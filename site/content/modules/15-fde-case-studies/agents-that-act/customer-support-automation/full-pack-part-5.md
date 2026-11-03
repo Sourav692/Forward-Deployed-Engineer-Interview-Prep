@@ -31,7 +31,11 @@ The interviewer's pivot after a good design is "volume is growing and monthly LL
 | Metrics that prove it | Cost per resolved ticket, deflection rate, cache hit rate, P95 latency, tool latency, CSAT                                                                                                                                    |
 | Recommendation        | Reduce cost by workflow, not across the board; protect the high-value paths                                                                                                                                                   |
 
-The sixty-second line: reduce cost by workflow, not across the board. Cache the FAQ path, route by intent, and protect the account-data path. Every strong cost answer follows four verbs in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on steps, tokens, top-k, timeouts and budgets. Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence. Cost per resolved case that improves while repeat contact rises is the trap to name unprompted.
+- The sixty-second line: reduce cost by workflow, not across the board. Cache the FAQ path, route by intent, and protect the account-data path.
+- Every strong cost answer follows four verbs in order. Measure, by tracing and attributing first.
+- Route, matching model and path to risk. Bound, with limits on steps, tokens, top-k, timeouts and budgets.
+- Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
+- Cost per resolved case that improves while repeat contact rises is the trap to name unprompted.
 
 ---
 

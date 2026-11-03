@@ -181,6 +181,18 @@ flowchart LR
     POLICY[ACL and ABAC policy] -.-> NORM
     POLICY -.-> FILTER
     POLICY -.-> CHECK
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class SRC,GRADE cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class QUEUE,USER,PLAN,RET,ABSTAIN,LLM cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class NORM,INDEX,ID,ANSWER cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class REFUSE cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class FILTER,CHECK,RERANK,VERIFY,POLICY cbPolicy
 ```
 
 ### Step-by-step architecture

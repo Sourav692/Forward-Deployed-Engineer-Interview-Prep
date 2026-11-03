@@ -59,6 +59,16 @@ flowchart TD
     Options --> O5["Move work to offline<br/>batch preprocessing"]
     Options --> O6["Accept a smaller<br/>interactive feature set"]
     style Q fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class R,O1,O5 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Q,OK,O2,O6 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Options,O4 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class O3 cbAction
 ```
 
 ### Worked Example: 1,000 Users, 20 QPS

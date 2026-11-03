@@ -15,9 +15,15 @@ The product metric is the acceptance rate, because a completion the developer de
 | Cost per thousand completions | Within budget | Rises with flat traffic | Tokens in and out by model | Finance |
 | Developer productivity | Time-to-merge and rework rate improve for adopters vs a matched control | No difference | Controlled rollout, statistical power decided in advance | Product |
 
-The OpenAI-style practice prompt's follow-up asks how to evaluate whether the assistant improves developer productivity. Acceptance rate alone is not enough. Compare adopters against a matched control on time-to-merge, review rework and defect rate, decide in advance how large an improvement would matter, and test on enough developers to tell that improvement from noise. LLM outputs vary, so a handful of examples cannot declare a winner.
+- The OpenAI-style practice prompt's follow-up asks how to evaluate whether the assistant improves developer productivity.
+- Acceptance rate alone is not enough.
+- Compare adopters against a matched control on time-to-merge, review rework and defect rate, decide in advance how large an improvement would matter, and test on enough developers to tell that improvement from noise.
+- LLM outputs vary, so a handful of examples cannot declare a winner.
 
-Run the evaluation ladder cheapest first. Prompt unit tests on every template change, so a broken template or a missing variable fails before the expensive suite. Golden-set evaluation on every build change. A scheduled nightly run against yesterday's baseline, because a moving alias like `gpt-4o` can be repointed to a new snapshot with no commit on the customer's side, unless you pin a dated snapshot. A/B tests in production on prompts, retrieval strategies and models.
+- Run the evaluation ladder cheapest first. Prompt unit tests on every template change, so a broken template or a missing variable fails before the expensive suite.
+- Golden-set evaluation on every build change.
+- A scheduled nightly run against yesterday's baseline, because a moving alias like `gpt-4o` can be repointed to a new snapshot with no commit on the customer's side, unless you pin a dated snapshot.
+- A/B tests in production on prompts, retrieval strategies and models.
 
 ## 13. Roll Out One Repository at a Time
 
@@ -52,7 +58,16 @@ The three-sentence close, from the source's summary:
 
 The two-minute spoken answer *(own construction from the source's summary and checkpoint)*:
 
-> *I would start with the two constraints, not the model. Suggestions have to arrive in under 300 milliseconds, and the assistant has to understand a private repository without leaking any of it. Those two decide the shape. Context engineering is a funnel: the whole workspace narrows to the current file, imports, open tabs, cursor and recent edits, then semantic search over a symbol-indexed repository ranks the snippets that matter, and only that ranked context becomes the prompt. A scoped completion cache sits in front of the expensive path, so a completion the assistant has effectively seen before skips embedding, retrieval and the large model. The router sends inline completion to a small fast model and explanation, tests, bug fixes and refactors to a larger reasoning model, because those are things a developer waits for. Every output is validated before it reaches the editor: syntax, hallucinated APIs checked against the symbol index, secrets, licence, unsafe patterns. The budget decomposes as ten milliseconds for the cache check, forty for context assembly, two hundred for streamed inference and fifty for validation. Security shapes it from the first question: retrieval respects repository permissions mirrored from the code host, secrets are masked before context leaves the IDE, nothing trains on private code without consent, and regulated customers get private deployment. I would prove it with acceptance rate per task, p95 by stage, a zero on cross-repository and secret leaks, and a controlled productivity comparison, rolling out one repository at a time.*
+> - I would start with the two constraints, not the model.
+> - Suggestions have to arrive in under 300 milliseconds, and the assistant has to understand a private repository without leaking any of it.
+> - Those two decide the shape.
+> - Context engineering is a funnel: the whole workspace narrows to the current file, imports, open tabs, cursor and recent edits, then semantic search over a symbol-indexed repository ranks the snippets that matter, and only that ranked context becomes the prompt.
+> - A scoped completion cache sits in front of the expensive path, so a completion the assistant has effectively seen before skips embedding, retrieval and the large model.
+> - The router sends inline completion to a small fast model and explanation, tests, bug fixes and refactors to a larger reasoning model, because those are things a developer waits for.
+> - Every output is validated before it reaches the editor: syntax, hallucinated APIs checked against the symbol index, secrets, licence, unsafe patterns.
+> - The budget decomposes as ten milliseconds for the cache check, forty for context assembly, two hundred for streamed inference and fifty for validation.
+> - Security shapes it from the first question: retrieval respects repository permissions mirrored from the code host, secrets are masked before context leaves the IDE, nothing trains on private code without consent, and regulated customers get private deployment.
+> - I would prove it with acceptance rate per task, p95 by stage, a zero on cross-repository and secret leaks, and a controlled productivity comparison, rolling out one repository at a time.
 
 The lines that carry the round *(own construction from the source's arguments)*:
 
@@ -79,4 +94,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 | How does the access-control problem from enterprise RAG reappear here? | Retrieval over code is retrieval over documents with owners; mirror repository permissions into the index and check them at retrieval, two layers, exactly as in the Enterprise Knowledge Assistant case |
 | How do you prevent insecure code generation? | Security filters and unsafe-pattern removal in validation; static analysis and test execution on the slow path; secret scanning on output; a planted-vulnerability red-team suite |
 
-Repair the common weak answers on the spot. "Use the best model for everything" becomes route by task and keep the hot path small. "Send the whole file, or the whole repo" becomes the funnel. "We'll cache the responses" becomes cache in front of the expensive path and never across scopes. "Fine-tune on the customer's code" becomes retrieval under their permissions, with training only by explicit consent. "It's fast enough" becomes ten, forty, two hundred, fifty. "We measure suggestions served" becomes acceptance rate.
+- Repair the common weak answers on the spot. "Use the best model for everything" becomes route by task and keep the hot path small.
+- "Send the whole file, or the whole repo" becomes the funnel. "We'll cache the responses" becomes cache in front of the expensive path and never across scopes.
+- "Fine-tune on the customer's code" becomes retrieval under their permissions, with training only by explicit consent.
+- "It's fast enough" becomes ten, forty, two hundred, fifty. "We measure suggestions served" becomes acceptance rate.

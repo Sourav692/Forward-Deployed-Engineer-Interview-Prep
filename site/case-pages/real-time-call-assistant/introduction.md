@@ -2,9 +2,13 @@
 
 ## Overview
 
-A sales or service team wants help during live calls: a short suggestion for the rep while the customer is talking, then a summary, action items and CRM updates after the call. The hard constraint is time. A useful bullet must appear within about three seconds of the customer finishing a question, and slower work must never sit on that path. Without recording consent nothing is transcribed, and a failed redaction stops storage and the model call.
+- A sales or service team wants help during live calls: a short suggestion for the rep while the customer is talking, then a summary, action items and CRM updates after the call.
+- The hard constraint is time. A useful bullet must appear within about three seconds of the customer finishing a question, and slower work must never sit on that path.
+- Without recording consent nothing is transcribed, and a failed redaction stops storage and the model call.
 
-The design splits one call into three clocks. Before the call, the system prepares a permission-scoped account snapshot. During the call, streaming speech recognition feeds a redaction step, and a small prompt with the snapshot goes to a fast model that streams short bullets; on timeout the panel stays silent. After the call, a larger model drafts a cited summary, actions and a CRM proposal, and the rep approves any write.
+- The design splits one call into three clocks. Before the call, the system prepares a permission-scoped account snapshot.
+- During the call, streaming speech recognition feeds a redaction step, and a small prompt with the snapshot goes to a fast model that streams short bullets; on timeout the panel stays silent.
+- After the call, a larger model drafts a cited summary, actions and a CRM proposal, and the rep approves any write.
 
 The case shares its snapshot and approval pattern with the Sales Copilot case. A sub-3-second sales drill uses the same call context and focuses on precompute and streaming.
 
@@ -19,6 +23,14 @@ flowchart LR
   B -->|Yes| D[Small fast live bullet]
   D --> E[Summary and CRM proposal after]
   E --> F[Rep approves the write]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D,F cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
 ```
 
 ## Who it is for

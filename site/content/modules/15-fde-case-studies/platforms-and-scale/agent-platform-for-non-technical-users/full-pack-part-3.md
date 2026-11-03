@@ -13,15 +13,25 @@ Every step of every run goes through one decision. `authorize_step()` returns `D
 | 5 | `needs_human_approval` | Destructive, not allow-listed for autonomous use on this tenant, and no approver present |
 | — | `autonomous_allowlisted` / `human_approved` | The two ways a destructive step is actually allowed to run |
 
-Non-destructive steps pass after the two budget checks. Destructive steps must clear all five rules and then match one of the two allows, so the full set is seven rules: five deny, two allow. The whiteboard script draws the same logic as a seven-line ladder, with "non-destructive? just run it" as its third rung. The handbook's five-rule table is the cleaner version to draw.
+- Non-destructive steps pass after the two budget checks. Destructive steps must clear all five rules and then match one of the two allows, so the full set is seven rules: five deny, two allow.
+- The whiteboard script draws the same logic as a seven-line ladder, with "non-destructive? just run it" as its third rung.
+- The handbook's five-rule table is the cleaner version to draw.
 
-The step budget and the spend cap count different things; they are not two severities of one check. The step budget counts how many steps a run has taken, so it catches a loop no matter how cheap each step is. The spend cap counts the dollars one step is about to spend, so it catches one expensive action on step one. Both halt and escalate. Neither retries, and neither clamps the amount down to fit.
+- The step budget and the spend cap count different things; they are not two severities of one check.
+- The step budget counts how many steps a run has taken, so it catches a loop no matter how cheap each step is.
+- The spend cap counts the dollars one step is about to spend, so it catches one expensive action on step one.
+- Both halt and escalate. Neither retries, and neither clamps the amount down to fit.
 
 > **"Autonomous status raises the ceiling on which actions can skip approval. It never removes the ceiling itself."**
 
 The tenant policy is `GuardrailPolicy(spend_cap_usd, max_steps, allowed_destructive_tools_autonomous)`. A workflow can be tighter than its tenant's policy but never looser. The allow-list belongs to the tenant alone.
 
-Build the negative control for anything claimed safe. `scripts/demo_guardrail_failure.py` shows seven denials. `wrong_role`: the author cannot promote their own workflow. `cannot_skip_stage`: draft cannot jump to autonomous. `type_mismatch` or missing arguments: rejected before execution. `not_live`: a draft workflow never fires a destructive step. `spend_cap_exceeded`: a 500 USD refund against a 50 USD cap is refused, not clamped. `step_budget_exceeded`: a 30-step workflow halts at the 5-step cap. `entity_locked`: a second run on an in-flight ticket is refused. A demo that shows things being stopped proves more than one that shows things working.
+- Build the negative control for anything claimed safe. `scripts/demo_guardrail_failure.py` shows seven denials.
+- `wrong_role`: the author cannot promote their own workflow. `cannot_skip_stage`: draft cannot jump to autonomous.
+- `type_mismatch` or missing arguments: rejected before execution. `not_live`: a draft workflow never fires a destructive step.
+- `spend_cap_exceeded`: a 500 USD refund against a 50 USD cap is refused, not clamped.
+- `step_budget_exceeded`: a 30-step workflow halts at the 5-step cap. `entity_locked`: a second run on an in-flight ticket is refused.
+- A demo that shows things being stopped proves more than one that shows things working.
 
 ## 11. Make Autonomy Something a Workflow Earns Through Four Gates
 
@@ -75,22 +85,29 @@ Cascade Robotics is a worked, runnable build of this design. Nothing in it contr
 
 First, the three-layer map that organises the whole answer:
 
-```
- LAYER 3   "Is this user allowed to configure/run this, and did we ask a human when we should have?"
-              -> guardrails: approvals, spend caps, staged rollout (draft/test/shadow/live)
+```mermaid
+flowchart TD
+    N0["Layer 1: canonical event and channel adapters"]
+    N1["Layer 2: idempotency and checkpointed recovery"]
+    N2["Layer 3: permissions, approvals, spend caps, and staged draft/test/shadow/live rollout"]
+    N0 --> N1
+    N1 --> N2
 
- LAYER 2   "If this runs twice by accident (retry, crash, redelivery), does it break something?"
-              -> idempotency keys, checkpointed/resumable execution
-
- LAYER 1   "No matter which channel this came from, does it look the same to everything downstream?"
-              -> a canonical event schema + one adapter per channel
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N2 cbPolicy
 ```
 
 A weak answer spends its time on Layer 1 and waves at an LLM doing reasoning. A strong answer spends most of it on Layers 2 and 3, because that is where real incidents happen: double refunds, a skipped human check, a re-run completed step.
 
 Second, the example data. The tenant is `cascade_robotics`, with three workflows. `wf_ticket_triage` runs at priority 10 on `webhook / ticket.created`. `wf_legacy_ticket_tagger` runs at priority 1 on the same trigger, to demonstrate the conflict. `wf_slack_escalation` runs at priority 10 on `slack / urgent_message`.
 
-Third, the cross-project shape. The RAG platform, this agent platform and the delivery framework all return `Decision(allowed, rule, reason)` from a named policy where deny overrides. The three functions are `authorize_step()` here, `sign_off()` in the delivery framework and `decide()` in enterprise RAG. Access control, delivery gates and workflow guardrails are the same kind of problem wearing three different hats. That line works well as a bridge when the interviewer has seen the Enterprise Knowledge Assistant or Scoping to Deployed Agent design.
+- Third, the cross-project shape. The RAG platform, this agent platform and the delivery framework all return `Decision(allowed, rule, reason)` from a named policy where deny overrides.
+- The three functions are `authorize_step()` here, `sign_off()` in the delivery framework and `decide()` in enterprise RAG.
+- Access control, delivery gates and workflow guardrails are the same kind of problem wearing three different hats.
+- That line works well as a bridge when the interviewer has seen the Enterprise Knowledge Assistant or Scoping to Deployed Agent design.
 
 Fourth, the coverage discipline: every claim is marked *built and runnable* or *known but not demonstrated*, with an effort label to close it. The punch list, by effort:
 

@@ -36,9 +36,13 @@ So the naive design is insecure and also fails to build. The platform forces a p
                           layer 2 - UC enforces ACL + PII masking
 ```
 
-Because the base table carries no policy, granting anyone `SELECT` on it bypasses the whole access model. Locking it to the pipeline identity is a security control. Write it down and audit it. A smaller gotcha can cost an afternoon: `CREATE OR REPLACE TABLE` does not detach an attached row filter, so a half-finished run leaves the table un-indexable until the filter or the schema is dropped. That is why the setup is idempotent.
+- Because the base table carries no policy, granting anyone `SELECT` on it bypasses the whole access model.
+- Locking it to the pipeline identity is a security control. Write it down and audit it.
+- A smaller gotcha can cost an afternoon: `CREATE OR REPLACE TABLE` does not detach an attached row filter, so a half-finished run leaves the table un-indexable until the filter or the schema is dropped.
+- That is why the setup is idempotent.
 
-The two layers map directly. Layer 1 is the AI Search filter compiled from the caller's groups and passed on every query as the service principal, so unauthorised vectors are never scored. Layer 2 re-reads the returned chunk IDs from the governed view on behalf of the user (OBO is Public Preview in 2026), and the view's row predicate and PII mask are evaluated as that user.
+- The two layers map directly. Layer 1 is the AI Search filter compiled from the caller's groups and passed on every query as the service principal, so unauthorised vectors are never scored.
+- Layer 2 re-reads the returned chunk IDs from the governed view on behalf of the user (OBO is Public Preview in 2026), and the view's row predicate and PII mask are evaluated as that user.
 
 ```
   ① AI SEARCH FILTER              — runs as the service principal
@@ -81,9 +85,13 @@ SELECT chunk_id, doc_id,
 FROM kb.chunks c WHERE EXISTS ( ...the seven rules... );
 ```
 
-Seven rules in one object govern every reader of it, the agent, a notebook, a dashboard and a SQL query, not only callers who go through the application. PII is masked by the view's `CASE` keyed on `is_account_group_member('pii_readers')`, and not `ai_mask`, which is an AI transform rather than an access-control primitive. Live revocation is free, because `is_account_group_member()` reads SCIM-synced account groups, so a removal in Okta takes effect on the first query after the SCIM push reaches Databricks, with no reindex.
+- Seven rules in one object govern every reader of it, the agent, a notebook, a dashboard and a SQL query, not only callers who go through the application.
+- PII is masked by the view's `CASE` keyed on `is_account_group_member('pii_readers')`, and not `ai_mask`, which is an AI transform rather than an access-control primitive.
+- Live revocation is free, because `is_account_group_member()` reads SCIM-synced account groups, so a removal in Okta takes effect on the first query after the SCIM push reaches Databricks, with no reindex.
 
-Encoding the ACL for the index filter is the gotcha to volunteer. AI Search filters work on scalar columns, struct fields and map values, with no array-containment operator, so `allowed_groups ARRAY<STRING>` cannot be filtered directly. The default encoding is one boolean column per group; the alternative fans out one row per chunk and group, which multiplies vectors, the expensive thing.
+- Encoding the ACL for the index filter is the gotcha to volunteer.
+- AI Search filters work on scalar columns, struct fields and map values, with no array-containment operator, so `allowed_groups ARRAY<STRING>` cannot be filtered directly.
+- The default encoding is one boolean column per group; the alternative fans out one row per chunk and group, which multiplies vectors, the expensive thing.
 
 ```
 A. One BOOLEAN column per group  ← default (bounded group set)
@@ -125,7 +133,11 @@ index.similarity_search(
     num_results=20)
 ```
 
-Multi-Query, HyDE, decomposition and the RRF across generated queries stay in agent code, because they are orchestration patterns rather than retrieval infrastructure. Two more lines belong on the board. Never gate a release on an LLM judge; on Databricks the leak test is a SQL assertion that tests the enforcement point rather than the application. And layer 1 overshooting is by design, since embargo and need-to-know cannot be pushed into the index. So the gate measures what reaches the model, not what the index proposed. When this was built, measuring the wrong layer gave six false leaks on the first run.
+- Multi-Query, HyDE, decomposition and the RRF across generated queries stay in agent code, because they are orchestration patterns rather than retrieval infrastructure.
+- Two more lines belong on the board. Never gate a release on an LLM judge; on Databricks the leak test is a SQL assertion that tests the enforcement point rather than the application.
+- And layer 1 overshooting is by design, since embargo and need-to-know cannot be pushed into the index.
+- So the gate measures what reaches the model, not what the index proposed.
+- When this was built, measuring the wrong layer gave six false leaks on the first run.
 
 Be precise about what was actually run, because "I designed this" and "I ran this" sound different to an interviewer. Everything below ran against a live workspace with a Unity Catalog metastore, a serverless SQL warehouse and an existing AI Search endpoint, with all test objects dropped afterwards.
 
@@ -141,7 +153,9 @@ Be precise about what was actually run, because "I designed this" and "I ran thi
 
 Two things were not verified end to end, and say so. The managed reranker was refused by the workspace with *"a workspace-level configuration is preventing us from accessing the reranker model"*. On-behalf-of-user auth is public preview and needs an admin to enable.
 
-Ask a Databricks interviewer three things. Is Unity Catalog the governance boundary today, or does Hive metastore remain to migrate? Are account groups SCIM-synced or managed in-workspace, which decides whether live revocation works? How faithfully must source-system permissions be mirrored per document? The artefact to bring is the persona-by-document visibility matrix, generated by running the same `SELECT count(*) FROM kb.chunks_secure` as each identity.
+- Ask a Databricks interviewer three things. Is Unity Catalog the governance boundary today, or does Hive metastore remain to migrate?
+- Are account groups SCIM-synced or managed in-workspace, which decides whether live revocation works?
+- How faithfully must source-system permissions be mirrored per document? The artefact to bring is the persona-by-document visibility matrix, generated by running the same `SELECT count(*) FROM kb.chunks_secure` as each identity.
 
 ## 14. Tell It as Something Built
 
@@ -149,14 +163,29 @@ For "tell me about something you built", tell the same system as a story. Each b
 
 > *"I built an enterprise AI search system where the hardest part wasn't finding the right answer. It was that the same question needed a different correct answer depending on who was asking, and I wanted to prove that boundary never breaks, not just hope it doesn't."*
 
-The business-problem beat is the persona table in plain words. A support platform where a Tier-1 agent, an account manager, an engineer and an outside contractor use one assistant, and each may see a different slice of the same customer's data. The account manager gets the contract terms without the root cause. The engineer gets the root cause and that the account is credit-eligible, without the contract terms. The contractor gets nothing. One wrong answer is a data leak. Bridge to the technical part: it is an access-control problem before it is an AI problem, so that is where the design effort went.
+- The business-problem beat is the persona table in plain words.
+- A support platform where a Tier-1 agent, an account manager, an engineer and an outside contractor use one assistant, and each may see a different slice of the same customer's data.
+- The account manager gets the contract terms without the root cause. The engineer gets the root cause and that the account is credit-eligible, without the contract terms.
+- The contractor gets nothing. One wrong answer is a data leak. Bridge to the technical part: it is an access-control problem before it is an AI problem, so that is where the design effort went.
 
 The two-checkpoint beat explains the layers without jargon. A fast checkpoint at the door gets a request into the right neighbourhood of documents. A slower, careful one runs right before anything is handed over, because permissions may have changed in the gap. Most systems build the first and hope nothing changes. This one assumed it would.
 
-The trust beat tells three mistakes, because that is more informative than a story where nothing went wrong. The system once accused itself of leaking a document to someone who was allowed to see it, because the test data was mislabelled. One security rule had no test exercising it, because a stricter rule kept masking it. And one check passed or failed almost at random, because the AI's own judgement had been allowed to decide something security-critical. The fix made that security decision a hard rule, never a model's mood.
+- The trust beat tells three mistakes, because that is more informative than a story where nothing went wrong.
+- The system once accused itself of leaking a document to someone who was allowed to see it, because the test data was mislabelled.
+- One security rule had no test exercising it, because a stricter rule kept masking it.
+- And one check passed or failed almost at random, because the AI's own judgement had been allowed to decide something security-critical.
+- The fix made that security decision a hard rule, never a model's mood.
 
-The platform beat is the Databricks finding, generalised. A search index built from governed data does not inherit the data's governance, because it is a copy. A revocation in the source does not reach the index downstream, so the check has to happen again, live, at query time. That is true of any architecture where a vector index sits next to but separate from operational data.
+- The platform beat is the Databricks finding, generalised. A search index built from governed data does not inherit the data's governance, because it is a copy.
+- A revocation in the source does not reach the index downstream, so the check has to happen again, live, at query time.
+- That is true of any architecture where a vector index sits next to but separate from operational data.
 
-Offer the limitations beat before you are asked. The test set in that build is 22 documents. At that size almost every retrieval strategy scores well, so the differences between the six strategies benchmarked are mostly noise. Dense retrieval would be the right production choice for a corpus this small. The small size does not weaken the zero-leak guarantee or the testing discipline behind it. For a real customer the corpus would be larger and tiered. The storage-isolation strategy would be designed for tenant growth up front, and the scale caveat instrumented from day one.
+- Offer the limitations beat before you are asked. The test set in that build is 22 documents.
+- At that size almost every retrieval strategy scores well, so the differences between the six strategies benchmarked are mostly noise.
+- Dense retrieval would be the right production choice for a corpus this small.
+- The small size does not weaken the zero-leak guarantee or the testing discipline behind it.
+- For a real customer the corpus would be larger and tiered. The storage-isolation strategy would be designed for tenant growth up front, and the scale caveat instrumented from day one.
 
-Close on whichever thread the conversation ended on. On trust: an FDE's job is turning a technical guarantee into something a customer's security team can sign off on. On platforms: never assume a guarantee travels between systems until it has been verified on their specific platform. On limitations: say exactly where the proven edges are before someone else finds them.
+- Close on whichever thread the conversation ended on. On trust: an FDE's job is turning a technical guarantee into something a customer's security team can sign off on.
+- On platforms: never assume a guarantee travels between systems until it has been verified on their specific platform.
+- On limitations: say exactly where the proven edges are before someone else finds them.

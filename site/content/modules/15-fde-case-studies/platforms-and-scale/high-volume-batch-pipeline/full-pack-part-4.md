@@ -21,7 +21,11 @@ Map each stage onto the anchor rather than drawing a new system *(own constructi
 
 Batch versus online is a per-workflow decision. Bulk backfills and nightly statements are batch, which buys throughput and quota smoothing. A document a customer uploads while waiting needs an online path with its own latency budget. The two paths can share the extraction schema and the typed boundary *(own construction)*.
 
-The likely follow-up is *"How would you handle a new document format appearing without warning?"* The answer *(own construction)* has four parts. Detect it: classification confidence drops, and schema-validation and business-rule failure rates rise for one cohort. Contain it: fail that cohort to the review queue rather than publishing low-confidence fields. Recover: add the format to the classifier and schema, then replay only the quarantined cohort through `replay-failures`. Prevent: monitor confidence and rejection rates by source and template, because format drift is a data-quality incident, not a model bug.
+- The likely follow-up is *"How would you handle a new document format appearing without warning?"* The answer *(own construction)* has four parts.
+- Detect it: classification confidence drops, and schema-validation and business-rule failure rates rise for one cohort.
+- Contain it: fail that cohort to the review queue rather than publishing low-confidence fields.
+- Recover: add the format to the classifier and schema, then replay only the quarantined cohort through `replay-failures`.
+- Prevent: monitor confidence and rejection rates by source and template, because format drift is a data-quality incident, not a model bug.
 
 ## 14. Deliver It in Fifty Minutes
 
@@ -44,13 +48,30 @@ A technically strong answer that runs out of time before the trade-offs or the f
 
 The two-minute spoken answer, from the answer key:
 
-> *I would not start with the model. The prompt sounds like a throughput problem — classify 100 million records every night before 6 a.m. — but the room splits three ways immediately: the business owner wants classifications by morning, the platform lead wants the warehouse intact, and the on-call engineer wants to rerun safely when something fails. That disagreement is the real problem, so I would restate the target as completing a replayable, cost-controlled batch by deadline with clear recovery decisions when behind schedule. The first question I need answered is whether partial results have value, because that one answer determines retry strategy, checkpointing cadence, and how much money to spend on the last ten percent. On sizing, 100 million records across a six-hour window is about 4,630 records per second, and with fifteen percent headroom for retries and stragglers, roughly 5,320 — and I would size from the tail of large records, not the mean. Architecturally, a planner freezes an immutable snapshot, a manifest splits it into partitions balanced for processing cost rather than row count, a durable queue hands out leases, and a rate-limit coordinator holds backpressure so tightening quota slows leases instead of triggering a retry storm. Checkpoints make recovery bounded and the sink upserts on the record key so replay cannot duplicate. The failure I would rehearse out loud is being 45% complete at 4 a.m., and the answer is that the contingency mode — narrow scope, cheaper model, or partial output with explicit status — was agreed with a named owner before launch.*
+> - The prompt sounds like a throughput problem — classify 100 million records every night before 6 a.m. — but the room splits three ways immediately: the business owner wants classifications by morning, the platform lead wants the warehouse intact, and the on-call engineer wants to rerun safely when something fails.
+> - That disagreement is the real problem, so I would restate the target as completing a replayable, cost-controlled batch by deadline with clear recovery decisions when behind schedule.
+> - The first question I need answered is whether partial results have value, because that one answer determines retry strategy, checkpointing cadence, and how much money to spend on the last ten percent.
+> - On sizing, 100 million records across a six-hour window is about 4,630 records per second, and with fifteen percent headroom for retries and stragglers, roughly 5,320 — and I would size from the tail of large records, not the mean.
+> - Architecturally, a planner freezes an immutable snapshot, a manifest splits it into partitions balanced for processing cost rather than row count, a durable queue hands out leases, and a rate-limit coordinator holds backpressure so tightening quota slows leases instead of triggering a retry storm.
+> - Checkpoints make recovery bounded and the sink upserts on the record key so replay cannot duplicate.
+> - The failure I would rehearse out loud is being 45% complete at 4 a.m., and the answer is that the contingency mode — narrow scope, cheaper model, or partial output with explicit status — was agreed with a named owner before launch.
 
 The ninety-second architecture summary, from the V2 tutorial:
 
-> *"We have a nightly batch that must classify all records before the business deadline, so I would prioritise replayability, clear ownership, and deadline-aware recovery over exotic optimisation. I'd partition the input into deterministic shards, track each shard in a durable manifest, and run workers that call either a provider API or a self-hosted model depending on the cost, latency, and control constraints. Every write would be idempotent, every shard would checkpoint progress, and every retry would be safe to rerun. I'd monitor shard lag, provider throttling, queue age, and downstream sink health so we can detect whether we're on track by the middle of the window. If we're behind at 4 a.m., I'd first identify the bottleneck, then decide whether to split hot partitions, raise concurrency, or switch the remaining work to a fallback model if the quality policy allows it. The main trade-off is between throughput and flexibility: larger batches improve efficiency, but smaller, deterministic units make recovery safer. I'd start rollout with a small representative slice, verify stable throughput and idempotent replay, and only then expand to the full nightly workload."*
+> - We have a nightly batch that must classify all records before the business deadline, so I would prioritise replayability, clear ownership, and deadline-aware recovery over exotic optimisation.
+> - I'd partition the input into deterministic shards, track each shard in a durable manifest, and run workers that call either a provider API or a self-hosted model depending on the cost, latency, and control constraints.
+> - Every write would be idempotent, every shard would checkpoint progress, and every retry would be safe to rerun.
+> - I'd monitor shard lag, provider throttling, queue age, and downstream sink health so we can detect whether we're on track by the middle of the window.
+> - If we're behind at 4 a.m., I'd first identify the bottleneck, then decide whether to split hot partitions, raise concurrency, or switch the remaining work to a fallback model if the quality policy allows it.
+> - The main trade-off is between throughput and flexibility: larger batches improve efficiency, but smaller, deterministic units make recovery safer.
+> - I'd start rollout with a small representative slice, verify stable throughput and idempotent replay, and only then expand to the full nightly workload.
 
-The three answer tiers, from the answer key. The weak answer builds a batch classifier with an inference service and a scheduler and runs it nightly. It names tools instead of value and says nothing about snapshots, 4 a.m. or replay. The average answer partitions, runs workers with retries, checkpoints and alerts when late. It treats "alert when late" as a recovery plan and never shapes calls against quota. The strong answer freezes a snapshot and balances partitions by processing cost. It leases durably, holds backpressure in a coordinator, checkpoints for bounded replay, upserts by record key, and agrees contingency modes before the run is ever late.
+- The three answer tiers, from the answer key. The weak answer builds a batch classifier with an inference service and a scheduler and runs it nightly.
+- It names tools instead of value and says nothing about snapshots, 4 a.m. or replay.
+- The average answer partitions, runs workers with retries, checkpoints and alerts when late.
+- It treats "alert when late" as a recovery plan and never shapes calls against quota.
+- The strong answer freezes a snapshot and balances partitions by processing cost.
+- It leases durably, holds backpressure in a coordinator, checkpoints for bounded replay, upserts by record key, and agrees contingency modes before the run is ever late.
 
 The lines that carry the round *(own construction from the sources' arguments)*:
 

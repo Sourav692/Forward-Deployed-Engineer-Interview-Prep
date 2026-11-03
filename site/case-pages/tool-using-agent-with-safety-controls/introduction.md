@@ -4,7 +4,9 @@
 
 An operations team wants an agent that reads customer email, checks internal systems, updates the CRM and sometimes issues refunds. The useful part is interpreting a messy request. The dangerous part is letting that interpretation become authority: email and tool output are untrusted, and one injected instruction must not become a refund.
 
-The design separates proposing from executing. The model proposes one bounded action at a time. Validation checks the tool and its arguments, policy answers allow, block or needs a human, a broker mints a short-lived, narrow token, and an idempotent gateway runs the action once and writes a receipt. Writes fail closed, and operators can stop in-flight work by revoking tokens and cancelling queues.
+- The design separates proposing from executing. The model proposes one bounded action at a time.
+- Validation checks the tool and its arguments, policy answers allow, block or needs a human, a broker mints a short-lived, narrow token, and an idempotent gateway runs the action once and writes a receipt.
+- Writes fail closed, and operators can stop in-flight work by revoking tokens and cancelling queues.
 
 This is the anchor case for agents that act. An enterprise assistant over many apps, a slow or looping agent and a refund near miss all keep the same proposal-to-execution boundary and change which control dominates.
 
@@ -20,6 +22,16 @@ flowchart LR
   C -->|Needs approval| E[Human approves]
   E --> D
   C -->|Block| F[Stop and record]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,C,E cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class D cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class F cbStop
 ```
 
 ## Who it is for

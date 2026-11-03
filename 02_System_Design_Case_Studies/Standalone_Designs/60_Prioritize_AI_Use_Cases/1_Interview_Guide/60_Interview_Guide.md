@@ -31,7 +31,9 @@ It closes with the property list of a good first pick, verbatim:
 - A practical integration path
 - A credible evaluation strategy
 
-The trap is real because demos and production reward different things. A demo hides traffic shape, tail latency, usage expansion and governance cost, in the words of the cost cram sheet. So the most impressive demo is often the use case whose production cost is least visible. Say that in the first two minutes, then make the method the answer:
+- The trap is real because demos and production reward different things. A demo hides traffic shape, tail latency, usage expansion and governance cost, in the words of the cost cram sheet.
+- So the most impressive demo is often the use case whose production cost is least visible.
+- Say that in the first two minutes, then make the method the answer:
 
 > *"I won't pick a winner from the list. I'll gate out the ones that can't be measured or can't be allowed, score the rest on value and on what makes value real, then check the ranking against dependencies and portfolio balance. The first build is the one with a measurable outcome, available data and a credible eval — and it should also lay platform that makes the next three cheaper."*
 
@@ -72,7 +74,9 @@ The card template is *(own construction)*. Its fields are the source's ten crite
 
 ## 4. Apply Gates Before Scoring Anything
 
-A weighted sum lets a high score on one dimension buy back a fatal score on another. So some properties are gates, checked first, and an item that fails one never reaches the scoring table. This is the same move as the delivery framework's intake refusal. *"A two-week clock against an unmeasurable goal is worse than no clock"*, and a score against an unmeasurable goal is worse than no score.
+- A weighted sum lets a high score on one dimension buy back a fatal score on another.
+- So some properties are gates, checked first, and an item that fails one never reaches the scoring table.
+- This is the same move as the delivery framework's intake refusal. *"A two-week clock against an unmeasurable goal is worse than no clock"*, and a score against an unmeasurable goal is worse than no score.
 
 | GATE | FAILS WHEN | WHAT HAPPENS TO THE ITEM |
 |---|---|---|
@@ -81,11 +85,16 @@ A weighted sum lets a high score on one dimension buy back a fatal score on anot
 | Permissible decision | The model would take an adverse action on a customer with no human review | Reshaped into decision support, or rejected |
 | Right tool | A deterministic rule, an existing statistical model or a purchase would do it better | Routed to rules, the existing model team, or procurement |
 
-The gates and their wording are *(own construction)*, built from the delivery operating model's intake refusal and its "no SME is a contractual prerequisite" rule. In my experience, the fourth gate is the one candidates forget. The cost cram sheet lists "low-value workflows" as a cause of runaway bills. Not every item on an AI list needs a language model.
+- The gates and their wording are *(own construction)*, built from the delivery operating model's intake refusal and its "no SME is a contractual prerequisite" rule.
+- In my experience, the fourth gate is the one candidates forget. The cost cram sheet lists "low-value workflows" as a cause of runaway bills.
+- Not every item on an AI list needs a language model.
 
 ## 5. Score Seven Dimensions With Stated Weights
 
-The source's ten criteria collapse into seven scored dimensions without losing any. Adoption likelihood becomes a multiplier on value, because unused value is not value. Integration complexity folds into feasibility. User pain is evidence for value, not a separate score. Each dimension is scored 1 to 5, where 5 is always the good end, so risk is inverted *(own construction)*.
+- The source's ten criteria collapse into seven scored dimensions without losing any.
+- Adoption likelihood becomes a multiplier on value, because unused value is not value.
+- Integration complexity folds into feasibility. User pain is evidence for value, not a separate score.
+- Each dimension is scored 1 to 5, where 5 is always the good end, so risk is inverted *(own construction)*.
 
 | DIMENSION | WEIGHT | WHAT A 5 LOOKS LIKE | WHAT A 1 LOOKS LIKE |
 |---|---|---|---|
@@ -97,7 +106,9 @@ The source's ten criteria collapse into seven scored dimensions without losing a
 | Time to value (T) | 10% | Measurable result inside one quarter | Over a year before anyone sees an effect |
 | Platform reuse (P) | 10% | Builds a component four other cards need | A dead end that shares nothing |
 
-The weights are a stated opinion, not a truth. Say them aloud so the interviewer can argue with them. Value gets the largest share because the sponsor funds outcomes. Data and risk tie for second because, in my judgement, they are the two dimensions that most often stop a project that scored well. Evaluability earns its own line because the decomposition prep page names it as a winning habit: tie every design choice back to how it would be evaluated.
+- The weights are a stated opinion, not a truth. Say them aloud so the interviewer can argue with them.
+- Value gets the largest share because the sponsor funds outcomes. Data and risk tie for second because, in my judgement, they are the two dimensions that most often stop a project that scored well.
+- Evaluability earns its own line because the decomposition prep page names it as a winning habit: tie every design choice back to how it would be evaluated.
 
 ## 6. Estimate Value From Volume, Not From Enthusiasm
 
@@ -105,9 +116,13 @@ Executive value estimates are usually a revenue number with no mechanism behind 
 
 > Annual value ≈ volume × saving per occurrence × unit cost × adoption rate
 
-A worked estimate, with every input an assumption. Contact-centre wrap-up notes (#7 on the insurer's list): 1.2M calls a year, 3 minutes of wrap-up saved per call, $0.75 per agent-minute fully loaded, and 70% adoption. That comes to about $1.9M a year. The sponsor's slide said "$5M in productivity". The gap is the adoption factor and the difference between minutes saved and minutes that turn into lower cost.
+- A worked estimate, with every input an assumption. Contact-centre wrap-up notes (#7 on the insurer's list): 1.2M calls a year, 3 minutes of wrap-up saved per call, $0.75 per agent-minute fully loaded, and 70% adoption.
+- That comes to about $1.9M a year. The sponsor's slide said "$5M in productivity".
+- The gap is the adoption factor and the difference between minutes saved and minutes that turn into lower cost.
 
-Three honesty rules keep this from becoming theatre. Separate hard savings, such as fewer contractor hours, from soft savings, such as minutes that go back into the same shift. Discount by adoption, using the pilot's measured rate once it exists. Subtract the run cost, because the cost cram sheet's executive question is "does the value justify the spend?", not "is there value?". Convert the result into the 1-to-5 band from section 5, and keep the dollar figure on the card, so the band can be challenged.
+- Three honesty rules keep this from becoming theatre. Separate hard savings, such as fewer contractor hours, from soft savings, such as minutes that go back into the same shift.
+- Discount by adoption, using the pilot's measured rate once it exists. Subtract the run cost, because the cost cram sheet's executive question is "does the value justify the spend?", not "is there value?".
+- Convert the result into the 1-to-5 band from section 5, and keep the dollar figure on the card, so the band can be challenged.
 
 ## 7. Stress-Test the Weighted Sum Where It Breaks
 

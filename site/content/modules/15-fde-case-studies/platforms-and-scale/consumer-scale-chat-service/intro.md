@@ -2,9 +2,14 @@
 
 ## Overview
 
-The prompt is to design a consumer chat assistant: many people, many turns, tokens streamed back, each conversation remembered, and a GPU bill that stays under control. The hard part is that the model is stateless while the product is not. The service must hold every conversation and send the model a bounded context. Every scale figure in the case is a whiteboard assumption, not a measured service fact.
+- The prompt is to design a consumer chat assistant: many people, many turns, tokens streamed back, each conversation remembered, and a GPU bill that stays under control.
+- The hard part is that the model is stateless while the product is not.
+- The service must hold every conversation and send the model a bounded context.
+- Every scale figure in the case is a whiteboard assumption, not a measured service fact.
 
-The design admits each request through a regional gateway with authentication, quotas and input moderation, loads the conversation, and sends only a summary, recent turns and relevant memory. A tier and task router places the turn on a fair queue in front of a continuously batched model pool, which streams the answer through output moderation and persists partial answers. A disconnect cancels model and tool work, and a stable prompt prefix on a warm replica saves prefill cost.
+- The design admits each request through a regional gateway with authentication, quotas and input moderation, loads the conversation, and sends only a summary, recent turns and relevant memory.
+- A tier and task router places the turn on a fair queue in front of a continuously batched model pool, which streams the answer through output moderation and persists partial answers.
+- A disconnect cancels model and tool work, and a stable prompt prefix on a warm replica saves prefill cost.
 
 The variant that asks you to design the Claude chat service uses the same architecture, with more emphasis on batching, GPU capacity, queues and failover.
 
@@ -19,6 +24,16 @@ flowchart LR
   B --> C[Bounded context]
   C --> D[Fair queue and model pool]
   D --> E[Stream and persist]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class F,E cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C cbPolicy
 ```
 
 ## Who it is for

@@ -18,20 +18,25 @@ We will use one example throughout:
 
 There are different levels of adaptation.
 
-```text
-Cheap + easy to rollback
-        ↓
-1. Context
-        ↓
-2. Memory
-        ↓
-3. Skill / Procedure
-        ↓
-4. Prompt Optimisation
-        ↓
-5. Model Weights
-        ↓
-Expensive + harder to rollback
+```mermaid
+flowchart TD
+    N0["Context: cheapest and easiest to roll back"]
+    N1["Memory"]
+    N2["Reusable skill or procedure"]
+    N3["Prompt optimisation"]
+    N4["Model weights: most expensive and hardest to roll back"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N4 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 ### Level 1. Context
@@ -69,14 +74,25 @@ The system learns a reusable workflow.
 
 Example:
 
-```text
-Safe Restart Skill
+```mermaid
+flowchart TD
+    N0["Check health"]
+    N1["Drain traffic"]
+    N2["Restart"]
+    N3["Verify health"]
+    N4["Restore traffic"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
 
-1. Check health
-2. Drain traffic
-3. Restart
-4. Verify health
-5. Restore traffic
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N0,N3 cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N4 cbAction
 ```
 
 ### Level 4. Prompt Optimisation
@@ -91,8 +107,25 @@ Use this only when cheaper mechanisms are not enough.
 
 ### Interview principle
 
-```text
-Context → Memory → Skill → Prompt → Weights
+```mermaid
+flowchart TD
+    N0["Context"]
+    N1["Memory"]
+    N2["Skill"]
+    N3["Prompt"]
+    N4["Weights"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 Always move from cheap and reversible toward expensive and hard to roll back.
@@ -134,16 +167,14 @@ Production requirements:
 
 Track:
 
-```text
-request
-tool calls
-prompt/model version
-selected skill
-result
-latency
-cost
-external outcome
-```
+- request
+- tool calls
+- prompt/model version
+- selected skill
+- result
+- latency
+- cost
+- external outcome
 
 ### Cost
 
@@ -157,14 +188,12 @@ Adaptation logic should not make every live request slow.
 
 Every production change should answer:
 
-```text
-Who created it?
-Why was it created?
-What data supported it?
-Which evaluation passed?
-Who approved it?
-Which previous version can we roll back to?
-```
+- Who created it?
+- Why was it created?
+- What data supported it?
+- Which evaluation passed?
+- Who approved it?
+- Which previous version can we roll back to?
 
 ---
 
@@ -208,6 +237,18 @@ flowchart TD
 
     T --> U[Capability Registry]
     U --> D
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E,M,U cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F,N,P,R cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,J,K,O,S cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,G,H,I,L,T cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class Q cbStop
 ```
 
 ---
@@ -216,34 +257,56 @@ flowchart TD
 
 The architecture has two loops and one gate.
 
-```text
-Runtime Loop
-     +
-Learning Loop
-     +
-Evaluation Gate
+```mermaid
+flowchart TD
+    N0["Adaptive system"]
+    N1["Runtime loop"]
+    N2["Offline learning loop"]
+    N3["Evaluation gate"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 ### Runtime Loop
 
 The runtime serves production traffic.
 
-```text
-Request
-  ↓
-Router
-  ↓
-Approved Capability
-  ↓
-Agent
-  ↓
-Tool Gateway
-  ↓
-External System
-  ↓
-Outcome
-  ↓
-Trace
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Router"]
+    N2["Approved capability"]
+    N3["Bounded agent"]
+    N4["Tool gateway"]
+    N5["External system"]
+    N6["Outcome"]
+    N7["Trace"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N7 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6 cbAction
 ```
 
 The runtime should use only approved versions.
@@ -252,18 +315,27 @@ The runtime should use only approved versions.
 
 The learning system studies historical traces.
 
-```text
-Production Traces
-      ↓
-Find patterns
-      ↓
-Create candidate
-      ↓
-Evaluate
-      ↓
-Shadow
-      ↓
-Promote
+```mermaid
+flowchart TD
+    N0["Production traces"]
+    N1["Find patterns"]
+    N2["Create candidate"]
+    N3["Evaluate"]
+    N4["Shadow"]
+    N5["Promote"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 ### Evaluation Gate
@@ -298,23 +370,49 @@ eval_score: 0.91
 
 Possible states:
 
-```text
-DRAFT
-  ↓
-CANDIDATE
-  ↓
-SHADOW
-  ↓
-LIVE
-  ↓
-DEMOTED
+```mermaid
+flowchart TD
+    N0["Draft"]
+    N1["Candidate"]
+    N2["Shadow"]
+    N3["Live"]
+    N4["Demoted"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
 
 If v3 becomes unhealthy:
 
-```text
-v3 → DEMOTED
-v2 → LIVE
+```mermaid
+flowchart TD
+    N0["v3"]
+    N1["Demoted"]
+    N2["v2"]
+    N3["Live"]
+    N0 --> N1
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
 
 This makes rollback easy.
@@ -371,18 +469,29 @@ Unknown tasks should not get normal production freedom.
 
 Use a stricter execution mode.
 
-```text
-Unknown Task
-    ↓
-General Agent
-    ↓
-Lower Step Limit
-    ↓
-Read-Only Tools First
-    ↓
-Approval for Risky Writes
-    ↓
-Earlier Human Escalation
+```mermaid
+flowchart TD
+    N0["Unknown task"]
+    N1["General agent"]
+    N2["Lower step limit"]
+    N3["Read-only tools first"]
+    N4["Required approval for risky writes"]
+    N5["Earlier human escalation"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N4 cbPolicy
 ```
 
 The system has less confidence about the task, so it gets less freedom.
@@ -409,35 +518,38 @@ There are two useful mechanisms.
 
 Instead of always using fixed few-shot examples:
 
-```text
-Example A
-Example B
-Example C
-```
+- Example A
+- Example B
+- Example C
 
 retrieve examples relevant to the current request.
 
-```text
-Current Request
-      ↓
-Search Successful Past Executions
-      ↓
-Filter Relevant Examples
-      ↓
-Add to Prompt
+```mermaid
+flowchart TD
+    N0["Current request"]
+    N1["Search successful past executions"]
+    N2["Filter relevant examples"]
+    N3["Add to prompt"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N1,N2 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N3 cbReason
 ```
 
 Do not select only by similarity.
 
 Prefer:
 
-```text
-Relevant
-+
-Successful
-+
-Diverse
-```
+- Relevant
+- Successful
+- Diverse
 
 A similar failed trace is not necessarily a good example.
 
@@ -453,15 +565,23 @@ The agent creates a temporary lesson and retries.
 
 Example:
 
-```text
-Agent sends wrong timestamp format
-        ↓
-API returns validation error
-        ↓
-Lesson:
-Use ISO-8601 UTC format
-        ↓
-Retry
+```mermaid
+flowchart TD
+    N0["Wrong timestamp format"]
+    N1["API validation error"]
+    N2["Use ISO-8601 UTC format"]
+    N3["Retry within budget"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N3 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 #### Critical rule
@@ -477,14 +597,12 @@ Agent:
 
 Good external validators:
 
-```text
-API result
-Unit test
-Database state
-Ticket status
-Monitoring signal
-Human approval
-```
+- API result
+- Unit test
+- Database state
+- Ticket status
+- Monitoring signal
+- Human approval
 
 Also keep a retry limit. Two is the cap I'd pick for this design, not a standard.
 
@@ -508,12 +626,10 @@ Ask this first:
 
 Before writing memory, ask:
 
-```text
-Is it durable?
-Is it reusable?
-Is it attributable?
-Is it allowed to be stored?
-```
+- Is it durable?
+- Is it reusable?
+- Is it attributable?
+- Is it allowed to be stored?
 
 Example of good memory:
 
@@ -551,9 +667,24 @@ restart_precondition = none
 
 we can mark the previous memory as superseded.
 
-```text
-Old Memory → SUPERSEDED
-New Memory → ACTIVE
+```mermaid
+flowchart TD
+    N0["Old memory"]
+    N1["Superseded"]
+    N2["New memory"]
+    N3["Active"]
+    N0 --> N1
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
 
 This reduces contradictory retrieval.
@@ -564,16 +695,25 @@ This reduces contradictory retrieval.
 
 Suppose the agent repeatedly succeeds with:
 
-```text
-Check health
-   ↓
-Drain traffic
-   ↓
-Restart
-   ↓
-Check health again
-   ↓
-Restore traffic
+```mermaid
+flowchart TD
+    N0["Check health"]
+    N1["Drain traffic"]
+    N2["Restart"]
+    N3["Check health again"]
+    N4["Restore traffic"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N0,N3 cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N4 cbAction
 ```
 
 The learning system may create:
@@ -599,6 +739,18 @@ flowchart TD
     I -->|No| G
     I -->|Yes| J[Owner Review]
     J --> K[LIVE]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,I cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,E,F,J cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,K cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,H cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class G cbStop
 ```
 
 #### Key interview rule
@@ -613,30 +765,48 @@ Prompt changes should be handled like software changes.
 
 Bad process:
 
-```text
-Engineer edits prompt
-   ↓
-Deploy
-   ↓
-Hope
+```mermaid
+flowchart TD
+    N0["Engineer edits prompt"]
+    N1["Deploys without evaluation"]
+    N2["Unverified production behaviour"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 Better process:
 
-```text
-Current Prompt
-     ↓
-Generate Variants
-     ↓
-Dev Evaluation
-     ↓
-Select Candidate
-     ↓
-Hidden Test Set
-     ↓
-Shadow
-     ↓
-Promote
+```mermaid
+flowchart TD
+    N0["Current prompt"]
+    N1["Generate variants"]
+    N2["Development evaluation"]
+    N3["Select candidate"]
+    N4["Hidden test set"]
+    N5["Shadow"]
+    N6["Promote"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1,N2,N5 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N4 cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6 cbAction
 ```
 
 ### Why hidden test data?
@@ -684,18 +854,30 @@ A small tuned model may replace a larger expensive model for a repetitive task.
 
 ### Useful rule
 
-```text
-Missing knowledge
-    → Retrieval / Memory
+```mermaid
+flowchart TD
+    N0["Missing knowledge"]
+    N1["Retrieval or memory"]
+    N2["Repeated workflow"]
+    N3["Skill"]
+    N4["Instruction-following problem"]
+    N5["Prompt"]
+    N6["Stable high-volume behaviour"]
+    N7["Consider fine-tuning"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    N6 --> N7
 
-Repeated workflow
-    → Skill
-
-Instruction-following issue
-    → Prompt
-
-Stable high-volume behaviour
-    → Maybe fine-tuning
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
 ```
 
 Do not fine-tune to teach business facts that change.
@@ -708,25 +890,50 @@ Every learned artifact must go through the same release process.
 
 Think of it like CI/CD.
 
-```text
-Software
-Code → Test → Review → Deploy
+```mermaid
+flowchart TD
+    N0["Code"]
+    N1["Test"]
+    N2["Review"]
+    N3["Deploy"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
 
 For the agent:
 
-```text
-Learning Candidate
-      ↓
-Offline Eval
-      ↓
-Safety Checks
-      ↓
-Shadow
-      ↓
-Review
-      ↓
-Deploy
+```mermaid
+flowchart TD
+    N0["Learning candidate"]
+    N1["Offline evaluation"]
+    N2["Safety checks"]
+    N3["Shadow"]
+    N4["Review"]
+    N5["Deploy"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3 cbPolicy
 ```
 
 ---
@@ -737,15 +944,13 @@ These are exact checks.
 
 Examples:
 
-```text
-Did it call a forbidden tool?
-Did it exceed retry limit?
-Did latency exceed threshold?
-Did cost exceed budget?
-Was required approval present?
-Did it violate permission rules?
-Did it produce valid schema?
-```
+- Did it call a forbidden tool?
+- Did it exceed retry limit?
+- Did latency exceed threshold?
+- Did cost exceed budget?
+- Was required approval present?
+- Did it violate permission rules?
+- Did it produce valid schema?
 
 ---
 
@@ -755,13 +960,11 @@ These need semantic evaluation.
 
 Examples:
 
-```text
-Was the plan correct?
-Was the response helpful?
-Did the selected tool make sense?
-Was the workflow safe?
-Did the agent solve the task?
-```
+- Was the plan correct?
+- Was the response helpful?
+- Did the selected tool make sense?
+- Was the workflow safe?
+- Did the agent solve the task?
 
 These may use:
 
@@ -780,22 +983,36 @@ Example:
 
 The agent eventually succeeds, but does this:
 
-```text
-DELETE
-  ↓
-READ
+```mermaid
+flowchart TD
+    N0["Delete before read"]
+    N1["Unsafe ordering"]
+    N0 --> N1
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N1 cbStop
 ```
 
 Policy requires:
 
-```text
-READ
-  ↓
-Validate
-  ↓
-Approval
-  ↓
-DELETE
+```mermaid
+flowchart TD
+    N0["Read"]
+    N1["Validate"]
+    N2["Approval"]
+    N3["Delete"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N2,N3 cbPolicy
 ```
 
 The final result may look correct.
@@ -804,21 +1021,13 @@ But the path was unsafe.
 
 So evaluate:
 
-```text
-Final Outcome
-+
-Tool Sequence
-+
-Permissions
-+
-Approvals
-+
-Retry Count
-+
-Cost
-+
-Latency
-```
+- Final Outcome
+- Tool Sequence
+- Permissions
+- Approvals
+- Retry Count
+- Cost
+- Latency
 
 ---
 
@@ -826,25 +1035,31 @@ Latency
 
 Before making a new candidate live:
 
-```text
-Production Request
-       ↓
-Current LIVE Skill ─────→ controls action
-       ↓
-Candidate Skill ────────→ observes same request
-                          but does not control action
+```mermaid
+flowchart TD
+    N0["Production request"]
+    N1["Current live skill controls action"]
+    N2["Candidate observes without controlling action"]
+    N0 --> N1
+    N0 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 Compare:
 
-```text
-success rate
-tool choice
-latency
-cost
-safety violations
-human feedback
-```
+- success rate
+- tool choice
+- latency
+- cost
+- safety violations
+- human feedback
 
 If healthy, promote.
 
@@ -860,16 +1075,27 @@ Later an API changes.
 
 Success rate drops.
 
-```text
-Live Skill
-   ↓
-Monitoring
-   ↓
-Regression Detected
-   ↓
-Auto-Demote
-   ↓
-Previous Skill / Safe Fallback
+```mermaid
+flowchart TD
+    N0["Live skill"]
+    N1["Monitoring"]
+    N2["Regression detected"]
+    N3["Auto-demote"]
+    N4["Previous skill or safe fallback"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N3 cbStop
 ```
 
 Production environments change, so live skills need monitoring.
@@ -880,10 +1106,21 @@ Production environments change, so live skills need monitoring.
 
 The system should clearly separate:
 
-```text
-Agent learns HOW
-Policy decides WHAT IS ALLOWED
-Executor performs the action
+```mermaid
+flowchart TD
+    N0["Agent learns how"]
+    N1["Policy decides permitted action"]
+    N2["Executor performs action"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 The agent may:
@@ -944,17 +1181,11 @@ So use multiple independent signals.
 
 Example:
 
-```text
-Ticket Closed
-+
-Reopened?
-+
-Customer Satisfaction
-+
-Human QA
-+
-Resolution Time
-```
+- Ticket Closed
+- Reopened?
+- Customer Satisfaction
+- Human QA
+- Resolution Time
 
 Do not use a single easily gamed metric.
 
@@ -983,12 +1214,10 @@ Do not use a single easily gamed metric.
 
 Assume these whiteboard numbers, which I'd state aloud as my own:
 
-```text
-20,000 requests/day
-40 existing task types
-3 new task types/week
-~30 requests/day for a new task
-```
+- 20,000 requests/day
+- 40 existing task types
+- 3 new task types/week
+- ~30 requests/day for a new task
 
 Suppose promotion requires:
 
@@ -1032,18 +1261,27 @@ Then evaluation cost becomes large.
 
 Use staged evaluation:
 
-```text
-Candidates
-    ↓
-Deduplicate
-    ↓
-Cheap Smoke Test
-    ↓
-Small Eval Set
-    ↓
-Only Strong Candidates
-    ↓
-Full Evaluation
+```mermaid
+flowchart TD
+    N0["Candidates"]
+    N1["Deduplicate"]
+    N2["Cheap smoke test"]
+    N3["Small evaluation set"]
+    N4["Strong candidates"]
+    N5["Full evaluation"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 ---
@@ -1056,28 +1294,24 @@ Do not put the entire learning process on the user request path.
 
 Keep only:
 
-```text
-Router
-Memory Retrieval
-Skill Retrieval
-Agent Execution
-Policy Check
-Tool Call
-Trace Write
-```
+- Router
+- Memory Retrieval
+- Skill Retrieval
+- Agent Execution
+- Policy Check
+- Tool Call
+- Trace Write
 
 ### Offline path
 
 Move expensive work here:
 
-```text
-Pattern Mining
-Skill Extraction
-Prompt Search
-Large Evaluation
-Fine-Tuning
-Shadow Analysis
-```
+- Pattern Mining
+- Skill Extraction
+- Prompt Search
+- Large Evaluation
+- Fine-Tuning
+- Shadow Analysis
 
 This keeps user latency predictable.
 
@@ -1107,14 +1341,12 @@ Useful cost controls:
 
 Useful metrics:
 
-```text
-Learning Spend / Serving Spend
-Cost per Promoted Skill
-Candidates Tested per Promotion
-Tokens per Successful Task
-Shadow Cost
-Evaluation Cost
-```
+- Learning Spend / Serving Spend
+- Cost per Promoted Skill
+- Candidates Tested per Promotion
+- Tokens per Successful Task
+- Shadow Cost
+- Evaluation Cost
 
 ---
 
@@ -1128,28 +1360,24 @@ All tool calls go through a central gateway.
 
 The gateway checks:
 
-```text
-identity
-permission
-action
-resource
-budget
-approval
-```
+- identity
+- permission
+- action
+- resource
+- budget
+- approval
 
 ### Audit Log
 
 Store:
 
-```text
-who
-what
-when
-which version
-which tool
-which permission
-which outcome
-```
+- who
+- what
+- when
+- which version
+- which tool
+- which permission
+- which outcome
 
 ### Human Approval
 
@@ -1169,21 +1397,19 @@ A simple production design may use these objects.
 
 ### Execution Trace
 
-```text
-trace_id
-request_id
-task_type
-novelty_score
-selected_skill
-prompt_version
-model_version
-tool_calls
-tool_results
-outcome
-latency
-cost
-timestamp
-```
+- trace_id
+- request_id
+- task_type
+- novelty_score
+- selected_skill
+- prompt_version
+- model_version
+- tool_calls
+- tool_results
+- outcome
+- latency
+- cost
+- timestamp
 
 ### Memory Record
 
@@ -1216,16 +1442,14 @@ created_at
 
 ### Learning Candidate
 
-```text
-candidate_id
-candidate_type
-source_traces
-baseline_version
-candidate_version
-evaluation_status
-shadow_status
-promotion_status
-```
+- candidate_id
+- candidate_type
+- source_traces
+- baseline_version
+- candidate_version
+- evaluation_status
+- shadow_status
+- promotion_status
 
 ---
 
@@ -1259,12 +1483,21 @@ NOVEL TASK
 
 The general agent gets tighter controls.
 
-```text
-Read docs
-↓
-Inspect service
-↓
-Create plan
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Capability router"]
+    N2["No confident match"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 Risky writes require approval.
@@ -1279,11 +1512,19 @@ Orion must be drained before restart.
 
 It performs:
 
-```text
-Drain
-→ Restart
-→ Health Check
-→ Restore Traffic
+```mermaid
+flowchart TD
+    N0["Read documentation"]
+    N1["Inspect service"]
+    N2["Create plan"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N2 cbReason
 ```
 
 External monitoring returns:
@@ -1296,15 +1537,25 @@ SUCCESS
 
 Store:
 
-```text
-request
-tool sequence
-result
-prompt version
-model version
-latency
-cost
-outcome
+```mermaid
+flowchart TD
+    N0["Drain"]
+    N1["Restart"]
+    N2["Health check"]
+    N3["Restore traffic"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N3 cbAction
 ```
 
 ### Step 5. Memory Candidate
@@ -1317,12 +1568,10 @@ Orion restart requires drain.
 
 Check:
 
-```text
-Durable?      Yes
-Reusable?     Yes
-Attributable? Yes
-Permitted?    Yes
-```
+- Durable?      Yes
+- Reusable?     Yes
+- Attributable? Yes
+- Permitted?    Yes
 
 Store it.
 
@@ -1340,13 +1589,11 @@ is created.
 
 Run:
 
-```text
-Held-out tests
-Regression tests
-Safety tests
-Cost tests
-Latency tests
-```
+- Held-out tests
+- Regression tests
+- Safety tests
+- Cost tests
+- Latency tests
 
 ### Step 8. Shadow
 
@@ -1384,10 +1631,25 @@ Previous Skill / General Fallback
 
 More automatic promotion:
 
-```text
-Faster adaptation
-but
-Higher production risk
+```mermaid
+flowchart TD
+    N0["Monitoring"]
+    N1["Regression detected"]
+    N2["Skill auto-demoted"]
+    N3["Previous skill or general fallback"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N2 cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
 
 Stricter evaluation:
@@ -1404,15 +1666,11 @@ Higher reliability
 
 Memory stores facts.
 
-```text
-"API max batch size = 100"
-```
+- "API max batch size = 100"
 
 Skill stores procedure.
 
-```text
-How to restart the service safely
-```
+- How to restart the service safely
 
 Do not put everything into memory.
 
@@ -1431,12 +1689,10 @@ Less predictable
 
 Specialised skills:
 
-```text
-Fast
-Cheap
-Predictable
-Less flexible
-```
+- Fast
+- Cheap
+- Predictable
+- Less flexible
 
 Use both.
 
@@ -1446,19 +1702,15 @@ Use both.
 
 Fine-tuning:
 
-```text
-Good for stable repeated behaviour
-Harder rollback
-Slower iteration
-```
+- Good for stable repeated behaviour
+- Harder rollback
+- Slower iteration
 
 Retrieval:
 
-```text
-Good for changing knowledge
-Easy update
-Easy rollback
-```
+- Good for changing knowledge
+- Easy update
+- Easy rollback
 
 ---
 
@@ -1468,30 +1720,31 @@ Do not build every self-learning feature on day one.
 
 Start with:
 
-```text
-Capability Router
-+
-Novelty Detection
-+
-General Fallback
-+
-Dynamic Examples
-+
-Memory
-+
-Trace Store
-+
-Evaluation Pipeline
-```
+- Capability Router
+- Novelty Detection
+- General Fallback
+- Dynamic Examples
+- Memory
+- Trace Store
+- Evaluation Pipeline
 
 Then add:
 
-```text
-Skill Learning
-      ↓
-Prompt Optimisation
-      ↓
-Fine-Tuning
+```mermaid
+flowchart TD
+    N0["Skill learning"]
+    N1["Prompt optimisation"]
+    N2["Fine-tuning only when justified"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 This keeps the first version safer and easier to operate.
@@ -1504,31 +1757,25 @@ For a customer deployment, I would prioritise:
 
 ### Phase 1
 
-```text
-Routing
-Novelty Detection
-Trace Collection
-Safe Fallback
-Memory
-Policy Gateway
-```
+- Routing
+- Novelty Detection
+- Trace Collection
+- Safe Fallback
+- Memory
+- Policy Gateway
 
 ### Phase 2
 
-```text
-Offline Skill Extraction
-Evaluation
-Shadow Testing
-Promotion / Rollback
-```
+- Offline Skill Extraction
+- Evaluation
+- Shadow Testing
+- Promotion / Rollback
 
 ### Phase 3
 
-```text
-Prompt Optimisation
-Advanced Automated Learning
-Selective Fine-Tuning
-```
+- Prompt Optimisation
+- Advanced Automated Learning
+- Selective Fine-Tuning
 
 The reason:
 
@@ -1574,13 +1821,11 @@ Before designing, ask questions like:
 
 ### 1. What exactly is allowed to adapt?
 
-```text
-Context?
-Memory?
-Workflow?
-Prompt?
-Model weights?
-```
+- Context?
+- Memory?
+- Workflow?
+- Prompt?
+- Model weights?
 
 This defines the risk level.
 
@@ -1588,13 +1833,11 @@ This defines the risk level.
 
 Example:
 
-```text
-API result?
-Human approval?
-Ticket resolution?
-Monitoring signal?
-Business KPI?
-```
+- API result?
+- Human approval?
+- Ticket resolution?
+- Monitoring signal?
+- Business KPI?
 
 Without a trusted outcome signal, learning becomes unreliable.
 
@@ -1602,13 +1845,11 @@ Without a trusted outcome signal, learning becomes unreliable.
 
 Ask:
 
-```text
-Read-only?
-Writes allowed?
-Human approval?
-Financial limit?
-Security-sensitive actions?
-```
+- Read-only?
+- Writes allowed?
+- Human approval?
+- Financial limit?
+- Security-sensitive actions?
 
 This determines fallback behaviour.
 
@@ -1616,12 +1857,10 @@ This determines fallback behaviour.
 
 This determines:
 
-```text
-shadow sample size
-evaluation design
-traffic requirement
-human review process
-```
+- shadow sample size
+- evaluation design
+- traffic requirement
+- human review process
 
 ---
 
@@ -1631,19 +1870,34 @@ If you remember nothing else, remember these:
 
 1. **Adaptation ladder**
 
-```text
-Context → Memory → Skill → Prompt → Weights
+```mermaid
+flowchart TD
+    N0["Context"]
+    N1["Memory"]
+    N2["Skill"]
+    N3["Prompt"]
+    N4["Weights"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
 
 2. Start from the cheapest and easiest-to-rollback method.
 
 3. Separate:
 
-```text
-Runtime
-Learning
-Evaluation Gate
-```
+- Runtime
+- Learning
+- Evaluation Gate
 
 4. Detect unknown tasks before routing them.
 
@@ -1655,12 +1909,27 @@ Evaluation Gate
 
 8. Every candidate goes through:
 
-```text
-Offline Eval
-→ Shadow
-→ Promotion
-→ Monitoring
-→ Auto-Demotion
+```mermaid
+flowchart TD
+    N0["Offline evaluation"]
+    N1["Shadow"]
+    N2["Promotion"]
+    N3["Monitoring"]
+    N4["Auto-demotion"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N4 cbStop
 ```
 
 9. Evaluate the full trajectory, not only the final answer.
@@ -1677,30 +1946,43 @@ Offline Eval
 
 ## 35. 30-Second Interview Summary
 
-```text
-User Request
-    ↓
-Detect Known vs Novel
-    ↓
-Approved Skill OR Safe Fallback
-    ↓
-Agent + Policy-Controlled Tools
-    ↓
-External Outcome
-    ↓
-Trace Store
-    ↓
-Offline Learning
-    ↓
-Memory / Skill / Prompt Candidate
-    ↓
-Evaluation
-    ↓
-Shadow
-    ↓
-Promote
-    ↓
-Monitor + Auto-Demote
+```mermaid
+flowchart TD
+    N0["User request"]
+    N1["Detect known or novel task"]
+    N2["Approved skill or safe fallback"]
+    N3["Agent and policy-controlled tools"]
+    N4["External outcome"]
+    N5["Trace store"]
+    N6["Offline learning"]
+    N7["Memory, skill, or prompt candidate"]
+    N8["Evaluation"]
+    N9["Shadow"]
+    N10["Promote"]
+    N11["Monitor and auto-demote"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    N10 --> N11
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N7,N8,N9 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N5,N6,N10 cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N11 cbStop
 ```
 
 In one line:

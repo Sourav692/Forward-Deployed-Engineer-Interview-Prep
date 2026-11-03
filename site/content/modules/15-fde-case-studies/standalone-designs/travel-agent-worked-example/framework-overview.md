@@ -2,7 +2,9 @@
 
 *Reference design: the corrected version*
 
-System design is the plan for how software parts work together to solve a business problem quickly, reliably and at scale. This page applies that plan to one sample system: an agentic AI travel assistant for customers in AMER, EMEA and APJ. It starts from a first-draft reference architecture and folds in five structural fixes that came out of two later reviews.
+- System design is the plan for how software parts work together to solve a business problem quickly, reliably and at scale.
+- This page applies that plan to one sample system: an agentic AI travel assistant for customers in AMER, EMEA and APJ.
+- It starts from a first-draft reference architecture and folds in five structural fixes that came out of two later reviews.
 
 > **What this is:** A first-draft architecture for a travel-agent system laid it out as a rigid pipeline. Five agents fanned out, then all passed, in order, through one shared cache, one retrieval stage, one LLM step and one tool-calling stage. An architecture review found four points where that order does not match how a multi-agent system runs. A separate blueprint, written independently, reached the same four fixes and added a fifth: a named Synthesiser Agent to fill the missing aggregation step. This page combines all five into one final architecture.
 
@@ -30,7 +32,10 @@ The draft pushed every agent through one shared LLM step, then a single Tool Cal
 
 ### 5 · A Synthesiser Agent replaces the missing aggregation step (*added by the prior blueprint*)
 
-The draft never said how five parallel outputs turn into one reply. It kept going as a single line, as if merging happened by itself. Now a named Synthesiser Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything. A Policy decision that overrides a Booking choice is a typical case.
+- The draft never said how five parallel outputs turn into one reply.
+- It kept going as a single line, as if merging happened by itself.
+- Now a named Synthesiser Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything.
+- A Policy decision that overrides a Booking choice is a typical case.
 
 ---
 
@@ -73,9 +78,21 @@ flowchart TB
   SYN --> RESP
   RESP -. "write-back" .-> SC
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class GW,SC,A4,A5,MCP,SYN cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class RESP,A3,VDB cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class SUP,A2,LLM,MON cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A1,API cbInput
 ```
 
-A cache hit returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs. Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for only what its task requires. The Synthesiser Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
+- A cache hit returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs.
+- Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for only what its task requires.
+- The Synthesiser Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
 
 ---
 

@@ -116,6 +116,16 @@ flowchart TD
   PLATFORM --> RISK2["Miss this group →<br/>customer-specific layer can't generalize"]
   style RISK1 fill:#a63d40,stroke:#5c1f22,color:#fff
   style RISK2 fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class REQ,SUPPORT cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class ADMIN,RISK1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class FDE,RISK2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class PLATFORM cbPolicy
 ```
 
 ### Discovery Question Tree
@@ -143,6 +153,14 @@ flowchart TD
   OWN --> RISK{"Risk & recovery:<br/>tolerate a broken approval path?"}
   RISK --> SUCCESS{"Success:<br/>what does 'done' mean?"}
   SUCCESS --> OUT["Scope, assumptions,<br/>risks, owners, success metrics"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class START,SUCCESS cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class SHAPE,OUT cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class OWN,RISK cbPolicy
 ```
 
 ### Assumption Ledger
@@ -186,6 +204,16 @@ flowchart TD
   Q4 --> Q5["5. Where is the custom-code security boundary?"]
   Q5 --> Q6["6. What is the time-to-configure target?"]
   Q6 --> DESIGN["Concrete design pressures:<br/>core abstraction, UX/auth model,<br/>adapter interface, versioning,<br/>trust boundary, tooling investment"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class Q1,Q5 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Q2,Q6,DESIGN cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class Q3 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Q4 cbPolicy
 ```
 
 > 🎯 **Interview Pointer:** Expect follow-ups on question 5, the custom-code boundary. Have the default ready (a declarative core, with any arbitrary code kept outside the trust boundary) and link it to the sandbox component in the architecture section and the controls in the security section.

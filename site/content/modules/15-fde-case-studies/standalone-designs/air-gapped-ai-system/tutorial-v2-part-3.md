@@ -58,6 +58,16 @@ flowchart LR
         DP --> LIP
         DP --> LTS
     end
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class CBE,LO cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class ASS,MS cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class TSZ,DP,LTS cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class ORP,LIP cbPolicy
 ```
 
 ### System of Record vs. Cache vs. Queue
@@ -89,11 +99,21 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant DP as Document Pipeline
-    participant LIP as Local Identity Provider
-    participant MS as Model Server
-    participant LTS as Local Telemetry Stack
+    box rgba(37,99,235,0.12)
+        actor User
+    end
+    box rgba(124,58,237,0.12)
+        participant DP as Document Pipeline
+    end
+    box rgba(21,128,61,0.12)
+        participant LIP as Local Identity Provider
+    end
+    box rgba(180,83,9,0.12)
+        participant MS as Model Server
+    end
+    box rgba(37,99,235,0.12)
+        participant LTS as Local Telemetry Stack
+    end
 
     User->>DP: submit document + request
     DP->>LIP: authenticate user and service
@@ -121,6 +141,16 @@ flowchart LR
 
     style PM fill:#f9d,stroke:#933,stroke-width:2px
     style LO fill:#fee,stroke:#933,stroke-width:2px
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class CBE,PM cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class TSZ,LTS cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class ORP cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class LO cbPolicy
 ```
 
 - When the package mirror lacks a dependency, the offline system must fail closed. It must never improvise by reaching across the boundary for the missing piece.

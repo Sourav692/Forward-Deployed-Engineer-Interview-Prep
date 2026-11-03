@@ -46,7 +46,10 @@ The weak answer draws autoscaling and a load balancer. It treats the jump as a c
 
 ## 2. Name What the Prototype Was Hiding
 
-A prototype hides problems by construction, not by accident. The cost cram sheet names four things demos hide. They hide *traffic shape*: one user, a warm cache, clean data. They hide *tail latency*: p95 and p99, not the average. They hide *usage expansion*: longer questions and bigger uploads, so tokens grow faster than requests. They also hide *governance cost*: security review, audit logging, evaluation, human review and support.
+- A prototype hides problems by construction, not by accident. The cost cram sheet names four things demos hide.
+- They hide *traffic shape*: one user, a warm cache, clean data. They hide *tail latency*: p95 and p99, not the average.
+- They hide *usage expansion*: longer questions and bigger uploads, so tokens grow faster than requests.
+- They also hide *governance cost*: security review, audit logging, evaluation, human review and support.
 
 The same sheet contrasts prototype and production on six axes, verbatim in the table's middle column.
 
@@ -61,7 +64,8 @@ The same sheet contrasts prototype and production on six axes, verbatim in the t
 
 Add three gaps the table does not name *(own construction)*. Prompts drift, because the builder still edits the live prompt by hand. Provider quotas are sized for a pilot account. The support model is a chat message to the one engineer who built it. At a thousand times the users, that engineer becomes the outage.
 
-The bank has a neighbouring prompt with the same shape: *"A team has a successful notebook-based AI prototype. How do you productionise it?"* Its discussion list is verbatim: reproducibility, CI/CD, evaluation gates, model and prompt versioning, secrets management, monitoring, cost controls, security, SLAs, rollback, ownership and support. Answer it with this page. The notebook variant adds one first step: turn the notebook into versioned, tested code before any of the rest applies.
+- The bank has a neighbouring prompt with the same shape: *"A team has a successful notebook-based AI prototype. How do you productionise it?"* Its discussion list is verbatim: reproducibility, CI/CD, evaluation gates, model and prompt versioning, secrets management, monitoring, cost controls, security, SLAs, rollback, ownership and support.
+- Answer it with this page. The notebook variant adds one first step: turn the notebook into versioned, tested code before any of the rest applies.
 
 ## 3. State Requirements as Testable Constraints
 
@@ -121,7 +125,10 @@ Now price it. The cost additions list current tiers: Claude Sonnet 5 at $2.00 in
 | + cache the 1,500-token stable prefix (read price 10% of input; only the mid-tier 30% benefits, because Haiku 4.5 will not cache a prompt under 4,096 tokens) | ≈ $2,460 | ≈ $74,000 |
 | + cap average output at 350 tokens | ≈ $2,220 | ≈ $67,000 |
 
-The table shows two things. First, the bill went up about 300 times, not 1,000 times, because only 30% of licensed users are active. Adoption is a cost variable. Second, the three cheapest levers cut the naive bill by nearly half without touching quality on the hard 30%. The cost additions' rule of thumb is that a real agent request can become 5–20 sub-requests. If the tools grow into an agent, multiply the call count before trusting any of this.
+- The table shows two things. First, the bill went up about 300 times, not 1,000 times, because only 30% of licensed users are active.
+- Adoption is a cost variable. Second, the three cheapest levers cut the naive bill by nearly half without touching quality on the hard 30%.
+- The cost additions' rule of thumb is that a real agent request can become 5–20 sub-requests.
+- If the tools grow into an agent, multiply the call count before trusting any of this.
 
 Then check the provider. 7.8M tokens a minute at peak must fit the account's tokens-per-minute and requests-per-minute limits, split by model after routing. Plan for twice the peak, because retries during an incident and the Monday spike stack on each other *(own construction)*. That headroom is a procurement conversation, and it starts weeks before launch.
 

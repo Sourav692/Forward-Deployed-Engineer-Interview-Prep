@@ -4,7 +4,11 @@
 
 This incident is the design's failure mode seen in production. It tests whether your debugging goes beyond "retrieval quality". Frame it as a multi-tenant isolation failure, never as a hallucination.
 
-Acme uses an enterprise support copilot over customer contracts, escalation policies and entitlements. The vector database stores chunks from several enterprise customers in one collection, with `tenant_id`, `doc_tenant_id`, `visibility`, `source_connector`, `acl_hash` and `metadata_filter_version` on each chunk. The intended invariant is that `tenant_id` on the request matches `doc_tenant_id` on every retrieved chunk, and the ACL service authorises each chunk before it reaches the prompt. On 2026-07-08 a support agent asked whether Acme customers could receive premium onboarding under the 2026 renewal terms. The assistant said yes and cited a "Premium Success Addendum" that belonged to Globex.
+- Acme uses an enterprise support copilot over customer contracts, escalation policies and entitlements.
+- The vector database stores chunks from several enterprise customers in one collection, with `tenant_id`, `doc_tenant_id`, `visibility`, `source_connector`, `acl_hash` and `metadata_filter_version` on each chunk.
+- The intended invariant is that `tenant_id` on the request matches `doc_tenant_id` on every retrieved chunk, and the ACL service authorises each chunk before it reaches the prompt.
+- On 2026-07-08 a support agent asked whether Acme customers could receive premium onboarding under the 2026 renewal terms.
+- The assistant said yes and cited a "Premium Success Addendum" that belonged to Globex.
 
 ```text
 2026-07-08T09:12:44.129Z level=warn service=rag-api env=prod region=eu-central-1
@@ -40,7 +44,11 @@ Acme uses an enterprise support copilot over customer contracts, escalation poli
 
 **Prevent.** Make tenant isolation a non-bypassable server-side predicate. Add a hard post-retrieval invariant check before context assembly. Remove connector-level ACL shortcutting. Add an automated eval that fails deployment if cross-tenant chunks appear in retrieved context. Add a dashboard panel for `cross_tenant_retrieval_count` by tenant, connector, retriever version and filter version. Say why the enforcement lives outside the LLM and outside prompt instructions: a malicious user could deliberately query for rare phrases that retrieve neighbouring tenant documents if filters are weak.
 
-> *"I would treat this as a critical data isolation incident. First I would disable the new filter version and stop serving answers from suspicious traces. Then I would inspect the trace for request tenant, retrieved chunk tenant, filter expression, and ACL decision. The telemetry already shows tenant_id=acme, doc_tenant_id=globex, and acl_check=skipped, so the root cause is likely the filter/ACL path, not the model. The fix is to enforce tenant equality as a hard backend invariant before context assembly, add post-retrieval validation, purge affected cache, and add a deployment gate that fails on cross-tenant retrieval."*
+> - I would treat this as a critical data isolation incident.
+> - First I would disable the new filter version and stop serving answers from suspicious traces.
+> - Then I would inspect the trace for request tenant, retrieved chunk tenant, filter expression, and ACL decision.
+> - The telemetry already shows tenant_id=acme, doc_tenant_id=globex, and acl_check=skipped, so the root cause is likely the filter/ACL path, not the model.
+> - The fix is to enforce tenant equality as a hard backend invariant before context assembly, add post-retrieval validation, purge affected cache, and add a deployment gate that fails on cross-tenant retrieval.
 
 | Criterion | Strong signal | Weak signal |
 |---|---|---|

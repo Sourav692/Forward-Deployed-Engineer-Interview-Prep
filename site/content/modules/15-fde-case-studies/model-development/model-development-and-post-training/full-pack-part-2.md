@@ -12,7 +12,10 @@ The scorer drives the design, and math offers three choices *(own construction)*
 | Reward model on steps | Is each step of the working valid? | Proofs and multi-step problems where the path matters | A learned reward model can be gamed; needs step-labelled data |
 | Preference pairs | Which of two answers do graders prefer? | Style, clarity, tutoring tone, anything not checkable by program | Graders prefer confident, long answers unless told otherwise |
 
-Two update methods sit on top of the scorer. RLHF trains a separate reward model from human comparisons, then optimises the policy against it with a penalty for drifting too far from the starting model. DPO, direct preference optimisation, skips the separate reward model. It trains directly on preferred-versus-rejected pairs and gets the same drift control implicitly. DPO is simpler to run and usually more stable, though a well-tuned PPO can still beat it. RL with a verifier is stronger when a program can check correctness, as it can in math.
+- Two update methods sit on top of the scorer. RLHF trains a separate reward model from human comparisons, then optimises the policy against it with a penalty for drifting too far from the starting model.
+- DPO, direct preference optimisation, skips the separate reward model. It trains directly on preferred-versus-rejected pairs and gets the same drift control implicitly.
+- DPO is simpler to run and usually more stable, though a well-tuned PPO can still beat it.
+- RL with a verifier is stronger when a program can check correctness, as it can in math.
 
 The drift penalty is not optional. A policy optimised against any scorer without it will find the scorer's blind spots. A lenient answer-matcher gets answers that format like the reference but are wrong. A length-biased reward model gets padding. Keep the penalty, and audit high-reward samples by hand every round.
 
@@ -20,7 +23,11 @@ The drift penalty is not optional. A policy optimised against any scorer without
 
 ## 8. Evaluate on Problems the Model Has Never Seen
 
-An eval score is only as honest as the wall between training and test data. A worked example shows why. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production. The held-out set was split at random from traces with heavy duplication. After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that. When an offline gain looks surprisingly large, suspect leakage first.
+- An eval score is only as honest as the wall between training and test data.
+- A worked example shows why. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production.
+- The held-out set was split at random from traces with heavy duplication.
+- After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that.
+- When an offline gain looks surprisingly large, suspect leakage first.
 
 Build the eval suite in five slices *(own construction)*.
 
@@ -34,13 +41,18 @@ Build the eval suite in five slices *(own construction)*.
 
 Report sampling settings with every number. Pass@1 at temperature zero and majority vote over eight samples are different measurements. Report both if both are used, and never compare one with the other.
 
-The Foundations evaluation lab shows the simplest version: run the model over a test set, compare with expected answers, then try a public benchmark, ARC. Exact-match comparison is where every eval starts. The release gate for this pipeline follows the same logic as the Evaluation and Release Gating case’s evaluation and release-gating page: fixed suites, thresholds agreed in advance, and a gate that blocks rather than advises.
+- The Foundations evaluation lab shows the simplest version: run the model over a test set, compare with expected answers, then try a public benchmark, ARC.
+- Exact-match comparison is where every eval starts.
+- The release gate for this pipeline follows the same logic as the Evaluation and Release Gating case’s evaluation and release-gating page: fixed suites, thresholds agreed in advance, and a gate that blocks rather than advises.
 
 ## 9. Scale Training Under a Fixed Compute Budget
 
 The compute-budget prompt changes the training stage. "Design a scalable, efficient system for training an LLM given compute and data constraints" is the same pipeline with pretraining back in scope and the budget fixed *(own construction throughout)*.
 
-Start from the budget, not the model. A widely used rule of thumb from compute-optimal scaling work is roughly 20 training tokens per parameter. For a 7B model that is 140B tokens. The compute is then 6 × 7e9 × 1.4e11 = 5.88e21 FLOPs. At an assumed 3e14 effective FLOP/s per GPU, that is about 5,444 GPU-hours, or about 21 hours on 256 GPUs *(assumptions; arithmetic exact)*. If the budget is smaller, shrink the model before shrinking the data.
+- Start from the budget, not the model. A widely used rule of thumb from compute-optimal scaling work is roughly 20 training tokens per parameter.
+- For a 7B model that is 140B tokens. The compute is then 6 × 7e9 × 1.4e11 = 5.88e21 FLOPs.
+- At an assumed 3e14 effective FLOP/s per GPU, that is about 5,444 GPU-hours, or about 21 hours on 256 GPUs *(assumptions; arithmetic exact)*.
+- If the budget is smaller, shrink the model before shrinking the data.
 
 Distribute the work in the order the memory forces it.
 
@@ -54,7 +66,10 @@ Distribute the work in the order the memory forces it.
 
 The data constraint is a pipeline problem. Stream shards from object storage rather than loading a dataset. Deduplicate and filter quality before training, because a repeated token costs the same as a new one and teaches less. Record the exact shard order, so a resumed run sees the same data in the same order.
 
-Checkpointing is how the run survives failure. At hundreds of GPUs over days, some hardware will fail. Write checkpoints to durable storage on a fixed interval, including optimiser state and data-loader position. Resume automatically from the last good one. Watch for loss spikes and roll back to the checkpoint before the spike rather than training through it. Track model FLOPs utilisation as the efficiency metric: a GPU-hour spent waiting on communication or input teaches the model nothing.
+- Checkpointing is how the run survives failure. At hundreds of GPUs over days, some hardware will fail.
+- Write checkpoints to durable storage on a fixed interval, including optimiser state and data-loader position.
+- Resume automatically from the last good one. Watch for loss spikes and roll back to the checkpoint before the spike rather than training through it.
+- Track model FLOPs utilisation as the efficiency metric: a GPU-hour spent waiting on communication or input teaches the model nothing.
 
 > *"I size from the budget: tokens per parameter picks the model size, six N D gives the FLOPs, and memory picks the parallelism. Then I make the run survivable: sharded state, streaming data with a recorded order, and checkpoints that include the data position so a failure costs minutes, not days."*
 
@@ -62,11 +77,21 @@ Checkpointing is how the run survives failure. At hundreds of GPUs over days, so
 
 The harm-versus-helpfulness prompt changes the post-training and eval stages. "Design a language model that minimises harmful outputs while staying useful" is a two-sided objective. A model that refuses everything is perfectly harmless and useless. Measure both sides, or the optimisation will quietly collapse to one of them *(own construction throughout)*.
 
-Plot two numbers against each other for every checkpoint. The first is the harmful-compliance rate: on a set of genuinely harmful requests, how often does the model help? The second is the over-refusal rate: on a set of benign requests that merely look risky, how often does it refuse? "How do I kill a stuck Python process?" belongs in the second set. A release moves down on the first number without moving up on the second.
+- Plot two numbers against each other for every checkpoint. The first is the harmful-compliance rate: on a set of genuinely harmful requests, how often does the model help?
+- The second is the over-refusal rate: on a set of benign requests that merely look risky, how often does it refuse?
+- "How do I kill a stuck Python process?" belongs in the second set.
+- A release moves down on the first number without moving up on the second.
 
-Post-training carries the policy. Write the policy down first: what is disallowed, what is allowed with care, what is always allowed. Collect preference pairs where the preferred answer is the one that follows the policy. That includes pairs where the preferred answer helps and the rejected one refuses needlessly. Train with RLHF or DPO on those pairs. AI feedback against the written policy, the Constitutional AI idea, scales the labelling when human graders are the bottleneck. Humans still audit a sample.
+- Post-training carries the policy. Write the policy down first: what is disallowed, what is allowed with care, what is always allowed.
+- Collect preference pairs where the preferred answer is the one that follows the policy.
+- That includes pairs where the preferred answer helps and the rejected one refuses needlessly.
+- Train with RLHF or DPO on those pairs. AI feedback against the written policy, the Constitutional AI idea, scales the labelling when human graders are the bottleneck.
+- Humans still audit a sample.
 
-The enterprise RAG design's output guardrail makes the same point at the application layer. Its sufficiency check has three verdicts, not two: sufficient, partial and insufficient. The middle one exists because refusing a whole two-part question when only one part is unanswerable is a common over-refusal. The model-level version is the same idea. Answer the safe part, decline the unsafe part, and say which is which.
+- The enterprise RAG design's output guardrail makes the same point at the application layer.
+- Its sufficiency check has three verdicts, not two: sufficient, partial and insufficient.
+- The middle one exists because refusing a whole two-part question when only one part is unanswerable is a common over-refusal.
+- The model-level version is the same idea. Answer the safe part, decline the unsafe part, and say which is which.
 
 Red-team continuously. Attack prompts change faster than training runs, so keep an adversarial set that grows from real attempts and run it in the eval gate. A layered deployment adds a separate safety classifier on inputs and outputs. That lets the policy tighten between training runs without retraining the model.
 
@@ -81,10 +106,20 @@ Size the weights first. Memory for weights is parameters × bytes per parameter.
 | 3B parameters | 6 GB | 3 GB | 1.5 GB |
 | 1B parameters | 2 GB | 1 GB | 0.5 GB |
 
-A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model *(assumption)*. That points at about a 1B model at 4-bit; a 3B model needs ~1.5 GB for weights alone, so it only fits at the top of that budget. The air-gapped chapter's sizing adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
+- A phone shares its memory with the operating system and other apps.
+- Assume a budget of 1 to 2 GB for the model *(assumption)*.
+- That points at about a 1B model at 4-bit; a 3B model needs ~1.5 GB for weights alone, so it only fits at the top of that budget.
+- The air-gapped chapter's sizing adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top.
+- Cap the context length, because the KV cache grows with it.
 
-Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. A hard cost or latency ceiling is one of the three situations where parameter updates earn their cost, and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
+- Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs.
+- Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload.
+- A hard cost or latency ceiling is one of the three situations where parameter updates earn their cost, and distillation is how you meet it.
+- Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
 
-Politeness is a preference target, trained like harmlessness. Write a short tone policy. Collect preference pairs where the polite answer wins and the obsequious or curt one loses. Include the teacher's polite outputs in the distillation data, so tone transfers with capability. Evaluate politeness with a rubric grader on a fixed prompt set, including provocative user messages, because politeness is only tested when the user is rude.
+- Politeness is a preference target, trained like harmlessness. Write a short tone policy.
+- Collect preference pairs where the polite answer wins and the obsequious or curt one loses.
+- Include the teacher's polite outputs in the distillation data, so tone transfers with capability.
+- Evaluate politeness with a rubric grader on a fixed prompt set, including provocative user messages, because politeness is only tested when the user is rude.
 
 Measure everything on the device, not on the server. Report quality of the quantised student against the full-precision student and the teacher. Report time to first token and tokens per second on the slowest supported phone. Report battery drain per session. A quality eval run on the unquantised model does not describe what users get.

@@ -2,7 +2,10 @@
 
 *An assistant that knows the account better than the rep, without ever seeing more of the CRM than the rep may.*
 
-Summarising an account is the easy part of a sales copilot. Every useful answer touches CRM records, call transcripts and pricing policy permissioned by territory, role and deal stage. One invented customer fact or unapproved claim can reach a customer's inbox. This page consolidates the group's prompts into one read for the day before. The group has no bespoke worked design, only a templated practice worksheet, so the CRM-permission and account-data detail here is added for this pack and marked where it appears.
+- Summarising an account is the easy part of a sales copilot. Every useful answer touches CRM records, call transcripts and pricing policy permissioned by territory, role and deal stage.
+- One invented customer fact or unapproved claim can reach a customer's inbox.
+- This page consolidates the group's prompts into one read for the day before.
+- The group has no bespoke worked design, only a templated practice worksheet, so the CRM-permission and account-data detail here is added for this pack and marked where it appears.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -18,9 +21,19 @@ Summarising an account is the easy part of a sales copilot. Every useful answer 
 
 Do not start with the model. Start with the workflow. Which B2B sales workflow is slow, risky or inconsistent today? Who decides at the end of it? Which risk cannot be automated? A copilot that saves ten minutes and sends one unapproved claim has lost more than it saved, so name the risk boundary before the first box.
 
-The workflow is the pre-meeting hour. An account executive prepares for a meeting. They ask for an account summary, the opportunity risks, suggested discovery questions, email drafts and CRM update suggestions. Each of those five outputs sits on a different side of the risk boundary. The summary and risks are read-only assistance. The questions and drafts are draft-only. The CRM update is an action, and it needs explicit approval before write-back.
+- The workflow is the pre-meeting hour. An account executive prepares for a meeting.
+- They ask for an account summary, the opportunity risks, suggested discovery questions, email drafts and CRM update suggestions.
+- Each of those five outputs sits on a different side of the risk boundary.
+- The summary and risks are read-only assistance. The questions and drafts are draft-only.
+- The CRM update is an action, and it needs explicit approval before write-back.
 
-The three answer tiers show what the framing buys. The weak answer connects the documents to a vector database, uses an LLM to answer questions and adds a chatbot UI. It ignores the workflow, the permission boundaries, source freshness, evaluation, human approval and monitoring. The average answer builds RAG over the company data, adds citations and tests with sample questions. It never separates low-risk assistance from high-risk actions, never defines the data model or permission checks, and never explains rollout gates. The strong answer maps the workflow and the risk boundary first, then designs a permission-aware system. It ingests approved sources with metadata, freshness and ACLs. It uses hybrid retrieval with pre-generation permission filtering, generates cited answers, exposes uncertainty and missing evidence, and routes risky actions to human approval. It proves the system with golden cases, permission red-team tests, groundedness and citation metrics, latency and cost budgets, and a staged rollout from offline prototype to approved write-back.
+- The three answer tiers show what the framing buys. The weak answer connects the documents to a vector database, uses an LLM to answer questions and adds a chatbot UI.
+- It ignores the workflow, the permission boundaries, source freshness, evaluation, human approval and monitoring.
+- The average answer builds RAG over the company data, adds citations and tests with sample questions.
+- It never separates low-risk assistance from high-risk actions, never defines the data model or permission checks, and never explains rollout gates.
+- The strong answer maps the workflow and the risk boundary first, then designs a permission-aware system.
+- It ingests approved sources with metadata, freshness and ACLs. It uses hybrid retrieval with pre-generation permission filtering, generates cited answers, exposes uncertainty and missing evidence, and routes risky actions to human approval.
+- It proves the system with golden cases, permission red-team tests, groundedness and citation metrics, latency and cost budgets, and a staged rollout from offline prototype to approved write-back.
 
 Ask the questions that decide the design and write the answers where they stay visible.
 
@@ -61,9 +74,16 @@ Every item lands in a section below.
 
 A requirement the customer cannot test is a preference. "Make the brief accurate" is a preference; "90 percent of claims supported by cited evidence, zero permission violations" is a constraint, and only the second changes the architecture. Split the functional list with MoSCoW so the launch gate is the smallest set that keeps the promise.
 
-The must-haves are four. Support the core workflow: account summary, opportunity risks, discovery questions, email drafts and CRM update suggestions, in that order of risk. Return grounded answers with citations to approved source systems, and never answer an unsupported claim confidently. Apply user, role, tenant, region and sensitivity permissions before retrieval and again before final generation. Keep every write tool behind a preview and a human approval.
+- The must-haves are four. Support the core workflow: account summary, opportunity risks, discovery questions, email drafts and CRM update suggestions, in that order of risk.
+- Return grounded answers with citations to approved source systems, and never answer an unsupported claim confidently.
+- Apply user, role, tenant, region and sensitivity permissions before retrieval and again before final generation.
+- Keep every write tool behind a preview and a human approval.
 
-The should-haves belong in the first usable version. Show confidence, missing evidence and the escalation reason when the system is uncertain or the policy risk is high. Collect user feedback and reviewer corrections for evaluation, never for training without governance. Provide admin controls for source inclusion, document freshness, policy rules, blocked actions and audit export. Precompute the account snapshot before the meeting so the interactive path stays fast. Personalisation by segment and playbook, public-data enrichment, and conversion attribution can wait.
+- The should-haves belong in the first usable version. Show confidence, missing evidence and the escalation reason when the system is uncertain or the policy risk is high.
+- Collect user feedback and reviewer corrections for evaluation, never for training without governance.
+- Provide admin controls for source inclusion, document freshness, policy rules, blocked actions and audit export.
+- Precompute the account snapshot before the meeting so the interactive path stays fast.
+- Personalisation by segment and playbook, public-data enrichment, and conversion attribution can wait.
 
 Declare the non-goals, because a sales copilot sprawls into a CRM replacement if nobody stops it:
 

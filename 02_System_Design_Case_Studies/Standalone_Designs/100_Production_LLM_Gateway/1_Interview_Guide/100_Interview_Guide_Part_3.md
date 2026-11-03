@@ -12,7 +12,9 @@
 
 **Degradation** is the floor. When both providers are down, return a labelled answer seeded with cached context, never a stack trace. For a support product the best degraded answer is often a handoff: "your ticket is logged and a person will reply" *(own construction)*.
 
-Degrade differently on the two faces. The source's rule is "Degrade gracefully in front of a human, fail loudly in front of a machine." The edge face shows the customer a labelled, useful reply. The model face returns a *typed error* to the agent, not a degraded string. An agent that acts on degraded text as if it were real can book against a stale price or issue a wrong refund.
+- Degrade differently on the two faces. The source's rule is "Degrade gracefully in front of a human, fail loudly in front of a machine." The edge face shows the customer a labelled, useful reply.
+- The model face returns a *typed error* to the agent, not a degraded string.
+- An agent that acts on degraded text as if it were real can book against a stale price or issue a wrong refund.
 
 ## 9. Fit Failover Inside the Three-Second Budget
 
@@ -24,7 +26,9 @@ A latency budget is a sum, and the source gives the terms verbatim. They are whi
 | Plus LLM output check | + 300-500ms | About 2.9 s: tight |
 | Plus LLM input guard in series *(assumption: 300-500ms)* | + 300-500ms | About 3.4 s: breaks |
 
-The source names the fix: the LLM input guard "is the one addition that risks the budget, so it should be skippable for low-risk, previously-seen query patterns." A second fix is *own construction*. The router and the input guard read the same text with the same small model, so run them in parallel. The pair then costs the slower of the two, not the sum.
+- The source names the fix: the LLM input guard "is the one addition that risks the budget, so it should be skippable for low-risk, previously-seen query patterns." A second fix is *own construction*.
+- The router and the input guard read the same text with the same small model, so run them in parallel.
+- The pair then costs the slower of the two, not the sum.
 
 Three more collisions sit inside the prompt *(own construction)*.
 
@@ -38,9 +42,15 @@ Three more collisions sit inside the prompt *(own construction)*.
 
 "No error logs" usually means a silent wrong answer, not a crash. Only a per-step trace isolates which stage produced it. The source's instruments answer three different questions. Structured logs say what happened to one request. Metrics say how often, overall. Traces say why, step by step.
 
-Tag every request with its cost, so "the $500/day ceiling is a live number, not a monthly surprise." Tag every response with the model and provider that answered. The playbook lists what every trace event should carry, verbatim: `tenant_id, feature, prompt_version, model, input_tokens, output_tokens, estimated_cost, latency breakdown, retrieval top-k, reranker used, cache status, tool calls, retries, timeout status, final outcome`. Add the guardrail decision and its reason for this gateway.
+- Tag every request with its cost, so "the $500/day ceiling is a live number, not a monthly surprise." Tag every response with the model and provider that answered.
+- The playbook lists what every trace event should carry, verbatim: `tenant_id, feature, prompt_version, model, input_tokens, output_tokens, estimated_cost, latency breakdown, retrieval top-k, reranker used, cache status, tool calls, retries, timeout status, final outcome`.
+- Add the guardrail decision and its reason for this gateway.
 
-Observability is also a privacy decision. Logs that store full prompts store the customer's PII a second time. Redact before writing, sample the successes, keep every failure, and attach a retention period. Write telemetry asynchronously, because synchronous logging is a listed cause of a post-deploy latency jump. [G14 Observability and Production Diagnosis](../../../Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/4_Full_Design/G14_Full_Design.md) develops this in sections 6 and 7. It also covers walking a cost spike in section 11.
+- Observability is also a privacy decision. Logs that store full prompts store the customer's PII a second time.
+- Redact before writing, sample the successes, keep every failure, and attach a retention period.
+- Write telemetry asynchronously, because synchronous logging is a listed cause of a post-deploy latency jump.
+- [G14 Observability and Production Diagnosis](../../../Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/4_Full_Design/G14_Full_Design.md) develops this in sections 6 and 7.
+- It also covers walking a cost spike in section 11.
 
 Put six numbers on one dashboard *(own construction)*: spend so far today against the pacer line, p95 time to first token, fallback rate by provider, breaker state, guard block rate by rule, and cache hit rate. A change in any one of them has a named first question in sections 7 to 9.
 
@@ -57,9 +67,14 @@ Residency is a routing rule, not a network setting. The gateway already sees eve
 | PII bound to a region | A provider endpoint in that region with contractual no-retention, or a model in the customer's VPC | Route only to that region's pool |
 | Data that cannot leave the network | A self-hosted model inside the customer's VPC | Route only to the in-network pool |
 
-The sharpest consequence falls on failover. A fallback that crosses the boundary is a breach, not a recovery. The residency pool therefore needs its own fallback: a second in-region endpoint, a second self-hosted replica set, or degradation to a human handoff. Never fall back to the global pool to stay up. [G07 Secure Multi-Tenant AI Platform](../../../Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/4_Full_Design/G07_Full_Design.md) section 8 makes the same point at platform scale: a route sending protected data to an unauthorised region is a residency breach.
+- The sharpest consequence falls on failover. A fallback that crosses the boundary is a breach, not a recovery.
+- The residency pool therefore needs its own fallback: a second in-region endpoint, a second self-hosted replica set, or degradation to a human handoff.
+- Never fall back to the global pool to stay up.
+- [G07 Secure Multi-Tenant AI Platform](../../../Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/4_Full_Design/G07_Full_Design.md) section 8 makes the same point at platform scale: a route sending protected data to an unauthorised region is a residency breach.
 
-A self-hosted model changes the cost model from tokens to GPU-hours. Size it with the air-gapped chapter's formula, `Replicas = ⌈(QPS × Tokens_request) / (TokensPerSecond_replica × UtilizationTarget)⌉`. When the answer exceeds the available hardware, change the workload, not the hardware request. [G20 LLM Inference Serving](../../../Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/4_Full_Design/G20_Full_Design.md) covers batching and failover inside that pool, and [the air-gapped AI system](../../19_Air_Gapped_AI_System/) covers the fully disconnected case.
+- A self-hosted model changes the cost model from tokens to GPU-hours. Size it with the air-gapped chapter's formula, `Replicas = ⌈(QPS × Tokens_request) / (TokensPerSecond_replica × UtilizationTarget)⌉`.
+- When the answer exceeds the available hardware, change the workload, not the hardware request.
+- [G20 LLM Inference Serving](../../../Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/4_Full_Design/G20_Full_Design.md) covers batching and failover inside that pool, and [the air-gapped AI system](../../19_Air_Gapped_AI_System/) covers the fully disconnected case.
 
 Telemetry follows the data. Traces and logs obey the same residency as the requests they describe. A hosted tracing product may be off limits, and the source flags the gap: only hosted tracing is shown in the worked examples, so a self-hostable tracing backend has to be built.
 

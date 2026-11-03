@@ -99,6 +99,16 @@ flowchart TB
   P[Shared versioned policy and prompts] -. deployed per region .-> A
   P -.-> C
   P -.-> V
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class W,C,H,P cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N,D,S,A,V cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B,Q,E,L cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class X cbInput
 ```
 
 ### Step-by-step architecture

@@ -2,9 +2,14 @@
 
 ## Overview
 
-A team reviews document packets against a rule: a clinician checks a prior authorisation request against the payer's policy, a compliance reviewer checks a filing against an obligation, a lawyer checks a contract against the playbook. Reading is cheap; signing off is expensive. The hard constraint is that a draft must never claim more than the evidence says. A correct answer with the wrong citation, or an approval drafted from a table the parser never read, is a serious failure.
+- A team reviews document packets against a rule: a clinician checks a prior authorisation request against the payer's policy, a compliance reviewer checks a filing against an obligation, a lawyer checks a contract against the playbook.
+- Reading is cheap; signing off is expensive. The hard constraint is that a draft must never claim more than the evidence says.
+- A correct answer with the wrong citation, or an approval drafted from a table the parser never read, is a serious failure.
 
-The design is a bounded review copilot. Ingestion stops any packet whose critical pages or tables were not extracted. For each case the copilot retrieves the rule version in force on the relevant date, a small model extracts typed fields with their spans, a deterministic check finds gaps, and a strong LLM drafts only flagged cases. A verifier checks each cited span, and a named human approves or rejects. Version one never submits anything on its own.
+- The design is a bounded review copilot. Ingestion stops any packet whose critical pages or tables were not extracted.
+- For each case the copilot retrieves the rule version in force on the relevant date, a small model extracts typed fields with their spans, a deterministic check finds gaps, and a strong LLM drafts only flagged cases.
+- A verifier checks each cited span, and a named human approves or rejects.
+- Version one never submits anything on its own.
 
 Prior authorisation is the anchor. Financial compliance, legal contract and claims-processing variants reuse the same spine and swap the schema, the governing rule and the approver.
 
@@ -19,6 +24,14 @@ flowchart LR
   B -->|Yes| D[Extract and compare to rule]
   D --> E[Verified cited draft]
   E --> F[Named human decides]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
 ```
 
 ## Who it is for

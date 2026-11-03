@@ -93,45 +93,75 @@ The organising rule is admit, assemble, stream, persist. Admission control decid
 
 The whole system, drawn with its planes *(own construction)*:
 
+```mermaid
+flowchart TD
+    N0["Web or mobile client over SSE"]
+    N1["Edge and GeoDNS"]
+    N2["Streaming gateway: identity, rate, quota, moderation, cancel on close"]
+    N3["Conversation service"]
+    N4["Context: system prompt, summary, turns, user memory, permitted file chunks"]
+    N5["Tier and task model router"]
+    N6["Per-tier fair scheduler with warm KV affinity"]
+    N7["Small, default, or premium inference pools"]
+    N8["Continuous batching and prefix/KV cache"]
+    N9["Output moderation on stream"]
+    N10["Gateway returns tokens to client"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N4,N5 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3,N7 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6,N8,N9,N10 cbAction
 ```
- ╔══════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════╗
- ║ model catalogue + routing policy per tier · quotas and rate limits per tier       ║
- ║ system prompts (versioned, prefix-stable) · moderation thresholds · region map    ║
- ║ feature flags · eval gates (G13) · budgets and alerts                             ║
- ╚═══════════════════════════════════════╤═══════════════════════════════════════════╝
-                                         │ configures every box below
- ╔══════════════════════ DATA PLANE, per region (calls are requests) ════════════════╗
- ║                                                                                   ║
- ║ client (web, mobile) ──SSE──> edge + GeoDNS ──> STREAMING GATEWAY                 ║
- ║                                                 authN · rate limit · quota        ║
- ║                                                 input moderation · cancel-on-close║
- ║                                                        │ admitted                 ║
- ║                                                        v                          ║
- ║                   CONVERSATION SERVICE ──> CONTEXT BUILDER                        ║
- ║                   (history, titles,        system prompt + summary + recent turns ║
- ║                    partial answers)        + user memory + retrieved file chunks  ║
- ║                        │                        │                                 ║
- ║            conversation store         MODEL ROUTER (tier + task)                  ║
- ║            (sharded by user_id)             │                                     ║
- ║            memory store                     v                                     ║
- ║            (namespaced by user_id)   SCHEDULER + FAIR QUEUE per tier              ║
- ║                                      session affinity -> warm KV cache            ║
- ║                                             │                                     ║
- ║                                             v                                     ║
- ║                          INFERENCE POOLS (small · default · premium)              ║
- ║                          continuous batching · prefix/KV cache                    ║
- ║                                             │ tokens                              ║
- ║                                             v                                     ║
- ║                          OUTPUT MODERATION on the stream ──> gateway ──> client   ║
- ║                                                                                   ║
- ║ TOOLS (bounded steps): web search · code sandbox · file retrieval                 ║
- ║ FILES: upload -> object store -> scan -> parse -> chunk + embed (per user)        ║
- ║                                                                                   ║
- ║ OBSERVABILITY: stage timings, tokens, cache reads, abandon, moderation — no text  ║
- ╚═══════════════════════════════════════════════════════════════════════════════════╝
-      replicated across regions: conversation store (home region per user),
-      control-plane config; inference pools are regional and independent
+
+```mermaid
+flowchart TD
+    N0["Uploaded files"]
+    N1["User-scoped object store"]
+    N2["Scan"]
+    N3["Parse"]
+    N4["Chunk and embed"]
+    N5["Bounded tools"]
+    N6["Web search"]
+    N7["Code sandbox"]
+    N8["File retrieval"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N5 --> N6
+    N5 --> N7
+    N5 --> N8
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N1,N2,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5 cbReason
 ```
+
+- Version the model catalogue, tier routing/quotas, prefix-stable system prompts, moderation, region map, flags, evaluation gates, budgets, and alerts.
+- Store history, titles, and partial answers in conversations sharded by user_id; namespace memory by user_id.
+- Replicate conversation state according to each user’s home region and replicate control-plane configuration. Inference pools are independent per region.
+- Record stage timings, tokens, cache reads, abandonment, and moderation events without conversation text.
 
 The same flow for viewers that render Mermaid *(own construction)*:
 
@@ -179,6 +209,16 @@ flowchart LR
     QT -.-> GW
     SP -.-> CB
     MT -.-> IM & OM
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class RP,QT,MT,GW,CS,TL cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class SP,MR cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,FU cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class IM,DB,MEM,CB,SQ,INF,OM cbAction
 ```
 
 Read the components in request order. The failure column is *own construction*.
@@ -201,7 +241,9 @@ Read the components in request order. The failure column is *own construction*.
 | 14 | File pipeline | Scan, parse, embed per user | Degrades: file unavailable, never cross-user |
 | 15 | Observability | Stage timings, tokens, cache reads, abandonment | Degrades: request still served, gap logged |
 
-Point at three boundaries while the diagram is up *(own construction)*. The admission boundary sits at the gateway, so nothing reaches a GPU without passing auth, quota and input moderation. The isolation boundary sits at every store, because each one is namespaced by a `user_id` that comes from auth. The cost boundary sits at the context builder, because it decides how many tokens each turn re-sends.
+- Point at three boundaries while the diagram is up *(own construction)*. The admission boundary sits at the gateway, so nothing reaches a GPU without passing auth, quota and input moderation.
+- The isolation boundary sits at every store, because each one is namespaced by a `user_id` that comes from auth.
+- The cost boundary sits at the context builder, because it decides how many tokens each turn re-sends.
 
 ## 5. Store the Conversation, Send Only What the Turn Needs
 
@@ -209,6 +251,13 @@ Store everything and send little. Trimming bounds what reaches the model, not wh
 
 The conversation service writes every message durably, keyed by `(user_id, conversation_id)`. It also persists the partial answer as tokens stream. A disconnected user then reconnects to the text generated so far rather than to nothing. The store is sharded by `user_id`, so one user's history lives on one shard and a list-conversations call touches one partition.
 
-The context builder assembles each turn in a fixed order: system prompt, rolling summary, recent turns, memory facts, retrieved file chunks, then the new message. A sliding window alone loses anything that scrolls out. Summarisation keeps a condensed record once the buffer crosses a threshold, at the cost of one extra model call per compression. The memory guide's worked answer folds the buffer at about 15 turns, an illustrative threshold rather than a rule, so cost stays flat on long chats. Volunteer the failure mode: the summariser can drop a detail it judged unimportant.
+- The context builder assembles each turn in a fixed order: system prompt, rolling summary, recent turns, memory facts, retrieved file chunks, then the new message.
+- A sliding window alone loses anything that scrolls out. Summarisation keeps a condensed record once the buffer crosses a threshold, at the cost of one extra model call per compression.
+- The memory guide's worked answer folds the buffer at about 15 turns, an illustrative threshold rather than a rule, so cost stays flat on long chats.
+- Volunteer the failure mode: the summariser can drop a detail it judged unimportant.
 
-Cross-conversation memory is a different store with a different key. A checkpoint key answers "which conversation"; a user namespace answers "which person". Semantic memory holds stable facts under a stable key that overwrites in place. Episodic memory appends one record per completed task and is pruned. The memory guide's isolation rule has no exceptions: read `user_id` from the server-side session on every request, never from a tool argument the model could set. Make memory visible and erasable in the product, because a user who cannot see a remembered fact cannot correct it.
+- Cross-conversation memory is a different store with a different key. A checkpoint key answers "which conversation"; a user namespace answers "which person".
+- Semantic memory holds stable facts under a stable key that overwrites in place.
+- Episodic memory appends one record per completed task and is pruned.
+- The memory guide's isolation rule has no exceptions: read `user_id` from the server-side session on every request, never from a tool argument the model could set.
+- Make memory visible and erasable in the product, because a user who cannot see a remembered fact cannot correct it.

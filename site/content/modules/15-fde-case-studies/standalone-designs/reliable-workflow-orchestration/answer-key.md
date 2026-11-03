@@ -47,6 +47,16 @@ flowchart LR
   SCH -->|wait| T[Timer / signal gateway] --> INST
   W -->|permanent error| COMP[Compensation engine] --> INST
   INST --> OPS[Operations UI: resume, replay, compensate]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class START,W,OPS cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class INST,EXT cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class SCH,Q,T cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class COMP cbPolicy
 ```
 
 ## Data model / integration assumptions

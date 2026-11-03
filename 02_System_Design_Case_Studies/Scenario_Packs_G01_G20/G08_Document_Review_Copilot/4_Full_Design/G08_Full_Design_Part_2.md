@@ -16,7 +16,9 @@ The spine is the same in every persona. The interviewer will pick one. Learn the
 | Sources | EHR via FHIR, payer portals, document store, claims system, IdP, audit logs | DMS, policy repository, regulatory rule library, GRC platform, case management, IdP | CLM, contract repository, clause library, playbook, DMS, e-signature, IdP |
 | Persona-specific red-team | PHI leakage, invented necessity, stale payer rule, wrong patient, "just submit it anyway" | Missed violation, outdated regulation, hallucinated rule, over-automation of legal judgement | Unauthorised legal advice, privilege leakage, wrong jurisdiction, hallucinated clause, risky fallback accepted without a lawyer |
 
-The claims-processing prompt from the OpenAI-style practice set is the same spine again. Its discussion list is classification, OCR and structured extraction, policy lookup, missing-information detection, fraud or anomaly signals, human review thresholds, explainability, regulatory constraints, PII protection, evaluation against human decisions, and gradual rollout by claim type. Its one instruction is to avoid promising full automation. Start with extraction, triage, summarisation and missing-information detection before any adjudication.
+- The claims-processing prompt from the OpenAI-style practice set is the same spine again.
+- Its discussion list is classification, OCR and structured extraction, policy lookup, missing-information detection, fraud or anomaly signals, human review thresholds, explainability, regulatory constraints, PII protection, evaluation against human decisions, and gradual rollout by claim type.
+- Its one instruction is to avoid promising full automation. Start with extraction, triage, summarisation and missing-information detection before any adjudication.
 
 Map each source with its permission model before choosing an embedding model. The connector translates each permission model into one internal representation.
 
@@ -31,37 +33,93 @@ Map each source with its permission model before choosing an embedding model. Th
 
 ## 4. Draw the Architecture End to End
 
-One diagram carries the design. This page constructed it from the three answer keys and the vendor case. The organising split is control plane against data plane. Rule versions, schemas, risk thresholds, credentials and evaluation gates live in the control plane. Every document, extraction, comparison, draft and approval lives in the data plane. A control-plane change is a release. A data-plane call is a case.
+- One diagram carries the design. This page constructed it from the three answer keys and the vendor case.
+- The organising split is control plane against data plane. Rule versions, schemas, risk thresholds, credentials and evaluation gates live in the control plane.
+- Every document, extraction, comparison, draft and approval lives in the data plane.
+- A control-plane change is a release. A data-plane call is a case.
 
+```mermaid
+flowchart TD
+    N0["Documents: EHR/FHIR, uploads, email, CLM"]
+    N1["Immutable copy and content hash"]
+    N2["Parse and OCR"]
+    N3["Detect and extract tables"]
+    N4["Layout quality gate"]
+    N5["Rules: payer PDFs, regulations, playbooks"]
+    N6["Version by effective date"]
+    N7["High-risk table coverage below threshold: fail ingestion"]
+    N8["Pass: chunk text and table rows"]
+    N9["Index"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N5 --> N6
+    N6 --> N2
+    N4 --> N7
+    N4 --> N8
+    N8 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N9 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N7 cbPolicy
 ```
- ╔══════════════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════════════╗
- ║  rule versions (payer policy · regulation · playbook) · extraction schema per document type          ║
- ║  risk tiers + approval routing rules · ACL mapping · credentials · prompt/model/parser versions       ║
- ║  eval gates (extraction audit · citation span · escalation · PHI leak = 0) · budgets                  ║
- ╚═════════════════════════════════════════╤═════════════════════════════════════════════════════════╝
-                                           │ configures every box below
- ╔══════════════════════════════ DATA PLANE (calls are cases) ═══════════════════════════════════════╗
- ║                                                                                                     ║
- ║  INTAKE + RULE INGESTION — asynchronous                                                             ║
- ║   documents (EHR/FHIR · uploads · email · CLM)     rules (payer PDFs · reg library · playbook)       ║
- ║        │ immutable copy + content hash                    │ versioned by effective date             ║
- ║        v                                                  v                                         ║
- ║   PARSE / OCR ─> TABLE DETECT + EXTRACT ─> layout QA gate ─> chunk (rows for tables) ─> index      ║
- ║        │ table coverage < threshold on a high-risk doc = FAIL ingestion, not warn                    ║
- ║                                                                                                     ║
- ║  REVIEW — synchronous per case, ordered by risk                                                     ║
- ║   user ─> gateway (authN, role, patient/matter scope) ─> RULE RETRIEVE (right version, permitted)   ║
- ║        ─> STRUCTURED EXTRACT (schema, cheap model) ─> COMPARE (evidence ↔ criteria, gap detect)     ║
- ║        ─> RISK CLASSIFY (tier) ─> DRAFT (strong model only on flagged tiers) ─> CITE (exact span)   ║
- ║        ─> VERIFY (span match + permission) ─> ROUTE ─┬─ low tier: reviewer accepts/edits            ║
- ║                                                      └─ material: named approver decides            ║
- ║                                              refuse + escalate when evidence missing/conflicting    ║
- ║                                                                                                     ║
- ║  AUDIT + OBSERVABILITY — every stage writes                                                         ║
- ║   audit log (rule IDs + versions · evidence IDs · draft · edits · approval)                          ║
- ║   trace store ─> eval service (golden cases · red-team · shadow) ─> dashboards (operational | safety)║
- ╚═════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["Gateway: identity, role, patient or matter scope"]
+    N2["Retrieve permitted rule version"]
+    N3["Structured extraction with schema and cheap model"]
+    N4["Compare evidence with criteria and detect gaps"]
+    N5["Classify risk"]
+    N6["Draft"]
+    N7["Flagged tiers: stronger model"]
+    N8["Cite exact span"]
+    N9["Other tiers"]
+    N10["Verify span and permission"]
+    N11["Route review"]
+    N12["Low tier: reviewer accepts or edits"]
+    N13["Material decision: named approver"]
+    N14["Missing or conflicting evidence: refuse and escalate"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N6 --> N9
+    N9 --> N8
+    N8 --> N10
+    N10 --> N11
+    N11 --> N12
+    N11 --> N13
+    N11 --> N14
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5,N7,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N10,N11,N13 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N14 cbStop
 ```
+
+- The control plane versions rules, extraction schemas, risk tiers, approval routing, ACL mappings, credentials, prompts, models, parsers, and budgets.
+- Release gates cover extraction audits, citation spans, escalation, and PHI leak = 0.
+- Audit rule IDs and versions, evidence IDs, drafts, edits, and approvals. Link traces to golden cases, red-team and shadow evaluations, and operational and safety dashboards.
 
 The same flow as a rendered diagram, for viewers that draw Mermaid:
 
@@ -108,6 +166,18 @@ flowchart LR
     TIER -.-> RC & RT
     GATE -.-> EVAL
     RR & EX & CMP & DR & CIT & VF & APP --> AUD
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class RV,DOC,PARSE,CHUNK,RR,RT,EVAL cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class SCH,HASH,TAB,EX,RC,DR,CIT,ACC,DASH cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class TIER,GATE,FAIL,GW,APP cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class RUL,VER,QA,IDX,U,CMP,VF,AUD cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class ESC cbStop
 ```
 
 Read the components in dependency order, which is the order they exist and the order they fail.
@@ -126,21 +196,40 @@ Read the components in dependency order, which is the order they exist and the o
 | Approval workflow | Named approver edits, approves, rejects; nothing external leaves without it | Closed: no approver, no submission |
 | Audit, trace, eval, dashboards | Rule IDs and versions, evidence IDs, draft, edits, approval; golden and red-team evals; operational and safety metrics apart | Degrades: case still served, gap logged |
 
-With the diagram up, point at three boundaries, each a line on the board. The cheap-to-expensive boundary sits between EXTRACT and DRAFT. Everything to the left runs a small model on every page. Everything to the right runs the strong model only on what was flagged. The trust boundary sits at VERIFY: no citation leaves that was not the span used and permitted. The decision boundary sits at ROUTE: to its left the system drafts and explains, to its right a named human decides.
+- With the diagram up, point at three boundaries, each a line on the board.
+- The cheap-to-expensive boundary sits between EXTRACT and DRAFT. Everything to the left runs a small model on every page.
+- Everything to the right runs the strong model only on what was flagged.
+- The trust boundary sits at VERIFY: no citation leaves that was not the span used and permitted.
+- The decision boundary sits at ROUTE: to its left the system drafts and explains, to its right a named human decides.
 
 ## 5. Make the Extraction Schema the Seam
 
 The schema turns the copilot from a chatbot into a workflow. Structured extraction with a typed schema per document type is the one component every downstream step depends on. Comparison, risk tiering and citation all key on fields, not on prose. A model cannot compare evidence to criteria it has not first named.
 
-For prior authorisation the fields are payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs, imaging and the clinical facts that map to each payer requirement. For compliance they are document type, jurisdiction, business unit, the obligation that applies, and the evidence span that meets or breaks it. For contracts they are clause type, the normalised clause text, the counterparty, the jurisdiction and the confidentiality level. Every record in the answer keys is a row in one of those schemas. The EvidenceLink, Finding and RiskFinding records are the join between an extracted field and the rule it was compared against, with a confidence.
+- For prior authorisation the fields are payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs, imaging and the clinical facts that map to each payer requirement.
+- For compliance they are document type, jurisdiction, business unit, the obligation that applies, and the evidence span that meets or breaks it.
+- For contracts they are clause type, the normalised clause text, the counterparty, the jurisdiction and the confidentiality level.
+- Every record in the answer keys is a row in one of those schemas.
+- The EvidenceLink, Finding and RiskFinding records are the join between an extracted field and the rule it was compared against, with a confidence.
 
-Two rules follow. In this design, extraction runs on the cheap model and on every page, because it is a narrow, schema-bound task whose output can be checked. A low-confidence field is flagged as missing rather than filled. A confident wrong field poisons every step after it. The vendor case's step-therapy test names the failure. A payer rule requires step therapy and the EHR has no record of it. The right output is a gap, not an invented history.
+- Two rules follow. In this design, extraction runs on the cheap model and on every page, because it is a narrow, schema-bound task whose output can be checked.
+- A low-confidence field is flagged as missing rather than filled. A confident wrong field poisons every step after it.
+- The vendor case's step-therapy test names the failure. A payer rule requires step therapy and the EHR has no record of it.
+- The right output is a gap, not an invented history.
 
 ## 6. Refuse to Index What the Parser Dropped
 
-A model cannot reason over data that never reached the index. In table-heavy policy documents, data goes missing silently. A plain text-extraction PDF loader usually flattens a table into disconnected fragments. The header row and the data rows land in different chunks with no schema linking them. The parser incident in section 14 is this failure: 17 tables detected, 9 extracted, pages 31 to 33 missing, and an escalation-threshold matrix never indexed.
+- A model cannot reason over data that never reached the index. In table-heavy policy documents, data goes missing silently.
+- A plain text-extraction PDF loader usually flattens a table into disconnected fragments.
+- The header row and the data rows land in different chunks with no schema linking them.
+- The parser incident in section 14 is this failure: 17 tables detected, 9 extracted, pages 31 to 33 missing, and an escalation-threshold matrix never indexed.
 
-The chunking reference gives the rule. For PDFs, validate extraction order before trusting chunk boundaries. Keep page-number metadata as the only anchor back to the source. Extract tables separately with a table-mode parser rather than as prose. For tables, chunk by row or row group and never split a row. Use zero overlap, because rows are independent records. Then gate ingestion on what the parser reports: `extraction_coverage`, `table_count_detected`, `table_count_extracted` and `layout_confidence`. Fail a high-risk policy document when table coverage falls below the agreed threshold instead of logging a warning. Classify documents as policy-with-tables when they are. The incident's gate only warned because the document had been labelled plain policy text.
+- The chunking reference gives the rule. For PDFs, validate extraction order before trusting chunk boundaries.
+- Keep page-number metadata as the only anchor back to the source. Extract tables separately with a table-mode parser rather than as prose.
+- For tables, chunk by row or row group and never split a row.
+- Use zero overlap, because rows are independent records. Then gate ingestion on what the parser reports: `extraction_coverage`, `table_count_detected`, `table_count_extracted` and `layout_confidence`.
+- Fail a high-risk policy document when table coverage falls below the agreed threshold instead of logging a warning.
+- Classify documents as policy-with-tables when they are. The incident's gate only warned because the document had been labelled plain policy text.
 
 Store page-level extraction coverage in the retrieval metadata. A query that lands on a section with ingestion warnings then carries a warning to the reviewer. Re-run the offline evaluation after any parser or chunking change. Chunking is a retrieval-model change, not a set-once parameter.
 
@@ -148,13 +237,25 @@ Store page-level extraction coverage in the retrieval metadata. A query that lan
 
 Answer correctness and citation correctness are separate dimensions. In a regulated workflow the second one is what the reviewer relies on. A correct answer with a wrong citation is more dangerous than a refusal, because the reviewer trusts the citation and repeats it in a negotiation or a submission.
 
-The citation builder quotes the exact span the drafting step used, rather than the most concise or highest-ranked chunk nearby. Before anything leaves, the verifier checks two things: the cited span contains the claim, and the user may see it. A span mismatch fails closed. The citation incident in section 14 shows the alternative. A changed citation generator preferred concise citations, the verifier over-weighted answer groundedness, and the draft cited the data-processing addendum for a termination clause.
+- The citation builder quotes the exact span the drafting step used, rather than the most concise or highest-ranked chunk nearby.
+- Before anything leaves, the verifier checks two things: the cited span contains the claim, and the user may see it.
+- A span mismatch fails closed. The citation incident in section 14 shows the alternative.
+- A changed citation generator preferred concise citations, the verifier over-weighted answer groundedness, and the draft cited the data-processing addendum for a termination clause.
 
-Playbook comparison in the contract persona is the same mechanism pointed at a rule. The copilot compares each extracted clause against the playbook's preferred position for its type and flags a deviation with a rationale. It proposes the playbook's fallback language rather than inventing its own. Material deviations route to counsel. A fallback is never accepted without a lawyer's approval. In the compliance persona the rule citation is the obligation text by jurisdiction and product. The finding carries the evidence span and a severity.
+- Playbook comparison in the contract persona is the same mechanism pointed at a rule.
+- The copilot compares each extracted clause against the playbook's preferred position for its type and flags a deviation with a rationale.
+- It proposes the playbook's fallback language rather than inventing its own. Material deviations route to counsel.
+- A fallback is never accepted without a lawyer's approval. In the compliance persona the rule citation is the obligation text by jurisdiction and product.
+- The finding carries the evidence span and a severity.
 
 ## 8. Handle Sensitive Data as a Boundary, Not a Setting
 
-PHI, privileged material and financial data change where content may travel, as well as who may read it. Minimise what enters the prompt to the fields the task needs. Redact unnecessary PHI from logs. Store policy and evidence IDs rather than raw content with every generated claim. Keep patient-level and matter-level access restrictions in retrieval, never in the prompt. Break-the-glass access, where it exists, is audited with a reason. No training on customer data unless the contract allows it. No vendor system sees raw content that the data classification forbids.
+- PHI, privileged material and financial data change where content may travel, as well as who may read it.
+- Minimise what enters the prompt to the fields the task needs. Redact unnecessary PHI from logs.
+- Store policy and evidence IDs rather than raw content with every generated claim.
+- Keep patient-level and matter-level access restrictions in retrieval, never in the prompt.
+- Break-the-glass access, where it exists, is audited with a reason. No training on customer data unless the contract allows it.
+- No vendor system sees raw content that the data classification forbids.
 
 The regulated-industry prompt from the OpenAI-style practice set is a checklist for this section. Each item already has a home in the design:
 

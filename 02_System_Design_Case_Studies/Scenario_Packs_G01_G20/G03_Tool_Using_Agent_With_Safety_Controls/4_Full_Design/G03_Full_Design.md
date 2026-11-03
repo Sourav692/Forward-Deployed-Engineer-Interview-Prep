@@ -4,7 +4,9 @@
 
 ◷ 38 min
 
-Getting a model to call a tool is easy. The hard part is an agent that reads email, queries systems, updates CRM and issues refunds, and stays useful without holding any authority. So the model proposes and deterministic systems decide. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
+- Getting a model to call a tool is easy. The hard part is an agent that reads email, queries systems, updates CRM and issues refunds, and stays useful without holding any authority.
+- So the model proposes and deterministic systems decide. This page consolidates the group's prompts into one read for the day before.
+- Everything else in the group is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -20,11 +22,22 @@ Getting a model to call a tool is easy. The hard part is an agent that reads ema
 
 ## 1. Name the Model as the Proposer, Never the Authority
 
-Open with the disagreement, not the feature list. The customer asks for an agent that reads email, queries internal systems, updates CRM records and issues refunds. Everyone nods at the feature list, then disagrees completely. Operations wants speed. Security wants hard approval gates. The support manager wants routine cases handled without friction. Finance fears irreversible money movement. That disagreement is the design problem. So restate the ask as a testable outcome: enable useful automation while deterministic controls govern identity, permissions, risk and irreversible effects. So the model is not the authority. It interprets and proposes. Deterministic systems decide who may act, what may change and whether an action can be reversed.
+- Open with the disagreement, not the feature list. The customer asks for an agent that reads email, queries internal systems, updates CRM records and issues refunds.
+- Everyone nods at the feature list, then disagrees completely. Operations wants speed.
+- Security wants hard approval gates. The support manager wants routine cases handled without friction.
+- Finance fears irreversible money movement. That disagreement is the design problem. So restate the ask as a testable outcome: enable useful automation while deterministic controls govern identity, permissions, risk and irreversible effects.
+- So the model is not the authority. It interprets and proposes. Deterministic systems decide who may act, what may change and whether an action can be reversed.
 
 > *"Let me restate the problem first. We need a tool-using agent that can read email, query internal systems, update CRM records, and sometimes trigger refunds, but the model itself should not have unchecked authority. So I'd frame the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects."*
 
-The three answer tiers show what that framing buys. The weak answer connects the agent to email and CRM and lets it issue refunds when it decides the customer deserves one. It makes the model the authority, hands it credentials instead of scoped capabilities, and has no defence against instructions hidden in a ticket. The average answer plans tool calls, checks permissions before each one, requires approval for large refunds, logs everything and adds retries. It still treats tool output as trusted, never bounds loops or spend, and adds retries without idempotency, which is how one refund quietly becomes two. The strong answer has the planner propose one bounded action. A typed schema validates it. A deterministic policy engine returns allow, block or needs-approval. A credential broker mints a short-lived token scoped to that single action. An idempotent gateway guarantees exactly one effect. Tool observations are untrusted data, never instructions. Loops, spend, refund amounts and destinations all have hard ceilings.
+- The three answer tiers show what that framing buys. The weak answer connects the agent to email and CRM and lets it issue refunds when it decides the customer deserves one.
+- It makes the model the authority, hands it credentials instead of scoped capabilities, and has no defence against instructions hidden in a ticket.
+- The average answer plans tool calls, checks permissions before each one, requires approval for large refunds, logs everything and adds retries.
+- It still treats tool output as trusted, never bounds loops or spend, and adds retries without idempotency, which is how one refund quietly becomes two.
+- The strong answer has the planner propose one bounded action. A typed schema validates it.
+- A deterministic policy engine returns allow, block or needs-approval. A credential broker mints a short-lived token scoped to that single action.
+- An idempotent gateway guarantees exactly one effect. Tool observations are untrusted data, never instructions.
+- Loops, spend, refund amounts and destinations all have hard ceilings.
 
 Then ask the questions that change what may be built, not the ones that sound thorough.
 
@@ -49,15 +62,30 @@ Map the people, because each stakeholder defines a different success condition.
 | Tool and data owner | Owns email, CRM, customer DB, refund service | Their system called in unsupported ways, or duplicated writes | A declared schema per tool, idempotency keys, per-tool concurrency limits | Owns the revert procedure |
 | Operator | Monitors, retries, escalates | No way to stop it, no way to explain a decision | Kill switch, runbook, replayable decision record | Runs containment |
 
-State the assumptions where the interviewer withholds answers, ranked by risk. With no approval process defined, assume a conservative human gate on every irreversible action. With retention unspecified, assume enough is stored to reconstruct any action, and leave the exact period to customer policy. With tenancy unclear, assume strict isolation and a separate authorisation check at every tool boundary. The CRM is the source of truth for customer context. Refunds above a threshold require approval. The agent may draft actions but cannot execute high-risk steps unless the policy engine allows it.
+- State the assumptions where the interviewer withholds answers, ranked by risk. With no approval process defined, assume a conservative human gate on every irreversible action.
+- With retention unspecified, assume enough is stored to reconstruct any action, and leave the exact period to customer policy.
+- With tenancy unclear, assume strict isolation and a separate authorisation check at every tool boundary.
+- The CRM is the source of truth for customer context. Refunds above a threshold require approval.
+- The agent may draft actions but cannot execute high-risk steps unless the policy engine allows it.
 
 ## 2. State Requirements as Testable Constraints
 
 A requirement the customer cannot test is a preference. "It should be safe" is a preference; "no arbitrary command execution" is a constraint, and only the second one changes the architecture. Distinguish what the system must do, how safely it must do it, and what it must never do.
 
-The six must-have functional requirements are a set, and interviewers ask for them cold. Separate planning from execution, so the model proposes a plan and a separate control layer decides whether any tool call is allowed. Validate tool name, arguments, identity and policy against an allowlist, a parameter schema, the caller's identity and the policy rules before anything runs. Use scoped, short-lived credentials, so the agent never holds a broad secret and receives only the minimum for the next approved step. Require approval for high-risk actions, meaning refunds, account changes and any irreversible external write cross a human boundary unless the customer accepts a narrower automated threshold. Make effects idempotent and auditable, so a retry cannot double-refund and every decision leaves a replayable trace. Stop safely under uncertainty: poor confidence, a malformed tool response, unclear policy or an inconsistent environment means pause, escalate or fail closed, never improvise.
+- The six must-have functional requirements are a set, and interviewers ask for them cold.
+- Separate planning from execution, so the model proposes a plan and a separate control layer decides whether any tool call is allowed.
+- Validate tool name, arguments, identity and policy against an allowlist, a parameter schema, the caller's identity and the policy rules before anything runs.
+- Use scoped, short-lived credentials, so the agent never holds a broad secret and receives only the minimum for the next approved step.
+- Require approval for high-risk actions, meaning refunds, account changes and any irreversible external write cross a human boundary unless the customer accepts a narrower automated threshold.
+- Make effects idempotent and auditable, so a retry cannot double-refund and every decision leaves a replayable trace.
+- Stop safely under uncertainty: poor confidence, a malformed tool response, unclear policy or an inconsistent environment means pause, escalate or fail closed, never improvise.
 
-Three should-haves belong in the first usable version. A declared registry with schema and data class for every tool, so undeclared tools cannot be called. A tested kill switch that halts autonomous paths without a deploy. Approval captured as a first-class record. The could-haves wait: richer policy expression, adaptive risk scoring, queued multi-step orchestration, replay tooling, operator dashboards, anomaly detection on action patterns, per-tenant policy overlays.
+Three should-haves for the first usable version:
+
+- A declared registry with schema and data class for every tool, so undeclared tools cannot be called.
+- A tested kill switch that halts autonomous paths without a deploy.
+- Approval captured as a first-class record.
+- The could-haves wait: richer policy expression, adaptive risk scoring, queued multi-step orchestration, replay tooling, operator dashboards, anomaly detection on action patterns, per-tenant policy overlays.
 
 Declare the non-goals, because the strongest candidates draw a narrower boundary than the prompt suggests:
 
@@ -106,9 +134,15 @@ One request is not one unit of work. Use the planning anchor of 50,000 users, 10
 | Audit storage | ~5 KB decision record and ~20 KB audit trail per task, so 100 KB/s to 400 KB/s | About 8.6 GB to 34.6 GB per day of raw append-only data before indexing and replication |
 | Planner compute | ~1 second of planner time per task, so about 20 core-seconds per second at peak | Reasoned about as a throughput-constrained service with slack for tail latency |
 
-The estimate that most affects the design is the ratio of model time to tool time, plus the irreversibility of tool effects. CPU matters less. Planning fast and tools slow means invest in async orchestration, caching and queueing. Tool effects high-risk means invest in policy checks, staged execution and audit logging even at the cost of latency. Human review as the bottleneck means clearer escalation rules and fewer ambiguous cases.
+- The estimate that most affects the design is the ratio of model time to tool time, plus the irreversibility of tool effects.
+- CPU matters less. Planning fast and tools slow means invest in async orchestration, caching and queueing.
+- Tool effects high-risk means invest in policy checks, staged execution and audit logging even at the cost of latency.
+- Human review as the bottleneck means clearer escalation rules and fewer ambiguous cases.
 
-Derive the risk tier before deciding autonomy. The decision aid is `Risk = Impact × Likelihood × Irreversibility`, not literal arithmetic. A low-impact read of a public FAQ can be fully autonomous. A CRM update can be partially reversible and still costly if it misroutes a customer. A refund may be technically reversible and still meaningfully irreversible through customer dissatisfaction, accounting noise or abuse. The tiers are fully autonomous, autonomous with preconditions, requires human approval, and blocked entirely.
+- Derive the risk tier before deciding autonomy. The decision aid is `Risk = Impact × Likelihood × Irreversibility`, not literal arithmetic.
+- A low-impact read of a public FAQ can be fully autonomous. A CRM update can be partially reversible and still costly if it misroutes a customer.
+- A refund may be technically reversible and still meaningfully irreversible through customer dissatisfaction, accounting noise or abuse.
+- The tiers are fully autonomous, autonomous with preconditions, requires human approval, and blocked entirely.
 
 ```mermaid
 flowchart TD
@@ -119,6 +153,18 @@ flowchart TD
   C -->|High| F["Require human approval"]
   C -->|Critical| G["Blocked entirely"]
   style G fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,F cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class G cbStop
 ```
 
 Show the sensitivity range instead of false precision. The 10× growth case is the real test: which part breaks first, the planner, the approval queue, a tool adapter, the audit log or the refund service?
@@ -129,4 +175,6 @@ Show the sensitivity range instead of false precision. The 10× growth case is t
 | 10x growth | 200 QPS | High | Partition by tenant or workflow class, add backpressure, move more work async |
 | 10x lower | 2 QPS | Low | Simpler deployment may work, but keep safety controls identical |
 
-Concurrency limits are a safety feature, not only a performance one. Cap per user, so nobody floods the system with parallel tasks; per tool, so a noisy downstream is not overwhelmed; and globally. Encode value limits too, so many low-risk reads are allowed while the number and value of refunds in flight stays bounded. A well-designed limit stops a prompt injection from becoming a cascade.
+- Concurrency limits are a safety feature, not only a performance one. Cap per user, so nobody floods the system with parallel tasks; per tool, so a noisy downstream is not overwhelmed; and globally.
+- Encode value limits too, so many low-risk reads are allowed while the number and value of refunds in flight stays bounded.
+- A well-designed limit stops a prompt injection from becoming a cascade.

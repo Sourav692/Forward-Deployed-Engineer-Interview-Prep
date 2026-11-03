@@ -20,6 +20,16 @@ flowchart LR
   C -->|Miss| D[Supervisor starts only the agents needed]
   D --> E[Synthesiser merges and settles conflicts]
   E --> F
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D,E cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class F cbPolicy
 ```
 
 ## Who it is for

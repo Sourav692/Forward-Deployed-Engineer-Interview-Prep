@@ -15,7 +15,15 @@ Spend the time on scopes, bounds and isolation, because those are what the rubri
 
 The two-minute spoken answer *(own construction, built on the source answer)*:
 
-> *I would split memory into four scopes, because each answers a different question. The live conversation is checkpointed by thread ID and folded into a running summary past about 15 turns, so prompt size stays flat. Session context sits under a session ID with a TTL. Stable facts like time zone live in a semantic namespace keyed by user ID, under stable keys that overwrite in place, with one prior version kept so contradictions are answerable. Completed tasks are appended to an episodic namespace, capped at the newest 100 per user, with older ones folded into a rolling digest. Episodes are searched through an embedding index filtered by user, so recall stays fast past a thousand items. On each turn, the reads fan out in parallel and fit well inside the 300 millisecond budget; every write, extraction and pruning step runs on a queue after the reply. User ID always comes from the auth session, never from the model. I would prove it with a recall harness that plants a fact and asks for it 20 turns and one conversation later, plus a false-memory rate and cross-user isolation tests.*
+> - I would split memory into four scopes, because each answers a different question.
+> - The live conversation is checkpointed by thread ID and folded into a running summary past about 15 turns, so prompt size stays flat.
+> - Session context sits under a session ID with a TTL.
+> - Stable facts like time zone live in a semantic namespace keyed by user ID, under stable keys that overwrite in place, with one prior version kept so contradictions are answerable.
+> - Completed tasks are appended to an episodic namespace, capped at the newest 100 per user, with older ones folded into a rolling digest.
+> - Episodes are searched through an embedding index filtered by user, so recall stays fast past a thousand items.
+> - On each turn, the reads fan out in parallel and fit well inside the 300 millisecond budget; every write, extraction and pruning step runs on a queue after the reply.
+> - User ID always comes from the auth session, never from the model.
+> - I would prove it with a recall harness that plants a fact and asks for it 20 turns and one conversation later, plus a false-memory rate and cross-user isolation tests.
 
 The lines that carry the round:
 
@@ -52,7 +60,9 @@ The pivot is usually "memory made the bill go up; what do you cut?" Answer with 
 | Do not | Stuff every memory into every prompt, or extract on every turn with the premium model |
 | 60-second line | Storage is cheap; the cost is the model calls to write memory and the tokens to read it back. Retrieve a few relevant memories, summarise in steps, extract with a small model after the reply, and prove recall held with the harness. |
 
-The first cost driver explains most surprises here. Input tokens grow with context: teams count the user's question and ignore the system prompt and hidden history, so the bill rises while traffic stays flat. Its fix list reads like this design: trim prompts, compress context, summarise history and cache static prompt parts. The FDE answer is the non-engineer version: cost scales with how often memory is written and searched, not with how much is stored.
+- The first cost driver explains most surprises here. Input tokens grow with context: teams count the user's question and ignore the system prompt and hidden history, so the bill rises while traffic stays flat.
+- Its fix list reads like this design: trim prompts, compress context, summarise history and cache static prompt parts.
+- The FDE answer is the non-engineer version: cost scales with how often memory is written and searched, not with how much is stored.
 
 Every strong cost answer follows four verbs in order. Measure tokens per prompt section first. Route extraction and summarising to a small model. Bound episodes, summary length and top-k. Cache safely, with the stable prefix first and the user's scope in every key.
 

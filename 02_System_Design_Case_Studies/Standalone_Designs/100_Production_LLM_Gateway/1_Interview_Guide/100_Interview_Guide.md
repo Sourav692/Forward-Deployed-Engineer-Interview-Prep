@@ -20,9 +20,14 @@ The prompt, verbatim:
 
 ## 1. Ask Which Side of the Agent the Gateway Guards
 
-"In front of an agent" has two readings, and the design needs both. The **edge face** sits between the customer and the agent. It screens what comes in and what goes out. The **model face** sits between the agent and the providers. An agent turn is rarely one call; the cost playbook's rule of thumb is that "one user request becomes 5–20 sub-requests." A gateway that only sees the customer's message cannot meter, retry or fail over the other calls.
+- "In front of an agent" has two readings, and the design needs both.
+- The **edge face** sits between the customer and the agent. It screens what comes in and what goes out.
+- The **model face** sits between the agent and the providers.
+- An agent turn is rarely one call; the cost playbook's rule of thumb is that "one user request becomes 5–20 sub-requests." A gateway that only sees the customer's message cannot meter, retry or fail over the other calls.
 
-So route every model call the agent makes through the gateway's model face *(own construction)*. One deployed research platform does this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider. Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
+- So route every model call the agent makes through the gateway's model face *(own construction)*.
+- One deployed research platform does this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider.
+- Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
 
 Ask five questions before drawing, and state an assumption for each one the interviewer declines *(own construction)*.
 
@@ -44,7 +49,10 @@ Keep this gateway distinct from the "deterministic gateway" in [G02 Customer Sup
 
 A requirement that cannot fail a test is a preference. "Resist prompt injection" is a preference. "Block every attack in a versioned red-team suite, and log a reason for each block" is a constraint. The nouns below come from the prompt and the rubric; the thresholds are *own construction*.
 
-The must-haves follow the prompt's four clauses. Screen every customer input for injection and PII. Screen every agent output for PII leakage and banned content. Route each model call to the cheapest model that can handle it. Retry, fail over and degrade so a provider outage never shows up as an error page. Refuse any request that would breach the per-request or daily budget. Log enough to replay any bad run.
+- The must-haves follow the prompt's four clauses. Screen every customer input for injection and PII.
+- Screen every agent output for PII leakage and banned content. Route each model call to the cheapest model that can handle it.
+- Retry, fail over and degrade so a provider outage never shows up as an error page.
+- Refuse any request that would breach the per-request or daily budget. Log enough to replay any bad run.
 
 The should-haves make it operable. A cache for repeated safe answers. Per-region routing for data that cannot travel. A red-team suite that runs through the real path. Prompt and routing changes shipped as versioned config, not code.
 

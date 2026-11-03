@@ -4,19 +4,30 @@
 
 A high average can hide a failing slice. A change may improve mean quality while hurting the rare, high-risk cases the business fears. So the release gate reads per-slice results, and a critical slice must pass on its own.
 
-The golden set is small enough to maintain carefully and broad enough to reflect real release risk. It holds representative happy paths, known hard cases, policy-sensitive cases, and examples that previously caused incidents or near misses. It also holds the edge cases where the old system failed quietly: malformed tool inputs, ambiguous queries, retrieval misses, and verbose answers that looked strong but were wrong. A golden set of obvious examples creates false confidence.
+- The golden set is small enough to maintain carefully and broad enough to reflect real release risk.
+- It holds representative happy paths, known hard cases, policy-sensitive cases, and examples that previously caused incidents or near misses.
+- It also holds the edge cases where the old system failed quietly: malformed tool inputs, ambiguous queries, retrieval misses, and verbose answers that looked strong but were wrong.
+- A golden set of obvious examples creates false confidence.
 
-Nondeterministic outputs are compared as distributions, not single strings. Run repeated trials where needed, seed what can be seeded, and compare aggregated rubric scores or pass rates. For many dimensions the unit is outcome equivalence rather than text match. Did the answer satisfy the task, respect policy and avoid harm? Stratify by scenario type so a regression in a small slice stays visible.
+- Nondeterministic outputs are compared as distributions, not single strings. Run repeated trials where needed, seed what can be seeded, and compare aggregated rubric scores or pass rates.
+- For many dimensions the unit is outcome equivalence rather than text match.
+- Did the answer satisfy the task, respect policy and avoid harm? Stratify by scenario type so a regression in a small slice stays visible.
 
 Online feedback is a discovery channel, not a scorecard. Thumbs-down, abandonment, escalation, correction and repeated retries are candidates for new cases. They enter the golden set only after redaction and trustworthy labelling. The tutorial's line: "Online feedback is a discovery channel for new failure modes; offline evaluation is where I make those failure modes measurable and releasable."
 
-The suite itself goes stale. The benchmark stops distinguishing candidates, or incidents cluster where it never looks. Mark it non-authoritative for gating, refresh it with new workflows, and re-baseline thresholds. A candidate can also overfit the benchmark: large offline gains with flat real-world behaviour. The defence is hidden holdout cases, adversarial variants, and never exposing the gate suite to the candidate's prompt, retrieval index or logs.
+- The suite itself goes stale. The benchmark stops distinguishing candidates, or incidents cluster where it never looks.
+- Mark it non-authoritative for gating, refresh it with new workflows, and re-baseline thresholds.
+- A candidate can also overfit the benchmark: large offline gains with flat real-world behaviour.
+- The defence is hidden holdout cases, adversarial variants, and never exposing the gate suite to the candidate's prompt, retrieval index or logs.
 
 ## 9. Walk Through the Regression the Suite Missed
 
 The sales-copilot incident is section 8 failing in production. It proves an aggregate pass rate can hide a critical slice.
 
-A sales copilot drafts account-specific outreach emails from CRM notes, product documentation and approved messaging. The model route was upgraded to improve fluency and personalisation. After the upgrade, emails sounded polished but included unsupported claims. Reps saw drafts claiming "SOC 2 Type II renewal completed in June 2026" and "average 34% support cost reduction." The SOC 2 claim was not yet approved for external use. The ROI claim came only from an internal pilot.
+- A sales copilot drafts account-specific outreach emails from CRM notes, product documentation and approved messaging.
+- The model route was upgraded to improve fluency and personalisation. After the upgrade, emails sounded polished but included unsupported claims.
+- Reps saw drafts claiming "SOC 2 Type II renewal completed in June 2026" and "average 34% support cost reduction." The SOC 2 claim was not yet approved for external use.
+- The ROI claim came only from an internal pilot.
 
 The workflow was CRM account context → approved claims retriever → prompt template → LLM gateway → policy evaluator → offline eval suite → online quality monitor. The release gate checked grammar, tone and general groundedness on 120 examples. Only 6 of them were about regulated claims.
 
@@ -44,7 +55,9 @@ Debug it by comparing offline pass rates with online failure modes. Inspect fail
 
 Unsupported sales claims create legal exposure, customer trust damage and compliance issues. A careless or malicious rep could prompt the assistant to exaggerate ROI or security status and send the draft externally.
 
-Map it back onto the anchor *(own construction)*. The anchor's gate would have caught this in three places. A per-application threshold on the regulated-claim slice fails at 83.3%. The coverage metric flags a critical slice with 6 cases as below minimum sample, so the gate holds. And a policy change from block to warn-only is itself a versioned artifact, so it goes through the gate instead of around it.
+- Map it back onto the anchor *(own construction)*. The anchor's gate would have caught this in three places.
+- A per-application threshold on the regulated-claim slice fails at 83.3%. The coverage metric flags a critical slice with 6 cases as below minimum sample, so the gate holds.
+- And a policy change from block to warn-only is itself a versioned artifact, so it goes through the gate instead of around it.
 
 > *Weak: "The model is too creative. I would make the prompt stricter and ask sales reps to review the output."*
 >
@@ -56,7 +69,10 @@ Both OpenAI-style practice prompts are the anchor seen from a different moment. 
 
 **The model got worse after an upgrade.** A customer says quality declined after switching to a newer model. Treat it as the release decision that never happened, and run it retroactively. The source's diagnostic plan has eleven steps. Collect before-and-after production examples. Replay a fixed evaluation set. Segment by task, language, customer and input size. Compare structured-output compliance. Check prompt compatibility and retrieval changes. Compare latency and token usage. Run human evaluation, and calibrate any LLM-as-judge first. Roll back or pin the model version. A/B test future upgrades.
 
-Map those steps onto the anchor *(own construction)*. Pinning the version is the artifact registry. Replaying a fixed set against the old model is Δ against a pinned baseline. Segmenting is slice-based gating. Calibrating the judge is section 7. A/B testing future upgrades is the online sampling pipeline. The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
+- Map those steps onto the anchor *(own construction)*. Pinning the version is the artifact registry.
+- Replaying a fixed set against the old model is Δ against a pinned baseline.
+- Segmenting is slice-based gating. Calibrating the judge is section 7. A/B testing future upgrades is the online sampling pipeline.
+- The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
 
 The follow-up is "the offline benchmark improved, but the customer still says quality declined." The source gives seven explanations, and each maps to a gate weakness.
 
@@ -90,9 +106,14 @@ Every external dependency and every irreversible action needs an explicit failur
 
 Time out grader and retrieval calls. Retry only operations that are safe to repeat. Put repeated failures behind a circuit breaker so the platform stops hammering a broken dependency. Escalate any unresolved release decision to a human rather than guessing.
 
-Four controls deserve their own threat model. Separate evaluator data by application and tenant, including reviewer access. Redact or synthesise sensitive cases at ingestion, because online samples carry PII, secrets and proprietary prompts. Version model-based graders like code, or the platform can change verdicts without changing the application under test. Prevent test-set leakage into prompts, retrieval, hidden notes or cached artifacts, since leakage manufactures false confidence.
+- Four controls deserve their own threat model. Separate evaluator data by application and tenant, including reviewer access.
+- Redact or synthesise sensitive cases at ingestion, because online samples carry PII, secrets and proprietary prompts.
+- Version model-based graders like code, or the platform can change verdicts without changing the application under test.
+- Prevent test-set leakage into prompts, retrieval, hidden notes or cached artifacts, since leakage manufactures false confidence.
 
-Inputs are adversarial until proven otherwise. A candidate prompt can carry an injection, a retrieved document can be poisoned, and an uploaded case can hide instructions that steer the grader. Sanitise before evaluation, isolate from the grader context, log the artifact hash and tenant scope, and keep a copy of suspicious evidence. Contain at the smallest scope: one tenant, one application, one region, one dependency chain.
+- Inputs are adversarial until proven otherwise. A candidate prompt can carry an injection, a retrieved document can be poisoned, and an uploaded case can hide instructions that steer the grader.
+- Sanitise before evaluation, isolate from the grader context, log the artifact hash and tenant scope, and keep a copy of suspicious evidence.
+- Contain at the smallest scope: one tenant, one application, one region, one dependency chain.
 
 | Failure | Detect | Contain | Prevent |
 |---|---|---|---|

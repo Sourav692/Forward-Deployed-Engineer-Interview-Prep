@@ -4,7 +4,10 @@
 
 ◷ 40 min
 
-The product is a routed service that must decide when to act, when to ask for approval, and when to stop. A chatbot that answers everything fails that test. A fluent model is one input to that decision, never its authority. This page combines the group's prompts into one read for the day before. Every other case in the group is a delta on it.
+- The product is a routed service that must decide when to act, when to ask for approval, and when to stop.
+- A chatbot that answers everything fails that test. A fluent model is one input to that decision, never its authority.
+- This page combines the group's prompts into one read for the day before.
+- Every other case in the group is a delta on it.
 
 | Case in the group                                              | What it contributes here                                                               |
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
@@ -25,9 +28,19 @@ Open with the harm case before any architecture. The ask sounds like "automate r
 
 > *"I'd like to optimise for the outcome first: reduce handling time and cost without increasing incorrect or harmful resolutions. I'll clarify the highest-risk intents, estimate scale, sketch the control flow, and then spend most of my time on escalation, safety and rollout."*
 
-The running example is a customer who says "I was charged twice for last month's subscription and need this fixed today." The naive design sends that to a model, drafts a reply and resolves the ticket. The real design starts earlier. Verify who the user is. Determine whether the request touches money. Decide whether it is safe to act on the account. Preserve enough context for a human to take over if automation hesitates. If the billing provider is down, or the model sounds confident but the policy check fails, degrade into a safe handoff rather than force a bad answer.
+- The running example is a customer who says "I was charged twice for last month's subscription and need this fixed today." The naive design sends that to a model, drafts a reply and resolves the ticket.
+- The real design starts earlier. Verify who the user is. Determine whether the request touches money.
+- Decide whether it is safe to act on the account. Preserve enough context for a human to take over if automation hesitates.
+- If the billing provider is down, or the model sounds confident but the policy check fails, degrade into a safe handoff rather than force a bad answer.
 
-The three answer tiers show what the reframe buys. The weak answer sends each message to an LLM, drafts a reply and resolves the ticket. It treats model output as truth, never verifies identity before touching an account, and puts no policy gate between a fluent answer and a real refund. The average answer classifies intent, retrieves policy and account context, drafts a grounded reply and escalates on low confidence. It never names which actions need approval, never says what happens when a refund executes but the response times out, and treats confidence as sufficient grounds to act. The strong answer designs a routed decision pipeline. Identity is verified before any account tool. The router tags risk. Retrieval grounds the draft. A deterministic tool policy gateway, not the model, decides whether an action may execute. Latency is tiered by risk. Dependency failures degrade into a handoff carrying full context. The launch is agent-assist only, then reversible intents, then one tool class at a time with a kill switch per intent.
+- The three answer tiers show what the reframe buys. The weak answer sends each message to an LLM, drafts a reply and resolves the ticket.
+- It treats model output as truth, never verifies identity before touching an account, and puts no policy gate between a fluent answer and a real refund.
+- The average answer classifies intent, retrieves policy and account context, drafts a grounded reply and escalates on low confidence.
+- It never names which actions need approval, never says what happens when a refund executes but the response times out, and treats confidence as sufficient grounds to act.
+- The strong answer designs a routed decision pipeline. Identity is verified before any account tool.
+- The router tags risk. Retrieval grounds the draft. A deterministic tool policy gateway, not the model, decides whether an action may execute.
+- Latency is tiered by risk. Dependency failures degrade into a handoff carrying full context.
+- The launch is agent-assist only, then reversible intents, then one tool class at a time with a kill switch per intent.
 
 Ask the questions that move risk boundaries. Name the six discovery areas fast and unprompted: channel and volume, action authority, identity and data sensitivity, freshness of knowledge, escalation and human-in-the-loop, multilingual handling.
 
@@ -42,7 +55,12 @@ Ask the questions that move risk boundaries. Name the six discovery areas fast a
 | Which categories carry legal, financial or safety risk and must stay human-reviewed in the first release? | The risk tags the router assigns and the non-goals list                                             |
 | What is the refund threshold above which approval is mandatory, and who owns that policy?                 | The one number the gateway checks on every money-moving action                                      |
 
-Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area. Safe defaults exist. Chat and email but no phone means a text-based model. An unknown language mix means the dominant language plus a fallback escalation path. Unknown volume means scalable but not over-engineered. Dangerous assumptions weaken the control boundary: that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth. When in doubt, protect the highest-risk constraint first: no unauthorised action and no confidently wrong answer on sensitive topics.
+- Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area.
+- Safe defaults exist. Chat and email but no phone means a text-based model.
+- An unknown language mix means the dominant language plus a fallback escalation path.
+- Unknown volume means scalable but not over-engineered.
+- Dangerous assumptions weaken the control boundary: that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth.
+- When in doubt, protect the highest-risk constraint first: no unauthorised action and no confidently wrong answer on sensitive topics.
 
 Map the people, because each notices a different failure first.
 
@@ -65,7 +83,11 @@ Declare the scope fence before the first box, because without a non-goals list t
 
 A constraint is a boundary the design must obey; a preference is polish. "Refunds above a stated threshold require human approval" is a constraint and shapes trust boundaries, authorisation and audit. "Show recent purchases on the right side of the console" is a preference and decides nothing about admissibility. State every requirement so a test can fail it.
 
-The functional must-haves form the pipeline in order. Classify and route every request by intent and risk before any retrieval or drafting begins. Retrieve grounded customer and policy context from CRM, order and policy sources before drafting. Draft or send answers gated by confidence and risk level. Execute tools such as refunds, address changes and subscription actions only through a controlled, authorised layer. Hand off to a human with full conversation and action history whenever automation hesitates. Record every retrieval, decision, tool call and human override so any outcome is attributable afterward.
+- The functional must-haves form the pipeline in order. Classify and route every request by intent and risk before any retrieval or drafting begins.
+- Retrieve grounded customer and policy context from CRM, order and policy sources before drafting.
+- Draft or send answers gated by confidence and risk level. Execute tools such as refunds, address changes and subscription actions only through a controlled, authorised layer.
+- Hand off to a human with full conversation and action history whenever automation hesitates.
+- Record every retrieval, decision, tool call and human override so any outcome is attributable afterward.
 
 The non-functional requirements tier by risk rather than one flat SLO.
 
@@ -92,6 +114,19 @@ Every requirement has an owning component:
 | Fast human takeover                           | One-click escalation and context packaging                           |
 | Complete action auditability                  | Append-only event trail with actor, time and reason                  |
 
-Size for the load that breaks the system, not the average. The practice numbers are 2 million tickets a month, 100 QPS peak and 20 languages. Two million a month is about 67,000 a day, but a morning spike after a product incident or a billing change arrives far above that. At 100 QPS the control plane cannot be a single-threaded pipeline. Twenty languages make English-only assumptions unsafe. Turn volume into calls, because tickets times one is not the model bill. Assume 70 percent routine, 20 percent ambiguous and 10 percent escalated. Routine is 1.4M tickets times 2 calls, or 2.8M. Ambiguous is 0.4M times 3, or 1.2M. Escalated is 0.2M times 1, or 0.2M. That is about 4.2M model calls a month, plus retries, moderation and tools. Retrieval runs 1.4M plus 0.8M plus up to 0.2M, so 2.2M to 2.4M calls a month. Retrieval therefore drives freshness logic, cache design and failure isolation. Handled only by people, a queue this size needs well over a thousand full-time agents (assuming ~1,500 tickets per agent a month). Deflecting 30 to 50 percent of tickets (a conservative planning assumption) shows up as delayed hiring, less overtime and agents moved to complex cases, not as half a team eliminated.
+- Size for the load that breaks the system, not the average. The practice numbers are 2 million tickets a month, 100 QPS peak and 20 languages.
+- Two million a month is about 67,000 a day, but a morning spike after a product incident or a billing change arrives far above that.
+- At 100 QPS the control plane cannot be a single-threaded pipeline. Twenty languages make English-only assumptions unsafe.
+- Turn volume into calls, because tickets times one is not the model bill.
+- Assume 70 percent routine, 20 percent ambiguous and 10 percent escalated. Routine is 1.4M tickets times 2 calls, or 2.8M.
+- Ambiguous is 0.4M times 3, or 1.2M. Escalated is 0.2M times 1, or 0.2M.
+- That is about 4.2M model calls a month, plus retries, moderation and tools.
+- Retrieval runs 1.4M plus 0.8M plus up to 0.2M, so 2.2M to 2.4M calls a month.
+- Retrieval therefore drives freshness logic, cache design and failure isolation. Handled only by people, a queue this size needs well over a thousand full-time agents (assuming ~1,500 tickets per agent a month).
+- Deflecting 30 to 50 percent of tickets (a conservative planning assumption) shows up as delayed hiring, less overtime and agents moved to complex cases, not as half a team eliminated.
 
-The NetValue equation is the most reusable move on the board. Start with time saved. Subtract model and retrieval cost. Subtract the cost of a confidently wrong resolution, which I'd expect to outweigh the model bill in most support settings. Subtract the cost of a repeat contact. A system that saves ten seconds per ticket and raises recontact is not a win. At 10× growth, revisit partitioning rather than server count: split online answering from offline summarisation, isolate escalation traffic from routine classification, and move long-running enrichment out of the critical path. Peak concurrency and escalation rate control the architecture more than the exact monthly count.
+- The NetValue equation is the most reusable move on the board. Start with time saved.
+- Subtract model and retrieval cost. Subtract the cost of a confidently wrong resolution, which I'd expect to outweigh the model bill in most support settings.
+- Subtract the cost of a repeat contact. A system that saves ten seconds per ticket and raises recontact is not a win.
+- At 10× growth, revisit partitioning rather than server count: split online answering from offline summarisation, isolate escalation traffic from routine classification, and move long-running enrichment out of the critical path.
+- Peak concurrency and escalation rate control the architecture more than the exact monthly count.

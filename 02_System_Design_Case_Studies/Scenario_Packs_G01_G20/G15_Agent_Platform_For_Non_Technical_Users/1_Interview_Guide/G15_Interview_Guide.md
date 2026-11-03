@@ -96,6 +96,16 @@ flowchart TB
   K -->|done| D[Completed + run trace]
   W[Versioned workflow store / promotion] --> R
   Q[Tenant policy] --> G
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,L cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,N,H,X,T cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class R,D,W cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class O,V,I,K,G,P,Q cbPolicy
 ```
 
 ### Step-by-step architecture
@@ -122,7 +132,10 @@ flowchart TB
 
 ## Rollout, scale and honest gaps
 
-Start with one channel and one non-destructive workflow, then prove negative guardrail cases and staged promotion before enabling refunds. The demo's in-process locks and idempotency dicts are not shared across workers; production needs a distributed lock (database uniqueness, or a Redis lease checked with a fencing token) and a durable shared idempotency store. The source also lacks a visual builder, natural-language-to-spec compiler, real LLM planner, automatic retry wrapper, secret vault integration, output PII redaction and gradual version migration. A compiled natural-language spec should land in `DRAFT` for review, never straight in `LIVE`.
+- Start with one channel and one non-destructive workflow, then prove negative guardrail cases and staged promotion before enabling refunds.
+- The demo's in-process locks and idempotency dicts are not shared across workers; production needs a distributed lock (database uniqueness, or a Redis lease checked with a fencing token) and a durable shared idempotency store.
+- The source also lacks a visual builder, natural-language-to-spec compiler, real LLM planner, automatic retry wrapper, secret vault integration, output PII redaction and gradual version migration.
+- A compiled natural-language spec should land in `DRAFT` for review, never straight in `LIVE`.
 
 ## Two-minute interview answer
 

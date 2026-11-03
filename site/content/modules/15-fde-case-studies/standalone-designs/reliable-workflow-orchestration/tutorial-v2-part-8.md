@@ -29,6 +29,16 @@ flowchart LR
   E --> F["35-42 min\nProduct & operational leverage"]
   F --> G["42-47 min\nTrade-offs & alternatives"]
   G --> H["47-50 min\nExecutive summary close"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G,H cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ### Keeping the Conversation at the Right Depth

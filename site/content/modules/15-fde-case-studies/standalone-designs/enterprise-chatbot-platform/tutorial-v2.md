@@ -214,6 +214,16 @@ flowchart TD
     H -->|"Anyone"| J["Publish review, view-time\nre-authorization, deprecation lifecycle"]
     K["What's wrong with buying?"] -->|"Nothing named"| L["Recommend buy"]
     K -->|"Something specific"| M["That constraint is now\nthe design's center"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B,D,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G,K cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E,I,M cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class H,J,L cbPolicy
 ```
 
 - **Can prompts leave our boundary?** No: self-host, plan GPUs, accept a lower quality bar and a longer timeline. Yes: thin orchestration, delivered in weeks. It depends: a classifier in the hot path and two backends.

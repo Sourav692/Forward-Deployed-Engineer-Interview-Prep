@@ -6,7 +6,9 @@ A real-time personal assistant has to remember a user across weeks: their prefer
 
 The hard constraint is remembering enough to feel personal while forgetting enough to stay fast, correct and private. A bigger context window does not solve it. The prompt has to stay flat as history grows, no user may ever read another's memory, and deleting a fact has to remove it everywhere.
 
-The design splits memory into four scopes (thread, session, semantic and episodic), each with its own key and write rule. Each turn reads the scopes in parallel, assembles a bounded prompt from a running summary and recent turns, replies, and then writes from a queue off the critical path. The user's identity always comes from authentication, never from the model.
+- The design splits memory into four scopes (thread, session, semantic and episodic), each with its own key and write rule.
+- Each turn reads the scopes in parallel, assembles a bounded prompt from a running summary and recent turns, replies, and then writes from a queue off the critical path.
+- The user's identity always comes from authentication, never from the model.
 
 ## The core idea
 
@@ -19,6 +21,14 @@ flowchart LR
   C --> D[Assemble a bounded prompt]
   D --> E[Reply]
   E --> F[Write memory from a queue]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,F cbAction
 ```
 
 ## Who it is for

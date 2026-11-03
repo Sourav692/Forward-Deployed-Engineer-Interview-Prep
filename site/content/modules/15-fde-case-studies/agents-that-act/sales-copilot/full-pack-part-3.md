@@ -2,11 +2,19 @@
 
 ## 8. Draft From Approved Claims and Preview Every Write
 
-An email draft is the copilot's most visible output. It is also the most dangerous one, because it leaves the building. Every outbound claim must trace to an entry in the approved-claims playbook, and the claim verifier blocks anything it cannot trace instead of warning. Pricing and discount language comes only from the versioned policy, and the copilot refuses to quote outside it.
+- An email draft is the copilot's most visible output. It is also the most dangerous one, because it leaves the building.
+- Every outbound claim must trace to an entry in the approved-claims playbook, and the claim verifier blocks anything it cannot trace instead of warning.
+- Pricing and discount language comes only from the versioned policy, and the copilot refuses to quote outside it.
 
-Personalisation is drawn from the account's own record and interactions: the rep's last thread, the customer's stated priorities from the transcript, the open escalation. It is never drawn from the model's sense of what a company like this probably cares about. Discovery questions follow the same rule, generated from the playbook's objection list and the gaps in the CRM record.
+- Personalisation is drawn from the account's own record and interactions: the rep's last thread, the customer's stated priorities from the transcript, the open escalation.
+- It is never drawn from the model's sense of what a company like this probably cares about.
+- Discovery questions follow the same rule, generated from the playbook's objection list and the gaps in the CRM record.
 
-CRM update suggestions are proposals, not writes. The copilot proposes a stage change, a next step or a note. The rep sees a preview of the exact fields that would change. Approval routes the write through the tool gateway with an idempotency key, so a retried approval cannot write twice. Read tools run automatically. Write tools require a policy check, an idempotency key, preview mode and human approval for anything above the risk threshold. Sending mail, closing an opportunity, changing an amount and emailing externally sit above the threshold on day one.
+- CRM update suggestions are proposals, not writes. The copilot proposes a stage change, a next step or a note.
+- The rep sees a preview of the exact fields that would change.
+- Approval routes the write through the tool gateway with an idempotency key, so a retried approval cannot write twice.
+- Read tools run automatically. Write tools require a policy check, an idempotency key, preview mode and human approval for anything above the risk threshold.
+- Sending mail, closing an opportunity, changing an amount and emailing externally sit above the threshold on day one.
 
 ## 9. Degrade on Everything Except Authorisation and Approval
 
@@ -29,7 +37,9 @@ Scale is bounded by the precompute lane. At ten times the accounts, shard the sn
 
 ## 10. Gate the Release on Claims, Not Fluency
 
-An eval suite that measures grammar, tone and general groundedness will pass a model that writes beautifully and invents a security certification. In the scenario incident in section 14, a 96.7 percent pass rate on 120 cases hid an 83.3 percent pass rate on the six regulated-claim cases that mattered. The gate therefore has slices, and the critical slices pass independently or the release does not ship.
+- An eval suite that measures grammar, tone and general groundedness will pass a model that writes beautifully and invents a security certification.
+- In the scenario incident in section 14, a 96.7 percent pass rate on 120 cases hid an 83.3 percent pass rate on the six regulated-claim cases that mattered.
+- The gate therefore has slices, and the critical slices pass independently or the release does not ship.
 
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
@@ -91,7 +101,14 @@ Spend minutes in proportion to risk. The permission model, the claim boundary an
 
 The two-minute spoken answer:
 
-> *I would not start with the model. I would start by clarifying the broken B2B sales productivity workflow, who uses the system, what decision they need to make, and what risk we cannot automate. For Sales Copilot for Account Executives, I would design a permission-aware assistant around the workflow: AE prepares for account meeting, asks for account summary, opportunity risks, suggested discovery questions, email drafts, and CRM update suggestions. The architecture would ingest approved sources from systems like Salesforce/HubSpot, Gong/Zoom transcripts, emails/calendar, product docs, pricing/discount policy, customer support history, data warehouse, preserve metadata, freshness, and ACLs, then use hybrid retrieval with permission filtering before generation. The LLM would produce cited answers, show uncertainty, and escalate when evidence is missing or risk is high. Tool use would be allowlisted: read-only tools can run automatically, but any write-back or externally visible action needs preview and human approval. I would evaluate with SME-approved golden cases, citation accuracy, groundedness, permission red-team tests, task completion, latency, and cost. Rollout would be staged: offline prototype, shadow mode, read-only pilot, then limited approved actions with monitoring and rollback. The production goal is not a flashy demo; it is a trusted workflow assistant that is secure, auditable, and measurably improves the business process.*
+> - I would start by clarifying the broken B2B sales productivity workflow, who uses the system, what decision they need to make, and what risk we cannot automate.
+> - For Sales Copilot for Account Executives, I would design a permission-aware assistant around the workflow: AE prepares for account meeting, asks for account summary, opportunity risks, suggested discovery questions, email drafts, and CRM update suggestions.
+> - The architecture would ingest approved sources from systems like Salesforce/HubSpot, Gong/Zoom transcripts, emails/calendar, product docs, pricing/discount policy, customer support history, data warehouse, preserve metadata, freshness, and ACLs, then use hybrid retrieval with permission filtering before generation.
+> - The LLM would produce cited answers, show uncertainty, and escalate when evidence is missing or risk is high.
+> - Tool use would be allowlisted: read-only tools can run automatically, but any write-back or externally visible action needs preview and human approval.
+> - I would evaluate with SME-approved golden cases, citation accuracy, groundedness, permission red-team tests, task completion, latency, and cost.
+> - Rollout would be staged: offline prototype, shadow mode, read-only pilot, then limited approved actions with monitoring and rollback.
+> - The production goal is not a flashy demo; it is a trusted workflow assistant that is secure, auditable, and measurably improves the business process.
 
 The lines that carry the round:
 
@@ -114,4 +131,7 @@ The follow-ups arrive in a predictable order.
 | How do you keep answers fast when the CRM is slow? | Precompute the snapshot on the calendar trigger and serve from cache; route common asks deterministically; parallelise the read-only calls that remain; cap agent steps; see section 13 |
 | How would you know the eval suite is good enough? | Compare offline pass rates with online failure modes by slice. If a slice is small and critical, it gets its own gate. Add negative examples the model must refuse |
 
-Repair the weak answers on the spot. "RAG with a vector database and ask GPT" becomes a workflow with a risk boundary and permission-aware retrieval. "Sales reps will review the drafts" becomes a claim verifier that blocks, with human review as the second line. "The model is too creative" becomes an eval and launch-gate problem with slice-based gates. "We'll add the CRM write later" becomes a tool gateway designed on day one with preview and approval.
+- Repair the weak answers on the spot. "RAG with a vector database and ask GPT" becomes a workflow with a risk boundary and permission-aware retrieval.
+- "Sales reps will review the drafts" becomes a claim verifier that blocks, with human review as the second line.
+- "The model is too creative" becomes an eval and launch-gate problem with slice-based gates.
+- "We'll add the CRM write later" becomes a tool gateway designed on day one with preview and approval.

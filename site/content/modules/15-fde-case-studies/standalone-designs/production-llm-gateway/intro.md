@@ -6,7 +6,8 @@ A team needs a gateway in front of every model call its customer-facing agent ma
 
 The hard constraint is that every safety check and every fallback spends part of the same three seconds, and every dollar saved hands the answer to a cheaper model. Screening, retries and failover all have to fit inside the latency ceiling without breaking the budget.
 
-The design makes the gateway the one place where every call is screened, metered, routed and recovered. Cheap rule-based guards run first and an LLM guard only on what survives, the cache key must prove a hit is safe, cost is checked before the call, and retry, circuit breaker, fallback and degradation are chained so that each handles a different failure.
+- The design makes the gateway the one place where every call is screened, metered, routed and recovered.
+- Cheap rule-based guards run first and an LLM guard only on what survives, the cache key must prove a hit is safe, cost is checked before the call, and retry, circuit breaker, fallback and degradation are chained so that each handles a different failure.
 
 ## The core idea
 
@@ -21,6 +22,16 @@ flowchart LR
   D --> E[Route by complexity]
   E --> F[Retry, breaker, fallback, degrade]
   F --> G
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,G,D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,F cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class E cbReason
 ```
 
 ## Who it is for

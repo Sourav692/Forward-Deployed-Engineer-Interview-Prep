@@ -39,6 +39,16 @@ flowchart LR
   P2 -->|"go/no-go:<br/>customer accepts support/rollback"| P3
   P3 -->|"go/no-go:<br/>config reduces custom work"| P4
   P4 -->|"go/no-go:<br/>2nd/3rd customer reuse works"| DONE["Reusable product pattern"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P1,P2 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P3 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P4 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class DONE cbInput
 ```
 
 > **Interview pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates stop a rollout from becoming "we shipped because the demo went well."
@@ -99,6 +109,16 @@ flowchart TD
   Q2 -->|No| Q3{"Is it reused across tenants and<br/>needs uniform policy?"}
   Q3 -->|Yes| SHARED["Shared service<br/>(validation, audit, execution, publish)"]
   Q3 -->|No| CONFIG["Configuration<br/>(fields, routing, branding, approvers, thresholds)"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class REQ,ADAPTER cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Q1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CORE cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Q2,Q3,SHARED,CONFIG cbPolicy
 ```
 
 ### The Risk Register

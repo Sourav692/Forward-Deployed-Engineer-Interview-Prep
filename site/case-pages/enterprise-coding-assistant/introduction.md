@@ -2,9 +2,14 @@
 
 ## Overview
 
-A company wants an AI coding assistant inside its developers' IDEs: inline completions as they type, plus slower help to explain, test or fix code on request. Two constraints pull against each other. A completion must arrive before the developer's next keystroke, inside a 300 ms budget, and it must respect private repository permissions: a suggestion built from a repo the developer cannot clone is a leak.
+- A company wants an AI coding assistant inside its developers' IDEs: inline completions as they type, plus slower help to explain, test or fix code on request.
+- Two constraints pull against each other.
+- A completion must arrive before the developer's next keystroke, inside a 300 ms budget, and it must respect private repository permissions: a suggestion built from a repo the developer cannot clone is a leak.
 
-The design starts from the latency budget and a context funnel. It takes a small context (cursor, file, imports), checks a scoped cache, and on a miss retrieves only snippets the developer may read. A small model streams a short completion, and a validation gate drops invented APIs, secrets and licence conflicts. If the backend is slow or a validator is down, the assistant shows nothing. Explain and refactor requests go to a larger model on a separate, slower lane.
+- The design starts from the latency budget and a context funnel. It takes a small context (cursor, file, imports), checks a scoped cache, and on a miss retrieves only snippets the developer may read.
+- A small model streams a short completion, and a validation gate drops invented APIs, secrets and licence conflicts.
+- If the backend is slow or a validator is down, the assistant shows nothing.
+- Explain and refactor requests go to a larger model on a separate, slower lane.
 
 The case adds an enterprise private-repository variant to the fast completion path: incremental indexing, repository access control, licensing and proof of productivity.
 
@@ -20,6 +25,16 @@ flowchart LR
   D --> E{Passes validation?}
   E -->|Yes| F[Show in editor]
   E -->|No| G[Show nothing]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D,F cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,E cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class G cbAction
 ```
 
 ## Who it is for

@@ -2,9 +2,14 @@
 
 ## Overview
 
-Executives and analysts want to ask a business question in plain words, such as "What's Q3 revenue?", and get a number they can put on a slide. The hard part is meaning. "Revenue" can mean booked, recognised or collected revenue, and a model can write valid SQL that answers the wrong one. The model cannot choose that definition on the business's behalf.
+- Executives and analysts want to ask a business question in plain words, such as "What's Q3 revenue?", and get a number they can put on a slide.
+- The hard part is meaning. "Revenue" can mean booked, recognised or collected revenue, and a model can write valid SQL that answers the wrong one.
+- The model cannot choose that definition on the business's behalf.
 
-The design anchors every question to a versioned, owner-approved metric before it exposes any physical schema. When a term fits more than one approved meaning, the system asks or sends the question to an analyst. The LLM proposes SQL; a parser checks the query tree against policy and a scan budget, and a read-only gateway runs it under the warehouse's row and column security. The answer carries the SQL, lineage and freshness, the prose is checked against the numbers, and every run is audited for replay.
+- The design anchors every question to a versioned, owner-approved metric before it exposes any physical schema.
+- When a term fits more than one approved meaning, the system asks or sends the question to an analyst.
+- The LLM proposes SQL; a parser checks the query tree against policy and a scan budget, and a read-only gateway runs it under the warehouse's row and column security.
+- The answer carries the SQL, lineage and freshness, the prose is checked against the numbers, and every run is audited for replay.
 
 This case anchors an executive dashboard assistant, a retail demand forecast explainer and an insurer's governed data assistant. They reuse the same query path and change the explanation and review workflow.
 
@@ -19,6 +24,16 @@ flowchart LR
   C -->|No| D[Clarify or analyst review]
   C -->|Yes| E[Check SQL and scan cost]
   E --> F[Read-only answer with lineage]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D,E cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class F cbAction
 ```
 
 ## Who it is for

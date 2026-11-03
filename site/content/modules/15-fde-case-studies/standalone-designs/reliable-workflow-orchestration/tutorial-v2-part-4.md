@@ -74,6 +74,16 @@ flowchart TB
   SCHED --> COMP
   OPS --> HIST
   OPS --> SCHED
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class API,W cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class REG,COMP cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class SCHED,OPS,Q,HIST cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class TIMER,SIGNAL,EXT,Caller cbPolicy
 ```
 
 - Three trust boundaries exist. Each needs its own authentication, authorisation and logging policy; do not merge them into one generic "service layer":
@@ -107,15 +117,33 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-  participant Caller
-  participant API as Workflow API
-  participant Hist as Durable History Store
-  participant Sched as Workflow Scheduler
-  participant Q as Activity Task Queues
-  participant Worker
-  participant Ext as External System
-  participant Timer as Timer/Signal
-  participant Comp as Compensation Engine
+  box rgba(37,99,235,0.12)
+      participant Caller
+  end
+  box rgba(124,58,237,0.12)
+      participant API as Workflow API
+  end
+  box rgba(21,128,61,0.12)
+      participant Hist as Durable History Store
+  end
+  box rgba(180,83,9,0.12)
+      participant Sched as Workflow Scheduler
+  end
+  box rgba(37,99,235,0.12)
+      participant Q as Activity Task Queues
+  end
+  box rgba(124,58,237,0.12)
+      participant Worker
+  end
+  box rgba(21,128,61,0.12)
+      participant Ext as External System
+  end
+  box rgba(180,83,9,0.12)
+      participant Timer as Timer/Signal
+  end
+  box rgba(37,99,235,0.12)
+      participant Comp as Compensation Engine
+  end
 
   Caller->>API: start workflow (idempotency key)
   API->>Hist: append scheduled transition
@@ -171,6 +199,14 @@ flowchart TD
   L --> M["History store closes with audit summary"]
   J --> N["History store closes with audit summary"]
   style K fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E,I cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D,G,H,J,K,L,M,N cbAction
 ```
 
 - The charge may have gone through before the worker died. So "worker lost" must never be read as "business action lost".

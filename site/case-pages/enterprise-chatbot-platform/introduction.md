@@ -20,6 +20,16 @@ flowchart LR
   D --> E[Model streams the answer]
   E --> F[Output scanned for secrets]
   F --> G[Reply and audit record]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,C,D cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class E cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class F,G cbAction
 ```
 
 ## Who it is for

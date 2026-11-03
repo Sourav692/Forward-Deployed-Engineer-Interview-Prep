@@ -52,20 +52,52 @@ The honest 90-day deliverable is the single queue plus a validated shadow model,
 
 The first value comes with no model at all. Entity resolution plus a single queue shows fraud that crosses the three systems, which none of them could see alone.
 
-The model then follows from the labels. With a few thousand relabelled cases, a gradient-boosted classifier over transaction features is the sensible first choice. Model risk reviewers can follow its explanations. Graph features over the resolved entities come next, since fraud rings show up as shared devices and accounts. A language model gets one bounded role: summarising case notes for investigators, and extracting structured reasons from them to help relabelling. A human still confirms every label.
+- The model then follows from the labels. With a few thousand relabelled cases, a gradient-boosted classifier over transaction features is the sensible first choice.
+- Model risk reviewers can follow its explanations. Graph features over the resolved entities come next, since fraud rings show up as shared devices and accounts.
+- A language model gets one bounded role: summarising case notes for investigators, and extracting structured reasons from them to help relabelling.
+- A human still confirms every label.
 
 ### 6.6 Draw the architecture
 
-```
- System A ─┐                                   ┌─► Unified investigator queue
- System B ─┼─► Ingest + map to one schema ─► Entity resolution ─┤    (cases linked across A/B/C)
- System C ─┘                                   │                └─► Feature store
- Case notes ──► note summariser (assist only) ─┘                        │
- Chargebacks ─► label reconciliation ◄── senior investigator review     ▼
-                        │                                     Shadow model (one fraud type)
-                        └──────── relabelled training set ───────────►  │
-                                                                         ▼
-                                            Compare with legacy rules ─► Model-risk validation pack
+```mermaid
+flowchart TD
+    N0["Systems A, B, and C"]
+    N1["Map to common schema"]
+    N2["Entity resolution"]
+    N3["Case notes"]
+    N4["Assistive note summary"]
+    N5["Unified investigator queue"]
+    N6["Feature store"]
+    N7["Shadow model for one fraud type"]
+    N8["Compare with legacy rules"]
+    N9["Model-risk validation pack"]
+    N10["Chargebacks"]
+    N11["Reconcile labels"]
+    N12["Relabelled training set"]
+    N13["Senior investigator review"]
+    N0 --> N1
+    N1 --> N2
+    N3 --> N4
+    N4 --> N2
+    N2 --> N5
+    N2 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N10 --> N11
+    N11 --> N12
+    N12 --> N7
+    N13 --> N11
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N7,N13 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N5,N6,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N9,N11 cbPolicy
 ```
 
 ```mermaid
@@ -84,6 +116,16 @@ flowchart LR
   F --> M[Shadow model]
   M --> V[Compare with legacy rules]
   V --> MR[Model-risk validation pack]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E,S cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class I,CB,M,V cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B,Q,F,L cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,N,R,MR cbPolicy
 ```
 
 | Component | Job | Why it exists |
@@ -173,18 +215,39 @@ The model comes last. Rules cover the first version: dose range per kilogram, ti
 
 ### 7.6 Draw the architecture
 
-```
- Patient records ─┐
- Dispensing log ──┼─► Dose reconciliation ─► Rules engine ─────► Risk flag
- Nurse schedule ──┘   (ordered vs dispensed   (dose/kg, time      │  (advisory only)
-                       vs administered)        window, duplicate) ▼
-                                                        Pharmacist review queue
- Free-text notes ─► extractor (weight/allergy) ─► human confirm      │ confirm / dismiss
-                                                                      ▼
-                                              Nurse alert (one ward, after shadow)
-                                                                      │ act / override + reason
-                                                                      ▼
-                                           Outcome log ─► error rate · precision · alert load
+```mermaid
+flowchart TD
+    N0["Patient records, dispensing log, nurse schedule"]
+    N1["Reconcile ordered, dispensed, and administered doses"]
+    N2["Rules: dose per kg, time window, duplicate"]
+    N3["Advisory risk flag"]
+    N4["Pharmacist review: confirm or dismiss"]
+    N5["Nurse alert for one ward after shadow"]
+    N6["Act or override with reason"]
+    N7["Outcome log: error rate, precision, alert load"]
+    N8["Free-text notes"]
+    N9["Extract weight and allergy"]
+    N10["Human confirms"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N8 --> N9
+    N9 --> N10
+    N10 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N6,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
 ```
 
 ```mermaid
@@ -202,6 +265,16 @@ flowchart LR
   A -->|act or override with reason| L[Outcome log]
   Q --> L
   L --> M[Error rate, precision, alert load]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class P,N,F,M cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class R,X cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class D,H,Q,A cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class S,E,L cbPolicy
 ```
 
 | Component | Job | Why it exists |

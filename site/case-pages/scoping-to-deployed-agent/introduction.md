@@ -2,9 +2,13 @@
 
 ## Overview
 
-A customer wants an AI agent and expects something real in two weeks. The worked example is Northwind's support triage, where success means a first response under five minutes. The hard part is governance on a fixed calendar. Every stage needs evidence signed by the right person, and a failed gate stops or escalates the engagement instead of becoming a quiet exception.
+- A customer wants an AI agent and expects something real in two weeks.
+- The worked example is Northwind's support triage, where success means a first response under five minutes.
+- The hard part is governance on a fixed calendar. Every stage needs evidence signed by the right person, and a failed gate stops or escalates the engagement instead of becoming a quiet exception.
 
-The design has two systems. The first is a deterministic delivery state machine with seven gated stages, from security review to the sponsor's go/no-go and handover. The second is the agent it delivers: a Zendesk ticket is redacted, classified, enriched with read-only context, drafted by an LLM, checked for grounding and escalation, and sent under a human approval policy. Speed comes from reuse: Northwind builds only its escalation policy and takes five of six components from the accelerator library.
+- The design has two systems. The first is a deterministic delivery state machine with seven gated stages, from security review to the sponsor's go/no-go and handover.
+- The second is the agent it delivers: a Zendesk ticket is redacted, classified, enriched with read-only context, drafted by an LLM, checked for grounding and escalation, and sent under a human approval policy.
+- Speed comes from reuse: Northwind builds only its escalation policy and takes five of six components from the accelerator library.
 
 ## The core idea
 
@@ -18,6 +22,18 @@ flowchart LR
   D --> E{Sponsor says go?}
   E -->|Yes| F[Limited production and handover]
   E -->|No| G[Stop or escalate]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class G cbStop
 ```
 
 ## Who it is for

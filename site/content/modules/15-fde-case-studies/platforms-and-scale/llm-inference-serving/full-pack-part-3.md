@@ -34,7 +34,15 @@ The hour belongs to batching, routing and failover, because those are the words 
 
 The two-minute summary to rehearse:
 
-> *"I'd treat each GPU as a stateful server with a memory budget. Requests are tokenized at the gateway and admitted against per-tenant token buckets, with a bounded queue that returns 429 early. A router picks a replica from a capacity registry of free KV blocks. It uses power-of-two choices so stale data doesn't cause herding, and prefix affinity so shared prompts reuse cache. Each replica runs continuous batching on a paged KV pool, with chunked prefill so long prompts don't stall streams. A three-layer health check evicts bad GPUs. Un-streamed requests retry under a budget, and streamed ones re-prefill or fail explicitly. At a thousand requests a second with this shape, that's about 214 replicas plus N+1 per zone. The metric that would prove me wrong is goodput, not throughput."*
+> - I'd treat each GPU as a stateful server with a memory budget.
+> - Requests are tokenized at the gateway and admitted against per-tenant token buckets, with a bounded queue that returns 429 early.
+> - A router picks a replica from a capacity registry of free KV blocks.
+> - It uses power-of-two choices so stale data doesn't cause herding, and prefix affinity so shared prompts reuse cache.
+> - Each replica runs continuous batching on a paged KV pool, with chunked prefill so long prompts don't stall streams.
+> - A three-layer health check evicts bad GPUs.
+> - Un-streamed requests retry under a budget, and streamed ones re-prefill or fail explicitly.
+> - At a thousand requests a second with this shape, that's about 214 replicas plus N+1 per zone.
+> - The metric that would prove me wrong is goodput, not throughput.
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
@@ -48,7 +56,11 @@ The pivot after a good design is "the GPU bill is too high." No ready-made drill
 | Do not | Buy more GPUs before measuring batch occupancy and KV use |
 | 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
 
-Decode was two-thirds of the anchor's replica-seconds in section 3, so output length is the first number to cut. Cancellation on disconnect is the second, because it recovers tokens nobody reads. Every strong cost answer follows four verbs in order. Measure, with occupancy and goodput. Route, sending offline work to the batch tier. Bound, with output caps and admission. Cache safely, sharing prefix blocks only for identical prefixes.
+- Decode was two-thirds of the anchor's replica-seconds in section 3, so output length is the first number to cut.
+- Cancellation on disconnect is the second, because it recovers tokens nobody reads.
+- Every strong cost answer follows four verbs in order. Measure, with occupancy and goodput.
+- Route, sending offline work to the batch tier. Bound, with output caps and admission.
+- Cache safely, sharing prefix blocks only for identical prefixes.
 
 ---
 

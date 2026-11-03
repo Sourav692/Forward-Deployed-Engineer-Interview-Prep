@@ -113,6 +113,18 @@ flowchart TB
     RECEIPT --> PLAN
     KILL[Kill switch and budgets] -.-> PLAN
     KILL -.-> GATE
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class USER,REG cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class EDGE,STATE,VALID,PDP,APR,SYS,KILL cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class PLAN,BROKER cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class STOP cbStop
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class GATE,RECEIPT cbAction
 ```
 
 ### Step-by-step architecture
@@ -159,9 +171,14 @@ The kill switch must stop new tool calls, cancel queued work, revoke or expire t
 
 ## 6. Scale, latency, and cost
 
-At the source’s illustrative 20 QPS and 10 actions/task, plan for about 200 tool actions/s, with 40–60 model calls/s during iterative planning bursts. The source estimates roughly 5 KB of decision record plus 20 KB audit trail per task, or about 8.6–34.6 GB/day of raw append-only data at its assumed range. Ask whether planner time, downstream tool time, or human approval is the bottleneck.
+- At the source’s illustrative 20 QPS and 10 actions/task, plan for about 200 tool actions/s, with 40–60 model calls/s during iterative planning bursts.
+- The source estimates roughly 5 KB of decision record plus 20 KB audit trail per task, or about 8.6–34.6 GB/day of raw append-only data at its assumed range.
+- Ask whether planner time, downstream tool time, or human approval is the bottleneck.
 
-At 10×, partition by tenant or workflow, cap concurrency per user/tool/globally, queue slow actions, and keep ordered actions for one account together. REST executes; function calling selects among a small set; MCP can expose tool discovery; an agent framework coordinates multi-step work. A registry loads only relevant schemas instead of placing 1,500 functions from 100 apps in one prompt. Backend services trust enterprise identity, not the LLM.
+- At 10×, partition by tenant or workflow, cap concurrency per user/tool/globally, queue slow actions, and keep ordered actions for one account together.
+- REST executes; function calling selects among a small set; MCP can expose tool discovery; an agent framework coordinates multi-step work.
+- A registry loads only relevant schemas instead of placing 1,500 functions from 100 apps in one prompt.
+- Backend services trust enterprise identity, not the LLM.
 
 If the agent is slow or expensive: trace → route common intents deterministically → bound steps, retries, tokens and tool time → cache safe read results within the request → move slow side effects async. Never extend an unbounded loop to make it “more capable.”
 

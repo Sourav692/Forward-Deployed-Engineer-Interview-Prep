@@ -2,38 +2,79 @@
 
 ## 4. Draw the Architecture End to End
 
-One diagram carries the design. The organising split is control plane against data plane. The control plane decides who may do what, where and under which limits. Its changes are slower, more privileged and more auditable. The data plane does the work. A tenant moving to the dedicated tier is a controlled configuration change in the control plane, not an ad hoc code path.
+- One diagram carries the design. The organising split is control plane against data plane.
+- The control plane decides who may do what, where and under which limits.
+- Its changes are slower, more privileged and more auditable. The data plane does the work.
+- A tenant moving to the dedicated tier is a controlled configuration change in the control plane, not an ad hoc code path.
 
+```mermaid
+flowchart TD
+    N0["Customer identity provider"]
+    N1["Identity federation"]
+    N2["Tenant directory"]
+    N3["Policy decision point"]
+    N4["Regional scheduler"]
+    N5["Allowed region and tier"]
+    N6["Per-tenant key selection"]
+    N7["Immutable tenant context"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N3 --> N6
+    N2 --> N7
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
 ```
- ╔═══════════════════ CONTROL PLANE — decides who may do what, where, under which limits ═══════════════════╗
- ║  identity federation (customer IdP) ─> tenant directory ─> policy decision point ─┬─> regional scheduler   ║
- ║  quota configuration · per-tenant key manager · tenant registry + provisioning    └─> key selection       ║
- ║  central policy definition · regional enforcement · SCIM group sync · retention policy per tenant         ║
- ╚═══════════════════════════════════════╤═══════════════════════════════════════════════════════════════════╝
-                                         │ immutable tenant context (never re-derived below this line)
- ╔═══════════════════ DATA PLANE — enforces, per region, shared by default ═══════════════════════════════════╗
- ║                                                                                                            ║
- ║  REQUEST PATH — synchronous, strict dependency order                                                       ║
- ║   user ─> API GATEWAY ─> AUTHORISE ─> ROUTE ─> ADMIT ─> TENANT-AWARE SERVICE ─> STORES ─> AUDIT ─> answer  ║
- ║           admit,       PDP: role,   region +  quota:    executes only on      row · object ·   tenant-   ║
- ║           shape,       tenant,      tier      concur-   immutable context     cache · queue ·  scoped    ║
- ║           reject early action,                rency,                          vector · key     event     ║
- ║                        region                 tokens,        │ missing tenant predicate                   ║
- ║                                               budget         v                                            ║
- ║                                                           FAIL CLOSED (reject / 404 / no result)          ║
- ║                                                                                                            ║
- ║  STORES — tenant key in the physical layout AND in every predicate                                         ║
- ║   partitioned DB (tenant_id) · object store (namespace per tenant) · cache (tenant in key)                 ║
- ║   queues (tenant envelope, per-tenant dead-letter) · vector index (scoped at ingest AND query)             ║
- ║   per-tenant data-encryption keys (envelope) · inference workers (fair queue, reserved lanes)              ║
- ║                                                                                                            ║
- ║  REGIONS — shared control plane, regional data planes; residency decided by the scheduler, not the app     ║
- ║                                                                                                            ║
- ║  OBSERVABILITY — per tenant                                                                                ║
- ║   audit pipeline (append-only) ─> usage ledger (cost attribution) ─> dashboards: p95 by tenant, quota     ║
- ║   rejections, cost/tenant, cross_tenant_retrieval_count, isolation-test pass rate, failover time           ║
- ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway validates shape and rejects early"]
+    N2["Authorise role, tenant, action, and region"]
+    N3["Route region and tier"]
+    N4["Admit within concurrency, token, and budget quota"]
+    N5["Tenant-aware service using immutable context"]
+    N6["Tenant-scoped stores"]
+    N7["Tenant audit event"]
+    N8["Answer"]
+    N9["Tenant predicate missing: fail closed with rejection, 404, or no result"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N5 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N1,N9 cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3,N4 cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6,N7,N8 cbAction
 ```
+
+- Keep central policy definition, regional enforcement, SCIM group sync, per-tenant retention, quotas, keys, tenant registry, and provisioning under control-plane management. Never rederive tenant context downstream.
+- Enforce tenant scope in physical layout and every predicate: database partitions, object namespaces, cache keys, queue envelopes/dead letters, vector ingestion/query, and envelope-encryption keys.
+- Use fair inference queues and reserved lanes where required. Residency comes from the scheduler.
+- Append tenant audit events and usage for attribution; monitor p95 per tenant, quota rejections, cost per tenant, cross-tenant retrieval count, isolation tests, and failover time.
 
 The same flow as a rendered diagram:
 
@@ -71,6 +112,16 @@ flowchart LR
     RS -.-> RT
     QC -.-> Q
     KM -.-> DB & OBJ
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class IF,KM,DB cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class TD,RT,DASH cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class PDP,RS,QC,GW,AUTH,Q,SVC cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class U,OBJ,CACHE,MQ,VEC,INF,FC,AUD,LED cbAction
 ```
 
 The answer key's diagram is the compressed form. Draw it first if time is short:
@@ -89,6 +140,16 @@ flowchart LR
   PDP -.immutable tenant context.-> GW
   STORE -->|missing tenant predicate| FC[["Fail closed"]]
   SVC --> AUD[(Audit pipeline)]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class ID,KM cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class TD,GW,FC cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class PDP,RS,Q cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class SVC,STORE,AUD cbAction
 ```
 
 Read the components in dependency order, because that is the order they must exist and the order they fail.
@@ -106,13 +167,19 @@ Read the components in dependency order, because that is the order they must exi
 | Regional scheduler | Place workload into an allowed region and tier | Placement and residency boundary | Control | Closed for sensitive writes; queue or reroute otherwise |
 | Audit pipeline | Capture immutable tenant-scoped events for investigation and billing | Observability and compliance boundary | Data | Degrades: the action completes, the gap is alerted |
 
-Point at three boundaries while the diagram is up. The sync/async boundary sits after audit: authentication, authorisation, quota admission and region selection are synchronous, and reporting, logging and offline enrichment may be asynchronous. Anything that could cross a trust boundary or consume scarce capacity is never deferred blindly to a background task. The systems of record are the tenant directory for membership, the partitioned database for tenant data, the quota service for usage and the audit pipeline for traceability. A boundary mistake among them is a security incident. Caches improve latency and are never the source of truth for membership or authorisation. Queues carry tenant identifiers and policy context explicitly, because backpressure is only safe when the worker knows which tenant it is slowing down.
+- Point at three boundaries while the diagram is up. The sync/async boundary sits after audit: authentication, authorisation, quota admission and region selection are synchronous, and reporting, logging and offline enrichment may be asynchronous.
+- Anything that could cross a trust boundary or consume scarce capacity is never deferred blindly to a background task.
+- The systems of record are the tenant directory for membership, the partitioned database for tenant data, the quota service for usage and the audit pipeline for traceability.
+- A boundary mistake among them is a security incident. Caches improve latency and are never the source of truth for membership or authorisation.
+- Queues carry tenant identifiers and policy context explicitly, because backpressure is only safe when the worker knows which tenant it is slowing down.
 
 The MVP is one policy service, one gateway, one tenant-aware application tier, one partitioned data store, one quota service, one regional control plane and one audit stream. That is enough to prove isolation, performance shaping and regional routing. Dedicated customer clusters, per-service SLOs, richer workload classification and a more granular policy language are extensions, not prerequisites.
 
 ## 5. Derive Tenant Context Once and Make It Immutable
 
-Tenant context comes from verified identity, never from the request body. A signed token, verified claim or server-side session can be authenticated and logged. A header or JSON field the client sets can be spoofed, replayed or forwarded across tenants by accident, unless a trusted gateway sets it. That one choice governs everything downstream, because row filters, object ownership, cache keys, queue partitions, log redaction and vector-index lookup must all consume the same verified context.
+- Tenant context comes from verified identity, never from the request body. A signed token, verified claim or server-side session can be authenticated and logged.
+- A header or JSON field the client sets can be spoofed, replayed or forwarded across tenants by accident, unless a trusted gateway sets it.
+- That one choice governs everything downstream, because row filters, object ownership, cache keys, queue partitions, log redaction and vector-index lookup must all consume the same verified context.
 
 The dependency order is strict, and each step has a reason. Identity must come first. Context must become immutable early. Policy must run before expensive work. Region is a control-plane decision, not a late optimisation. Audit happens after the action but close to it.
 
@@ -127,20 +194,44 @@ The dependency order is strict, and each step has a reason. Identity must come f
 9. **Regional scheduler** decides which region and cluster class may serve the request.
 10. **Audit pipeline** records tenant-scoped activity.
 
-Narrate the happy path and tie each step to a customer reason. Authenticate through federation, because the customer keeps their own identity source. Derive immutable tenant context, because one company may have several subsidiaries. Authorise against policy, because authorisation must be explainable and centrally governed. Route to the allowed region and tier, because location control is part of the product promise. Apply quota before inference, because shared cannot mean noisy neighbour. Read and write only tenant-scoped resources. Emit a tenant-scoped audit event, because enterprise buyers need traceability.
+- Narrate the happy path and tie each step to a customer reason.
+- Authenticate through federation, because the customer keeps their own identity source. Derive immutable tenant context, because one company may have several subsidiaries.
+- Authorise against policy, because authorisation must be explainable and centrally governed. Route to the allowed region and tier, because location control is part of the product promise.
+- Apply quota before inference, because shared cannot mean noisy neighbour. Read and write only tenant-scoped resources.
+- Emit a tenant-scoped audit event, because enterprise buyers need traceability.
 
 ```mermaid
 sequenceDiagram
-    participant User as User/Client
-    participant GW as API Gateway
-    participant IF as Identity Federation
-    participant TD as Tenant Directory
-    participant PDP as Policy Decision Point
-    participant RS as Regional Scheduler
-    participant Q as Quota Service
-    participant TAS as Tenant-Aware Service
-    participant DB as Partitioned DB / Cache
-    participant Audit as Audit Pipeline
+    box rgba(37,99,235,0.12)
+        participant User as User/Client
+    end
+    box rgba(124,58,237,0.12)
+        participant GW as API Gateway
+    end
+    box rgba(21,128,61,0.12)
+        participant IF as Identity Federation
+    end
+    box rgba(180,83,9,0.12)
+        participant TD as Tenant Directory
+    end
+    box rgba(37,99,235,0.12)
+        participant PDP as Policy Decision Point
+    end
+    box rgba(124,58,237,0.12)
+        participant RS as Regional Scheduler
+    end
+    box rgba(21,128,61,0.12)
+        participant Q as Quota Service
+    end
+    box rgba(180,83,9,0.12)
+        participant TAS as Tenant-Aware Service
+    end
+    box rgba(37,99,235,0.12)
+        participant DB as Partitioned DB / Cache
+    end
+    box rgba(124,58,237,0.12)
+        participant Audit as Audit Pipeline
+    end
     User->>GW: Request with identity token
     GW->>IF: Validate identity
     IF->>TD: Resolve membership and deployment posture
@@ -164,7 +255,11 @@ sequenceDiagram
 
 If the diagram does not make the missing-predicate case obvious, the design is still too hand-wavy. The strongest signal in the round is your narration of how identity, data, state and failure move through the diagram, more than the drawing itself.
 
-Production identity has three problems to solve before the policy engine runs, and none of them is authorisation. Token validation checks the signature against the IdP's published keys, the issuer, the expiry, and that the token was issued for this application, before any permission logic runs. Group mapping is owned by the customer. Their Okta or Microsoft Entra ID (formerly Azure AD) groups are the source of truth, mapped into the platform's role vocabulary. That mapping is configuration that drifts silently when a group is renamed. Just-in-time provisioning creates the first local record from the token's claims, scoped to the customer and never with more access than intended by default.
+- Production identity has three problems to solve before the policy engine runs, and none of them is authorisation.
+- Token validation checks the signature against the IdP's published keys, the issuer, the expiry, and that the token was issued for this application, before any permission logic runs.
+- Group mapping is owned by the customer. Their Okta or Microsoft Entra ID (formerly Azure AD) groups are the source of truth, mapped into the platform's role vocabulary.
+- That mapping is configuration that drifts silently when a group is renamed.
+- Just-in-time provisioning creates the first local record from the token's claims, scoped to the customer and never with more access than intended by default.
 
 ## 6. Enforce Isolation at Seven Layers That Do Not Trust Each Other
 
@@ -180,7 +275,14 @@ One row label is one defence layer. It is easy to omit in application code, ad h
 | Vector index | Tenant scoping applied at ingestion and at query time, because semantic search otherwise surfaces neighbouring content |
 | Key | Tenant-scoped encryption keys with envelope encryption, so one compromise does not span the fleet |
 
-The tenant predicate is the mechanism this group owns. The store itself refuses to return a row unless the request is already scoped to one tenant. Row-level security bound to the session does that, as long as the app connects as a role that is not the table owner, a superuser or BYPASSRLS, or the table uses FORCE ROW LEVEL SECURITY. Partitioning helps only if each tenant's partition sits behind its own credentials. Isolation then never depends on every engineer remembering `WHERE tenant_id = …`. A future API that forgets the clause returns nothing rather than another company's data. The same predicate is compiled into the vector-search filter and into the cache key, keyed on tenant, permission signature and version. The two-layer pattern that makes a pre-filter cheap and a post-check authoritative is G01's section 6, and it applies here unchanged. The tenant predicate is layer 1 in the search. The post-retrieval invariant `request.tenant_id == chunk.doc_tenant_id` is the layer 2 check, and section 14's incident shows it being skipped.
+- The tenant predicate is the mechanism this group owns. The store itself refuses to return a row unless the request is already scoped to one tenant.
+- Row-level security bound to the session does that, as long as the app connects as a role that is not the table owner, a superuser or BYPASSRLS, or the table uses FORCE ROW LEVEL SECURITY.
+- Partitioning helps only if each tenant's partition sits behind its own credentials.
+- Isolation then never depends on every engineer remembering `WHERE tenant_id = …`.
+- A future API that forgets the clause returns nothing rather than another company's data.
+- The same predicate is compiled into the vector-search filter and into the cache key, keyed on tenant, permission signature and version.
+- The two-layer pattern that makes a pre-filter cheap and a post-check authoritative is G01's section 6, and it applies here unchanged.
+- The tenant predicate is layer 1 in the search. The post-retrieval invariant `request.tenant_id == chunk.doc_tenant_id` is the layer 2 check, and section 14's incident shows it being skipped.
 
 Pick a tenancy level and justify it, because the interviewer will ask how strongly tenants are isolated.
 
@@ -190,17 +292,32 @@ Pick a tenancy level and justify it, because the interviewer will ask how strong
 | Separate schema / namespace per tenant | Same cluster; one tenant's tables are not another's | Stronger isolation without an extra deployment |
 | Dedicated deployment per tenant | Separate cluster, region and encryption keys | Customers whose contracts or risk policy rule out sharing, often in banking and healthcare |
 
-Start at level 1 and make the default honest with two follow-ups. First, the database enforces the tenant, not the application. Second, regulated customers get a named escalation path from a tagged row to their own keys, region or deployment. Per-tenant keys answer the question *"what happens if someone gets raw read access to the storage layer?"* With per-tenant data keys wrapped by a master key, storage access alone gives them only ciphertext. A leaked tenant key opens one tenant, not the fleet, and destroying that key crypto-shreds the tenant's data. With one platform-wide key, a single leaked key exposes every customer at once. The master key still guards everyone, so it lives in the KMS and never leaves it.
+- Start at level 1 and make the default honest with two follow-ups.
+- First, the database enforces the tenant, not the application. Second, regulated customers get a named escalation path from a tagged row to their own keys, region or deployment.
+- Per-tenant keys answer the question *"what happens if someone gets raw read access to the storage layer?"* With per-tenant data keys wrapped by a master key, storage access alone gives them only ciphertext.
+- A leaked tenant key opens one tenant, not the fleet, and destroying that key crypto-shreds the tenant's data.
+- With one platform-wide key, a single leaked key exposes every customer at once.
+- The master key still guards everyone, so it lives in the KMS and never leaves it.
 
-Two more principles belong on the board. Least privilege: each service sees only the tenant scope it needs, only for the operation it performs. Blast radius as the design unit: by tenant, by region, by workflow, by dependency. Negative isolation tests matter more than positive ones, because the platform should prove the wrong tenant cannot read, infer, cache, dequeue or search another tenant's data.
+- Two more principles belong on the board. Least privilege: each service sees only the tenant scope it needs, only for the operation it performs.
+- Blast radius as the design unit: by tenant, by region, by workflow, by dependency.
+- Negative isolation tests matter more than positive ones, because the platform should prove the wrong tenant cannot read, infer, cache, dequeue or search another tenant's data.
 
 > *"I'd start with shared infrastructure and a tenant id on every record, that's the right default. The filter has to live in the data layer, not in application code: the store should refuse to return a row unless the request is tenant-scoped. For regulated customers I'd escalate to a separate schema or a dedicated region and keys, not just a different tag in the same table."*
 
 ## 7. Meter Before the Call and Share Fairly
 
-Apply quota and budget before inference, storage growth or batch fan-out, never after. A budget checked after the call is a bill, not a control, and budgets here are contractual. The quota service enforces concurrency, token and burst limits per tenant or tier. The usage ledger attributes every request to a tenant. Quota alerts fire before the limit rather than at it.
+- Apply quota and budget before inference, storage growth or batch fan-out, never after.
+- A budget checked after the call is a bill, not a control, and budgets here are contractual.
+- The quota service enforces concurrency, token and burst limits per tenant or tier.
+- The usage ledger attributes every request to a tenant. Quota alerts fire before the limit rather than at it.
 
-Rate limiting and fairness are different problems, and a real platform needs both. A rate limit answers whether this request may proceed at all, a ceiling on one tenant's own allotment. A fair queue answers in what order requests are served under load. A large tenant's burst then cannot make a small, well-behaved tenant wait longer for its turn, even though the small tenant never exceeded any limit. The mechanism is weighted fair queuing across per-tenant queues feeding a shared worker pool, so throughput is shared proportionally under contention rather than first-come-first-served. A token bucket per tenant caps each tenant's rate on top.
+- Rate limiting and fairness are different problems, and a real platform needs both.
+- A rate limit answers whether this request may proceed at all, a ceiling on one tenant's own allotment.
+- A fair queue answers in what order requests are served under load.
+- A large tenant's burst then cannot make a small, well-behaved tenant wait longer for its turn, even though the small tenant never exceeded any limit.
+- The mechanism is weighted fair queuing across per-tenant queues feeding a shared worker pool, so throughput is shared proportionally under contention rather than first-come-first-served.
+- A token bucket per tenant caps each tenant's rate on top.
 
 Contain a noisy neighbour in two steps. First the per-tenant quotas, rate limits, concurrency caps and workload classification. Then isolate the expensive parts: admission control before inference, queue partitioning, reserved capacity for premium tenants, circuit breakers past the envelope. Noise caused by a bug gets fast detection and a kill switch. Legitimate burst demand gets fairness, not punishment.
 

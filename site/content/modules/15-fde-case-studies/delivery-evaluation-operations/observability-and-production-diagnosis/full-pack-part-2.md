@@ -6,7 +6,10 @@ A classifier that runs after storage protects nothing, because the raw value has
 
 The data model is small. `Request` carries tenant ID, prompt and an optional user ID. `ExportedTrace` carries only a bounded, structured attribute dictionary: correlation ID, tenant ID, prompt classification, query hash, spans and result status. It never carries raw prompt text by default.
 
-The hash is HMAC-SHA256 with a secret key, so the same prompt always maps to the same fingerprint. That fingerprint deduplicates and correlates requests across the store. Without the secret key, nobody can brute-force common prompts back out of the hash. If the key leaks, they can, so it lives in a vault and gets rotated. A missing key raises an error rather than silently hashing without one.
+- The hash is HMAC-SHA256 with a secret key, so the same prompt always maps to the same fingerprint.
+- That fingerprint deduplicates and correlates requests across the store. Without the secret key, nobody can brute-force common prompts back out of the hash.
+- If the key leaks, they can, so it lives in a vault and gets rotated.
+- A missing key raises an error rather than silently hashing without one.
 
 Three tests turn the design into executable contracts:
 
@@ -37,7 +40,11 @@ The first move under this injection is to contain impact, preserve evidence and 
 
 ## 8. Name the Failure Policy for Every Layer
 
-Every dependency needs an explicit answer to one question: what happens when it is gone? Use five terms for the answer. Fail open continues with reduced visibility. Fail closed refuses the action when integrity, privacy or authorisation would be compromised. Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention. Human intervention escalates when risk or ambiguity is too high for automation.
+- Every dependency needs an explicit answer to one question: what happens when it is gone?
+- Use five terms for the answer. Fail open continues with reduced visibility.
+- Fail closed refuses the action when integrity, privacy or authorisation would be compromised.
+- Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention.
+- Human intervention escalates when risk or ambiguity is too high for automation.
 
 | Failure | Policy |
 |---|---|
@@ -73,7 +80,9 @@ A dashboard built from component metrics shows rates without telling anyone whet
 
 The top panel shows the user outcome: latency percentile, failure rate, incident volume. The middle panel shows likely causes: retrieval success, tool success, model error class, token cost. The bottom panel shows support mechanics: trace coverage, redaction rate, queue age for incidents, mean time to diagnose.
 
-To answer the correctness question, compare the retrieved evidence with the final answer. If retrieval is empty, stale or off-topic, the fault is upstream. If retrieval looked good but the answer contradicts it, suspect the model or prompt construction. If the bad answer appears for only one tenant, suspect tenant configuration, access control or integration state before blaming the shared model.
+- To answer the correctness question, compare the retrieved evidence with the final answer.
+- If retrieval is empty, stale or off-topic, the fault is upstream. If retrieval looked good but the answer contradicts it, suspect the model or prompt construction.
+- If the bad answer appears for only one tenant, suspect tenant configuration, access control or integration state before blaming the shared model.
 
 ```mermaid
 flowchart TD
@@ -82,6 +91,12 @@ flowchart TD
   CHECK -->|"Evidence looks good"| CONTRADICT{"Does answer<br/>contradict evidence?"}
   CONTRADICT -->|"Yes"| MODEL["Fault likely: Model /<br/>Prompt Construction"]
   CONTRADICT -->|"No, only one tenant affected"| TENANT["Suspect: Tenant config,<br/>access control, or<br/>integration state"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class START,UPSTREAM,CONTRADICT cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class CHECK,MODEL,TENANT cbReason
 ```
 
 This works because of the signals section 2 kept: request and tenant correlation IDs; retrieval query fingerprints and document identifiers, not raw text; model version, prompt template version and generation settings; tool call status, latency and error class; and outcome tags.

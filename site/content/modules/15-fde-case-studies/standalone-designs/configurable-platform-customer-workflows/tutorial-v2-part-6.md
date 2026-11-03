@@ -26,6 +26,16 @@ flowchart LR
   D --> E["30-38 min<br/>Happy path, failure path,<br/>loop drill"]
   E --> F["39-46 min<br/>Trade-offs & follow-ups"]
   F --> G["47-49 min<br/>Close: summary + rollout gate"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ### Four Trade-Off Pairs

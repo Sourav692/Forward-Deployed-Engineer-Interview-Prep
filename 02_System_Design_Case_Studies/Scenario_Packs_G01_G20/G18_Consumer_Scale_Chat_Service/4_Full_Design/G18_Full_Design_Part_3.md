@@ -15,7 +15,16 @@ Spend the hour on state, streaming, admission and cost, because those are the pa
 
 The two-minute spoken answer *(own construction)*:
 
-> *I would start by saying the model is stateless and the product is not. At 100 million daily users and ten messages each, peak is around 35,000 messages a second, and with eight-second answers that is about 280,000 open streams — so admission, streaming and cost dominate. A streaming gateway holds each SSE connection and does auth, per-user token-bucket limits, tier quotas and input moderation before anything reaches a GPU. The conversation service stores every message durably, sharded by user, and persists partial answers so a reconnect resumes. A context builder sends only what the turn needs: a frozen system prompt, a rolling summary, recent turns and user memory, in a prefix-stable order so prompt caching works. A router picks the model by tier and task, and a fair queue per tier feeds inference pools that batch continuously and keep each conversation on a warm replica. Output moderation runs on the stream and can halt it. When the client leaves, the gateway cancels generation and tool calls, because tokens nobody reads still cost money. Each region is independent, with a home region for history and cold failover. I would prove it with time to first token, regenerate and abandon rates, moderation error rates and cost per daily active user.*
+> - I would start by saying the model is stateless and the product is not.
+> - At 100 million daily users and ten messages each, peak is around 35,000 messages a second, and with eight-second answers that is about 280,000 open streams — so admission, streaming and cost dominate.
+> - A streaming gateway holds each SSE connection and does auth, per-user token-bucket limits, tier quotas and input moderation before anything reaches a GPU.
+> - The conversation service stores every message durably, sharded by user, and persists partial answers so a reconnect resumes.
+> - A context builder sends only what the turn needs: a frozen system prompt, a rolling summary, recent turns and user memory, in a prefix-stable order so prompt caching works.
+> - A router picks the model by tier and task, and a fair queue per tier feeds inference pools that batch continuously and keep each conversation on a warm replica.
+> - Output moderation runs on the stream and can halt it.
+> - When the client leaves, the gateway cancels generation and tool calls, because tokens nobody reads still cost money.
+> - Each region is independent, with a home region for history and cold failover.
+> - I would prove it with time to first token, regenerate and abandon rates, moderation error rates and cost per daily active user.
 
 The lines that carry the round *(own construction)*:
 
@@ -53,7 +62,9 @@ The interviewer's pivot is "the bill is growing faster than users." No ready-mad
 | Do not | Re-send the full history every turn, or build a three-model cascade that forfeits the prompt cache |
 | 60-second line | Chat cost is history times turns plus answers nobody finished. Keep the prefix stable so history is a cache read, summarise in steps, keep answers short by default, route easy turns down, and cancel the moment the user leaves. |
 
-Two cost drivers explain almost every surprise here. Input tokens grow with the conversation: teams count the user's question and ignore the system prompt and hidden history, so the bill rises with flat traffic. Output tokens grow with verbosity: teams measure requests, not generated tokens. Streaming improves perceived latency but does not reduce total compute cost. Quote cost per successful conversation rather than per request, as the additions insist: a cheaper model that needs a regenerate is not cheaper.
+- Two cost drivers explain almost every surprise here. Input tokens grow with the conversation: teams count the user's question and ignore the system prompt and hidden history, so the bill rises with flat traffic.
+- Output tokens grow with verbosity: teams measure requests, not generated tokens. Streaming improves perceived latency but does not reduce total compute cost.
+- Quote cost per successful conversation rather than per request, as the additions insist: a cheaper model that needs a regenerate is not cheaper.
 
 Every strong cost answer follows four verbs in order. Measure tokens and stage timings first. Route model to tier and task. Bound history, answer length and tool steps. Cache safely, with a stable prefix and the user's scope in every key.
 

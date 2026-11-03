@@ -2,11 +2,18 @@
 
 ## 12. Decide When Parameter Updates Earn Their Cost
 
-Training is the most expensive way to change a model's behaviour, so defend it before proposing it. Improvement can live in four places, in this order: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the rule of thumb is roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
+- Training is the most expensive way to change a model's behaviour, so defend it before proposing it.
+- Improvement can live in four places, in this order: context, memory, procedure and parameters.
+- Each is slower and costlier to change than the one before; the rule of thumb is roughly ten times per step, an order of magnitude rather than a measurement.
+- Work down that list, not up.
 
-The book names three situations where parameter updates win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost. Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back. It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
+- The book names three situations where parameter updates win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost.
+- Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back.
+- It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
 
-Map the four prompts onto that rule *(own construction)*. The math model wins on reasoning behaviour that prompting cannot install. The training system is parameter updates by definition. The harm-versus-help model wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
+- Map the four prompts onto that rule *(own construction)*. The math model wins on reasoning behaviour that prompting cannot install.
+- The training system is parameter updates by definition. The harm-versus-help model wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer.
+- The phone model is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
 
 A tuned model freezes its task definition, which is the cost the book asks to name. When the business definition changes, a tuned model needs retraining where a prompt needs an edit. Keep a prompted fallback path for that reason.
 
@@ -25,7 +32,10 @@ Spend the hour on the scorer and the eval, because that is where these prompts s
 | 45–55 | Eval | Five slices, sampling settings with every number, leakage suspected first |
 | 55–60 | Pivot | Whichever constraint the interviewer adds: compute (section 9), harm (10), device (11) |
 
-The interviewer will change a constraint mid-round; the question bank says so. Map the new constraint to the stage it changes and re-derive only that stage. "You now have a tenth of the compute" changes model size and the SFT-versus-RL split. "It must run offline on a laptop" changes deploy. "Legal says no synthetic data" changes data collection and pushes harder on the verifier.
+- The interviewer will change a constraint mid-round; the question bank says so.
+- Map the new constraint to the stage it changes and re-derive only that stage.
+- "You now have a tenth of the compute" changes model size and the SFT-versus-RL split.
+- "It must run offline on a laptop" changes deploy. "Legal says no synthetic data" changes data collection and pushes harder on the verifier.
 
 | Follow-up | Strong answer |
 |---|---|
@@ -48,7 +58,9 @@ The interviewer's pivot after a good design is "the training bill is out of cont
 | Do not | Launch the full-scale run to find out whether the recipe works, or tune hyperparameters against the test set |
 | 60-second line | Treat training spend as a series of experiments. Prove the recipe small, iterate with adapters, spend rollouts where problems are hard, and checkpoint so a failure costs minutes. The metric is eval gained per GPU-hour. |
 
-The four cost verbs still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
+- The four cost verbs still generate the answer. Measure, by attributing GPU-hours to stage and experiment.
+- Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving.
+- Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
 
 ---
 

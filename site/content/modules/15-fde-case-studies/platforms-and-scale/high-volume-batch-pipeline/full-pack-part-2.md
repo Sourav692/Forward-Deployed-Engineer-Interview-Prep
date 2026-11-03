@@ -19,44 +19,84 @@ Say the uncertainty out loud:
 
 > *"At 100 million records, I would plan for about 4,630 records per second before retries. If the average prompt is smaller than expected, model throughput becomes easier; if the tail of large records is heavier, we need more headroom or more aggressive partitioning. I would size the system around the tail, not the mean."*
 
-The chapter treats cost only qualitatively. The V2 tutorial's author closes the gap with a live dollar formula, which is supplementary perspective and not chapter content. At 270 tokens a record and ~5,320 rps, the fleet sustains roughly 1.43M tokens/second. Across the window that is about 27B tokens for 100M records (100M × 270). Apply the per-million-token price for a cost per run, then divide by 100 for cost per million records. Retries of calls that ran re-spend the full 270 tokens each; a call rejected up front, such as a 429, generally costs nothing. At a 5% retry rate that is roughly 5% more spend. The 15% headroom is itself a cost line, and stragglers burn compute past the window. So the cost ceiling belongs inside the rate-limit coordinator's backoff behaviour, not in a separate finance conversation.
+- The chapter treats cost only qualitatively. The V2 tutorial's author closes the gap with a live dollar formula, which is supplementary perspective and not chapter content.
+- At 270 tokens a record and ~5,320 rps, the fleet sustains roughly 1.43M tokens/second.
+- Across the window that is about 27B tokens for 100M records (100M × 270).
+- Apply the per-million-token price for a cost per run, then divide by 100 for cost per million records.
+- Retries of calls that ran re-spend the full 270 tokens each; a call rejected up front, such as a 429, generally costs nothing.
+- At a 5% retry rate that is roughly 5% more spend. The 15% headroom is itself a cost line, and stragglers burn compute past the window.
+- So the cost ceiling belongs inside the rate-limit coordinator's backoff behaviour, not in a separate finance conversation.
 
 ## 5. Draw the Architecture End to End
 
-Each layer owns a different kind of truth. The planner owns what "this batch" means. The queue owns who is working on what. The sink owns what has been published. Planner, manifest, forecaster and console are control-plane concerns that coordinate the run. Workers and sink are data-plane concerns that move records through the model into durable output. They scale and change at different rates, which is why they are drawn apart.
+- Each layer owns a different kind of truth. The planner owns what "this batch" means.
+- The queue owns who is working on what. The sink owns what has been published.
+- Planner, manifest, forecaster and console are control-plane concerns that coordinate the run.
+- Workers and sink are data-plane concerns that move records through the model into durable output.
+- They scale and change at different rates, which is why they are drawn apart.
 
 The system with its planes and trust boundaries *(own construction)*:
 
+```mermaid
+flowchart TD
+    N0["Customer scheduler or API with idempotency key"]
+    N1["Job planner freezes snapshot, model version, deadline, and policy"]
+    N2["Partition manifest: ranges, attempts, checkpoints"]
+    N3["ETA forecast against deadline"]
+    N4["Operations console: status, pause, replay, contingency owner"]
+    N5["Opaque lease IDs"]
+    N6["Durable work queue with visibility timeout, retry, and dead letter"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N2 --> N5
+    N5 --> N6
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N2,N3 cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6 cbAction
 ```
- ╔══════════════════════════ CONTROL PLANE (coordinates the run) ══════════════════════════╗
- ║  customer scheduler / API ─> JOB PLANNER ─> PARTITION MANIFEST ─> ETA FORECASTER          ║
- ║  (idempotency key)          freeze snapshot  ranges, attempts,     progress vs deadline   ║
- ║                             model_version,   checkpoints              │                   ║
- ║                             deadline, policy     │                    v                   ║
- ║                                                  │            OPERATIONS CONSOLE          ║
- ║                                                  │            status · pause · replay ·   ║
- ║                                                  │            contingency mode + owner    ║
- ╚══════════════════════════════════════════════════╪════════════════════════════════════════╝
-            TRUST BOUNDARY 1: snapshot frozen ───────┤ enqueue leases (opaque ids only)
- ╔══════════════════════════ DATA PLANE (moves records) ═════════╪═════════════════════════╗
- ║                                                               v                         ║
- ║   DURABLE WORK QUEUE ── lease ──> INFERENCE WORKERS (autoscaled) ── read range once     ║
- ║   leases, visibility timeout      │   chunk into batches (e.g. 64)                        ║
- ║   retries, dead letter            │                                                      ║
- ║        ^                          v                                                      ║
- ║        │               RATE-LIMIT COORDINATOR  grant / delay tokens + concurrency        ║
- ║        │               (global + per tenant; backpressure lives here)                    ║
- ║        │                          │                                                      ║
- ║        │     TRUST BOUNDARY 2 ────┼──> EXTERNAL MODEL / PROVIDER (timeouts, 429s, junk)   ║
- ║        │                          v                                                      ║
- ║        │               validate_output()  typed boundary; bad output -> quarantine       ║
- ║        │                          │                                                      ║
- ║        │     TRUST BOUNDARY 3 ────┼──> IDEMPOTENT RESULT SINK                             ║
- ║        │                          │    upsert on job_id + record_id + model_version      ║
- ║        │                          v                                                      ║
- ║        └── ack / release ── CHECKPOINT STORE  advances only after the sink write succeeds ║
- ╚═════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Durable work queue"]
+    N1["Autoscaled inference workers read each range once"]
+    N2["Chunk into batches, for example 64"]
+    N3["Global and per-tenant rate/concurrency coordinator"]
+    N4["External model with deadlines"]
+    N5["Validate typed output"]
+    N6["Bad output: quarantine"]
+    N7["Valid output: idempotent sink keyed by job_id, record_id, model_version"]
+    N8["Advance checkpoint only after sink write"]
+    N9["Acknowledge or release queue lease"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N5 --> N7
+    N7 --> N8
+    N8 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N0,N2,N6,N9 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N4,N7 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N5,N8 cbPolicy
 ```
+
+- Freeze the input snapshot before leasing work. Send opaque identifiers across that boundary.
+- The coordinator owns grant/delay decisions and backpressure; external models can time out, return 429s, or return invalid output.
 
 The source's control-plane and data-plane diagram:
 
@@ -93,6 +133,16 @@ flowchart TB
 
     classDef trust stroke:#c0392b,stroke-width:2px,stroke-dasharray:4 2
     class ExtModel trust
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class API,Console cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Planner,Workers,ExtModel cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Manifest,ETA,RateLimit,Checkpoint cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class Queue,Sink cbAction
 ```
 
 The components, with the failure behaviour of each *(the "Fails how" column is own construction)*:
@@ -109,7 +159,13 @@ The components, with the failure behaviour of each *(the "Fails how" column is o
 | 08 | ETA forecaster | Estimates completion and lag risk | Progress rate, remaining work, backlog | Degrades: a missing forecast is itself an alert |
 | 09 | Operations console | Shows run status, warnings, and intervention controls | Human-facing incident and rollout state | Degrades: runbook and pager still work without it |
 
-Walk the happy path in seven steps. First, snapshot the input and build the manifest, recording dataset version, deadline and run policy. Second, split into partitions balanced by processing cost. Tenant, payload-size band or historical latency beats record count alone. Third, lease work to workers through the durable queue, so the planner never waits on any worker. Fourth, batch records and ask the rate-limit coordinator for capacity before calling the model. Fifth, checkpoint the completed range and write rows to the idempotent sink. Sixth, retry transient errors per policy and quarantine permanent ones with triage context. Seventh, reconcile the manifest and publish the completed dataset.
+- Walk the happy path in seven steps. First, snapshot the input and build the manifest, recording dataset version, deadline and run policy.
+- Second, split into partitions balanced by processing cost. Tenant, payload-size band or historical latency beats record count alone.
+- Third, lease work to workers through the durable queue, so the planner never waits on any worker.
+- Fourth, batch records and ask the rate-limit coordinator for capacity before calling the model.
+- Fifth, checkpoint the completed range and write rows to the idempotent sink.
+- Sixth, retry transient errors per policy and quarantine permanent ones with triage context.
+- Seventh, reconcile the manifest and publish the completed dataset.
 
 ```mermaid
 flowchart TD
@@ -123,6 +179,16 @@ flowchart TD
     F -->|"permanent error"| H["6b. Quarantine\nwith triage context"]
     F -->|"success"| I["7. Reconcile manifest\nand publish dataset"]
     H --> I
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,I cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,E,G,H cbPolicy
 ```
 
 Three trust boundaries carry the security story. After the planner freezes the snapshot, the run cannot drift if upstream data changes. The model call is external, so the worker assumes timeouts, throttling, malformed responses and partial failures. Publication must be idempotent, so replays cannot create duplicate classifications.
@@ -141,7 +207,9 @@ Three records carry the durable state.
 | Partition | `job_id + partition_id` | `range`, `lease`, `attempts`, `completed_count`, checkpoint | `available` → `leased` → `completed`; `retryable` on transient failure; `abandoned`/`dead_lettered` after too many attempts |
 | InferenceResult | `job_id + record_id + model_version` | `output`, `status`, confidence | `pending` → `written` → `validated`; `failed` if rejected or unpersistable |
 
-The `input_snapshot` is an immutable pointer to the exact dataset version. It is the ownership boundary that makes replay possible. The result is keyed by business identity plus model version, never by worker or attempt. Be ready for "why not just `record_id`?" Without the model version, a rerun under a new model silently overwrites yesterday's answer and replay loses its meaning.
+- The `input_snapshot` is an immutable pointer to the exact dataset version. It is the ownership boundary that makes replay possible.
+- The result is keyed by business identity plus model version, never by worker or attempt.
+- Be ready for "why not just `record_id`?" Without the model version, a rerun under a new model silently overwrites yesterday's answer and replay loses its meaning.
 
 The API surface stays small.
 
@@ -152,9 +220,16 @@ The API surface stays small.
 | `POST /v1/batch-jobs/{id}/pause` | Stops new leases and preserves progress. Optimistic concurrency via ETag. Already terminal is a state conflict, not a pretend success. Retried pauses are harmless |
 | `POST /v1/batch-jobs/{id}/replay-failures` | Privileged, because replay reconsumes capacity. Selector for all failed, a named subset, or after a checkpoint. Reused key returns the same replay outcome, never a second attempt |
 
-Idempotency applies at every write boundary, not only the sink. A duplicate create must not create a second job. A duplicate lease renewal must not invalidate the original lease. A duplicate result write overwrites the same logical record. A duplicate pause or replay request is harmless. Versioning matters for the same reason: when the model, schema or validation policy changes, old and new results must stay distinguishable.
+- Idempotency applies at every write boundary, not only the sink. A duplicate create must not create a second job.
+- A duplicate lease renewal must not invalidate the original lease. A duplicate result write overwrites the same logical record.
+- A duplicate pause or replay request is harmless. Versioning matters for the same reason: when the model, schema or validation policy changes, old and new results must stay distinguishable.
 
-The smallest code path that proves the design is one worker loop. It claims a lease and reads the range once. It chunks records into batches of 64 and acquires tokens from the limiter before the call, because admission control belongs before the quota breach. It then validates output at a typed boundary and upserts by `record_id`. The checkpoint advances only after the sink write succeeds, which prevents false progress. The partition completes only after every batch succeeds. A `TransientError` retries with backoff. A `ValidationError` retries once without backoff and then surfaces as a data-quality problem.
+- The smallest code path that proves the design is one worker loop.
+- It claims a lease and reads the range once. It chunks records into batches of 64 and acquires tokens from the limiter before the call, because admission control belongs before the quota breach.
+- It then validates output at a typed boundary and upserts by `record_id`.
+- The checkpoint advances only after the sink write succeeds, which prevents false progress.
+- The partition completes only after every batch succeeds. A `TransientError` retries with backoff.
+- A `ValidationError` retries once without backoff and then surfaces as a data-quality problem.
 
 ```mermaid
 flowchart TD
@@ -171,6 +246,14 @@ flowchart TD
     Validate -->|"ValidationError"| RetryV["queue.retry(backoff=False)\nthen re-raise"]
     RetryT --> Lease
     RetryV --> Fail["surface data-quality problem"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class Lease,Chunk,Upsert,Complete,RetryT,RetryV cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Read,Invoke cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Acquire,Validate,Advance,Fail cbPolicy
 ```
 
 Two tests prove it. The contract test repeats `POST /v1/batch-jobs` with the same key and confirms one job and one id. The failure-injection test crashes the worker after `upsert_many()` but before `complete()`. On retry the sink still holds one logical result per `record_id`. The source's assertion is that distinct `record_id` count equals row count.
@@ -187,4 +270,9 @@ Keep raw payloads out of queue metadata. Messages carry only opaque identifiers,
 
 Record model version, code version, prompt or feature schema version and deployment identity for every run. That is how the team proves which artifact produced which result when a customer asks why today's classification differs from yesterday's.
 
-The chapter names no external framework, and the V2 author treats that as a gap. Their supplementary answer is to ask which framework applies before claiming compliance. With personal data, purpose limitation and data minimisation apply to snapshot and result retention. In healthcare, HIPAA's audit-control rule applies to the audit trail; in finance, rules such as SEC 17a-4 or SOX do. SOC 2 is a voluntary audit report that customers in any industry may ask for. They also propose a per-run "processing basis" field on `BatchJob`. Without a named framework to test them against, the controls are necessary but not sufficient.
+- The chapter names no external framework, and the V2 author treats that as a gap.
+- Their supplementary answer is to ask which framework applies before claiming compliance.
+- With personal data, purpose limitation and data minimisation apply to snapshot and result retention.
+- In healthcare, HIPAA's audit-control rule applies to the audit trail; in finance, rules such as SEC 17a-4 or SOX do.
+- SOC 2 is a voluntary audit report that customers in any industry may ask for.
+- They also propose a per-run "processing basis" field on `BatchJob`. Without a named framework to test them against, the controls are necessary but not sufficient.

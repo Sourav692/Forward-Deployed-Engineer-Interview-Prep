@@ -88,6 +88,16 @@ flowchart LR
   K --> E[Reconcile + publish by policy]
   B --> F[ETA forecast + operations console]
   K --> F
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,W,F cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,R,M cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,Q,S,D cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class V,K,E cbPolicy
 ```
 
 ### Step-by-step architecture
@@ -112,7 +122,10 @@ flowchart LR
 
 ## Evaluation and rollout
 
-Measure completion before deadline, predicted versus actual ETA, throughput, partition skew, duplicate-key conflicts, retry and quarantine rates, typed-output validity, provider quota errors and cost per million records. Test representative token sizes and deliberately crash a worker after sink write but before ack. Ramp from representative data to 1% and 10%, then exercise quota and sink failures. Assign a contingency owner and write the missed-deadline decision before launch.
+- Measure completion before deadline, predicted versus actual ETA, throughput, partition skew, duplicate-key conflicts, retry and quarantine rates, typed-output validity, provider quota errors and cost per million records.
+- Test representative token sizes and deliberately crash a worker after sink write but before ack.
+- Ramp from representative data to 1% and 10%, then exercise quota and sink failures.
+- Assign a contingency owner and write the missed-deadline decision before launch.
 
 ## Two-minute interview answer
 

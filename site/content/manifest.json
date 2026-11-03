@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T11:38:02.333Z",
+  "generatedAt": "2026-11-03T21:03:49.290Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -147,7 +147,7 @@
               "order": 9,
               "title": "Reliable Workflow Orchestration System",
               "minutes": 3,
-              "updated": "2026-10-28"
+              "updated": "2026-11-04"
             },
             {
               "slug": "observability-customer-facing-ai-application",
@@ -290,8 +290,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 72,
-              "updated": "2026-11-02"
+              "minutes": 73,
+              "updated": "2026-11-04"
             },
             {
               "slug": "nl-over-governed-data",
@@ -335,8 +335,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 71,
-              "updated": "2026-11-02"
+              "minutes": 72,
+              "updated": "2026-11-04"
             },
             {
               "slug": "document-review-copilot",
@@ -377,7 +377,7 @@
                 }
               ],
               "minutes": 62,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "deep-research-agent",
@@ -413,8 +413,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 46,
-              "updated": "2026-11-02"
+              "minutes": 47,
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -470,7 +470,7 @@
                 }
               ],
               "minutes": 87,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -510,8 +510,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 74,
-              "updated": "2026-11-02"
+              "minutes": 75,
+              "updated": "2026-11-04"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -551,8 +551,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 62,
-              "updated": "2026-11-02"
+              "minutes": 63,
+              "updated": "2026-11-04"
             },
             {
               "slug": "sales-copilot",
@@ -592,8 +592,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 64,
-              "updated": "2026-11-02"
+              "minutes": 65,
+              "updated": "2026-11-04"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -634,7 +634,7 @@
                 }
               ],
               "minutes": 55,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "real-time-call-assistant",
@@ -675,7 +675,7 @@
                 }
               ],
               "minutes": 52,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "logistics-exception-handling",
@@ -712,7 +712,7 @@
                 }
               ],
               "minutes": 46,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -764,7 +764,7 @@
                 }
               ],
               "minutes": 74,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -809,7 +809,7 @@
                 }
               ],
               "minutes": 61,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "agent-platform-for-non-technical-users",
@@ -849,8 +849,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 52,
-              "updated": "2026-11-02"
+              "minutes": 53,
+              "updated": "2026-11-04"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -886,8 +886,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 43,
-              "updated": "2026-11-02"
+              "minutes": 44,
+              "updated": "2026-11-04"
             },
             {
               "slug": "llm-inference-serving",
@@ -924,7 +924,7 @@
                 }
               ],
               "minutes": 48,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -968,7 +968,7 @@
                 }
               ],
               "minutes": 48,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -1013,7 +1013,7 @@
                 }
               ],
               "minutes": 59,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -1058,7 +1058,7 @@
                 }
               ],
               "minutes": 64,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -1101,8 +1101,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
-              "updated": "2026-11-02"
+              "minutes": 45,
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -1130,7 +1130,7 @@
                 }
               ],
               "minutes": 24,
-              "updated": "2026-11-01"
+              "updated": "2026-11-04"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1151,7 +1151,7 @@
                 }
               ],
               "minutes": 22,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1204,7 +1204,7 @@
                 }
               ],
               "minutes": 97,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -1261,7 +1261,7 @@
                 }
               ],
               "minutes": 105,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -1310,7 +1310,7 @@
                 }
               ],
               "minutes": 91,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1351,7 +1351,7 @@
                 }
               ],
               "minutes": 75,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "self-adapting-agent",
@@ -1379,8 +1379,8 @@
                   "label": "Answer Template"
                 }
               ],
-              "minutes": 47,
-              "updated": "2026-11-02"
+              "minutes": 49,
+              "updated": "2026-11-04"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -1405,7 +1405,7 @@
                 }
               ],
               "minutes": 33,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "production-llm-gateway",
@@ -1434,7 +1434,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             }
           ]
         },
@@ -1466,7 +1466,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1491,7 +1491,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1516,7 +1516,7 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -1541,7 +1541,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-11-02"
+              "updated": "2026-11-04"
             }
           ]
         }

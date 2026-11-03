@@ -20,6 +20,16 @@ The source's strong answer adds incremental processing, queue budgets and sample
 flowchart LR
     I[Ingest] --> H[Hash + dedupe] --> P[Parse] --> Q[Changed-only queue] --> B[Batch summarisation<br/>cheaper model] --> S[Quality sample<br/>strong-model audit] --> PUB[Publish]
     H -.unchanged.-> SKIP[Reuse last summary]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class I cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class H,B,S cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P,Q,PUB cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class SKIP cbPolicy
 ```
 
 **The batch embedding job became too expensive (§15 scenario 13).** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.

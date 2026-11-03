@@ -50,7 +50,10 @@ If the interviewer does not answer, state a safe default aloud: new request type
 
 A requirement that cannot fail a test is a wish. "Gets better over time" is a wish. "Success on a new task type reaches the baseline within 14 days without a regression on any existing type" is a constraint *(own construction throughout this section; thresholds are assumptions unless marked sourced)*.
 
-There are six functional must-haves. Recognise when a request does not match any known capability. Attempt it safely with a general fallback, escalating when confidence is low. Record every run with its outcome, so learning has evidence. Turn repeated successes into candidate skills, memories or prompt changes. Evaluate each candidate before it affects real traffic. Remove learned behaviour automatically when it starts to fail.
+- There are six functional must-haves. Recognise when a request does not match any known capability.
+- Attempt it safely with a general fallback, escalating when confidence is low.
+- Record every run with its outcome, so learning has evidence. Turn repeated successes into candidate skills, memories or prompt changes.
+- Evaluate each candidate before it affects real traffic. Remove learned behaviour automatically when it starts to fail.
 
 The should-haves come later: per-tenant specialisation, a tuned small model for high-volume task types, and a dashboard that shows owners what the agent learned this week.
 
@@ -89,47 +92,101 @@ Arithmetic decides which rungs you can afford *(own construction; every input is
 | Offline eval suite per candidate | 640 cases, paired with baseline | 1,280 runs = $38.40 per candidate |
 | Candidates generated per week | 50 | $1,920 a week, about 46% of the $4,200 weekly serving bill |
 
-Two lessons fall out of the table. First, rare task types cannot be promoted quickly. At 30 requests a day the shadow minimum alone takes a week, which sets the honest time to competence. Second, candidate volume drives learning cost, not training. Fifty candidates a week breaks a 10% learning budget almost five times over, so the extractor must deduplicate and pre-filter before anything reaches the paid evaluation.
+- Two lessons fall out of the table. First, rare task types cannot be promoted quickly.
+- At 30 requests a day the shadow minimum alone takes a week, which sets the honest time to competence.
+- Second, candidate volume drives learning cost, not training. Fifty candidates a week breaks a 10% learning budget almost five times over, so the extractor must deduplicate and pre-filter before anything reaches the paid evaluation.
 
-The sample-size arithmetic sets what the gate can detect at all. The validation chapter gives it as n ≈ 15.7 × p(1−p) / δ² per arm. At a baseline of 0.8, 200 cases detect only differences of about 11 points. A 5-point gain needs about 1,000 cases per arm. So the 200-attempt shadow proves "not much worse", not "5 points better". Say that aloud; few candidates do.
+- The sample-size arithmetic sets what the gate can detect at all. The validation chapter gives it as n ≈ 15.7 × p(1−p) / δ² per arm.
+- At a baseline of 0.8, 200 cases detect only differences of about 11 points.
+- A 5-point gain needs about 1,000 cases per arm. So the 200-attempt shadow proves "not much worse", not "5 points better".
+- Say that aloud; few candidates do.
 
 ## 4. Draw the Architecture as Two Loops With One Gate
 
 The runtime loop serves requests. The learning loop proposes changes. They meet at one place, the evaluation gate, and nothing learned reaches live traffic without passing it *(own construction for every diagram in this section)*.
 
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Capability router with novelty score"]
+    N2["Known: load live skill, examples, memories"]
+    N3["Context assembler"]
+    N4["Novel: general fallback with tighter bounds"]
+    N5["Bounded agent: steps, tokens, time, spend"]
+    N6["Tool gateway: authorise, validate, execute, classify"]
+    N7["External outcome"]
+    N8["Trace and outcome store"]
+    N9["Irreversible action: required human approval"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N1 --> N4
+    N4 --> N3
+    N3 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N6 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N8 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N6,N7,N9 cbPolicy
 ```
- ╔══════════════════════ CONTROL PLANE (every change is a version) ═════════════════════╗
- ║ capability registry: skills, memories, prompts, models — each with owner, version,     ║
- ║ status (candidate / shadow / live / demoted) · permission policy · budgets · kill switch ║
- ╚═════════════════════════════════════════╤══════════════════════════════════════════════╝
-                                           │ reads only LIVE versions
- ╔════════════════════════════ RUNTIME LOOP ══════════════════════════════════════════════╗
- ║  request ─> capability router ──known──> load skill + examples + memories ─┐           ║
- ║                   │ (novelty score)                                        v           ║
- ║                   └──novel──> general fallback + tighter bounds ─> context assembler   ║
- ║                                                                            │           ║
- ║                        bounded agent loop (steps, tokens, time, spend caps)            ║
- ║                                   │                                                    ║
- ║                        tool gateway (authorise · validate · execute · classify)        ║
- ║                                   │                     └─ irreversible? ─> human      ║
- ║                        outcome signal: validator · test · ticket state · user feedback ║
- ║                                   │                                                    ║
- ║                        trace + outcome store ───────────────────────────────┐          ║
- ╚═════════════════════════════════════════════════════════════════════════════│══════════╝
- ╔════════════════════════════ LEARNING LOOP (offline, budgeted) ═══════════════v══════════╗
- ║  flywheel gates: dedupe ─> split by time and user ─> adjudicate low-agreement cases      ║
- ║        │                                                                                ║
- ║        ├─> skill extractor (generalise successful trajectories)                         ║
- ║        ├─> memory writer (durable? reusable? attributable? permitted?)                  ║
- ║        ├─> prompt optimiser (search instructions and examples on a dev set)             ║
- ║        └─> dataset builder (only when rungs 1–4 are exhausted)                          ║
- ║                                   │ candidates                                          ║
- ║  EVAL GATE: held-out, paired, per stratum · safety absolute · cost visible              ║
- ║        ├─ fail ─> discard, log reason                                                   ║
- ║        └─ pass ─> shadow on live traffic (≥200 attempts) ─> owner review ─> LIVE        ║
- ║  LIVE MONITOR: success per stratum ─> 4 points below baseline ─> auto-demote            ║
- ╚══════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Trace and outcome store"]
+    N1["Dedupe, split by time and user, adjudicate low agreement"]
+    N2["Offline learning candidates"]
+    N3["Extract generalised skills"]
+    N4["Held-out paired evaluation by stratum"]
+    N5["Memory write: durable, reusable, attributable, permitted"]
+    N6["Prompt search on development set"]
+    N7["Dataset builder only after rungs 1–4 exhausted"]
+    N8["Fail: discard with reason"]
+    N9["Pass: shadow at least 200 attempts"]
+    N10["Owner review"]
+    N11["Promote live"]
+    N12["Monitor each stratum"]
+    N13["4 points below baseline: auto-demote"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N2 --> N5
+    N5 --> N4
+    N2 --> N6
+    N6 --> N4
+    N2 --> N7
+    N7 --> N4
+    N4 --> N8
+    N4 --> N9
+    N9 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N13
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N0,N2,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N4,N5,N6,N9 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N7,N11 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N8,N13 cbStop
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N12 cbInput
 ```
+
+- Version capability ownership, status, permissions, budgets, and kill switches. Runtime reads only live skills, memories, prompts, and models.
+- Candidate statuses are candidate, shadow, live, and demoted. Evaluation has an absolute safety floor and visible cost.
 
 The same design for viewers that render Mermaid:
 
@@ -174,6 +231,18 @@ flowchart TB
     REG --> LOAD
     POL --> GW
     TS --> MON
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class REG,LOAD,GW,FW,DB,OWN cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class POL,RTR,HUM,SH cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class REQ,CA,OUT,TS,MW cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class FB,LOOP,SX,PO,GATE,MON cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class DIS,DEM cbStop
 ```
 
 | Component | Job | Fails how |
@@ -199,11 +268,17 @@ flowchart TB
 
 An agent cannot adapt to a task it has not noticed is new. The hardest failure is confidently forcing a new request into the nearest known skill; "I do not know how" is the easy case *(own construction throughout this section)*.
 
-Score novelty on three signals. First, the router's retrieval score against the skill catalogue falls below a threshold. Second, the request names a system, tool or entity absent from every live skill. Third, the router's top two candidates are close, so its choice is a coin flip. Any one signal routes the request to the general fallback instead of a skill.
+- Score novelty on three signals. First, the router's retrieval score against the skill catalogue falls below a threshold.
+- Second, the request names a system, tool or entity absent from every live skill.
+- Third, the router's top two candidates are close, so its choice is a coin flip.
+- Any one signal routes the request to the general fallback instead of a skill.
 
 Treat the fallback as a different operating mode. Cut the step budget. Allow read-only tools freely and require approval for writes. Escalate earlier. The first dozen runs of a new task type are the riskiest and the most valuable, because they carry the evidence every later rung learns from.
 
-A standard skill-loading pattern supports this. The agent starts with a lightweight catalogue of skill names and triggers. It loads one skill's full instructions only when selected, then releases that context. Trigger descriptions need counterexamples as well as examples, or the wrong skill activates. Evaluate triggering separately from execution: a skill that runs perfectly after the wrong trigger is still a wrong answer.
+- A standard skill-loading pattern supports this. The agent starts with a lightweight catalogue of skill names and triggers.
+- It loads one skill's full instructions only when selected, then releases that context.
+- Trigger descriptions need counterexamples as well as examples, or the wrong skill activates.
+- Evaluate triggering separately from execution: a skill that runs perfectly after the wrong trigger is still a wrong answer.
 
 ## 6. Adapt Within One Request Before Changing Anything Permanent
 

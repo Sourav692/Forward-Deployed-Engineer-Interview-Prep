@@ -18,9 +18,14 @@ The source's architecture line: "before call → precompute context. During call
 <!-- spelling: source -->
 Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are the actual cause behind the "executive demo is too slow" scenario and the "sub-3-second sales assistant" case. Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
 
-One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon. In a call, the rep "abandons" by answering. So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
+- One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon.
+- In a call, the rep "abandons" by answering.
+- So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
 
-Every strong cost answer comes from four verbs in order. Measure: trace latency by stage first. Route: send the live lane to a small model and the post-call lane to a larger one. Bound: timeouts on every live lookup, a cap on bullet length, triggers that suppress small talk. Cache safely: the snapshot keyed on account and permission signature, invalidated on a role change.
+- Every strong cost answer comes from four verbs in order. Measure: trace latency by stage first.
+- Route: send the live lane to a small model and the post-call lane to a larger one.
+- Bound: timeouts on every live lookup, a cap on bullet length, triggers that suppress small talk.
+- Cache safely: the snapshot keyed on account and permission signature, invalidated on a role change.
 
 ---
 

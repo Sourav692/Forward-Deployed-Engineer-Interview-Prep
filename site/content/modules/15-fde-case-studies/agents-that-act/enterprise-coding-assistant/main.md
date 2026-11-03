@@ -96,6 +96,18 @@ flowchart LR
     POLICY[Prompt, model, cache and validation versions] -.-> CACHE
     POLICY -.-> CHECK
     POLICY -.-> VALID
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class HOST,KEY cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class CHUNK,IDE,LARGE cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class EMB,INDEX,RET,SMALL,SHOW,SILENT,RESPONSE cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class AUTH,FUNNEL,CACHE,CHECK,ASK,ROUTE,V2,POLICY cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class VALID cbStop
 ```
 
 ### Step-by-step architecture
@@ -130,7 +142,10 @@ Completion uses a small model; multi-line may use a medium tier where the budget
 | Secret in input/output | Mask input before model; suppress output and audit safely. |
 | Large model unavailable | Explicit slow-path task queues with visible status; hot path remains unaffected. |
 
-At 10×, partition indexes by repository and region, re-index on push asynchronously, autoscale inference for bursty typing, and rate-limit abusive paths. Trace input context size, output tokens, cache hit rate, first-token time, total p95, acceptance, and cost per thousand completions. Trim context and cap generated length before moving every request to a stronger model. Streaming shows the developer tokens sooner; it does not shorten total generation time.
+- At 10×, partition indexes by repository and region, re-index on push asynchronously, autoscale inference for bursty typing, and rate-limit abusive paths.
+- Trace input context size, output tokens, cache hit rate, first-token time, total p95, acceptance, and cost per thousand completions.
+- Trim context and cap generated length before moving every request to a stronger model.
+- Streaming shows the developer tokens sooner; it does not shorten total generation time.
 
 ## 6. Evaluation and rollout
 
@@ -140,7 +155,13 @@ Roll out one repository with real permissions and three developers with differen
 
 ## 7. Interview answer to rehearse
 
-> “I would start with two constraints: inline completion needs p95 under 300 milliseconds, and private repository code must never cross permission boundaries. I would index on push by symbol and mirror the code host’s ACLs. On a keystroke, a context funnel keeps only the current function, imports, nearby files, and relevant edits. An early permission-scoped cache can end the request; on a miss, authorised retrieval builds a small prompt for a fast LLM. A larger reasoning model handles explicit explain, test, and refactor tasks away from the hot path. Every output is checked for syntax, nonexistent APIs, secrets, license, and unsafe patterns before the editor sees it. I would measure acceptance and a controlled productivity outcome, plus p95 and zero leak gates, then roll out one repository at a time.”
+> - I would start with two constraints: inline completion needs p95 under 300 milliseconds, and private repository code must never cross permission boundaries.
+> - I would index on push by symbol and mirror the code host’s ACLs.
+> - On a keystroke, a context funnel keeps only the current function, imports, nearby files, and relevant edits.
+> - An early permission-scoped cache can end the request; on a miss, authorised retrieval builds a small prompt for a fast LLM.
+> - A larger reasoning model handles explicit explain, test, and refactor tasks away from the hot path.
+> - Every output is checked for syntax, nonexistent APIs, secrets, license, and unsafe patterns before the editor sees it.
+> - I would measure acceptance and a controlled productivity outcome, plus p95 and zero leak gates, then roll out one repository at a time.
 
 **Memory line:** “Cache first, retrieve on a miss, route by task, validate before display.”
 

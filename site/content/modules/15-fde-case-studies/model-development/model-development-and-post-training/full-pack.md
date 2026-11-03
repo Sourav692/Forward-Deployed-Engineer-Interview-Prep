@@ -28,7 +28,8 @@ A model cannot be trained toward a target nobody wrote down. "Solves math proble
 | Who uses it, and what does failure cost? | A tutor that is wrong teaches students wrong; a research assistant that is wrong wastes an hour |
 | Build from a base model, or adapt an existing chat model? | Sets whether pretraining is in scope or only post-training |
 
-The decomposition round rewards this move. The question bank's own framework starts with "Clarify the mission" and warns that the most common failure is jumping to architecture before scope. Say the assumptions aloud if the interviewer does not answer. A safe default is grade-school to competition word problems, final numeric answers, an optional code tool, and adaptation of an open base model.
+- The decomposition round rewards this move. The question bank's own framework starts with "Clarify the mission" and warns that the most common failure is jumping to architecture before scope.
+- Say the assumptions aloud if the interviewer does not answer. A safe default is grade-school to competition word problems, final numeric answers, an optional code tool, and adaptation of an open base model.
 
 > *"Before I pick a method I want the target pinned: which level of math, whether a final answer is enough or the working must be right too, and whether the model may call a tool. Those three answers decide the data, the reward and the eval."*
 
@@ -36,7 +37,10 @@ The decomposition round rewards this move. The question bank's own framework sta
 
 A requirement that cannot fail a test is a preference. "Good at math" is a preference. "Pass@1 of at least the target on a held-out set that shares no problems with training" is a constraint. Only the second one shapes the pipeline *(own construction throughout this section)*.
 
-The must-haves are six. Correct final answers on the target distribution, measured on problems the model never saw. Shown working that is consistent with the final answer. No regression on general ability beyond an agreed tolerance. Refusal to fabricate when a problem is ill-posed. A reproducible training run, so any checkpoint can be rebuilt. An evaluation harness that runs on every candidate checkpoint before anyone reads a single sample by hand.
+- The must-haves are six. Correct final answers on the target distribution, measured on problems the model never saw.
+- Shown working that is consistent with the final answer. No regression on general ability beyond an agreed tolerance.
+- Refusal to fabricate when a problem is ill-posed. A reproducible training run, so any checkpoint can be rebuilt.
+- An evaluation harness that runs on every candidate checkpoint before anyone reads a single sample by hand.
 
 The should-haves come after the first model is trusted. Tool use through a code interpreter. Step-level feedback on the working. A tutoring mode that explains rather than answers.
 
@@ -76,40 +80,85 @@ Run the numbers on the math model *(all figures are assumptions, arithmetic is e
 
 SFT is cheap. With these assumed workloads, post-training with sampled rollouts costs roughly ten times more, and generation runs well below peak throughput because it is memory-bound. So the compute budget belongs to post-training and to evaluation, not to the supervised stage.
 
-Memory decides the hardware shape. A full fine-tune with the Adam optimiser in mixed precision needs roughly 16 bytes per parameter for weights, gradients and optimiser state. That is about 112 GB for a 7B model *(assumption: the rule of thumb, before activations)*. It does not fit on one 80 GB card. Either shard the optimiser state across GPUs or train a small adapter instead of the full weights. Section 9 returns to both.
+- Memory decides the hardware shape. A full fine-tune with the Adam optimiser in mixed precision needs roughly 16 bytes per parameter for weights, gradients and optimiser state.
+- That is about 112 GB for a 7B model *(assumption: the rule of thumb, before activations)*.
+- It does not fit on one 80 GB card. Either shard the optimiser state across GPUs or train a small adapter instead of the full weights.
+- Section 9 returns to both.
 
 ## 4. Draw the Architecture End to End
 
 The pipeline is a loop. Data flows forward through training stages, and evaluation results flow backward into the next data mix. No checkpoint moves forward without passing the eval gate *(own construction for every diagram in this section)*.
 
+```mermaid
+flowchart TD
+    N0["Data sources: public, licensed, synthetic, and human-written"]
+    N1["Deduplicate"]
+    N2["Decontaminate against evaluation sets"]
+    N3["Verify answers"]
+    N4["Mix training data"]
+    N5["Base model"]
+    N6["SFT: worked solutions and format"]
+    N7["Checkpoint"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N2,N5 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6 cbAction
 ```
- ╔═══════════════════════ CONTROL PLANE (changes are experiments) ═══════════════════════╗
- ║  data mixture config · training configs · reward definitions · eval suites + gates     ║
- ║  experiment tracker (run id, data hash, code version, seed) · compute budget per stage  ║
- ╚══════════════════════════════════════╤══════════════════════════════════════════════════╝
-                                        │ configures every stage below
- ╔══════════════════════════ DATA + TRAINING PLANE ═══════════════════════════════════════╗
- ║                                                                                         ║
- ║  DATA            sources ─> dedupe ─> decontaminate vs eval ─> verify answers ─> mix    ║
- ║                  (public sets, licensed, synthetic from a strong model, human-written)  ║
- ║                                   │                                                     ║
- ║                                   v                                                     ║
- ║  BASE MODEL ──> SFT (worked solutions, format) ──> checkpoint ──┐                       ║
- ║                                                                 v                       ║
- ║  POST-TRAIN     sample N answers ─> score (verifier / reward model / preference) ─>     ║
- ║                 update policy (RL with KL to reference, or DPO on pairs) ─> checkpoint  ║
- ║                                                                 │                       ║
- ║                                                                 v                       ║
- ║  EVAL GATE      held-out accuracy · general regression · safety + over-refusal ·        ║
- ║                 contamination report ─── pass ──> release candidate                     ║
- ║                                     └── fail ──> error analysis ──> next data mix ─┐    ║
- ║                                                                                     │   ║
- ║  DEPLOY         distil / quantise if a size target exists ─> serving ─> traces ─────┘   ║
- ║                                                                  (flywheel, gated)     ║
- ║                                                                                         ║
- ║  CHECKPOINT STORE + TRACKER — every stage reads from and writes to it                   ║
- ╚═════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Checkpoint"]
+    N1["Sample N answers"]
+    N2["Score with verifier, reward model, or preferences"]
+    N3["Update policy with RL and KL to reference, or DPO pairs"]
+    N4["New checkpoint"]
+    N5["Held-out evaluation gate"]
+    N6["Fail: error analysis"]
+    N7["Revise data mix"]
+    N8["Pass: release candidate"]
+    N9["Distil or quantise if a size target exists"]
+    N10["Serving"]
+    N11["Gated traces and data flywheel"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N5 --> N8
+    N8 --> N9
+    N9 --> N10
+    N10 --> N11
+    N11 --> N7
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N0,N3,N4,N7,N11 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N1,N6,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N2,N5,N9 cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N8 cbInput
 ```
+
+- Version the data mixture, training configuration, reward definitions, evaluation suites/gates, and compute budget per stage.
+- Track run ID, data hash, code version, and seed. Every stage reads and writes the checkpoint store and experiment tracker.
+- The evaluation gate checks held-out accuracy, general regression, safety, over-refusal, and the contamination report.
 
 The same pipeline for viewers that render Mermaid:
 
@@ -145,6 +194,18 @@ flowchart LR
         SRV --> TR[Traces, deduped and split by time]
         TR -.gated.-> MIX
     end
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class SRC,MIX,SRV cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class DD,BASE,SAMP,SCORE,RC,TR cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class DC,SFT,UPD,EA cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class VF,CK1,CK2,SHR cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class EV cbStop
 ```
 
 | Component | Job | Fails how |
@@ -166,18 +227,34 @@ flowchart LR
 
 In math, a program can verify most final answers, which few domains allow. Build the data pipeline around that. A problem whose answer cannot be checked is worth less than one that can, because nothing downstream can tell whether training on it helped.
 
-Draw from four sources *(own construction)*. Public problem sets with known answers. Licensed or customer-owned material. Human-written problems from domain experts for the hard tail. Synthetic problems and solutions generated by a stronger model, kept only when the final answer passes verification. That last filter is rejection sampling: generate many solutions, keep the ones whose answer checks out, discard the rest.
+- Draw from four sources *(own construction)*. Public problem sets with known answers.
+- Licensed or customer-owned material. Human-written problems from domain experts for the hard tail.
+- Synthetic problems and solutions generated by a stronger model, kept only when the final answer passes verification.
+- That last filter is rejection sampling: generate many solutions, keep the ones whose answer checks out, discard the rest.
 
-The Foundations labs show the mechanical half of this stage. They contrast a pretraining corpus with a company fine-tuning dataset. They format examples as question-answer pairs with a prompt template, store them as JSONL, tokenise with padding and truncation, and split into train and test. That is the plumbing. The judgement lies in the three gates of the data flywheel.
+- The Foundations labs show the mechanical half of this stage. They contrast a pretraining corpus with a company fine-tuning dataset.
+- They format examples as question-answer pairs with a prompt template, store them as JSONL, tokenise with padding and truncation, and split into train and test.
+- That is the plumbing. The judgement lies in the three gates of the data flywheel.
 
-Deduplicate first. In the book's worked example, 140,000 traces turned out to be only about 9,000 distinct requests after dedup. Split by time and by source, never at random, because a random split puts near-twins on both sides. Route low-agreement, high-impact examples to human adjudication, because an automatic label is not the same as a correct one. Ship a datasheet with every dataset: collection window, filters, dedup method, split strategy, label source and known biases.
+- Deduplicate first. In the book's worked example, 140,000 traces turned out to be only about 9,000 distinct requests after dedup.
+- Split by time and by source, never at random, because a random split puts near-twins on both sides.
+- Route low-agreement, high-impact examples to human adjudication, because an automatic label is not the same as a correct one.
+- Ship a datasheet with every dataset: collection window, filters, dedup method, split strategy, label source and known biases.
 
 ## 6. Teach the Format With SFT, Then Stop
 
 SFT teaches the model what a good answer looks like, not how to find one it has never seen. Supervised fine-tuning trains on example inputs paired with the exact outputs wanted. For math, the outputs are worked solutions ending in a clearly marked final answer.
 
-The Foundations labs make the contrast concrete. They compare a base model with an instruction-tuned one on the same prompt. The base model continues the text; the tuned one answers the question. They then train a small model, `pythia-70m`, for a handful of steps and compare it with the same model trained longer and with a larger model. In those labs, more training on the same data changed the style of the answer long before it changed whether the answer was right.
+- The Foundations labs make the contrast concrete. They compare a base model with an instruction-tuned one on the same prompt.
+- The base model continues the text; the tuned one answers the question.
+- They then train a small model, `pythia-70m`, for a handful of steps and compare it with the same model trained longer and with a larger model.
+- In those labs, more training on the same data changed the style of the answer long before it changed whether the answer was right.
 
-Three rules follow *(own construction)*. Keep SFT short: a model that over-fits the worked solutions reproduces their exact wording and loses flexibility. Mix in general instruction data so the model does not forget how to follow ordinary requests. Include examples that decline an ill-posed problem, or the model will never learn that "this has no unique answer" is a legal output.
+- Three rules follow *(own construction)*. Keep SFT short: a model that over-fits the worked solutions reproduces their exact wording and loses flexibility.
+- Mix in general instruction data so the model does not forget how to follow ordinary requests.
+- Include examples that decline an ill-posed problem, or the model will never learn that "this has no unique answer" is a legal output.
 
-Parameter-efficient fine-tuning is the default for iteration. An adapter method such as LoRA trains a small set of added weights and leaves the base model frozen. QLoRA does the same on a base model loaded at 4-bit precision. A typical Llama 2 AutoTrain run uses `--use_peft` and `--use_int4` (current AutoTrain calls them `--peft` and `--quantization int4`) to fit a 7B model on modest hardware. Use adapters for fast experiments. Move to a full fine-tune only when an adapter demonstrably plateaus below the target.
+- Parameter-efficient fine-tuning is the default for iteration. An adapter method such as LoRA trains a small set of added weights and leaves the base model frozen.
+- QLoRA does the same on a base model loaded at 4-bit precision.
+- A typical Llama 2 AutoTrain run uses `--use_peft` and `--use_int4` (current AutoTrain calls them `--peft` and `--quantization int4`) to fit a 7B model on modest hardware.
+- Use adapters for fast experiments. Move to a full fine-tune only when an adapter demonstrably plateaus below the target.

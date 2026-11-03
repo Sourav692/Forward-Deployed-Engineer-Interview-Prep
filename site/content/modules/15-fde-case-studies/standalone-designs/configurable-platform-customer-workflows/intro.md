@@ -6,7 +6,8 @@ Ten customers want the same workflow product, each with its own fields, approval
 
 The hard constraint is that customisation must be safe, versioned and supportable. No change may skip authorisation or switch on behaviour nobody reviewed, every tenant can see which definition is live, and support can trace a fault and roll a bad configuration back. Customer admins, not engineers, write much of the configuration.
 
-The design splits a control plane, where configurations are written, validated, versioned and promoted, from the data plane that runs live workflows. Published versions never change, a tenant flag switches a version on for one tenant and then a cohort, and an append-only deployment ledger records which version is live, so a rollback is a new event rather than an edit.
+- The design splits a control plane, where configurations are written, validated, versioned and promoted, from the data plane that runs live workflows.
+- Published versions never change, a tenant flag switches a version on for one tenant and then a cohort, and an append-only deployment ledger records which version is live, so a rollback is a new event rather than an edit.
 
 ## The core idea
 
@@ -20,6 +21,16 @@ flowchart LR
   D --> E[Tenant flag: one tenant, then a cohort]
   E --> F[Live workflows]
   C -->|Fail| G[Rejected, nothing written]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class G cbStop
 ```
 
 ## Who it is for

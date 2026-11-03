@@ -137,6 +137,18 @@ flowchart TD
   F -->|success| H["Return 'completed'"]
   G --> I["Re-raise for terminal state / history"]
   style G fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,B,G cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Z,E,I cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class C cbStop
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class D cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class F,H cbAction
 ```
 
 > **Interview pointer:** Expect a question on how fine-grained the idempotency keys are, and answer it head-on. Each business action with a side effect gets its own key (`pay:`, `crm:`, `mail:`, `refund:`). The workflow as a whole does not share one. That single detail moves an answer from a whiteboard sketch to something a team could run in production.

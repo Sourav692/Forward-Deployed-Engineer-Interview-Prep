@@ -27,7 +27,9 @@ A design that cannot be falsified cannot be improved. Name the one metric whose 
 
 Here that metric is the grade distribution. If most runs grade poorly even after correction, the corpus is the constraint, not the architecture, and the wrong thing was built.
 
-Evaluate at two levels. Outcome evaluation asks whether the final answer was right. Trajectory evaluation asks whether it took a sensible path: did the planner decompose sensibly, did agents stay in role, how many hops. Trajectory matters more in a multi-agent system. A run that reaches the right answer through six wasted hops is one prompt change away from not reaching it.
+- Evaluate at two levels. Outcome evaluation asks whether the final answer was right.
+- Trajectory evaluation asks whether it took a sensible path: did the planner decompose sensibly, did agents stay in role, how many hops.
+- Trajectory matters more in a multi-agent system. A run that reaches the right answer through six wasted hops is one prompt change away from not reaching it.
 
 | Question a worried owner asks | Metric *(own construction)* |
 |---|---|
@@ -39,7 +41,9 @@ Evaluate at two levels. Outcome evaluation asks whether the final answer was rig
 | Does it feel fast? | Time to first signal (under 3s); p95 total (under 90s) |
 | Is the private corpus safe? | Cross-user retrieval tests at zero; egress-firewall trigger rate |
 
-Debug a bad run from the trace keyed by run ID. Record per hop which agent ran, why it was chosen, what it saw and what it returned. The routing reasoning is the highest-value thing to log, because many bad multi-agent outputs come from how work was split and routed, not from one weak agent. Find the first hop where the trajectory diverged.
+- Debug a bad run from the trace keyed by run ID. Record per hop which agent ran, why it was chosen, what it saw and what it returned.
+- The routing reasoning is the highest-value thing to log, because many bad multi-agent outputs come from how work was split and routed, not from one weak agent.
+- Find the first hop where the trajectory diverged.
 
 ## 11. Read the Deployed Research Platform as Proof
 
@@ -61,11 +65,18 @@ It has nine layers, and one request passes through them top to bottom.
 
 The delta from the anchor is the infrastructure. Four pieces carry it.
 
-The gateway means an outage, rate limit or price change is a config change, not a code change in five places. The guardrails run on both sides, because a model can produce harmful output from a benign prompt. The input check runs on raw user input, not on an agent's interpretation of it. pgvector turns the cache from short-lived to durable. A report evicted from Redis is still found at ≥ 0.88, and a related one in the 0.50–0.88 band seeds the Writer. PyRIT attacks through the same auth, rate-limit and guardrail path as a real user. A passing run is therefore genuine evidence the defences hold, not a test of a mock.
+- The gateway means an outage, rate limit or price change is a config change, not a code change in five places.
+- The guardrails run on both sides, because a model can produce harmful output from a benign prompt.
+- The input check runs on raw user input, not on an agent's interpretation of it. pgvector turns the cache from short-lived to durable.
+- A report evicted from Redis is still found at ≥ 0.88, and a related one in the 0.50–0.88 band seeds the Writer.
+- PyRIT attacks through the same auth, rate-limit and guardrail path as a real user.
+- A passing run is therefore genuine evidence the defences hold, not a test of a mock.
 
 Layer 3 is a pipeline with a loop and a gate, closer to single-agent multi-step than to supervisor and workers. Its agents share one context and one tool set. The Critic's independent judgement and the bounded retry earn the split.
 
-Name what it lacks, because that is the coverage-map habit. It has no per-user access control: one API key, no tenant model, so every user sees every cached report. That is fine for a research tool and wrong for an enterprise one, and it is exactly the anchor's per-user isolation requirement. It also has no deterministic release gate, since the judge scores are observability, not a gate.
+- Name what it lacks, because that is the coverage-map habit. It has no per-user access control: one API key, no tenant model, so every user sees every cached report.
+- That is fine for a research tool and wrong for an enterprise one, and it is exactly the anchor's per-user isolation requirement.
+- It also has no deterministic release gate, since the judge scores are observability, not a gate.
 
 ## 12. Build the Supervisor-and-Workers Version
 
@@ -75,9 +86,14 @@ State carries findings with `operator.add`, so parallel writes accumulate. Bound
 
 Parallel is right here because the queries are independent. Parallel costs N calls at once, merge logic and partial failure. It buys the latency of the slowest branch rather than the sum. Sequential is right only when a later step needs an earlier one's result.
 
-Justify multi-agent by naming what it buys. The three valid reasons are real parallelism, distinct tool permissions per role, and context one agent cannot hold. This design has all three. It fans out searches, web agents hold different permissions from the document agent, and isolation keeps the parent's window small. If you cannot name any of the three, use one agent with more tools.
+- Justify multi-agent by naming what it buys. The three valid reasons are real parallelism, distinct tool permissions per role, and context one agent cannot hold.
+- This design has all three. It fans out searches, web agents hold different permissions from the document agent, and isolation keeps the parent's window small.
+- If you cannot name any of the three, use one agent with more tools.
 
-Four costs belong in the answer *(from the mock design)*. A supervisor adds one model call per hop. Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead. Constrain routing with a `Literal` over the real agent names so the supervisor cannot route to one that does not exist. Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
+- Four costs belong in the answer *(from the mock design)*. A supervisor adds one model call per hop.
+- Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead.
+- Constrain routing with a `Literal` over the real agent names so the supervisor cannot route to one that does not exist.
+- Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
 
 ## 13. Deliver It in Forty-Five Minutes
 
@@ -93,7 +109,8 @@ The binding constraint in the round is time. Miss the first 8 minutes and every 
 | 35-41 | Measurement and rollout | 10 |
 | 41-45 | Questions for the interviewer | — |
 
-Cover the whole design at consistent depth first, then offer depth explicitly: "I can go deeper on the evaluation layer or the cost model — which is more useful to you?" Candidates who go deep unprompted usually pick the component they know best. They then run out of time before the failure and measurement sections, where the levelling signal lives.
+- Cover the whole design at consistent depth first, then offer depth explicitly: "I can go deeper on the evaluation layer or the cost model — which is more useful to you?" Candidates who go deep unprompted usually pick the component they know best.
+- They then run out of time before the failure and measurement sections, where the levelling signal lives.
 
 The follow-up bank, with the shape of a strong answer:
 
@@ -108,11 +125,26 @@ The follow-up bank, with the shape of a strong answer:
 | What would you cut for a 2-week version? | A specific reduced scope that still has an oracle and a failure ladder, plus what you would NOT cut and why |
 | How do you handle a bad actor? | Rate limits, a cost governor per principal, anomalous tool-sequence detection, and the point that prompt defences are rate-reducers, not boundaries |
 
-Recover a round that goes sideways out loud. Behind on time: say so and reprioritise aloud. The interviewer keeps redirecting: stop defending the path, follow, and ask what they want to assess. A wrong number: correct it immediately. Self-correction is a strong signal, and an uncorrected error that was noticed is a weak one. An unfamiliar domain: say so and ask two questions that make it reasonable. What fails a round is running out of time without saying so.
+- Recover a round that goes sideways out loud. Behind on time: say so and reprioritise aloud.
+- The interviewer keeps redirecting: stop defending the path, follow, and ask what they want to assess.
+- A wrong number: correct it immediately. Self-correction is a strong signal, and an uncorrected error that was noticed is a weak one.
+- An unfamiliar domain: say so and ask two questions that make it reasonable.
+- What fails a round is running out of time without saying so.
 
 The two-minute spoken answer *(own construction from the source's design)*:
 
-> *This is a read-only research agent, forty thousand runs a day, peaking at three times the mean, under ninety seconds at p95 with a first signal in three, and twenty cents a run. Success is every claim cited to a source a reviewer would accept. A planner on the reasoning tier decides whether to decompose and writes a dependency-aware plan. Web sub-agents fetch and read in their own windows and hold no access to the user's documents. A separate user-scoped sub-agent reads those. Only typed findings cross the schema boundary into a deduplicated evidence ledger with a concatenating merge, so no parallel branch is lost. A grader checks coverage and agreement, the synthesiser writes with citations, and a verifier checks every claim before the answer streams with a coverage note. At peak that is about a hundred runs a minute and around a hundred and twenty in flight, so I would provision around a hundred and seventy. A naive seven-step run blows the budget, and sub-agent isolation, prefix caching and tier routing bring it back. On safety, the agent reads private data and untrusted pages. The rendered answer is its outbound channel, so rendering goes through an egress firewall. The metric that would prove me wrong is the grade distribution.*
+> - This is a read-only research agent, forty thousand runs a day, peaking at three times the mean, under ninety seconds at p95 with a first signal in three, and twenty cents a run.
+> - Success is every claim cited to a source a reviewer would accept.
+> - A planner on the reasoning tier decides whether to decompose and writes a dependency-aware plan.
+> - Web sub-agents fetch and read in their own windows and hold no access to the user's documents.
+> - A separate user-scoped sub-agent reads those.
+> - Only typed findings cross the schema boundary into a deduplicated evidence ledger with a concatenating merge, so no parallel branch is lost.
+> - A grader checks coverage and agreement, the synthesiser writes with citations, and a verifier checks every claim before the answer streams with a coverage note.
+> - At peak that is about a hundred runs a minute and around a hundred and twenty in flight, so I would provision around a hundred and seventy.
+> - A naive seven-step run blows the budget, and sub-agent isolation, prefix caching and tier routing bring it back.
+> - On safety, the agent reads private data and untrusted pages.
+> - The rendered answer is its outbound channel, so rendering goes through an egress firewall.
+> - The metric that would prove me wrong is the grade distribution.
 
 The lines that carry the round *(own construction from the source's arguments)*:
 

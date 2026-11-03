@@ -4,7 +4,9 @@
 
 A company wants an assistant to answer, act on or hand off support requests from chat, email and voice, cutting handling time without more incorrect or harmful resolutions. A double-charge ticket shows the difficulty: the system must verify the customer, check live billing, apply the refund policy, avoid a duplicate refund and hand off cleanly when anything is uncertain.
 
-The design is a routed decision pipeline. It verifies identity before any account tool, fetches approved policy and live facts, and lets the model draft a reply or propose an action. A deterministic policy gateway then decides: safe answers go out, money waits for a human, and unclear cases reach an agent with a full handoff pack. Every write is idempotent.
+- The design is a routed decision pipeline. It verifies identity before any account tool, fetches approved policy and live facts, and lets the model draft a reply or propose an action.
+- A deterministic policy gateway then decides: safe answers go out, money waits for a human, and unclear cases reach an agent with a full handoff pack.
+- Every write is idempotent.
 
 This is the anchor case for support automation. The multi-tenant SaaS assistant, the ticket automation agent and the large-scale support assistant reuse the same pipeline and change which boundary dominates.
 
@@ -19,6 +21,14 @@ flowchart LR
   C --> D{Gateway allows it?}
   D -->|Yes| E[Answer or act]
   D -->|No| F[Approval or handoff]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,D,F cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
 ```
 
 ## Who it is for

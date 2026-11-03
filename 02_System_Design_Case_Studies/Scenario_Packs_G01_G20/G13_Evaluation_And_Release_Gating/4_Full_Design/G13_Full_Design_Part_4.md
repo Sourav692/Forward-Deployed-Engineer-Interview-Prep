@@ -11,7 +11,10 @@ A gate nobody trusts gets bypassed, so adoption is part of the design. The rollo
 | 3. Add latency and cost gates | Platform engineering with product and finance input | The candidate stays within agreed performance and cost envelopes, or the exception is approved with a rationale |
 | 4. Expand with a shared schema and app-specific rubrics | Platform team; app teams own their rubric configuration | Coverage, escape rate and flaky-case rate hold as teams join |
 
-The answer key's calendar: week 0–1 names scope, evidence, override authority and thresholds. Week 1–2 proves one application. Week 2–3 calibrates graders, including concise-correct and verbose-wrong examples. Week 3–4 holds the gate advisory. Week 5 adds latency and cost gates. Week 6–8 expands with a shared schema. After the pilot, widen only while the metrics hold, and retire any suite that stops discriminating.
+- The answer key's calendar: week 0–1 names scope, evidence, override authority and thresholds.
+- Week 1–2 proves one application. Week 2–3 calibrates graders, including concise-correct and verbose-wrong examples.
+- Week 3–4 holds the gate advisory. Week 5 adds latency and cost gates.
+- Week 6–8 expands with a shared schema. After the pilot, widen only while the metrics hold, and retire any suite that stops discriminating.
 
 The shared schema becomes core product: run metadata and model, prompt, dataset and rubric versions, plus outcome labels, trace references and the release decision. Rubrics stay configuration, because a support bot and a coding assistant do not need identical criteria. Adapters handle per-app formats; the shared service owns orchestration, scoring and audit.
 
@@ -25,7 +28,10 @@ The shared schema becomes core product: run metadata and model, prompt, dataset 
 | Flaky case rate | cases whose result changes across repeated runs without input change / repeated cases | QA or evaluation infra | above 2% overall, or above 5% in a release-affecting dimension |
 | Production failure capture rate | regressions caught before or right after deploy / total known regressions | incident review board | below 80% over a quarter, or down more than 10 points |
 
-A concrete launch review reads like this. Coverage 97%. One severe regression escaped in the last 20 releases. Agreement 89%, acceptable only if the disagreement set is explainable. p95 run time 14 minutes against the 20-minute window. Cost $18 per release evaluation. Flaky rate 1.5%, concentrated in one ambiguous rubric dimension. Four of 5 known regression classes caught before release, 1 by canary, with a postmortem required on the missed class.
+- A concrete launch review reads like this. Coverage 97%. One severe regression escaped in the last 20 releases.
+- Agreement 89%, acceptable only if the disagreement set is explainable. p95 run time 14 minutes against the 20-minute window.
+- Cost $18 per release evaluation. Flaky rate 1.5%, concentrated in one ambiguous rubric dimension.
+- Four of 5 known regression classes caught before release, 1 by canary, with a postmortem required on the missed class.
 
 Rollback triggers are as explicit as go/no-go gates: a bad canary signal, a spike in flaky cases, a post-release incident in an unchecked failure class, and a failed dependency that prevents trustworthy scoring.
 
@@ -48,7 +54,15 @@ Open with the business result and the hidden constraint. The applications are no
 
 The two-minute spoken answer, from the answer key:
 
-> *I would not start with the model. The ask is one platform so 30 applications can decide whether a change is safe to release, but the platform is not the goal — making quality, safety, latency, and cost regressions visible before and after deployment is. So I would restate it as a release-gating system that compares a candidate against the current baseline and records the evidence behind the decision, then separate the four stakeholders. An engineer asking "did my change worsen behaviour," an evaluator asking "what should I score," a safety lead asking "is this safe enough," and a release manager asking "can I approve this with evidence" are different jobs. Architecturally, the control plane decides what to evaluate and the data plane executes it inside a sandbox I treat as hostile-adjacent. An artifact registry pins the candidate so it cannot drift mid-run, a dataset store owns suites and rubrics, a scheduler fans out work with per-tenant quotas, a grader scores across all four dimensions, and a policy engine reads only completed validated runs to compute the delta against thresholds. Missing evidence fails closed, and a sample too small to support a decision holds rather than approves. The named failure is a grader that rewards verbosity over correctness, so graders are versioned, rubric hashes stored, and a calibration suite includes concise-correct and verbose-wrong cases. I would prove it on one critical application, calibrate against human labels, add latency and cost gates, then expand. The gate is only useful if teams trust it enough not to route around it.*
+> - The ask is one platform so 30 applications can decide whether a change is safe to release, but the platform is not the goal — making quality, safety, latency, and cost regressions visible before and after deployment is.
+> - So I would restate it as a release-gating system that compares a candidate against the current baseline and records the evidence behind the decision, then separate the four stakeholders.
+> - An engineer asking "did my change worsen behaviour," an evaluator asking "what should I score," a safety lead asking "is this safe enough," and a release manager asking "can I approve this with evidence" are different jobs.
+> - Architecturally, the control plane decides what to evaluate and the data plane executes it inside a sandbox I treat as hostile-adjacent.
+> - An artifact registry pins the candidate so it cannot drift mid-run, a dataset store owns suites and rubrics, a scheduler fans out work with per-tenant quotas, a grader scores across all four dimensions, and a policy engine reads only completed validated runs to compute the delta against thresholds.
+> - Missing evidence fails closed, and a sample too small to support a decision holds rather than approves.
+> - The named failure is a grader that rewards verbosity over correctness, so graders are versioned, rubric hashes stored, and a calibration suite includes concise-correct and verbose-wrong cases.
+> - I would prove it on one critical application, calibrate against human labels, add latency and cost gates, then expand.
+> - The gate is only useful if teams trust it enough not to route around it.
 
 The lines that carry the round *(own construction from the sources' arguments)*:
 
@@ -75,4 +89,8 @@ The follow-ups arrive in a predictable order.
 | What about regulation? | Registry, lineage and audit trail are most of a compliance story; add an explicit control mapping, such as SOC 2-style controls, and reconcile deletion rights with trace retention *(tutorial's own gap note)* |
 | What about fairness? | Stratify the golden set by user segment and add a per-segment Δ as a fifth dimension of the same fail-closed decision *(tutorial's own gap note)* |
 
-Repair the five weak-answer traps on the spot. "We'll track accuracy and latency" is too generic; name task-specific rubrics and release decisions. "The model grader decides everything" is too automated; add human calibration and audits. "Full suite on every commit" is too big too soon; tier it. "Pass or fail" is too binary; add thresholds, confidence bands and escalation paths. "We only care about pre-release quality" is too narrow; add online feedback and post-release drift detection.
+- Repair the five weak-answer traps on the spot. "We'll track accuracy and latency" is too generic; name task-specific rubrics and release decisions.
+- "The model grader decides everything" is too automated; add human calibration and audits.
+- "Full suite on every commit" is too big too soon; tier it.
+- "Pass or fail" is too binary; add thresholds, confidence bands and escalation paths.
+- "We only care about pre-release quality" is too narrow; add online feedback and post-release drift detection.

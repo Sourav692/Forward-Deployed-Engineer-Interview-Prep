@@ -12,7 +12,10 @@ The interviewer's pivot after a good design is "it misses its 30-second ceiling.
 | Do not                | Feed the model everything and ask it to find the needle                                                                                                                 |
 | 60-second line        | Under a latency ceiling the win is in what is not sent. Summarise telemetry first, run diagnostics in parallel, and spend the strong model on the hypothesis only         |
 
-Every strong cost or latency answer follows four verbs in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on steps, tokens, lookback windows, timeouts and budgets. Cache safely, with the service catalog, runbooks and deploy metadata keyed on version. Deliver it in six moves: frame the impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
+- Every strong cost or latency answer follows four verbs in order. Measure, by tracing and attributing first.
+- Route, matching model and path to risk. Bound, with limits on steps, tokens, lookback windows, timeouts and budgets.
+- Cache safely, with the service catalog, runbooks and deploy metadata keyed on version.
+- Deliver it in six moves: frame the impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
 
 ---
 

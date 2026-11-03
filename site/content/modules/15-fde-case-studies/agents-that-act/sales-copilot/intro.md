@@ -4,7 +4,9 @@
 
 A sales team wants a copilot that prepares an account executive for a meeting: an account summary, opportunity risks, discovery questions, an email draft and suggested CRM updates. The time saved is worthless if the draft invents a certification, makes an unapproved pricing claim, or shows the rep a record from a peer's territory.
 
-The design runs in three lanes. Before the meeting, it builds the account brief as the rep and caches it by permission. When the rep asks, it routes the question to the brief, a reviewed CRM lookup, a search over notes or a short bounded agent, and rechecks access before the model writes from cited evidence. A claim verifier blocks anything not on the approved playbook, and any CRM change needs a field-level preview and the rep's approval before a gateway writes it once.
+- The design runs in three lanes. Before the meeting, it builds the account brief as the rep and caches it by permission.
+- When the rep asks, it routes the question to the brief, a reviewed CRM lookup, a search over notes or a short bounded agent, and rechecks access before the model writes from cited evidence.
+- A claim verifier blocks anything not on the approved playbook, and any CRM change needs a field-level preview and the rep's approval before a gateway writes it once.
 
 The related variants keep this design and shift the weight to broader integration, latency or claim-level release gates.
 
@@ -20,6 +22,16 @@ flowchart LR
   D --> E{Claim approved?}
   E -->|Yes| F[Show to rep]
   E -->|No| G[Block the claim]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,E cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D,G cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class F cbReason
 ```
 
 ## Who it is for

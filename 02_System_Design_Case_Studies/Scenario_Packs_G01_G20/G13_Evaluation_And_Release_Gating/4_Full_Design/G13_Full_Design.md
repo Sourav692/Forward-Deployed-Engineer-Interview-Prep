@@ -4,7 +4,9 @@
 
 ◷ 34 min
 
-An evaluation platform makes a controlled decision about whether one change is safe to ship; a dashboard of scores is at most one view of it. This page folds the group's prompts into one read for the day before. The anchor design comes first; the neighbouring prompts, the incident and the cost pivot follow as deltas on the same gate.
+- An evaluation platform makes a controlled decision about whether one change is safe to ship; a dashboard of scores is at most one view of it.
+- This page folds the group's prompts into one read for the day before.
+- The anchor design comes first; the neighbouring prompts, the incident and the cost pivot follow as deltas on the same gate.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -62,7 +64,11 @@ A requirement that cannot fail a test is a preference. "Fast gate" is a preferen
 
 The functional requirements make this a gate rather than a dashboard. Split them with MoSCoW so the first release is the smallest trustworthy path *(the split is own construction; the items are the sources')*.
 
-The must-haves are six. A release owner submits a candidate change, and the platform compares it to a pinned baseline and returns pass, block or hold with evidence. Datasets, prompts, models, tools and graders are versioned, because versioning is the only way to reproduce a decision later. Both deterministic and probabilistic evaluations run, since some checks must be stable and others depend on rubric judgement. Every candidate is compared against a pinned production baseline, never reported as an absolute score. Release policies are enforced per application, which turns analysis into action. Human review is supported, and reviewer disagreement is recorded as a first-class signal rather than discarded as noise.
+- The must-haves are six. A release owner submits a candidate change, and the platform compares it to a pinned baseline and returns pass, block or hold with evidence.
+- Datasets, prompts, models, tools and graders are versioned, because versioning is the only way to reproduce a decision later.
+- Both deterministic and probabilistic evaluations run, since some checks must be stable and others depend on rubric judgement.
+- Every candidate is compared against a pinned production baseline, never reported as an absolute score.
+- Release policies are enforced per application, which turns analysis into action. Human review is supported, and reviewer disagreement is recorded as a first-class signal rather than discarded as noise.
 
 The should-haves follow once the gate is trusted. Privacy-safe production failures are sampled back into future suites so the test set evolves with the product. Online sampling watches live or shadow traffic after rollout. Latency and cost gates sit beside quality and safety.
 
@@ -99,7 +105,10 @@ Every requirement then needs an owner in the architecture. If a requirement has 
 
 The whiteboard version is a queue, a pool of workers, a results database and a dashboard. It works at average load and fails when the release train tightens. Sizing turns it into a design.
 
-The headline workload is 30 applications × 20 candidate releases a day = 600 candidate evaluations a day, not "30 apps". With 5,000 test cases each, that is 3,000,000 test-case executions a day. I'd assume each case needs 2–3 model or grader calls at minimum and 3–5 more realistically. So the platform makes roughly 6,000,000–15,000,000 model or evaluator calls a day.
+- The headline workload is 30 applications × 20 candidate releases a day = 600 candidate evaluations a day, not "30 apps".
+- With 5,000 test cases each, that is 3,000,000 test-case executions a day.
+- I'd assume each case needs 2–3 model or grader calls at minimum and 3–5 more realistically.
+- So the platform makes roughly 6,000,000–15,000,000 model or evaluator calls a day.
 
 | Window | Calls/sec needed | Approx. workers at 2.5 calls/sec each | Practical implication |
 |---|---|---|---|

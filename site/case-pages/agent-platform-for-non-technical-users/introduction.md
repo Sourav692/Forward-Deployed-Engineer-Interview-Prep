@@ -4,7 +4,10 @@
 
 A business wants support leads and other non-technical staff to build workflows across channels such as email and Slack that reply, tag, escalate or issue a refund, without writing code. The hard part is trust. A real action such as a refund must be authorised, executed once, and recoverable after a crash without paying twice.
 
-The design turns each channel message into one canonical event carrying a tenant ID, matches it to one live workflow, and takes an entity lock so two workflows cannot collide. Workflows are versioned, declarative specs, and a model may fill only typed values. Every step checkpoints, idempotency is keyed on the run and step and checked before authorisation, and a guardrail denies in a fixed order, so a $500 refund against a $50 cap is refused, never clamped. A workflow earns autonomy one stage at a time, from draft through testing, shadow and live, and its author can never approve it alone.
+- The design turns each channel message into one canonical event carrying a tenant ID, matches it to one live workflow, and takes an entity lock so two workflows cannot collide.
+- Workflows are versioned, declarative specs, and a model may fill only typed values.
+- Every step checkpoints, idempotency is keyed on the run and step and checked before authorisation, and a guardrail denies in a fixed order, so a $500 refund against a $50 cap is refused, never clamped.
+- A workflow earns autonomy one stage at a time, from draft through testing, shadow and live, and its author can never approve it alone.
 
 The whiteboard anchor shares its engine with the Cascade Robotics project, which works the $500 refund through conflicting workflows and a runnable demo and names the implementation gaps.
 
@@ -18,6 +21,16 @@ flowchart LR
   B --> C{Guardrail allows?}
   C -->|Yes| D[Run once and checkpoint]
   C -->|No| E[Refuse or seek approval]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class E cbStop
 ```
 
 ## Who it is for

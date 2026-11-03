@@ -23,6 +23,16 @@ flowchart LR
     D --> E["28-35 min<br/>Security,<br/>provenance, failure"]
     E --> F["35-42 min<br/>Rollout &<br/>operations"]
     F --> G["42-50 min<br/>Recap &<br/>follow-up defence"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 - **0–5 minutes: discovery and constraints**

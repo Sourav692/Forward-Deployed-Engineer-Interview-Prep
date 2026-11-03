@@ -40,23 +40,11 @@ export const CASE_SITE_EDITS = {
       ['checks that Unity Catalog governance does not silently drop', 'checks that source governance does not silently drop'],
       ['\n                         G01\n', '\n'],
       ['and four §15 scenarios', 'and four latency and scale scenarios'],
-      // Tick and cross marks in the text diagrams, said in words.
-      ['✗ Wrong. Can also leak', 'Verdict: wrong. It can also leak'],
-      ['✓ Strongest isolation, simple.  ✗ Expensive, awkward', 'Pro: strongest isolation, simple.  Con: expensive, awkward'],
-      ['✓ Unauthorised chunks never scored', 'Pro: unauthorised chunks never scored'],
-      ['is asked not to share.  ✗', 'is asked not to share.  (leaks)'],
-      ['Nothing to print. ✓', 'Nothing to print. (safe)'],
-      ['doc  ✗       dense', 'doc  (wrong)   dense'],
-      ['passage   ✓', 'passage   (right)'],
-      ['doc ✓      BM25', 'doc (right)  BM25'],
-      ['"Getting Started"        ✗', '"Getting Started"        (wrong)'],
     ],
   },
   'enterprise-coding-assistant': {
     replace: [
       ['the enterprise knowledge assistant in G01', 'the Enterprise Knowledge Assistant case'],
-      ['│  ✕ unrelated files', '│  excluded: unrelated files'],
-      ['│  ✕ distant history', '│  excluded: distant history'],
     ],
   },
   'agent-platform-for-non-technical-users': {
@@ -76,7 +64,6 @@ export const CASE_SITE_EDITS = {
       ['bytes scanned or DBU time', 'bytes scanned or compute time'],
       ['"Genie Agent<br/>(Text-to-SQL)"', '"Text-to-SQL Agent<br/>(managed service)"'],
       ['"Visualization Agent<br/>(Lakeview API)"', '"Visualization Agent<br/>(dashboard API)"'],
-      ['route_to_{genie | multi_tool', 'route_to_{text_to_sql | multi_tool'],
       ['a 16-asset Context Index of Genie Spaces (now Genie Agents; Genie itself is now Genie One), metric views', 'a 16-asset Context Index of curated text-to-SQL spaces, metric views'],
       ['| **Genie** | BI specialist | Genie Conversation API (managed text-to-SQL; Genie Spaces renamed Genie Agents in 2026) |', '| **Text-to-SQL** | BI specialist | Managed text-to-SQL conversation API |'],
       ["runs under each user's Unity Catalog permissions", "runs under each user's catalog permissions"],

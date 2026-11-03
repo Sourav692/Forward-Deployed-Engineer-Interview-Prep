@@ -12,7 +12,8 @@ The prompt: build a recruiting platform where AI supports the recruiter at every
 
 **From first resume to final hire.**
 
-A recruiter posts a job description, a flood of resumes follows, and the platform has to rank the applicants, draft questions and scorecards, book interviews and offer a hiring suggestion. Through all of it, the recruiter keeps the final say. That requirement sets the boundary for the whole design: the platform assists the people who hire and never hires by itself.
+- A recruiter posts a job description, a flood of resumes follows, and the platform has to rank the applicants, draft questions and scorecards, book interviews and offer a hiring suggestion.
+- Through all of it, the recruiter keeps the final say. That requirement sets the boundary for the whole design: the platform assists the people who hire and never hires by itself.
 
 Below are the clarifying questions, with the answers this case takes as given. In a real interview, check each one before you build on it.
 
@@ -50,43 +51,62 @@ Below are the clarifying questions, with the answers this case takes as given. I
 
 **Two intake lanes that merge into a single ranking pipeline.**
 
-Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser. Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity. Ranking feeds interview question drafting, and once the interview or assessment is over, the AI judge scores it. The evaluation pipeline then combines those scores with the rest of the evidence. A human recruiter reviews its output, and only then do scheduling and candidate messages go out.
+- Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser.
+- Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity.
+- Ranking feeds interview question drafting, and once the interview or assessment is over, the AI judge scores it.
+- The evaluation pipeline then combines those scores with the rest of the evidence.
+- A human recruiter reviews its output, and only then do scheduling and candidate messages go out.
 
-```
-Recruiter Portal
-│
-Authentication Service
-│
-API Gateway / Load Balancer
-┌──────────────┴──────────────┐
-Resume Upload          Job Description Upload
-│                              │
-OCR / Document Parser         JD Parser
-└──────────────┬──────────────┘
-     Structured Extraction Service
-                │
-       Candidate Profile Builder
-                │
-       Embedding Generation Service
-                │
-       Vector Database
-       (candidate & JD embeddings)
-                │
-       Similarity Search Engine
-                │
-          Candidate Ranking
-                │
-     Interview Question Generator
-                │
-          AI Judge Scoring
-                │
-         Evaluation Pipeline
-                │
-        Human Recruiter Review
-                │
-         Interview Scheduler
-                │
-          Candidate Portal
+```mermaid
+flowchart TD
+    N0["Recruiter portal"]
+    N1["Authentication"]
+    N2["API Gateway and load balancer"]
+    N3["Resume upload"]
+    N4["OCR and document parsing"]
+    N5["Structured extraction"]
+    N6["Job-description upload"]
+    N7["Job-description parser"]
+    N8["Candidate profile"]
+    N9["Embeddings"]
+    N10["Candidate and job vector database"]
+    N11["Similarity search"]
+    N12["Candidate ranking"]
+    N13["Interview questions"]
+    N14["AI judge scoring"]
+    N15["Evaluation"]
+    N16["Human recruiter review"]
+    N17["Interview scheduling"]
+    N18["Candidate portal"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N2 --> N6
+    N6 --> N7
+    N7 --> N5
+    N5 --> N8
+    N8 --> N9
+    N9 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N13
+    N13 --> N14
+    N14 --> N15
+    N15 --> N16
+    N16 --> N17
+    N17 --> N18
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8,N16 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9,N12,N13,N15,N17 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10,N14,N18 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 cbPolicy
 ```
 
 Think of structured extraction as the line between documents and data. On one side the system handles PDFs and loose text. On the other it handles candidate profiles with a shared shape, which can be compared and ranked.
@@ -114,9 +134,14 @@ Think of structured extraction as the line between documents and data. On one si
 
 **Weighted signals you can inspect, not a hidden pass or fail.**
 
-A single similarity number is not enough to rank people. The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. An explicit weight per signal lets a recruiter understand the ranking and an auditor inspect it; one opaque model score allows neither. The weights do not by themselves establish fairness or job relevance.
+- A single similarity number is not enough to rank people.
+- The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success.
+- An explicit weight per signal lets a recruiter understand the ranking and an auditor inspect it; one opaque model score allows neither.
+- The weights do not by themselves establish fairness or job relevance.
 
-Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience level ~20% · domain expertise ~15% · other signals (location, certifications, availability) ~10%. With the weights on show, a recruiter can see the reasons behind each candidate's place, not only the place itself.
+- Here is a weighting I would open with.
+- It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience level ~20% · domain expertise ~15% · other signals (location, certifications, availability) ~10%.
+- With the weights on show, a recruiter can see the reasons behind each candidate's place, not only the place itself.
 
 ---
 
@@ -195,17 +220,24 @@ When a popular posting brings a surge of applications, two things keep the syste
 - Let candidates ask for their data to be deleted.
 - Track model fairness and bias across protected groups.
 
-```
-AI Ranking & Scores
-        │
-Human Recruiter Review
-        │
-Approve or Override
-        │
-Final Hiring Decision
+```mermaid
+flowchart TD
+    N0["AI ranking and scores"]
+    N1["Human recruiter review"]
+    N2["Approve or override"]
+    N3["Final hiring decision"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
 
-  Continuous bias & fairness monitoring
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3 cbPolicy
 ```
+
+- Monitor bias and fairness across the full decision path.
 
 No AI ranking or score goes straight to a decision. A recruiter approves it or overrules it first, and fairness monitoring covers the entire path all the time, not as a check done once.
 
@@ -263,7 +295,9 @@ No AI ranking or score goes straight to a decision. A recruiter approves it or o
 
 Strong answers treat recruiting as a single AI workflow. Structured extraction, semantic matching, explainable ranking and AI-judged evaluation run in sequence, while a human keeps control of the final decision. Fairness, PII protection and compliance apply at every step. From resume parsing to interview scheduling, AI assists at every stage and decides at none.
 
-Scale comes from stateless application servers, asynchronous document processing, sharded vector databases, GPU-backed inference clusters, event-driven ingestion and deployment across regions. Security and fairness come from encryption, RBAC, audit logs, data handling that respects GDPR and EEOC, and bias monitoring that never stops. Treat them as design constraints that shape the ranking and evaluation pipeline from day one, not compliance boxes to tick.
+- Scale comes from stateless application servers, asynchronous document processing, sharded vector databases, GPU-backed inference clusters, event-driven ingestion and deployment across regions.
+- Security and fairness come from encryption, RBAC, audit logs, data handling that respects GDPR and EEOC, and bias monitoring that never stops.
+- Treat them as design constraints that shape the ranking and evaluation pipeline from day one, not compliance boxes to tick.
 
 > The design shows you can build one AI workflow from resume intake to hire. It uses embeddings and semantic search to match candidates well, pulls structured data out of messy documents, and balances automation against human oversight so that people can trust the hiring decisions it supports.
 

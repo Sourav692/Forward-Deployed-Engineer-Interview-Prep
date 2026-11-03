@@ -65,7 +65,9 @@ The source’s illustrative requirements are routine p95 <3 s, ambiguous p95 <8 
 
 With a 70/20/10 routine/ambiguous/escalated split and 2/3/1 model calls: `1.4M × 2 + 0.4M × 3 + 0.2M × 1 = 4.2M` monthly model calls before retries, moderation, and tools. Retrieval is roughly 2.2M–2.4M calls on the source assumptions. These are planning calculations, not measured traffic.
 
-At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarisation and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorisation decisions, and money state require live authority.
+- At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers.
+- Isolate offline summarisation and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key.
+- Identity assertions, account status, authorisation decisions, and money state require live authority.
 
 Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact` (and account for retrieval/operations when pricing it). Measure cost per resolved issue and by intent. A shorter cheap answer that drives recontact can lose money.
 
@@ -81,7 +83,10 @@ Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong
 | Language detection uncertain | Language-neutral intake and escalation. | Detection scores and chosen fallback. |
 | Tool timed out after possible side effect | Pending reconciliation; never blind retry. | Idempotency key, action record, ledger result. |
 
-For a wrong policy answer, ask whether a side effect occurred or a customer was misled. Preserve prompt, output, evidence, and policy version; stop automated delivery; hand off; add a regression example. For a billing timeout before action, the gateway blocks a refund because authoritative facts are missing, then hands off. For a timeout after a refund call, check the ledger before deciding whether anything remains to do.
+- For a wrong policy answer, ask whether a side effect occurred or a customer was misled.
+- Preserve prompt, output, evidence, and policy version; stop automated delivery; hand off; add a regression example.
+- For a billing timeout before action, the gateway blocks a refund because authoritative facts are missing, then hands off.
+- For a timeout after a refund call, check the ledger before deciding whether anything remains to do.
 
 Never replace failed policy retrieval with an unmarked stale answer. Model failures circuit-break and queue eligible work. Use short deadlines, bounded jittered retries, and dead-letter queues so failures stay inspectable. Explain the handoff at workflow level: which intent and rule fired, which fact was absent or contradictory, and which action was attempted.
 

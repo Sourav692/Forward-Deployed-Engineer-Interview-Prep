@@ -14,9 +14,20 @@ The two counts that gate every expansion are unsafe actions and duplicate effect
 | Task completion rate | Automation finishes work without manual rescue | Holds or improves after each expansion | Workflow state machine, case closures | Product and FDE |
 | Human override rate | The agent is earning its place in the queue | Low enough to justify the automation | Review UI, post-action edits | Operations manager |
 
-Report four dashboard layers, because the customer buys workflow improvement under control, not model accuracy. Technical health is tool success, duplicate effects, error rate, queue latency, denial rate. Model quality is task completion, approval rate and delay, and how often a proposed action is later corrected. Adoption is override rate, usage by team, share of eligible requests routed through the agent. Business outcome is time to resolution, refund cycle time, backlog reduction and the customer KPI the workflow exists to move. A healthy service can still fail the business. A high denial rate may mean the guardrails work or the schema is too restrictive. A high override rate may mean the model underperforms or policy needs calibration.
+- Report four dashboard layers, because the customer buys workflow improvement under control, not model accuracy.
+- Technical health is tool success, duplicate effects, error rate, queue latency, denial rate.
+- Model quality is task completion, approval rate and delay, and how often a proposed action is later corrected.
+- Adoption is override rate, usage by team, share of eligible requests routed through the agent.
+- Business outcome is time to resolution, refund cycle time, backlog reduction and the customer KPI the workflow exists to move.
+- A healthy service can still fail the business. A high denial rate may mean the guardrails work or the schema is too restrictive.
+- A high override rate may mean the model underperforms or policy needs calibration.
 
-Red-team before granting more power, as a release gate rather than a stunt. Feed the system emails, documents and ticket text with adversarial instructions hidden in legitimate content. Ask whether it can be steered into calling tools it should not, leaking context, or skipping approvals. The go/no-go for autonomy has three parts. The obvious attack paths were exercised. The policy layer rejected them. The agent degraded to read-only or human review instead of improvising around the control plane. The red-team list covers five attack families:
+- Red-team before granting more power, as a release gate rather than a stunt.
+- Feed the system emails, documents and ticket text with adversarial instructions hidden in legitimate content.
+- Ask whether it can be steered into calling tools it should not, leaking context, or skipping approvals.
+- The go/no-go for autonomy has three parts. The obvious attack paths were exercised.
+- The policy layer rejected them. The agent degraded to read-only or human review instead of improvising around the control plane.
+- The red-team list covers five attack families:
 
 - indirect injection in CRM records, tickets, database rows and fetched pages
 - over-broad credentials that turn one manipulated plan into fleet-wide access
@@ -34,6 +45,14 @@ flowchart LR
   B --> C["Phase 3: Financial actions behind approval"]
   C --> D["Red-team review and canary rollout"]
   D --> E["Expanded autonomy"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E cbInput
 ```
 
 | Week | Gate |
@@ -48,9 +67,15 @@ flowchart LR
 
 A practical approval gate includes reviewer identity, decision timestamp, policy rationale and the exact payload that will execute. An approval that ages out expires rather than executing later. A policy change updates the gate before the next rollout step, not after an incident.
 
-Keep a risk register with the shape risk, owner, mitigation, trigger, rollback, and reuse it for any de-risking question. Prompt injection causes an unauthorised tool call: security reviewer; injection tests, allowlists, policy checks, read-only fallback; any confirmed unauthorised attempt; disable autonomous tool calls and revert to human review. Duplicate CRM writes after retries: reliability engineer; idempotency keys, reconciliation jobs, replay-safe contracts; any duplicated side effect; pause write traffic and drain the queue. Refund approvals stall operations: finance operations lead; approval SLAs, escalation path, reviewer training; delay exceeds target or queue depth climbs; narrow the eligible refund scope or route more to manual.
+- Keep a risk register with the shape risk, owner, mitigation, trigger, rollback, and reuse it for any de-risking question.
+- Prompt injection causes an unauthorised tool call: security reviewer; injection tests, allowlists, policy checks, read-only fallback; any confirmed unauthorised attempt; disable autonomous tool calls and revert to human review.
+- Duplicate CRM writes after retries: reliability engineer; idempotency keys, reconciliation jobs, replay-safe contracts; any duplicated side effect; pause write traffic and drain the queue.
+- Refund approvals stall operations: finance operations lead; approval SLAs, escalation path, reviewer training; delay exceeds target or queue depth climbs; narrow the eligible refund scope or route more to manual.
 
-The rollout is also a training and support plan. Users need to know what the agent can do, what it will refuse, how approvals work and how to escalate when a result looks wrong. Support needs a runbook for inspecting logs, finding the policy rule that fired and recovering a stuck workflow. Build the approval service, idempotency layer, policy engine and ledger as shared services, and keep the customer-specific pieces, CRM fields, refund rules, routing and thresholds, in configuration and adapters. The durable product asset is the control plane.
+- The rollout is also a training and support plan. Users need to know what the agent can do, what it will refuse, how approvals work and how to escalate when a result looks wrong.
+- Support needs a runbook for inspecting logs, finding the policy rule that fired and recovering a stuck workflow.
+- Build the approval service, idempotency layer, policy engine and ledger as shared services, and keep the customer-specific pieces, CRM fields, refund rules, routing and thresholds, in configuration and adapters.
+- The durable product asset is the control plane.
 
 ## 11. Deliver It in Fifty Minutes
 
@@ -64,6 +89,16 @@ flowchart LR
   D --> E["30-38 min: Follow-up drill"]
   E --> F["38-44 min: Summarise under pressure"]
   F --> G["44-50 min: Executive close"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 | Minutes | Phase |
@@ -102,13 +137,27 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 
 The ninety-second decision memo that closes the round:
 
-> *"We're building an agent that turns unstructured email into safe operational action, but we are not giving the model unchecked authority. The model handles interpretation and recommendation; deterministic services handle identity, authorisation, idempotency, approvals, audit, and execution. The key trade-off is flexibility versus control: we accept some workflow rigidity so that refunds and CRM writes are gated, logged, and reversible where possible. The first gate is not 'the agent can do everything'; it is that the control plane demonstrably prevents unauthorised actions, duplicate execution, and uncontrolled side effects."*
+> - We're building an agent that turns unstructured email into safe operational action, but we are not giving the model unchecked authority.
+> - The model handles interpretation and recommendation; deterministic services handle identity, authorisation, idempotency, approvals, audit, and execution.
+> - The key trade-off is flexibility versus control: we accept some workflow rigidity so that refunds and CRM writes are gated, logged, and reversible where possible.
+> - The first gate is not 'the agent can do everything'; it is that the control plane demonstrably prevents unauthorised actions, duplicate execution, and uncontrolled side effects.
 
-The interviewer will challenge the riskiest assumption: "what if the email itself is trying to steer the agent into a refund it should not make?" Answer calmly and specifically. The email is untrusted input for classification and extraction only. The policy engine outside the model decides whether the request is eligible for any write path. The workflow requires a durable action record plus approval for risky cases. Content that looks like injection or conflicting instructions fails closed.
+- The interviewer will challenge the riskiest assumption: "what if the email itself is trying to steer the agent into a refund it should not make?" Answer calmly and specifically.
+- The email is untrusted input for classification and extraction only. The policy engine outside the model decides whether the request is eligible for any write path.
+- The workflow requires a durable action record plus approval for risky cases.
+- Content that looks like injection or conflicting instructions fails closed.
 
 The two-minute spoken answer, for when the whole design has to fit in a summary:
 
-> *I would not start with the model. The customer asks for an agent that reads email, queries internal systems, updates CRM records, and issues refunds, and everyone nods at the feature list before disagreeing completely: operations wants speed, security wants hard gates, finance fears irreversible money movement. That disagreement is the design problem. So I would restate the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects. The crucial consequence is that the model is not the authority: it can interpret and propose, but deterministic systems decide who may act, what may change, and whether an action can be reversed. Concretely, the planner proposes one bounded action, a typed schema validates the arguments before policy even runs, a deterministic policy engine returns allow, block, or needs-approval with the scopes it grants, a credential broker mints a short-lived token tied to one workflow and one action type, and an idempotent execution gateway guarantees exactly one side effect no matter how many retries occur. Tool observations are untrusted data, never commands, so a prompt injection hidden in a ticket fails at the policy gate rather than depending on the model to notice it. Loops, per-task spend, refund amounts, and destinations all carry hard ceilings. I would roll out read-only first, prove reversibility before enabling any write path, keep money behind a human, and red-team the prompt before granting more autonomy. Success is fewer handling minutes with zero unauthorised or unreviewed irreversible changes.*
+> - The customer asks for an agent that reads email, queries internal systems, updates CRM records, and issues refunds, and everyone nods at the feature list before disagreeing completely: operations wants speed, security wants hard gates, finance fears irreversible money movement.
+> - That disagreement is the design problem.
+> - So I would restate the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects.
+> - The crucial consequence is that the model is not the authority: it can interpret and propose, but deterministic systems decide who may act, what may change, and whether an action can be reversed.
+> - Concretely, the planner proposes one bounded action, a typed schema validates the arguments before policy even runs, a deterministic policy engine returns allow, block, or needs-approval with the scopes it grants, a credential broker mints a short-lived token tied to one workflow and one action type, and an idempotent execution gateway guarantees exactly one side effect no matter how many retries occur.
+> - Tool observations are untrusted data, never commands, so a prompt injection hidden in a ticket fails at the policy gate rather than depending on the model to notice it.
+> - Loops, per-task spend, refund amounts, and destinations all carry hard ceilings.
+> - I would roll out read-only first, prove reversibility before enabling any write path, keep money behind a human, and red-team the prompt before granting more autonomy.
+> - Success is fewer handling minutes with zero unauthorised or unreviewed irreversible changes.
 
 The lines that carry the round:
 
@@ -123,4 +172,7 @@ The lines that carry the round:
 9. *"Ceilings on steps, spend, refund amount and destinations are guardrails, not tuning knobs."*
 10. *"The first production gate is that the control plane prevents unauthorised actions, duplicate execution and uncontrolled side effects."*
 
-Repair the common weak answers on the spot. Talking about the model too long becomes re-centring the control plane. Optimising for elegance becomes acknowledging the cost of fine-grained scopes and approval queues. Assuming email is trustworthy becomes stating untrusted-input handling early. Describing the kill switch as a UI flag becomes tying it to cancellation, token revocation and downstream rejection. Drowning the interviewer in components becomes saying what ships first and what is deferred.
+- Repair the common weak answers on the spot. Talking about the model too long becomes re-centring the control plane.
+- Optimising for elegance becomes acknowledging the cost of fine-grained scopes and approval queues.
+- Assuming email is trustworthy becomes stating untrusted-input handling early. Describing the kill switch as a UI flag becomes tying it to cancellation, token revocation and downstream rejection.
+- Drowning the interviewer in components becomes saying what ships first and what is deferred.

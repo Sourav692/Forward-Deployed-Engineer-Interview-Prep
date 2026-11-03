@@ -4,30 +4,48 @@
 
 ## 1. The contract between authoring and runtime
 
-The source's `WorkflowSpec` is a versioned declaration with triggers, fixed steps, max steps and max cost. `Event` carries channel, event type, tenant, target entity, payload and raw reference. `Tool` registration declares typed arguments, scopes and whether it is destructive. A non-technical builder or eventual natural-language compiler produces a reviewable draft spec; the runtime does not execute free text as code. Runs pin a workflow version, so editing a spec cannot alter a run mid-flight.
+- The source's `WorkflowSpec` is a versioned declaration with triggers, fixed steps, max steps and max cost.
+- `Event` carries channel, event type, tenant, target entity, payload and raw reference.
+- `Tool` registration declares typed arguments, scopes and whether it is destructive. A non-technical builder or eventual natural-language compiler produces a reviewable draft spec; the runtime does not execute free text as code.
+- Runs pin a workflow version, so editing a spec cannot alter a run mid-flight.
 
 The runnable project has no LLM, on purpose, so its tests prove deterministic behaviour. A future LLM might propose values or produce a draft spec, but schema validation, policy and human promotion must remain deterministic. An open-ended planning loop would be a separate change, bounded by the same step, spend and authorisation controls.
 
 ## 2. Routing and concurrency
 
-Adapters normalise once at the edge. The router matches tenant, `LIVE` status and `(channel,event_type)` trigger; highest priority wins. It returns `no_trigger_match` when none qualifies. A target-entity lock then refuses a second active run with `entity_locked`, even if priorities are accidentally equal. Priority is a configuration choice; the lock is a safety invariant. In Cascade Robotics, ticket triage priority 10 beats a legacy tagger at priority 1 on the same webhook trigger. A production lock needs database uniqueness, or a distributed lease checked with a fencing token, rather than an in-process dict.
+- Adapters normalise once at the edge. The router matches tenant, `LIVE` status and `(channel,event_type)` trigger; highest priority wins.
+- It returns `no_trigger_match` when none qualifies. A target-entity lock then refuses a second active run with `entity_locked`, even if priorities are accidentally equal.
+- Priority is a configuration choice; the lock is a safety invariant. In Cascade Robotics, ticket triage priority 10 beats a legacy tagger at priority 1 on the same webhook trigger.
+- A production lock needs database uniqueness, or a distributed lease checked with a fencing token, rather than an in-process dict.
 
 ## 3. One execution loop and action-level idempotency
 
 `run_workflow()` and `resume()` enter the same loop at `next_step_index`. After each completed step, the run checkpoints the next index. A crash after step 0 resumes at step 1, so step 0 is not deliberately re-run. At-least-once delivery can still replay an action around a crash, so its external side effect needs an idempotency key like `{tenant_id}:{run_id}:{step_name}:{args_hash}` and a durable shared store. The same key must be passed to a provider when the provider supports it.
 
-After caller and tenant access checks, look up the action's applied key before authorisation. The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial. Idempotency must cover every side effect: the visible API call, cost accounting and audit semantics. A replay of an already-applied action is a free no-op and may advance the checkpoint.
+- After caller and tenant access checks, look up the action's applied key before authorisation.
+- The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial.
+- Idempotency must cover every side effect: the visible API call, cost accounting and audit semantics.
+- A replay of an already-applied action is a free no-op and may advance the checkpoint.
 
 ## 4. Guardrail order and the $500 story
 
 `authorize_step()` returns `Decision(allowed, rule, reason)`. In order: deny if the tighter workflow/tenant step budget is exhausted; deny if the step's *real* cost exceeds the tighter spend cap; deny destructive writes in `SHADOW`; deny actions not yet `LIVE`; then require human approval unless the destructive tool is tenant-allow-listed for autonomy. Non-destructive work proceeds after budget checks. Deny overrides allow. The $500 Cascade refund under a $50 cap is refused rather than reduced; its autonomous status does not erase the cap or allow-list.
 
-The first discovered bug used a nominal tool invocation fee to evaluate a $500 refund against a $5 cap, so it checked the wrong number. The fix reads `amount_usd` from the validated financial tool arguments. Keep inference/tool operating cost separate from money moved on the customer's behalf. A 30-step cheap workflow trips a five-step cap; a single $500 refund trips a $50 spend cap. Neither should retry or silently clamp.
+- The first discovered bug used a nominal tool invocation fee to evaluate a $500 refund against a $5 cap, so it checked the wrong number.
+- The fix reads `amount_usd` from the validated financial tool arguments. Keep inference/tool operating cost separate from money moved on the customer's behalf.
+- A 30-step cheap workflow trips a five-step cap; a single $500 refund trips a $50 spend cap.
+- Neither should retry or silently clamp.
 
 ## 5. Promotion and negative evidence
 
-The states are `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`; promotion moves one stage at a time, only by an approver/admin who is not the author. Testing uses historical input; shadow observes live traffic with writes mocked; live can require human approval per action; autonomous can skip approval only for tenant-allow-listed tools. The source demo has 21 deterministic tests covering wrong role, skipped stage, bad typed arguments, not-live action, cap denial, step limit, entity lock, crash resume and no duplicate effect. Those tests prove this engine's rules, not the behaviour of an unbuilt planner.
+- The states are `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`; promotion moves one stage at a time, only by an approver/admin who is not the author.
+- Testing uses historical input; shadow observes live traffic with writes mocked; live can require human approval per action; autonomous can skip approval only for tenant-allow-listed tools.
+- The source demo has 21 deterministic tests covering wrong role, skipped stage, bad typed arguments, not-live action, cap denial, step limit, entity lock, crash resume and no duplicate effect.
+- Those tests prove this engine's rules, not the behaviour of an unbuilt planner.
 
 ## 6. Product and production gaps
 
-Templates, plain-language run history, natural-language authoring, automatic retry scheduling, real connector secrets, output PII redaction, custom-tool sandboxing and gradual traffic split are incomplete or absent in the source. Production also needs durable run, lock and idempotency stores shared across workers, scoped connector credentials, observability and a tenant-level spending breaker. Keep the run trace understandable to the author: each allow/deny should have a rule name and plain reason. Build week one around a single safe workflow and negative guardrail proof before adding model planning or destructive actions.
+- Templates, plain-language run history, natural-language authoring, automatic retry scheduling, real connector secrets, output PII redaction, custom-tool sandboxing and gradual traffic split are incomplete or absent in the source.
+- Production also needs durable run, lock and idempotency stores shared across workers, scoped connector credentials, observability and a tenant-level spending breaker.
+- Keep the run trace understandable to the author: each allow/deny should have a rule name and plain reason.
+- Build week one around a single safe workflow and negative guardrail proof before adding model planning or destructive actions.

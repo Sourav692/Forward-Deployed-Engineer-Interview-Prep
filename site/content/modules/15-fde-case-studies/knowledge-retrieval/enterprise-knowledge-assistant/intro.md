@@ -4,7 +4,8 @@
 
 A company wants its employees to ask internal questions about policies, runbooks and product docs, and get an answer that cites its sources. The hard part is permissions. A Tier-1 support agent and a VP can ask the same question and must get different answers, because each may read only what their access allows.
 
-The design is a permission-aware retrieval pipeline. It identifies the user, retrieves only the documents that user may open, writes the answer from those documents with citations, and abstains when the evidence is thin. It also has to act on lost access: when someone leaves a group, the change must reach the search index and the answer cache, not only the source system.
+- The design is a permission-aware retrieval pipeline. It identifies the user, retrieves only the documents that user may open, writes the answer from those documents with citations, and abstains when the evidence is thin.
+- It also has to act on lost access: when someone leaves a group, the change must reach the search index and the answer cache, not only the source system.
 
 This is the anchor case for enterprise RAG. Support assistants, legal search and low-latency enterprise search reuse the same core and change which constraint dominates.
 
@@ -19,6 +20,16 @@ flowchart LR
   C --> D{Enough evidence?}
   D -->|Yes| E[Answer with citations]
   D -->|No| F[Abstain or escalate]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ## Who it is for

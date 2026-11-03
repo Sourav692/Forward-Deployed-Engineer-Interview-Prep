@@ -129,6 +129,16 @@ flowchart LR
     GATE -.-> AUDIT[(Audit and quality outcomes)]
     TOOL -.-> AUDIT
     HANDOFF -.-> AUDIT
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class RULES,GW,ID,FACTS,LOOKUP,GATE,APPROVE cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class KILL,ROUTE,PLAN,DRAFT,HANDOFF cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CH,ANSWER,TOOL,AUDIT cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class SOR,LIMITED cbInput
 ```
 
 ### Step-by-step architecture

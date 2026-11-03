@@ -44,7 +44,10 @@ The follow-ups arrive in a predictable order. Several are the source bank's Tier
 | How do you know it is working? | Section 10: recall per type, the customs invariant at zero, calibration, draft acceptance, outcome joins, a holdout for reroutes |
 | Agentic or deterministic workflow? | Deterministic for the pipeline and the gate; the model only drafts. The agent is an execution graph with a budget, not an open loop |
 
-Repair the common weak answers on the spot. "The model decides whether to auto-resolve" becomes the agent proposes and the gate decides. "Check confidence, and customs is just low confidence" becomes customs first, as a rule. "One global deployment with an EU flag" becomes regional data planes. "Average time-to-detect" becomes split by feed type. "We'll monitor it" becomes the evaluation plan with a release gate.
+- Repair the common weak answers on the spot. "The model decides whether to auto-resolve" becomes the agent proposes and the gate decides.
+- "Check confidence, and customs is just low confidence" becomes customs first, as a rule.
+- "One global deployment with an EU flag" becomes regional data planes. "Average time-to-detect" becomes split by feed type.
+- "We'll monitor it" becomes the evaluation plan with a release gate.
 
 ## 14. Answer the Cost Pivot in Ten Minutes
 
@@ -58,9 +61,13 @@ No ready-made drill covers this group, so the card below is own construction. It
 | Do not | Send every carrier event to the LLM, or retry a flaky carrier API until the storm passes |
 | 60-second line | Most events are routine scans, so the model belongs behind detection, not on the stream. Cost should scale with disruptions, not with events. Bound each exception's steps and carrier calls, template the common rebook, cap retries with a breaker that falls back to a human, and spend the strong model only on drafts a human will read. |
 
-During a storm, latency matters as much as cost. The batch path is slow by design, and no model choice changes that. Latency on the real-time path is detection plus drafting plus the queue, and a burst lands in the queue. The latency answer is backlog prioritisation by value and deadline, plus stateless scale-out of detection, not a faster model.
+- During a storm, latency matters as much as cost. The batch path is slow by design, and no model choice changes that.
+- Latency on the real-time path is detection plus drafting plus the queue, and a burst lands in the queue.
+- The latency answer is backlog prioritisation by value and deadline, plus stateless scale-out of detection, not a faster model.
 
-A strong cost answer follows four verbs in order. Measure, by tracing model calls, carrier calls and retries per exception first. Route, sending detection to rules, routine drafts to a small model, and high-stakes drafts to a strong one. Bound, with step caps, carrier-call budgets, retry budgets and breakers. Cache safely, with shipment state keyed on the event version so a stale lookup never drives a reroute.
+- A strong cost answer follows four verbs in order. Measure, by tracing model calls, carrier calls and retries per exception first.
+- Route, sending detection to rules, routine drafts to a small model, and high-stakes drafts to a strong one.
+- Bound, with step caps, carrier-call budgets, retry budgets and breakers. Cache safely, with shipment state keyed on the event version so a stale lookup never drives a reroute.
 
 ---
 

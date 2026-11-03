@@ -15,11 +15,23 @@ Begin with the customer's pain, not a diagram: executives want governed natural-
 
 The 90-second architecture summary:
 
-> *"We're building a governed natural-language-to-SQL assistant for executives and analysts who need fast answers but cannot afford incorrect metrics or unsafe queries. I'd put a semantic layer between the model and the warehouse so the assistant generates SQL from approved business definitions rather than raw table names. The service would accept a user question, classify intent and risk, resolve the relevant metric definitions, generate a constrained draft query, validate it for policy and cost, and then either execute automatically or route for approval depending on sensitivity and confidence. Row-level security must be enforced in the warehouse, not in the prompt. I'd log the question, the generated SQL, the metric mapping, the cost estimate, the execution result, and the user identity for audit and debugging. The biggest trade-off is flexibility versus correctness: I'd optimise for governed answers first, then add templates and fallback pathways for the long tail. My first rollout gate would be a small set of executive metrics with a golden test corpus and a hard stop on ambiguous or expensive queries."*
+> - We're building a governed natural-language-to-SQL assistant for executives and analysts who need fast answers but cannot afford incorrect metrics or unsafe queries.
+> - I'd put a semantic layer between the model and the warehouse so the assistant generates SQL from approved business definitions rather than raw table names.
+> - The service would accept a user question, classify intent and risk, resolve the relevant metric definitions, generate a constrained draft query, validate it for policy and cost, and then either execute automatically or route for approval depending on sensitivity and confidence.
+> - Row-level security must be enforced in the warehouse, not in the prompt.
+> - I'd log the question, the generated SQL, the metric mapping, the cost estimate, the execution result, and the user identity for audit and debugging.
+> - The biggest trade-off is flexibility versus correctness: I'd optimise for governed answers first, then add templates and fallback pathways for the long tail.
+> - My first rollout gate would be a small set of executive metrics with a golden test corpus and a hard stop on ambiguous or expensive queries.
 
 The 2-minute spoken answer:
 
-> *I would not start with the model. The naive pitch here is to let an LLM write the SQL, and that loses immediately, because generation is not the hard part. The hard part is that "revenue" might mean booked, recognised, or collected, and a syntactically perfect query against the wrong definition is a governance failure dressed up as a working feature. So I would reframe the problem as building a governed decision-support system that only speaks in terms the business has already agreed to. That means three things from day one: a semantic layer of governed metric definitions, a safety boundary around the warehouse that is read-only and cost-bounded, and an explicit way to say "I don't know which definition you mean" instead of guessing. Architecturally, the query API authenticates and resolves entitlements, the metric registry is consulted before any physical table, the schema retriever pulls only what is needed, ambiguity triggers a clarifying question, and the generated SQL is parsed into an AST and checked against policy and a scan budget before a read-only gateway executes it with timeouts and row limits. I would prove it on ten governed metrics with golden cases pairing question, approved SQL, and expected result, then shadow analysts before any executive sees output, then expand domain by domain with named metric owners. Success is not a fast answer; it is an answer nobody has to re-check.*
+> - The naive pitch here is to let an LLM write the SQL, and that loses immediately, because generation is not the hard part.
+> - The hard part is that "revenue" might mean booked, recognised, or collected, and a syntactically perfect query against the wrong definition is a governance failure dressed up as a working feature.
+> - So I would reframe the problem as building a governed decision-support system that only speaks in terms the business has already agreed to.
+> - That means three things from day one: a semantic layer of governed metric definitions, a safety boundary around the warehouse that is read-only and cost-bounded, and an explicit way to say "I don't know which definition you mean" instead of guessing.
+> - Architecturally, the query API authenticates and resolves entitlements, the metric registry is consulted before any physical table, the schema retriever pulls only what is needed, ambiguity triggers a clarifying question, and the generated SQL is parsed into an AST and checked against policy and a scan budget before a read-only gateway executes it with timeouts and row limits.
+> - I would prove it on ten governed metrics with golden cases pairing question, approved SQL, and expected result, then shadow analysts before any executive sees output, then expand domain by domain with named metric owners.
+> - Success is not a fast answer; it is an answer nobody has to re-check.
 
 The lines that carry the round:
 
@@ -33,7 +45,11 @@ The lines that carry the round:
 8. *"Ten metrics, golden cases, shadow analysts, then domain by domain. Trust is earned, not assumed."*
 9. *"Success is not a fast answer; it is an answer nobody has to re-check."*
 
-Name the trade-offs with a balanced verdict each. Raw schema prompting versus semantic layer: default to the layer for governed metrics, allow raw schema only for approved exploratory workflows. Automatic execution versus approval: risk-based execution, auto-run only on high confidence, an approved pattern, permission and low cost, otherwise show the draft and ask. Flexibility versus templates: a hybrid, templates for common governed workflows, free-form for the long tail, and a policy gate deciding when free-form is allowed. Speed versus warehouse cost: bound the search space with the semantic layer and cache aggressively for repeat questions. Treat any large scan as a signal to narrow scope, not to optimise the query.
+- Name the trade-offs with a balanced verdict each. Raw schema prompting versus semantic layer: default to the layer for governed metrics, allow raw schema only for approved exploratory workflows.
+- Automatic execution versus approval: risk-based execution, auto-run only on high confidence, an approved pattern, permission and low cost, otherwise show the draft and ask.
+- Flexibility versus templates: a hybrid, templates for common governed workflows, free-form for the long tail, and a policy gate deciding when free-form is allowed.
+- Speed versus warehouse cost: bound the search space with the semantic layer and cache aggressively for repeat questions.
+- Treat any large scan as a signal to narrow scope, not to optimise the query.
 
 | Follow-up | Answer |
 |---|---|
@@ -45,7 +61,10 @@ Name the trade-offs with a balanced verdict each. Raw schema prompting versus se
 | The executive says the number changed since last quarter. Why? | Metric versions are retained; the query run records the metric and schema versions used, so the two runs are diffed by definition, not by guesswork |
 | How does an executive get an explanation as well as a table? | Section 8: summary generated from the structured result and cross-checked; drivers computed deterministically and narrated; uncertain explanations escalated to an analyst |
 
-Repair the weak answers on the spot. "Let the LLM write the SQL" becomes registry first, AST policy, read-only gateway. "The database handles permissions" becomes warehouse-native policies reused plus entitlement re-check at execution. "We'll test the SQL" becomes golden cases judged for semantic correctness. "It will ask when unsure" becomes a confidence threshold with a number. "We'll just run it and see" becomes cost estimation before execution.
+- Repair the weak answers on the spot. "Let the LLM write the SQL" becomes registry first, AST policy, read-only gateway.
+- "The database handles permissions" becomes warehouse-native policies reused plus entitlement re-check at execution.
+- "We'll test the SQL" becomes golden cases judged for semantic correctness. "It will ask when unsure" becomes a confidence threshold with a number.
+- "We'll just run it and see" becomes cost estimation before execution.
 
 Score a dry run on six dimensions: estimation, architecture, depth (ambiguity, cost, failure paths), security (authorisation, RLS, validation, audit), delivery (gates, fallback, support) and communication. A miss in any one is a design gap to fix, not a phrase to memorise.
 
@@ -74,18 +93,66 @@ flowchart LR
     end
     S1 -.pivot.-> S2
     S2 -.pivot as domains grew.-> S3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A1,A2,B2,B3,B4,B5,C3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B1,S1 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C1,C2,S2 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class S3 cbInput
 ```
 
-The first-pivot beat is the failure that taught the architecture. One agent, one prompt, twenty-plus tools broke on two axes in real testing. Context bloat, because every tool schema sat in context on every turn. Tool confusion, because with that many tools competing the agent picked the wrong one often enough to be unusable. The fix was architectural rather than a bigger model or better prompting: split deciding what to do from doing it. If asked why it broke specifically, say that stuffing 20-plus tool schemas plus full history into one prompt measurably degrades tool-selection accuracy. It is a context-bloat effect, not vague confusion.
+- The first-pivot beat is the failure that taught the architecture. One agent, one prompt, twenty-plus tools broke on two axes in real testing.
+- Context bloat, because every tool schema sat in context on every turn.
+- Tool confusion, because with that many tools competing the agent picked the wrong one often enough to be unusable.
+- The fix was architectural rather than a bigger model or better prompting: split deciding what to do from doing it.
+- If asked why it broke specifically, say that stuffing 20-plus tool schemas plus full history into one prompt measurably degrades tool-selection accuracy.
+- It is a context-bloat effect, not vague confusion.
 
 The supervisor is an eight-node state machine.
 
-```
-classify_intent → clarify_or_disambiguate → resolve_assets_with_context_index
-    → route_to_{text_to_sql | multi_tool | analysis | visualization} → compose_answer
+```mermaid
+flowchart TD
+    N0["Classify intent"]
+    N1["Clarify or disambiguate"]
+    N2["Resolve assets from context index"]
+    N3["Route"]
+    N4["Managed text-to-SQL specialist"]
+    N5["Compose answer"]
+    N6["Multi-tool worker"]
+    N7["Deterministic analysis"]
+    N8["Dashboard visualisation"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N3 --> N6
+    N6 --> N5
+    N3 --> N7
+    N7 --> N5
+    N3 --> N8
+    N8 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N5,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N4,N8 cbInput
 ```
 
-Intent is classified with a confidence score. Clarification fires only below 60%. The supervisor, and only the supervisor, resolves assets against a 16-asset Context Index of curated text-to-SQL spaces, metric views, tables and document indexes, with endorsed assets ranked first. It passes the resolved list to one of four specialists on shared state. Centralising resolution costs one hop of latency. It buys a single auditable source of truth for what data any answer is based on. Two workers resolving to different tables for the same question is a governance nightmare in insurance.
+- Intent is classified with a confidence score. Clarification fires only below 60%.
+- The supervisor, and only the supervisor, resolves assets against a 16-asset Context Index of curated text-to-SQL spaces, metric views, tables and document indexes, with endorsed assets ranked first.
+- It passes the resolved list to one of four specialists on shared state.
+- Centralising resolution costs one hop of latency. It buys a single auditable source of truth for what data any answer is based on.
+- Two workers resolving to different tables for the same question is a governance nightmare in insurance.
 
 | Agent | Role | Tools | The trade-off it embodies |
 |---|---|---|---|
@@ -107,9 +174,17 @@ The governance beat sits underneath, in five pieces:
 | **Durable, resumable state** | Multi-turn conversations backed by table checkpoints, a governance requirement; every conversation state must be auditable. In this build I wrote a custom checkpointer over a table |
 | **Deterministic composition** | A governed insurance environment cannot tolerate open-ended agent-to-agent chat deciding its own flow. The graph is inspectable and fixed at build time: eight nodes, each nameable |
 
-The second-pivot beat is the same failure one level up. As domains grew, the supervisor's own tool list re-approached the original bloat. So the fix was applied again, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, claims. Each has its own prompt, small toolset, context window and curated text-to-SQL space. A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback. The cost was more infrastructure surface. The gain was a ceiling on tool-selection degradation that does not reappear as the system grows.
+- The second-pivot beat is the same failure one level up. As domains grew, the supervisor's own tool list re-approached the original bloat.
+- So the fix was applied again, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, claims.
+- Each has its own prompt, small toolset, context window and curated text-to-SQL space.
+- A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback.
+- The cost was more infrastructure surface. The gain was a ceiling on tool-selection degradation that does not reappear as the system grows.
 
 
-State the results honestly. In that engagement, the team reported time-to-insight going from days to minutes. Dashboard delivery went from weeks to governed self-serve. Adoption grew after rollout, though I can't attribute it cleanly; say exactly that before being asked. MVP in about two months. If rebuilt today: instrument resolution-time and accuracy metrics from day one rather than relying on tracing for post-hoc debugging, and invest earlier in the offline evaluation dataset.
+- State the results honestly. In that engagement, the team reported time-to-insight going from days to minutes.
+- Dashboard delivery went from weeks to governed self-serve. Adoption grew after rollout, though I can't attribute it cleanly; say exactly that before being asked.
+- MVP in about two months. If rebuilt today: instrument resolution-time and accuracy metrics from day one rather than relying on tracing for post-hoc debugging, and invest earlier in the offline evaluation dataset.
 
-Close on whichever thread the conversation ended on. On the pivots: the same failure showed up twice at two scales, and both times the fix was the same instinct, specialise and keep each unit's context small. On governance: at an insurer, what counts is a system provably safe to hand to a regulated business user. On results: better to say exactly what can and cannot be claimed than to let a number go unquestioned.
+- Close on whichever thread the conversation ended on. On the pivots: the same failure showed up twice at two scales, and both times the fix was the same instinct, specialise and keep each unit's context small.
+- On governance: at an insurer, what counts is a system provably safe to hand to a regulated business user.
+- On results: better to say exactly what can and cannot be claimed than to let a number go unquestioned.

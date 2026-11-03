@@ -8,7 +8,9 @@ The [Main guide](../1_Interview_Guide/G03_Interview_Guide.md) is the spoken desi
 
 `AgentTask(id, actor, goal, state, step_budget)` tracks the workflow, not customer or financial truth. `ToolDefinition(name, schema, data_class, scopes)` limits the legal tool space. `ActionProposal(id, task_id, tool, args_hash, policy_decision)` is the model’s recommendation. `PolicyDecision(proposal_id, verdict, scopes, reason)` is the deterministic verdict. `ActionReceipt(proposal_id, idempotency_key, outcome)` is proof of the side effect. Canonicalize arguments before hashing, and return the stored receipt when the same business action is retried.
 
-Keep the order explicit: authenticate → propose → resolve registered tool → validate typed arguments/data class/limits → evaluate policy → obtain approval if required → mint scoped credential → execute through the gateway → persist receipt → decide whether to continue. In this case, validation runs before policy so malformed or over-limit proposals never enter authorisation. If the policy or broker cannot be reached, a write cannot proceed.
+- Keep the order explicit: authenticate → propose → resolve registered tool → validate typed arguments/data class/limits → evaluate policy → obtain approval if required → mint scoped credential → execute through the gateway → persist receipt → decide whether to continue.
+- In this case, validation runs before policy so malformed or over-limit proposals never enter authorisation.
+- If the policy or broker cannot be reached, a write cannot proceed.
 
 An approval is a durable record of reviewer, time, rationale, exact payload, tenant, record version, amount, and expiry. A later state change invalidates it. The gateway, not the planner, owns exactly-once effect semantics within the idempotency contract. A lost response is an unknown outcome that needs reconciliation; neither a prompt nor a generic retry makes it safe.
 
@@ -32,7 +34,11 @@ The user boundary ends at authentication, planner boundary at proposal, policy b
 
 Use `Impact × Likelihood × Irreversibility` as a qualitative risk aid, not a numeric proof. A public FAQ read may be autonomous; a CRM update may need preconditions; a refund may need human approval; some exports or permission changes are blocked. Refund reversibility in software does not erase customer, finance, or abuse costs.
 
-The source’s planning anchor is 50k users, 20 QPS peak, and 10 actions/task, roughly 200 tool actions/s. Iterative plans may reach 40–60 model calls/s. With about 1 s of planner compute/task, the planner needs roughly 20 core-seconds per second at peak, plus slack for tails. Illustrative 5 KB decision + 20 KB audit/task gives about 100–400 KB/s and 8.6–34.6 GB/day raw before indexing/replication. At 10× peak, ask what saturates first: planner, approval queue, adapter, ledger, or refund service. At 10× lower load, simplify deployment but keep the same safety boundary.
+- The source’s planning anchor is 50k users, 20 QPS peak, and 10 actions/task, roughly 200 tool actions/s.
+- Iterative plans may reach 40–60 model calls/s. With about 1 s of planner compute/task, the planner needs roughly 20 core-seconds per second at peak, plus slack for tails.
+- Illustrative 5 KB decision + 20 KB audit/task gives about 100–400 KB/s and 8.6–34.6 GB/day raw before indexing/replication.
+- At 10× peak, ask what saturates first: planner, approval queue, adapter, ledger, or refund service.
+- At 10× lower load, simplify deployment but keep the same safety boundary.
 
 Cap concurrency by user, tool, and globally; also cap value and destination. Partition ordered work by account or workflow so conflicting writes do not race. Reads can run in parallel; writes and approvals must follow state transitions. Long workflows return a job ID and continue asynchronously.
 
@@ -71,11 +77,16 @@ Rollout: read-only triage/draft → narrow reversible CRM writes with owner/reve
 
 Agent steps and tool calls, including retries after rejected or failed actions, are the common cost driver. Profile model planning versus downstream tool wait versus approval. If planner-heavy, route common intents deterministically and combine safe reads; if tool-heavy, cache safe reads in-request and prefetch; if approval-heavy, improve proposal clarity and risk classification, never bypass approval.
 
-For a tool loop, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests. For a tool timeout, find the critical path, parallelise independent reads, set per-tool deadlines, and move slow side effects to an async job with status. Measure steps, tool latency, retries, timeouts, and cost before and after.
+- For a tool loop, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests.
+- For a tool timeout, find the critical path, parallelise independent reads, set per-tool deadlines, and move slow side effects to an async job with status.
+- Measure steps, tool latency, retries, timeouts, and cost before and after.
 
 ## 8. Refund near miss: planner failure, gateway success
 
-In the source incident, a support agent asked the agent to handle delayed VIP shipments. The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorised money moved. A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries. The unchanged gateway policy blocked the high-value actions.
+- In the source incident, a support agent asked the agent to handle delayed VIP shipments.
+- The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorised money moved.
+- A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries.
+- The unchanged gateway policy blocked the high-value actions.
 
 Contain by disabling bulk refund planning, forcing VIP refunds into review-ticket mode, adding user confirmation, and auditing the 12 allowed actions. Prevent with threshold-aware schemas, policy simulation, a separate action-risk check, better planner examples, and non-bypassable gateway enforcement. Treat it as a near miss even though the money gate held, because the proposal distribution got worse.
 

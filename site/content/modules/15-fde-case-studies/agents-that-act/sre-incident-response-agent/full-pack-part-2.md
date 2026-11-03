@@ -2,48 +2,73 @@
 
 ## 4. Draw the Architecture End to End
 
-One diagram carries the design, and the sections after it zoom in. The organising split is control plane against data plane. Policy, tool allowlists, credentials, runbook and catalog sync, model versions and evaluation rules live in the control plane; every alert, query, hypothesis, proposal and approval lives in the data plane. The second split is the read-only line inside the data plane: everything to the left of the approval gate may query, nothing to its left may change.
+- One diagram carries the design, and the sections after it zoom in.
+- The organising split is control plane against data plane.
+- Policy, tool allowlists, credentials, runbook and catalog sync, model versions and evaluation rules live in the control plane; every alert, query, hypothesis, proposal and approval lives in the data plane.
+- The second split is the read-only line inside the data plane: everything to the left of the approval gate may query, nothing to its left may change.
 
+```mermaid
+flowchart TD
+    N0["Alerts: about 1,200 per day, peak 400 in 90 s"]
+    N1["Dedupe and correlate with rules or small model"]
+    N2["One investigation per cluster with per-service concurrency cap"]
+    N3["Build service, deploy, flag, and owner context"]
+    N4["Pre-aggregate telemetry"]
+    N5["Parallel read-only checks: metrics, logs, traces, k8s, runbooks"]
+    N6["Evidence and source coverage"]
+    N7["Strong-model hypothesis and evidence ranking"]
+    N8["Stream first useful summary in under 30 s"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N7 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N8 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N5 cbPolicy
 ```
- ╔═══════════════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════════════╗
- ║  tool allowlist + policy (read / propose / execute) · scoped read credentials · service-ownership map  ║
- ║  runbook + service-catalog sync · change-freeze calendar · model + prompt versions · eval rules        ║
- ╚═════════════════════════════════════════╤═══════════════════════════════════════════════════════════╝
-                                           │ configures every box below
- ╔═══════════════════════════════ DATA PLANE (runs outside the affected blast radius) ═════════════════╗
- ║                                                                                                       ║
- ║  INTAKE — before any model call                                                                       ║
- ║   alerts (~1,200/day, 400 in 90 s at peak) ─> DEDUPE + CORRELATE (rules, small model) ─> per-service ║
- ║                                                  cap on concurrent investigations                     ║
- ║        │ one investigation per correlated cluster                                                     ║
- ║        v                                                                                              ║
- ║  INVESTIGATION — read-only                                                                            ║
- ║   context builder ─> PRE-AGGREGATE telemetry ─┬─> metrics  ┐                                          ║
- ║   (service, deploys, flags, owners)           ├─> logs     │ parallel, bounded lookback,               ║
- ║                                               ├─> traces   │ typed results: SUCCESS / EMPTY /         ║
- ║                                               ├─> k8s      │ UNAVAILABLE / DENIED / INVALID           ║
- ║                                               └─> runbooks ┘                                          ║
- ║        │ evidence + source coverage                                                                   ║
- ║        v                                                                                              ║
- ║   HYPOTHESIS (strong model) ─> evidence ranker ─> first useful summary (< 30 s, streamed)             ║
- ║        │ ranked causes · confidence · missing evidence · sources not reached                          ║
- ║        v                                                                                              ║
- ║  MITIGATION — staged                                                                                  ║
- ║   proposal: exact command + blast radius + evidence + runbook + freeze check + simulation             ║
- ║        │                                                                                              ║
- ║        v                                                                                              ║
- ║   ══ APPROVAL GATE (owner + commander, ~10 s) ══ ─> TOOL GATEWAY (authorise → validate → idempotent   ║
- ║                                                     call with timeout → classify → trim → log)        ║
- ║        │                                                                                              ║
- ║        v                                                                                              ║
- ║   execute ─> verify effect ─> incident timeline ─> postmortem draft                                   ║
- ║                                                                                                       ║
- ║  OBSERVABILITY — every stage writes                                                                   ║
- ║   trace store (alert → signals → hypotheses → proposal → decision → outcome) ─> eval service          ║
- ║                                 ─> dashboards (time to first output · hypothesis precision · source    ║
- ║                                    coverage · approval decision time · later reversal rate)            ║
- ╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Ranked hypothesis and missing evidence"]
+    N1["Exact mitigation proposal"]
+    N2["Owner and commander approval: about 10 s"]
+    N3["Tool gateway: authorise, validate, idempotent call, timeout, classify, trim, log"]
+    N4["Execute"]
+    N5["Verify effect"]
+    N6["Incident timeline"]
+    N7["Postmortem draft"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3,N5,N7 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N4,N6 cbAction
 ```
+
+- Version tool policy, scoped read credentials, service ownership, runbook/catalog sync, change freezes, models, prompts, and evaluation rules. Run this data plane outside the affected blast radius.
+- Bound lookback and classify tool results as SUCCESS, EMPTY, UNAVAILABLE, DENIED, or INVALID.
+- A proposal includes the exact command, blast radius, evidence, runbook, freeze check, and simulation.
+- Trace alert, signals, hypotheses, proposal, decision, and outcome. Monitor first-output time, hypothesis precision, source coverage, approval time, and later reversals.
 
 The same flow as a rendered diagram, for viewers that draw Mermaid:
 
@@ -87,6 +112,18 @@ flowchart LR
     OWN -.-> PROP & APR
     VER -.-> HYP & EVAL
     DD & PRE & HYP & PROP & APR & EX --> TS
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class POL,CTX,T,APR,GW,VFY,DASH cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class CRED,VER,DD,M,R,HYP,RANK cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class OWN,CAP,L,SUM,PROP,EX,TS,EVAL cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class AL,PRE,K,TL,TL2 cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class TR cbStop
 ```
 
 The anchor's own diagram is the four-box version to draw when the board is small. Reproduce it exactly; it is the shape interviewers recognise.
@@ -97,6 +134,16 @@ flowchart LR
     B --> C["Read-only investigation<br/>(query anything, change nothing)"]
     C --> D["Proposed mitigation:<br/>exact command + blast radius + evidence"]
     D --> E["Human approves<br/>(~10s is fine mid-incident)"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,E cbPolicy
 ```
 
 Read the components in dependency order, because that is the order they have to exist and the order they fail.
@@ -115,7 +162,9 @@ Read the components in dependency order, because that is the order they have to 
 | Timeline writer                          | Every event, hypothesis, decision and outcome into the incident record                      | Degrades: the incident proceeds, the gap is logged                                                                  |
 | Trace store, eval, dashboards            | Replayable investigations; precision, coverage, decision time, reversal rate                | Degrades: output still served, gap logged                                                                           |
 
-Point at three boundaries while the diagram is up. The model-call boundary sits after dedupe and correlation, so a burst never becomes 400 model invocations. The write boundary sits at the approval gate, so nothing left of it can change production, and the gateway behind it is the single doorway for anything that can. The blast-radius boundary sits around the whole data plane, which runs outside the systems it investigates.
+- Point at three boundaries while the diagram is up. The model-call boundary sits after dedupe and correlation, so a burst never becomes 400 model invocations.
+- The write boundary sits at the approval gate, so nothing left of it can change production, and the gateway behind it is the single doorway for anything that can.
+- The blast-radius boundary sits around the whole data plane, which runs outside the systems it investigates.
 
 ## 5. Deduplicate and Correlate Before Any Model Call
 
@@ -123,15 +172,23 @@ Design for the burst, not the daily average. 1,200 alerts a day is trivial; 400 
 
 So deduplicate and correlate with rules and a small model before any strong-model call, and cap concurrent investigations per service. A cluster of alerts on one service within one window becomes one investigation. Alerts that arrive while it runs attach to it as new signals rather than opening new runs.
 
-The same rule governs what enters the model's context. Raw logs, traces and deploy diffs are input tokens, and under a latency ceiling you win by sending less. Pre-aggregate telemetry first: bucket the metric, diff the deploy, count the log signature, sample the trace. Bound the lookback window. Send the summary and keep the raw slice reachable by a tool call if the hypothesis needs it. Reserve the strong model for hypothesis synthesis and use smaller models or rules for clustering and correlation.
+- The same rule governs what enters the model's context. Raw logs, traces and deploy diffs are input tokens, and under a latency ceiling you win by sending less.
+- Pre-aggregate telemetry first: bucket the metric, diff the deploy, count the log signature, sample the trace.
+- Bound the lookback window. Send the summary and keep the raw slice reachable by a tool call if the hypothesis needs it.
+- Reserve the strong model for hypothesis synthesis and use smaller models or rules for clustering and correlation.
 
 ## 6. Investigate Read-Only, Stage the Mitigation
 
 Four decisions matter more than the diagram, and the first is the whole risk model. Read-only investigation, staged mitigation: the agent may query anything and change nothing on its own. A ten-second human approval is acceptable mid-incident. An autonomous rollback on a wrong hypothesis is not.
 
-A proposal has a fixed shape: the exact command, the blast radius, the evidence, the runbook it follows, the change-freeze status, and a simulation or dry-run result where the platform allows one. Reject any proposal without a blast radius. Route it to the service owner and the incident commander, record the decision and the decision time, and let it expire when the incident window closes.
+- A proposal has a fixed shape: the exact command, the blast radius, the evidence, the runbook it follows, the change-freeze status, and a simulation or dry-run result where the platform allows one.
+- Reject any proposal without a blast radius. Route it to the service owner and the incident commander, record the decision and the decision time, and let it expire when the incident window closes.
 
-Give every tool a typed result with five states, because a string return cannot tell the agent what happened. `SUCCESS` carries the data. `EMPTY` means the query ran and nothing matched. `UNAVAILABLE` means the source is down. `DENIED` means the caller may not. `INVALID` means the arguments were wrong and says what to fix. Mixing up `EMPTY` and `UNAVAILABLE` can cause retry storms during a real outage, which is when this agent runs. Mixing up `DENIED` and `INVALID` teaches the agent to work around policy instead of respecting it.
+- Give every tool a typed result with five states, because a string return cannot tell the agent what happened.
+- `SUCCESS` carries the data. `EMPTY` means the query ran and nothing matched.
+- `UNAVAILABLE` means the source is down. `DENIED` means the caller may not.
+- `INVALID` means the arguments were wrong and says what to fix. Mixing up `EMPTY` and `UNAVAILABLE` can cause retry storms during a real outage, which is when this agent runs.
+- Mixing up `DENIED` and `INVALID` teaches the agent to work around policy instead of respecting it.
 
 ```mermaid
 flowchart LR
@@ -141,19 +198,44 @@ flowchart LR
     R --> U["UNAVAILABLE — the database is down, try later"]
     R --> D["DENIED — you're not allowed to do that"]
     R --> I["INVALID — bad input, here's what to fix"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Call,R cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class S,I cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class E cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class U cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class D cbStop
 ```
 
 Never explain a denial. A `DENIED` that says "restarts of this service need commander approval" can read to the model as a hint, and the next attempt may be the same restart phrased as a scale-to-zero. Denials are a dead end to the model, with the reason logged for humans.
 
-Every write, once approved, walks through one gateway in one order. Authorise before validating, otherwise a denied caller learns the tool's schema from the validation error. Validate the arguments against the schema. Execute with a timeout and an idempotency key, which is a hash of run id, tool name and arguments, so a retry after a timeout runs the restart once. Classify the result into the five states. Trim it to the declared fields before it returns. Log all of it.
+- Every write, once approved, walks through one gateway in one order. Authorise before validating, otherwise a denied caller learns the tool's schema from the validation error.
+- Validate the arguments against the schema. Execute with a timeout and an idempotency key, which is a hash of run id, tool name and arguments, so a retry after a timeout runs the restart once.
+- Classify the result into the five states. Trim it to the declared fields before it returns.
+- Log all of it.
 
 ```mermaid
 sequenceDiagram
-    participant O as Orchestrator
-    participant G as Gateway
-    participant P as Policy
-    participant V as Validator
-    participant T as Tool/API
+    box rgba(37,99,235,0.12)
+        participant O as Orchestrator
+    end
+    box rgba(124,58,237,0.12)
+        participant G as Gateway
+    end
+    box rgba(21,128,61,0.12)
+        participant P as Policy
+    end
+    box rgba(180,83,9,0.12)
+        participant V as Validator
+    end
+    box rgba(37,99,235,0.12)
+        participant T as Tool/API
+    end
     O->>G: call issue_refund(order_123, $50)
     G->>P: is this caller even allowed to refund?
     P-->>G: allow / DENIED
@@ -164,15 +246,24 @@ sequenceDiagram
     G-->>O: classified, trimmed-down ToolResult
 ```
 
-Hold credentials to match. Read tools run with scoped read-only credentials. Write tools exist only behind the gate and only for the allowlisted, reversible actions of the current rollout stage. The blast radius on a proposal is computed from the service catalog and topology, not estimated by the model, and a rollback path is part of the proposal or the proposal is refused.
+- Hold credentials to match. Read tools run with scoped read-only credentials. Write tools exist only behind the gate and only for the allowlisted, reversible actions of the current rollout stage.
+- The blast radius on a proposal is computed from the service catalog and topology, not estimated by the model, and a rollback path is part of the proposal or the proposal is refused.
 
 ## 7. Say the Latency Arithmetic Aloud
 
 Thirty seconds is a ceiling, not a target. A first useful summary must land inside it while 400 alerts arrive, because I'd expect a responder who has already started typing a manual query to stop reading the agent. Say the budget in slices and where each second goes.
 
-Dedupe and correlation are rules, so they cost under a second. Context building reads a cached service catalog, deploy metadata and flag history in parallel, another second or two. Telemetry queries fan out in parallel with bounded lookback windows and a per-query timeout, budgeted at five to ten seconds for the slowest source, with `UNAVAILABLE` returned rather than waited for. Pre-aggregation runs on the query results as they arrive. In my budget, hypothesis synthesis on the strong model is the largest slice, ten to fifteen seconds, streamed so the first ranked cause appears before the last. Citation and evidence verification runs inline for anything that will become a proposal, and asynchronously for explanatory text.
+- Dedupe and correlation are rules, so they cost under a second. Context building reads a cached service catalog, deploy metadata and flag history in parallel, another second or two.
+- Telemetry queries fan out in parallel with bounded lookback windows and a per-query timeout, budgeted at five to ten seconds for the slowest source, with `UNAVAILABLE` returned rather than waited for.
+- Pre-aggregation runs on the query results as they arrive. In my budget, hypothesis synthesis on the strong model is the largest slice, ten to fifteen seconds, streamed so the first ranked cause appears before the last.
+- Citation and evidence verification runs inline for anything that will become a proposal, and asynchronously for explanatory text.
 
-Rehearse the mock's objection: the prototype takes 18 seconds and users will not adopt it. Don't answer with a faster model. Break the 18 seconds into authentication, retrieval, reranking, generation, tool calls and verification, then fix the slice that dominates. Parallelise independent queries. Cache embeddings and the service catalog. Reduce top-k before reranking. Stream partial responses. Route low-risk requests to a smaller model. Remove tool calls that do not change the hypothesis. Keep citation verification, because it is a safety feature. You can make it asynchronous for low-risk explanatory answers and keep it inline for proposals. Avoid long chain-of-thought loops in a live incident; a bounded set of parallel checks beats a long serial reasoning chain.
+- Rehearse the mock's objection: the prototype takes 18 seconds and users will not adopt it.
+- Don't answer with a faster model. Break the 18 seconds into authentication, retrieval, reranking, generation, tool calls and verification, then fix the slice that dominates.
+- Parallelise independent queries. Cache embeddings and the service catalog. Reduce top-k before reranking.
+- Stream partial responses. Route low-risk requests to a smaller model. Remove tool calls that do not change the hypothesis.
+- Keep citation verification, because it is a safety feature. You can make it asynchronous for low-risk explanatory answers and keep it inline for proposals.
+- Avoid long chain-of-thought loops in a live incident; a bounded set of parallel checks beats a long serial reasoning chain.
 
 ## 8. Treat the Observability Stack as Degraded
 
@@ -191,6 +282,11 @@ Here partial dependency degradation is the normal operating condition, because t
 | Approval gate unreachable or approver absent | Fail closed. No execution. The proposal waits or expires; the responder acts manually with the evidence                            |
 | Policy engine or credential service down     | Fail closed on every write; reads continue with cached scopes only if the scope is read-only                                       |
 
-Instrument the ladder. A degradation ladder is an ordered set of rungs from full capability to honest refusal, selected by a pure function of a health snapshot. The selected rung is disclosed to the responder and emitted as a span attribute. In this design, a breaker per telemetry source trips on a windowed failure rate with a minimum sample size, not on a run of consecutive failures. Agent traffic is bursty, so a consecutive-failure trigger tends to trip too often or too late.
+- Instrument the ladder. A degradation ladder is an ordered set of rungs from full capability to honest refusal, selected by a pure function of a health snapshot.
+- The selected rung is disclosed to the responder and emitted as a span attribute.
+- In this design, a breaker per telemetry source trips on a windowed failure rate with a minimum sample size, not on a run of consecutive failures.
+- Agent traffic is bursty, so a consecutive-failure trigger tends to trip too often or too late.
 
-Then say what breaks first at 10×. The binding constraint is provider quota and the telemetry sources' rate limits during a storm, so the per-service cap and pre-aggregation do the scaling, not the model. Ten times the alerts means ten times the correlation load on rules and small models, which is cheap, and the same number of strong-model calls per real incident. Source coverage per investigation is the metric that shows the sources falling behind before the responders notice.
+- Then say what breaks first at 10×. The binding constraint is provider quota and the telemetry sources' rate limits during a storm, so the per-service cap and pre-aggregation do the scaling, not the model.
+- Ten times the alerts means ten times the correlation load on rules and small models, which is cheap, and the same number of strong-model calls per real incident.
+- Source coverage per investigation is the metric that shows the sources falling behind before the responders notice.

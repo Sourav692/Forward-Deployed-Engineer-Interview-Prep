@@ -91,6 +91,14 @@ flowchart LR
   A["1. Model one workflow explicitly\nOwner: platform + product/customer partner"] --> B["2. Test replay determinism & crashes\nOwner: platform eng + QA/release eng"]
   B --> C["3. Add operator visibility\nOwner: operations + orchestration team"]
   C --> D["4. Migrate workflows by version\nOwner: platform owner + release manager"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ### Connect the Dashboard to the User Journey

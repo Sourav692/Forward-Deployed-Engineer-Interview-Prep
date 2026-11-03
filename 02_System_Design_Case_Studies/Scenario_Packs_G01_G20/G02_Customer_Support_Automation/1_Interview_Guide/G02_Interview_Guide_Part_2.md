@@ -32,7 +32,9 @@ Retries are bounded and jittered, failed jobs remain inspectable, and timeouts n
 
 ## 7. Scale, latency, and cost
 
-The source’s sizing exercise for this case assumes 2M tickets/month, 100 QPS peak, and 20 languages; the ~1M conversations a day figure belongs to the separate consumer-support assistant scenario. With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about 4.2M model calls/month, before retries and moderation. The same assumptions imply roughly 2.2M–2.4M retrieval calls/month. Treat these as interview assumptions, not measured production demand.
+- The source’s sizing exercise for this case assumes 2M tickets/month, 100 QPS peak, and 20 languages; the ~1M conversations a day figure belongs to the separate consumer-support assistant scenario.
+- With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about 4.2M model calls/month, before retries and moderation.
+- The same assumptions imply roughly 2.2M–2.4M retrieval calls/month. Treat these as interview assumptions, not measured production demand.
 
 | Pressure                            | Design response                                                                                                                                                            |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -75,7 +77,15 @@ Spend the hour roughly as follows: opening and requirements (10 min), architectu
 
 **90-second answer:**
 
-> “I would design support automation as a routed decision pipeline. The gateway normalises the message, identity verification establishes what account data and tools are available, and an intent router tags risk. Approved policy and current account facts ground a draft or proposed action. A deterministic gateway checks authorisation, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission. Simple, low-risk requests can be answered quickly. Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason. Every write is idempotent, and an uncertain side effect is reconciled before retry. I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback. I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.”
+> - I would design support automation as a routed decision pipeline.
+> - The gateway normalises the message, identity verification establishes what account data and tools are available, and an intent router tags risk.
+> - Approved policy and current account facts ground a draft or proposed action.
+> - A deterministic gateway checks authorisation, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission.
+> - Simple, low-risk requests can be answered quickly.
+> - Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason.
+> - Every write is idempotent, and an uncertain side effect is reconciled before retry.
+> - I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback.
+> - I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.
 
 ### Interviewer trigger → short answer
 

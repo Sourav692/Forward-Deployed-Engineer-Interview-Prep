@@ -6,7 +6,9 @@ Three open prompts: cut 911 response times, unify fraud detection at a bank, and
 
 The hard constraint is the clock. You have to commit to a plan early enough to show progress, and late enough that the mission, not the model, has chosen it. The round fails answers that start with architecture and answers that hand-wave evaluation.
 
-The page teaches one six-step method on a sixty-minute clock, then runs it on all three prompts. Define the mission, name the owners, map every input with its owner and quality risk, order workstreams by the unknown most likely to kill the project, build a walking skeleton, and re-plan live. In all three the riskiest unknown is the data, and the language model is never the core.
+- The page teaches one six-step method on a sixty-minute clock, then runs it on all three prompts.
+- Define the mission, name the owners, map every input with its owner and quality risk, order workstreams by the unknown most likely to kill the project, build a walking skeleton, and re-plan live.
+- In all three the riskiest unknown is the data, and the language model is never the core.
 
 ## The core idea
 
@@ -19,6 +21,14 @@ flowchart LR
   C --> D[Workstreams ordered by risk]
   D --> E[Walking skeleton]
   E --> F[Re-plan live]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E cbInput
 ```
 
 ## Who it is for

@@ -2,9 +2,16 @@
 
 ## Overview
 
-A logistics operator wants help with shipments that should have moved and did not: customs holds, missed scans and weather delays. About 150 ops agents decide what to tell the customer or the carrier. Users are few and stakes are high. The hard constraint is that customs and regulatory holds always go to a human, and no automated carrier action may run twice or without an audit row. EU shipment data must stay in the EU.
+- A logistics operator wants help with shipments that should have moved and did not: customs holds, missed scans and weather delays.
+- About 150 ops agents decide what to tell the customer or the carrier.
+- Users are few and stakes are high. The hard constraint is that customs and regulatory holds always go to a human, and no automated carrier action may run twice or without an audit row.
+- EU shipment data must stay in the EU.
 
-The design turns carrier webhooks and batch files into one normalised event stream per region. Cheap detection finds the exception, and the agent drafts a resolution: the next scan, a customer message, a proposed carrier call. An independent, customs-first policy gate decides. Only a non-customs case under the value limit with confidence above the threshold may auto-resolve, through an executor with an idempotency key and a circuit breaker that falls back to a human. Everything else goes to the ops queue, and every action is audited in its region.
+- The design turns carrier webhooks and batch files into one normalised event stream per region.
+- Cheap detection finds the exception, and the agent drafts a resolution: the next scan, a customer message, a proposed carrier call.
+- An independent, customs-first policy gate decides.
+- Only a non-customs case under the value limit with confidence above the threshold may auto-resolve, through an executor with an idempotency key and a circuit breaker that falls back to a human.
+- Everything else goes to the ops queue, and every action is audited in its region.
 
 A related shipment-rerouting case reuses the same pattern. SAP becomes source and target, weather adds a predictive signal and 500 regional managers widen the approval surface; the gate does not get looser.
 
@@ -19,6 +26,16 @@ flowchart LR
   C --> D{Gate allows auto?}
   D -->|Yes| E[Run once and audit]
   D -->|No| F[Ops agent queue]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,C,F cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class E cbAction
 ```
 
 ## Who it is for

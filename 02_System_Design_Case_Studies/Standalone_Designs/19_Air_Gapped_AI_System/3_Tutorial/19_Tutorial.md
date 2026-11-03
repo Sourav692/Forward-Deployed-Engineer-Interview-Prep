@@ -131,6 +131,16 @@ flowchart TD
     C --> F
     D --> F
     E --> F
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A,C,F cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E cbInput
 ```
 
 ### Choosing a Business-Outcome Metric
@@ -190,6 +200,16 @@ flowchart TD
     D -->|No| D2["Design a manual ceremony<br/>with clear provenance records"]
     E["Does the customer already have<br/>local identity and storage platforms?"] -->|Yes| E1["Integrate with them"]
     E -->|No| E2["MVP may need a minimal internal<br/>service — high-risk scope expansion"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B1,B2,C1,D,E1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A1,A2,C,E2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D1,D2 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C2,E cbInput
 ```
 
 ### MVP Prioritisation: Must, Should, Could

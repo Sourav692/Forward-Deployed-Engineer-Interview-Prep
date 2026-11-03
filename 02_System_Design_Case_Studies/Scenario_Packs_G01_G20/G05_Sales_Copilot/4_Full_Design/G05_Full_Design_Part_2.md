@@ -2,7 +2,9 @@
 
 ## 3. Map Every Source With Its Permission Model
 
-The answer key names the sources: Salesforce or HubSpot, Gong or Zoom transcripts, email and calendar, product docs, pricing and discount policy, customer support history, and the data warehouse. It does not say how each one is permissioned, and that is what the interviewer probes. The permission model per source below is added for this pack. The freshness column is my working assumption for a typical setup, not a vendor figure.
+- The answer key names the sources: Salesforce or HubSpot, Gong or Zoom transcripts, email and calendar, product docs, pricing and discount policy, customer support history, and the data warehouse.
+- It does not say how each one is permissioned, and that is what the interviewer probes.
+- The permission model per source below is added for this pack. The freshness column is my working assumption for a typical setup, not a vendor figure.
 
 | Data source | Format | Owner | Freshness | Permission model (added) | Risk |
 |---|---|---|---|---|---|
@@ -14,53 +16,116 @@ The answer key names the sources: Salesforce or HubSpot, Gong or Zoom transcript
 | Support history | Tickets, escalations | Support | Minutes | Account-scoped; tenant-scoped in multi-tenant support | Cross-account leakage; severity fields mis-summarised |
 | Data warehouse | Usage metrics, ROI pilots, renewals | Analytics | Daily | Row-level by account and role; internal-only pilot results | Internal-only ROI numbers used as external claims (the incident) |
 
-State the integration assumptions aloud. Every source record has a stable ID, owner metadata, a last-updated timestamp and access-control metadata. A source that lacks ACL metadata is excluded from production retrieval until it is mapped. Embeddings never decide permissions. Metadata filters do, backed by source-system authorisation checks for sensitive records. Source freshness varies by system, so the answer shows a stale-source warning when a record is older than the approved threshold. User feedback is stored separately from ground truth, and SME-reviewed corrections become evaluation data only after approval.
+- State the integration assumptions aloud. Every source record has a stable ID, owner metadata, a last-updated timestamp and access-control metadata.
+- A source that lacks ACL metadata is excluded from production retrieval until it is mapped.
+- Embeddings never decide permissions. Metadata filters do, backed by source-system authorisation checks for sensitive records.
+- Source freshness varies by system, so the answer shows a stale-source warning when a record is older than the approved threshold.
+- User feedback is stored separately from ground truth, and SME-reviewed corrections become evaluation data only after approval.
 
-The core records follow. Account(id, segment, industry, region, owner, entitlements). Opportunity(id, stage, amount, close_date, competitors, next_step). Interaction(id, account_id, type, transcript, participants, timestamp). Playbook(id, segment, approved_claims, objections). Draft(id, account_id, user_id, content, approval_status). AuditLog(user_id, account_id, source_ids, output_type). Two of these carry the safety story: `Playbook.approved_claims` is the only place an outbound claim may come from, and `Draft.approval_status` is the gate every write passes through.
+- The core records follow. Account(id, segment, industry, region, owner, entitlements). Opportunity(id, stage, amount, close_date, competitors, next_step).
+- Interaction(id, account_id, type, transcript, participants, timestamp). Playbook(id, segment, approved_claims, objections). Draft(id, account_id, user_id, content, approval_status).
+- AuditLog(user_id, account_id, source_ids, output_type). Two of these carry the safety story: `Playbook.approved_claims` is the only place an outbound claim may come from, and `Draft.approval_status` is the gate every write passes through.
 
 ## 4. Draw the Architecture End to End
 
 One diagram carries the whole design. The organising split is control plane against data plane. Inside the data plane, two lanes must never share a hot path. The pre-meeting precompute lane is slow and scheduled. The interactive ask lane reads what precompute produced. Write-back is a third, gated lane.
 
+```mermaid
+flowchart TD
+    N0["CRM, transcripts, email, calendar, docs, pricing, support, warehouse"]
+    N1["Change events and nightly reconciliation"]
+    N2["Connectors and normalisation"]
+    N3["ACL and territory mirror"]
+    N4["No usable ACL: refuse"]
+    N5["Chunk and embed"]
+    N6["Keyword and vector indexes"]
+    N7["Structured CRM store"]
+    N8["Calendar trigger"]
+    N9["Snapshot as the rep: summary, risks, last interactions, approved claims"]
+    N10["Cache by account and rep permission signature"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N3 --> N5
+    N5 --> N6
+    N3 --> N7
+    N8 --> N9
+    N9 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N7 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N9,N10 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N4 cbStop
 ```
- ╔══════════════════════════════ CONTROL PLANE (changes are releases) ══════════════════════════════╗
- ║  ABAC policy + CRM sharing-rule mirror · connector registry + schedules · credentials (vault refs) ║
- ║  approved-claims playbooks · pricing policy versions · prompt / model / route versions              ║
- ║  tool allowlist + approval thresholds · eval suites incl. claim-level slices · budgets              ║
- ╚═══════════════════════════════════════╤═══════════════════════════════════════════════════════════╝
-                                         │ configures every box below
- ╔══════════════════════════════ DATA PLANE (calls are requests) ═══════════════════════════════════╗
- ║                                                                                                   ║
- ║  PRECOMPUTE — scheduled, before the meeting                                                       ║
- ║   CRM · transcripts · email/calendar · docs · pricing · support · warehouse                        ║
- ║        │ change events + nightly reconciliation (connector registry, one schedule per source)     ║
- ║        v                                                                                          ║
- ║   connectors ─> normalise ─> ACL + territory mirror ─> chunk / embed ─┬─> keyword + vector index   ║
- ║                                     │ refuse: no usable ACL           └─> structured store (CRM)   ║
- ║   calendar trigger ─> SNAPSHOT JOB: summary · open risks · last interactions · approved claims     ║
- ║                       (built as the rep, permission-checked, cached on account + rep signature)    ║
- ║                                                                                                   ║
- ║  ASK — synchronous, ordered by risk                                                               ║
- ║   rep ─> gateway ─> AUTHORISE ─> ROUTE ─> FETCH ─> ENFORCE ─> REASON ─> GENERATE ─> VERIFY ─> answer
- ║           SSO      resolve      intent:   snapshot   ABAC     risks from  cited      claim +      ║
- ║           via      role,        summary   cache;     post-    CRM fields; brief,     citation     ║
- ║           IdP      territory,   risk      structured check,   playbook    questions, check,       ║
- ║                    deal stage   draft     query or   redact   objections  draft      output       ║
- ║                                 update    hybrid                                     policy       ║
- ║                                           search                                         │        ║
- ║                                                                     insufficient / unapproved     ║
- ║                                                                     claim ─> REFUSE + escalate    ║
- ║                                                                                                   ║
- ║  WRITE-BACK — gated                                                                               ║
- ║   proposed CRM update or email draft ─> policy check ─> PREVIEW to rep ─> APPROVE ─> tool gateway ║
- ║   (allowlist, idempotency key) ─> CRM / mail ─> audit                                              ║
- ║                                                                                                   ║
- ║  OBSERVABILITY — every stage writes                                                               ║
- ║   trace store ─> eval service (golden set · claim-level slices · permission red team · shadow)     ║
- ║               ─> dashboards (unsupported-claim rate · permission violations · step count ·         ║
- ║                  snapshot hit rate · cost per workflow · adoption)                                 ║
- ╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Rep through SSO"]
+    N1["Resolve role, territory, and deal stage"]
+    N2["Route summary, risk, draft, or update"]
+    N3["Fetch snapshot, structured facts, or hybrid evidence"]
+    N4["ABAC post-check and redaction"]
+    N5["Reason from CRM facts and playbook"]
+    N6["Generate cited brief, questions, or draft"]
+    N7["Verify claim, citation, and output policy"]
+    N8["Unsupported or unapproved claim: refuse and escalate"]
+    N9["Supported answer"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N7 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N6 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N9 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N4,N7 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N8 cbStop
 ```
+
+```mermaid
+flowchart TD
+    N0["Proposed CRM update or email draft"]
+    N1["Policy check"]
+    N2["Rep previews and approves"]
+    N3["Allowlisted tool gateway and idempotency key"]
+    N4["CRM or mail"]
+    N5["Audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N2,N3 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N5 cbAction
+```
+
+- Version ABAC policy, CRM sharing rules, connector schedules, vault references, approved claims, pricing policy, prompts, models, routes, tool allowlists, approval thresholds, claim-level evaluations, and budgets.
+- Trace the golden set, permission red-team and shadow cases. Monitor unsupported claims, permission violations, steps, snapshot hit rate, cost per workflow, and adoption.
 
 The same flow as a rendered diagram:
 
@@ -118,6 +183,18 @@ flowchart LR
     TOOL -.-> TG
     EVR -.-> EVAL
     AUTH & ENF & GEN & VFY & TG --> TR
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class POL,CLM,TOOL,ACL,CAL,GW,AUTH,ENF,VFY,PC,APR cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class REG,SRC,RT,RSN,GEN,CRM,DASH cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class EVR,SNAP,PROP,TG,EVAL cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CON,IDX,STR,SC,REP,ANS,PV,TR cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class REF,ESC,DROP cbStop
 ```
 
 Read the components in dependency order, because that is the order they exist and the order they fail.
@@ -136,25 +213,43 @@ Read the components in dependency order, because that is the order they exist an
 | Tool gateway | Allowlist, idempotency keys, preview, approval, audit | Closed: no approval, no write |
 | Trace store, eval, dashboards | Replayable runs, claim-level slices, permission red team, online unsupported-claim monitor | Degrades: answer served, gap logged |
 
-Point at three boundaries while the diagram is up. The precompute-versus-ask boundary keeps CRM fan-out off the interactive path. The trust boundary sits at ENFORCE: everything to its left may hold records the rep cannot see, nothing to its right may. The write boundary sits at APPROVE: nothing reaches the CRM or a mailbox without a previewed, approved draft carrying an idempotency key.
+- Point at three boundaries while the diagram is up. The precompute-versus-ask boundary keeps CRM fan-out off the interactive path.
+- The trust boundary sits at ENFORCE: everything to its left may hold records the rep cannot see, nothing to its right may.
+- The write boundary sits at APPROVE: nothing reaches the CRM or a mailbox without a previewed, approved draft carrying an idempotency key.
 
 ## 5. Precompute the Account Snapshot Before the Meeting
 
 The interactive path cannot fan out to the CRM, the transcript store and the warehouse on every question. A meeting is on the calendar hours in advance. So build the brief then, before the rep opens the panel. That decision makes the 3-to-8-second target and the latency drill in section 13 achievable.
 
-The snapshot job runs on a calendar trigger, or on demand with a visible progress state. It builds the account summary, the open opportunities with stage and next step, the last interactions across calls and email, the open support escalations, and the approved claims and objections for the account's segment. It runs as the rep, so the permission check happens at build time. It is cached keyed on the account and the rep's permission signature. A manager and a rep on the same account get different snapshots, because they may see different fields.
+- The snapshot job runs on a calendar trigger, or on demand with a visible progress state.
+- It builds the account summary, the open opportunities with stage and next step, the last interactions across calls and email, the open support escalations, and the approved claims and objections for the account's segment.
+- It runs as the rep, so the permission check happens at build time.
+- It is cached keyed on the account and the rep's permission signature.
+- A manager and a rep on the same account get different snapshots, because they may see different fields.
 
-Precomputation is an optimisation, never a permission model. A snapshot is a materialised view, and a materialised view can outlive a permission change: a rep moved off a territory at noon must not read the 9 a.m. snapshot at 2 p.m. So the ask lane re-checks the policy on fresh attributes before serving it, and a territory or role change invalidates every snapshot keyed on that rep. Say that sentence in the room; it is the same two-layer rule as permission-aware RAG.
+- Precomputation is an optimisation, never a permission model.
+- A snapshot is a materialised view, and a materialised view can outlive a permission change: a rep moved off a territory at noon must not read the 9 a.m. snapshot at 2 p.m.
+- So the ask lane re-checks the policy on fresh attributes before serving it, and a territory or role change invalidates every snapshot keyed on that rep.
+- Say that sentence in the room; it is the same two-layer rule as permission-aware RAG.
 
 ## 6. Propagate CRM Permissions and Territory Rules Into Retrieval
 
 *This section is added for this pack. The answer key says "apply user, role, tenant, region and sensitivity permissions before retrieval" and stops there.*
 
-Identity is established before any permission logic runs. Authenticate through the customer's own identity provider, validate the token's signature, issuer, expiry and audience, and map the customer's own groups into the platform's role vocabulary rather than inventing roles locally. Group mapping is configuration that can drift, so a renamed group on the customer's side must surface as an alert, not silently orphan a rep. A user from a newly connected customer is provisioned just in time from the token's claims, scoped to their company, never with more access than intended by default.
+- Identity is established before any permission logic runs.
+- Authenticate through the customer's own identity provider, validate the token's signature, issuer, expiry and audience, and map the customer's own groups into the platform's role vocabulary rather than inventing roles locally.
+- Group mapping is configuration that can drift, so a renamed group on the customer's side must surface as an alert, not silently orphan a rep.
+- A user from a newly connected customer is provisioned just in time from the token's claims, scoped to their company, never with more access than intended by default.
 
-CRM permissions are richer than document ACLs, and the mirror has to carry all of them. Salesforce decides record visibility by org-wide defaults, owner, role hierarchy, sharing rules, teams and territories, and field-level security decides which fields show. The mirror translates each into an attribute on the record: `owner_id`, `territory_ids`, `role_visible_from`, and a field mask that hides forecast amount, or any other FLS-restricted field, from roles that cannot see them. The pre-filter compiled into retrieval carries tenant, territory and role; the post-check re-verifies the field mask and any sharing rule that changed since the index was written. A count of open opportunities that includes a peer's territory is as serious a leak as a forbidden document, and it is held to the same zero-violation gate.
+- CRM permissions are richer than document ACLs, and the mirror has to carry all of them.
+- Salesforce decides record visibility by org-wide defaults, owner, role hierarchy, sharing rules, teams and territories, and field-level security decides which fields show.
+- The mirror translates each into an attribute on the record: `owner_id`, `territory_ids`, `role_visible_from`, and a field mask that hides forecast amount, or any other FLS-restricted field, from roles that cannot see them.
+- The pre-filter compiled into retrieval carries tenant, territory and role; the post-check re-verifies the field mask and any sharing rule that changed since the index was written.
+- A count of open opportunities that includes a peer's territory is as serious a leak as a forbidden document, and it is held to the same zero-violation gate.
 
-Credentials for the CRM, the call recorder and the mailbox are references to a vault, never values. They are resolved at the moment of use, never logged, never written into a trace, and scoped per connection rather than per connector type, so one customer's Salesforce credential can never reach another customer's Salesforce. Per-tenant encryption keys mean one leaked key exposes one tenant, not all of them, and a tenant's data can be crypto-shredded by destroying its key.
+- Credentials for the CRM, the call recorder and the mailbox are references to a vault, never values.
+- They are resolved at the moment of use, never logged, never written into a trace, and scoped per connection rather than per connector type, so one customer's Salesforce credential can never reach another customer's Salesforce.
+- Per-tenant encryption keys mean one leaked key exposes one tenant, not all of them, and a tenant's data can be crypto-shredded by destroying its key.
 
 The interview lens, in one line:
 
@@ -162,7 +257,10 @@ The interview lens, in one line:
 
 ## 7. Ground Opportunity Risks in CRM Fields, Not Model Memory
 
-"What are the risks on this opportunity?" is a structured question wearing a conversational coat. Embed it and search a document index, and you get the most similar-sounding notes, not the stage that has not moved in 40 days, the competitor named in the last call, or the close date that slipped twice. Semantic search answers "which things are like this", never "how many", "which is most recent" or "did this field change". A router in front of retrieval decides which kind of question this is.
+- "What are the risks on this opportunity?" is a structured question wearing a conversational coat.
+- Embed it and search a document index, and you get the most similar-sounding notes, not the stage that has not moved in 40 days, the competitor named in the last call, or the close date that slipped twice.
+- Semantic search answers "which things are like this", never "how many", "which is most recent" or "did this field change".
+- A router in front of retrieval decides which kind of question this is.
 
 | Question shape | Right tool | Why plain search fails |
 |---|---|---|
@@ -171,6 +269,10 @@ The interview lens, in one line:
 | "What is the status of opportunity 0065g00000?" | Direct lookup by ID | An ID is not ordinary text |
 | "Which objections came up across all late-stage deals this quarter?" | Both: filter first, then summarise the filtered transcripts | A filter cannot summarise prose; search cannot scope to "this quarter's late-stage deals" |
 
-Prefer a fixed set of reviewed operations on the CRM over generating queries from natural language: get opportunities by stage, get account by ID, get interactions since a date. A model that generates a query can invent fields or touch every row, and "the copilot queried the whole pipeline" is a real incident. The fixed operations are the tool registry pointed at a record system, and they are the same allowlist the tool gateway enforces.
+- Prefer a fixed set of reviewed operations on the CRM over generating queries from natural language: get opportunities by stage, get account by ID, get interactions since a date.
+- A model that generates a query can invent fields or touch every row, and "the copilot queried the whole pipeline" is a real incident.
+- The fixed operations are the tool registry pointed at a record system, and they are the same allowlist the tool gateway enforces.
 
-Opportunity risks are then reasoned from evidence the system fetched: stage age, slipped close dates, competitor mentions in transcripts, unanswered emails, open escalations, and the playbook's known objections for the segment. Each risk carries its citation. When the fields are missing or the transcripts are stale, the copilot says so and lists what it could not check, rather than filling the gap from what a typical deal looks like.
+- Opportunity risks are then reasoned from evidence the system fetched: stage age, slipped close dates, competitor mentions in transcripts, unanswered emails, open escalations, and the playbook's known objections for the segment.
+- Each risk carries its citation.
+- When the fields are missing or the transcripts are stale, the copilot says so and lists what it could not check, rather than filling the gap from what a typical deal looks like.

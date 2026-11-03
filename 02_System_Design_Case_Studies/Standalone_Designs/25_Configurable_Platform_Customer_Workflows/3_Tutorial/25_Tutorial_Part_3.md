@@ -57,9 +57,15 @@
 
 ```mermaid
 sequenceDiagram
-  participant Client as Ops Client
-  participant API as Deployments API
-  participant Registry as Configuration Registry
+  box rgba(37,99,235,0.12)
+      participant Client as Ops Client
+  end
+  box rgba(124,58,237,0.12)
+      participant API as Deployments API
+  end
+  box rgba(21,128,61,0.12)
+      participant Registry as Configuration Registry
+  end
 
   Client->>API: POST /v1/tenants/acme/deployments<br/>key=deploy-2024-11-18-001, configVersion=17
   API->>Registry: create deployment dep-555
@@ -224,6 +230,14 @@ flowchart TD
   style FAIL1 fill:#a63d40,stroke:#5c1f22,color:#fff
   style FAIL2 fill:#a63d40,stroke:#5c1f22,color:#fff
   style FAIL3 fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class RAW,OK cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class PARSE,POLICY,FAIL2,ADAPTER,PERSIST cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class FAIL1,FAIL3 cbAction
 ```
 
 > 🎯 **Interview Pointer:** Commit the sequence to memory and reuse it elsewhere: parse → validate → authorise-by-policy → persist. Expect the follow-up "why that order?" Cheap structural checks come first and fail fast, so the costly policy and adapter checks only run on sound input. Nothing is written until every earlier step passes, so the path fails closed.

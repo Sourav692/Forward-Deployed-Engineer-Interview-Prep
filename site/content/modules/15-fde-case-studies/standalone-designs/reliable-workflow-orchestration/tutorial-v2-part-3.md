@@ -120,6 +120,14 @@ flowchart TD
   A -->|Dispatch rate| C[Optimise queue partitioning & worker elasticity]
   A -->|External APIs| D[Optimise retries, circuit breaking, per-integration throttles]
   A -->|Manual recovery load| E[Optimise observability, operator UI, audit trails]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
 ```
 
 ### Communicating Uncertainty Like an Operator
