@@ -17,7 +17,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
     <article className="relative flex flex-col gap-2 rounded-md border border-border bg-bg px-3 py-3 transition-colors duration-150 hover:bg-surface-2 sm:flex-row sm:items-center sm:gap-4">
       <div className="min-w-0 flex-1 sm:min-w-56">
         <div className="flex items-baseline gap-2">
-          {moduleTag(mod) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
+          {moduleTag(mod) && <span className="min-w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
           <h3 className="cb-small-head min-w-0 text-sm font-semibold leading-snug">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm after:absolute after:inset-0 after:rounded-md hover:text-accent', focusRing)}>
               {mod.title}

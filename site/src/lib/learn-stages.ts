@@ -59,7 +59,7 @@ export const LEARN_STAGES: LearnGroup[] = [
     slug: 'ai-system-design',
     title: 'AI System Design',
     summary: 'Turn a vague brief into an architecture you can defend in an interview.',
-    tracks: ['ai-systems-design'],
+    tracks: ['ai-systems-design', 'staff-ai-system-design'],
   },
   {
     slug: 'forward-deployed-engineering',

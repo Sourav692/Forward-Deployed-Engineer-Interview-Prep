@@ -26,7 +26,7 @@ sequenceDiagram
  alt Evidence remains authorised
  A->>M: Construct permitted context with citations
  else Deleted, revoked or stale
- A-->>A: Remove evidence; refuse if none remains
+ A-->>A: Remove evidence#59; refuse if none remains
  end
 ```
 

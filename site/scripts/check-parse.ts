@@ -489,12 +489,18 @@ for (const mod of manifest.modules) {
 // phrases are authoring notes (the case index spreadsheet, how a tutorial was regenerated,
 // which viewer draws a diagram) that mean nothing to a visitor.
 const PRIVATE_REPO = 'github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep'
+const COURSE_FILES = `${PRIVATE_REPO}/blob/main/10_AI_System_Design/`
 const BUILD_ARTEFACTS = ['CASE_STUDY_INDEX.xlsx', 'Interview-ready v2', 'for a viewer that draws Mermaid']
 for (const dir of [CONTENT]) {
   for (const file of await readdir(dir, { recursive: true })) {
     if (!/\.(md|json|html)$/.test(file)) continue
     const text = await readFile(join(dir, file), 'utf8')
-    if (text.includes(PRIVATE_REPO)) failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the private repository`)
+    // The repository has been public since November 2026. The AI System Design course links its
+    // lab code, ADRs and records under 10_AI_System_Design/ there (owner decision, 3 November 2026,
+    // task SDC-05); any other link to the repository is still an authoring leak.
+    if (text.split(PRIVATE_REPO).length > text.split(COURSE_FILES).length) {
+      failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the repository outside 10_AI_System_Design/`)
+    }
     if (!file.endsWith('.md')) continue
     for (const phrase of BUILD_ARTEFACTS) {
       if (text.includes(phrase)) failures.push(`${relative(SITE_ROOT, join(dir, file))}: contains "${phrase}", a build artefact`)

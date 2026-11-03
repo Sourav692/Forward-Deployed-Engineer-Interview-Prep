@@ -14,7 +14,7 @@ These four lessons are the site's teaching copy of module T0.2 "The FDE role and
 - `01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md` (own material).
 - `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md` (own material).
 
-The source files stay in the repository unchanged. The site no longer publishes `the-three-roles` and `senior-fde-day-to-day` as separate lessons; old URLs redirect to lessons here. The handbook's delivery-model "A Day in the Life of a Senior FDE" (`a-day-in-the-life`) is homed in T17.4 and stays a see-also.
+The source files stay in the repository unchanged. The site no longer publishes `the-three-roles` and `senior-fde-day-to-day` as separate lessons; old URLs redirect to lessons here. The handbook's delivery-model "A Day in the Life of a Senior FDE" (`a-day-in-the-life`) is homed in T18.4 and stays a see-also.
 
 The two sources agree. The handbook's three-lens table is a lightly edited copy of the day-to-day document's table; lesson 2 teaches it once.
 

@@ -21,7 +21,7 @@ sequenceDiagram
  E->>D: Record immutable versions and fixture outputs
  D->>G: Score case/slice coverage and budgets
  alt Gate fails
- G-->>E: Block; retain failure evidence
+ G-->>E: Block#59; retain failure evidence
  else Teaching gate passes
  G->>P: Approve exact bundle/report binding
  P->>A: Sticky eligible canary assignment

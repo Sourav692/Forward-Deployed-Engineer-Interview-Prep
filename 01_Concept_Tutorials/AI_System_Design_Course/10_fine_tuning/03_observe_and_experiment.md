@@ -26,7 +26,7 @@ sequenceDiagram
  E->>R: Bound report and trusted approval request
  R->>R: Compare generation and set future release candidate
  else Mismatch or safety failure
- E-->>O: Block candidate; retain previous live release
+ E-->>O: Block candidate#59; retain previous live release
  end
 ```
 

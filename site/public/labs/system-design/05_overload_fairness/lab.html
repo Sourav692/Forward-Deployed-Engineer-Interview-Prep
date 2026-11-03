@@ -34,7 +34,10 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-bo
 main.lab{max-width:60rem;margin:0 auto;padding:2rem 1.25rem 4rem}
 main.lab h1{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.1;margin:0 0 .75rem}
 main.lab>p{max-width:75ch;color:var(--muted)}
-main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}</style>
+main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}
+html.embedded main.lab{padding:0 0 1rem}
+html.embedded main.lab>h1,html.embedded main.lab>p{display:none}
+html.embedded main.lab section:first-of-type h2{margin-top:0}</style>
 <link rel="stylesheet" href="/labs/_site-tokens.css">
 <script src="/labs/_site-lab.js"></script>
 </head>
@@ -64,5 +67,8 @@ function params(){const p={};for(const c of config.controls){const el=document.g
 function renderSim(){const result=simulate(params()),dl=document.getElementById('sim-result');dl.replaceChildren();for(const [name,value]of Object.entries(result)){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=name;dd.textContent=String(value);dl.append(dt,dd);}}
 function apply(values){for(const c of config.controls)document.getElementById(c.id).value=String(values[c.id]??c.default);renderSim();}
 for(const el of document.querySelectorAll('[data-param]'))el.addEventListener('input',renderSim);document.getElementById('sim-reset').onclick=()=>apply({});document.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>apply(config.cases[Number(b.dataset.case)].params));document.getElementById('simulation-controls').hidden=false;apply({});</script>
+<script>
+if (window.self !== window.top) new ResizeObserver(() => parent.postMessage({ labHeight: document.body.getBoundingClientRect().height + 2 }, '*')).observe(document.body)
+</script>
 </body>
 </html>

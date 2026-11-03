@@ -19,17 +19,17 @@ sequenceDiagram
  participant W as Worker/model adapter
  C->>A: Scope, key, payload, token estimate, deadline
  alt Queue/admission budget unavailable
- A-->>C: Explicit rejection; not accepted
+ A-->>C: Explicit rejection#59; not accepted
  else Work accepted durably
  A->>Q: Bounded queued operation
  Q->>G: Eligible job under fair turn
  G->>G: Atomic request/token/slot reservation
- G->>W: Fresh grant only; current epoch and policy required
+ G->>W: Fresh grant only#59; current epoch and policy required
  W->>W: Execute within remaining deadline
  alt Outcome known and result committed
- W->>G: Settle known completion; release slot
+ W->>G: Settle known completion#59; release slot
  else Remote outcome unknown
- W->>G: Preserve unknown reservation; no blind retry
+ W->>G: Preserve unknown reservation#59; no blind retry
  end
  end
 ```

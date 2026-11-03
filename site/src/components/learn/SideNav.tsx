@@ -39,7 +39,7 @@ export function SideNav({
                 const gap = m.status === 'coming-soon' ? 'Coming soon' : m.status === 'on-hold' ? 'On hold' : null
                 const body = (
                   <>
-                    {moduleTag(m) && <span className={cx('w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{moduleTag(m)}</span>}
+                    {moduleTag(m) && <span className={cx('min-w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{moduleTag(m)}</span>}
                     <span className="min-w-0 flex-1">
                       {m.title}
                       {gap && <span className="block text-xs font-normal text-muted">{gap}</span>}

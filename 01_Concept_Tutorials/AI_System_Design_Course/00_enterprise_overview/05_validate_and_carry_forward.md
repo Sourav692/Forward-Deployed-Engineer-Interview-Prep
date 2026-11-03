@@ -16,7 +16,7 @@ The map is a preview. A role appearing here does not count as teaching or master
 | [Stage 7](../07_reliability_consistency/01_understand_the_problem.md): Reliability and Consistency | Crashes, stale replicas and lost responses break naive retries | Consistency by data class, durable operation evidence and recovery |
 | [Stage 8](../08_evaluation_releases/01_understand_the_problem.md): Production AI Quality and Releases | A behaviour change regresses supplier outcomes | Evaluation Service, immutable bundles, approval, canary and rollback |
 | [Stage 9](../09_inference_gpu/01_understand_the_problem.md): Inference and GPU Infrastructure | Serving cost, latency or data-path constraints need comparison | Model Gateway, approved providers, optional self-hosted engine and GPU Pool |
-| [Stage 10](../10_fine_tuning/01_understand_the_problem.md): Fine-Tuning and Model Customization | Stable behaviour misses justify a governed challenger | Dataset versions, Fine-Tuning Jobs, checkpoints and Model Registry |
+| [Stage 10](../10_fine_tuning/01_understand_the_problem.md): Fine-Tuning and Model Customisation | Stable behaviour misses justify a governed challenger | Dataset versions, Fine-Tuning Jobs, checkpoints and Model Registry |
 | [Stage 11](../11_multi_region/01_understand_the_problem.md): Global Multi-Region Platform | Residency and regional recovery change placement and economics | Eligible regional cells, replication, fencing, capacity and usage evidence |
 | [Stage 12](../12_staff_platform/01_understand_the_problem.md): Staff-Level Platform Architecture | Several app teams duplicate risky integration work | Versioned manifests, shared contracts, ownership, migration and total cost |
 

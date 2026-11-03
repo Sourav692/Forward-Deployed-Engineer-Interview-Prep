@@ -33,14 +33,14 @@ Two questions decide every recovery. How much recently saved work may Alice lose
 | 2.1 Networking fundamentals | Revisited from [Stage 1](../01_mvp/01_understand_the_problem.md) | D2: DNS caching, ingress reachability, TLS and private endpoint boundaries |
 | 3.1 Distributed system fundamentals | Revisited from [Stage 7](../07_reliability_consistency/01_understand_the_problem.md) | D3: one writer per tenant through a quorum lease and epoch fencing |
 | 5.1 Rate limiting and admission control | Revisited from [Stage 5](../05_overload_fairness/01_understand_the_problem.md) | D3: admission follows the surviving regional dependency budget |
-| 5.4 Fair scheduling and workload prioritization | Revisited from [Stage 5](../05_overload_fairness/01_understand_the_problem.md) | D2: retain tenant shares under degraded capacity |
+| 5.4 Fair scheduling and workload prioritisation | Revisited from [Stage 5](../05_overload_fairness/01_understand_the_problem.md) | D2: retain tenant shares under degraded capacity |
 | 5.5 AI workload management | Revisited from [Stage 5](../05_overload_fairness/01_understand_the_problem.md) | D3: reserve token and slot capacity, not just app replicas |
 | 7.2 AI gateway and provider management | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D3: route only to eligible regional provider profiles before dispatch |
 | 8.1 Document ingestion and indexing | Revisited from [Stage 3](../03_enterprise_knowledge/01_understand_the_problem.md) | D3: rebuild indexes from source copies checked against quorum-held versions and tombstones |
 | 8.3 Enterprise retrieval governance | Revisited from [Stage 6](../06_enterprise_security/01_understand_the_problem.md) | D3: current policy authority remains required during recovery |
 | 9.1 LLM execution and inference fundamentals | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D2: token phases and context mix affect regional slots |
 | 9.2 Model serving architecture | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D2: warm model readiness differs from a running VM |
-| 9.3 Inference performance optimization | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D1: optimisation changes require measured local evidence |
+| 9.3 Inference performance optimisation | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D1: optimisation changes require measured local evidence |
 | 10.3 GPU infrastructure and scheduling | Revisited from [Stage 9](../09_inference_gpu/01_understand_the_problem.md) | D1: reserve accelerator availability within allowed geography |
 | 12.1 Scaling and traffic engineering | Revisited from [Stage 4](../04_application_scaling/01_understand_the_problem.md) | D3: app headroom cannot hide provider bottlenecks |
 | 12.2 Resilience and fault tolerance | Revisited from [Stage 7](../07_reliability_consistency/01_understand_the_problem.md) | D3: RPO/RTO runbook and explicit fail-closed cases |

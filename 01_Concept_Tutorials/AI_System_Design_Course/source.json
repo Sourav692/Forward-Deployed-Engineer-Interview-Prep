@@ -335,6 +335,10 @@
           "title": "Staff-level platform architecture: think like a staff engineer"
         },
         {
+          "file": "12_staff_platform/04b_staff_interview_practice.md",
+          "title": "Staff-level platform architecture: staff interview practice"
+        },
+        {
           "file": "12_staff_platform/05_validate_and_carry_forward.md",
           "title": "Staff-level platform architecture: validate and carry forward"
         }
