@@ -164,25 +164,25 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant AdminUI as Admin UI
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant Validator as Schema/Rule Validator
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Harness as Tenant Test Harness
   end
-  box rgb(254,243,199)
+  box rgba(180,83,9,0.12)
       participant Registry as Configuration Registry
   end
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Flags as Feature Flag Service
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant Runtime as Workflow Runtime
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Support as Support / Rollback
   end
 

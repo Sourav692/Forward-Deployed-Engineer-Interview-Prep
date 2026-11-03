@@ -202,34 +202,34 @@ The dependency order is strict, and each step has a reason. Identity must come f
 
 ```mermaid
 sequenceDiagram
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant User as User/Client
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant GW as API Gateway
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant IF as Identity Federation
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant TD as Tenant Directory
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant PDP as Policy Decision Point
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant RS as Regional Scheduler
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant Q as Quota Service
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant TAS as Tenant-Aware Service
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant DB as Partitioned DB / Cache
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant Audit as Audit Pipeline
     end
     User->>GW: Request with identity token

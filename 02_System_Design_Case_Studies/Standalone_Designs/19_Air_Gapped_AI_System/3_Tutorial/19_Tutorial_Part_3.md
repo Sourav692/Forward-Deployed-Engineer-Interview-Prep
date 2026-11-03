@@ -99,19 +99,19 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         actor User
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant DP as Document Pipeline
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant LIP as Local Identity Provider
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant MS as Model Server
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant LTS as Local Telemetry Stack
     end
 

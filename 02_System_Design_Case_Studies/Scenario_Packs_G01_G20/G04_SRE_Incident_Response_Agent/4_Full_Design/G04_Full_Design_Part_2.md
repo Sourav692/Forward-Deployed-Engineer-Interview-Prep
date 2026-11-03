@@ -221,19 +221,19 @@ Never explain a denial. A `DENIED` that says "restarts of this service need comm
 
 ```mermaid
 sequenceDiagram
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant O as Orchestrator
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant G as Gateway
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant P as Policy
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant V as Validator
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant T as Tool/API
     end
     O->>G: call issue_refund(order_123, $50)

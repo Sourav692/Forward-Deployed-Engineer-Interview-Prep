@@ -151,31 +151,31 @@ Walk the representative request in order without skipping a handoff. The request
 
 ```mermaid
 sequenceDiagram
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant User as Delegating User
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant Edge as AuthN/AuthZ Edge
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Planner as Agent Planner
   end
-  box rgb(254,243,199)
+  box rgba(180,83,9,0.12)
       participant Registry as Tool Registry
   end
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant PDP as Policy Decision Point
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant Approval as Approval Service
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Broker as Credential Broker
   end
-  box rgb(254,243,199)
+  box rgba(180,83,9,0.12)
       participant Gateway as Execution Gateway
   end
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Ledger as Audit Ledger
   end
   User->>Edge: authenticate

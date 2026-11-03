@@ -117,31 +117,31 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Caller
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant API as Workflow API
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Hist as Durable History Store
   end
-  box rgb(254,243,199)
+  box rgba(180,83,9,0.12)
       participant Sched as Workflow Scheduler
   end
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Q as Activity Task Queues
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant Worker
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Ext as External System
   end
-  box rgb(254,243,199)
+  box rgba(180,83,9,0.12)
       participant Timer as Timer/Signal
   end
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Comp as Compensation Engine
   end
 

@@ -193,31 +193,31 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant U as Employee
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant GW as Gateway / Session
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant CS as Conversation Service
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant P as Policy & DLP
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant A as Context Assembler
     end
-    box rgb(237,233,254)
+    box rgba(124,58,237,0.12)
         participant R as Retrieval + Connectors
     end
-    box rgb(220,252,231)
+    box rgba(21,128,61,0.12)
         participant MR as Model Router
     end
-    box rgb(254,243,199)
+    box rgba(180,83,9,0.12)
         participant PA as Provider Adapter
     end
-    box rgb(219,234,254)
+    box rgba(37,99,235,0.12)
         participant ST as Store / Audit / Usage
     end
 

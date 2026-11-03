@@ -57,13 +57,13 @@
 
 ```mermaid
 sequenceDiagram
-  box rgb(219,234,254)
+  box rgba(37,99,235,0.12)
       participant Client as Ops Client
   end
-  box rgb(237,233,254)
+  box rgba(124,58,237,0.12)
       participant API as Deployments API
   end
-  box rgb(220,252,231)
+  box rgba(21,128,61,0.12)
       participant Registry as Configuration Registry
   end
 
