@@ -7,7 +7,7 @@ The customer, workload, policy ages and costs are hypothetical. The executable v
 
 ## Preserve the Actual Platform
 
-[Stage 5](/learn/staff-ai-system-design/overload-fairness/overload-fairness-understand-the-problem) bounded tenant queues, compared fair service shares and guarded provider request/token/concurrency budgets. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/architecture-after.md) and [ADR-005](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-005-bounded-fair-dispatch.md) are the before-state. Preserve shared history and stable keys, durable worker epochs, versioned ingestion, current retrieval gates, scoped immutable caches, ready replicas and unknown-outcome handling.
+[Stage 5](/learn/staff-ai-system-design/overload-fairness/overload-fairness-understand-the-problem) bounded tenant queues, compared fair service shares and guarded provider request/token/concurrency budgets. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/architecture-after.md) and [ADR-005](/learn/staff-ai-system-design/architecture-decisions/adr-005-bounded-fair-dispatch) are the before-state. Preserve shared history and stable keys, durable worker epochs, versioned ingestion, current retrieval gates, scoped immutable caches, ready replicas and unknown-outcome handling.
 
 ```mermaid
 flowchart TD

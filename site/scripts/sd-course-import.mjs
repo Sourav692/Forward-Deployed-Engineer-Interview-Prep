@@ -36,7 +36,10 @@
  *    stage and part titles take sentence case;
  *  - a part over the site's page limit (WORD_LIMIT, as check:content counts words) splits before its
  *    first "Interview" heading into a further "staff interview practice" lesson, `0Kb_…md`.
- * Last, every relative link and anchor across the generated files is checked against its target.
+ *  - each ADR in `architecture/decisions/` becomes a lesson, `architecture_decisions/adr_NNN_….md`,
+ *    and links to an ADR point there instead of GitHub;
+ * Last, every relative link and anchor across the generated files is checked against its target,
+ * and every file must be a lesson in site/src/lib/sd-course.ts under the same title.
  * The import fails on a link or anchor that resolves to nothing, on a placeholder (TODO, TBD,
  * XXX, [FILL) and when the course stages have uncommitted changes, so `source.json` names the
  * exact commit. A second run on an unchanged course gives no diff.
@@ -46,6 +49,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, wri
 import { dirname, join, posix, relative, resolve, sep } from 'node:path'
 import { githubSlug, headingAnchors, readingSlug } from './learn.mjs'
 import { wordCount } from '../src/lib/editorial.ts'
+import { SD_LESSONS } from '../src/lib/sd-course.ts'
 import { britishText, siteLab } from './rag-theory-import.mjs'
 
 const SITE = resolve(import.meta.dirname, '..')
@@ -53,6 +57,10 @@ const REPO_ROOT = resolve(SITE, '..')
 const COURSE = '10_AI_System_Design'
 const OUT_REL = '01_Concept_Tutorials/AI_System_Design_Course'
 const LABS_REL = 'site/public/labs/system-design'
+// The architecture decision records, one lesson each in the track's last module.
+const ADR_REL = `${COURSE}/architecture/decisions`
+const ADR_PATH = new RegExp(`^${ADR_REL}/(ADR-\\d{3}-[a-z0-9-]+)\\.md$`)
+const adrFile = (name) => `architecture_decisions/${name.toLowerCase().replace(/-/g, '_')}.md`
 // The Learn track the lessons publish in (task SDC-05: site/src/lib/sd-course.ts). Its module slugs
 // are the stage folder names without their number, and each stage opens on part 1.
 const TRACK = 'staff-ai-system-design'
@@ -195,30 +203,37 @@ const partFile = (stage, part) => `${stage.out}/0${part.n}_${part.title.toLowerC
 
 /** Rewrites every Markdown link of one part body. */
 function rewriteLinks(lines, ctx) {
-  const { stage, part, stagesByDir } = ctx
-  const here = partFile(stage, part)
+  // `base`: the course folder links resolve from; `where`: the source file, for errors;
+  // `here`: the generated file the links are written into.
+  const { base, where, here, stagesByDir } = ctx
   const out = [...lines]
   eachProseLine(lines, (line, i) => {
     out[i] = line.replace(/(!?)\[([^\]]*)\]\(([^)]+)\)/g, (all, bang, text, target) => {
-      if (bang) throw new Error(`${stage.rel}/guide.md: images are not supported: ${all}`)
+      if (bang) throw new Error(`${where}: images are not supported: ${all}`)
       if (/^(https?:|mailto:)/.test(target)) return all
-      if (/\s/.test(target)) throw new Error(`${stage.rel}/guide.md: link target with a space: ${all}`)
+      if (/\s/.test(target)) throw new Error(`${where}: link target with a space: ${all}`)
       const [path, anchor] = target.split('#')
-      const abs = path ? resolve(REPO_ROOT, stage.rel, path) : resolve(REPO_ROOT, stage.rel, 'guide.md')
+      const abs = resolve(REPO_ROOT, base, path || 'guide.md')
       const repoPath = posixPath(relative(REPO_ROOT, abs))
       const guide = repoPath.match(new RegExp(`^${COURSE}/stages/([^/]+)/guide\\.(md|html)$`))
       if (guide) {
         const dest = stagesByDir.get(guide[1])
-        if (!dest) throw new Error(`${stage.rel}/guide.md: link to unknown stage: ${all}`)
+        if (!dest) throw new Error(`${where}: link to unknown stage: ${all}`)
         if (LAB_ANCHORS.includes(anchor)) return `[${text}](${labHref(dest, anchor)}#${anchor})`
         const spot = anchor ? findAnchor(dest, anchor) : { part: dest.parts[0], section: null }
-        if (!spot) throw new Error(`${stage.rel}/guide.md: anchor #${anchor} not found in ${dest.rel}/guide.md: ${all}`)
+        if (!spot) throw new Error(`${where}: anchor #${anchor} not found in ${dest.rel}/guide.md: ${all}`)
         const file = partFile(dest, spot.part)
         const rel = file === here ? '' : posix.relative(posix.dirname(here), file)
         return `[${text}](${rel}${sectionId(spot.section)})`
       }
-      if (!existsSync(abs) || !statSync(abs).isFile()) throw new Error(`${stage.rel}/guide.md: link to a missing file: ${all}`)
-      if (anchor !== undefined) throw new Error(`${stage.rel}/guide.md: anchors into non-guide files are not supported: ${all}`)
+      if (!existsSync(abs) || !statSync(abs).isFile()) throw new Error(`${where}: link to a missing file: ${all}`)
+      const adr = repoPath.match(ADR_PATH)
+      if (adr) {
+        if (anchor !== undefined) throw new Error(`${where}: anchors into ADRs are not supported: ${all}`)
+        const file = adrFile(adr[1])
+        return `[${text}](${file === here ? '' : posix.relative(posix.dirname(here), file)})`
+      }
+      if (anchor !== undefined) throw new Error(`${where}: anchors into non-guide files are not supported: ${all}`)
       return `[${text}](${GITHUB}/${repoPath})`
     })
   })
@@ -487,7 +502,7 @@ export function importCourse() {
     let codeLab = false
     for (const part of stage.parts) {
       const body = [...(part.n === 1 ? stage.preamble : []), ...part.lines]
-      let lines = dropPackageSentences(rewriteLinks(body, { stage, part, stagesByDir }))
+      let lines = dropPackageSentences(rewriteLinks(body, { base: stage.rel, where: `${stage.rel}/guide.md`, here: partFile(stage, part), stagesByDir }))
       for (const [, anchor] of lines.join('\n').matchAll(new RegExp(`\\]\\(/labs/system-design/${stage.out}/[a-z]+\\.html#([a-z-]+)\\)`, 'g'))) {
         if (!anchors.includes(anchor)) throw new Error(`${stage.rel}/guide.md: links #${anchor}, which its guide.html has no interactive block for`)
         linked = true
@@ -515,7 +530,32 @@ export function importCourse() {
     if (pages.length && !linked) throw new Error(`${stage.rel}/guide.md: never links its lab, so no lesson would show it`)
   }
 
+  // Each ADR becomes a lesson, titled "ADR-NNN: <title>" in sentence case.
+  const decisions = []
+  for (const name of readdirSync(join(REPO_ROOT, ADR_REL)).filter((f) => ADR_PATH.test(`${ADR_REL}/${f}`)).sort()) {
+    const where = `${ADR_REL}/${name}`
+    const [first, ...rest] = readFileSync(join(REPO_ROOT, where), 'utf8').split('\n')
+    const h1 = first.match(/^# (ADR-\d{3}): (.+)$/)
+    if (!h1) throw new Error(`${where}: first line is not "# ADR-NNN: <title>"`)
+    const file = adrFile(name.replace(/\.md$/, ''))
+    const title = `${h1[1]}: ${sentenceCase(h1[2])}`
+    const text = tidy(britishProse(dropPackageSentences(rewriteLinks(rest, { base: ADR_REL, where, here: file, stagesByDir }))))
+    const markdown = `<!-- Generated by site/scripts/sd-course-import.mjs from ${where}. Edit the ADR there. -->\n# ${title}\n\n${text}\n`
+    const hit = markdown.match(PLACEHOLDER)
+    if (hit) throw new Error(`${where}: placeholder "${hit[0]}"`)
+    files.set(file, markdown)
+    decisions.push({ file, title })
+  }
+
   checkLinks(files)
+  // The curriculum (site/src/lib/sd-course.ts) lists exactly these files, under these titles.
+  const listed = new Map(SD_LESSONS.map((l) => [l.source.slice(OUT_REL.length + 1), l.title]))
+  for (const [file, markdown] of files) {
+    const h1 = markdown.split('\n')[1].slice(2)
+    if (!listed.has(file)) throw new Error(`${OUT_REL}/${file} is not a lesson in sd-course.ts`)
+    if (listed.get(file) !== h1) throw new Error(`${OUT_REL}/${file}: title "${h1}" but sd-course.ts says "${listed.get(file)}"`)
+  }
+  for (const file of listed.keys()) if (!files.has(file)) throw new Error(`sd-course.ts lists ${file}, which the import does not write`)
   for (const [file, markdown] of files) {
     if (wordCount(markdown) > WORD_LIMIT) throw new Error(`${OUT_REL}/${file}: ${wordCount(markdown)} words, over ${WORD_LIMIT}`)
   }
@@ -534,6 +574,7 @@ export function importCourse() {
       title: s.title,
       lessons: s.parts.flatMap((p) => [p, ...(s.extra?.after === p.n ? [s.extra.part] : [])]).map((p) => ({ file: partFile(s, p), title: lessonTitle(s, p) })),
     })),
+    decisions,
   }
   writeFileSync(join(out, 'source.json'), `${JSON.stringify(source, null, 2)}\n`)
   const labsOut = join(REPO_ROOT, LABS_REL)

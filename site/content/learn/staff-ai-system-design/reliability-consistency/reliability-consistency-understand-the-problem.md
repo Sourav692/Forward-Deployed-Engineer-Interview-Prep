@@ -7,7 +7,7 @@ This continues the same hypothetical platform. The executable uses two SQLite fi
 
 ## Inherit Security and Execution Before Adding Recovery
 
-[Stage 6](/learn/staff-ai-system-design/enterprise-security/enterprise-security-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-006-trusted-enterprise-boundaries.md) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
+[Stage 6](/learn/staff-ai-system-design/enterprise-security/enterprise-security-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](/learn/staff-ai-system-design/architecture-decisions/adr-006-trusted-enterprise-boundaries) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
 
 ```mermaid
 flowchart TD

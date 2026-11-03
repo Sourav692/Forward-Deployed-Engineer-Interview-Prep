@@ -991,6 +991,27 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 435
   },
   {
+    "slug": "architecture-decisions",
+    "code": "T17.14",
+    "title": "Architecture decision records",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "adr-001-synchronous-mvp",
+      "adr-002-durable-execution",
+      "adr-003-versioned-retrieval",
+      "adr-004-stateless-scale-and-cache",
+      "adr-005-bounded-fair-dispatch",
+      "adr-006-trusted-enterprise-boundaries",
+      "adr-007-consistency-and-recovery",
+      "adr-008-versioned-quality-releases",
+      "adr-009-approved-inference-boundaries",
+      "adr-010-governed-model-customisation",
+      "adr-011-residency-aware-regional-cells",
+      "adr-012-versioned-regional-platform-contracts",
+      "adr-013-regional-authority-and-route-generations"
+    ]
+  },
+  {
     "slug": "tool-design-mcp-a2a",
     "code": "T15.1",
     "title": "Tool design and the agent-computer interface",
@@ -1884,7 +1905,8 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
       "inference-gpu",
       "fine-tuning",
       "multi-region",
-      "staff-platform"
+      "staff-platform",
+      "architecture-decisions"
     ]
   },
   {

@@ -3,7 +3,7 @@
 
 ## 13. Decision and Carry-Forward
 
-[ADR-001](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-001-synchronous-mvp.md) accepts a synchronous single-application MVP for this educational architecture. [Current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) records version `v0.1-stage-01`; it is an accepted teaching baseline, not a deployment approval.
+[ADR-001](/learn/staff-ai-system-design/architecture-decisions/adr-001-synchronous-mvp) accepts a synchronous single-application MVP for this educational architecture. [Current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) records version `v0.1-stage-01`; it is an accepted teaching baseline, not a deployment approval.
 
 Keep the request schema, scoped history, adapter interface, no-automatic-retry rule, and commit-before-success contract. A future Stage 2 starts when document processing or another long task blocks interactive requests or must survive a worker crash. It can introduce durable jobs with a migration decision. No Stage 2 artifacts are generated here.
 

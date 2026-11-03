@@ -7,7 +7,7 @@ All workloads, costs, and acceptance counts below are illustrative. The local ex
 
 ## Inherit the Actual Runtime
 
-[Stage 9](../09_inference_gpu/01_understand_the_problem.md), [its state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/stage-state.json), and [ADR-009](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-009-approved-inference-boundaries.md) already separate the Model Gateway from a proposed serving engine. Current resource access, mandatory audit, private-approved routes, versioned retrieval/cache, fair request/token/concurrency budgets, and durable operation identity remain mandatory. Short drafting and grounded supplier-policy answering remain distinct routes. An unknown provider result still requires reconciliation; a new adapter cannot justify regeneration under the old key.
+[Stage 9](../09_inference_gpu/01_understand_the_problem.md), [its state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/stage-state.json), and [ADR-009](../architecture_decisions/adr_009_approved_inference_boundaries.md) already separate the Model Gateway from a proposed serving engine. Current resource access, mandatory audit, private-approved routes, versioned retrieval/cache, fair request/token/concurrency budgets, and durable operation identity remain mandatory. Short drafting and grounded supplier-policy answering remain distinct routes. An unknown provider result still requires reconciliation; a new adapter cannot justify regeneration under the old key.
 
 ```mermaid
 flowchart TD

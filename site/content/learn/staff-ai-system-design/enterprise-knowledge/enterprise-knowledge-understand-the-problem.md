@@ -7,7 +7,7 @@ The procurement customer remains hypothetical. All corpus sizes, timings, and ca
 
 ## Inherit the Real System
 
-[Stage 2](/learn/staff-ai-system-design/distributed-execution/distributed-execution-understand-the-problem) added durable acceptance, leased worker ownership, guarded completion, bounded tools, and explicit unknown external outcomes. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) and [ADR-002](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-002-durable-execution.md) are the starting architecture. Retain the short draft API, saved history, trusted scope, Queue, Workers, model adapter, and proposed metadata-only Telemetry.
+[Stage 2](/learn/staff-ai-system-design/distributed-execution/distributed-execution-understand-the-problem) added durable acceptance, leased worker ownership, guarded completion, bounded tools, and explicit unknown external outcomes. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) and [ADR-002](/learn/staff-ai-system-design/architecture-decisions/adr-002-durable-execution) are the starting architecture. Retain the short draft API, saved history, trusted scope, Queue, Workers, model adapter, and proposed metadata-only Telemetry.
 
 ```mermaid
 flowchart TD
