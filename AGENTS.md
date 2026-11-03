@@ -8,7 +8,7 @@
 
 ## Repository layout
 
-- Root directories `00_` through `09_` and `99_Reference_Library/` contain prep material. Put new material in the directory matching its kind.
+- Root directories `00_` through `10_` and `99_Reference_Library/` contain prep material. Put new material in the directory matching its kind.
 - `site/` is the only JavaScript project. It uses Next.js 16, React 19, Tailwind v4, and npm. Run npm commands from `site/` only.
 - Skills: Claude Code gets the Sourav692 skills from the `sourav-skills` plugin, so this repo has no `.claude/skills/`. Codex skills are npx installs in `.agents/skills/` (tracked in `skills-lock.json`). Update them with `.agents/update-skills.sh`, never `npx skills update`: it re-adds `.claude/skills` symlinks. Add one with `npx skills@latest add <owner/repo> -s <name> -a codex -y`.
 - Before changing Next.js code, read the relevant local Next documentation in `site/node_modules/next/dist/docs/`. Also follow [site/AGENTS.md](site/AGENTS.md).
@@ -25,6 +25,7 @@
 
 - `site/content/` and `site/public/fde-last-day-prep/` are generated but committed deployment snapshots. Never edit them directly. Edit their root source, then run `npm run sync` from `site/`.
 - Sync rewrites `site/content/manifest.json` and its `generatedAt` value. That change alone is expected generated noise.
+- The Staff AI System Design course (Learn track T17, `staff-ai-system-design`, in the AI System Design group) is edited in `10_AI_System_Design/`: stage guides `stages/NN-<stage>/guide.md`, their `guide.html`, Python labs and ADRs. Its own tooling, index and stage ZIPs stay offline; the site does not use them. From `site/`, `npm run import:sd-course` (`scripts/sd-course-import.mjs`) splits each guide's five `## N.` parts into lessons in `01_Concept_Tutorials/AI_System_Design_Course/` (a part over 2,500 words splits again before its first Interview heading, as Stage 12's does), cuts each `guide.html`'s interactive blocks into `site/public/labs/system-design/`, and adds a "Run the code lab" section (Python only: GitHub links to `labs/*.py` and the repo-root `test_*.py -v` command; no ZIPs, Codespaces or JavaScript). Never edit those generated copies. The track, modules and lessons are `site/src/lib/sd-course.ts`; its titles must match the import's `source.json`. To refresh: commit the course change, run `npm run import:sd-course`, `npm run sync` and `npm run check:content`, and commit the lessons, labs and diagrams in one PR. The import fails on uncommitted course changes, a broken link or anchor, a placeholder or a page over the limit, and a second run gives no diff. `check:content` allows GitHub links into `10_AI_System_Design/` only.
 - Only these roots feed the site: Customer Discovery and System Design worksheets, `04_Behavioral_and_Leadership/`, Scenario Packs and Standalone Designs under `02_System_Design_Case_Studies/`, `07_Last_Day_Revision/`, and `08_Company_Specific_Prep/Blitzy/`.
 - If one of those source paths changes, update the corresponding `site/scripts/*.mjs` path in the same change.
 - Do not publish or wire in `09_Study_Plans/`, `99_Reference_Library/`, or content that references its purchased library index. Remove references to `LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, and the condensed-plan spreadsheet before public use.
