@@ -187,6 +187,7 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'fine-tuning',
     'multi-region',
     'staff-platform',
+    'architecture-decisions',
   ],
 }
 

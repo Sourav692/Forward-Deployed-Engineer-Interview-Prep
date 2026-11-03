@@ -7,7 +7,7 @@ This is the same hypothetical platform. The gateway executes injected fixture tr
 
 ## Inherit the Approved Runtime
 
-[Stage 8](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-008-versioned-quality-releases.md) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
+[Stage 8](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](/learn/staff-ai-system-design/architecture-decisions/adr-008-versioned-quality-releases) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
 
 ```mermaid
 flowchart TD

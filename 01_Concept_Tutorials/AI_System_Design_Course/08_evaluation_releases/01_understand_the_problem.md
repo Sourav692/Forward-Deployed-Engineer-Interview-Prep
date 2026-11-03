@@ -7,7 +7,7 @@ This remains the same hypothetical procurement system. The runnable evaluator sc
 
 ## Inherit a Recoverable, Protected Platform
 
-[Stage 7](../07_reliability_consistency/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) and [ADR-007](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-007-consistency-and-recovery.md) establish data-class consistency, result/outbox atomicity, projection freshness, bounded recovery and diagnostic contracts. Retain current identity/policy/audit, approved egress, source citations, immutable-cache safety, worker epochs, stable operation identity and fair provider budgets.
+[Stage 7](../07_reliability_consistency/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) and [ADR-007](../architecture_decisions/adr_007_consistency_and_recovery.md) establish data-class consistency, result/outbox atomicity, projection freshness, bounded recovery and diagnostic contracts. Retain current identity/policy/audit, approved egress, source citations, immutable-cache safety, worker epochs, stable operation identity and fair provider budgets.
 
 ```mermaid
 flowchart TD

@@ -7,7 +7,7 @@ This is the same hypothetical procurement platform. Numbers are planning example
 
 ## What Stage 1 Actually Built
 
-[Stage 1](../01_mvp/01_understand_the_problem.md) established trusted tenant/user scope, a short synchronous drafting path, request-key duplicate suppression, and an answer commit before completed success. Its Python API and tests remain unchanged. [ADR-001](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-001-synchronous-mvp.md) still applies to that endpoint. It did not implement worker recovery, background execution, or exactly-once provider calls.
+[Stage 1](../01_mvp/01_understand_the_problem.md) established trusted tenant/user scope, a short synchronous drafting path, request-key duplicate suppression, and an answer commit before completed success. Its Python API and tests remain unchanged. [ADR-001](../architecture_decisions/adr_001_synchronous_mvp.md) still applies to that endpoint. It did not implement worker recovery, background execution, or exactly-once provider calls.
 
 ```mermaid
 flowchart TD

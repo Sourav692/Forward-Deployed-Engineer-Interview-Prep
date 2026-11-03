@@ -7,7 +7,7 @@ The same hypothetical procurement platform now has three hypothetical tenants. E
 
 ## Inherit the Actual Scale-Out Contract
 
-[Stage 4](/learn/staff-ai-system-design/application-scaling/application-scaling-understand-the-problem) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/decisions/ADR-004-stateless-scale-and-cache.md) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
+[Stage 4](/learn/staff-ai-system-design/application-scaling/application-scaling-understand-the-problem) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](/learn/staff-ai-system-design/architecture-decisions/adr-004-stateless-scale-and-cache) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
 
 ```mermaid
 flowchart TD

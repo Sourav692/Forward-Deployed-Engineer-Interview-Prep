@@ -344,5 +344,59 @@
         }
       ]
     }
+  ],
+  "decisions": [
+    {
+      "file": "architecture_decisions/adr_001_synchronous_mvp.md",
+      "title": "ADR-001: Synchronous MVP with durable history"
+    },
+    {
+      "file": "architecture_decisions/adr_002_durable_execution.md",
+      "title": "ADR-002: Durable jobs with guarded worker ownership"
+    },
+    {
+      "file": "architecture_decisions/adr_003_versioned_retrieval.md",
+      "title": "ADR-003: Versioned, permission-filtered retrieval"
+    },
+    {
+      "file": "architecture_decisions/adr_004_stateless_scale_and_cache.md",
+      "title": "ADR-004: Stateless app replicas and immutable passage reuse"
+    },
+    {
+      "file": "architecture_decisions/adr_005_bounded_fair_dispatch.md",
+      "title": "ADR-005: Bounded fair dispatch under fixed provider budgets"
+    },
+    {
+      "file": "architecture_decisions/adr_006_trusted_enterprise_boundaries.md",
+      "title": "ADR-006: Verified enterprise identity and audited disclosure"
+    },
+    {
+      "file": "architecture_decisions/adr_007_consistency_and_recovery.md",
+      "title": "ADR-007: Data-class consistency and evidence-based recovery"
+    },
+    {
+      "file": "architecture_decisions/adr_008_versioned_quality_releases.md",
+      "title": "ADR-008: Versioned quality evidence and controlled release pointers"
+    },
+    {
+      "file": "architecture_decisions/adr_009_approved_inference_boundaries.md",
+      "title": "ADR-009: Approved inference routes with explicit memory and outcome limits"
+    },
+    {
+      "file": "architecture_decisions/adr_010_governed_model_customisation.md",
+      "title": "ADR-010: Governed model customisation"
+    },
+    {
+      "file": "architecture_decisions/adr_011_residency_aware_regional_cells.md",
+      "title": "ADR-011: Residency-aware regional cells"
+    },
+    {
+      "file": "architecture_decisions/adr_012_versioned_regional_platform_contracts.md",
+      "title": "ADR-012: Versioned regional platform contracts and controlled adoption"
+    },
+    {
+      "file": "architecture_decisions/adr_013_regional_authority_and_route_generations.md",
+      "title": "ADR-013: Regional authority quorum, cell route generations and dual-run economics"
+    }
   ]
 }

@@ -429,6 +429,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'A short document that records one architecture decision: the context, the options, the choice and its consequences, so later readers know why.' },
   { term: 'CAS', expansion: 'compare-and-set', group: 'Reliability and operations',
     plain: 'A write that succeeds only if the stored value is still the one you read. It stops two writers from silently overwriting each other.' },
+  { term: 'FTS', expansion: 'full-text search', group: 'Retrieval and data',
+    plain: 'Keyword search over the words of a document collection, usually ranked with BM25. SQLite ships it as FTS5.' },
   { term: 'FTS5', group: 'Retrieval and data',
     plain: "SQLite's built-in full-text search extension. The course's local labs use it as a small keyword index." },
   { term: 'HPA', expansion: 'Horizontal Pod Autoscaler', group: 'Reliability and operations',
