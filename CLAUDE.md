@@ -150,6 +150,7 @@ The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one s
     - "🎯 **Interview Pointer:**" becomes "**Interview pointer:**".
     - ✅ 🟡 ❌ in coverage tables become Built, Partial and Not built.
     - A ✓ or ✗ in a diagram becomes words through a `replace` rule.
+  - **No "own construction" markers.** The repo's provenance tags stay in the source. On the site, `siteProvenance()` drops the tag, the sentence that explains it, and the provenance row of a sources table. A tag with an assumption caveat keeps the caveat. A sentence the cut would leave broken gets a `replace` rule.
   - **Renumbering:** when a cut drops a section, that document's `## N.` sections are renumbered across its parts, and its "Section N" references follow.
 - **Adding or editing a case:**
   1. Write its `introduction.md`.
