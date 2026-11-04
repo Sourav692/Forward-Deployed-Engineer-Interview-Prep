@@ -96,7 +96,7 @@ The pivot after a good answer is "who pays for the pilot, and what stops it runn
 | Do not | Instrument cost after the pilot proves value |
 | 60-second line | Cost is a success metric agreed at intake, not a cleanup after go-live. Cap the agent, sample the evals, and report cost per resolved ticket in the same dashboard as quality. |
 
-- The card fits the framework without a new box *(own construction)*. Cost per resolved ticket becomes a third success metric at intake, so the refusal rule covers it: no baseline, no clock.
+- The card fits the framework without a new box. Cost per resolved ticket becomes a third success metric at intake, so the refusal rule covers it: no baseline, no clock.
 - `cost_attribution_dashboard` is already in the library, so it is pulled on day 1, not built on day 13.
 - And `success_metrics_met` then certifies cost alongside first-response time in the day-14 limited-release acceptance rule, while the week-4 zero-edit target is measured later by its named owner.
 

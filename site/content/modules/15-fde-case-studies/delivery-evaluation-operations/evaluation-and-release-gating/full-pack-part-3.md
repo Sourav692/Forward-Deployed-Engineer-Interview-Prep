@@ -55,7 +55,7 @@ Debug it by comparing offline pass rates with online failure modes. Inspect fail
 
 Unsupported sales claims create legal exposure, customer trust damage and compliance issues. A careless or malicious rep could prompt the assistant to exaggerate ROI or security status and send the draft externally.
 
-- Map it back onto the anchor *(own construction)*. The anchor's gate would have caught this in three places.
+- Map it back onto the anchor. The anchor's gate would have caught this in three places.
 - A per-application threshold on the regulated-claim slice fails at 83.3%. The coverage metric flags a critical slice with 6 cases as below minimum sample, so the gate holds.
 - And a policy change from block to warn-only is itself a versioned artifact, so it goes through the gate instead of around it.
 
@@ -69,14 +69,14 @@ Both OpenAI-style practice prompts are the anchor seen from a different moment. 
 
 **The model got worse after an upgrade.** A customer says quality declined after switching to a newer model. Treat it as the release decision that never happened, and run it retroactively. The source's diagnostic plan has eleven steps. Collect before-and-after production examples. Replay a fixed evaluation set. Segment by task, language, customer and input size. Compare structured-output compliance. Check prompt compatibility and retrieval changes. Compare latency and token usage. Run human evaluation, and calibrate any LLM-as-judge first. Roll back or pin the model version. A/B test future upgrades.
 
-- Map those steps onto the anchor *(own construction)*. Pinning the version is the artifact registry.
+- Map those steps onto the anchor. Pinning the version is the artifact registry.
 - Replaying a fixed set against the old model is Δ against a pinned baseline.
 - Segmenting is slice-based gating. Calibrating the judge is section 7. A/B testing future upgrades is the online sampling pipeline.
 - The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
 
 The follow-up is "the offline benchmark improved, but the customer still says quality declined." The source gives seven explanations, and each maps to a gate weakness.
 
-| Explanation | The gate weakness it points at *(own construction)* |
+| Explanation | The gate weakness it points at |
 |---|---|
 | The benchmark does not represent production traffic | Stale or unrepresentative golden set |
 | A specific customer segment regressed | Aggregate gate, no slices |

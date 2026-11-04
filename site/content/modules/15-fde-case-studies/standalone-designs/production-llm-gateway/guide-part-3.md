@@ -8,9 +8,9 @@
 
 **The breaker** remembers that a provider failed a moment ago, so no request pays to rediscover it. A typical setting is `failure_threshold=3, cooldown_seconds=5.0`. It has three states. Closed passes calls through. Open rejects instantly without calling the provider. Half-open lets one probe through after the cooldown. A breaker without the half-open probe "has no path back to healthy." If it flaps under load, count failures over a sliding window rather than consecutively, and require more than one good probe before closing.
 
-**Fallback** switches to a second provider when the breaker trips or retries run out. Tag every response with its `source`. "Logging which model actually answered is what lets you track cost and quality drift when traffic silently shifts to the backup." Keep prompts and tool schemas portable, because a fallback model with a different tool-calling format breaks the agent silently. Keep the fallback warm *(own construction)*. Send a small share of live traffic to it every day, such as 1% *(assumption)*, so its quality and its quota are proven before the outage. Confirm its rate limit covers full load. The additions file warns to "separate provider 429s from your own gateway limits."
+**Fallback** switches to a second provider when the breaker trips or retries run out. Tag every response with its `source`. "Logging which model actually answered is what lets you track cost and quality drift when traffic silently shifts to the backup." Keep prompts and tool schemas portable, because a fallback model with a different tool-calling format breaks the agent silently. Keep the fallback warm. Send a small share of live traffic to it every day, such as 1% *(assumption)*, so its quality and its quota are proven before the outage. Confirm its rate limit covers full load. The additions file warns to "separate provider 429s from your own gateway limits."
 
-**Degradation** is the floor. When both providers are down, return a labelled answer seeded with cached context, never a stack trace. For a support product the best degraded answer is often a handoff: "your ticket is logged and a person will reply" *(own construction)*.
+**Degradation** is the floor. When both providers are down, return a labelled answer seeded with cached context, never a stack trace. For a support product the best degraded answer is often a handoff: "your ticket is logged and a person will reply".
 
 - Degrade differently on the two faces. The source's rule is "Degrade gracefully in front of a human, fail loudly in front of a machine." The edge face shows the customer a labelled, useful reply.
 - The model face returns a *typed error* to the agent, not a degraded string.
@@ -26,11 +26,11 @@ A latency budget is a sum, and the source gives the terms verbatim. They are whi
 | Plus LLM output check | + 300-500ms | About 2.9 s: tight |
 | Plus LLM input guard in series *(assumption: 300-500ms)* | + 300-500ms | About 3.4 s: breaks |
 
-- The source names the fix: the LLM input guard "is the one addition that risks the budget, so it should be skippable for low-risk, previously-seen query patterns." A second fix is *own construction*.
+- The source names the fix: the LLM input guard "is the one addition that risks the budget, so it should be skippable for low-risk, previously-seen query patterns."
 - The router and the input guard read the same text with the same small model, so run them in parallel.
 - The pair then costs the slower of the two, not the sum.
 
-Three more collisions sit inside the prompt *(own construction)*.
+Three more collisions sit inside the prompt.
 
 **The agent path cannot finish in 3 s.** Five sequential calls at ~1-2s each take 5 to 10 seconds. In my sizing, complex turns are 21% of traffic, so p95 falls inside them, and a p95 on full answers fails by construction. This is why section 1 asked what the 3 s measures. Hold the agent path to first streamed token under 3 s. Parallelise read-only tool calls, and route common intents to a one-call path. The playbook's rule applies: "I would not use an agent where a workflow engine or router is enough."
 
@@ -52,11 +52,11 @@ Three more collisions sit inside the prompt *(own construction)*.
 - [Observability and Production Diagnosis](/design/observability-and-production-diagnosis#full-pack) develops this in sections 6 and 7.
 - It also covers walking a cost spike in section 11.
 
-Put six numbers on one dashboard *(own construction)*: spend so far today against the pacer line, p95 time to first token, fallback rate by provider, breaker state, guard block rate by rule, and cache hit rate. A change in any one of them has a named first question in sections 7 to 9.
+Put six numbers on one dashboard: spend so far today against the pacer line, p95 time to first token, fallback rate by provider, breaker state, guard block rate by rule, and cache hit rate. A change in any one of them has a named first question in sections 7 to 9.
 
 ## 11. Close the Data Residency Gap
 
-The source ends on its own gap: "this design has no answer yet for data residency if the customer can't send data to a third-party provider at all." Its proposed next step is "an in-VPC or self-hosted model." Here is that answer built out *(own construction, grounded where cited)*.
+The source ends on its own gap: "this design has no answer yet for data residency if the customer can't send data to a third-party provider at all." Its proposed next step is "an in-VPC or self-hosted model." Here is that answer built out.
 
 Residency is a routing rule, not a network setting. The gateway already sees every model call, so it is the right place to enforce where data may go. Tag each request with a data class at the edge, from the customer's policy and the PII detector's findings. Each data class then maps to a pool of allowed providers.
 

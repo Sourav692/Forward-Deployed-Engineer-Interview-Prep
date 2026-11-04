@@ -11,7 +11,6 @@ The hardest part of this system is the decision at 4 a.m., when the job is behin
 | Nightly PDF summarisation is too expensive (cost drill) | Section 15, first card |
 | Batch embedding job became too expensive (scenario 13) | Section 15, second card |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 
 ---
 

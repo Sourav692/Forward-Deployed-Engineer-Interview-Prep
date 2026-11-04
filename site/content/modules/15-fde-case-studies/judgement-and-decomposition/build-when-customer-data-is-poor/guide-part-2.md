@@ -2,7 +2,7 @@
 
 ## 6. State Requirements as Testable Constraints
 
-A worked example makes the method concrete. The scenario is invented for this page, and every number in sections 6 to 10 is an assumption *(own construction)*.
+A worked example makes the method concrete. The scenario is invented for this page, and every number in sections 6 to 10 is an assumption.
 
 **The customer.** A manufacturer of industrial pumps processes about 12,000 warranty claims a month. Adjusters decide approve, reject, or request more information, and route suspected design defects to engineering. Each claim takes an adjuster about 11 minutes. The customer wants AI to cut that time and catch defect patterns earlier.
 
@@ -123,7 +123,7 @@ flowchart TD
     class S,N,AD,K cbPolicy
 ```
 
-Read the components in dependency order *(own construction)*:
+Read the components in dependency order:
 
 | Component | Job | What goes wrong without it |
 |---|---|---|
@@ -161,7 +161,7 @@ Content hashing belongs here too. The same pipeline hashes each document's text 
 
 ## 9. Grow Labels From the Review Queue
 
-Poor labels are a starting condition, not a permanent one. The review queue turns adjuster time into trusted labels. Design it that way from day one *(own construction)*.
+Poor labels are a starting condition, not a permanent one. The review queue turns adjuster time into trusted labels. Design it that way from day one.
 
 - Three rules make corrections usable as labels. First, the correction happens in the tool, on the field, with the original value kept.
 - A reviewer who fixes a claim in the ERP directly leaves no trace the system can learn from.
@@ -207,7 +207,7 @@ Ship the set with a datasheet: collection window, filters, dedup method, split s
 
 ## 11. Tell the Customer Their Data Is Poor
 
-The hardest part of this case is a conversation, not a component. Nobody enjoys hearing that their data is poor, and the person told is often the person responsible for it *(own construction)*.
+The hardest part of this case is a conversation, not a component. Nobody enjoys hearing that their data is poor, and the person told is often the person responsible for it.
 
 Lead with measurements, not adjectives. "Your data is messy" invites a defence. "38% of claims are coded OTHER, and two of your adjusters agree on the code about half the time beyond chance" invites a plan. The scorecard exists partly to make this conversation factual.
 
@@ -222,7 +222,7 @@ Name what will not be promised. In the worked example, the first release makes n
 
 ## 12. Phase the Work So Data Fixes Ship as Value
 
-The phases follow the readiness scores, not a generic timeline. Each phase exits on a measured condition, in the spirit of the Scoping to Deployed Agent case’s gates *(own construction)*.
+The phases follow the readiness scores, not a generic timeline. Each phase exits on a measured condition, in the spirit of the Scoping to Deployed Agent case’s gates.
 
 | Phase | Weeks | Ships | Exit condition |
 |---|---|---|---|

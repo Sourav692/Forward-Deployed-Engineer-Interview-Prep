@@ -4,7 +4,7 @@
 
 The organising rule is a split. The control plane decides what to evaluate, and the data plane executes it. A slow or failing runner therefore cannot make policy nondeterministic. Candidate selection, enforcement and escalation stay deterministic however noisy the execution is.
 
-The planes and lanes as one picture *(own construction from the sources' component map)*:
+The planes and lanes as one picture:
 
 ```mermaid
 flowchart TD
@@ -93,7 +93,7 @@ flowchart TB
     class RPE,SR,BLOCK cbPolicy
 ```
 
-Read the components in the order a release travels through them. The first four columns are the tutorial's; the failure column is own construction, drawn from the tutorial's failure-policy table.
+Read the components in the order a release travels through them.
 
 | Component | Primary responsibility | State ownership | Fails how |
 |---|---|---|---|

@@ -136,7 +136,7 @@ All paths are relative to the repository root unless stated.
 - [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719): well-tuned PPO can match or beat DPO
 - [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124): RL with a programmatic verifier works well where correctness is checkable
 - [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948): rule-based rewards for math and code
-- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantisation-aware-training/): QAT loses less quality than post-training quantisation
+- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/): QAT loses less quality than post-training quantisation
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934): RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
 - [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732): small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
 - `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md`: the book's worked example (140,000 → 9,000 traces; 94% / 78% / 83%) and the four learning surfaces

@@ -8,7 +8,7 @@ Rehearse "what breaks first?" most of all. "Hallucinations" is the wrong answer.
 
 > *"The web search tool returns empty result sets during a partial outage. The agent treats empty as valid, and we ship an ungrounded response with no citations. The signal is citation-free answer rate. The fix is a typed result distinguishing empty from unavailable."*
 
-The ladder below applies that shape to each component *(own construction)*.
+The ladder below applies that shape to each component.
 
 | Fails | Behaviour |
 |---|---|
@@ -31,7 +31,7 @@ Here that metric is the grade distribution. If most runs grade poorly even after
 - Trajectory evaluation asks whether it took a sensible path: did the planner decompose sensibly, did agents stay in role, how many hops.
 - Trajectory matters more in a multi-agent system. A run that reaches the right answer through six wasted hops is one prompt change away from not reaching it.
 
-| Question a worried owner asks | Metric *(own construction)* |
+| Question a worried owner asks | Metric |
 |---|---|
 | Is every claim actually supported? | Claim-support rate from the verifier, audited by human sample |
 | Are we shipping answers with no sources? | Citation-free answer rate |
@@ -131,7 +131,7 @@ The follow-up bank, with the shape of a strong answer:
 - An unfamiliar domain: say so and ask two questions that make it reasonable.
 - What fails a round is running out of time without saying so.
 
-The two-minute spoken answer *(own construction from the source's design)*:
+The two-minute spoken answer:
 
 > - This is a read-only research agent, forty thousand runs a day, peaking at three times the mean, under ninety seconds at p95 with a first signal in three, and twenty cents a run.
 > - Success is every claim cited to a source a reviewer would accept.
@@ -146,7 +146,7 @@ The two-minute spoken answer *(own construction from the source's design)*:
 > - The rendered answer is its outbound channel, so rendering goes through an egress firewall.
 > - The metric that would prove me wrong is the grade distribution.
 
-The lines that carry the round *(own construction from the source's arguments)*:
+The lines that carry the round:
 
 1. *"Read-only, so no approval subsystem. I'm saying that on purpose."*
 2. *"Sub-agent isolation is the single largest cost lever. The parent sees hundreds of tokens, not raw pages."*

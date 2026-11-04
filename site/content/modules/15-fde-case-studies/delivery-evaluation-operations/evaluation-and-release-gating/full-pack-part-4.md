@@ -64,7 +64,7 @@ The two-minute spoken answer, from the answer key:
 > - I would prove it on one critical application, calibrate against human labels, add latency and cost gates, then expand.
 > - The gate is only useful if teams trust it enough not to route around it.
 
-The lines that carry the round *(own construction from the sources' arguments)*:
+The lines that carry the round:
 
 1. *"A dashboard reports scores. A gate makes a decision, with an owner, a threshold and a record."*
 2. *"Thirty apps, twenty releases, five thousand cases: three million executions a day."*
@@ -85,7 +85,7 @@ The follow-ups arrive in a predictable order.
 | How does online feedback enter offline evaluation? | As a discovery channel: redact, label, then add to the golden or shadow set |
 | Why not run the full suite on every commit? | Tiered evaluation: smoke on every change, broader regression pre-release, deep audits for high-risk changes |
 | Why not one universal rubric? | Generic metrics for trends, task-specific rubrics for the decision |
-| How do you know the gate isn't blocking good releases? | Track the override rate and the reason for every override. Treat a rising rate of justified overrides as a threshold or rubric defect *(own construction)* |
+| How do you know the gate isn't blocking good releases? | Track the override rate and the reason for every override. Treat a rising rate of justified overrides as a threshold or rubric defect |
 | What about regulation? | Registry, lineage and audit trail are most of a compliance story; add an explicit control mapping, such as SOC 2-style controls, and reconcile deletion rights with trace retention *(tutorial's own gap note)* |
 | What about fairness? | Stratify the golden set by user segment and add a per-segment Δ as a fifth dimension of the same fail-closed decision *(tutorial's own gap note)* |
 

@@ -4,7 +4,7 @@
 
 The organising rule is admit, assemble, answer, learn. The gateway decides who may use a model and how much. Retrieval decides what the answer may see. The model path decides what it costs and how it fails. The control plane decides what changes reach users, and on what evidence.
 
-The whole system, drawn with its planes *(own construction)*:
+The whole system, drawn with its planes:
 
 ```mermaid
 flowchart TD
@@ -126,7 +126,7 @@ flowchart LR
     class FQ,TL,P2,Q,BA cbAction
 ```
 
-Read the components in request order. The failure column is *own construction*.
+Read the components in request order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -146,7 +146,7 @@ Read the components in request order. The failure column is *own construction*.
 | 14 | Observability | One trace per request with tokens, cost, stages and outcome | Degrades: request still served, gap logged |
 | 15 | Control plane | Versioned prompts, routing, quotas, flags, eval gate | Changes blocked until the gate passes |
 
-- Point at three boundaries while the diagram is up *(own construction)*. The admission boundary is the gateway: nothing reaches a model without identity, a quota and a budget check.
+- Point at three boundaries while the diagram is up. The admission boundary is the gateway: nothing reaches a model without identity, a quota and a budget check.
 - The isolation boundary is retrieval and the cache key: both carry the user's permission scope.
 - The change boundary is the control plane: a prompt edit is a release with a gate, never a hot edit.
 
@@ -174,7 +174,7 @@ Put every model call behind one gateway, because the prototype's direct calls le
 
 Set the reliability target honestly. The guide's FDE track answers the "99.9% uptime" request directly: *"Separate your infra's uptime from the upstream provider's — you can't promise more than your dependency provides, and fallback/circuit-breaker design is how you buy margin, not a guarantee."* Say that sentence to the customer before the contract says something else.
 
-- Keep the fallback warm and validated *(own construction)*. A fallback provider that has never served real traffic fails at the worst moment.
+- Keep the fallback warm and validated. A fallback provider that has never served real traffic fails at the worst moment.
 - The guide's agent track names the trap: tool schemas and structured-output contracts are not portable across models, so the fallback path needs its own prompt and its own eval run.
 - Route a small, steady share of traffic to it so its latency and quality stay measured.
 - Tag every response with the model that answered, because cost and quality shift silently when traffic moves.
@@ -183,7 +183,7 @@ Degrade in front of people and fail loudly in front of machines. That is the gui
 
 ## 9. Rebuild the Eval Set From Production, Not the Demo
 
-The prototype's eval set, if it exists, is the demo questions. It measures what already worked on the questions the builder thought to ask. That is survivorship, not evaluation. The Evaluation and Release Gating case designs the full release gate; this section names what the scale-up changes *(own construction, from the Evaluation and Release Gating case’s argument)*.
+The prototype's eval set, if it exists, is the demo questions. It measures what already worked on the questions the builder thought to ask. That is survivorship, not evaluation. The Evaluation and Release Gating case designs the full release gate; this section names what the scale-up changes.
 
 - Build the new set from the first cohorts' real traffic. Sample by intent and by department, because 100,000 users ask questions the 100 never did.
 - Label with the customer's subject-matter experts, not the builder. Add adversarial cases for permissions and prompt injection, and hold the security slice at zero failures.
@@ -197,7 +197,7 @@ Keep evaluating after launch. Run a sampled online evaluation on live traffic, p
 
 Never launch to 100,000 people on one day. Roll out by cohort, so each tenfold step in section 5 happens on purpose, to a group that can be supported. Use shadow, canary and promote, and know the risk each puts on a real user. I add cohort waves between canary and promote.
 
-| Stage | What happens (Module 08 doc 1; the cohort-wave row is mine) | Gate to move on *(own construction)* |
+| Stage | What happens (Module 08 doc 1; the cohort-wave row is mine) | Gate to move on |
 |---|---|---|
 | Shadow | *"The new version runs alongside the live one on real traffic; both outputs are logged; compared offline"* | Eval gate passed; zero isolation failures in shadow |
 | Canary | A small slice of real users sees it; *"the same metrics are watched live"* | p95, error rate and cost per request within limits for 48 hours |
@@ -210,9 +210,9 @@ Make rollback a pointer flip. The rule: *"If rollback requires a build, it is no
 
 ## 11. Assign Owners Before the First Page
 
-At 100 users, the builder is the owner, the on-call and the support desk. At 100,000, that arrangement is the single point of failure *(own construction)*. Name the owners before the first cohort, not after the first incident.
+At 100 users, the builder is the owner, the on-call and the support desk. At 100,000, that arrangement is the single point of failure. Name the owners before the first cohort, not after the first incident.
 
-| Area | Owner *(own construction)* | What it owns |
+| Area | Owner | What it owns |
 |---|---|---|
 | Platform and gateway | AI platform team | SLOs, capacity, provider relationships, on-call |
 | Product behaviour | Product owner | Prompts, intents, routing policy, release decisions |
@@ -221,7 +221,7 @@ At 100 users, the builder is the owner, the on-call and the support desk. At 100
 | Budget | Finance partner plus product owner | Department budgets, anomaly thresholds |
 | Support | IT helpdesk (L1), app team (L2), platform (L3) | Tickets, known issues, escalation |
 
-- Write runbooks for the incidents that will happen *(own construction)*. The cost cram sheet lists fifteen, and four matter from week one.
+- Write runbooks for the incidents that will happen. The cost cram sheet lists fifteen, and four matter from week one.
 - Cost 5× after rollout: *"The increase is likely from request shape, not just user count."* Latency 2 s to 20 s after a deploy: roll back the prompt or reranker, activate the fallback provider.
 - One tenant over-using: *"distinguish healthy adoption from runaway automation."* Cache hit rate dropping: look for a silent prefix invalidator.
 - Add a fifth for a permissions leak, owned by security.
@@ -234,12 +234,12 @@ A system can be technically ready and still fail, because nobody uses it. Adopti
 
 - Measure adoption with numbers that cannot be faked by a launch email.
 - Start with two.
-- The human-approval override rate: *"Falling over time = trust being earned; flat = the agent is not ready for less supervision."* The second is week-4 retention: *"Whether the thing deployed is still the thing being used a month later."* Add active users as a share of licensed users, task success by intent, and cost per successful task *(own construction)*.
+- The human-approval override rate: *"Falling over time = trust being earned; flat = the agent is not ready for less supervision."* The second is week-4 retention: *"Whether the thing deployed is still the thing being used a month later."* Add active users as a share of licensed users, task success by intent, and cost per successful task.
 - The cost additions insist on the last one: a cheaper model that needs a retry or a human correction is not cheaper.
 
 The bank's follow-up, verbatim: *"The system is technically ready but users are not adopting it. What do you investigate?"* Its answer list, verbatim: whether the problem is important enough, workflow fit, user trust, response quality, latency, training and onboarding, incentives, integration friction, and whether the product solves the user's actual pain point.
 
-- Order that list into an investigation *(own construction)*. Start with data, not opinions.
+- Order that list into an investigation. Start with data, not opinions.
 - Segment usage by department and intent, and find where users try once and stop.
 - Then read those sessions. A drop after the first answer points to quality or trust.
 - A drop before any answer points to latency or onboarding. Low first use points to workflow fit and integration friction: the assistant lives in a separate tab while the work lives in another tool.

@@ -10,6 +10,7 @@
  *   `CASE_SITE_EDITS`, worded vendor-neutrally.
  * - Case codes (`G01`) become the case's name; on its own page, "this case".
  * - Section signs, emoji and tick or cross marks become words.
+ * - "Own construction" provenance markers are dropped (`siteProvenance`).
  * - A document that lost a section is renumbered across its parts (`renumberSections`).
  * Sync fails if a cut term, a case code or a forbidden character survives, so nothing
  * slips through mid-paragraph.
@@ -45,6 +46,8 @@ export const CASE_SITE_EDITS = {
   'enterprise-coding-assistant': {
     replace: [
       ['the enterprise knowledge assistant in G01', 'the Enterprise Knowledge Assistant case'],
+      // The fourth column held only the provenance tag; body rows' extra cells are ignored.
+      ['| Signal | Cost | Permission it carries | *(own construction)* |\n|---|---|---|---|', '| Signal | Cost | Permission it carries |\n|---|---|---|'],
     ],
   },
   // Headings that named the source library or an earlier draft (audit check PQ-18).
@@ -53,6 +56,28 @@ export const CASE_SITE_EDITS = {
   },
   'travel-agent-worked-example': {
     replace: [[' replaces the missing aggregation step (*added by the prior blueprint*)', ' replaces the missing aggregation step']],
+  },
+  // Provenance sentences whose caveat outlives the "own construction" tag (siteProvenance).
+  'real-time-call-assistant': {
+    replace: [
+      ["Much of the source design is the author's own construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.", 'The time allocations are planning assumptions, not measured vendor guarantees.'],
+      ['The source marks much of the architecture and the 2-second stage budget as its own construction; validate those assumptions with production measurements.', 'Treat much of the architecture and the 2-second stage budget as assumptions; validate them with production measurements.'],
+    ],
+  },
+  'production-llm-gateway': {
+    replace: [
+      ['The traffic, prices and dollar arithmetic are *own construction*, and every number marked *(assumption)* is', 'Every number marked *(assumption)* is'],
+      ['Every number here is *own construction*, and the prices are illustrations;', 'The prices are illustrations;'],
+    ],
+  },
+  'scoping-to-deployed-agent': {
+    replace: [[" The triage agent's internals in section 4 are the largest such addition, because the sources design the delivery pipeline and name the agent without drawing it.", '']],
+  },
+  'logistics-exception-handling': {
+    replace: [['No ready-made drill covers this group, so the card below is own construction. It draws on', 'The card below draws on']],
+  },
+  'build-when-customer-data-is-poor': {
+    replace: [['- The worked example in sections 6 to 10 is entirely own construction, and every number in it is an assumption.', '- Every number in the worked example in sections 6 to 10 is an assumption.']],
   },
   'agent-platform-for-non-technical-users': {
     replace: [['the G01 or G12 design', 'the Enterprise Knowledge Assistant or Scoping to Deployed Agent design']],
@@ -153,6 +178,63 @@ function nameCodes(text, codes, own) {
   )
 }
 
+const OWN = /own construction/i
+// A sentence ends at . ! or ?, after any closing bold, quote or bracket.
+const SENTENCE_END = /(?<=[.!?](?:\*\*)?["”)]?)\s+(?=\S)/
+const PREFIX = /^(\s*(?:>\s*)*(?:[-*+]\s+|\d+\.\s+)?)/
+
+/**
+ * The repo marks what a case built itself, as against what its sources give, with
+ * "own construction" (audit check PQ-18). The site credits sources on /library/credits
+ * and drops the markers: a provenance row in a sources table, a sentence that explains the
+ * marker or says a part "is own construction", and the italic tag itself. A tag that also
+ * carries an assumption caveat keeps the caveat: "*(own construction; figures are
+ * assumptions)*" becomes "*(figures are assumptions)*". Fenced blocks are left alone.
+ */
+function siteProvenance(text) {
+  const untag = (s) =>
+    s.replace(/\s*\*\(([^()]*own construction[^()]*)\)\*/gi, (m, inner) => {
+      const caveats = inner.split(/;\s*/).filter((c) => /assumption/i.test(c) && !OWN.test(c))
+      return caveats.length ? ` *(${caveats.join('; ').replace(/ unless marked sourced$/, '')})*` : ''
+    })
+  // A sentence goes whole when it explains the marker, or when the tag is its predicate
+  // ("so these are *(own construction)*", which untagged reads "so these are").
+  const explainsMarker = /marked \*?\(?own construction|\b(?:is|are)\s+\*\(own construction\)\*/i
+  // Its sourced half goes with it: "The functional list is the source's."
+  const sourcedHalf = /^(?:The|Most)\b[^.]{0,80}\b(?:is|are) the (?:source|sources|tutorial|anchor|prompt|drill)['’]s?\.$/
+  const out = []
+  let fence = false
+  for (const line of text.split('\n')) {
+    if (/^(```|~~~)/.test(line)) fence = !fence
+    if (fence || !OWN.test(line)) {
+      out.push(line)
+      continue
+    }
+    if (/^\s*\|/.test(line)) {
+      // A data row keeps its cells without the tag; a provenance row goes.
+      const row = untag(line)
+      if (!explainsMarker.test(line) && !OWN.test(row)) out.push(row)
+      continue
+    }
+    const prefix = line.match(PREFIX)[1]
+    // A sentence that leans on a dropped one ("They are not in the sources verbatim.")
+    // goes with it.
+    let dropped = false
+    const body = line
+      .slice(prefix.length)
+      .split(SENTENCE_END)
+      .filter((s) => {
+        dropped = explainsMarker.test(s) || OWN.test(untag(s)) || (dropped && /^(They|It|These|This) /.test(s))
+        return !dropped
+      })
+      .filter((s) => !sourcedHalf.test(s))
+      .map(untag)
+      .join(' ')
+    if (body.trim()) out.push(prefix + body)
+  }
+  return out.join('\n')
+}
+
 const matched = new Set()
 
 /**
@@ -179,7 +261,7 @@ export function applySiteEdits(slug, markdown, file, ctx) {
     if (text.includes(from)) matched.add(from)
     text = text.split(from).join(to)
   }
-  text = nameCodes(wordSymbols(text), ctx.codes, ctx.own ?? 'G00')
+  text = siteProvenance(nameCodes(wordSymbols(text), ctx.codes, ctx.own ?? 'G00'))
 
   const out = []
   let dropping = false
@@ -195,7 +277,7 @@ export function applySiteEdits(slug, markdown, file, ctx) {
     out.push(line)
   }
   const result = out.join('\n')
-  const left = result.match(CUT) ?? result.match(FORBID)
+  const left = result.match(CUT) ?? result.match(FORBID) ?? result.match(OWN)
   if (left) {
     const near = result.slice(Math.max(0, left.index - 80), left.index + 60).replace(/\n/g, ' ')
     throw new Error(`Site edits for ${slug} left "${left[0]}" in ${file}: …${near}…; add a replace rule in CASE_SITE_EDITS`)

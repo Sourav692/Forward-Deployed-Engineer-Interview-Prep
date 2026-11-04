@@ -34,7 +34,6 @@ Defend four trade-offs. Full capture against privacy and cost: capture structure
 
 - Ten members of this group are the same system asked a cost or latency question.
 - Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say.
-- The "Do not" field for the scenarios is *(own construction)*; the playbook gives no weak answer for them.
 - Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
 
 ### 15.1 LLM costs exploded after launch

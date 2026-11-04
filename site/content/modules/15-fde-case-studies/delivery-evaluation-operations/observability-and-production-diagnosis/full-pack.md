@@ -16,7 +16,7 @@
 | scenarios 1, 2, 6, 7, 10, 11, 12 | Cards 15.2 to 15.8 |
 | Rate limits throttling at peak, users abandon mid-stream | Cards 15.9 and 15.10 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. The sizing numbers in section 4 come from the V2 tutorial's "My Perspective on the Gaps" note, which is supplementary and not chapter content.
+The sizing numbers in section 4 come from the V2 tutorial's "My Perspective on the Gaps" note, which is supplementary and not chapter content.
 
 ---
 
@@ -82,7 +82,7 @@ A requirement that cannot fail a test is a preference. "Observable" is a prefere
 | Cost | Volume scales with request rate, trace rate, retention window and sampling rate, so the first decision is what not to collect |
 | Diagnosability | Trace coverage high enough that complaints map to traces; mean time to diagnose falling after the support workflow lands |
 
-Every requirement then needs an owner in the architecture *(own construction)*.
+Every requirement then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -141,7 +141,7 @@ flowchart TD
 
 The design is tracing-first: structured spans, selective redaction, and a stable correlation ID on every request from the edge inward. Two paths run side by side. The request path serves the user. The observability path explains the request path, and it must never be able to break it.
 
-The same system drawn with its trust boundaries *(own construction)*:
+The same system drawn with its trust boundaries:
 
 ```mermaid
 flowchart TD
@@ -240,7 +240,7 @@ flowchart TB
     class COLLECT,STORE,TENANTVIEW cbAction
 ```
 
-The source's component table, with a column added for how each part fails *(the last column is own construction)*.
+The source's component table, with a column added for how each part fails.
 
 | Component | Primary responsibility | Notes | Fails how |
 |---|---|---|---|

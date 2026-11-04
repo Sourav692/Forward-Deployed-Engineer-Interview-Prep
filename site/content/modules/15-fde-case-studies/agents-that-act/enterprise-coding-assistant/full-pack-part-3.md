@@ -2,7 +2,7 @@
 
 ## 12. Gate the Release on Acceptance and Safety, Not Fluency
 
-The product metric is the acceptance rate, because a completion the developer deletes cost latency and money and taught the model nothing. Measure accepted, partially accepted and rejected suggestions per task, per language and per repository, and treat a drop as a regression even when offline benchmarks improve *(table is own construction; the metrics are drawn from the sources)*.
+The product metric is the acceptance rate, because a completion the developer deletes cost latency and money and taught the model nothing. Measure accepted, partially accepted and rejected suggestions per task, per language and per repository, and treat a drop as a regression even when offline benchmarks improve.
 
 | Metric | Good threshold | Bad threshold | Dataset / method | Owner |
 |---|---:|---:|---|---|
@@ -27,7 +27,7 @@ The product metric is the acceptance rate, because a completion the developer de
 
 ## 13. Roll Out One Repository at a Time
 
-Week one at a customer is not the whole diagram *(section is own construction, following the sibling pages' rollout shape)*. It is one repository indexed under its real permissions, three developers with different access levels, and the leak test standing: the same completion requested by each of the three, asserting nothing crosses.
+Week one at a customer is not the whole diagram. It is one repository indexed under its real permissions, three developers with different access levels, and the leak test standing: the same completion requested by each of the three, asserting nothing crosses.
 
 | Stage | Gate |
 |---|---|
@@ -56,7 +56,7 @@ The three-sentence close, from the source's summary:
 
 > *"A retrieval-augmented, context-engineered system, not one call to a big model. Gather and prioritise context instead of sending repositories, retrieve semantically, route across models to balance latency, cost and quality, and validate every output. Scale from stateless servers, sharded vector databases, autoscaling inference, streaming and multi-region; secure it with tenant isolation, repository-level access control, secret masking and private deployment for regulated industries."*
 
-The two-minute spoken answer *(own construction from the source's summary and checkpoint)*:
+The two-minute spoken answer:
 
 > - I would start with the two constraints, not the model.
 > - Suggestions have to arrive in under 300 milliseconds, and the assistant has to understand a private repository without leaking any of it.
@@ -69,7 +69,7 @@ The two-minute spoken answer *(own construction from the source's summary and ch
 > - Security shapes it from the first question: retrieval respects repository permissions mirrored from the code host, secrets are masked before context leaves the IDE, nothing trains on private code without consent, and regulated customers get private deployment.
 > - I would prove it with acceptance rate per task, p95 by stage, a zero on cross-repository and secret leaks, and a controlled productivity comparison, rolling out one repository at a time.
 
-The lines that carry the round *(own construction from the source's arguments)*:
+The lines that carry the round:
 
 1. *"A coding assistant is a context-engineering problem before it is a model problem."*
 2. *"Cache first, retrieve on a miss, route by task."*

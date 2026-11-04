@@ -33,7 +33,7 @@ The diagram is the source's. In this design the exception type comes from the de
 
 State the ordering out loud. A candidate who checks confidence before the customs carve-out has built a system where a high-confidence model could, in principle, auto-resolve a customs hold, the one outcome the customer ruled out. It is the same structure as deny-rules-first in the Tool-Using Agent with Safety Controls tool gateway, and the same short-circuit logic.
 
-- Three details make the gate trustworthy *(own construction)*. Take the exception type from the detection service, not from the agent's own output.
+- Three details make the gate trustworthy. Take the exception type from the detection service, not from the agent's own output.
 - An agent that mislabels a customs hold as a weather delay must not be able to talk its way past the gate.
 - Fail closed on any missing field: no value, no type or no confidence routes to a human.
 - Keep the policy definitions in the control plane under version control, so a threshold change is a release with an audit entry, not a config edit.
@@ -102,7 +102,7 @@ Enforce regional access control at the application layer, as section 7 describes
 
 The rerouting prompt ends "how do you build it, and **how do you evaluate it**?" The source bank names hand-waved evaluation as the second failure mode of the round, and says most candidates fumble "how do you know your AI system is actually working well?" Tie every design choice back to how it would be evaluated, and raise the plan unprompted.
 
-The plan below is own construction, built on the anchor's components. Each layer of the design gets one question and one instrument.
+Each layer of the design gets one question and one instrument.
 
 | What could go wrong | First evaluator |
 |---|---|
@@ -116,7 +116,7 @@ The plan below is own construction, built on the anchor's components. Each layer
 | Can an EU record reach a US session? | Residency test from every region's session, on every release |
 | Is batch lateness hidden? | Time-to-detect p50/p95 split by feed type |
 
-Run it in three stages *(own construction)*. **Offline first.** Replay months of historical shipment and weather data through detection and the agent. Compare against what the ops team did. This builds the golden set and calibrates the threshold before anything touches a carrier.
+Run it in three stages. **Offline first.** Replay months of historical shipment and weather data through detection and the agent. Compare against what the ops team did. This builds the golden set and calibrates the threshold before anything touches a carrier.
 
 **Shadow second.** The agent drafts for live exceptions, but humans act on everything. Compare its draft with the human decision per exception type. Auto-resolve is not switched on until the agreement rate on sub-$500 cases clears a target agreed with the ops lead.
 
@@ -132,7 +132,7 @@ Gate every release on the same suite. Detection recall must not drop, the custom
 - It says: *"A logistics firm wants an AI agent to handle automated shipment rerouting. They have SAP data, real-time weather APIs, and 500 warehouse managers on different regional systems."* The source bank says it tests three things: multi-system data unification, stakeholder surface area, and whether evaluation is first-class.
 - Section 10 covers the last. This section covers the first two.
 
-Map the anchor onto the prompt before drawing anything new *(own construction)*.
+Map the anchor onto the prompt before drawing anything new.
 
 | Rerouting-prompt noun | Where it lands in the anchor | What changes |
 |---|---|---|

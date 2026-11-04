@@ -47,7 +47,7 @@ More context is not always better. Irrelevant context increases cost and can red
 A cache placed after the expensive work saves nothing. The scoped completion cache sits immediately in front of the embedding service, the vector database and the model, so a valid hit skips all three and goes to output validation.
 
 - What gets cached is what repeats: framework boilerplate, standard algorithms, popular API usage.
-- Semantic matching allows reuse even when requests are phrased differently. Two more caches sit beside it *(own construction, from the cross-cutting doc)*.
+- Semantic matching allows reuse even when requests are phrased differently. Two more caches sit beside it.
 - A prompt-prefix cache holds the static top of every prompt, the system instructions and the repository conventions, so only the tail is re-tokenised.
 - An embedding cache holds vectors for chunks that have not changed since the last push.
 
@@ -91,7 +91,7 @@ Not every task needs the largest model, and not every context signal is worth it
 The model's output is a proposal, and the validation service decides whether it becomes a suggestion. Before returning, parse the generated code, check syntax, validate formatting, apply security filters, detect hallucinated APIs and remove unsafe patterns. Invalid or low-confidence output is regenerated or suppressed.
 
 - Hallucinated APIs are on the list because a completion that calls a method that does not exist looks correct until it compiles.
-- The validator checks calls against the symbol index built at indexing time, which is the second reason the index is by symbol rather than by token window *(own construction)*.
+- The validator checks calls against the symbol index built at indexing time, which is the second reason the index is by symbol rather than by token window.
 - The OpenAI-style practice prompt adds three checks.
 - Secret scanning on the output as well as the input, so a suggestion is far less likely to reproduce a credential the model saw in training or context (code models are known to memorise secrets).
 - Licence checks, so the assistant does not emit a verbatim block under an incompatible licence.
@@ -130,7 +130,7 @@ Scaling to millions of developers keeps the same budget under load. Stateless AP
 - Enforce repository-level access controls and respect organisational permissions during retrieval. Mask secrets and credentials before sending context.
 - Support deployment within a customer's private environment for regulated industries. Maintain audit logs.
 
-- Telemetry follows the same rule *(own construction)*.
+- Telemetry follows the same rule.
 - Record the event and never the code: task type, latency by stage, cache hit or miss, tokens in and out, model version, prompt template version, validation outcome, and accept, partial-accept or reject.
 - Store a hash of the suggestion so a repeated complaint can be matched, never the suggestion itself.
 - That is enough to answer whether retrieval missed, the template regressed, or the model changed, and it keeps the telemetry store out of scope for a source-code breach.
@@ -141,7 +141,7 @@ Scaling to millions of developers keeps the same budget under load. Stateless AP
 
 ## 11. Degrade on Everything Except Access
 
-A suggestion that is wrong is worse than no suggestion, and a suggestion the developer may not see is a breach. So the assistant degrades to silence on availability problems and fails closed on permission problems *(table is own construction; the rules are the source's)*.
+A suggestion that is wrong is worse than no suggestion, and a suggestion the developer may not see is a breach. So the assistant degrades to silence on availability problems and fails closed on permission problems.
 
 | Fails | Behaviour |
 |---|---|

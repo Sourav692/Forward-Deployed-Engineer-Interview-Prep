@@ -7,7 +7,7 @@ Stream every answer, and treat the closed connection as a cost signal. Streaming
 - Use Server-Sent Events for the chat stream. After the request, traffic is one-way from server to client.
 - SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own.
 - Keep WebSockets for paths that need both directions at once, such as voice.
-- Each stream carries a message ID, so a reconnect resumes from the persisted partial answer instead of regenerating it *(own construction)*.
+- Each stream carries a message ID, so a reconnect resumes from the persisted partial answer instead of regenerating it.
 
 - A user who leaves mid-answer is still costing GPU time.
 - The cost additions name this scenario: *"cancel the stream + any in-flight tool calls on abandon — otherwise you pay for tokens nobody read."* The gateway detects the closed connection and sends a cancel to the inference request.
@@ -26,7 +26,7 @@ Route on two axes: the user's tier and the turn's difficulty. The tier sets whic
 - Then name the trade-off. Prompt caches are scoped to a model, so a cheap-to-medium-to-premium cascade means separate cold prefixes.
 - On a chat product whose input is mostly repeated history, a cascade can forfeit more in cache than it saves in price.
 - The additions give the rule: measure one strong model at lower effort before building the cascade.
-- Route at the start of a conversation where possible, and keep a conversation on one model unless the user changes it *(own construction)*.
+- Route at the start of a conversation where possible, and keep a conversation on one model unless the user changes it.
 
 ## 8. Limit Per User, Queue Fairly Per Tier
 
@@ -35,12 +35,12 @@ A rate limit and a fair queue answer different questions, and a consumer service
 - Put a token bucket per user at the gateway, sized by tier: messages per window and tokens per day.
 - Count tokens, not only requests, because one long request can cost as much as, say, fifty short ones.
 - Behind admission, feed a weighted fair queue per tier into the shared inference pools.
-- A free-tier surge then waits longer, and paid users keep their latency *(own construction, from the Secure Multi-Tenant AI Platform case’s weighted-fair-queuing argument)*.
+- A free-tier surge then waits longer, and paid users keep their latency.
 
 - Separate the two kinds of 429 when load spikes. As the additions put it: *"Separate provider 429s from your own gateway limits."* A self-inflicted limit is a policy decision.
 - A provider or pool limit is a capacity event. Short term, retry with jitter onto a fallback model or region and shed non-interactive traffic.
 - Long term, buy capacity and queue non-urgent work rather than retrying into the same wall.
-- Abuse is a rate-limit problem too: per-account and per-IP limits, anomaly detection on bursts, and stricter quotas on new or unverified accounts *(own construction)*.
+- Abuse is a rate-limit problem too: per-account and per-IP limits, anomaly detection on bursts, and stricter quotas on new or unverified accounts.
 
 ## 9. Moderate Both Directions and Treat Every File as Untrusted
 
@@ -53,13 +53,13 @@ A rate limit and a fair queue answer different questions, and a consumer service
 - Output moderation runs on the stream in chunks and can halt it mid-answer with an explanation.
 - Moderation APIs score a fixed set of categories, and at default thresholds milder or app-specific abuse can still pass.
 - The guide names two independent layers, the model's trained refusals and the moderation classifier, and neither substitutes for an app-specific policy.
-- Track false positives as closely as false negatives, because over-blocking is a product failure users notice first *(own construction)*.
+- Track false positives as closely as false negatives, because over-blocking is a product failure users notice first.
 
 - Files and tools carry indirect prompt injection, which the question bank lists as a Tier 2 probe.
 - An uploaded PDF or a fetched web page is data, and data must not gain the authority of instructions.
 - Store uploads in object storage, scan them, parse asynchronously, then chunk and embed per user.
 - Retrieval over them is filtered by `user_id` at query time, the same two-layer idea as section 6 of the Enterprise Knowledge Assistant case.
-- Tool steps are capped per turn. The code sandbox runs with no network and no credentials, and is destroyed after the session *(own construction)*.
+- Tool steps are capped per turn. The code sandbox runs with no network and no credentials, and is destroyed after the session.
 
 ## 10. Keep the Prefix Stable and the Conversation on a Warm Replica
 
@@ -70,14 +70,14 @@ Chat is the best case for prefix caching, because each turn is the previous turn
 - The additions list the silent invalidators behind a sudden cache-hit drop: a `datetime.now()` in the system prompt, unsorted JSON keys, a tool list whose order varies, a prompt-version bump, a model swap.
 - Prove it with the cache-read token counter, not by guessing.
 
-- A cache is only warm on the machine that holds it. Route every turn of a conversation to the replica that served the previous one, so its KV cache still holds the history *(own construction)*.
+- A cache is only warm on the machine that holds it. Route every turn of a conversation to the replica that served the previous one, so its KV cache still holds the history.
 - Session affinity trades some load-balancing freedom for a large cut in prefill work.
 - When the replica is gone, the turn still succeeds, only slower, because the new replica must prefill the whole history again.
 - Summarisation interacts with caching too: rewriting the summary changes the prefix, so fold history in large steps rather than every turn.
 
 ## 11. Serve From Many Regions and Fail Over Cold, Not Closed
 
-Serve each user from the nearest healthy region, and let a regional failure cost latency, not availability. GeoDNS or anycast sends the client to a regional edge. Each region runs its own gateway, services and inference pools, so one region's failure does not queue behind another's *(own construction)*.
+Serve each user from the nearest healthy region, and let a regional failure cost latency, not availability. GeoDNS or anycast sends the client to a regional edge. Each region runs its own gateway, services and inference pools, so one region's failure does not queue behind another's.
 
 - Give each user a home region for the conversation store and replicate it asynchronously to a second region.
 - A failover then reads slightly stale history rather than none. Keep the control plane central for policy and regional for enforcement, the balance section 8 of the Secure Multi-Tenant AI Platform case argues for.
@@ -94,7 +94,7 @@ Serve each user from the nearest healthy region, and let a regional failure cost
 - the Observability and Production Diagnosis case’s triage section decomposes a slow request by stage: queue wait, prefill, decode, moderation, tools.
 - That trace is the first tool when latency moves. Record stage timings, token counts, cache reads, abandonment and moderation outcomes, and keep message text out of telemetry by default, per section 2 of the Observability and Production Diagnosis case.
 
-The question bank's second failure mode is hand-waving evaluation. Tie every design choice to a number *(own construction)*.
+The question bank's second failure mode is hand-waving evaluation. Tie every design choice to a number.
 
 | Worry | Metric that answers it |
 |---|---|
@@ -110,7 +110,7 @@ Ship model and prompt changes through a release gate with a canary slice, as the
 
 ## 13. Answer the Anthropic Wording the Same Way
 
-"Design the Claude chat service" is the same prompt as "Design ChatGPT", and the design above answers it unchanged. The sheet records no content delta. The emphasis differs, and saying so shows the candidate read the room *(own construction)*.
+"Design the Claude chat service" is the same prompt as "Design ChatGPT", and the design above answers it unchanged. The sheet records no content delta. The emphasis differs, and saying so shows the candidate read the room.
 
 - The question bank frames the Anthropic questions directly: *"AI/ML framing, but they fundamentally test distributed-systems fundamentals: batching, queuing, load balancing."* The neighbouring Anthropic prompts are inference batching, GPU routing and a 100,000-requests-per-second token service.
 - Those are group the LLM Inference Serving case in the sheet.

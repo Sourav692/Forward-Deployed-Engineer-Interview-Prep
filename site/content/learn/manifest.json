@@ -4698,7 +4698,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 59,
+      "estMinutes": 58,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -4720,7 +4720,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
-      "estMinutes": 64,
+      "estMinutes": 63,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -4742,7 +4742,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 44,
+      "estMinutes": 43,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -4753,7 +4753,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
-      "estMinutes": 61,
+      "estMinutes": 60,
       "href": "/design/high-volume-batch-pipeline"
     },
     {
@@ -4764,7 +4764,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 45,
+      "estMinutes": 44,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -5134,7 +5134,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/",
-      "estMinutes": 47,
+      "estMinutes": 46,
       "href": "/design/deep-research-agent"
     },
     {
@@ -5145,7 +5145,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 48,
+      "estMinutes": 47,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -5167,7 +5167,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 52,
+      "estMinutes": 50,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -5200,7 +5200,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
-      "estMinutes": 37,
+      "estMinutes": 36,
       "href": "/design/production-llm-gateway"
     },
     {
@@ -5288,7 +5288,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
-      "estMinutes": 49,
+      "estMinutes": 48,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -5299,7 +5299,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 33,
+      "estMinutes": 32,
       "href": "/design/personal-assistant-with-memory"
     },
     {

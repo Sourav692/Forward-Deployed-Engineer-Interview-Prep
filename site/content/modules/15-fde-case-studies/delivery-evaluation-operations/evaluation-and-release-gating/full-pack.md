@@ -15,7 +15,6 @@
 | Costs are fine but the eval bill tripled | Section 14 |
 | Self-drill, Drill Add-ons tab | Section 14 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments. They are not in the sources verbatim.
 
 ---
 
@@ -60,7 +59,7 @@ When the interviewer stays vague, protect the riskiest assumption. Assume the ga
 
 A requirement that cannot fail a test is a preference. "Fast gate" is a preference. "p95 run duration under 20 minutes in the release window" is a constraint, and only the constraint shapes the architecture.
 
-The functional requirements make this a gate rather than a dashboard. Split them with MoSCoW so the first release is the smallest trustworthy path *(the split is own construction; the items are the sources')*.
+The functional requirements make this a gate rather than a dashboard. Split them with MoSCoW so the first release is the smallest trustworthy path.
 
 - The must-haves are six. A release owner submits a candidate change, and the platform compares it to a pinned baseline and returns pass, block or hold with evidence.
 - Datasets, prompts, models, tools and graders are versioned, because versioning is the only way to reproduce a decision later.

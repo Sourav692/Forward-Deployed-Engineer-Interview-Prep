@@ -13,7 +13,6 @@
 | Cascade Robotics, Module 05 running case and code project | Section 13 for what the module adds; its figures run through sections 2, 5, 6, 10 and 11 |
 | Self-drill, Drill Add-ons tab | Section 15 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 
 ---
 
@@ -76,7 +75,7 @@ The demo question that drives the round: *"Why didn't Cascade Robotics' $500 ref
 
 ## 3. State Requirements as Testable Constraints
 
-A requirement that cannot fail a test is a preference. The source project proves every safety claim with a deterministic test, including the negative cases, so state requirements the same way. The functional list splits into must-haves and later work *(the split is own construction; the items are the sources')*.
+A requirement that cannot fail a test is a preference. The source project proves every safety claim with a deterministic test, including the negative cases, so state requirements the same way. The functional list splits into must-haves and later work.
 
 The must-haves are eight:
 
@@ -104,7 +103,7 @@ The should-haves come after the safety core is trusted. They are a template libr
 | Auditability | Every guardrail decision, allowed or denied, is on the run's event log with a named rule and reason |
 | Testability | 21 tests, deterministic, no LLM, well under a second |
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component |
 |---|---|
@@ -175,7 +174,7 @@ flowchart TD
     class N3,N4,N6,N7,N9,N11 cbPolicy
 ```
 
-The full platform adds the authoring plane and the stores *(own construction from the sources' components)*. The authoring plane changes what may run; the runtime plane decides whether a given step runs now.
+The full platform adds the authoring plane and the stores. The authoring plane changes what may run; the runtime plane decides whether a given step runs now.
 
 ```mermaid
 flowchart TD
@@ -283,7 +282,7 @@ flowchart TB
     class F,V,CK,G,P,POL cbPolicy
 ```
 
-| Component | Job | What goes wrong without it *(own construction)* |
+| Component | Job | What goes wrong without it |
 |---|---|---|
 | Channel adapters (`from_webhook`, `from_slack`, `from_email`) | Translate each payload once into `Event` | Every downstream component learns every channel, forever |
 | Canonical `Event` | `channel`, `event_type`, `tenant_id`, `target_entity_id`, `payload`, `raw_ref` | No tenant scope, no lock key, no audit pointer |

@@ -4,7 +4,7 @@
 
 - Spend the hour on the ladder and the gate. Reported interview questions say evaluation sets strong candidates apart in the OpenAI decomposition round; I'm assuming the same holds here.
 - The decomposition framework has six steps: clarify the mission, stakeholders and metrics, map inputs, decompose and sequence by risk, walking-skeleton MVP, then adapt live.
-- The plan below follows it *(own construction)*.
+- The plan below follows it.
 
 | Minutes | Move | What to say |
 |---|---|---|
@@ -38,7 +38,7 @@ The relevant follow-up probes from the question bank, answered for this design:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the learning loop costs more than serving". No worked drill exists for this prompt, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the learning loop costs more than serving".
 
 | | |
 |---|---|

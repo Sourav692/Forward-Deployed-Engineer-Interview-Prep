@@ -14,11 +14,11 @@ Spend the hour on the four questions, the gate and the evaluation plan. The inge
 | 45–55 | Evaluation plan and staged rollout (section 10) |
 | 55–60 | Close: trade-offs and the one non-negotiable (section 12) |
 
-The two-minute spoken answer *(own construction from the source's summary)*:
+The two-minute spoken answer:
 
 > *This is a modest-scale, high-stakes system: 150 ops agents, not millions of users, so the pressure comes from event throughput and correctness. Carriers report two ways, about 60% by real-time webhook at around 200 events a second and 40% by batch drops every two to six hours, so I ingest both and converge them after ingestion into one normalised stream, diffing batch drops against last known state and surfacing their lateness instead of hiding it. Detection classifies customs holds, missed scans and weather delays, and only exceptions reach the Resolution Agent, which drafts an action with a confidence score and reasons but never executes anything. That decision belongs to the Policy Gate, a separate component: customs and regulatory holds go to a human first and always, and only then does the rule apply that under $500 with confidence that meets the threshold auto-resolves. Auto-resolve actions carry idempotency keys and sit behind circuit breakers that fall back to a human. The customer requires EU data to stay in the EU, which is stricter than GDPR, so I run a shared control plane with regional data planes. Every verdict and action goes to an immutable audit log, and every draft shows why. I would prove it offline on replayed history, then in shadow mode, then with staged auto-resolve, with a zero on customs auto-resolutions as a release gate.*
 
-The lines that carry the round *(own construction from the source's arguments)*:
+The lines that carry the round:
 
 1. *"The questions are the design. Each answer moved a box."*
 2. *"Scale comes from event throughput, not users."*
@@ -51,7 +51,7 @@ The follow-ups arrive in a predictable order. Several are the source bank's Tier
 
 ## 14. Answer the Cost Pivot in Ten Minutes
 
-No ready-made drill covers this group, so the card below is own construction. It draws on the throughput arithmetic of section 3 and on the agent-steps and retries cost drivers. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
+The card below draws on the throughput arithmetic of section 3 and on the agent-steps and retries cost drivers. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
 
 | | |
 |---|---|

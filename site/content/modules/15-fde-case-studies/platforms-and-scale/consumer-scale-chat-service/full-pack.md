@@ -8,10 +8,10 @@
 |---|---|
 | OpenAI reported prompt: "Design ChatGPT." (anchor) | Sections 1 to 12, 14 and 15: the full design |
 | Anthropic reported prompt: "Design the Claude chat service." | Section 13: the same design, with the emphasis an Anthropic panel is reported to probe |
-| Self-drill *(own construction)* | Section 15 |
+| Self-drill | Section 15 |
 | The [Enterprise Knowledge Assistant](/design/enterprise-knowledge-assistant), [Secure Multi-Tenant AI Platform](/design/secure-multi-tenant-ai-platform) and [Observability and Production Diagnosis](/design/observability-and-production-diagnosis) designs, plus the cost, latency, memory and production material | Sections 5 to 12, cited per section |
 
-**No worked design exists for this prompt.** Both sources are one-line prompts that candidates report. Everything below the prompt is *own construction*, assembled from the designs above and this site's material on memory, caching, tenancy, observability and cost. Sizing numbers are stated assumptions, not measurements. Treat each figure as a placeholder to be replaced by measured throughput.
+**No worked design exists for this prompt.** Both sources are one-line prompts that candidates report. Sizing numbers are stated assumptions, not measurements. Treat each figure as a placeholder to be replaced by measured throughput.
 
 ---
 
@@ -21,7 +21,7 @@ Ask what "ChatGPT" means in this room before drawing anything. The question bank
 
 The prompt, from the reported-question bank: **"Design ChatGPT."** Nothing else is given. The framework on the same page says to clarify the mission first: *"Are we optimising for response time, cost, accuracy, or equity of coverage? Who's the primary user?"* State assumptions explicitly if the interviewer does not confirm them.
 
-| Question | Assumed answer *(own construction)* | What it decides |
+| Question | Assumed answer | What it decides |
 |---|---|---|
 | Consumer app, API, or both? | Consumer web and mobile chat | Sessions and UX matter; API quotas are out of scope |
 | How many users? | 100M daily active users | Sizing, sharding and multi-region from day one |
@@ -36,13 +36,13 @@ The weak answer draws a load balancer in front of a model and stops. It forgets 
 
 ## 2. State Requirements as Testable Constraints
 
-A requirement that cannot fail a test is a preference. "Fast" is a preference. "Time to first token under one second at p95" is a constraint, and only the second shapes the architecture. The split below is *own construction*.
+A requirement that cannot fail a test is a preference. "Fast" is a preference. "Time to first token under one second at p95" is a constraint, and only the second shapes the architecture.
 
 There are six must-haves. Send a message and receive a streamed answer. Keep and list conversation history per user, with rename and delete. Carry context across turns within a conversation. Enforce per-user and per-tier usage limits. Moderate input and output. Stop generation on request or when the client leaves.
 
 The should-haves round out a competitive product: file uploads, web search, a code sandbox, cross-conversation memory the user can inspect and erase, regenerate and edit-and-resend, and sharing a conversation by link. Voice and image generation come later.
 
-| Constraint | Stated so it can be tested *(own construction)* |
+| Constraint | Stated so it can be tested |
 |---|---|
 | Latency | Time to first token under 1 s p95 for the default model; steady streaming after that; no UI freeze before the first token |
 | Availability | 99.9% for send-and-stream; a regional outage degrades to another region, not to an error page |
@@ -53,7 +53,7 @@ The should-haves round out a competitive product: file uploads, web search, a co
 | Cost | Cost per daily active user tracked by tier; cache-read share of input tokens tracked as a first-class metric |
 | Privacy | Content excluded from logs by default; deletion propagates to history, memory, files and caches |
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -66,7 +66,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 
 ## 3. Size It From Daily Users Down to GPUs
 
-Say the arithmetic aloud, because it shows that multi-region and caching are required. Every number below is an assumption for the whiteboard *(own construction)*. The interviewer scores the method.
+Say the arithmetic aloud, because it shows that multi-region and caching are required. Every number below is an assumption for the whiteboard. The interviewer scores the method.
 
 | Step | Assumption | Result |
 |---|---|---|
@@ -89,7 +89,7 @@ Split the two latency phases before going further. Prefill processes the whole p
 
 The organising rule is admit, assemble, stream, persist. Admission control decides whether a request may use a GPU at all. The context builder decides what the turn costs. The stream decides what the user feels. Persistence decides what survives.
 
-The whole system, drawn with its planes *(own construction)*:
+The whole system, drawn with its planes:
 
 ```mermaid
 flowchart TD
@@ -219,7 +219,7 @@ flowchart LR
     class IM,DB,MEM,CB,SQ,INF,OM cbAction
 ```
 
-Read the components in request order. The failure column is *own construction*.
+Read the components in request order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -239,7 +239,7 @@ Read the components in request order. The failure column is *own construction*.
 | 14 | File pipeline | Scan, parse, embed per user | Degrades: file unavailable, never cross-user |
 | 15 | Observability | Stage timings, tokens, cache reads, abandonment | Degrades: request still served, gap logged |
 
-- Point at three boundaries while the diagram is up *(own construction)*. The admission boundary sits at the gateway, so nothing reaches a GPU without passing auth, quota and input moderation.
+- Point at three boundaries while the diagram is up. The admission boundary sits at the gateway, so nothing reaches a GPU without passing auth, quota and input moderation.
 - The isolation boundary sits at every store, because each one is namespaced by a `user_id` that comes from auth.
 - The cost boundary sits at the context builder, because it decides how many tokens each turn re-sends.
 

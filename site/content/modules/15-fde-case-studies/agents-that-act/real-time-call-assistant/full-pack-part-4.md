@@ -20,7 +20,7 @@ Two latency drivers have no cost analogue, and the cram sheet names this case as
 
 - One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon.
 - In a call, the rep "abandons" by answering.
-- So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
+- So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read.
 
 - Every strong cost answer comes from four verbs in order. Measure: trace latency by stage first.
 - Route: send the live lane to a small model and the post-call lane to a larger one.
