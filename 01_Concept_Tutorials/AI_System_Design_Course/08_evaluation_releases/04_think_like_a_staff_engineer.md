@@ -7,9 +7,9 @@ Separate infrastructure failure, retrieval miss/staleness, unsupported answer, a
 
 For a suspected leak, stop affected exposure and preserve restricted evidence under incident access controls; do not paste raw prompts into shared diagnostics. For a quality regression with no known safety issue, compare source/citation and rubric failures before changing thresholds. For latency/cost, inspect queue/model/token distributions and shadow overhead rather than only average request duration.
 
-Rollback requires a tested previous approved bundle and a compatible current runtime/source contract. Never roll back tenant membership, audit policy or source tombstones to match an old evaluation snapshot. If an old model is no longer approved for a tenant/provider destination, the safe response may be refusal rather than automatic fallback. Keep Stage 7 unknown effects and Stage 5 reservations reconciled independently of release flags.
+Rollback requires a tested previous approved bundle and a compatible current runtime/source contract. Never roll back tenant membership, audit policy or source tombstones to match an old evaluation snapshot. If an old model is no longer approved for a tenant/provider destination, the safe response may be refusal rather than automatic fallback. Keep T17.8 unknown effects and T17.6 reservations reconciled independently of release flags.
 
-Risk management needs owners, evidence and follow-through; [NIST AI RMF](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) is a primary governance reference, not a certification this fixture attains. The local approval API assumes trusted control-plane callers and authentic evaluation results; production needs control-plane authentication, artifact provenance and calibrated human approval.
+Risk management needs owners, evidence and follow-through; [NIST AI RMF](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) is a primary governance reference, not a certification this fixture attains. The local approval API assumes trusted control-plane callers and authentic evaluation results; production needs control-plane authentication, artefact provenance and calibrated human approval.
 
 ## Interview 1: What Exactly Is Evaluated?
 
@@ -42,3 +42,10 @@ Risk management needs owners, evidence and follow-through; [NIST AI RMF](https:/
 **Spoken answer:** “No. Withdrawing an active candidate should retain the current approved stable release. Reverting a completed promotion is a distinct pointer change to its previous approved version. I use a generation check so stale commands cannot overwrite newer decisions. Neither operation rewrites saved answers, revives permissions or retries uncertain provider effects.”
 
 **Trade-off:** Explicit release states require more careful control-plane logic. **Changed constraint:** If the prior stable model is no longer approved for a tenant, specify a safe withdrawal/response path.
+
+## Key Takeaways
+
+- Separate infrastructure failure, retrieval miss or staleness, unsupported answer, access violation and cost or latency regression. A changed corpus, evaluator, timeout or refusal population can invalidate an apparent model comparison.
+- For a suspected leak, stop affected exposure and keep restricted evidence under incident access controls. Never roll back tenant membership, audit policy or source tombstones to match an old evaluation snapshot.
+- Choosing a model at random for every retry mixes versions within one user's experience and confuses attribution. Canaries use a stable experiment unit and log bundle and cohort with each result.
+- Withdrawing an active canary keeps the current stable release, while reverting a completed promotion moves to its previous approved version. If that old model is no longer approved for a tenant, refusal may be safer than automatic fallback.

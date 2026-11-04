@@ -85,3 +85,9 @@ A restricted supplier pricing note is the best search hit. May the platform send
 No. Trusted retrieval and current policy must stop the restricted content before model disclosure. Search relevance does not establish permission, and a model instruction cannot repair an unauthorised data transfer.
 
 </details>
+
+## Key Takeaways
+
+- The target architecture joins four paths, namely customer requests, document ingestion, quality and model changes, and platform and regional control. Each box is a logical responsibility first, so several roles can share one application and durable jobs can start on a database-backed queue.
+- Search relevance does not establish permission. Trusted retrieval and current policy must stop restricted content before it reaches the model, because a model instruction cannot repair an unauthorised data transfer.
+- Tenants A and B stay in EU cells with an EU recovery target, and Tenant C has a US home. The global placement directory holds no customer content, and an EU secondary becomes a writer only after exclusive ownership and current eligibility are verified.

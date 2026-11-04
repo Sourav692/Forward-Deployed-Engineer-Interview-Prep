@@ -7,7 +7,7 @@
 | --- | --- | --- |
 | Executable local slices | Python/SQLite exercises for persistence, jobs, source versions, policy/budgets, release/gateway controls and migration metadata; deterministic browser worksheets | A deployed end-to-end enterprise platform or production identity/network service |
 | Target architecture and decisions | Regional service boundaries, approved serving alternatives, governed training lifecycle, recovery and platform operating model | Actual GPUs, model training, provider processing geography, distributed writer fencing, cloud recovery or measured service objectives |
-| Deferred specialisations | Distributed training is D0 context; GPU internals, pretraining and machine-unlearning research are optional specialist work | Missing first-priority production integration evidence cannot be replaced by studying more advanced theory |
+| Deferred specialisations | Distributed training is awareness depth context; GPU internals, pretraining and machine-unlearning research are optional specialist work | Missing first-priority production integration evidence cannot be replaced by studying more advanced theory |
 
 Self-hosted inference and fine-tuning are conditional paths, not mandatory product features or claims that a model has been trained. Start with an approved hosted adapter and simpler prompt/retrieval interventions. The course introduces added infrastructure when a concrete requirement changes the earlier design.
 
@@ -24,3 +24,10 @@ The target keeps configuration and execution separate. Global platform control v
 | A previous route loses data approval | A convenient rollback would restore forbidden processing | Re-evaluate current eligibility; use a permitted alternative or remain unavailable |
 
 When explaining the whole design, start with Alice’s outcome and then trace the boundaries. “I verify her tenant and region, obtain only current permitted policy, call an approved bounded model route, and commit the answer before saved success. Ingestion keeps evidence current; evaluation governs changes; platform and regional controls preserve those guarantees as usage grows.”
+
+## Key Takeaways
+
+- Self-hosted inference and fine-tuning are conditional paths. Start with an approved hosted adapter and simpler prompt and retrieval changes, and add infrastructure only when a concrete requirement changes the earlier design.
+- Configuration and execution stay separate. A control-plane outage can freeze changes while an eligible regional runtime keeps serving, but an unavailable current policy or mandatory audit service still blocks protected disclosure.
+- Rolling back to a route that has lost data approval would restore forbidden processing. Re-evaluate current eligibility, then use a permitted alternative or remain unavailable.
+- The executable slices are local Python and SQLite exercises. They do not establish a deployed platform, real GPUs, model training, provider processing geography or measured service objectives.

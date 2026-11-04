@@ -5,7 +5,7 @@ Status: accepted educational architecture, not production approval. Stages: 11 a
 
 ## Situation
 
-A review of Stages 11 and 12 found three gaps in the accepted decisions.
+A review of T17.12 and T17.13 found three gaps in the accepted decisions.
 
 - ADR-011 places Tenant A/B runtime and authority in the EU-primary cell, but does not say where policy, membership and writer ownership live once EU-primary is lost, or how the old writer is stopped. Network reachability was the only implied fence.
 - ADR-012 adds a shared control plane and a route authority above the cells, but does not say where route records live, how a committed generation reaches a cell, or what a cell does when the control plane is down.
@@ -32,7 +32,7 @@ Reachability or a health check never counts as fencing. If the quorum is lost, t
 
 **Control-plane outage and rollback reconciliation.** Cells keep serving last-known-good and new cutovers freeze. Emergency rollback stays possible: it writes a new local generation, N+2, carrying generation N's route, with actor, reason and audit, and still requires current eligibility. Because a cell never applies a generation lower than its current one, the failed N+1 cannot be re-applied on reconnect. On reconnect the cell reports N+2, the control plane marks N+1 as rolled back for that cell, and its next publication must carry a generation above every reported cell generation.
 
-**Economics with dual-run overlap.** While cohorts migrate, the duplicated app work ($12,000 a month) and the platform ($8,000 a month) both run. At the Stage 12 illustrative inputs and a six-month overlap, up-front cost is $60,000 + 6 × $8,000 = $108,000, break-even is month 33, and the three-year saving is $12,000. Break-even month = 15 + 3 × overlap months, and each overlap month removes $12,000 of three-year saving, so a seven-month overlap erases it. This replaces ADR-012's 15 months and $84,000, which hold only if old paths stop on day one.
+**Economics with dual-run overlap.** While cohorts migrate, the duplicated app work ($12,000 a month) and the platform ($8,000 a month) both run. At the T17.13 illustrative inputs and a six-month overlap, up-front cost is $60,000 + 6 × $8,000 = $108,000, break-even is month 33, and the three-year saving is $12,000. Break-even month = 15 + 3 × overlap months, and each overlap month removes $12,000 of three-year saving, so a seven-month overlap erases it. This replaces ADR-012's 15 months and $84,000, which hold only if old paths stop on day one.
 
 ## Consequences
 
@@ -44,8 +44,14 @@ Reachability or a health check never counts as fencing. If the quorum is lost, t
 
 ## Guarantees and Non-Guarantees
 
-The Stage 11 lab checks attempt-scoped usage evidence and a promotion gate that blocks on supplied facts: quorum, lease, epoch rejection, residency, capacity and recovery time. The Stage 12 lab checks append-only shadow evidence bound to its baseline generation, generation-checked cutover and rollback, and rollback history. Neither lab runs a consensus protocol, installs or probes real epochs, measures clock drift, deploys a witness, signs artifacts, resolves DNS or integrates with production identity. Lease timings and the staleness bound are illustrative.
+The T17.12 lab checks attempt-scoped usage evidence and a promotion gate that blocks on supplied facts: quorum, lease, epoch rejection, residency, capacity and recovery time. The T17.13 lab checks append-only shadow evidence bound to its baseline generation, generation-checked cutover and rollback, and rollback history. Neither lab runs a consensus protocol, installs or probes real epochs, measures clock drift, deploys a witness, signs artefacts, resolves DNS or integrates with production identity. Lease timings and the staleness bound are illustrative.
 
 ## Revisit Trigger
 
 Revisit if a regulator forbids the witness location, if quorum latency breaks a stated budget, if measured overlap exceeds seven months, or if a cell needs route changes during a control-plane outage beyond rollback.
+
+## Key Takeaways
+
+- Tenant A and B policy, membership and writer-ownership records live in an EU-only authority store, consensus-replicated across EU-primary, EU-secondary and a witness that holds votes, not content. The global control plane publishes signed route generations and is never authority.
+- Reachability or a health check never counts as fencing. Writer ownership is a quorum lease whose epoch rises on every grant, and the new writer confirms that each store it will use refuses a write carrying the old epoch.
+- If the quorum is lost the cell fails closed, even when recovery misses its time objective. Dual-run overlap is a tracked cost that moves break-even to month 33 at six months, and an overlap past seven months reopens the decision.

@@ -44,3 +44,10 @@ The runbook ends with evidence: restored authority/current version, drained/reco
 **Spoken answer:** “I inspect waiting time: admission/tenant queues, DB pool acquisition, identity/audit calls and connection setup. I correlate request traces with offered/admitted/completed counts and dependency histograms. Adding app replicas can worsen pool pressure and cache misses if the bottleneck is shared. I test one hypothesis against the critical path and compare the affected population before changing capacity.”
 
 **Trade-off:** More diagnostics cost telemetry/storage and operator time. **Changed constraint:** If only 1% of traces are sampled, explain what aggregate signals prevent a false diagnosis of the tail.
+
+## Key Takeaways
+
+- Classify the symptom first. For a missing saved answer, inspect the primary commit under the same scoped key and compare the acknowledged minimum with the projection watermark, and never regenerate because a lagging replica returned empty.
+- Before promoting a primary, fence old writers and assess possible lost commits. A restart is not a runbook, which ends with evidence such as restored authority, a reconciled outbox, no unexpected duplicate effects and a documented customer-impact window.
+- Read replicas suit saved history only past the acknowledged minimum version. Membership, permissions, worker ownership and quota reservations keep their authoritative contract.
+- Retrying a timed-out call through another provider is a new external attempt that may duplicate work or charges. When latency rises while provider time is unchanged, look first at waits such as tenant queues, pool acquisition and connection setup.

@@ -2,7 +2,7 @@
 # ADR-001: Synchronous MVP with durable history
 
 **Status:** accepted for the educational baseline  
-**Stage:** 1  
+**Module:** T17.2  
 **Date:** 2026-11-02  
 **Superseded by:** none
 
@@ -42,3 +42,9 @@ The representative healthy budget is 2,620 ms; the provider-timeout example is 4
 ## Revisit Triggers
 
 Revisit persistence for multi-host deployment, restore requirements, measured write contention, or stronger isolation. Revisit execution when processing blocks interactive requests or must survive worker loss. Revisit streaming when time-to-first-text measurably improves the user experience and provisional versus saved completion is specified. Preserve this ADR; supersede it with a new decision when assumptions change.
+
+## Key Takeaways
+
+- Start with one synchronous AI App Service on SQLite, with gateway, identity, model adapter and telemetry as logical roles inside the process. A `201` returns only after the `completed` row commits, with no streaming and no automatic model retry.
+- A direct browser-to-model request is rejected because it exposes credentials and policy and splits the saved-answer contract. A job queue with workers is deferred until a long-running task needs durable execution.
+- No transaction spans the database and the provider, so a crash can leave a `processing` row after the provider has answered. Multi-host deployment, measured write contention or work that must survive worker loss reopens the decision.

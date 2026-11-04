@@ -19,9 +19,9 @@ The 60-second card: verify identity; bind current scope; separate service and us
 
 ## Decisions and Next Pressure
 
-[ADR-006](/learn/staff-ai-system-design/architecture-decisions/adr-006-trusted-enterprise-boundaries), the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/validation.md) and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve the actual teaching evidence.
+[ADR-006](/learn/staff-ai-system-design/architecture-decisions/adr-006-trusted-enterprise-boundaries) and the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) preserve the actual teaching evidence.
 
-A future Stage 7 addresses authority lag, dependency outage, failover and duplicate effects without weakening these disclosure/audit rules. It must distinguish stale body reuse from stale authorisation. No security deployment or certification is claimed here.
+A future T17.8 addresses authority lag, dependency outage, failover and duplicate effects without weakening these disclosure/audit rules. It must distinguish stale body reuse from stale authorisation. No security deployment or certification is claimed here.
 
 ## Primary References
 
@@ -30,3 +30,10 @@ A future Stage 7 addresses authority lag, dependency outage, failover and duplic
 - [OWASP prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted content and model-control risks that retrieval alone does not remove.
 
 Sources checked 2 November 2026. Policy ages, traffic and overhead are authored assumptions; executed checks and missing integrations are in validation.
+
+## Key Takeaways
+
+- Trusted tenant scope is verified identity plus current membership, never caller headers or model output. An audience limits which service may consume a credential, and that service still needs action and resource scope.
+- Policy age and token expiry are tracked separately because a still-valid identity assertion can outlive current access.
+- Audit may hold protected identifiers, action, decision and provenance metadata under controlled access. It never holds raw bearer tokens or source bodies.
+- Production OIDC, private routes, mTLS, secret storage, row-level security and a global immediate revocation guarantee are not demonstrated by the local fixtures.

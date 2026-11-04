@@ -56,3 +56,10 @@ Spoken answer: “I would size each budget separately. The peak needs 3.6 millio
 Trade-off: shedding keeps the reserve cost down but turns an outage into partial rejection for both tenants.
 
 Follow-up: If Tenant B's contract guarantees full service during recovery, what changes? Reserve B's full share first, 24 RPS (40% of the 60 RPS peak), and give A the remaining 9 RPS of the 33 RPS, or buy more quota. The contract changes the split, not the quota.
+
+## Key Takeaways
+
+- Different tenants can be active in different regions, but each tenant has one writer at a time. Global active-active for one tenant adds conflict resolution, shared quota and operation deduplication, and copies A/B content outside the EU.
+- The RTO runs to validated customer success, not to the DNS change. A ten-minute model load misses the 600-second objective before traffic moves, so report the miss and keep the adapter warm or agree a longer RTO.
+- Before failback, reconcile or discard EU-primary's quarantined writes, rebuild its stores, indexes and caches from the new authority, and move the lease once through the quorum. Never reverse DNS while both regions accept writes.
+- A late provider invoice becomes an adjustment against the original attempts and never silently replaces the earlier figure. At zero successes unit cost is undefined, not zero.

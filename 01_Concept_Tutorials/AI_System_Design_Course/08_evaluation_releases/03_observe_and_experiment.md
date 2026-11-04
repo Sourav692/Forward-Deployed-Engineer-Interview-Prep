@@ -84,12 +84,19 @@ python3 10_AI_System_Design/stages/08-evaluation-releases/labs/test_releases.py 
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-[evaluation.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/evaluation.py) loads the JSON cases, validates coverage/metrics, scores the rubric and binds a report to versions. [releases.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/releases.py) reuses Stage 7's transaction helper for approval and a generation-checked pointer. Fourteen tests cover good/sliced scoring, quality/safety/latency/cost, missing/duplicate/invalid data, dataset/report binding, stale CAS, eligible sticky cohorts, rollback with an actual Stage 7 saved result, shadow policy, telemetry redaction, refusal labels hiding answer text, weakened gate settings and withdrawing a later canary without reverting the current stable bundle.
+[evaluation.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/evaluation.py) loads the JSON cases, validates coverage/metrics, scores the rubric and binds a report to versions. [releases.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/releases.py) reuses T17.8's transaction helper for approval and a generation-checked pointer. Fourteen tests cover good/sliced scoring, quality/safety/latency/cost, missing/duplicate/invalid data, dataset/report binding, stale CAS, eligible sticky cohorts, rollback with an actual T17.8 saved result, shadow policy, telemetry redaction, refusal labels hiding answer text, weakened gate settings and withdrawing a later canary without reverting the current stable bundle.
 
-For D3 practice, add a new labelled refusal or retrieval case and observe the dataset digest change. An old report must not approve the changed bundle. Then stage two conflicting promotion commands and explain which succeeds. Inspect the stored result before/after rollback: it must keep its original ID and answer rather than being regenerated to match the new route.
+For build depth practice, add a new labelled refusal or retrieval case and observe the dataset digest change. An old report must not approve the changed bundle. Then stage two conflicting promotion commands and explain which succeeds. Inspect the stored result before/after rollback: it must keep its original ID and answer rather than being regenerated to match the new route.
 
 ## Checkpoint 2: Routing Rollback Is Not Data Rollback
 
 A canary answer was already committed under a stable operation key. The release is withdrawn. Should the system erase that result and rerun the operation with the old model?
 
 <details><summary>Answer before revealing</summary><p>No. Routing rollback controls future requests; it does not rewrite prior committed outcomes or authorise duplicate external work. Preserve result provenance and operation identity. Corrective action, customer communication or a deliberate new operation needs its own policy and evidence.</p></details>
+
+## Key Takeaways
+
+- One wrong normal answer gives `7/8 × 100 = 87.5%` and fails the 95% gate. One foreign-tenant answer gives the same score but stays blocked at an 80% threshold because its safety count is one.
+- With one 3,000 ms label among seven 1,000 ms labels, nearest-rank p95 is rank `ceil(0.95×8)=8` and reports 3,000 ms. On so small a set p95 is the maximum, not a latency SLO.
+- Splitting 100 live requests a second between canary and stable still makes 100 calls. A 10% independent shadow adds about ten more, giving 110 before retries against the hypothetical 120-RPS provider budget.
+- Routing rollback controls future requests only. A committed canary answer keeps its original operation identity and is not erased or rerun with the old model.

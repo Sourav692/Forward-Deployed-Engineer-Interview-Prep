@@ -32,8 +32,17 @@
  *    lines go, and so does `verify_package.py`, which checks the stage ZIP;
  *  - a `;` in a Mermaid sequence-diagram message becomes the entity `#59;`, which renders as ";":
  *    the site's Mermaid reads a bare `;` there as the end of the statement;
- *  - prose takes British spelling (src/lib/spelling.ts; never code, link targets or diagrams), and
- *    stage and part titles take sentence case;
+ *  - prose takes British spelling (src/lib/spelling.ts, plus "artefact"; never code, link targets or
+ *    diagrams), and stage and part titles take sentence case;
+ *  - the course's own numbering becomes the site's (4 Nov 2026 audit, IA-08): "Stage N" becomes the
+ *    module code T17.(N+1), the curriculum topic codes ("1.1", "13.1") leave table cells, and the depth
+ *    tags D0 to D3 become words (awareness, explain, design, build depth);
+ *  - course bookkeeping goes (PQ-07): links to the stage plan, state and validation records and to
+ *    the progress maps leave their sentence, a sentence left with no link goes, and so do sentences
+ *    about first-teaching coverage and the course's study-time estimates (PQ-04);
+ *  - each lesson ends with Key Takeaways (PQ-06) from site/sd-course-pages/key-takeaways.md, a
+ *    site-side file like site/case-pages/: the course has none, and the import fails on a lesson
+ *    without an entry or an entry without a lesson;
  *  - a part over the site's page limit (WORD_LIMIT, as check:content counts words) splits before its
  *    first "Interview" heading into a further "staff interview practice" lesson, `0Kb_…md`.
  *  - each ADR in `architecture/decisions/` becomes a lesson, `architecture_decisions/adr_NNN_….md`,
@@ -79,6 +88,14 @@ const LAB_ANCHORS = ['target-map', 'request-walkthrough', 'lab']
 // Sentences about the stage ZIP and its clean-extraction checks; the site offers no ZIP.
 const PACKAGE_SENTENCE = /\b(complete|full) (package|archive|ZIP)\b|\bclean[ -]extraction\b/i
 const posixPath = (p) => p.split(sep).join('/')
+// Course bookkeeping the site does not publish: the stage plan, state and validation records and the
+// curriculum progress maps. TOOLING_LEFT must match nothing in the generated lessons.
+const TOOLING_TARGET = /(?:^|\/)(?:stage-state\.json|stage-plan\.md|validation\.md)$|(?:^|\/)progress\//
+const TOOLING_LEFT = /stage-state\.json|stage-plan\.md|validation\.md|coverage-status|curriculum-map|curriculum map/i
+const BOOKKEEPING_SENTENCE = /first-teach|first-taught|completed coverage|study hours|\bAllow about \d/i
+const TAKEAWAYS_REL = 'site/sd-course-pages/key-takeaways.md'
+const DEPTH = ['awareness', 'explain', 'design', 'build']
+const SENTENCE_SPLIT = /(?<=[.!?])\s+(?=[A-Z[`])/
 
 // ------------------------------------------------------------------ text helpers
 
@@ -198,7 +215,7 @@ export const lessonTitle = (stage, part) => `${stage.title}: ${part.title.charAt
 const labPage = (anchor) => (anchor === 'target-map' ? 'map' : 'lab')
 const labHref = (stage, anchor) => `/labs/system-design/${stage.out}/${labPage(anchor)}.html`
 
-const sectionId = (section) => (section ? `#lesson-${readingSlug(section) || 'section'}` : '')
+const sectionId = (section) => (section ? `#lesson-${readingSlug(siteText(section)) || 'section'}` : '')
 const partFile = (stage, part) => `${stage.out}/0${part.n}_${part.title.toLowerCase().replace(/[^a-z0-9]+/g, '_')}.md`
 
 /** Rewrites every Markdown link of one part body. */
@@ -260,6 +277,104 @@ function dropPackageSentences(lines) {
       .join(' ')
   })
   return out
+}
+
+/** The site code of course stage `n`: Stage 0 is T17.1 (task SDC-05). */
+function stageCode(n) {
+  const k = Number(n)
+  if (k > 12) throw new Error(`no module for Stage ${n}`)
+  return `T17.${k + 1}`
+}
+
+const capitalise = (word) => word.charAt(0).toUpperCase() + word.slice(1)
+
+/** The site's numbering and spelling for one piece of prose (no code, link targets or tags). */
+export function siteText(text) {
+  return britishText(text)
+    .replace(/\bartifact(s?)\b/g, 'artefact$1')
+    .replace(/\bArtifact(s?)\b/g, 'Artefact$1')
+    .replace(/\bLearning Contract(?: and Coverage)?\b/g, 'What This Module Covers')
+    .replace(/\*\*Stage:\*\*\s*(\d+)/g, (_, n) => `**Module:** ${stageCode(n)}`)
+    .replace(/\bStage: (\d+)/g, (_, n) => `Module: ${stageCode(n)}`)
+    .replace(/\bnot a Stage 13\b/g, 'not another module')
+    .replace(/\bStages? (\d+)((?:(?:\s+(?:and|to|or)\s+|\s*[–-]\s*)\d+\b)*)/g, (_, first, rest) => stageCode(first) + rest.replace(/\d+/g, stageCode))
+    .replace(/\bD([0-3]):\s/g, (_, d) => `${capitalise(DEPTH[d])} depth: `)
+    .replace(/(^|\|\s*|[.!?]\s+)D([0-3])\b/g, (_, before, d) => `${before}${capitalise(DEPTH[d])} depth`)
+    .replace(/\bD([0-3])\b/g, (_, d) => `${DEPTH[d]} depth`)
+}
+
+/** Table rows: topic codes leave cells, and the coverage labels read as plain words. */
+function siteTableRow(line) {
+  return line
+    .replace(/(\|\s*)\d{1,2}\.\d\s+(?=[A-Z])/g, '$1')
+    .replace(/\| Taught at mapped depth \| Depth \|/, '| Topic | Depth |')
+    .replace(/\bTaught at mapped depth\b/g, 'Taught here')
+    .replace(/\bFirst-teaching stage and target depth\b/g, 'Where it is taught')
+}
+
+/**
+ * Cuts course bookkeeping from prose lines (before links are rewritten, so targets are still course
+ * paths): a link to a TOOLING_TARGET leaves its list; a sentence that loses its last link, or matches
+ * BOOKKEEPING_SENTENCE, goes. In table rows such a link becomes its text.
+ */
+function cutTooling(lines) {
+  const LINK = /\[([^\]]*)\]\(([^)]+)\)/g
+  const isTool = (target) => TOOLING_TARGET.test(target.split('#')[0])
+  const out = [...lines]
+  eachProseLine(lines, (line, i) => {
+    if (HEADING.test(line)) return
+    if (/^\s*\|/.test(line)) {
+      out[i] = line.replace(LINK, (all, text, target) => (isTool(target) ? text : all))
+      return
+    }
+    out[i] = line
+      .split(SENTENCE_SPLIT)
+      .map((sentence) => {
+        if (BOOKKEEPING_SENTENCE.test(sentence)) return null
+        const tools = [...sentence.matchAll(LINK)].filter((m) => isTool(m[2]))
+        if (!tools.length && !/`stage-state\.json`/.test(sentence)) return sentence
+        let cut = sentence.replace(/\s+and\s+`stage-state\.json`/g, '')
+        for (const [link] of tools) {
+          const at = cut.indexOf(link)
+          const before = cut.slice(0, at)
+          const after = cut.slice(at + link.length)
+          if (/,\s+(?:and\s+)?$/.test(before) || /\s+and\s+$/.test(before)) cut = before.replace(/(?:,\s+(?:and\s+)?|\s+and\s+)$/, '') + after
+          else if (/^,\s+(?:and\s+)?/.test(after)) cut = before + after.replace(/^,\s+(?:and\s+)?/, '')
+          else if (/^\s+and\s+/.test(after)) cut = before + after.replace(/^\s+and\s+/, '')
+          else return null
+        }
+        // The list is shorter now: two links join with "and", and one link takes a singular verb.
+        const left = [...cut.matchAll(LINK)].length
+        if (!left) return null
+        if (left === 2) return cut.replace(/(\]\([^)]+\)),\s+(?:and\s+)?((?:the |its )?\[)/, '$1 and $2')
+        return left === 1 ? cut.replace(/(\]\([^)]+\)) (preserve|record)\b/, '$1 $2s') : cut
+      })
+      .filter((sentence) => sentence !== null)
+      .join(' ')
+  })
+  return out
+}
+
+/** The Key Takeaways for each generated lesson, by its path under OUT_REL. */
+function readTakeaways() {
+  const map = new Map()
+  const text = readFileSync(join(REPO_ROOT, TAKEAWAYS_REL), 'utf8')
+  for (const section of text.split(/^## /m).slice(1)) {
+    const [file, ...body] = section.split('\n')
+    const bullets = body.join('\n').trim()
+    if (!/^- /.test(bullets)) throw new Error(`${TAKEAWAYS_REL}: ${file} has no bullet list`)
+    map.set(file.trim(), bullets)
+  }
+  return map
+}
+
+/** Adds the lesson's Key Takeaways before its References section, or at the end. */
+function addTakeaways(markdown, file, takeaways) {
+  const bullets = takeaways.get(file)
+  if (!bullets) throw new Error(`${TAKEAWAYS_REL} has no entry for ${OUT_REL}/${file}`)
+  const block = `## Key Takeaways\n\n${bullets}\n`
+  const at = markdown.search(/^## References\b/m)
+  return at === -1 ? `${markdown.trimEnd()}\n\n${block}` : `${markdown.slice(0, at)}${block}\n${markdown.slice(at)}`
 }
 
 // ------------------------------------------------------------------ labs
@@ -453,8 +568,9 @@ function britishProse(lines) {
   eachProseLine(lines, (line, i) => {
     out[i] = line
       .split(/(`[^`]*`|\]\([^)]*\)|<[^>]+>|https?:\/\/\S+)/)
-      .map((piece, k) => (k % 2 ? piece : britishText(piece)))
+      .map((piece, k) => (k % 2 ? piece : siteText(piece)))
       .join('')
+    if (/^\s*\|/.test(out[i])) out[i] = siteTableRow(out[i])
   })
   return out
 }
@@ -502,7 +618,7 @@ export function importCourse() {
     let codeLab = false
     for (const part of stage.parts) {
       const body = [...(part.n === 1 ? stage.preamble : []), ...part.lines]
-      let lines = dropPackageSentences(rewriteLinks(body, { base: stage.rel, where: `${stage.rel}/guide.md`, here: partFile(stage, part), stagesByDir }))
+      let lines = dropPackageSentences(rewriteLinks(cutTooling(body), { base: stage.rel, where: `${stage.rel}/guide.md`, here: partFile(stage, part), stagesByDir }))
       for (const [, anchor] of lines.join('\n').matchAll(new RegExp(`\\]\\(/labs/system-design/${stage.out}/[a-z]+\\.html#([a-z-]+)\\)`, 'g'))) {
         if (!anchors.includes(anchor)) throw new Error(`${stage.rel}/guide.md: links #${anchor}, which its guide.html has no interactive block for`)
         linked = true
@@ -539,7 +655,7 @@ export function importCourse() {
     if (!h1) throw new Error(`${where}: first line is not "# ADR-NNN: <title>"`)
     const file = adrFile(name.replace(/\.md$/, ''))
     const title = `${h1[1]}: ${sentenceCase(h1[2])}`
-    const text = tidy(britishProse(dropPackageSentences(rewriteLinks(rest, { base: ADR_REL, where, here: file, stagesByDir }))))
+    const text = tidy(britishProse(dropPackageSentences(rewriteLinks(cutTooling(rest), { base: ADR_REL, where, here: file, stagesByDir }))))
     const markdown = `<!-- Generated by site/scripts/sd-course-import.mjs from ${where}. Edit the ADR there. -->\n# ${title}\n\n${text}\n`
     const hit = markdown.match(PLACEHOLDER)
     if (hit) throw new Error(`${where}: placeholder "${hit[0]}"`)
@@ -547,6 +663,13 @@ export function importCourse() {
     decisions.push({ file, title })
   }
 
+  const takeaways = readTakeaways()
+  for (const [file, markdown] of files) {
+    const left = markdown.split('\n').find((line) => TOOLING_LEFT.test(line) || /\bStages? \d/.test(line.replace(/`[^`]*`/g, '')))
+    if (left && !/^```|^\s*[A-Za-z]+\[|-->/.test(left)) throw new Error(`${OUT_REL}/${file}: course bookkeeping or numbering left: ${left.slice(0, 160)}`)
+    files.set(file, addTakeaways(markdown, file, takeaways))
+  }
+  for (const file of takeaways.keys()) if (!files.has(file)) throw new Error(`${TAKEAWAYS_REL}: ${file} is not a generated lesson`)
   checkLinks(files)
   // The curriculum (site/src/lib/sd-course.ts) lists exactly these files, under these titles.
   const listed = new Map(SD_LESSONS.map((l) => [l.source.slice(OUT_REL.length + 1), l.title]))

@@ -7,7 +7,7 @@ The same hypothetical procurement platform now has three hypothetical tenants. E
 
 ## Inherit the Actual Scale-Out Contract
 
-[Stage 4](../04_application_scaling/01_understand_the_problem.md) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](../architecture_decisions/adr_004_stateless_scale_and_cache.md) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
+[T17.5](../04_application_scaling/01_understand_the_problem.md) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](../architecture_decisions/adr_004_stateless_scale_and_cache.md) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
 
 ```mermaid
 flowchart TD
@@ -38,16 +38,22 @@ At the same time, a single global first-in-first-out queue can let A’s large b
 
 | Module | Treatment | Depth and evidence |
 | --- | --- | --- |
-| 5.1 Rate limiting and admission control | Taught at mapped depth | D3: separate request/token/concurrency budgets and atomic guard tests |
-| 5.2 Queuing and queueing theory | Taught at mapped depth | D2: backlog growth, stability, bounded wait, Little’s law limitations |
-| 5.3 Backpressure and overload management | Taught at mapped depth | D3: finite queues, rejection/deadline/retry policy, failure exercises |
-| 5.4 Fair scheduling and workload prioritisation | Taught at mapped depth | D2: FIFO, strict priority, RR, WRR, starvation and cost-normalised trade-offs |
-| 5.5 AI workload management | Taught at mapped depth | D3: token reservation, provider slots, workload classes and explicit unknown outcomes |
-| 4.1 Concurrency fundamentals | Revisited from Stage 2 | D3: apply atomic authority to simultaneous budget reservations |
-| 4.2 Messaging and event streams | Revisited from Stage 2 | D3: queue/prefetch/retry limits preserve durable completion and ownership |
-| 6.2 Caching systems | Revisited from Stage 4 | D2: hits save body work without bypassing admission or permission |
-| 12.1 Scaling and traffic engineering | Revisited from Stage 4 | D3: provider capacity stays binding while app replicas increase |
-| 7.2 AI gateway and provider management | Context only | Stage 9, D3: the guard protects a provider boundary; routing/fallback is not retaught here |
-| 9.3 Inference performance optimisation | Deferred | Stage 9, D1: no kernel, batching-engine, or GPU optimisation implementation |
+| Rate limiting and admission control | Taught here | Build depth: separate request/token/concurrency budgets and atomic guard tests |
+| Queuing and queueing theory | Taught here | Design depth: backlog growth, stability, bounded wait, Little’s law limitations |
+| Backpressure and overload management | Taught here | Build depth: finite queues, rejection/deadline/retry policy, failure exercises |
+| Fair scheduling and workload prioritisation | Taught here | Design depth: FIFO, strict priority, RR, WRR, starvation and cost-normalised trade-offs |
+| AI workload management | Taught here | Build depth: token reservation, provider slots, workload classes and explicit unknown outcomes |
+| Concurrency fundamentals | Revisited from T17.3 | Build depth: apply atomic authority to simultaneous budget reservations |
+| Messaging and event streams | Revisited from T17.3 | Build depth: queue/prefetch/retry limits preserve durable completion and ownership |
+| Caching systems | Revisited from T17.5 | Design depth: hits save body work without bypassing admission or permission |
+| Scaling and traffic engineering | Revisited from T17.5 | Build depth: provider capacity stays binding while app replicas increase |
+| AI gateway and provider management | Context only | T17.10, Build depth: the guard protects a provider boundary; routing/fallback is not retaught here |
+| Inference performance optimisation | Deferred | T17.10, Explain depth: no kernel, batching-engine, or GPU optimisation implementation |
 
-Outcomes: distinguish the five budgets; enforce a race-safe provider reservation; reproduce noisy-neighbour outcomes; expire waiting work; and explain why retries/extra replicas cannot create capacity. Prerequisites are the first four stage contracts. [Curriculum](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json) and [actual coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) remain separate from learner completion.
+Outcomes: distinguish the five budgets; enforce a race-safe provider reservation; reproduce noisy-neighbour outcomes; expire waiting work; and explain why retries/extra replicas cannot create capacity. Prerequisites are the first four stage contracts.
+
+## Key Takeaways
+
+- If a shared path finishes six equal-cost jobs a second but receives ten, backlog grows by four a second. A bigger queue delays the failure without adding service capacity, and long waits trigger client retries that add demand.
+- A single global FIFO queue lets one tenant's large burst occupy the whole useful waiting window while smaller tenants miss their deadlines. Overall completion rate can look healthy while B and C get no timely service.
+- A token bucket bounds arrivals over time but not long requests still in flight. A concurrency limit bounds simultaneous provider calls but not tokens a minute. Fair scheduling shares existing capacity and creates none.

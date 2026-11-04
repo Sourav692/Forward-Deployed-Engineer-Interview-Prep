@@ -3,7 +3,7 @@
 
 ## Separate Acceptance From Execution
 
-Create a new job path rather than silently changing `/requests`. The proposed `POST /jobs` facade validates an allowed job kind, a bounded payload/reference, and a scoped operation key. In one transaction it creates a `queued` row. Only after commit may it return `202` and a job ID with a status location. `202` means accepted for processing, not that generation finished; see [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). The executable tests the store behind this contract; it does not add an HTTP facade to Stage 1.
+Create a new job path rather than silently changing `/requests`. The proposed `POST /jobs` facade validates an allowed job kind, a bounded payload/reference, and a scoped operation key. In one transaction it creates a `queued` row. Only after commit may it return `202` and a job ID with a status location. `202` means accepted for processing, not that generation finished; see [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). The executable tests the store behind this contract; it does not add an HTTP facade to T17.2.
 
 A status read uses trusted tenant and user from identity, never owner fields supplied in JSON. Proposed `GET /jobs/<id>` returns state, attempt count, and a saved result only when available. Unknown or out-of-scope IDs return the same not-found outcome. Keep public error codes bounded: invalid input `400`, unauthenticated `401`, conflicting key `409`, unavailable durable store `503`. The new route is a design contract, not a claim of executed HTTP tests for it.
 
@@ -54,4 +54,11 @@ Alice’s document-preparation workflow can plan a small sequence: extract text,
 
 The exercise allows only `extract`, `validate`, and `draft`. `send_email` is rejected. The original customer requirement still says Alice reviews and sends the email herself. If later product scope adds an irreversible action, separate human approval, operation identity, and unknown-outcome reconciliation from the model’s proposed text. A checkpoint before an external call proves intent, not that the call did or did not execute.
 
-For D3, implement/debug this control boundary: keep immutable job input, validate proposed tools outside the model, persist progress, reject an unapproved tool, and stop when step/time/attempt budgets expire. The fixture saves the latest tool output and step index; it is not a full agent engine or a complete transcript/event store. Rich tool-output retention and cancellation acknowledgement need explicit future design.
+For build depth, implement/debug this control boundary: keep immutable job input, validate proposed tools outside the model, persist progress, reject an unapproved tool, and stop when step/time/attempt budgets expire. The fixture saves the latest tool output and step index; it is not a full agent engine or a complete transcript/event store. Rich tool-output retention and cancellation acknowledgement need explicit future design.
+
+## Key Takeaways
+
+- `POST /jobs` commits a `queued` row and only then returns `202` with a job ID. `202` means accepted for processing, not finished, and because the queue and job record are the same row there is no gap between saving and publishing.
+- `claim(now)` runs `BEGIN IMMEDIATE`, increments the epoch and attempt count, sets a lease and commits. Completion must match job ID, epoch, active state, unexpired lease and deadline, so a paused worker holding an old epoch cannot overwrite newer work.
+- Commit the result before acknowledging delivery so redelivery finds the saved completion. An expired lease after an external start becomes `unknown` with no automatic retry, because the epoch fences database writes, not remote calls.
+- Trusted code checks each proposed tool against an allowlist, schema, tenant scope, remaining time and a three-step limit. Only `extract`, `validate` and `draft` are allowed, `send_email` is rejected, and a restart resumes from the durable checkpoint.

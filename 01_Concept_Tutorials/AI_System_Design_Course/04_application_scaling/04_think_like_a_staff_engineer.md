@@ -42,3 +42,10 @@ Scale-in must stop new routing and drain requests with a deadline. Durable job w
 **Spoken answer:** “That creates independent authorities for history, keys, and worker leases. I preserve the schema and invariants in a shared relational design, test transaction/claim semantics, and use a controlled writer cutover with reconciliation. The local two-object test establishes the desired semantics on one file; it does not prove a production PostgreSQL migration or a network-filesystem deployment is safe.”
 
 **Trade-off:** Controlled cutover may need a write pause. **Changed constraint:** If downtime must be near zero, specify the additional replication/change-capture checks rather than casually adding dual writes.
+
+## Key Takeaways
+
+- Stateless means no replica owns the only copy of session, operation or history state. Losing its expendable cache changes cost or latency, never correctness.
+- When p95 rises, find the waiting time before scaling. DB pool waits with low CPU suggest connection contention, provider waits with low CPU suggest dependency capacity, and a miss spike just after scaling may be warmup.
+- A high hit rate is not a safety metric, so also count rejected stale or forbidden cache lookups. If authoritative storage fails, return the established error path rather than promote stale cache contents into authority.
+- Starting each new replica with its own copy of the SQLite file creates independent authorities for history, keys and worker leases. Migrate with a controlled writer cutover and reconciliation, not casual dual writes.

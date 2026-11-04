@@ -17,7 +17,7 @@ Use separate buckets for request counts and model tokens. Reserve known input pl
 
 A semaphore-like concurrency budget counts calls that may still be running. Release a slot when termination is known, not when an app stops waiting. Unknown external outcomes retain a reservation in the fixture and require reconciliation; this favours safety over automatic capacity recovery. A stale local timeout does not prove a provider stopped computing or billing.
 
-The guard’s database transaction reads existing operation state, checks concurrency and all bucket balances, then spends credits and records the reservation together. Rejected requests do not partially spend another budget. Production replicas must share a consistent authority/configuration; per-instance counters would multiply the limit as Stage 4 scales out. The SQLite exercise demonstrates serialised local reservations, not a distributed quota algorithm or a vendor’s exact token accounting.
+The guard’s database transaction reads existing operation state, checks concurrency and all bucket balances, then spends credits and records the reservation together. Rejected requests do not partially spend another budget. Production replicas must share a consistent authority/configuration; per-instance counters would multiply the limit as T17.5 scales out. The SQLite exercise demonstrates serialised local reservations, not a distributed quota algorithm or a vendor’s exact token accounting.
 
 ## Queue Bounds, Deadlines, and Backpressure
 
@@ -25,7 +25,7 @@ Choose finite per-tenant queues, not only a global memory cap. Store metadata/re
 
 For durable ingestion, reduce the rate of new source-job admission or pause consumption within source cursor/retention constraints when downstream capacity is unavailable. Bound worker prefetch/in-flight claims so a single worker cannot privately hoard all queued jobs. [RabbitMQ consumer prefetch](https://www.rabbitmq.com/docs/consumer-prefetch) is a primary example of limiting outstanding deliveries; it is not the same as a global provider-concurrency guard.
 
-If callers blindly retry rejection, backpressure becomes amplification. Preserve the same operation key, cap attempts, respect remaining deadline, and use backoff with jitter for failures known safe to retry. Retry at a controlled layer, not independently at every nested hop. Never auto-retry the Stage 2 unknown external region. [AWS’s retry guidance](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/) explains the load and side-effect risks; the fixture uses deterministic logical time instead of claiming to test a production jitter distribution.
+If callers blindly retry rejection, backpressure becomes amplification. Preserve the same operation key, cap attempts, respect remaining deadline, and use backoff with jitter for failures known safe to retry. Retry at a controlled layer, not independently at every nested hop. Never auto-retry the T17.3 unknown external region. [AWS’s retry guidance](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/) explains the load and side-effect risks; the fixture uses deterministic logical time instead of claiming to test a production jitter distribution.
 
 [Google SRE’s overload chapter](https://sre.google/sre-book/handling-overload/) motivates explicit resource restrictions and rejection/degradation. Degradation here may reduce optional context/output work while preserving citations and authorisation, or return a clear refusal. It must not bypass current policy/version checks, reveal another tenant’s cached answer, or silently weaken saved-success semantics.
 
@@ -40,7 +40,7 @@ If callers blindly retry rejection, backpressure becomes amplification. Preserve
 
 Choose bounded tenant queues and WRR for the equal-cost teaching workload, with weights A:B:C = 2:1:1. When all are continuously backlogged, expected dispatch proportions are 50%, 25%, and 25%. When a tenant is idle, skip its empty queue and let others use service; this is work-conserving. Weights are explicit hypothetical entitlements, not evidence A deserves arbitrary priority because it is noisy.
 
-For unequal token/duration work, request-count fairness can be misleading. A tenant getting one 20,000-token job per turn can consume far more than one getting a 200-token job. Compare estimated-cost credits, deficit round-robin, per-class concurrency, and token reservations before promising token-normalised shares. Deficit scheduling carries unused credit across turns so a larger job can eventually fit. This D2 comparison does not implement a GPU scheduler or prove latency guarantees under arbitrary job sizes.
+For unequal token/duration work, request-count fairness can be misleading. A tenant getting one 20,000-token job per turn can consume far more than one getting a 200-token job. Compare estimated-cost credits, deficit round-robin, per-class concurrency, and token reservations before promising token-normalised shares. Deficit scheduling carries unused credit across turns so a larger job can eventually fit. This design depth comparison does not implement a GPU scheduler or prove latency guarantees under arbitrary job sizes.
 
 ```mermaid
 flowchart TD
@@ -59,3 +59,10 @@ After diagram. Identity/current-policy gates, cache safety, shared authority, so
 At ten arrivals/second and six completions/second, does increasing a queue from 12 to 1,200 jobs make the system stable?
 
 <details><summary>Answer before revealing</summary><p>No. In the simple sustained model backlog still grows by four jobs/second. A larger queue increases how long overload can hide and often how long callers wait. Reduce admitted work, increase real downstream service, or change the workload; apply a deadline/rejection policy rather than treating stored backlog as throughput.</p></details>
+
+## Key Takeaways
+
+- Keep separate budgets for tenant requests, global requests, model tokens and concurrent provider calls. The guard checks them all and records the reservation in one transaction, and only a fresh `accepted` reservation authorises a provider call.
+- Reserve known input plus an upper bound on output tokens before generation. Release a concurrency slot only when termination is known, because a local timeout does not prove the provider stopped computing or billing.
+- Bound each tenant's queue, expire unstarted work past its deadline and carry one overall deadline through every hop. Retries keep the same operation key and a capped attempt count, with jittered backoff at one controlled layer.
+- Weighted round-robin at 2:1:1 gives continuously backlogged tenants 50%, 25% and 25% of dispatches and skips empty queues. Equal job counts are not equal token shares when job sizes vary.

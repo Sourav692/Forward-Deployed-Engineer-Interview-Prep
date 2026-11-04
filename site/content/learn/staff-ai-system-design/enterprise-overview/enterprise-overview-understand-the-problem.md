@@ -3,7 +3,7 @@
 
 Alice, a procurement analyst in Tenant A, needs to answer a supplier question using current internal policy, draft a reply, and reopen the saved result. Other employees and companies need the same workflow with their own permissions, documents, budgets, and approved processing regions. The twelve stages build the platform that supports this journey.
 
-Read this orientation before Stage 1. Allow about 25–35 minutes, including the walkthrough and recall questions. You do not need to understand every component yet. Stage 0 previews the destination; Stage 1 still starts with no system and builds the smallest useful drafting path. This is a hypothetical enterprise case. Requirements and numbers are teaching assumptions, and production integrations remain unverified.
+Read this orientation before T17.2. You do not need to understand every component yet. T17.1 previews the destination; T17.2 still starts with no system and builds the smallest useful drafting path. This is a hypothetical enterprise case. Requirements and numbers are teaching assumptions, and production integrations remain unverified.
 
 ## The Customer and the People Using the Platform
 
@@ -34,22 +34,22 @@ flowchart LR
  T --> S[Manually save and review reply]
 ```
 
-Starting diagram. Text alternative: Alice manually finds policy, copies it into a tool, and saves a draft. There is no implemented enterprise platform at the start of Stage 1.
+Starting diagram. Text alternative: Alice manually finds policy, copies it into a tool, and saves a draft. There is no implemented enterprise platform at the start of T17.2.
 
 ## Functional Requirements for the Destination
 
 | Requirement | What the reader should expect the target system to do | Where the design grows |
 | --- | --- | --- |
-| Authenticated drafting and saved history | Accept approved text, generate a draft, commit it, and let its owner reopen it | Stages 1 and 6 |
-| Long-running work | Persist accepted jobs, bound retries, and inspect failures or uncertain effects | Stage 2 |
-| Enterprise knowledge | Ingest changing sources, publish versioned passages, and retrieve current permitted evidence | Stages 3 and 6 |
-| Shared service at higher demand | Scale the application while bounding requests, tokens, queues, and tenant shares | Stages 4 and 5 |
-| Recoverable operations | Preserve operation identity and distinguish committed, stale, failed, and unknown outcomes | Stage 7 |
-| Controlled AI changes | Evaluate task and safety slices; approve immutable bundles; canary and roll back eligible routes | Stage 8 |
-| Model choice | Select an approved hosted route or assess a justified self-hosted alternative | Stage 9 |
-| Governed custom behaviour | Compare prompting and retrieval with a bounded tuning trial; track data-to-model lineage | Stage 10 |
-| Approved regional service | Keep data and processing inside tenant policy; recover only to an eligible regional cell | Stage 11 |
-| Reusable internal platform | Onboard applications through versioned contracts with named owners and controlled migration | Stage 12 |
+| Authenticated drafting and saved history | Accept approved text, generate a draft, commit it, and let its owner reopen it | T17.2 and T17.7 |
+| Long-running work | Persist accepted jobs, bound retries, and inspect failures or uncertain effects | T17.3 |
+| Enterprise knowledge | Ingest changing sources, publish versioned passages, and retrieve current permitted evidence | T17.4 and T17.7 |
+| Shared service at higher demand | Scale the application while bounding requests, tokens, queues, and tenant shares | T17.5 and T17.6 |
+| Recoverable operations | Preserve operation identity and distinguish committed, stale, failed, and unknown outcomes | T17.8 |
+| Controlled AI changes | Evaluate task and safety slices; approve immutable bundles; canary and roll back eligible routes | T17.9 |
+| Model choice | Select an approved hosted route or assess a justified self-hosted alternative | T17.10 |
+| Governed custom behaviour | Compare prompting and retrieval with a bounded tuning trial; track data-to-model lineage | T17.11 |
+| Approved regional service | Keep data and processing inside tenant policy; recover only to an eligible regional cell | T17.12 |
+| Reusable internal platform | Onboard applications through versioned contracts with named owners and controlled migration | T17.13 |
 
 ## Non-Functional Requirements and Planning Targets
 
@@ -57,13 +57,20 @@ These requirements describe correctness, availability, latency, isolation, and c
 
 | Requirement or assumption | Illustrative target or rule | Source and limit |
 | --- | --- | --- |
-| Pilot demand and latency | One active pilot user, 200 requests per eight-hour day, brief 0.5 requests/second peak; healthy p95 below five seconds | [Stage 1](/learn/staff-ai-system-design/mvp/mvp-understand-the-problem); a proposed target, not a measured service |
-| Result durability | A completed saved-success response follows committed answer/history state | [Stage 1](/learn/staff-ai-system-design/mvp/mvp-understand-the-problem); the provider is outside the database transaction |
-| Isolation and current access | Trusted services enforce tenant, user, resource access, approved egress, and audit | [Stage 6](/learn/staff-ai-system-design/enterprise-security/enterprise-security-understand-the-problem); model text cannot grant permission |
-| Overload | Bound queues and independent request/token/concurrency budgets; apply explicit tenant shares | [Stage 5](/learn/staff-ai-system-design/overload-fairness/overload-fairness-understand-the-problem); scheduling cannot create provider capacity |
-| Custom behaviour gate | At least 196 of 200 frozen schema cases pass, with zero known safety violations | [Stage 10](/learn/staff-ai-system-design/fine-tuning/fine-tuning-understand-the-problem); supplied fixture counts do not prove real model safety |
-| Regional recovery | A/B content stays in approved EU cells; C has a US home; assumed RPO ≤60 seconds and RTO ≤600 seconds | [Stage 11](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem); unavailable authority or unsafe promotion can miss the target |
-| Recovery capacity scenario | Combined A/B peak of 60 requests/second, 1,000 tokens/request, and two-second active slots | [Stage 11](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem); plan app replicas, token budget, and slots separately |
-| Economics | Count failed attempts, idle reserve, storage/networking, and operating labour per successful workflow | [Stages 11](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem) and [12](/learn/staff-ai-system-design/staff-platform/staff-platform-understand-the-problem); prices and savings are assumptions |
+| Pilot demand and latency | One active pilot user, 200 requests per eight-hour day, brief 0.5 requests/second peak; healthy p95 below five seconds | [T17.2](/learn/staff-ai-system-design/mvp/mvp-understand-the-problem); a proposed target, not a measured service |
+| Result durability | A completed saved-success response follows committed answer/history state | [T17.2](/learn/staff-ai-system-design/mvp/mvp-understand-the-problem); the provider is outside the database transaction |
+| Isolation and current access | Trusted services enforce tenant, user, resource access, approved egress, and audit | [T17.7](/learn/staff-ai-system-design/enterprise-security/enterprise-security-understand-the-problem); model text cannot grant permission |
+| Overload | Bound queues and independent request/token/concurrency budgets; apply explicit tenant shares | [T17.6](/learn/staff-ai-system-design/overload-fairness/overload-fairness-understand-the-problem); scheduling cannot create provider capacity |
+| Custom behaviour gate | At least 196 of 200 frozen schema cases pass, with zero known safety violations | [T17.11](/learn/staff-ai-system-design/fine-tuning/fine-tuning-understand-the-problem); supplied fixture counts do not prove real model safety |
+| Regional recovery | A/B content stays in approved EU cells; C has a US home; assumed RPO ≤60 seconds and RTO ≤600 seconds | [T17.12](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem); unavailable authority or unsafe promotion can miss the target |
+| Recovery capacity scenario | Combined A/B peak of 60 requests/second, 1,000 tokens/request, and two-second active slots | [T17.12](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem); plan app replicas, token budget, and slots separately |
+| Economics | Count failed attempts, idle reserve, storage/networking, and operating labour per successful workflow | [T17.12](/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem) and [12](/learn/staff-ai-system-design/staff-platform/staff-platform-understand-the-problem); prices and savings are assumptions |
 
 The 95th percentile, p95, is the latency threshold met by 95% of the defined measured population. Recovery point objective (RPO) bounds the acceptable data-loss window. Recovery time objective (RTO) bounds the acceptable restoration interval. A regional switch is incomplete until permitted customer work can succeed, not merely when a route changes.
+
+## Key Takeaways
+
+- A tenant is one customer organisation with its own users, policy, data, budget and approved processing regions. Shared infrastructure must never expose one user's private history or restricted evidence to another user or tenant.
+- Drafting from supplied text, answering from enterprise policy and preparing a long document are three paths with different completion contracts. They need supplied text, current authorised evidence and durable background execution respectively.
+- The planning targets come from separate teaching workloads, not one deployment's measurements. The pilot assumes 200 requests per eight-hour day, a brief 0.5 requests/second peak and a healthy p95 below five seconds.
+- RPO bounds the acceptable data-loss window and RTO bounds the restoration interval. A regional switch is complete only when permitted customer work can succeed, not when a route changes.

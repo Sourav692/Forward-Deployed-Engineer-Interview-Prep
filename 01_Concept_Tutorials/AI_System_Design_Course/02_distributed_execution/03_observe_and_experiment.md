@@ -87,3 +87,10 @@ The tests create a temporary database, instantiate/recreate worker stores, race 
 A model call started, its worker stopped answering, and its lease expired. May the replacement call the model immediately?
 
 <details><summary>Answer before revealing</summary><p>No. A timeout or dead worker does not prove the provider stopped. The job enters unknown and requires reconciliation. Automatic redelivery is appropriate only for the defined safe portion of this exercise; an epoch fences local writes, not remote execution.</p></details>
+
+## Key Takeaways
+
+- At six jobs a minute and 20 seconds each, Little's law gives two jobs in flight. Two workers supply exactly six a minute with no headroom, while three give nine a minute at about 67% utilisation.
+- Twelve simultaneous jobs on three workers finish in waves at 20, 40, 60 and 80 seconds, leaving 10 seconds of margin under a 90-second deadline. Return the job identifier and poll with backoff rather than tying the job to a 30-second browser timeout.
+- Polling is load too. Five state writes per job give about 0.5 writes a second, but 100 clients polling every second add 100 reads a second, which more generation workers cannot fix.
+- A shorter lease speeds recovery but risks false takeovers during pauses. A crash before an external effect allows redelivery once the lease expires, while a crash after the external-start marker leaves the job `unknown`.

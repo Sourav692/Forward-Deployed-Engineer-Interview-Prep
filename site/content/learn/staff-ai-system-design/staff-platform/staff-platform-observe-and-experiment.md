@@ -66,7 +66,7 @@ Production shadow evidence binds manifest, release bundle, population, evaluator
 
 ## Calculate Total Cost of Ownership
 
-TCO adds operating cost, migration, support, the overlap while old and new paths both run, and expected change effort over an explicit horizon. It differs from Stage 11's per-success cost because it compares organisational choices. It counts labour cost and keeps opportunity cost qualitative. Count shared costs the same way in both options, and do not claim savings from costs that remain.
+TCO adds operating cost, migration, support, the overlap while old and new paths both run, and expected change effort over an explicit horizon. It differs from T17.12's per-success cost because it compares organisational choices. It counts labour cost and keeps opportunity cost qualitative. Count shared costs the same way in both options, and do not claim savings from costs that remain.
 
 Assume a three-year horizon without discounting, common serving spend of $20,000 a month in both options, and a loaded planning labour rate of $100 an hour. Four teams spend 30 hours a month each on duplicated platform work: 120 × $100 = $12,000 a month. A shared platform needs 50 hours a month of operations plus 20 of adoption support, $7,000, plus $1,000 of control-plane infrastructure: $8,000 a month. Once the old paths are retired, the saving is $12,000 − $8,000 = $4,000 a month. Migration takes 600 one-time hours, $60,000.
 
@@ -134,3 +134,10 @@ A canary fails, but the old model's data approval has been revoked. Should rollb
 No. A historical approved pointer is not present permission. Block that rollback, keep unsafe work unavailable, and choose another currently approved route or repair the release. Neither the migration controller nor an incident commander may silently restore a revoked data purpose or wrong-region handling.
 
 </details>
+
+## Key Takeaways
+
+- A strangler migration routes selected new work through the new contract while the old path serves the rest, with one authoritative writer and stable operation IDs. A route rollback cannot undo a destructive schema migration, erase a tombstone or revoke a remote side effect.
+- Shadow evidence is append-only and bound to its baseline route and generation, so a route change makes it stale. Zero mismatches in 100 representative samples bounds the mismatch rate below about 3% at 95% confidence, by the rule of three.
+- With no overlap, $60,000 of migration against a $4,000 monthly saving breaks even at 15 months. A six-month dual-run overlap moves break-even to month 33 and cuts the three-year saving from $84,000 to $12,000.
+- Rollback still checks current eligibility. If the previous model's data approval is revoked, block the rollback and choose another approved route, because a historical pointer is not present permission.
