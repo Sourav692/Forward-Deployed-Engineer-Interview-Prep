@@ -11,9 +11,9 @@ These prompts look like AI questions and are graded as distributed-systems quest
 | Anthropic: token-generation service at 100,000 requests per second | Section 13: the anchor scaled out, with admission control |
 | Anthropic: review a junior developer's batching design | Section 14: the anchor used as a critique rubric |
 | OpenAI favourite: diagnose high latency in an LLM inference pipeline | Section 15: the stack walk, shared with the Observability and Production Diagnosis case |
-| Self-drill for this case *(own construction)* | Section 17 |
+| Self-drill for this case | Section 17 |
 
-**Read this first.** No worked design exists for this group, and the sources have no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*, built from general serving practice. It is grounded where the sources do speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
+**Read this first.** The design on this page is built from general serving practice: continuous batching, paged attention and the serving engines that use them. The replica memory budget and sizing formula come from the air-gapped design, and the prefill, decode, Little's Law and goodput arithmetic from the site's cost and latency material. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
 
 ---
 
@@ -21,7 +21,7 @@ These prompts look like AI questions and are graded as distributed-systems quest
 
 The request shape sets the design, and "100,000 requests per second" means nothing until the tokens per request are known. A 20-token completion and a 2,000-token essay differ in decode work by two orders of magnitude.
 
-Ask five questions first, and state an assumption for each one the interviewer declines *(own construction)*.
+Ask five questions first, and state an assumption for each one the interviewer declines.
 
 | Question | Why it matters | Anchor assumption |
 |---|---|---|
@@ -42,7 +42,7 @@ Ask five questions first, and state an assumption for each one the interviewer d
 
 ## 2. State Requirements as Testable Constraints
 
-A requirement that cannot fail a test is a preference. "Fast" is a preference. "First token under 500 ms at p95 at 1,000 rps" is a constraint. The split and the numbers are *own construction*; the nouns come from the prompts.
+A requirement that cannot fail a test is a preference. "Fast" is a preference. "First token under 500 ms at p95 at 1,000 rps" is a constraint. The nouns come from the prompts; the split and the numbers are assumptions.
 
 - The must-haves come straight from the anchor prompt's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag.
 - Batch them onto GPUs. Route each batch or sequence to a GPU with capacity.
@@ -62,7 +62,7 @@ The should-haves make it operable: per-tenant quotas and priorities, cancellatio
 | Fairness | No tenant above its quota can raise another tenant's p95 |
 | Goodput | Requests per second that finish inside the SLO, reported next to raw throughput *(additions file, section D)* |
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -84,7 +84,7 @@ Replicas = ⌈ (QPS × Tokens_request) / (TokensPerSecond_replica × Utilization
 
 That chapter also warns that a candidate who talks GPU count without throughput misses the bottleneck. One who talks memory without throughput misses the placement constraint. Both checks follow.
 
-**Step one: token work per request.** Prefill and decode run at very different rates, so price each request in replica-seconds. Every rate below is an assumption for an illustrative 8B-class model on one 80 GB H100-class GPU; an A100's peak compute could not reach this prefill rate *(own construction)*.
+**Step one: token work per request.** Prefill and decode run at very different rates, so price each request in replica-seconds. Every rate below is an assumption for an illustrative 8B-class model on one 80 GB H100-class GPU; an A100's peak compute could not reach this prefill rate.
 
 | Assumption | Value |
 |---|---|
@@ -100,13 +100,13 @@ One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = 0.15 replica-se
 
 **Step three: take the larger number.** Compute says 214 and slots say 110, so compute binds. Provision about 214, then add N+1 per zone for failover. Say both checks aloud. A reviewer trusts the number that survived two independent methods.
 
-**Step four: check memory.** The KV cache stores each sequence's attention keys and values. It grows with every token *(section 7 does the arithmetic)*. The air-gapped chapter's replica budget, kept verbatim, shows the shape. Quantised weights 12 GB, runtime overhead 2 GB, KV cache and activations 6 GB, batch buffers and fragmentation slack 2 GB. That totals roughly 22 GB, too tight for a 24 GB card. The same chapter's rule applies here: if the replica count exceeds the pool, challenge the request profile rather than ask for more hardware.
+**Step four: check memory.** The KV cache stores each sequence's attention keys and values. It grows with every token *(section 7 does the arithmetic)*. The air-gapped design's replica budget shows the shape. Quantised weights 12 GB, runtime overhead 2 GB, KV cache and activations 6 GB, batch buffers and fragmentation slack 2 GB. That totals roughly 22 GB, too tight for a 24 GB card. The same design's rule applies here: if the replica count exceeds the pool, challenge the request profile rather than ask for more hardware.
 
 ## 4. Draw the Architecture End to End
 
 The organising rule is admit, then route, then batch per GPU. Admission and routing are global and stateless. Batching is local, because only the replica knows its own memory.
 
-The whole system *(own construction)*, with the control plane above and the request path below:
+The whole system, with the control plane above and the request path below:
 
 ```mermaid
 flowchart TD
@@ -171,7 +171,7 @@ flowchart TD
 - Version model registry, autoscaling, tenant quotas, routing, health policy, SLO targets, and drain/canary rollout. Autoscaling uses queue depth and KV use.
 - Measure TTFT, TPOT, queue wait versus service time, goodput, KV use, and errors.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart LR
@@ -218,7 +218,7 @@ flowchart LR
     class C,RT,SCH2,DT,R2 cbInput
 ```
 
-Read the components in request order *(own construction)*.
+Read the components in request order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|

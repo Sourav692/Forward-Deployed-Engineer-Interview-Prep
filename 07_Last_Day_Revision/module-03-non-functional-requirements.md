@@ -13,7 +13,7 @@
 
 - Functional requirement: what must the system do?
 
-- Non-functional requirement (nfr): how well must it work, and within what limits?
+- Non-functional requirement (NFR): how well must it work, and within what limits?
 
 ```mermaid
 flowchart TD
@@ -134,7 +134,7 @@ flowchart TD
     class N3 c3
 ```
 
-- Define the service-level objective (slo) for an agreed workload and measurement window.
+- Define the service-level objective (SLO) for an agreed workload and measurement window.
 - Example format: “P95 completion latency ≤ X seconds for workload Y over window Z.” P95 means 95% of measured requests meet that latency.
 - Confirm X, Y, and Z with the customer.
 

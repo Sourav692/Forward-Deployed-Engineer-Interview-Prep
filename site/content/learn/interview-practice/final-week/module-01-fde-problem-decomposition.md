@@ -187,7 +187,7 @@ flowchart TD
     class N3 c3
 ```
 
-- Human-in-the-loop (hitl) means a human participates in the decision or approval workflow.
+- Human-in-the-loop (HITL) means a human participates in the decision or approval workflow.
 - Risk depends on the actual action and customer policy.
 
 #### 6. Success: What measurable result matters?
@@ -240,7 +240,7 @@ flowchart TD
 
 #### 8. Security: What boundaries must the system respect?
 
-- Clarify access control, tenant isolation, personally identifiable information (pii), retention, approved providers, and data residency where relevant.
+- Clarify access control, tenant isolation, personally identifiable information (PII), retention, approved providers, and data residency where relevant.
 
 > “Who can access which data and actions, and are there restrictions on where data and models can run?”
 

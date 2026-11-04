@@ -161,7 +161,7 @@ flowchart TD
 - Replicate conversation state according to each user’s home region and replicate control-plane configuration. Inference pools are independent per region.
 - Record stage timings, tokens, cache reads, abandonment, and moderation events without conversation text.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart LR

@@ -47,6 +47,13 @@ export const CASE_SITE_EDITS = {
       ['the enterprise knowledge assistant in G01', 'the Enterprise Knowledge Assistant case'],
     ],
   },
+  // Headings that named the source library or an earlier draft (audit check PQ-18).
+  'decomposition-classics-67-68-69': {
+    replace: [['## 9. Answer the Tier 2 Probes These Cases Invite', '## 9. Answer the Follow-Up Probes These Cases Invite']],
+  },
+  'travel-agent-worked-example': {
+    replace: [[' replaces the missing aggregation step (*added by the prior blueprint*)', ' replaces the missing aggregation step']],
+  },
   'agent-platform-for-non-technical-users': {
     replace: [['the G01 or G12 design', 'the Enterprise Knowledge Assistant or Scoping to Deployed Agent design']],
   },

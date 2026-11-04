@@ -25,8 +25,6 @@ Spoken answers: 5 grounded, 1 partly grounded, 1 needing your input. Deliver the
 
 ## 2. Go-live in three days and it won't be ready
 
-**Example story.**
-
 **CEO-ready answer.**
 
 > "I raise it the same day. A late warning compounds. An early one is just a conversation. Then I bring options, not a problem: reduced scope on the date, full scope on a new date, or a phased go-live. I separate what truly blocks from what is merely incomplete. Much of "not ready" is polish that can follow the cutover. I bring my own leadership in before the customer escalates, so nobody is surprised. And I name who decides, and by when. Ambiguity in a crisis is worse than a bad call. Better still, I avoid day three. The trend shows weeks earlier if you track the release gate."

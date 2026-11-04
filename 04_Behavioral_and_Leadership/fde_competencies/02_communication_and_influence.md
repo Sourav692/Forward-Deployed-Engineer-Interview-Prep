@@ -55,13 +55,13 @@ Several of these are method questions, and candidates ramble on them. Write the 
 - The overlap you found instead of picking a side:
 - Result, with the number:
 
-## 4. Building trust with a skeptical chief architect in 30 days
+## 4. Building trust with a sceptical chief architect in 30 days
 
-> "How do you build trust with a skeptical chief architect in 30 days?"
+> "How do you build trust with a sceptical chief architect in 30 days?"
 
 **Also asked as:** "How do you build trust with a customer's security or compliance team?"
 
-**Also asked as:** "Describe how you've built trust with a team that had reason to be skeptical of new leadership."
+**Also asked as:** "Describe how you've built trust with a team that had reason to be sceptical of new leadership."
 
 Method question. Four moves, in order:
 

@@ -3,7 +3,7 @@ import 'server-only'
 import { cache } from 'react'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { INTERVIEW_ROUNDS, MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
-import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
+import type { CurriculumModule } from '@/lib/curriculum-types'
 import { FAMILY_META, LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
 import { getLearnManifest, learnTracks, trackHours } from '@/lib/learn'
 import { isLearnTrack } from '@/lib/curriculum-href'
@@ -86,12 +86,10 @@ export type SiteCounts = {
   /** Tracks listed under /learn, and how many study hours they add up to. */
   learnTracks: number
   learnHours: number
-  /** Modules listed in Learn tracks, and the lesson pages they hold (links to other areas not counted). */
+  /** Modules listed in Learn tracks, how many are ready, and the lesson pages they hold (links to other areas not counted). */
   learnModules: number
+  learnReady: number
   learnLessons: number
-  /** Modules in the curriculum, Learn and Interview together, by status. */
-  modules: number
-  byStatus: Record<ModuleStatus, number>
   worksheets: number
   /** Worksheets by set: customer discovery and system design. */
   discoveryWorksheets: number
@@ -118,18 +116,15 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
   const scenarios = await getAllScenarios()
   const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
   const listed = new Set(CURRICULUM_TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modules)))
-  const modules = CURRICULUM_MODULES.filter((m) => listed.has(m.slug))
-  const byStatus: Record<ModuleStatus, number> = { ready: 0, partly: 0, 'coming-soon': 0, 'on-hold': 0 }
-  for (const m of modules) byStatus[m.status] += 1
+  const learnModules = CURRICULUM_MODULES.filter((m) => listed.has(m.slug) && isLearnTrack(m.track))
   const learn = learnTracks()
   const inTrack = (moduleId: string, trackId: string) => scenarios.filter((s) => s.moduleId === moduleId && s.trackId === trackId).length
   return {
     learnTracks: learn.length,
     learnHours: learn.reduce((sum, t) => sum + trackHours(t), 0),
-    learnModules: modules.filter((m) => isLearnTrack(m.track)).length,
+    learnModules: learnModules.length,
+    learnReady: learnModules.filter((m) => m.status === 'ready').length,
     learnLessons: getLearnManifest().filter((l) => l.kind === 'sync' && isLearnTrack(l.track)).length,
-    modules: modules.length,
-    byStatus,
     worksheets: count(LIVE.worksheets),
     discoveryWorksheets: inTrack(LIVE.worksheets, 'core'),
     systemDesignWorksheets: inTrack(LIVE.worksheets, 'system-design'),
@@ -141,6 +136,7 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
     reviews: REVIEWS.length,
     liveRounds: liveRounds().length,
     rounds: INTERVIEW_ROUNDS.length,
-    mocks: CURRICULUM_MODULES.find((m) => m.slug === 'mock-interviews')?.lessons.length ?? 0,
+    // The module opens with the scoring guide, which is not itself a mock.
+    mocks: CURRICULUM_MODULES.find((m) => m.slug === 'mock-interviews')?.lessons.filter((l) => l !== 'running-and-scoring-a-mock-interview').length ?? 0,
   }
 })

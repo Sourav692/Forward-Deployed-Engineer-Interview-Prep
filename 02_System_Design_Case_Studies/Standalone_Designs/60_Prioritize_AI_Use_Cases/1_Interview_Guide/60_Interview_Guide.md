@@ -6,11 +6,11 @@
 
 Treat this as a portfolio question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper.
 
-| Case | Where it comes from | What the source gives |
+| Case | Where it comes from | What the prompt gives |
 |---|---|---|
 | Prioritise AI Use Cases for a Large Enterprise | A problem-decomposition interview prompt | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
-The source is a set of talking points with no worked answer. Everything marked *(own construction)* was built for this page from the arguments in this site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
+The prompt comes with talking points but no worked answer. This page builds one from the site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
 ---
 
@@ -20,7 +20,7 @@ The prompt, verbatim:
 
 > "An executive gives you a list of 30 potential AI use cases. How do you decide what to build first?"
 
-The source's answer names ten criteria: business value, user pain, feasibility, data availability, integration complexity, risk, time to value, adoption likelihood, reusability and evaluation difficulty. It then gives the instruction that matters most: *"You should explicitly avoid selecting the most impressive demo."*
+A strong answer names ten criteria: business value, user pain, feasibility, data availability, integration complexity, risk, time to value, adoption likelihood, reusability and evaluation difficulty. It then gives the instruction that matters most: *"You should explicitly avoid selecting the most impressive demo."*
 
 It closes with the property list of a good first pick, verbatim:
 
@@ -31,7 +31,7 @@ It closes with the property list of a good first pick, verbatim:
 - A practical integration path
 - A credible evaluation strategy
 
-- The trap is real because demos and production reward different things. A demo hides traffic shape, tail latency, usage expansion and governance cost, in the words of the cost cram sheet.
+- The trap is real because demos and production reward different things. A demo hides traffic shape, tail latency, usage expansion and governance cost.
 - So the most impressive demo is often the use case whose production cost is least visible.
 - Say that in the first two minutes, then make the method the answer:
 
@@ -39,11 +39,11 @@ It closes with the property list of a good first pick, verbatim:
 
 ## 2. Ask What "Prioritise" Decides
 
-A ranking is only useful if it changes a decision. So the first question is which decision this one feeds. Each of the questions below changes the method as well as the answer *(own construction)*.
+A ranking is only useful if it changes a decision. So the first question is which decision this one feeds. Each of the questions below changes the method as well as the answer.
 
 | QUESTION | WHAT CHANGES WITH THE ANSWER |
 |---|---|
-| Who is the sponsor, and who owns each use case's outcome? | Whether a use case with no business owner is scored at all; the source's rule is to refuse work with no measurable metric and no SME |
+| Who is the sponsor, and who owns each use case's outcome? | Whether a use case with no business owner is scored at all; the rule is to refuse work with no measurable metric and no SME |
 | What budget and horizon: one team for a quarter, or a programme for two years? | How many items fit in wave 1, and whether platform enablers can be funded ahead of their first user |
 | Does "prioritise" mean pick one pilot, or fund a portfolio? | One pilot optimises for learning and credibility; a portfolio also optimises for reuse and balance |
 | What is the risk appetite, and which regulator watches? | Where the risk gate sits; insurance regulators expect governance and human oversight of models that make decisions about customers, and in the EU a customer can contest a solely automated decision and ask for a human |
@@ -70,7 +70,7 @@ Thirty ideas arrive as thirty sentences of different shapes. "Use AI for fraud" 
 | Business owner and SME | The person who signs the outcome, and the expert who labels the test set |
 | Kill criteria | The result that would stop it, written before the build |
 
-The card template is *(own construction)*. Its fields are the source's ten criteria and six properties, plus the delivery framework's intake rules. Filling thirty cards is a week of interviews, not a month. The delivery framework's rule applies here too: a stage is done when a checkable thing is true, not when time has passed.
+The card's fields are the ten criteria and six properties, plus the delivery framework's intake rules. Filling thirty cards is a week of interviews, not a month. The delivery framework's rule applies here too: a stage is done when a checkable thing is true, not when time has passed.
 
 ## 4. Apply Gates Before Scoring Anything
 
@@ -85,16 +85,16 @@ The card template is *(own construction)*. Its fields are the source's ten crite
 | Permissible decision | The model would take an adverse action on a customer with no human review | Reshaped into decision support, or rejected |
 | Right tool | A deterministic rule, an existing statistical model or a purchase would do it better | Routed to rules, the existing model team, or procurement |
 
-- The gates and their wording are *(own construction)*, built from the delivery operating model's intake refusal and its "no SME is a contractual prerequisite" rule.
-- In my experience, the fourth gate is the one candidates forget. The cost cram sheet lists "low-value workflows" as a cause of runaway bills.
+- The gates build on the delivery operating model's intake refusal and its "no SME is a contractual prerequisite" rule.
+- In my experience, the fourth gate is the one candidates forget. Low-value workflows are a common cause of runaway bills.
 - Not every item on an AI list needs a language model.
 
 ## 5. Score Seven Dimensions With Stated Weights
 
-- The source's ten criteria collapse into seven scored dimensions without losing any.
+- The ten criteria collapse into seven scored dimensions without losing any.
 - Adoption likelihood becomes a multiplier on value, because unused value is not value.
 - Integration complexity folds into feasibility. User pain is evidence for value, not a separate score.
-- Each dimension is scored 1 to 5, where 5 is always the good end, so risk is inverted *(own construction)*.
+- Each dimension is scored 1 to 5, where 5 is always the good end, so risk is inverted.
 
 | DIMENSION | WEIGHT | WHAT A 5 LOOKS LIKE | WHAT A 1 LOOKS LIKE |
 |---|---|---|---|
@@ -112,7 +112,7 @@ The card template is *(own construction)*. Its fields are the source's ten crite
 
 ## 6. Estimate Value From Volume, Not From Enthusiasm
 
-Executive value estimates are usually a revenue number with no mechanism behind it. Rebuild each one from four factors: how often the step happens, how much it saves each time, what that time or loss is worth, and what share of users will change behaviour. The formula is *(own construction)*.
+Executive value estimates are usually a revenue number with no mechanism behind it. Rebuild each one from four factors: how often the step happens, how much it saves each time, what that time or loss is worth, and what share of users will change behaviour.
 
 > Annual value ≈ volume × saving per occurrence × unit cost × adoption rate
 
@@ -121,12 +121,12 @@ Executive value estimates are usually a revenue number with no mechanism behind 
 - The gap is the adoption factor and the difference between minutes saved and minutes that turn into lower cost.
 
 - Three honesty rules keep this from becoming theatre. Separate hard savings, such as fewer contractor hours, from soft savings, such as minutes that go back into the same shift.
-- Discount by adoption, using the pilot's measured rate once it exists. Subtract the run cost, because the cost cram sheet's executive question is "does the value justify the spend?", not "is there value?".
+- Discount by adoption, using the pilot's measured rate once it exists. Subtract the run cost, because the executive question is "does the value justify the spend?", not "is there value?".
 - Convert the result into the 1-to-5 band from section 5, and keep the dollar figure on the card, so the band can be challenged.
 
 ## 7. Stress-Test the Weighted Sum Where It Breaks
 
-A single ranked column looks rigorous and hides five known failures. Name them before the interviewer does *(own construction)*.
+A single ranked column looks rigorous and hides five known failures. Name them before the interviewer does.
 
 **Compensation.** A 5 on value can buy back a 1 on risk. The gates in section 4 handle the fatal cases. A floor handles the rest: no item enters "do now" with any dimension below 3.
 

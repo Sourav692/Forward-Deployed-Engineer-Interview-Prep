@@ -26,8 +26,6 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 2. Making yourself unnecessary on an account
 
-**Example story.**
-
 **CEO-ready answer.**
 
 > "Three things. First, I document while I build, not after. The handover artifact exists before anyone asks for it. Second, I pair with the client's engineers on real work instead of running abstract training. They own the code because they wrote some of it. Third, I automate whatever I'd otherwise get called about at 2am. If I'm still the only person who can fix it, I haven't finished. The proof is where the work lives now. The reusable pieces from those accounts sit in a shared codebase, not in my head."

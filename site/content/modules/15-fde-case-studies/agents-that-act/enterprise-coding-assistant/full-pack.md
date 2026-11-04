@@ -256,7 +256,7 @@ flowchart TD
 - The inline-completion target is < 300 ms. Version task prompts, routing, cache thresholds, validation, permission mirrors, licence/secret patterns, models, budgets, and evaluation gates.
 - Record stage latency, cache hits, accept/partial/reject, and validation failures without source code. Track regressions, acceptance, first-token latency, and cost per 1k completions.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart LR

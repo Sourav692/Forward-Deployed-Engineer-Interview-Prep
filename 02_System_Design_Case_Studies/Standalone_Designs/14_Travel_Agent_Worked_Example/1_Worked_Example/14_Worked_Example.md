@@ -138,7 +138,7 @@ On a cache hit, the user gets a reply and no agent starts. If it misses, the sup
 
 **Shared retrieval service vs per-agent RAG.** One shared retrieval layer gives you a single place to enforce data residency and guardrails, but every agent then depends on that one service. Per-agent retrieval matches how frameworks such as LangGraph and CrewAI wire tools to each agent, yet without governance you end up running several copies of the embedding stack. You can defend either choice. The real mistake is placing RAG beside the agents *as if it were one of them*; it is infrastructure, or a tool.
 
-**Single agent vs multi-agent.** Every extra agent adds coordination and a synthesis step you must pay for. Pay it when sub-tasks differ in their tools or guardrails, or must scale on their own. Booking and Policy plainly do. Module 07 sets out the full rule for deciding.
+**Single agent vs multi-agent.** Every extra agent adds coordination and a synthesis step you must pay for. Pay it when sub-tasks differ in their tools or guardrails, or must scale on their own. Booking and Policy plainly do.
 
 **Semantic cache vs traditional cache.** A traditional cache only hits on an exact repeat. A semantic cache also matches near-duplicates, so it can skip the entire fan-out rather than save a single call downstream.
 

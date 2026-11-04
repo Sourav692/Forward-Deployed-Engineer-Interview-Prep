@@ -101,7 +101,7 @@ flowchart TD
 - Version guardrail rules, banned phrases, routes and thresholds, prompts, provider/residency registry, budgets, pacing, and red-team suite.
 - Record JSON logs, metrics, request traces, cost tags, and model-source tags.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart TB

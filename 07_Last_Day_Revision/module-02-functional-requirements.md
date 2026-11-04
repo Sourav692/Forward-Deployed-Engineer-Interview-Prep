@@ -130,7 +130,7 @@ flowchart TD
 #### 3. FR3 Retrieve + FR4 Permissions: Use Authorised Knowledge
 
 - Retrieve relevant information from approved enterprise sources, within the current user's access scope.
-- Retrieval-augmented generation (rag) uses retrieved knowledge to support an answer.
+- Retrieval-augmented generation (RAG) uses retrieved knowledge to support an answer.
 
 > “The system must retrieve the relevant refund policy and only expose information the user is authorised to access.”
 
@@ -248,7 +248,7 @@ flowchart TD
 #### 7. FR8 Act + FR9 HITL: Execute Permitted Actions
 
 - Execute approved changes through controlled tools.
-- Human-in-the-loop (hitl) adds review or approval when customer policy or risk requires it.
+- Human-in-the-loop (HITL) adds review or approval when customer policy or risk requires it.
 
 > “The system must issue permitted refunds and request manager approval for cases covered by the approval policy.”
 

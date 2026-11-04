@@ -164,7 +164,7 @@ Remember:
 
 - Confirm targets with the customer; label provisional assumptions.
 
-- Define each service-level objective (slo) with a metric, target, workload, and measurement window.
+- Define each service-level objective (SLO) with a metric, target, workload, and measurement window.
 
 Example (the 5 seconds is a placeholder; confirm the real number with the customer):
 

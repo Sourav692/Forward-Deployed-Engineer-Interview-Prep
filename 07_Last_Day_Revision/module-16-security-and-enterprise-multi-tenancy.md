@@ -67,7 +67,7 @@ flowchart TD
 #### 2. Authorisation and RBAC: Decide Permitted Operations
 
 - Authorisation asks what that identity may do.
-- Role-based access control (rbac) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
+- Role-based access control (RBAC) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
 
 > “An authenticated support user is not automatically authorised to read every account or issue every refund.”
 
@@ -88,7 +88,7 @@ flowchart TD
 
 #### 3. Permission-Aware RAG: Keep Restricted Evidence Out
 
-- Retrieval-augmented generation (rag) must enforce current access before restricted content enters model context.
+- Retrieval-augmented generation (RAG) must enforce current access before restricted content enters model context.
 - Preserve source permissions through ingestion and query execution.
 
 ```mermaid

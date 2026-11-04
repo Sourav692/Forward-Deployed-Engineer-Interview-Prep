@@ -22,8 +22,6 @@ Spoken answers: 4 grounded, 1 needing your input. Deliver them in your own caden
 
 ## 2. Running discovery with a client who can't articulate the ask
 
-**Example story.**
-
 **CEO-ready answer.**
 
 > "Four moves. First, I start from today's pain, not their wish list. Pain is concrete; aspiration isn't. Second, I get current-state numbers early: runtimes, failure rates, manual hours. That is the baseline we will be judged against. Third, I talk to the people doing the work, not only the sponsor. The sponsor describes the intended workflow. The operator describes the real one. Fourth, I put a rough design in front of them fast. People who can't state requirements can always react to a proposal. At a lender, that process turned "automate our tickets" into three distinct problems with three different fixes."
@@ -42,8 +40,6 @@ It's a method question. Give the process, then one illustration.
 **Illustration.** The multi-agent RCA engine. The ask was vague; discovery surfaced a repeating manual investigation loop, and that loop justified building the tooling.
 
 ## 3. Week one with unclear requirements
-
-**Example story.**
 
 **CEO-ready answer.**
 

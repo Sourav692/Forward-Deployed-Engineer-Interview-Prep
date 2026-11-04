@@ -2,7 +2,7 @@
 
 ## 6. Decompose Bank Fraud: Scope Fraud Unification in Ninety Days
 
-*Everything in this section is (own construction). Numbers are assumptions.*
+*Numbers in this section are assumptions.*
 
 ### 6.1 Clarify the mission
 
@@ -46,7 +46,7 @@ Sequence by risk. The riskiest unknown is whether one consistent label can exist
 | 61–80 | **Shadow model.** A first model on one fraud type, scoring in shadow beside legacy rules | Beats legacy rules on the relabelled holdout at the agreed false-positive rate | Model risk |
 | 81–90 | **Validate and decide.** Model documentation, validation pack, go or no-go for a limited pilot | Model risk approval, or a documented reason to wait | Model risk; compliance |
 
-The honest 90-day deliverable is the single queue plus a validated shadow model, not a new production model deciding on transactions. Say so early; that is the regulatory realism the source asks for.
+The honest 90-day deliverable is the single queue plus a validated shadow model, not a new production model deciding on transactions. Say so early; that is the regulatory realism the round asks for.
 
 ### 6.5 Choose the model last
 
@@ -162,11 +162,11 @@ Assume the interviewer says system C's vendor will not release data for 60 days.
 
 ## 7. Decompose Medication Errors: Start Medication Safety at the Human Check
 
-*Everything in this section is (own construction). Numbers are assumptions. Clinical practice named here is general knowledge, not sourced material.*
+*Numbers in this section are assumptions. Clinical practice named here is general knowledge, not sourced material.*
 
 ### 7.1 Clarify the mission
 
-The source says this case tests safety-first decomposition. Start with what the system may do. The only answer that survives a hospital's review is narrow: flag risk for a nurse or pharmacist, never change an order.
+This case tests safety-first decomposition. Start with what the system may do. The only answer that survives a hospital's review is narrow: flag risk for a nurse or pharmacist, never change an order.
 
 | Ask | Assumed answer | Implication |
 |---|---|---|
@@ -304,6 +304,6 @@ Watch alert load per nurse per shift as a hard ceiling. Read override reasons we
 
 ### 7.9 Adapt when administration records do not exist
 
-Assume the interviewer says there is no bedside scanning. Re-derive: measure what can be measured, which is ordered against dispensed timing. Say what that misses: wrong-patient and wrong-time administration stay invisible. The strongest recommendation may then be bedside scanning itself, not software. Saying so is the "is AI the right solution" judgement the question bank asks for.
+Assume the interviewer says there is no bedside scanning. Re-derive: measure what can be measured, which is ordered against dispensed timing. Say what that misses: wrong-patient and wrong-time administration stay invisible. The strongest recommendation may then be bedside scanning itself, not software. Saying so is the "is AI the right solution" judgement the round asks for.
 
 ---

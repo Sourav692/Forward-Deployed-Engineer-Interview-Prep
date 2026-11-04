@@ -176,9 +176,9 @@ flowchart TD
 
 #### 6. SLI / SLO / SLA: Measurement, Target, Commitment
 
-- A service-level indicator (sli) is the measured service behaviour.
+- A service-level indicator (SLI) is the measured service behaviour.
 - An SLO is its target.
-- A service-level agreement (sla) is an agreed service commitment, often including consequences.
+- A service-level agreement (SLA) is an agreed service commitment, often including consequences.
 
 - SLI: Measured share of eligible tasks completed within X
 - SLO: Target share over an agreed window

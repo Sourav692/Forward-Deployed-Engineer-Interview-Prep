@@ -2,7 +2,7 @@
 
 ## 14. Deliver It in Forty-Five Minutes
 
-The source's reusable opening fits almost unchanged. Clarify the business outcome, the user, the current workflow, the constraints and how success is measured, and state assumptions where information is missing.
+The standard opening fits almost unchanged. Clarify the business outcome, the user, the current workflow, the constraints and how success is measured, and state assumptions where information is missing.
 
 | MINUTES | WHAT TO DO | WHAT TO SAY OR DRAW |
 |---|---|---|
@@ -14,7 +14,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 | 34–40 | Plan | Platform sketch, waves, kill criteria |
 | 40–45 | Follow-up | The pet-project path; close with the metrics that will prove the choice |
 
-**The two-minute spoken answer** *(own construction)*:
+**The two-minute spoken answer:**
 
 > - I wouldn't pick from the list directly.
 > - The most impressive demo is usually the one with the most hidden production cost.
@@ -28,7 +28,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 > - For an insurer, that gives a first wave like call wrap-up summaries and claims intake summaries: high volume, low risk, clean eval, and they build the gateway, eval harness and ingestion that make the next ten items cheap.
 > - Every item gets kill criteria before the pilot, and the register is re-scored quarterly with real data.
 
-**Likely follow-ups** *(own construction, except the first, which comes from the prompt)*:
+**Likely follow-ups** (the first comes from the prompt):
 
 | FOLLOW-UP | ANSWER IN ONE BREATH |
 |---|---|
@@ -42,7 +42,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The pivot is "how much will the programme cost, and how do you stop the cost per use case staying flat?" There is no playbook drill for this case, so the card is a self-drill *(own construction)*.
+The pivot is "how much will the programme cost, and how do you stop the cost per use case staying flat?" The card is a self-drill.
 
 | | |
 |---|---|
@@ -52,10 +52,10 @@ The pivot is "how much will the programme cost, and how do you stop the cost per
 | Do not | Fund thirty pilots in parallel, or let every team build its own ingestion, prompts and eval |
 | 60-second line | The expensive thing in an AI portfolio is people rebuilding the same plumbing. Build it once under the first high-volume use case, cap what is in flight, and kill on schedule. Then the tenth use case costs a fraction of the first, and that ratio is the number to report. |
 
-- The four verbs from the cost playbook still apply, one level up.
+- The four cost verbs still apply, one level up.
 - Measure cost per use case and per successful outcome. Route commodity capabilities to purchase and deterministic problems to rules.
 - Bound work in progress with a pilot cap. Cache safely by reusing platform components rather than rebuilding them.
-- The cost cram sheet's customer-complaint drill ends the same way: *"show cost by workflow and propose concrete reductions that preserve value."*
+- A customer cost complaint ends the same way: show cost by workflow and propose concrete reductions that preserve value.
 
 ---
 
@@ -89,7 +89,7 @@ On the use-case portfolio, the levels split on whether the candidate ranks thirt
 
 ## Check Yourself
 
-1. Why is "the most impressive demo" a trap, according to the cost cram sheet?
+1. Why is "the most impressive demo" a trap?
    *It hides traffic shape, tail latency, usage expansion and governance cost, so its production cost is the least visible.*
 2. What two answers to "what does prioritise decide?" change the method?
    *Picking one pilot optimises for learning and credibility; funding a portfolio also optimises for reuse and balance.*

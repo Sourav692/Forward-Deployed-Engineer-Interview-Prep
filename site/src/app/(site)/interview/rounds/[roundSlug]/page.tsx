@@ -6,7 +6,8 @@ import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { PageHead } from '@/components/editorial/PageHead'
 import { JsonLd } from '@/components/JsonLd'
 import { roundHref } from '@/lib/curriculum-href'
-import { lessonRow, liveRounds, moduleRow, practiseCount, type Row } from '@/lib/interview-rounds'
+import { getAllScenarios } from '@/lib/content'
+import { lessonRow, liveRounds, moduleRow, practiseCount, worksheetFacts, type Row } from '@/lib/interview-rounds'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 /**
@@ -42,6 +43,7 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
   const next = live[at + 1]
 
   const practise = practiseCount(round)
+  const worksheets = worksheetFacts(await getAllScenarios())
   const plural = (n: number, word: string) => `${n} ${n === 1 ? word : `${word}s`}`
   const facts = [
     { term: 'Format', value: round.format },
@@ -94,7 +96,7 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
                 <h3 className="cb-label mb-2">
                   {g.title} <span className="tabular-nums text-subtle">({g.lessons.length})</span>
                 </h3>
-                <Rows rows={g.lessons.map(lessonRow)} />
+                <Rows rows={g.lessons.map((slug) => lessonRow(slug, worksheets))} />
               </div>
             ))}
           </div>
@@ -107,7 +109,7 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
           title="Mock Interview"
           description="Run it under time with a partner, then score it against the scorecard."
         >
-          <Rows rows={round.mocks.map(lessonRow)} />
+          <Rows rows={round.mocks.map((slug) => lessonRow(slug))} />
         </EditorialSection>
       )}
 

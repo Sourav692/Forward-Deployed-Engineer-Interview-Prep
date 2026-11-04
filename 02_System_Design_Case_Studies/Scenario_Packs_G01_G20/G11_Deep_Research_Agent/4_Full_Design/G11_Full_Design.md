@@ -180,7 +180,7 @@ flowchart TD
 - Strip images and links outside the allowlist before rendering.
 - Link sub-agent traces to the run; record tokens and spend by branch and the resulting grades.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart TD

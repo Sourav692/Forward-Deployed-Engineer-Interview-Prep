@@ -71,6 +71,8 @@ export const SITE_TEXT_EDITS = {
  * because its page shows it as "What you need to make your own:".
  */
 const STORY_TAGS = [
+  // A tag alone on its line labels nothing on the site (every answer there is an example), so it goes.
+  [/^\*\*GROUNDED\.\*\*\n\n/gm, ''],
   ['| GROUNDED | Every fact comes from your existing STAR material. Say it as written. |', '| Example story | A complete sample answer built from real engagements. Use its shape and tell it with your own facts. |'],
   ['| PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you.', '| Add your own detail | A sample answer with a gap marked `[FILL: ...]` that only you can fill.'],
   ['| NEEDS YOUR INPUT | The repo has nothing here.', '| Your story | No sample story here.'],
