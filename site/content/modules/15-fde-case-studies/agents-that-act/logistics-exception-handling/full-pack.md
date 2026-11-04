@@ -10,7 +10,6 @@ This is a low-scale, high-stakes design, not a traffic problem. Only 150 people 
 | OpenAI FDE prompt: shipment rerouting over SAP, weather APIs and 500 warehouse managers | Section 10, the evaluation plan the prompt demands; section 11, the stakeholder and data-unification delta; follow-ups in section 13 |
 | Self-drill (written for this page) | Section 14 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. No ready-made cost drill covers the group, so the whole of section 14 is own construction.
 
 ---
 
@@ -41,7 +40,6 @@ Section 4 is the model answer to that prompt.
 
 A requirement that cannot fail a test is a preference. "Reliable" is a preference. "Zero customs holds auto-resolved, ever" is a constraint, and it is the one that shapes the architecture.
 
-The functional list is the source's. The priority split and the acceptance column are own construction.
 
 | Priority | Functional requirement | Accepted when |
 |---|---|---|
@@ -54,9 +52,8 @@ The functional list is the source's. The priority split and the acceptance colum
 | Must | Maintain a full audit trail of every decision, automated or human | Any resolution can be reconstructed from the audit log alone |
 | Should | Extend to new carriers without redeploying the core pipeline | A new carrier is an adapter plus config, no pipeline release |
 
-The non-functional list is the source's. The measurable targets in the right column are own construction.
 
-| Quality | Source requirement | Testable form *(own construction)* |
+| Quality | Source requirement | Testable form |
 |---|---|---|
 | Residency | EU data never leaves the EU | A cross-region query from a US session is refused; replication config has no EU→non-EU path |
 | Reliability | A missed exception is a real shipment sitting stuck | Detection recall per type tracked daily; zero dropped events on the queue |
@@ -71,7 +68,7 @@ The customs rule dominates the rest. The gate holds it as an invariant for every
 
 Event throughput and correctness constrain this system, not user count. I'd treat forty concurrent agents as a single-server load. Two hundred events a second, bursting during a regional storm, is the real sizing problem.
 
-The arithmetic below is own construction from the source's figures. Say it aloud, because it decides where the model sits.
+Say it aloud, because it decides where the model sits.
 
 | Quantity | Figure | Consequence |
 |---|---|---|
@@ -131,7 +128,7 @@ flowchart TD
     class N9 cbStop
 ```
 
-The same system drawn with its planes and trust boundaries *(own construction)*. The control plane is shared and versioned identically everywhere. The data plane is one copy per region.
+The same system drawn with its planes and trust boundaries. The control plane is shared and versioned identically everywhere. The data plane is one copy per region.
 
 ```mermaid
 flowchart TD
@@ -201,7 +198,7 @@ flowchart TD
 - Nothing executes before policy. Circuit breakers protect carrier calls.
 - Keep event stores, audit verdicts, actions, confidence, and decision summaries inside their region; EU data never leaves the EU.
 
-The same flow in Mermaid *(own construction)*, with the gate's ordering visible:
+The same flow in Mermaid, with the gate's ordering visible:
 
 ```mermaid
 flowchart TD
@@ -243,7 +240,7 @@ flowchart TD
     class SYS cbInput
 ```
 
-Read the components in the order an event meets them. The component names and responsibilities are the source's. The failure column is own construction.
+Read the components in the order an event meets them.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -260,7 +257,7 @@ Read the components in the order an event meets them. The component names and re
 | 11 | Shared control plane | Logic, routing, policy definitions, UI, versioned identically per region | A bad release rolls back everywhere at once |
 | 12 | Regional data plane | Event store, any vector store, audit log; never replicates across regions | Closed at the region boundary |
 
-Point at three things while the diagram is up *(own construction)*. The gate is its own box, not a check inside the agent. Both ingestion paths converge after ingestion, not before. The region boundary cuts through storage, not through logic.
+Point at three things while the diagram is up. The gate is its own box, not a check inside the agent. Both ingestion paths converge after ingestion, not before. The region boundary cuts through storage, not through logic.
 
 ## 5. Unify Streaming and Batch After Ingestion, Not Before
 

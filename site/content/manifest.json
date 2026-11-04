@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T21:38:10.360Z",
+  "generatedAt": "2026-11-04T08:26:51.175Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -413,7 +413,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 47,
+              "minutes": 46,
               "updated": "2026-11-04"
             }
           ]
@@ -674,7 +674,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 52,
+              "minutes": 50,
               "updated": "2026-11-04"
             },
             {
@@ -808,7 +808,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 61,
+              "minutes": 60,
               "updated": "2026-11-04"
             },
             {
@@ -886,7 +886,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
+              "minutes": 43,
               "updated": "2026-11-04"
             },
             {
@@ -967,7 +967,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 48,
+              "minutes": 47,
               "updated": "2026-11-04"
             },
             {
@@ -1012,7 +1012,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 59,
+              "minutes": 58,
               "updated": "2026-11-04"
             },
             {
@@ -1057,7 +1057,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 64,
+              "minutes": 63,
               "updated": "2026-11-04"
             }
           ]
@@ -1101,7 +1101,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 45,
+              "minutes": 44,
               "updated": "2026-11-04"
             }
           ]
@@ -1379,7 +1379,7 @@
                   "label": "Answer Template"
                 }
               ],
-              "minutes": 49,
+              "minutes": 48,
               "updated": "2026-11-04"
             },
             {
@@ -1404,7 +1404,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 33,
+              "minutes": 32,
               "updated": "2026-11-04"
             },
             {
@@ -1433,7 +1433,7 @@
                   "label": "Interview Guide 4"
                 }
               ],
-              "minutes": 37,
+              "minutes": 36,
               "updated": "2026-11-04"
             }
           ]

@@ -6,7 +6,7 @@ The document-processing member is an OpenAI-style practice prompt: *"A bank proc
 
 The source lists the decomposition. It runs ingestion, file validation, document classification, OCR or multimodal extraction, schema-constrained output, and confidence scoring. It continues with validation against business rules, human review, correction feedback, audit storage, and reprocessing with model versioning. It asks for discussion of batch versus online processing, idempotency, retry behaviour, data lineage, model versioning and document-format drift.
 
-Map each stage onto the anchor rather than drawing a new system *(own construction)*.
+Map each stage onto the anchor rather than drawing a new system.
 
 | Document-processing stage | Where it lives on the anchor | What is new |
 |---|---|---|
@@ -19,9 +19,9 @@ Map each stage onto the anchor rather than drawing a new system *(own constructi
 | Audit storage, data lineage | `InferenceResult` plus snapshot pointer | Every field traces to document hash, page, model version and reviewer |
 | Reprocessing, model versioning | `replay-failures` and `model_version` in the key | Reprocess a cohort under a new model without overwriting the old answers |
 
-Batch versus online is a per-workflow decision. Bulk backfills and nightly statements are batch, which buys throughput and quota smoothing. A document a customer uploads while waiting needs an online path with its own latency budget. The two paths can share the extraction schema and the typed boundary *(own construction)*.
+Batch versus online is a per-workflow decision. Bulk backfills and nightly statements are batch, which buys throughput and quota smoothing. A document a customer uploads while waiting needs an online path with its own latency budget. The two paths can share the extraction schema and the typed boundary.
 
-- The likely follow-up is *"How would you handle a new document format appearing without warning?"* The answer *(own construction)* has four parts.
+- The likely follow-up is *"How would you handle a new document format appearing without warning?"* The answer has four parts.
 - Detect it: classification confidence drops, and schema-validation and business-rule failure rates rise for one cohort.
 - Contain it: fail that cohort to the review queue rather than publishing low-confidence fields.
 - Recover: add the format to the classifier and schema, then replay only the quarantined cohort through `replay-failures`.
@@ -73,7 +73,7 @@ The ninety-second architecture summary, from the V2 tutorial:
 - The strong answer freezes a snapshot and balances partitions by processing cost.
 - It leases durably, holds backpressure in a coordinator, checkpoints for bounded replay, upserts by record key, and agrees contingency modes before the run is ever late.
 
-The lines that carry the round *(own construction from the sources' arguments)*:
+The lines that carry the round:
 
 1. *"Throughput is not the hard part. The decision at 4 a.m. is."*
 2. *"Can the batch be partial? That one answer sets retry, checkpointing and the spend on the last ten percent."*

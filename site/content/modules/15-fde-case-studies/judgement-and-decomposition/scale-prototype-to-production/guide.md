@@ -14,7 +14,7 @@ Scaling a prototype a thousandfold produces a different system that happens to s
 | Notes on identity, secrets and tenant fairness | Section 7: identity, fair queuing |
 | The Secure Multi-Tenant AI Platform case, the Evaluation and Release Gating case, the Observability and Production Diagnosis case, the Consumer-Scale Chat Service case, the LLM Inference Serving case and the Production LLM Gateway case | Cross-linked by section instead of re-explained |
 
-**The source has talking points for this prompt, not a worked design.** The prompt lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
+**The source has talking points for this prompt, not a worked design.** The prompt lists what to cover and one follow-up. Every number is a stated assumption for the whiteboard, not a measurement.
 
 ---
 
@@ -26,7 +26,7 @@ The prompt, verbatim from the question bank:
 
 "Works" is the word to attack first. A prototype is usually judged on a demo and a few enthusiastic users. That evidence says the idea is valuable. It says nothing about cost, tail latency, abuse, or the users who never volunteered. The bank's own list of biggest mistakes includes *"Treating a prototype as a production system."*
 
-Ask before sizing anything. The assumed answers are *own construction*, stated aloud so the interviewer can correct them.
+Ask before sizing anything.
 
 | Question | Assumed answer | What it decides |
 |---|---|---|
@@ -51,7 +51,7 @@ The weak answer draws autoscaling and a load balancer. It treats the jump as a c
 
 The same sheet contrasts prototype and production on six axes, verbatim in the table's middle column.
 
-| Axis | Prototype → production (cram sheet) | What that means for this case *(own construction)* |
+| Axis | Prototype → production (cram sheet) | What that means for this case |
 |---|---|---|
 | Dataset | curated/static → large, messy, multi-tenant, churning | The eval set built from demo questions is biased toward what already worked |
 | Security | mocked → OAuth/OIDC/SAML, RBAC/ABAC, permission filtering, audit | A shared API key and an unfiltered index become a data-exposure incident |
@@ -60,18 +60,18 @@ The same sheet contrasts prototype and production on six axes, verbatim in the t
 | Latency | one happy path → tail latency, queueing, cold starts | The demo's 3 s answer becomes a 12 s p95 under queueing |
 | Cost | small bill → budget ownership, allocation, anomaly detection, procurement | Nobody owns the invoice until it arrives |
 
-Add three gaps the table does not name *(own construction)*. Prompts drift, because the builder still edits the live prompt by hand. Provider quotas are sized for a pilot account. The support model is a chat message to the one engineer who built it. At a thousand times the users, that engineer becomes the outage.
+Add three gaps the table does not name. Prompts drift, because the builder still edits the live prompt by hand. Provider quotas are sized for a pilot account. The support model is a chat message to the one engineer who built it. At a thousand times the users, that engineer becomes the outage.
 
 - The bank has a neighbouring prompt with the same shape: *"A team has a successful notebook-based AI prototype. How do you productionise it?"* Its discussion list is verbatim: reproducibility, CI/CD, evaluation gates, model and prompt versioning, secrets management, monitoring, cost controls, security, SLAs, rollback, ownership and support.
 - Answer it with this page. The notebook variant adds one first step: turn the notebook into versioned, tested code before any of the rest applies.
 
 ## 3. State Requirements as Testable Constraints
 
-A requirement that cannot fail a test is a wish. "Scalable" is a wish. "Sustains 20 requests a second at p95 first-token under 2 s" is a constraint. The split below is *own construction*.
+A requirement that cannot fail a test is a wish. "Scalable" is a wish. "Sustains 20 requests a second at p95 first-token under 2 s" is a constraint.
 
 The functional core does not change from the prototype. Answer questions from company documents with citations. Call the two read-only tools. Keep a short conversation history. What changes is everything around that core: identity, limits, fairness, failure handling, evaluation, rollout and support.
 
-| Constraint | Stated so it can be tested *(own construction)* |
+| Constraint | Stated so it can be tested |
 |---|---|
 | Throughput | 20 requests/s sustained at peak, 40 requests/s burst for 10 minutes |
 | Latency | First token under 2 s p95; full answer under 10 s p95; measured per stage |
@@ -83,7 +83,7 @@ The functional core does not change from the prototype. Answer questions from co
 | Operability | Every page has a runbook; rollback in under 5 minutes without a redeploy |
 | Adoption | Week-4 retention and task success reported per department cohort |
 
-Every new constraint needs an owner in the architecture *(own construction)*.
+Every new constraint needs an owner in the architecture.
 
 | Constraint | Primary component(s) |
 |---|---|
@@ -97,7 +97,7 @@ Every new constraint needs an owner in the architecture *(own construction)*.
 
 ## 4. Size the Thousandfold Jump From Users Down to Tokens
 
-Say the arithmetic aloud, because it turns "scale" into three numbers the customer must approve: requests per second, tokens per minute and dollars per month. Every figure below is an assumption *(own construction)*. The method is what gets scored.
+Say the arithmetic aloud, because it turns "scale" into three numbers the customer must approve: requests per second, tokens per minute and dollars per month. Every figure below is an assumption. The method is what gets scored.
 
 | Step | Assumption | Result |
 |---|---|---|
@@ -115,7 +115,7 @@ Little's Law is `concurrency = throughput × latency`, from the cost additions. 
 
 Now price it. The cost additions list current tiers: Claude Sonnet 5 at $2.00 input and $10.00 output per million tokens, and Claude Haiku 4.5 at $1.00 and $5.00 (checked Sep 2026 on Anthropic's pricing page). Prices change constantly, so state the mechanism and say "I'd check current pricing" for the digits.
 
-| Scenario *(own construction)* | Daily cost | Monthly |
+| Scenario | Daily cost | Monthly |
 |---|---|---|
 | Prototype: 100 users × 8 requests, one mid-tier model | ≈ $14 | ≈ $400 |
 | Naive scale: 240,000 requests on one mid-tier model | $2,880 input + $1,200 output = $4,080 | ≈ $122,000 |
@@ -128,11 +128,11 @@ Now price it. The cost additions list current tiers: Claude Sonnet 5 at $2.00 in
 - The cost additions' rule of thumb is that a real agent request can become 5–20 sub-requests.
 - If the tools grow into an agent, multiply the call count before trusting any of this.
 
-Then check the provider. 7.8M tokens a minute at peak must fit the account's tokens-per-minute and requests-per-minute limits, split by model after routing. Plan for twice the peak, because retries during an incident and the Monday spike stack on each other *(own construction)*. That headroom is a procurement conversation, and it starts weeks before launch.
+Then check the provider. 7.8M tokens a minute at peak must fit the account's tokens-per-minute and requests-per-minute limits, split by model after routing. Plan for twice the peak, because retries during an incident and the Monday spike stack on each other. That headroom is a procurement conversation, and it starts weeks before launch.
 
 ## 5. Walk Each Tenfold Step and Name What Breaks
 
-Scale in tenfold steps, because each step breaks something different. A plan that jumps from 100 to 100,000 finds all of them on the same morning. The table is *own construction*, built from the cost incidents and the production guide.
+Scale in tenfold steps, because each step breaks something different. A plan that jumps from 100 to 100,000 finds all of them on the same morning.
 
 | Step | What breaks first | First signal | Fix before the next step |
 |---|---|---|---|

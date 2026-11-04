@@ -11,7 +11,7 @@
 - Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back.
 - It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
 
-- Map the four prompts onto that rule *(own construction)*. The math model wins on reasoning behaviour that prompting cannot install.
+- Map the four prompts onto that rule. The math model wins on reasoning behaviour that prompting cannot install.
 - The training system is parameter updates by definition. The harm-versus-help model wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer.
 - The phone model is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
 
@@ -19,7 +19,7 @@ A tuned model freezes its task definition, which is the cost the book asks to na
 
 ## 13. Deliver It in Sixty Minutes
 
-Spend the hour on the scorer and the eval, because that is where these prompts separate candidates *(own construction)*.
+Spend the hour on the scorer and the eval, because that is where these prompts separate candidates.
 
 | Minutes | Move | What to say |
 |---|---|---|
@@ -48,7 +48,7 @@ Spend the hour on the scorer and the eval, because that is where these prompts s
 
 ## 14. Answer the Compute Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the training bill is out of control." No ready-made drill covers this group, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the training bill is out of control."
 
 | | |
 |---|---|
@@ -120,7 +120,7 @@ Every level can name SFT and RL; the level shows in which stage gets the budget 
 - [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719): well-tuned PPO can match or beat DPO
 - [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124): RL with a programmatic verifier works well where correctness is checkable
 - [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948): rule-based rewards for math and code
-- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantisation-aware-training/): QAT loses less quality than post-training quantisation
+- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/): QAT loses less quality than post-training quantisation
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934): RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
 - [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732): small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
 

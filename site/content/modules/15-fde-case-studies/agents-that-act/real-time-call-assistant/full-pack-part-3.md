@@ -5,7 +5,7 @@
 A CRM record outlives the call. A wrong stage or an invented commitment misleads forecasting for weeks. So the assistant proposes and a person approves. It is the same preview-then-approve rule as section 8 of the Sales Copilot case.
 
 - The anchor prompt lists confidence scoring and human correction as components for this reason.
-- Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*.
+- Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low.
 - High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm.
 - Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
 
@@ -13,7 +13,7 @@ Approval routes the write through the tool gateway with an idempotency key, so a
 
 ## 10. Degrade on Everything Except Consent, Redaction and Approval
 
-Design the failure path with the happy path *(own construction)*. Three things fail closed: consent, redaction and the CRM write. Everything else degrades visibly, and the live lane degrades to silence.
+Design the failure path with the happy path. Three things fail closed: consent, redaction and the CRM write. Everything else degrades visibly, and the live lane degrades to silence.
 
 | Fails | Behaviour |
 |---|---|
@@ -32,7 +32,7 @@ Design the failure path with the happy path *(own construction)*. Three things f
 
 The anchor prompt's follow-up is the hardest question in this group: "How do you evaluate summaries when there is no single correct summary?" Two good summaries of one call can share few words. So word-overlap scores against one reference answer punish good summaries. The fix is to stop scoring the summary as text and score what it is for.
 
-The source's seven methods, verbatim: rubric-based human assessment, action-item precision and recall, factual consistency, coverage of required fields, CRM update accuracy, user-edit distance, and downstream task completion. Each answers a different worry *(the pairing is own construction)*.
+The source's seven methods, verbatim: rubric-based human assessment, action-item precision and recall, factual consistency, coverage of required fields, CRM update accuracy, user-edit distance, and downstream task completion. Each answers a different worry.
 
 | Worry | Best first measure |
 |---|---|
@@ -50,11 +50,11 @@ The source's seven methods, verbatim: rubric-based human assessment, action-item
 
 Slice every metric by call type and by language, as the anchor prompt lists. A system that scores well on English sales calls can fail on accented support calls. The average hides it. The rep's corrections from section 9 grow the golden set every week, which is why they are logged.
 
-For the live lane, measure differently *(own construction; the metrics are the drill's)*. Use first-token latency, total latency, precompute hit rate, user accept rate and timeout rate. Accept rate is the product metric. A suggestion the rep ignored cost money and taught nothing.
+For the live lane, measure differently. Use first-token latency, total latency, precompute hit rate, user accept rate and timeout rate. Accept rate is the product metric. A suggestion the rep ignored cost money and taught nothing.
 
 ## 12. Roll Out From Post-Call Summaries to Live Suggestions
 
-Launch the lane with no latency risk first *(own construction)*. The post-call summary and CRM proposal deliver value in week one, and every correction builds the evaluation set. Live suggestions come second, once the snapshot, the redaction and the playbook are proven.
+Launch the lane with no latency risk first. The post-call summary and CRM proposal deliver value in week one, and every correction builds the evaluation set. Live suggestions come second, once the snapshot, the redaction and the playbook are proven.
 
 | Stage | Scope | Gate to widen |
 |---|---|---|
@@ -77,7 +77,7 @@ Spend the hour on the three clocks, the latency budget, redaction and the evalua
 | 40–52 | Evaluation without a single correct summary; failure modes (sections 10, 11) |
 | 52–60 | Close: rollout, trade-offs, week one (section 12) |
 
-The two-minute spoken answer *(own construction)*:
+The two-minute spoken answer:
 
 > - I would treat this as three systems on three clocks.
 > - Before the call, there are hours, so I build an account snapshot as the rep, with the rep's CRM permissions, and cache it.
@@ -92,7 +92,7 @@ The two-minute spoken answer *(own construction)*:
 > - I would evaluate summaries by what they are for: action-item precision and recall, factual consistency, field coverage, CRM accuracy and edit distance, sliced by call type and language.
 > - I would launch post-call first, then live suggestions.
 
-The lines that carry the round *(own construction from the sources' arguments)*:
+The lines that carry the round:
 
 1. *"Sub-3 seconds is a workflow design problem, not a model choice."* (the drill's own line)
 2. *"Three systems on three clocks: hours before, seconds during, minutes after."*

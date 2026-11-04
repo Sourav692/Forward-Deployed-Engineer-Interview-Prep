@@ -12,7 +12,7 @@ Every candidate memory passes four gates. Is it durable (still true next month)?
 - Both statements were stored as separate episodes. Retrieval returned whichever phrasing was more similar, so vendor A reappeared about one time in four until May.
 - Typed facts fix it, and so does a release-gate test that seeds contradictory histories and asserts the newer fact wins.
 
-In this case the memory tier holds environment facts learned during work. Examples: "Service X needs a drain before restart" and "The payments API rejects batch sizes over 100" *(own construction examples)*. Salience decays on a half-life per predicate, and consolidation runs offline, off the request path.
+In this case the memory tier holds environment facts learned during work. Examples: "Service X needs a drain before restart" and "The payments API rejects batch sizes over 100". Salience decays on a half-life per predicate, and consolidation runs offline, off the request path.
 
 ## 8. Promote Procedures Through a Gate, Not a Single Success
 
@@ -35,7 +35,7 @@ Procedures change behaviour, so they are the highest-risk memory layer. A sound 
 
 ## 9. Optimise Prompts as Experiments, Not Edits
 
-Prompt optimisation automates the search a prompt engineer does by hand *(own construction throughout this section)*. Define a metric and a scored development set. Generate variants of the instructions and the selected examples. Score each variant, and keep the best. Frameworks that compile prompts from a declared program and a metric do this.
+Prompt optimisation automates the search a prompt engineer does by hand. Define a metric and a scored development set. Generate variants of the instructions and the selected examples. Score each variant, and keep the best. Frameworks that compile prompts from a declared program and a metric do this.
 
 It sits between procedure and parameters on the ladder because it changes behaviour across every task type at once, like training, yet the result is still text: versioned, readable, and revertible in seconds.
 
@@ -92,7 +92,7 @@ Evaluate the whole trajectory as well as the final answer. Several paths can be 
 
 ## 12. Bound the Autonomy the Agent Has Over Itself
 
-"Autonomously" is the most dangerous word in the prompt. The agent may learn how to do things, but never that it is allowed to do more *(own construction throughout this section, built on standard tool-gateway and approval patterns)*.
+"Autonomously" is the most dangerous word in the prompt. The agent may learn how to do things, but never that it is allowed to do more.
 
 Draw the line in a table and say it aloud.
 

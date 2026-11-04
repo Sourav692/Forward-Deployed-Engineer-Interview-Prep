@@ -14,7 +14,7 @@
 | Realtime Voice AI Agent with RAG (reference implementation) | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
 | Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
 
-**Most of this page is own construction.** The prompt gives a component list and an evaluation list. The drill gives the shape and the metrics. The design connecting them, the latency budget and every diagram were built for this page and are marked *(own construction)*.
+The prompt gives a component list and an evaluation list. The drill gives the shape and the metrics.
 
 ---
 
@@ -26,7 +26,7 @@ The prompt sounds like one system: "A company wants to transcribe calls, summari
 - During the call there are three seconds, so send a small prompt to a fast model and stream the suggestion.
 - After the call there are minutes, so summarise, extract actions and propose the CRM update asynchronously.
 
-Ask the drill's five questions first. They come verbatim from Case 6. The answers are the assumptions this page designs against *(own construction)*.
+Ask the drill's five questions first. They come verbatim from Case 6. The answers are the assumptions this page designs against.
 
 | Question | Assumed answer | What it decides |
 |---|---|---|
@@ -46,7 +46,7 @@ Add three questions the prompt implies. Which languages and call types are in sc
 
 ## 2. State Requirements as Testable Constraints
 
-"Real-time" is a preference. "First suggestion bullet visible within 3 seconds of the customer finishing a question, at p95" is a constraint. Only the constraint decides the architecture. Split the functional list by priority so the launch gate is the smallest set that still keeps the promise *(the split is own construction; the items are the anchor prompt's)*.
+"Real-time" is a preference. "First suggestion bullet visible within 3 seconds of the customer finishing a question, at p95" is a constraint. Only the constraint decides the architecture. Split the functional list by priority so the launch gate is the smallest set that still keeps the promise.
 
 **Must-haves.** Audio ingestion from the telephony or meeting platform. Speaker diarization, so the transcript knows rep from customer. Streaming transcription. PII redaction before anything is stored or sent to a model. Post-call summary and action-item extraction. CRM update proposals with confidence scoring. Human correction before the write.
 
@@ -54,9 +54,9 @@ Add three questions the prompt implies. Which languages and call types are in sc
 
 **Later.** Coaching analytics across calls. Automatic follow-up email drafts, which reuse the Sales Copilot case’s approved-claims rule.
 
-Ordering live suggestions after the post-call summary is deliberate *(own construction)*. The summary and the CRM proposal deliver value with no latency risk, and they build the evaluation set the live path later needs.
+Ordering live suggestions after the post-call summary is deliberate. The summary and the CRM proposal deliver value with no latency risk, and they build the evaluation set the live path later needs.
 
-| Constraint | Stated so it can be tested *(own construction unless quoted)* |
+| Constraint | Stated so it can be tested |
 |---|---|
 | Live latency | First suggestion bullet within 3 s of end-of-utterance at p95; timeout rate reported separately |
 | Post-call latency | Summary and CRM proposal ready within a few minutes of hang-up, before the rep's next call |
@@ -68,7 +68,7 @@ Ordering live suggestions after the post-call summary is deliberate *(own constr
 | Permissions | A rep's suggestions draw only on accounts and fields that rep may see in the CRM |
 | Cost | Cost per call tracked; the large model never runs per utterance |
 
-Interviewers probe the latency budget more than any other constraint. Say it as arithmetic *(own construction; the allocations are assumptions to measure, not vendor figures)*. The clock starts when the customer stops speaking and stops when the first bullet is readable.
+Interviewers probe the latency budget more than any other constraint. Say it as arithmetic *(the allocations are assumptions to measure, not vendor figures)*. The clock starts when the customer stops speaking and stops when the first bullet is readable.
 
 | Stage | Budget | Why it fits |
 |---|---|---|
@@ -86,7 +86,7 @@ Interviewers probe the latency budget more than any other constraint. Say it as 
 - The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target.
 - That project also has to speak the answer, which this one does not.
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -102,7 +102,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 
 ## 3. Map the Audio, the Account and Who May Hear Them
 
-Every input to this system is someone's personal data. Audio carries voices and spoken card numbers. Transcripts carry names and complaints. The CRM carries deal values the rep's peers may not see. Map each input with its sensitivity and its permission before drawing boxes *(own construction)*.
+Every input to this system is someone's personal data. Audio carries voices and spoken card numbers. Transcripts carry names and complaints. The CRM carries deal values the rep's peers may not see. Map each input with its sensitivity and its permission before drawing boxes.
 
 | Input | When it is read | Sensitivity | Permission it carries |
 |---|---|---|---|

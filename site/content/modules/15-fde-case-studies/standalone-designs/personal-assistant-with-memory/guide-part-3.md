@@ -13,7 +13,7 @@ Spend the time on scopes, bounds and isolation, because those are what the rubri
 | 32–40 | Latency budget and isolation (sections 10 and 11) |
 | 40–45 | Evaluation, failure modes and the cost pivot (sections 12, 13 and 16) |
 
-The two-minute spoken answer *(own construction, built on the source answer)*:
+The two-minute spoken answer:
 
 > - I would split memory into four scopes, because each answers a different question.
 > - The live conversation is checkpointed by thread ID and folded into a running summary past about 15 turns, so prompt size stays flat.
@@ -29,9 +29,9 @@ The lines that carry the round:
 
 1. *"Thread ID answers which conversation; the user namespace answers which person."* (source)
 2. *"If a fact can change, its key must be stable; if it is an event, a fresh key is correct."* (source)
-3. *"Store everything in the thread, send the model a summary and the recent turns."* *(own construction)*
+3. *"Store everything in the thread, send the model a summary and the recent turns."*
 4. *"A scan is fine at five memories and wrong at five hundred."* (source)
-5. *"Reads on the critical path, writes after the reply."* *(own construction)*
+5. *"Reads on the critical path, writes after the reply."*
 6. *"User ID comes from auth. Never from the model."* (source)
 7. *"Enterprise knowledge is not memory; it is retrieval."* (source)
 
@@ -50,7 +50,7 @@ The follow-ups, including the source's "skeptical staff engineer" prompts:
 
 ## 16. Answer the Cost Pivot in Ten Minutes
 
-The pivot is usually "memory made the bill go up; what do you cut?" Answer with the cost-drill card *(own construction, built on the cost notes)*.
+The pivot is usually "memory made the bill go up; what do you cut?" Answer with the cost-drill card.
 
 | Card field | Answer |
 |---|---|

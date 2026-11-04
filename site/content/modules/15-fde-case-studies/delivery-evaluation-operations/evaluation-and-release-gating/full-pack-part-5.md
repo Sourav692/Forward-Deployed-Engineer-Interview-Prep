@@ -16,7 +16,7 @@ The self-drill card turns the same idea into the full answer shape.
 | Do not | Run the full strong-judge suite on every commit |
 | 60-second line | A gate nobody can afford gets bypassed. Tier the judges, sample on every change, run the full suite only where a release decision is made. |
 
-The source names the risk alongside the fix: weak eval coverage misses quality regressions, as the sales-copilot incident shows. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest *(own construction)*.
+The source names the risk alongside the fix: weak eval coverage misses quality regressions, as the sales-copilot incident shows. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest.
 
 - Two levers connect the cost answer back to the design. The anchor's gap note calls human review almost certainly the most expensive unit cost.
 - Better grader agreement therefore lowers cost per run by shrinking the human-review tail.

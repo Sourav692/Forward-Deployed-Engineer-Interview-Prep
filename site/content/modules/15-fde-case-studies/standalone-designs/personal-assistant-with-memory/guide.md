@@ -11,7 +11,7 @@ A memory system is four scopes of state, not one database with a bigger context 
 | Notes on agent state and memory, and a supervisor-to-deep-agent case study | Three scopes of state, per-user isolation, a real 30-day retention decision (sections 2, 5 and 11) |
 | Cost and latency notes | The cost pivot (section 16) |
 
-**The source is short.** Section 6 of the memory tutorial gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Everything beyond those 25 lines is built from this site's other memory material, and anything those sources do not say is marked *(own construction)*. Sizing figures are stated assumptions, not measurements.
+**The source is short.** Section 6 of the memory tutorial gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Sizing figures are stated assumptions, not measurements.
 
 The prompt, verbatim from the source:
 
@@ -23,7 +23,7 @@ The prompt, verbatim from the source:
 
 Ask what the user expects the assistant to remember before drawing a box. "Remembers you" hides four promises: hold the conversation, keep preferences for good, recall what it did last week, and keep one user's life out of another's view. Each promise needs a different store with a different lifetime.
 
-The clarifying questions *(own construction)*:
+The clarifying questions:
 
 | Question | Why it changes the design |
 |---|---|
@@ -34,13 +34,13 @@ The clarifying questions *(own construction)*:
 | Where must the data live? | Residency rules decide where each store physically runs |
 | Is "300ms" added latency on read, write, or both? | Decides which work may run after the reply |
 
-Answer the last one for the interviewer if they will not: the budget is for reads on the critical path. Writes run after the reply is sent *(own construction)*.
+Answer the last one for the interviewer if they will not: the budget is for reads on the critical path. Writes run after the reply is sent.
 
 ## 2. State Requirements as Testable Constraints
 
 A requirement that cannot fail a test is a preference. "Remembers preferences" is a preference. "Recalls a preference stated 30 days ago in a new conversation" is a constraint.
 
-The functional requirements *(own construction, from the prompt)*:
+The functional requirements:
 
 | # | Requirement |
 |---|---|
@@ -60,10 +60,10 @@ The non-functional requirements, stated so each can fail a test:
 | Recall | A fact planted early is recalled 20 turns later, measured on an eval set *(source take-home)* |
 | Bounded growth | Prompt tokens per turn flat after the summary threshold; episodes capped per user *(source)* |
 | Durability | A completed turn and a saved fact survive a process restart |
-| Freshness | A fact written in one conversation is readable from a new conversation within seconds *(own construction)* |
-| Deletion | "Forget X" and account deletion propagate to every store, index and cache *(own construction)* |
+| Freshness | A fact written in one conversation is readable from a new conversation within seconds |
+| Deletion | "Forget X" and account deletion propagate to every store, index and cache |
 
-Every requirement then needs an owner *(own construction)*.
+Every requirement then needs an owner.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -76,7 +76,7 @@ Every requirement then needs an owner *(own construction)*.
 
 ## 3. Size the Memory Before the Model
 
-Say the arithmetic aloud, because it shows why the design needs an index and a pruning policy. Every number is an assumption for the whiteboard *(own construction)*. The method is what gets scored.
+Say the arithmetic aloud, because it shows why the design needs an index and a pruning policy. Every number is an assumption for the whiteboard. The method is what gets scored.
 
 | Step | Assumption | Result |
 |---|---|---|
@@ -97,7 +97,7 @@ Three conclusions follow. The episode cap bounds the index; without it, 5M write
 
 The organising rule is resolve, read, assemble, reply, then write. Identity comes first, because every key depends on it. Reads fan out in parallel inside the budget. Writes happen after the reply, off the critical path.
 
-The whole system *(own construction)*:
+The whole system:
 
 ```mermaid
 flowchart TD
@@ -236,7 +236,7 @@ flowchart LR
     class FO,EV,Q,EW,PR cbAction
 ```
 
-Read the components in request order. The failure column is *own construction*.
+Read the components in request order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -255,7 +255,7 @@ Read the components in request order. The failure column is *own construction*.
 | 13 | Pruner | Enforces the 100-episode cap, feeds the digest | Degrades: index grows for a while, alert fires |
 | 14 | Deletion job | Propagates "forget" and account deletion everywhere | Closed: retried until every store confirms |
 
-Point at three boundaries while the diagram is up *(own construction)*. The isolation boundary is the identity service, because every namespace below it carries a `user_id` it supplied. The latency boundary is the parallel fan-out, because the slowest store sets the turn's added latency. The write boundary is the queue, because nothing after it can slow a reply.
+Point at three boundaries while the diagram is up. The isolation boundary is the identity service, because every namespace below it carries a `user_id` it supplied. The latency boundary is the parallel fan-out, because the slowest store sets the turn's added latency. The write boundary is the queue, because nothing after it can slow a reply.
 
 ## 5. Separate Four Scopes and Give Each Its Own Key
 
@@ -292,4 +292,4 @@ Pick summarisation with a window of raw recent turns. Volunteer its failure mode
 
 Two gotchas separate a practitioner from a reader. Trimming the prompt does not trim the stored checkpoint; only an explicit removal or a retention policy shrinks storage. A running-summary field with no merge rule can be reset by a stray input on the next call, so the summary appears never to accumulate.
 
-The context builder assembles in a fixed order *(own construction)*: system prompt, semantic facts, episode digest, top-k episodes, running summary, recent turns, then the new message. Stable parts go first, so a provider's prefix cache can reuse them across turns.
+The context builder assembles in a fixed order: system prompt, semantic facts, episode digest, top-k episodes, running summary, recent turns, then the new message. Stable parts go first, so a provider's prefix cache can reuse them across turns.

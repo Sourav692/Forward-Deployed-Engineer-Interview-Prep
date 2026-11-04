@@ -2,7 +2,7 @@
 
 ## 13. Cover All Seventeen Items the Bank Lists
 
-The prompt lists seventeen things to cover. Check the answer against them, in the order given *(mapping is own construction)*.
+The prompt lists seventeen things to cover. Check the answer against them, in the order given.
 
 | Item (verbatim) | Where this page covers it |
 |---|---|
@@ -24,7 +24,7 @@ The prompt lists seventeen things to cover. Check the answer against them, in th
 | Change management | Sections 10 and 12: cohort waves, onboarding, champions |
 | Adoption measurement | Section 12 |
 
-Failure modes worth volunteering, with the signal that catches each *(own construction)*:
+Failure modes worth volunteering, with the signal that catches each:
 
 | Failure | Signal | Mitigation |
 |---|---|---|
@@ -52,7 +52,7 @@ Spend the time on the gap between prototype and production. The model choice is 
 | 36–41 | Ownership and adoption, including the follow-up (sections 11 and 12) |
 | 41–45 | Failure modes and the cost pivot (sections 13 and 15) |
 
-The two-minute spoken answer *(own construction)*:
+The two-minute spoken answer:
 
 > - First I would ask what "works" meant, because a hundred volunteers prove the idea is useful and nothing about cost, the slow tail, permissions or adoption.
 > - Assuming an internal document assistant going to 100,000 employees, I would size it: about 30% daily active at eight requests each is 240,000 requests a day, around 20 a second at peak and roughly 8 million tokens a minute.
@@ -64,7 +64,7 @@ The two-minute spoken answer *(own construction)*:
 > - I would rebuild the eval set from real traffic, gate every release on slices with security at zero, and roll out by department cohort with shadow, canary and a pointer-flip rollback.
 > - Finally I would measure adoption, week-4 retention and override rate, because a system nobody uses has failed however well it scales.
 
-The lines that carry the round *(own construction unless quoted)*:
+The lines that carry the round:
 
 1. *"A hundred volunteers proved the idea, not the system."*
 2. *"The bill scales with request shape, not with users."*
@@ -74,7 +74,7 @@ The lines that carry the round *(own construction unless quoted)*:
 6. *"If rollback requires a build, it is not a rollback."*
 7. *"Adoption is a deliverable."*
 
-Follow-ups beyond the bank's adoption question *(own construction)*:
+Follow-ups beyond the bank's adoption question:
 
 | Follow-up | Answer |
 |---|---|
@@ -86,7 +86,7 @@ Follow-ups beyond the bank's adoption question *(own construction)*:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot: "The pilot cost $400 a month. Finance just saw the forecast." There is no drill for this prompt, so the card below is a self-drill *(own construction)*, grounded in the cost cram sheets.
+The interviewer's pivot: "The pilot cost $400 a month. Finance just saw the forecast." There is no drill for this prompt, so the card below is a self-drill, grounded in the cost cram sheets.
 
 | | |
 |---|---|

@@ -72,7 +72,7 @@ flowchart TD
 
 The call assistant keeps the front half of that pipeline: voice activity detection, streaming speech-to-text and a model with retrieval. It replaces speech output with a text panel for the rep. It adds the before and after lanes the voice project does not need.
 
-The full system, drawn with its planes and lanes *(own construction)*:
+The full system, drawn with its planes and lanes:
 
 ```mermaid
 flowchart TD
@@ -181,7 +181,7 @@ flowchart TD
 - Version suggestion/summary templates, triggers, redaction patterns, live-lookup allowlists/timeouts, CRM schema, confidence thresholds, regional consent/retention, model routes, budgets, and evaluation gates.
 - Record events rather than raw audio: stage latency, timeouts, acceptance, word error rate by language, and edit distance.
 
-The same system for viewers that render Mermaid *(own construction)*:
+The same system for viewers that render Mermaid:
 
 ```mermaid
 flowchart LR
@@ -237,7 +237,7 @@ flowchart LR
     class SRC,ASR,PII,TS,TRG,PB,NONE,Q,CRMP,RQ,CRM,EV cbAction
 ```
 
-Read the components in dependency order *(own construction; the capabilities are the anchor prompt's list)*.
+Read the components in dependency order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -257,7 +257,7 @@ Read the components in dependency order *(own construction; the capabilities are
 | 14 | Retention scheduler | Deletes audio and transcripts on schedule | Closed: a failed deletion alerts; it is not retried silently |
 | 15 | Telemetry and eval store | Latency by stage, accept rate, corrections by call type and language | Degrades: suggestion still served, gap logged |
 
-Point at three boundaries while the diagram is up *(own construction)*. The three lanes share the snapshot and the transcript store and nothing else. The privacy boundary sits at redaction: nothing past it has seen raw PII. The action boundary sits at approval: the model proposes CRM changes, and only a person makes them.
+Point at three boundaries while the diagram is up. The three lanes share the snapshot and the transcript store and nothing else. The privacy boundary sits at redaction: nothing past it has seen raw PII. The action boundary sits at approval: the model proposes CRM changes, and only a person makes them.
 
 ## 5. Precompute the Account Context Before the Call Starts
 
@@ -268,7 +268,7 @@ You cannot count on a live CRM lookup fitting inside three seconds. The CRM's ow
 - It runs as the rep. It is cached on the account and the rep's permission signature.
 - A role or territory change invalidates it.
 
-- Trigger the build from the calendar for scheduled calls, and from the dialer for outbound campaigns *(own construction)*.
+- Trigger the build from the calendar for scheduled calls, and from the dialer for outbound campaigns.
 - Inbound calls are the hard case, because the account is unknown until the number is matched.
 - Match on caller ID, then build a minimal snapshot in the first seconds of the call, while the greeting is still happening.
 - I'm assuming the first real question rarely lands in the first ten seconds, and that gap is the window.
@@ -282,9 +282,9 @@ A snapshot is a copy, and copies go stale. Mark each field with its age. Keep th
 - It streams transcription so the text is ready when the customer stops.
 - And it keeps the prompt small so the model's first token comes fast.
 
-Voice activity detection starts the clock. The voice project uses Silero for it, with Deepgram Nova-3 (Pipecat's default model) for real-time speech-to-text. Streaming ASR emits partial text as the customer speaks and a final segment at the pause. Only the final segment triggers a suggestion, because partials change *(own construction)*.
+Voice activity detection starts the clock. The voice project uses Silero for it, with Deepgram Nova-3 (Pipecat's default model) for real-time speech-to-text. Streaming ASR emits partial text as the customer speaks and a final segment at the pause. Only the final segment triggers a suggestion, because partials change.
 
-Not every utterance deserves a suggestion. A trigger detector asks one question: did the customer just ask something the playbook or the snapshot can answer? Pricing questions, objections, product comparisons and case-status questions qualify. Small talk does not. Keep the detector cheap, a small classifier or rules, so it never spends the budget it protects *(own construction)*.
+Not every utterance deserves a suggestion. A trigger detector asks one question: did the customer just ask something the playbook or the snapshot can answer? Pricing questions, objections, product comparisons and case-status questions qualify. Small talk does not. Keep the detector cheap, a small classifier or rules, so it never spends the budget it protects.
 
 - The suggestion prompt is small by construction. It holds the last few turns of redacted transcript, the relevant slice of the snapshot, one or two playbook entries and any live fact that arrived in time.
 - It does not hold the whole call or the whole account. The model is small or mid-sized, as the drill says.
@@ -298,15 +298,15 @@ On timeout, show nothing. A suggestion that arrives after the rep has already an
 - "The customer agreed to renew" and "the rep offered a renewal" are different facts.
 - Diarization, telling one speaker from another, is on the anchor prompt's list for that reason.
 - Take per-speaker channels from the telephony platform when it offers them. A stereo recording with the rep on one channel makes diarization trivial.
-- Fall back to model-based diarization only for single-channel audio *(own construction)*.
+- Fall back to model-based diarization only for single-channel audio.
 
-- PII redaction runs on the transcript stream, before storage and before any model call *(own construction on placement; redaction itself is the anchor prompt's)*.
+- PII redaction runs on the transcript stream, before storage and before any model call.
 - Spoken card numbers, account numbers, dates of birth and addresses are masked with typed placeholders.
 - The summary can still say "customer gave a card number" without holding it.
 - Keep card details out of the audio in the first place: pause or mask recording while the card is read out, because PCI DSS bans storing the security code after authorisation, even encrypted.
 - Other raw audio goes in a separate, short-retention store with tighter access, because redacting audio is harder than redacting text.
 
-- Retention is a policy the platform enforces, not a promise *(own construction; retention is the anchor prompt's item)*.
+- Retention is a policy the platform enforces, not a promise.
 - Set a retention period per region and per data type: audio shortest, redacted transcript longer, summary and CRM fields as long as the CRM keeps them.
 - A scheduler deletes on time and writes an audit record. A failed deletion raises an alert.
 - Consent is checked before recording starts. With no recorded consent, the assistant does not record, transcribe or suggest.
@@ -315,12 +315,12 @@ On timeout, show nothing. A suggestion that arrives after the rep has already an
 
 - After the call, the latency constraint relaxes from seconds to minutes, so the model choice changes too.
 - The post-call worker reads the full redacted transcript and uses a larger model.
-- That model is too slow for the live lane and is worth its cost once per call *(own construction)*.
+- That model is too slow for the live lane and is worth its cost once per call.
 - The drill's line: "After call → async summary + CRM update."
 
 - The output is a fixed schema, not free text, because a CRM consumes it.
 - A summary of what was discussed. Action items, each with an owner, a due date and the transcript span it came from.
 - Commitments made by either side. Objections raised. Proposed CRM field changes such as stage, next step and close date.
-- Every extracted item cites its span, so the reviewer can check it in one click, and so the evaluation can score it *(own construction)*.
+- Every extracted item cites its span, so the reviewer can check it in one click, and so the evaluation can score it.
 
 Queue the work. Retry on failure. Never let a slow summary delay the rep's next call, which gets a fresh live lane with its own snapshot.

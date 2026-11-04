@@ -10,8 +10,7 @@ Poor data changes what gets built first. It is no reason to refuse the work. The
 
 - The source gives this case one prompt, eleven talking points and one closing line.
 - It has no "likely follow-up" block, unlike most questions in the bank.
-- Everything past those lines is assembled from other repo material or marked *(own construction)*.
-- The worked example in sections 6 to 10 is entirely own construction, and every number in it is an assumption.
+- Every number in the worked example in sections 6 to 10 is an assumption.
 
 ---
 
@@ -52,7 +51,7 @@ The bank's reusable opening fits this case well. Clarify the outcome, user, work
 
 ## 3. Split "Poor" Into Failure Types You Can Measure
 
-"The data is bad" is not actionable. Eight distinct failure types hide inside it, and each has a different week-one measurement and a different remedy *(own construction, built on the source's talking points)*.
+"The data is bad" is not actionable. Eight distinct failure types hide inside it, and each has a different week-one measurement and a different remedy.
 
 | FAILURE TYPE | SYMPTOM | MEASURE IN WEEK 1 | WHAT IT BLOCKS | REMEDY |
 |---|---|---|---|---|
@@ -73,7 +72,7 @@ In my experience, two rows fool teams most often.
 
 ## 4. Score Readiness in One Week
 
-A readiness assessment turns "poor" into a number the customer can argue with. It also produces the decision memo that justifies what gets built. One week is enough if the scope is one decision, not the whole estate *(own construction)*.
+A readiness assessment turns "poor" into a number the customer can argue with. It also produces the decision memo that justifies what gets built. One week is enough if the scope is one decision, not the whole estate.
 
 | Day | Activity | Output |
 |---|---|---|
@@ -88,7 +87,7 @@ A readiness assessment turns "poor" into a number the customer can argue with. I
 - Raw agreement overstates quality when one label dominates, because always guessing the majority class looks accurate.
 - Set the floor for a judge at κ ≥ 0.60, and I'd use the same floor for a pair of humans.
 
-The scorecard scores only the dimensions the target decision depends on *(own construction)*:
+The scorecard scores only the dimensions the target decision depends on:
 
 | DIMENSION | GREEN | AMBER | RED |
 |---|---|---|---|
@@ -107,7 +106,7 @@ The delivery framework in the Scoping to Deployed Agent case already has the slo
 
 ## 5. Decide What to Build Anyway, or Say Not Yet
 
-Poor data rules out some designs and barely affects others. Pick a design whose weakest input is one the data can supply *(own construction)*.
+Poor data rules out some designs and barely affects others. Pick a design whose weakest input is one the data can supply.
 
 | DESIGN THAT TOLERATES POOR DATA | WHY IT TOLERATES IT | WHAT IT STILL NEEDS |
 |---|---|---|

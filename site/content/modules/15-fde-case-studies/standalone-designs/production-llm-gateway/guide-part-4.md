@@ -2,7 +2,7 @@
 
 ## 12. Name What Still Breaks
 
-The rubric's last line rewards a candidate who "volunteers the failure mode of their own design." Have four ready *(own construction, with sourced items marked)*.
+The rubric's last line rewards a candidate who "volunteers the failure mode of their own design." Have four ready.
 
 | Failure | Why the design misses it | What to add next |
 |---|---|---|
@@ -30,7 +30,7 @@ A senior answer adds three things beyond the rubric: the dollar arithmetic that 
 
 ## 14. Deliver It in Forty-Five Minutes
 
-The forty-five minutes belong to the four constraints, because those are the words in the prompt. Spend it in this order *(own construction)*.
+The forty-five minutes belong to the four constraints, because those are the words in the prompt. Spend it in this order.
 
 | Minutes | What to say |
 |---|---|
@@ -59,7 +59,7 @@ The two-minute summary to rehearse:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the bill is over budget." No worked drill covers this case, so the card is *own construction*, built from the playbook's drivers and section 3's arithmetic.
+The pivot after a good design is "the bill is over budget."
 
 | | |
 |---|---|

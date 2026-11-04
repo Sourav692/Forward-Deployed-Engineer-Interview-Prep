@@ -9,7 +9,7 @@
 | Design an agentic AI system that can autonomously adapt to new tasks | Sections 1 to 14: the whole design on one running example |
 | Cost self-drill | Section 15 |
 
-**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from a problem decomposition question bank. The spine comes from the learning chapter of a book on agentic system design, whose four learning surfaces, skill promotion gate and data flywheel answer most of this prompt. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
+No worked answer exists for this prompt. The prompt comes from a problem decomposition question bank. The spine comes from the learning chapter of a book on agentic system design, whose four learning surfaces, skill promotion gate and data flywheel answer most of this prompt. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
 
 The running example is the book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y", and new request types appear every week as teams ship new systems.
 
@@ -19,19 +19,19 @@ The running example is the book's own: an internal operations agent. It handles 
 
 You cannot design toward a verb nobody defined. "Adapt to new tasks" hides at least five mechanisms, which differ by an order of magnitude in cost and in how easily you can undo a change.
 
-The book names four places an agent's improvement can live: context, memory, procedure and parameters. Each is roughly ten times slower and costlier to iterate on than the one before. This page adds prompt optimisation as a separate rung between procedure and parameters *(own construction)*. It changes behaviour broadly, like training, but stays reversible, like a prompt.
+The book names four places an agent's improvement can live: context, memory, procedure and parameters. Each is roughly ten times slower and costlier to iterate on than the one before. This page adds prompt optimisation as a separate rung between procedure and parameters. It changes behaviour broadly, like training, but stays reversible, like a prompt.
 
 | Rung | What changes | Example in the ops agent | Iteration time | Undo |
 |---|---|---|---|---|
 | 1. Context | Which instructions, examples and skills are loaded for this request | Load the "feature flags" skill and three similar past runs | Minutes | Instantly |
 | 2. Memory | Stored facts, preferences, corrections | "Service X restarts need a drain first" | Immediate | Supersede the fact |
 | 3. Procedure | Validated tool sequences saved as named skills | A promoted "safe restart" workflow | Hours | Pin the previous version |
-| 4. Prompt optimisation *(own construction)* | Instructions and examples searched against a scored dev set | A rewritten planner prompt that raises tool-choice accuracy | Hours to a day | Revert the prompt version |
+| 4. Prompt optimisation | Instructions and examples searched against a scored dev set | A rewritten planner prompt that raises tool-choice accuracy | Hours to a day | Revert the prompt version |
 | 5. Parameters | Model weights | A tuned small router for the top task types | Days to weeks | Redeploy the old model |
 
 The book's rule is to work down this table, not up. In the book's view, most teams that reach for fine-tuning have not yet fixed their tool schemas, retrieval or example selection, and fine-tuning bakes those defects into weights that take weeks to change.
 
-Ask these questions before committing *(own construction)*.
+Ask these questions before committing.
 
 | Question | Why it changes the design |
 |---|---|
@@ -48,7 +48,7 @@ If the interviewer does not answer, state a safe default aloud: new request type
 
 ## 2. State Requirements as Testable Constraints
 
-A requirement that cannot fail a test is a wish. "Gets better over time" is a wish. "Success on a new task type reaches the baseline within 14 days without a regression on any existing type" is a constraint *(own construction throughout this section; thresholds are assumptions unless marked sourced)*.
+A requirement that cannot fail a test is a wish. "Gets better over time" is a wish. "Success on a new task type reaches the baseline within 14 days without a regression on any existing type" is a constraint *(thresholds are assumptions)*.
 
 - There are six functional must-haves. Recognise when a request does not match any known capability.
 - Attempt it safely with a general fallback, escalating when confidence is low.
@@ -81,7 +81,7 @@ Each must-have needs an owner in the architecture.
 
 ## 3. Size the Adaptation Before Choosing a Rung
 
-Arithmetic decides which rungs you can afford *(own construction; every input is an assumption, arithmetic is exact)*.
+Arithmetic decides which rungs you can afford *(every input is an assumption, arithmetic is exact)*.
 
 | Quantity | Assumed value | Consequence |
 |---|---|---|
@@ -103,7 +103,7 @@ Arithmetic decides which rungs you can afford *(own construction; every input is
 
 ## 4. Draw the Architecture as Two Loops With One Gate
 
-The runtime loop serves requests. The learning loop proposes changes. They meet at one place, the evaluation gate, and nothing learned reaches live traffic without passing it *(own construction for every diagram in this section)*.
+The runtime loop serves requests. The learning loop proposes changes. They meet at one place, the evaluation gate, and nothing learned reaches live traffic without passing it.
 
 ```mermaid
 flowchart TD
@@ -266,7 +266,7 @@ flowchart TB
 
 ## 5. Detect the Unknown Before Trying to Handle It
 
-An agent cannot adapt to a task it has not noticed is new. The hardest failure is confidently forcing a new request into the nearest known skill; "I do not know how" is the easy case *(own construction throughout this section)*.
+An agent cannot adapt to a task it has not noticed is new. The hardest failure is confidently forcing a new request into the nearest known skill; "I do not know how" is the easy case.
 
 - Score novelty on three signals. First, the router's retrieval score against the skill catalogue falls below a threshold.
 - Second, the request names a system, tool or entity absent from every live skill.

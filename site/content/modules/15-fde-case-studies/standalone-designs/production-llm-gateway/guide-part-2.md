@@ -4,7 +4,7 @@
 
 The organising rule is screen, then meter, then route, then recover. Cheap checks run first. The paid call runs last. The trace runs through everything.
 
-The whole system *(own construction, built on the source's request path)*, with the control plane above and the request path below:
+The whole system, with the control plane above and the request path below:
 
 ```mermaid
 flowchart TD
@@ -162,7 +162,7 @@ flowchart TB
     class A,DEG cbInput
 ```
 
-Read the components in request order *(own construction)*.
+Read the components in request order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -235,7 +235,7 @@ The source puts it bluntly: "The single biggest cost lever in a production LLM s
 - A simple question sent to the large model wastes money. A complex one sent to the small model wastes the customer's time.
 - Say which error the product tolerates.
 
-Meter every call before it is made. The source's rule: "The cap has to fire before the API call, not after — checking cost post-hoc only tells you what you already spent." Two controls do different jobs *(the pacer is own construction)*.
+Meter every call before it is made. The source's rule: "The cap has to fire before the API call, not after — checking cost post-hoc only tells you what you already spent." Two controls do different jobs.
 
 | Control | Catches | Action |
 |---|---|---|

@@ -2,7 +2,7 @@
 
 ## 13. Name the Failure Modes Before the Interviewer Does
 
-Most failures in this case come from trusting data or labels more than the week-1 numbers justify *(own construction, except where attributed)*.
+Most failures in this case come from trusting data or labels more than the week-1 numbers justify.
 
 | FAILURE | HOW IT SHOWS UP | DEFENCE IN THE DESIGN |
 |---|---|---|
@@ -19,7 +19,7 @@ Most failures in this case come from trusting data or labels more than the week-
 
 ## 14. Deliver It in Forty-Five Minutes
 
-The round rewards spending the first third on diagnosis. A candidate who draws the pipeline at minute three has skipped the part being tested *(own construction)*.
+The round rewards spending the first third on diagnosis. A candidate who draws the pipeline at minute three has skipped the part being tested.
 
 | Minutes | Move |
 |---|---|
@@ -46,7 +46,7 @@ The round rewards spending the first third on diagnosis. A candidate who draws t
 > - I'd say out loud that a set that small only catches large regressions.
 > - Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode.
 
-**Likely follow-ups.** The source gives none for this question, so these are *(own construction)*, each with a one-line answer.
+**Likely follow-ups.**
 
 - *"The customer says there's no time for a readiness week."* Then scope it to two days on one decision; skipping it means discovering the same facts in production, more expensively.
 - *"What if the experts themselves disagree?"* Their disagreement is a finding. Write a label guide, adjudicate, and measure κ again. A task humans cannot agree on cannot have an accuracy target.
@@ -55,7 +55,7 @@ The round rewards spending the first third on diagnosis. A candidate who draws t
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The pivot is "what does all this review and relabelling cost, and how do you stop it growing?" There is no playbook drill for this case, so the card is a self-drill *(own construction)*.
+The pivot is "what does all this review and relabelling cost, and how do you stop it growing?" There is no playbook drill for this case, so the card is a self-drill.
 
 | | |
 |---|---|

@@ -13,7 +13,7 @@ Spend the hour on state, streaming, admission and cost, because those are the pa
 | 40–50 | Safety, caching, regions (sections 9 to 11) |
 | 50–60 | Metrics, the release gate, the cost pivot (sections 12 and 15) |
 
-The two-minute spoken answer *(own construction)*:
+The two-minute spoken answer:
 
 > - I would start by saying the model is stateless and the product is not.
 > - At 100 million daily users and ten messages each, peak is around 35,000 messages a second, and with eight-second answers that is about 280,000 open streams — so admission, streaming and cost dominate.
@@ -26,7 +26,7 @@ The two-minute spoken answer *(own construction)*:
 > - Each region is independent, with a home region for history and cold failover.
 > - I would prove it with time to first token, regenerate and abandon rates, moderation error rates and cost per daily active user.
 
-The lines that carry the round *(own construction)*:
+The lines that carry the round:
 
 1. *"The model is stateless and the product is not."*
 2. *"Store everything, send little."*
@@ -52,7 +52,7 @@ The follow-ups come from the question bank's Tier 2 probes and the neighbouring 
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot is "the bill is growing faster than users." No ready-made drill covers this group, so the card below is a self-drill *(own construction)*, grounded in the main cost drivers.
+The interviewer's pivot is "the bill is growing faster than users." No ready-made drill covers this group, so the card below is a self-drill, grounded in the main cost drivers.
 
 | | |
 |---|---|

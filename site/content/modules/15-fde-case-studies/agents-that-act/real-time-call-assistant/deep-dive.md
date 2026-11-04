@@ -1,6 +1,6 @@
 # Real-Time Call Assistant: Deep Dive
 
-> Read with the unchanged [source](/design/real-time-call-assistant#full-pack). The [Main guide](/design/real-time-call-assistant#main) is the interview path; the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) is the recall card. The source marks much of the architecture and the 2-second stage budget as its own construction; validate those assumptions with production measurements.
+> Read with the unchanged [source](/design/real-time-call-assistant#full-pack). The [Main guide](/design/real-time-call-assistant#main) is the interview path; the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) is the recall card. Treat much of the architecture and the 2-second stage budget as assumptions; validate them with production measurements.
 
 ## 1. Three lanes and the budget
 

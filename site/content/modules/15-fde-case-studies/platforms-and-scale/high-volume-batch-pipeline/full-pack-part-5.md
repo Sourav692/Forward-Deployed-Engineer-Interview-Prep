@@ -42,7 +42,7 @@ flowchart LR
 | Do not | Re-index the whole corpus because the refresh touched it |
 | 60-second line | Embedding should be incremental. Re-embedding unchanged documents is usually a pipeline design issue. |
 
-The debugging step is a single comparison: changed document count against embedded document count. If the two differ, the pipeline is the bill. Prevention is an indexing budget with anomaly alerts. A silent embedding-model upgrade is also a re-index, so the model version belongs in the cache key *(own construction)*.
+The debugging step is a single comparison: changed document count against embedded document count. If the two differ, the pipeline is the bill. Prevention is an indexing budget with anomaly alerts. A silent embedding-model upgrade is also a re-index, so the model version belongs in the cache key.
 
 Both cards connect back to the anchor. The content hash is the same idea as the immutable snapshot: know exactly what this run is about, and skip what it is not. The sampled audit is the same idea as the tail-sized evaluation: prove quality on a sample instead of paying the premium model on everything.
 

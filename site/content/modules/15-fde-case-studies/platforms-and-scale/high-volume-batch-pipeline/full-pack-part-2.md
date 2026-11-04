@@ -35,7 +35,7 @@ Say the uncertainty out loud:
 - Workers and sink are data-plane concerns that move records through the model into durable output.
 - They scale and change at different rates, which is why they are drawn apart.
 
-The system with its planes and trust boundaries *(own construction)*:
+The system with its planes and trust boundaries:
 
 ```mermaid
 flowchart TD
@@ -145,7 +145,7 @@ flowchart TB
     class Queue,Sink cbAction
 ```
 
-The components, with the failure behaviour of each *(the "Fails how" column is own construction)*:
+The components, with the failure behaviour of each:
 
 | # | Component | Responsibility | State owned | Fails how |
 |---|---|---|---|---|

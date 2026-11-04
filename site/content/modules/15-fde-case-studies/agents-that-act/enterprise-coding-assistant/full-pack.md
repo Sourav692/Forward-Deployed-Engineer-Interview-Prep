@@ -11,7 +11,6 @@ A coding assistant is a context-engineering problem before it is a model problem
 | Self-drill, Drill Add-ons tab | Section 15 |
 | Cross-cutting tutorials on caching, CI/CD, prompt injection and egress; cost drivers 1 and 2 | Sections 6, 8, 10 and 15 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 
 ---
 
@@ -43,7 +42,7 @@ Ask whether suggestions are real-time as the user types; the answer sets the lat
 ## 2. State Requirements as Testable Constraints
 
 - A requirement that cannot fail a test is a preference. "Fast" is a preference; "under 300 ms for inline completion at p95" is a constraint, and only the second one shapes the architecture.
-- Split the functional list with MoSCoW so the launch gate is the smallest set that still keeps the promise *(the split is own construction; the items are the source's)*.
+- Split the functional list with MoSCoW so the launch gate is the smallest set that still keeps the promise.
 
 Five must-haves:
 
@@ -63,7 +62,7 @@ The should-haves round out the first usable version: explain selected code, gene
 | Cost | Small model for the hot path, large model only on explicit request; completion length capped; cache hit rate as a cost metric |
 | Personalisation | Coding style, project APIs and accepted-suggestion history used to tune prompts and retrieval while raw source stays protected |
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -81,8 +80,8 @@ Not every context signal is worth its token cost, and every signal is source cod
 
 The collector gathers the current function, the current file, open tabs, imported libraries, repository structure, cursor location, programming language, recent edits, compiler errors and optionally the git branch. It selects only what is relevant. It never sends the whole repository.
 
-| Signal | Cost | Permission it carries | *(own construction)* |
-|---|---|---|---|
+| Signal | Cost | Permission it carries |
+|---|---|---|
 | Current function and file | Cheap, always in | The developer already has it open | |
 | Open tabs and recent edits | Cheap, usually in | Same session, same developer | |
 | Imports and repository structure | Cheap, structural | Repository read access | |
@@ -94,7 +93,7 @@ The collector gathers the current function, the current file, open tabs, importe
 - The OpenAI-style practice prompt adds the indexing side: repository indexing with incremental updates, code-aware chunking, symbol and dependency retrieval.
 - Index by symbol and file rather than by fixed token windows, so a retrieved chunk is a whole function or class and its imports.
 - Re-index on push, not on a schedule, so the assistant never suggests a helper that was deleted this morning.
-- Mirror the code host's repository permissions into the index metadata at indexing time and check them again at retrieval, which is the same two-layer rule as the Enterprise Knowledge Assistant case *(own construction, drawn from section 6 of the Enterprise Knowledge Assistant case)*.
+- Mirror the code host's repository permissions into the index metadata at indexing time and check them again at retrieval, which is the same two-layer rule as the Enterprise Knowledge Assistant case.
 
 ## 4. Draw the Architecture End to End
 
@@ -161,7 +160,7 @@ flowchart TD
 
 In the source drawing a cache hit rejoins at the prompt builder. This design ends a valid hit at output validation instead, so a hit never calls a model.
 
-The same system drawn with its planes and lanes *(own construction)*: a control plane that changes by release, and three data-plane lanes that run per request or per push.
+The same system drawn with its planes and lanes: a control plane that changes by release, and three data-plane lanes that run per request or per push.
 
 ```mermaid
 flowchart TD
@@ -313,7 +312,7 @@ flowchart LR
     class EMB,VDB,EXT,CACHE,IDE,FUN2,IDE2 cbAction
 ```
 
-Read the components in dependency order. The fourteen are the source's; the failure column is own construction.
+Read the components in dependency order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -332,6 +331,6 @@ Read the components in dependency order. The fourteen are the source's; the fail
 | 13 | Validation Service | Checks syntax, security, and quality | Closed: no validation, no suggestion |
 | 14 | Telemetry & Analytics | Captures usage, latency, and feedback | Degrades: suggestion still served, gap logged |
 
-- Point at three boundaries while the diagram is up *(own construction)*. The hot path and the slow path share the funnel and the index but nothing else, so a refactor request never queues behind a keystroke.
+- Point at three boundaries while the diagram is up. The hot path and the slow path share the funnel and the index but nothing else, so a refactor request never queues behind a keystroke.
 - The trust boundary sits at retrieval: nothing enters the prompt that the developer could not open in the code host.
 - And source code crosses the network exactly once, as the funnelled prompt, and never lands in telemetry.

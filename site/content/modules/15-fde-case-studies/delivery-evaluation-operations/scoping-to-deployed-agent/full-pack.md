@@ -11,7 +11,6 @@ It comes up in a system design round, but this is an operating-model question. T
 | Self-drill, Drill Add-ons tab | Section 15 |
 | Module 10 doc 4 and the project's `docs/05` | Sections 6, 9 and 10 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. The triage agent's internals in section 4 are the largest such addition, because the sources design the delivery pipeline and name the agent without drawing it.
 
 ---
 
@@ -66,7 +65,7 @@ A two-week clock started against something nobody can measure is worse than no c
 - Say that aloud: if a metric cannot be measured this cleanly, intake refuses rather than starting a clock against it.
 - The week-4 target cannot be proved on day 14, so intake also agrees a limited-release acceptance rule for the day-14 gate and names the owner who measures the week-4 target later.
 
-**Functional requirements of the delivery framework.** Most are the source's; the MoSCoW split is *(own construction)*.
+**Functional requirements of the delivery framework.**
 
 | Priority | Requirement |
 |---|---|
@@ -81,9 +80,9 @@ A two-week clock started against something nobody can measure is worse than no c
 | Should | Gate evidence has a required shape, a checklist rather than a sentence (section 10) |
 | Could | A portfolio view across engagements per FDA |
 
-**Functional requirements of the agent being delivered** *(own construction, from the case's metrics and library assets)*: classify incoming tier-1 tickets and handle the top 3 categories; draft a grounded reply from the Confluence knowledge base and the customer's Salesforce record; redact PII; escalate anything outside policy to a human; in shadow mode draft without sending, and in limited production send only after human approval.
+**Functional requirements of the agent being delivered**: classify incoming tier-1 tickets and handle the top 3 categories; draft a grounded reply from the Confluence knowledge base and the customer's Salesforce record; redact PII; escalate anything outside policy to a human; in shadow mode draft without sending, and in limited production send only after human approval.
 
-**Non-functional requirements** *(own construction; figures are the source's)*:
+**Non-functional requirements**:
 
 | Attribute | Target | Why it is the bar |
 |---|---|---|
@@ -163,7 +162,7 @@ flowchart TD
     class N3,N7,N11 cbPolicy
 ```
 
-Both layers on one board, with the agent inside the pipeline *(own construction)*:
+Both layers on one board, with the agent inside the pipeline:
 
 ```mermaid
 flowchart TD
@@ -278,7 +277,7 @@ flowchart LR
     class ESC,S6,LIB cbAction
 ```
 
-The delivered agent *(own construction)*:
+The delivered agent:
 
 ```mermaid
 flowchart LR
@@ -310,7 +309,7 @@ flowchart LR
     class CF,DR,SEND cbReason
 ```
 
-Read the components in dependency order. The pipeline rows are the source's; the agent rows and the failure column are own construction.
+Read the components in dependency order.
 
 | Component | Job | What goes wrong without it |
 |---|---|---|

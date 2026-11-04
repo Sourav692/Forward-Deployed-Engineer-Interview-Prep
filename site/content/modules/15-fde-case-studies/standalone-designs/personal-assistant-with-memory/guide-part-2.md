@@ -6,11 +6,11 @@ Derive a fact's key from what the fact is, and an event's key from nothing at al
 
 The rule comes as a pair. If a fact can change, its key must be stable. If a fact is a fresh event, a fresh key is correct. Mix them up and semantic memory quietly turns into a pile of duplicate facts.
 
-**Handle a conflict explicitly.** The source answer overwrites the existing key and keeps the previous value one version back. That makes "you told me X last month, now Y" answerable instead of silently lost. Add a timestamp and the source turn to each value, so the assistant can say when it learned something *(own construction)*.
+**Handle a conflict explicitly.** The source answer overwrites the existing key and keeps the previous value one version back. That makes "you told me X last month, now Y" answerable instead of silently lost. Add a timestamp and the source turn to each value, so the assistant can say when it learned something.
 
 **Name what is not persisted.** The source answer keeps raw intermediate tool outputs and one-off task details in short-term or episodic memory only. They are promoted to semantic memory only when the user restates them as a standing preference. "Book me a window seat this time" is an episode. "I always want a window seat" is a fact.
 
-- Decide who chooses what to write *(own construction)*. A hard-coded rule is predictable but misses facts it did not anticipate.
+- Decide who chooses what to write. A hard-coded rule is predictable but misses facts it did not anticipate.
 - A model-driven writer, in the style of MemGPT's self-editing memory tools, catches more but can misjudge what is durable.
 - Use a model extractor behind a policy filter. The model proposes; the policy decides which categories may be stored at all.
 - Run the extractor on the write queue, never on the reply path.
@@ -19,7 +19,7 @@ The rule comes as a pair. If a fact can change, its key must be stable. If a fac
 
 Cap episodic memory per user, because nothing else will. Every completed task is a fresh append with no natural ceiling, so a year-long user's row count only climbs. The source answer keeps the most recent 100 per user and folds older ones into a rolling digest rather than deleting them outright.
 
-The digest keeps the gist of older activity at a fixed size. "Booked four trips to Lisbon this year" survives even after the four booking episodes are pruned *(own construction)*. The pruner runs as a background job on the write path, so pruning never costs a reply any latency.
+The digest keeps the gist of older activity at a fixed size. "Booked four trips to Lisbon this year" survives even after the four booking episodes are pruned. The pruner runs as a background job on the write path, so pruning never costs a reply any latency.
 
 - Session memory needs the same discipline in a different form. A TTL marks entries for expiry, and sliding expiry extends the session on activity.
 - The gotcha is that, in the LangGraph store, expiry is enforced by a sweep, not checked on every read.
@@ -36,7 +36,7 @@ The digest keeps the gist of older activity at a fixed size. "Booked four trips 
 
 Many simple memory demos skip this. Their long-term search is an unfiltered scan or a similarity check by the model, with no real embedding index. That is the difference between working with 10 memories and working with 10,000.
 
-Use each search shape for what it does best *(own construction)*:
+Use each search shape for what it does best:
 
 | Worry | Search shape |
 |---|---|
@@ -51,7 +51,7 @@ Semantic facts for one user are few, about 50 in the sizing, so fetch them all b
 
 Budget memory like any other dependency, because a slow memory read can dominate p95 as easily as a slow retriever. The prompt allows 300ms added at p95. Spend it on reads in parallel and move every write after the reply.
 
-A budget that fits *(own construction; figures are assumptions)*:
+A budget that fits *(figures are assumptions)*:
 
 | Step | p95 assumption | Critical path? |
 |---|---|---|
@@ -66,7 +66,7 @@ A budget that fits *(own construction; figures are assumptions)*:
 
 A fact said in this thread is already in the checkpoint, so the long-term write can lag by seconds without anyone noticing. That is why every write can leave the critical path. The only freshness promise that matters is cross-conversation, and a queue that drains in seconds meets it.
 
-Put timeouts on each read. When episode search misses its timeout, answer without it and log the miss rather than blowing the budget *(own construction)*.
+Put timeouts on each read. When episode search misses its timeout, answer without it and log the miss rather than blowing the budget.
 
 ## 11. Take `user_id` From Auth, Never From the Model
 
@@ -76,7 +76,7 @@ The debugging advice follows from this. When two users see each other's memories
 
 Channels have to agree on identity before memory can be shared. A web app and a chat bot both need to resolve to the same `user_id` at the identity layer. The memory system does not care which channel wrote a fact.
 
-Governance follows from the same design *(own construction, building on the FDE track questions)*:
+Governance follows from the same design:
 
 | Governance ask | Design answer |
 |---|---|
@@ -90,7 +90,7 @@ Governance follows from the same design *(own construction, building on the FDE 
 
 Measure whether the assistant remembers, not whether it sounds as if it does. A fluent answer that invents a preference is worse than one that asks again. Few worked examples cover memory-quality evaluation, so building it is the strong move.
 
-The harness comes from the source's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
+The harness comes from the source's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later.
 
 | Worry | Metric that answers it |
 |---|---|
@@ -103,11 +103,11 @@ The harness comes from the source's take-home. Plant a fact early in a long synt
 | Is it isolated? | Cross-user read tests at zero, run before every release |
 | Is growth bounded? | Episodes per user at the cap; prompt tokens per turn flat past the threshold |
 
-Every metric except the last two is *own construction*, built on a standard recall harness. Gate changes to the extraction prompt, summary threshold or cap on this suite, because each one changes what the assistant remembers.
+Gate changes to the extraction prompt, summary threshold or cap on this suite, because each one changes what the assistant remembers.
 
 ## 13. Name the Failure Modes Before They Do
 
-Volunteer how the design breaks, because a design with no failure modes has not been examined. Most of these come from the source's gotchas and FDE questions; the rest are *(own construction)*.
+Volunteer how the design breaks, because a design with no failure modes has not been examined.
 
 | Failure | Symptom | Fix |
 |---|---|---|
@@ -118,9 +118,9 @@ Volunteer how the design breaks, because a design with no failure modes has not 
 | Scan instead of index | Fine at 5 facts, slow at 500 | Embedding index with a user filter |
 | `user_id` from the model | One user reads another's facts | Identity from auth only |
 | Expired session still readable | A read returns an entry past its TTL | Scheduled sweeper, or check age on read |
-| Stale preference wins | Assistant uses last month's value | Overwrite with one version kept; ask when a new statement contradicts an old one *(own construction)* |
+| Stale preference wins | Assistant uses last month's value | Overwrite with one version kept; ask when a new statement contradicts an old one |
 | Extractor over-stores | Transient details become "facts" | Policy filter on categories; promote only restated preferences |
-| Memory poisoning *(own construction)* | Text from an email or web page is saved as a user preference | Write only from the user's own turns; never from tool output |
+| Memory poisoning | Text from an email or web page is saved as a user preference | Write only from the user's own turns; never from tool output |
 
 ## 14. Score Yourself Against the Rubric
 

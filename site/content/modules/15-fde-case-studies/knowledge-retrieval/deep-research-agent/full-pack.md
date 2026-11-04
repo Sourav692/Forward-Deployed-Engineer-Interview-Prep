@@ -11,7 +11,6 @@ A research agent fails when an unbounded fan-out quietly spends the budget, or w
 | Research system with a supervisor and workers (mock design) | Sections 3, 8 and 12: the reducer, the three termination defences, the supervisor–worker build |
 | Self-drill, Drill Add-ons tab | Section 14 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 
 ---
 
@@ -31,7 +30,7 @@ Close requirements by restating the whole system as one sentence and asking "is 
 
 A requirement that cannot fail a test is a preference. "Well-researched" is a preference. "Every claim cited to a source a reviewer would accept" is an oracle, and only an oracle shapes the architecture.
 
-The must-haves are five *(the MoSCoW split is own construction; the items are the source's)*. Decompose a question into a dependency-aware plan. Search the public web and the user's documents in parallel. Collect findings into one deduplicated evidence ledger. Synthesise an answer with citations. Verify each claim against the evidence before streaming it with a coverage note.
+The must-haves are five. Decompose a question into a dependency-aware plan. Search the public web and the user's documents in parallel. Collect findings into one deduplicated evidence ledger. Synthesise an answer with citations. Verify each claim against the evidence before streaming it with a coverage note.
 
 The should-haves come after the core path is trusted. Probe a cache before planning. Replan when coverage is thin. Grade agreement between sources. Answer "not enough evidence" rather than guess.
 
@@ -48,7 +47,7 @@ Read-only is a deliberate requirement. There are no writes, so you need no appro
 | Data class | Public web plus user documents; per-user isolation required |
 | Recovery | A failed branch returns partial results with an explicit gap note, never a silent drop *(from the supervisor-and-workers mock design)* |
 
-Every must-have then needs an owner in the architecture *(own construction)*.
+Every must-have then needs an owner in the architecture.
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -123,7 +122,7 @@ flowchart TD
     class N7,N9 cbPolicy
 ```
 
-The same system with its planes and trust zones *(own construction)*: a control plane that changes by release, and a data plane split by who may see what.
+The same system with its planes and trust zones: a control plane that changes by release, and a data plane split by who may see what.
 
 ```mermaid
 flowchart TD
@@ -227,7 +226,7 @@ flowchart TD
     class EF cbInput
 ```
 
-Read the components in dependency order *(own construction; the components are the source's)*.
+Read the components in dependency order.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|

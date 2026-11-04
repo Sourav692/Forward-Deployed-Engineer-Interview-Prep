@@ -54,7 +54,7 @@ The interviewer's cost pivot is "users built automations and the bill exploded."
 | Do not | Trust users to write bounded workflows |
 | 60-second line | Non-technical users will build loops. The platform bounds them: caps per run, a budget per tenant, idempotent actions, and a breaker that trips before the invoice does. |
 
-- Most of the levers are already in the design, so say that aloud *(own construction)*.
+- Most of the levers are already in the design, so say that aloud.
 - The step budget is the per-run cap, and `max_steps` is the tighter of workflow and tenant.
 - The spend cap already meters real dollars before the action, not after.
 - The idempotency key already stops a redelivered event paying twice for the same work.
