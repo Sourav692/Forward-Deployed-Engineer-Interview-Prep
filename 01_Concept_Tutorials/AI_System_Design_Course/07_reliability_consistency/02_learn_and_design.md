@@ -10,7 +10,7 @@
 | Just-completed saved history | At least the acknowledged result version | Use primary or a replica proven past the minimum; retain auth/audit checks |
 | Search/projections | May be derived asynchronously | Recheck current versions/policy before context; disclose freshness appropriately |
 | Immutable passage bodies | Exact named version | Reuse bytes only after the current trusted gate |
-| Audit decision | Durable acknowledgement required by Stage 6 | Block disclosure or use a separately designed durable buffer contract |
+| Audit decision | Durable acknowledgement required by T17.7 | Block disclosure or use a separately designed durable buffer contract |
 
 A primary is the authorised writer, not merely the machine called “primary.” Replication copies committed changes to another node. With asynchronous acknowledgement, a primary loss can strand acknowledged changes not yet replicated. Synchronous replication can wait for a specified durable remote acknowledgement at extra latency/availability cost. [PostgreSQL standby documentation](https://www.postgresql.org/docs/current/warm-standby.html) describes concrete replication choices; this fixture implements none of that transport.
 
@@ -38,7 +38,7 @@ Local database transactions protect local invariants; they do not enlist a hoste
 | Local result plus outbox and duplicate-safe consumer | Atomic local intent, recoverable async propagation | Delivery lag/replay and retention operations | Choose representative slice |
 | Blind retry/failover of an uncertain provider call | May produce an answer eventually | Duplicate work/billing/effects | Reject without a documented safe provider contract |
 
-The minimum history version comes from the trusted acknowledged write, not an untrusted client permission claim. A just-completed item lookup without a usable minimum must use authority rather than silently weaken the original saved-answer promise. A stale read leg never bypasses the separate current Stage 6 identity/resource/audit requirements. The simulator isolates the data-read decision; it is not a whole-request authorisation implementation.
+The minimum history version comes from the trusted acknowledged write, not an untrusted client permission claim. A just-completed item lookup without a usable minimum must use authority rather than silently weaken the original saved-answer promise. A stale read leg never bypasses the separate current T17.7 identity/resource/audit requirements. The simulator isolates the data-read decision; it is not a whole-request authorisation implementation.
 
 ```mermaid
 flowchart TD
@@ -62,6 +62,13 @@ A projection has received event 2 but not event 1. May it claim watermark 2 and 
 
 Use one remaining deadline across queue wait, identity/policy, retrieval, provider work and commit/audit. A timeout on each hop that restarts the full budget can exceed the user's overall limit. Reserve time for the final required persistence/audit before dispatch. If no useful allowance remains, reject/expire before a new provider call.
 
-Retry known-safe transient failures only within the shared attempt/deadline budget; use backoff/jitter and preserve operation identity. A circuit breaker stops ordinary attempts after failures, waits a cooldown, then admits bounded probes. The local breaker allows one half-open probe per object and protects that choice with a lock. It is a basic logical-state fixture, not a production SDK handling arbitrary overlapping/late result generations or a distributed breaker shared across replicas. Stage 5 budgets remain authoritative even if a replica's breaker resets.
+Retry known-safe transient failures only within the shared attempt/deadline budget; use backoff/jitter and preserve operation identity. A circuit breaker stops ordinary attempts after failures, waits a cooldown, then admits bounded probes. The local breaker allows one half-open probe per object and protects that choice with a lock. It is a basic logical-state fixture, not a production SDK handling arbitrary overlapping/late result generations or a distributed breaker shared across replicas. T17.6 budgets remain authoritative even if a replica's breaker resets.
 
-Bulkheads keep one dependency or tenant from consuming every worker/thread/connection; Stage 5 queue/slot bounds already provide part of that isolation. A fallback must be semantically acceptable: smaller approved context or explicit refusal can fit, while stale permission and blind alternate-provider replay cannot. Cancellation of a local wait is not proof of remote cancellation.
+Bulkheads keep one dependency or tenant from consuming every worker/thread/connection; T17.6 queue/slot bounds already provide part of that isolation. A fallback must be semantically acceptable: smaller approved context or explicit refusal can fit, while stale permission and blind alternate-provider replay cannot. Cancellation of a local wait is not proof of remote cancellation.
+
+## Key Takeaways
+
+- Consistency is chosen per data class. Membership and permissions need current authority with no stale allow fallback, saved history needs at least the acknowledged version, and search projections may lag behind a current-version gate.
+- With asynchronous acknowledgement, losing the primary can strand acknowledged writes. For three voting nodes a majority is two, but a quorum count alone does not give linearizability without epochs, ordering, durable acknowledgement and the read protocol.
+- The result and its outbox row commit in one local transaction, which is not exactly-once model execution. A watermark covers only a contiguous applied prefix, so event 2 arriving before event 1 leaves it at zero.
+- One remaining deadline spans queue wait, policy, retrieval, provider work and commit, with time reserved for final persistence and audit. Retries stay inside that budget, and the breaker admits one half-open probe after its cooldown.

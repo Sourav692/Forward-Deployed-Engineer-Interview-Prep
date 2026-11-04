@@ -19,9 +19,9 @@ The 60-second card: durable source event; immutable version; coherent publicatio
 
 ## Record the Change and Its Limits
 
-[ADR-003](../architecture_decisions/adr_003_versioned_retrieval.md) records the versioned retrieval choice. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/validation.md), and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve actual evidence.
+[ADR-003](../architecture_decisions/adr_003_versioned_retrieval.md) records the versioned retrieval choice. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/architecture-after.md) preserves actual evidence.
 
-A later Stage 4 may add stateless app replicas and caching when this path faces broader enterprise traffic. It must preserve authoritative version/permission checks and citeable source identities; a cache hit cannot grant access. No advanced governance, embedding deployment, or evaluation platform is added here.
+A later T17.5 may add stateless app replicas and caching when this path faces broader enterprise traffic. It must preserve authoritative version/permission checks and citeable source identities; a cache hit cannot grant access. No advanced governance, embedding deployment, or evaluation platform is added here.
 
 ## Primary References
 
@@ -30,3 +30,10 @@ A later Stage 4 may add stateless app replicas and caching when this path faces 
 - [Elastic semantic text](https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/semantic-text): an implementation example of embedding/chunking concerns for the alternative, not an installed dependency.
 
 Sources checked 2 November 2026. Numbers and fixture text are authored examples. Execution evidence and untested integrations are in validation.
+
+## Key Takeaways
+
+- Each tenant, document and version object and its content is immutable. The current publication pointer is not.
+- A relevant hit is unusable when it belongs to the wrong tenant, the reader is not allowed, or the document is deleted or no longer the current version. Re-fetch stored text, because a caller can forge a hit body.
+- The local fixture does not prove real connector freshness, distributed publication, model faithfulness or physical erasure.
+- A cache hit can never grant access. Any caching added for scale must keep the authoritative version and permission checks and citeable source identities.

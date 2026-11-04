@@ -19,9 +19,9 @@ The 60-second card: authenticate first; deduplicate operations; budget requests/
 
 ## Decision and Stopping Point
 
-[ADR-005](/learn/staff-ai-system-design/architecture-decisions/adr-005-bounded-fair-dispatch) accepts bounded fair dispatch under fixed dependency budgets. [Snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/validation.md), and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve checked artifacts and limits.
+[ADR-005](/learn/staff-ai-system-design/architecture-decisions/adr-005-bounded-fair-dispatch) accepts bounded fair dispatch under fixed dependency budgets. [Snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/architecture-after.md) preserves checked artefacts and limits.
 
-Stop after Stage 5. A future Stage 6 expands enterprise identity, isolation, audit, private connectivity, and retrieval governance. It inherits the current tenant/policy gates and all execution/overload uncertainty boundaries; it has not been authored here.
+Stop after T17.6. A future T17.7 expands enterprise identity, isolation, audit, private connectivity, and retrieval governance. It inherits the current tenant/policy gates and all execution/overload uncertainty boundaries; it has not been authored here.
 
 ## Primary References
 
@@ -31,3 +31,10 @@ Stop after Stage 5. A future Stage 6 expands enterprise identity, isolation, aud
 - [AWS: timeouts, retries, and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/): retry load and side-effect boundaries.
 
 Sources checked 2 November 2026. Workloads and model outputs are illustrative; executed checks and untested production integrations are in validation.
+
+## Key Takeaways
+
+- Weighted round-robin changes how existing eligible service is allocated, not physical provider throughput.
+- A finite burst can stop and drain. Persistent arrivals above departures keep growing the backlog unless work is rejected.
+- A token estimate is safe only if it covers the allowed input and output envelope under the real provider's counting rules.
+- An unknown reservation means external termination is not established, so releasing or retrying it requires reconciliation.

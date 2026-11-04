@@ -3,11 +3,11 @@
 
 Alice's supplier workflow now has an approved behaviour/release process, but hosted generation cost, queueing and data-path constraints motivate a comparison with self-hosted inference. Keep the Model Gateway responsible for approved routes and stable operations. Do not replace an uncertain hosted call with an automatic second call merely because another GPU or endpoint is available.
 
-This is the same hypothetical platform. The gateway executes injected fixture transport while composing actual Stage 5 budget, Stage 6 security and Stage 8 release code. The GPU worksheet performs memory arithmetic only. No model, GPU, tokeniser, container cluster or real provider runs. All architecture sizes, utilisation and costs are assumptions, not benchmarks or current prices. Estimated integrated study: six to eight hours; mastery remains unassessed.
+This is the same hypothetical platform. The gateway executes injected fixture transport while composing actual T17.6 budget, T17.7 security and T17.9 release code. The GPU worksheet performs memory arithmetic only. No model, GPU, tokeniser, container cluster or real provider runs. All architecture sizes, utilisation and costs are assumptions, not benchmarks or current prices. Estimated integrated study: six to eight hours; mastery remains unassessed.
 
 ## Inherit the Approved Runtime
 
-[Stage 8](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](/learn/staff-ai-system-design/architecture-decisions/adr-008-versioned-quality-releases) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
+[T17.9](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](/learn/staff-ai-system-design/architecture-decisions/adr-008-versioned-quality-releases) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
 
 ```mermaid
 flowchart TD
@@ -36,22 +36,29 @@ An enterprise may require a particular network/data-handling path or a reproduci
 
 | Module | Treatment | Assigned depth and scope |
 | --- | --- | --- |
-| 7.2 AI gateway and provider management | Taught at mapped depth | D3: approved route policy, envelopes, budgets, durable replay and unknown/commit-failure tests |
-| 9.1 LLM execution and inference fundamentals | Taught at mapped depth | D2: prefill/decode, tokens, TTFT/ITL and peak context/memory exercise |
-| 9.2 Model serving architecture | Taught at mapped depth | D2: gateway/engine separation, readiness, batching and deployment alternatives |
-| 9.3 Inference performance optimisation | Taught at mapped depth | D1: quantisation/batching/prefix-cache implications and profiling boundary, not kernel tuning |
-| 10.1 GPU architecture fundamentals | Taught at mapped depth | D1: VRAM versus bandwidth/compute and practical memory accounting |
-| 10.2 Distributed GPU execution | Taught at mapped depth | D1: replicas versus tensor/pipeline sharding and communication cost |
-| 10.3 GPU infrastructure and scheduling | Taught at mapped depth | D1: placement, memory reservations, sharing/isolation and finite capacity |
-| 16.1 Container and orchestration architecture | Taught at mapped depth | D2: image/model identity, startup/readiness/drain, device resources and lifecycle exercise |
-| 1.2 Estimation and capacity planning | Revisited from Stage 1 | D3: inference memory, tokens, utilisation and conditional economics |
-| 2.3 Gateway and service communication | Revisited from Stage 6 | D3: provider/private-route constraints remain trusted policy |
-| 4.1 Concurrency fundamentals | Revisited from Stage 2 | D3: active sequences and remote calls are bounded independently of app replicas |
-| 5.1 Admission; 5.2 queueing; 5.3 backpressure; 5.4 fair scheduling; 5.5 AI workload management | Revisited from Stage 5 | D3/D2/D3/D2/D3: apply token/slot/queue/share budgets to inference; do not repeat those tutorials |
-| 8.2 Search architecture | Revisited from Stage 3 | D3: retrieved context changes token/memory demand while access and provenance remain mandatory |
-| 12.3 Latency and performance | Revisited from Stage 7 | D3: separate queue, prefill, decode and final persistence in the critical path |
-| 14.2 Release management and experimentation | Revisited from Stage 8 | D3: only approved bundles enter eligible routes; preserve saved operations on change |
-| 15.1 Observability systems | Revisited from Stage 8 | D3: correlate model/engine/bundle, token phases and redacted outcomes |
-| 11.1 Fine-tuning fundamentals | Deferred | Stage 10, D2: no training, adapters or optimisation research added here |
+| AI gateway and provider management | Taught here | Build depth: approved route policy, envelopes, budgets, durable replay and unknown/commit-failure tests |
+| LLM execution and inference fundamentals | Taught here | Design depth: prefill/decode, tokens, TTFT/ITL and peak context/memory exercise |
+| Model serving architecture | Taught here | Design depth: gateway/engine separation, readiness, batching and deployment alternatives |
+| Inference performance optimisation | Taught here | Explain depth: quantisation/batching/prefix-cache implications and profiling boundary, not kernel tuning |
+| GPU architecture fundamentals | Taught here | Explain depth: VRAM versus bandwidth/compute and practical memory accounting |
+| Distributed GPU execution | Taught here | Explain depth: replicas versus tensor/pipeline sharding and communication cost |
+| GPU infrastructure and scheduling | Taught here | Explain depth: placement, memory reservations, sharing/isolation and finite capacity |
+| Container and orchestration architecture | Taught here | Design depth: image/model identity, startup/readiness/drain, device resources and lifecycle exercise |
+| Estimation and capacity planning | Revisited from T17.2 | Build depth: inference memory, tokens, utilisation and conditional economics |
+| Gateway and service communication | Revisited from T17.7 | Build depth: provider/private-route constraints remain trusted policy |
+| Concurrency fundamentals | Revisited from T17.3 | Build depth: active sequences and remote calls are bounded independently of app replicas |
+| Admission; 5.2 queueing; 5.3 backpressure; 5.4 fair scheduling; 5.5 AI workload management | Revisited from T17.6 | Build depth/design depth/build depth/design depth/Build depth: apply token/slot/queue/share budgets to inference; do not repeat those tutorials |
+| Search architecture | Revisited from T17.4 | Build depth: retrieved context changes token/memory demand while access and provenance remain mandatory |
+| Latency and performance | Revisited from T17.8 | Build depth: separate queue, prefill, decode and final persistence in the critical path |
+| Release management and experimentation | Revisited from T17.9 | Build depth: only approved bundles enter eligible routes; preserve saved operations on change |
+| Observability systems | Revisited from T17.9 | Build depth: correlate model/engine/bundle, token phases and redacted outcomes |
+| Fine-tuning fundamentals | Deferred | T17.11, Design depth: no training, adapters or optimisation research added here |
 
-Outcomes: defend a hosted/self-hosted boundary; build/debug an approved gateway slice; estimate peak memory without claiming speed; explain deployment and parallelism trade-offs at the assigned depth. The [curriculum map](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json) is authoritative. D1 topics need working boundary knowledge, not a GPU-internals course.
+Outcomes: defend a hosted/self-hosted boundary; build/debug an approved gateway slice; estimate peak memory without claiming speed; explain deployment and parallelism trade-offs at the assigned depth. Explain depth topics need working boundary knowledge, not a GPU-internals course.
+
+## Key Takeaways
+
+- A required data path, a reproducible model revision, rising time to first token at an unchanged request rate and long contexts filling memory are different reasons to change architecture. Each needs its own evidence.
+- Prefill reads the input once and decode produces each next token from prior attention state. The KV cache holds that key/value state and is inference state, never an authorisation or content cache.
+- Time to first token (TTFT) and inter-token latency (ITL) measure different things. Good first-token timing does not prove a saved success, and high aggregate throughput can coexist with poor per-user token latency.
+- The Model Gateway stays responsible for approved routes. An uncertain hosted call is never replaced with an automatic second call because another GPU or endpoint is free.

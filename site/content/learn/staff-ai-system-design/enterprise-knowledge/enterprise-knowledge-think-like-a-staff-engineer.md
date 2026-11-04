@@ -7,7 +7,7 @@ Measure source-cursor lag, oldest ingestion-job age, parser failures, index publ
 
 If Alice receives an old policy, inspect the connector cursor, published version, and the final context citation before blaming generation. If the object exists but is not published, inspect the failed ingestion attempt; do not point readers to it manually. If new access rules are unavailable, apply the stated freshness/fail-closed policy. Never use a stale search copy as the sole authority for immediate revocation.
 
-Limit ingestion file size, parse time, context tokens, and query length in the real API adapter. The fixture bounds source characters and final result count but does not implement production upload security, distributed storage, source authentication, or a tokeniser. A real search-service migration needs versioned indexes, alias/pointer cutover, deletion/ACL reconciliation, and rollback that does not revive restricted data. Stage 6 will expand governance rather than retell this retrieval baseline.
+Limit ingestion file size, parse time, context tokens, and query length in the real API adapter. The fixture bounds source characters and final result count but does not implement production upload security, distributed storage, source authentication, or a tokeniser. A real search-service migration needs versioned indexes, alias/pointer cutover, deletion/ACL reconciliation, and rollback that does not revive restricted data. T17.7 will expand governance rather than retell this retrieval baseline.
 
 ## Interview 1: Why Not Start With Vector Search?
 
@@ -40,3 +40,10 @@ Limit ingestion file size, parse time, context tokens, and query length in the r
 **Spoken answer:** “Source IDs provide traceability, not entailment. The chosen passage may be irrelevant, stale, incomplete, or misrepresented. I verify version/access before context leaves the app, evaluate retrieval separately from grounded answer quality, and preserve citations that resolve to the exact source generation. A missing authorised passage should produce a refusal rather than a fabricated policy answer.”
 
 **Trade-off:** Conservative refusals reduce coverage. **Changed constraint:** If several readable policies disagree, what metadata and response behaviour would you require?
+
+## Key Takeaways
+
+- Separate "not ingested", "not relevant" and "not allowed" internally, but keep external errors from revealing that a restricted document exists.
+- If Alice gets an old policy, inspect the connector cursor, the published version and the final context citation before blaming generation. Never use a stale search copy as the sole authority for immediate revocation.
+- Preserving bytes is not publishing. When chunk publication fails, keep the prior visible generation, fail or retry the durable job, and clean up the orphan object later under policy.
+- Source IDs give traceability, not entailment. A cited passage can still be irrelevant, stale or misrepresented, so evaluate retrieval separately from grounded answer quality and refuse when no authorised passage exists.

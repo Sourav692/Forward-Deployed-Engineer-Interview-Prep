@@ -3,7 +3,7 @@
 
 ## Operate and Retire the Model
 
-Use tenant-scoped storage credentials for datasets, checkpoints, outputs, and tracking metadata. Access to training artifacts is separate from document read access. Record approver, purpose, budget, and lineage without raw training examples in metrics. Freeze evaluator and gate identities alongside each report. Any changed base, recipe, tokeniser, data, or serving configuration invalidates assumed compatibility and requires new evidence.
+Use tenant-scoped storage credentials for datasets, checkpoints, outputs, and tracking metadata. Access to training artefacts is separate from document read access. Record approver, purpose, budget, and lineage without raw training examples in metrics. Freeze evaluator and gate identities alongside each report. Any changed base, recipe, tokeniser, data, or serving configuration invalidates assumed compatibility and requires new evidence.
 
 A deletion request must traverse snapshots, examples, checkpoints, registry versions, serving copies, caches, and retained backups according to approved policy. Deleting a row does not erase learned parameters. Quarantine affected descendants, stop future serving where required, and plan retraining from an approved clean snapshot. Physical erasure, legal retention choices, and machine unlearning are outside this fixture. Do not promise selective forgetting.
 
@@ -38,3 +38,10 @@ Prompt: Tenant A revokes permission to use a supplier corpus after training.
 Spoken answer: “I would locate every derived model and checkpoint through dataset lineage and apply the approved retention and serving policy. Row deletion cannot remove information already learned in weights. I would block affected candidates, assess deployed versions, and retrain from an approved snapshot where required. Document retrieval would still check current permission separately. I would avoid promising selective forgetting or treating an older model rollback as an authorisation rollback.”
 
 Trade-off: retirement can reduce availability while clean candidates are prepared. Follow-up: if backups must remain, restrict access and document expiry separately.
+
+## Key Takeaways
+
+- Classify failures before tuning. A stale supplier rule needs current authorised retrieval, formatting may yield to prompts and schema constraints, and only stable residual misses justify a bounded adapter challenger against the frozen baseline.
+- Reproducibility means resolving a friendly model name to immutable base, adapter, tokeniser, dataset, recipe, serving, evaluator and test identities. A seed does not prove identical floating-point execution across hardware.
+- Real training resume needs compatible code, input position, optimiser, scheduler and random state, not a newer log line. Frequent checkpoints cut recomputation but cost I/O and storage.
+- Deleting a dataset row does not erase learned parameters. Trace descendants through lineage, quarantine them, retrain from an approved clean snapshot, and never promise selective forgetting.

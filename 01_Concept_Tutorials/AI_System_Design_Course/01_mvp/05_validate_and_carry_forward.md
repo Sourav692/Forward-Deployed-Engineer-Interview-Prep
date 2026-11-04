@@ -5,7 +5,7 @@
 
 [ADR-001](../architecture_decisions/adr_001_synchronous_mvp.md) accepts a synchronous single-application MVP for this educational architecture. [Current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) records version `v0.1-stage-01`; it is an accepted teaching baseline, not a deployment approval.
 
-Keep the request schema, scoped history, adapter interface, no-automatic-retry rule, and commit-before-success contract. A future Stage 2 starts when document processing or another long task blocks interactive requests or must survive a worker crash. It can introduce durable jobs with a migration decision. No Stage 2 artifacts are generated here.
+Keep the request schema, scoped history, adapter interface, no-automatic-retry rule, and commit-before-success contract. A future T17.3 starts when document processing or another long task blocks interactive requests or must survive a worker crash. It can introduce durable jobs with a migration decision. No T17.3 artefacts are generated here.
 
 Unresolved pre-pilot questions include real identity/provider contracts, durable hosting, retention and backup deletion, a recovery policy for uncertain rows, measured load/latency, and cost/quota values. Keep these visible rather than marking the platform production-ready.
 
@@ -31,6 +31,13 @@ These boxes are learner work, not claims of mastery. Review after about one, sev
 
 Stop after these gates. Defer distributed execution, recovery workers, retrieval, and production infrastructure to their assigned stages.
 
+## Key Takeaways
+
+- The accepted design is a synchronous single-application MVP, a teaching baseline rather than deployment approval. It carries forward the request schema, scoped history, adapter interface, no-automatic-retry rule and commit-before-success contract.
+- Durable jobs come next only when a long task blocks interactive requests or must survive a worker crash.
+- A shorter provider deadline does not prove a better SLO. It can replace slow completions with failures, so count errors and measure the actual request population.
+- The lab cannot prove identity, TLS or hosted-provider behaviour, because those boundaries are simulated or absent. They need separate integration checks before a real pilot.
+
 ## References
 
 - [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html): primary reference for HTTP methods and status semantics; application retry/idempotency choices remain explicitly local.
@@ -39,4 +46,4 @@ Stop after these gates. Defer distributed execution, recovery workers, retrieval
 - [Python sqlite3](https://docs.python.org/3/library/sqlite3.html): parameter binding and transaction API used by the executable.
 - [SQLite Isolation](https://www.sqlite.org/isolation.html): local database concurrency/isolation constraints.
 
-Sources checked 2 November 2026. Examples and budgets are authored assumptions. Local verification results and limitations are recorded in [validation.md](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/01-mvp/validation.md) and `stage-state.json`.
+Sources checked 2 November 2026. Examples and budgets are authored assumptions.

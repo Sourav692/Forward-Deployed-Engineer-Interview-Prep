@@ -15,9 +15,9 @@ Keep source permission state distinct from content version. A permission change 
 
 In production, extract text while preserving page/section offsets, parser version, source version, and chunk IDs. Choose boundaries that keep a supplier rule with its qualifier. Too-small chunks can separate “confirmation required” from the exception; too-large chunks waste context and reduce ranking precision. The teaching fixture splits on blank paragraphs and uses `(document, version, paragraph index)` as provenance. It does not claim those offsets are stable across parser changes.
 
-Publish only after all required passages for the chosen version are ready. A new parser/chunking configuration needs a new index generation or equivalent key so old and new chunk identities cannot mix silently. Record failed extraction as a failed job, rather than indexing an empty document and calling ingestion successful. Retry safe extraction using Stage 2’s job protocol. An embedding call, if later added, is an external dependency with its own ambiguity and cost; durable job state does not remove that boundary.
+Publish only after all required passages for the chosen version are ready. A new parser/chunking configuration needs a new index generation or equivalent key so old and new chunk identities cannot mix silently. Record failed extraction as a failed job, rather than indexing an empty document and calling ingestion successful. Retry safe extraction using T17.3’s job protocol. An embedding call, if later added, is an external dependency with its own ambiguity and cost; durable job state does not remove that boundary.
 
-A delete event publishes a newer tombstone and removes visible search passages. Retain enough version metadata to reject a late upsert. Old object bytes, backups, and search-service replicas require a separate deletion/retention policy; removing a search hit is not a verified physical erase. Object lifecycle governance is introduced at D1 here, not implemented as a production erasure service.
+A delete event publishes a newer tombstone and removes visible search passages. Retain enough version metadata to reject a late upsert. Old object bytes, backups, and search-service replicas require a separate deletion/retention policy; removing a search hit is not a verified physical erase. Object lifecycle governance is introduced at explain depth here, not implemented as a production erasure service.
 
 ## Choose Search for This Corpus
 
@@ -51,3 +51,10 @@ After diagram. Trusted connector/worker/metadata roles stay inside application c
 The most relevant passage is a restricted supplier discount. Can we send it to the model with an instruction not to reveal it?
 
 <details><summary>Answer before revealing</summary><p>No. The text has already crossed the access boundary if the model receives it. Exclude unauthorised material in trusted retrieval/context code before generation. Relevance and permission are different decisions, and a prompt is not an access-control mechanism.</p></details>
+
+## Key Takeaways
+
+- Ingestion makes two promises. Preserve immutable source bytes under a tenant, document and version identity, then publish a visible version only once every required passage is ready. A failure between them leaves an orphan object, never a half-built document.
+- A repeated version with the same body is a no-op, and the same identity with different text is a conflict. An older event can never replace a newer published version or tombstone.
+- Lexical full-text search (SQLite FTS5 with BM25 ranking) is the baseline because supplier names, identifiers and explicit policy wording matter. Semantic or hybrid retrieval waits until an authorised relevance set shows which lexical misses matter.
+- Apply tenant, current-version, deleted-state and reader filters before the result limit, so restricted high-scoring hits cannot fill the final context. A prompt is not an access-control mechanism.

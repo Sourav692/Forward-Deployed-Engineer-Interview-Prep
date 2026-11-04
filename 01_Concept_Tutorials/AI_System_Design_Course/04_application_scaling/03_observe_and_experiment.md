@@ -49,9 +49,9 @@ Now assume two authoritative checks plus four passage body fetches/request. With
 
 With an assumed 80% passage hit rate, expected reads/request are `2 + 4 × (1 − 0.8) = 2.8`. Demand becomes 280 queries/second, and the same modelled DB budget allows `500 / 2.8 ≈ 178.57 RPS`. The two trusted checks are never multiplied by hit rate. This model groups database work into equal-cost queries; the actual FTS/policy fixture uses a different query shape and does not validate that performance assumption.
 
-Choose a modelled provider capacity of 120 RPS for the healthy comparison: minimum of app 112, DB 178.57, provider 120 is 112 planned RPS. Lower provider capacity to 60 and the minimum becomes 60 regardless of more app replicas. These provider budgets are new hypothetical inputs for a larger rollout, not verified vendor quotas or an automatic expansion of Stage 1’s illustrative quota.
+Choose a modelled provider capacity of 120 RPS for the healthy comparison: minimum of app 112, DB 178.57, provider 120 is 112 planned RPS. Lower provider capacity to 60 and the minimum becomes 60 regardless of more app replicas. These provider budgets are new hypothetical inputs for a larger rollout, not verified vendor quotas or an automatic expansion of T17.2’s illustrative quota.
 
-Request counts also hide token demand. At 1,500 expected tokens/request and 100 RPS, expected demand is 150,000 tokens/second or nine million tokens/minute before retries. Real quotas, cost, variable lengths, and concurrent generation limits must be checked separately. Stage 5 will make admission/fair scheduling explicit rather than treating the provider as an unlimited sink.
+Request counts also hide token demand. At 1,500 expected tokens/request and 100 RPS, expected demand is 150,000 tokens/second or nine million tokens/minute before retries. Real quotas, cost, variable lengths, and concurrent generation limits must be checked separately. T17.6 will make admission/fair scheduling explicit rather than treating the provider as an unlimited sink.
 
 A pool of 20 database connections per replica grows to 160 at eight replicas. Include workers, migrations, and spare connections in the server budget. More connections are not inherently more throughput; they can increase contention. Use pool wait/transaction latency and dependency timings to test that diagnosis.
 
@@ -85,12 +85,19 @@ python3 10_AI_System_Design/stages/04-application-scaling/labs/test_scaling.py -
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-[scaling.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/labs/scaling.py) adds bounded cache behaviour and independent capacity arithmetic. Tests instantiate the actual Stage 1 application against a shared SQLite file to verify cross-replica history and key replay, then use the actual Stage 3 store to test warm policy checks, update/delete/revocation, tenant key separation, TTL/eviction/cache outage, and bottleneck boundaries. These are integration/invariant tests across local objects, not a benchmark or managed-database migration test.
+[scaling.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/labs/scaling.py) adds bounded cache behaviour and independent capacity arithmetic. Tests instantiate the actual T17.2 application against a shared SQLite file to verify cross-replica history and key replay, then use the actual T17.4 store to test warm policy checks, update/delete/revocation, tenant key separation, TTL/eviction/cache outage, and bottleneck boundaries. These are integration/invariant tests across local objects, not a benchmark or managed-database migration test.
 
-For D3 practice, instrument offered versus completed requests and dependency time under a controlled local load without paid model calls. Predict the limiting budget before the run. Replace a warm replica with a cold one and record misses/DB calls; distinguish a measured result from this worksheet’s assumed capacity. For D2 caching, explain which property comes from the key, the live gate, TTL, and eviction separately.
+For build depth practice, instrument offered versus completed requests and dependency time under a controlled local load without paid model calls. Predict the limiting budget before the run. Replace a warm replica with a cold one and record misses/DB calls; distinguish a measured result from this worksheet’s assumed capacity. For design depth caching, explain which property comes from the key, the live gate, TTL, and eviction separately.
 
 ## Checkpoint 2: Scale What Is Saturated
 
 Eight app replicas are mostly waiting on a provider capped at 60 RPS. Incoming traffic is 100 RPS. Should you double app replicas to recover the missing 40 RPS?
 
 <details><summary>Answer before revealing</summary><p>No. The dependency cap remains 60 RPS. Extra replicas can increase waiting, connections, and retries without increasing completions. Preserve bounded demand now, then use explicit admission and dependency-capacity decisions rather than calling more idle app CPU a fix.</p></details>
+
+## Key Takeaways
+
+- At 25 ms CPU and a 70% utilisation target, a replica plans for 28 RPS. Serving 100 RPS needs `ceil(100 / 28) = 4` replicas, giving 112 planned RPS before database and provider limits.
+- With two authoritative checks and four passage fetches a request, a 500-query/second database permits about 83.33 RPS. An 80% passage hit rate cuts reads to 2.8 a request and lifts that to about 178.57 RPS. The trusted checks never shrink with hit rate.
+- Planned capacity is the minimum of the app, database and provider budgets in the same units. With the provider at 60 RPS, capacity stays 60 however many replicas run, and extra replicas only add waiting, connections and retries.
+- Request counts hide token demand. At 1,500 tokens a request and 100 RPS, demand reaches 150,000 tokens a second, or nine million a minute, before retries.

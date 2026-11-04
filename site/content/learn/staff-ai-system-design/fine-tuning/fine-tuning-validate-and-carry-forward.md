@@ -5,7 +5,7 @@
 
 1. What changes first for a factual supplier-policy error? Current authorised retrieval and source freshness, not automatically model parameters.
 2. Why split by supplier/thread? Near-duplicate examples across splits can inflate reported generalisation.
-3. Is a checkpoint a deployable release? No. Recoverable training state and approved serving artifacts have different contracts.
+3. Is a checkpoint a deployable release? No. Recoverable training state and approved serving artefacts have different contracts.
 4. Can 99% schema success override one known safety failure? No. Safety gates remain independent.
 5. What stays unchanged after a release rollback? Saved operation identity, current access policy, audit requirements, and uncertain external outcomes.
 
@@ -13,6 +13,12 @@
 
 ## Evidence and Carry Forward
 
-Read the [stage plan](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/stage-plan.md), [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/architecture-after.md), [decision](/learn/staff-ai-system-design/architecture-decisions/adr-010-governed-model-customisation), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/validation.md), and [actual coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv). The [curriculum map](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json) records targets. Local content verification and learner completion are separate. Stage 11 inherits approved candidate lineage and the unchanged runtime, then adds regional boundaries. No actual model training or deployment has occurred.
+Read the [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/architecture-after.md) and [decision](/learn/staff-ai-system-design/architecture-decisions/adr-010-governed-model-customisation). Local content verification and learner completion are separate. T17.12 inherits approved candidate lineage and the unchanged runtime, then adds regional boundaries. No actual model training or deployment has occurred.
 
-Review after about one, seven, and 21 days. Stop when you can explain the change in two minutes, draw it within the inherited platform, defend two alternatives, and diagnose a fault from an observable signal. For D3 modules also build, test, and debug the representative slice. These learner gates remain unassessed. Production integrations and deployment controls described here are proposals unless the validation report explicitly records an executed check.
+Review after about one, seven, and 21 days. Stop when you can explain the change in two minutes, draw it within the inherited platform, defend two alternatives, and diagnose a fault from an observable signal. For build depth modules also build, test, and debug the representative slice. These learner gates remain unassessed. Production integrations and deployment controls described here are proposals unless the validation report explicitly records an executed check.
+
+## Key Takeaways
+
+- A factual supplier-policy error is fixed through current authorised retrieval and source freshness, not by changing model parameters automatically.
+- Split by supplier or thread, because near-duplicate examples across splits inflate reported generalisation. A checkpoint is recoverable training state, not a deployable release.
+- Even 99% schema success cannot override one known safety failure. After a release rollback, saved operation identity, current access policy, audit requirements and uncertain external outcomes stay unchanged.

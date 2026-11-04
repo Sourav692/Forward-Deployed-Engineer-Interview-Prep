@@ -19,11 +19,11 @@ The 60-second card: accept durably; claim atomically; separate overlap from dura
 
 ## Decisions, Package, and Next Dependency
 
-[ADR-002](../architecture_decisions/adr_002_durable_execution.md) adds durable background execution without replacing Stage 1’s short request contract. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) records the accepted educational after-state independently of the mutable [current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md). [Coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/stage-state.json), and [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/validation.md) separate authored checks from mastery.
+[ADR-002](../architecture_decisions/adr_002_durable_execution.md) adds durable background execution without replacing T17.2’s short request contract. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) records the accepted educational after-state independently of the mutable [current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md).
 
 The complete distribution contains this stage, required earlier guides/labs, architecture/ADRs, and local reference/licence files with their relative paths preserved. No production readiness is inferred.
 
-A later Stage 3 can use these durable jobs for document ingestion and versioned indexing. It must preserve trusted scope, replay-safe writes, job status, and uncertainty boundaries. It is not needed to understand or run Stage 2.
+A later T17.4 can use these durable jobs for document ingestion and versioned indexing. It must preserve trusted scope, replay-safe writes, job status, and uncertainty boundaries. It is not needed to understand or run T17.3.
 
 ## Primary References
 
@@ -32,3 +32,9 @@ A later Stage 3 can use these durable jobs for document ingestion and versioned 
 - [SQLite isolation](https://www.sqlite.org/isolation.html): serialised local writes underlying the claim experiment.
 
 Sources checked 2 November 2026. Workloads, clocks, deadlines, and tool responses are authored assumptions. See validation for actual execution evidence.
+
+## Key Takeaways
+
+- `202` establishes only durable acceptance, not completed generation. Keep transactions short so no write lock is held over slow external work.
+- Retry is safe only for pure work before any external effect, within bounded attempts and the job deadline. An epoch protects local writes against a stale owner, not external actions.
+- Trusted tool policy, step, time and attempt budgets, and persistent state stop an agent loop. Later document ingestion can reuse these durable jobs if it keeps trusted scope, replay-safe writes, job status and uncertainty boundaries.

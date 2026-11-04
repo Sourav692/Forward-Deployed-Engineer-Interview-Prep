@@ -15,13 +15,13 @@ The 60-second card: approved route; current access; stable operation; bound cont
 - [ ] Draw protected Gateway, budget guard, engine/replica, device and result boundaries.
 - [ ] Defend hosted/self-hosted, one-device replica and sharding alternatives at their assigned depths.
 - [ ] Diagnose queue, prefill, decode, memory and unknown-outcome failures using concrete signals.
-- [ ] For D3 Gateway, run/modify the prior-stage integration and final-write tests. For D2, complete the memory/deployment design exercise. For D1 topics, explain purpose/boundary/trade-off and stop; learner completion remains unassessed.
+- [ ] For build depth Gateway, run/modify the prior-stage integration and final-write tests. For design depth, complete the memory/deployment design exercise. For explain depth topics, explain purpose/boundary/trade-off and stop; learner completion remains unassessed.
 
 ## Decision and Stopping Point
 
-[ADR-009](../architecture_decisions/adr_009_approved_inference_boundaries.md), the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/validation.md) and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve actual evidence.
+[ADR-009](../architecture_decisions/adr_009_approved_inference_boundaries.md) and the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/architecture-after.md) preserve actual evidence.
 
-Stop after Stage 9. A future Stage 10 considers fine-tuning/customisation only when behaviour requirements justify it, retaining approved data, release and serving boundaries. No training, GPU provisioning or production endpoint has been performed here.
+Stop after T17.10. A future T17.11 considers fine-tuning/customisation only when behaviour requirements justify it, retaining approved data, release and serving boundaries. No training, GPU provisioning or production endpoint has been performed here.
 
 ## Primary References
 
@@ -31,3 +31,10 @@ Stop after Stage 9. A future Stage 10 considers fine-tuning/customisation only w
 - [Kubernetes GPU scheduling](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/): device resources and placement vocabulary, not a deployed cluster.
 
 Sources checked 2 November 2026. All hardware shapes, timings and costs in the worked examples are explicit assumptions. Validation distinguishes memory/control arithmetic from real hardware/inference measurements.
+
+## Key Takeaways
+
+- KV memory depends on the K and V count, layers, KV heads, head dimension, bytes per element, total cached tokens and active sequences. Reducing weight bits does not change the cached representation.
+- Route work only when the approved model, engine and supported envelope are ready, not merely when a container runs. Drain on replacement without erasing unknown outcomes.
+- Another provider is safe after a timeout only under explicitly approved data and behaviour rules with known-outcome or reconciliation semantics.
+- Memory and control arithmetic leave actual inference and GPU performance, deployment, tokenisation, network privacy and production cost untested.

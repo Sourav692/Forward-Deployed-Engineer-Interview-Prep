@@ -19,9 +19,9 @@ The 60-second card: freeze versions; validate coverage; score slices; hard-stop 
 
 ## Decision and Next Dependency
 
-[ADR-008](../architecture_decisions/adr_008_versioned_quality_releases.md), the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/validation.md) and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve actual artifacts.
+[ADR-008](../architecture_decisions/adr_008_versioned_quality_releases.md) and the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) preserve actual artefacts.
 
-A future Stage 9 compares hosted and self-hosted inference under explicit performance, policy and cost assumptions. It must use approved versioned routes, current data/tenant policy, bounded provider budgets and the inherited unknown-outcome rules, rather than treating a cheaper endpoint as an automatic fallback.
+A future T17.10 compares hosted and self-hosted inference under explicit performance, policy and cost assumptions. It must use approved versioned routes, current data/tenant policy, bounded provider budgets and the inherited unknown-outcome rules, rather than treating a cheaper endpoint as an automatic fallback.
 
 ## Primary References
 
@@ -30,3 +30,10 @@ A future Stage 9 compares hosted and self-hosted inference under explicit perfor
 - [NIST AI RMF](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10): governance context, not claimed compliance.
 
 Sources checked 2 November 2026. Cases, output strings, latencies, costs and thresholds are authored fixtures. Validation separates executed scoring/control tests from untested model/deployment behaviour.
+
+## Key Takeaways
+
+- A report binds the exact bundle, dataset, evaluator and approved gate settings. Slices matter because a global score can hide access, refusal or tenant-specific regressions.
+- Synthetic cost and latency values prove only that the deterministic gate logic handles those labels, not real model performance.
+- Shadow traffic costs extra authorised inference and data handling, and it can cause side effects unless the execution path is constrained.
+- Rollback preserves current safety authority, committed result identity and evidence of unknown external effects.

@@ -43,9 +43,9 @@ Follow-up: the pilot misses its gate by one mismatch, and the microservice advoc
 
 ## Interview 5: Walk Me Through the Whole Platform
 
-Prompt: Defend the complete design, Stages 1 to 12, in about a minute.
+Prompt: Defend the complete design, T17.2 to T17.13, in about a minute.
 
-Spoken answer: “Alice in Tenant A submits a supplier request. An authenticated API commits the answer before reporting success, and long work runs as durable jobs with idempotent operation keys. Retrieval returns only current, authorised source versions. Stateless replicas and immutable caches scale reads; fair admission protects each tenant. Identity, audit and approved egress live in trusted services, never in the prompt. Unknown outcomes are reconciled, not blindly retried. Releases pass frozen evaluation; model routes, GPU capacity and any adapter are approved with lineage. Stage 11 placed A and B in EU cells and C in a US cell, each with one fenced writer. Stage 12 adds versioned manifests and a control plane that signs route generations on opaque IDs, while each cell keeps route authority. Migration is a strangler with bound shadow evidence, one owner per decision, and a 33-month break-even under illustrative inputs.”
+Spoken answer: “Alice in Tenant A submits a supplier request. An authenticated API commits the answer before reporting success, and long work runs as durable jobs with idempotent operation keys. Retrieval returns only current, authorised source versions. Stateless replicas and immutable caches scale reads; fair admission protects each tenant. Identity, audit and approved egress live in trusted services, never in the prompt. Unknown outcomes are reconciled, not blindly retried. Releases pass frozen evaluation; model routes, GPU capacity and any adapter are approved with lineage. T17.12 placed A and B in EU cells and C in a US cell, each with one fenced writer. T17.13 adds versioned manifests and a control plane that signs route generations on opaque IDs, while each cell keeps route authority. Migration is a strangler with bound shadow evidence, one owner per decision, and a 33-month break-even under illustrative inputs.”
 
 Trade-off: every layer keeps its own guarantee, so the design has more owners and contracts than a single service, and each one must be staffed.
 
@@ -68,16 +68,23 @@ Capstone rubric. Pass with at least four of five, and the fifth is mandatory:
 <details>
 <summary>Model answers for the four changed constraints</summary>
 
-<p><strong>Zero data loss.</strong> Stage 11's asynchronous copies allow loss within the recovery point objective (RPO). Zero loss for acknowledged answers needs a synchronous commit to a second EU location before success, which adds cross-site latency to every write and lowers availability during a partition. Owner: the database and SRE owner. Evidence: measured commit latency and a failover test with no lost acknowledged write. The route platform does not change; it cannot create durability.</p>
+<p><strong>Zero data loss.</strong> T17.12's asynchronous copies allow loss within the recovery point objective (RPO). Zero loss for acknowledged answers needs a synchronous commit to a second EU location before success, which adds cross-site latency to every write and lowers availability during a partition. Owner: the database and SRE owner. Evidence: measured commit latency and a failover test with no lost acknowledged write. The route platform does not change; it cannot create durability.</p>
 
 <p><strong>Lost policy authority.</strong> If the region's authority store loses its quorum, no current access decision is possible. The cell fails closed for work that needs one, and cutovers and rollbacks freeze because eligibility cannot be checked. Owner: the security and data owner, with the incident commander. Signal: quorum loss and policy freshness age. Restore quorum; never fall back to a stale replica for revocation.</p>
 
-<p><strong>Revoked old adapter.</strong> Rollback to any route that uses it is blocked, as in Checkpoint 3. Stage 10 lineage lists every manifest pinned to that adapter. Choose another currently approved route or repair forward. Owner: model operations with each app owner. Evidence: the revocation record and the list of affected routes.</p>
+<p><strong>Revoked old adapter.</strong> Rollback to any route that uses it is blocked, as in Checkpoint 3. T17.11 lineage lists every manifest pinned to that adapter. Choose another currently approved route or repair forward. Owner: model operations with each app owner. Evidence: the revocation record and the list of affected routes.</p>
 
 <p><strong>Double support demand.</strong> Support rises from 20 to 40 hours a month, so the platform costs $10,000 a month and saves $2,000. With a six-month overlap, break-even moves to month 66 and the platform costs $60,000 more over three years. ADR-012's revisit trigger fires. Owner: the platform owner with finance. Options: cut support load with self-service documentation, slow adoption, or justify the platform on measured policy-incident reduction.</p>
 
 </details>
 
-The source map contains 56 modules across 18 domains and 12 stages. [Actual coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) records authored and checked content, not personal mastery. Stages 10 and 11 add seven first-taught modules, including D0 distributed-training context; Stage 12 adds seven. A map row or a green local fixture cannot establish a production deployment or distributed-systems implementation.
+The source map contains 56 modules across 18 domains and 12 stages. A map row or a green local fixture cannot establish a production deployment or distributed-systems implementation.
 
 Remaining gaps are concrete: real identity and private routing, a deployed authority store and distributed fencing, signed route distribution, crash, power-loss and backup tests, real brokers and reconciliation, representative model evaluations, real training and checkpoint restore, provider and GPU capacity and invoices, end-to-end regional recovery, load and SLO evidence, external security review, screen-reader assessment and learner assessment. GPU kernels, distributed optimiser implementation, pretraining and machine-unlearning research remain deferred specialisations. Prioritise the first pilot's real integration risks before that optional research track.
+
+## Key Takeaways
+
+- Centralise validation and contracts while data and execution stay in regional cells. A control-plane outage freezes new cutovers but not authorised work, and rollback still works through a local N+2 if the previous route is currently eligible.
+- Independent dual writes to old and new databases can fork saved answers and operation keys. Prefer one writer, additive schema changes and replayable projections, because a route rollback cannot restore a dropped column.
+- The payback case turns on the overlap. Six months gives break-even at month 33 and $12,000 saved over three years, while ten months moves break-even to month 45 and costs $36,000 more.
+- The capstone's mandatory rule is never to trade residency or current access for availability. Zero data loss for acknowledged answers needs a synchronous commit to a second EU location, which adds cross-site latency to every write.

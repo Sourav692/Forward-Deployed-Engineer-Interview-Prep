@@ -37,6 +37,13 @@ Threat exercises should include forged tenant headers, guessed IDs, stale allow 
 
 **Prompt:** An allow audit event exists. Does that prove the external provider processed the request once?
 
-**Spoken answer:** “It records our decision and protected resource references at a defined boundary. It does not prove remote execution or erase a lost-response ambiguity. I keep request/job/reservation IDs correlated while preserving Stage 2 and Stage 5 unknown outcomes. If audit commitment is mandatory before disclosure, failure must block or enter a separately designed durable buffering path.”
+**Spoken answer:** “It records our decision and protected resource references at a defined boundary. It does not prove remote execution or erase a lost-response ambiguity. I keep request/job/reservation IDs correlated while preserving T17.3 and T17.6 unknown outcomes. If audit commitment is mandatory before disclosure, failure must block or enter a separately designed durable buffering path.”
 
 **Trade-off:** Conservative evidence requirements can reduce availability. **Changed constraint:** Define the incident workflow for matching audit events, provider usage and an unknown reservation without exposing source text.
+
+## Key Takeaways
+
+- Measure authentication rejections by bounded reason, retired or unknown key rates, policy observation lag, epoch mismatches, cross-tenant attempts, audit commit failures and denied provider destinations. Protect audit read access so a support operator never inherits a platform-wide dump permission.
+- Internally, separate expired identity, missing membership, revoked document and stale policy as denial reasons. Externally, never confirm that another tenant's document exists.
+- A valid, unexpired signature does not authorise retrieval for a user removed yesterday. Membership, audience, policy epoch and resource access are checked separately, and stale or missing authority denies instead of promoting a cached allow.
+- Private subnets and mTLS do not replace per-resource checks. An allow audit event records a decision at a defined boundary and does not prove the provider processed the request once.

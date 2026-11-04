@@ -59,12 +59,12 @@ For the example policy, the answer should explain that Alice needs written suppl
 | Document change | Approved source event; durable ingestion job; bounded parser/extractor; immutable versioned passages; current metadata/tombstone; published index | Supplies current permitted evidence. A deletion or newer version must invalidate old visibility even if cached text remains |
 | Prompt or model release | Frozen task/safety cases; immutable prompt/retriever/model configuration; bound evaluation report; trusted approval; eligible canary; controlled release pointer | Supplies the specific approved behaviour bundle used by new requests. Rollback keeps current access and saved-result identity |
 | Optional customisation | Separately approved training data; immutable dataset splits; pinned base/recipe; training/checkpoints; candidate registry; evaluation/approval; existing serving gate | Attempts to improve stable behaviour after simpler options fail. It does not replace retrieval for changing facts or permissions |
-| Regional outage | Detect failure; fence old writer; check allowed destination/current policy/audit; verify copies/artifacts/capacity; promote once; reconcile uncertain operations | Restores only eligible service. If no allowed region is safe, return unavailable rather than route A/B content to C’s US cell |
+| Regional outage | Detect failure; fence old writer; check allowed destination/current policy/audit; verify copies/artefacts/capacity; promote once; reconcile uncertain operations | Restores only eligible service. If no allowed region is safe, return unavailable rather than route A/B content to C’s US cell |
 | New internal application | Named app owner; versioned manifest; contract checks; eligible read-only shadow; pilot; generation-checked cutover; observe; eligible reversal | Reuses the supplier platform while the app team still owns task behaviour and outcomes |
 
 ## A Capacity Preview With Correct Units
 
-Use Stage 11’s recovery scenario as a preview, not a new benchmark. At 60 requests/second and 1,000 budgeted tokens/request, token demand is 60 ×1,000×60 =3.6 million tokens/minute. At two assumed active seconds/request, the steady-state active-slot estimate is 60×2 =120. A bigger application fleet cannot fix a provider quota below the required token budget.
+Use T17.12’s recovery scenario as a preview, not a new benchmark. At 60 requests/second and 1,000 budgeted tokens/request, token demand is 60 ×1,000×60 =3.6 million tokens/minute. At two assumed active seconds/request, the steady-state active-slot estimate is 60×2 =120. A bigger application fleet cannot fix a provider quota below the required token budget.
 
 If one app replica supports an assumed 20 requests/second and we plan at 70% utilisation, it supplies 14 planned requests/second. The app calculation is ceil(60/14)=5 replicas. We still need sufficient database/search capacity, provider request quota, token quota, active slots, and ready model capacity. The later lessons teach those independent bottlenecks and the limits of this arithmetic.
 
@@ -78,3 +78,10 @@ The model returned an answer, but Alice’s browser did not receive saved succes
 Inspect the original operation using its stable scoped identity. If the answer committed, return the existing permitted result. If the remote outcome or final commit is uncertain, preserve that state and reconcile it. A new key or provider can duplicate work and cost without resolving the original outcome.
 
 </details>
+
+## Key Takeaways
+
+- Alice's request passes identity and region checks, bounded admission, retrieval of current permitted versions and an approved model route with a reserved budget. The answer commits before saved success, and with no permitted current evidence the platform refuses a grounded answer.
+- A lost response can mean the provider already executed and charged. Inspect the original operation by its stable scoped key, because a new key or another provider duplicates work and cost without resolving the original outcome.
+- At 60 requests/second and 1,000 tokens per request, token demand is 3.6 million tokens a minute, and two active seconds per request need about 120 slots. A bigger application fleet cannot fix a provider token quota below that.
+- One replica at an assumed 20 requests/second, planned at 70% utilisation, supplies 14, so 60 requests/second needs five replicas. Database, search, request quota, token quota and ready model capacity remain separate bottlenecks.
