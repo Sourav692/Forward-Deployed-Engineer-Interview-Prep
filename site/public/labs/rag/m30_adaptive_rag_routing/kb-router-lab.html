@@ -6,7 +6,7 @@
 <title>Routing confidence and the fallback</title>
 <meta name="description" content="M30 lab: eighteen Larkspur support tickets routed to three knowledge bases by real TF-IDF scores; raise the score floor and read misroutes, fallbacks and searches per ticket.">
 <style>
-/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, the course's lab system) · build: new lab in the M11 lab's shell
+/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, the course's lab system) · build: new lab in the M10 lab's shell
  * nav: top bar, the wordmark and the lab's name · signature: the routing ledger, one row per ticket with the knowledge base it reaches, beside a step chart of misroutes and fallbacks against the floor · states: full only; the page computes every value itself, so it has no loading, empty or error state
  * axes: mid/grotesk-sans/chromatic-magenta · posture: restrained · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the ledger is long; the step chart above it carries the trade-off on one screen */
@@ -196,7 +196,7 @@ html.embedded .sheet.ledgers { order: 2; }
           <tbody id="ledger"></tbody>
         </table>
         <p class="note" style="margin-top: var(--space-sm)">A misrouted ticket is filtered to a knowledge base that does not hold its answer, so retrieval there cannot find the evidence. A fallback searches all three knowledge bases, which costs three searches instead of one. When every score ties at 0.000, the router takes the first in its list, billing, as a classifier forced to pick one label would.</p>
-        <p class="note">The knowledge bases are the twelve handbook chunks from the M11 lab, five in billing, four in technical and three in general. TF-IDF uses scikit-learn’s defaults with English stop words.</p>
+        <p class="note">The knowledge bases are the twelve handbook chunks from the M10 lab, five in billing, four in technical and three in general. TF-IDF uses scikit-learn’s defaults with English stop words.</p>
       </section>
     </div>
   </div>

@@ -8,7 +8,7 @@
 **What a strong answer covers:**
 - Reads the trace first: which chunks came back, how each was graded, and whether the web branch fired. In the lab, TF-IDF retrieves `reboot`, `sizing` and `export` for this question, the grader correctly rejects all three, and CRAG goes to the web
 - Names the two faults: a retrieval miss on wording ("server goes down" against "outage" and "availability"), and a fallback that searches a source which cannot know a private handbook
-- Fixes retrieval inside the corpus first: a rewrite-and-retry against the index ([T10.1](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview)), hybrid or embedding search ([T7.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview), [T6.3](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview))
+- Fixes retrieval inside the corpus first: a rewrite-and-retry against the index ([T9.1](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview)), hybrid or embedding search ([T6.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview), [T5.4](/learn/llm-and-retrieval/embeddings-and-model-selection/embeddings-and-model-selection-overview))
 - Restricts the web branch to questions about public facts, or replaces it with a refusal that says the handbook does not cover the question
 
 ### 2. Product wants Self-RAG on every Larkspur question "to stop hallucinations". The assistant already carries most of Larkspur's support traffic. How do you decide?

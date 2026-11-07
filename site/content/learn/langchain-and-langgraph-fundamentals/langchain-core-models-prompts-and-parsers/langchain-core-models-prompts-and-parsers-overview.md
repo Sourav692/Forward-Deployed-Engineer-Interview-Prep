@@ -3,7 +3,7 @@
 
 Every LangChain program in this course has the same three parts: a prompt template that turns variables into messages, a chat model that turns messages into an `AIMessage`, and an output parser that turns the `AIMessage` into something your code can use. The T4.1 notebooks build on four ideas: chat models, messages, prompt templates and output parsers.
 
-The running example is the Larkspur Cloud support assistant that [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) to [T6.2](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview) build, at the step after retrieval. It holds three handbook passages (`refund-window`, `refund-timing` and `billing`) for the question *How long does a refund take?* and must return a JSON answer with a list of the passages it cites. That is the module's lab brief, and the lab runs it.
+The running example is the Larkspur Cloud support assistant that [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) to [T5.3](/learn/llm-and-retrieval/chunking-and-indexing/chunking-and-indexing-overview) build, at the step after retrieval. It holds three handbook passages (`refund-window`, `refund-timing` and `billing`) for the question *How long does a refund take?* and must return a JSON answer with a list of the passages it cites. That is the module's lab brief, and the lab runs it.
 
 ## In short
 
@@ -93,12 +93,12 @@ The prompt template and the parser are where your code meets the model's text. T
 
 ## Interactive lab
 
-[**The parser bench**](/labs/rag/m07_langchain_core/parser-bench-lab.html): open the file in a browser. Start on `JsonOutputParser` and read the four rows marked unusable: each one parsed without an error. Switch to `PydanticOutputParser` with `Literal` ids and watch them move to the raised column while the usable count stays at 3. Then pick *Clean JSON* in the inspector and drag the cut slider down, as a `max_tokens` limit would, to see `JsonOutputParser` repair almost every truncated reply into a dict.
+[**The parser bench**](/labs/rag/m06_langchain_core/parser-bench-lab.html): open the file in a browser. Start on `JsonOutputParser` and read the four rows marked unusable: each one parsed without an error. Switch to `PydanticOutputParser` with `Literal` ids and watch them move to the raised column while the usable count stays at 3. Then pick *Clean JSON* in the inspector and drag the cut slider down, as a `max_tokens` limit would, to see `JsonOutputParser` repair almost every truncated reply into a dict.
 
 ## How it connects
 
 - **Before:** [T2.2](/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/llm-provider-apis-and-model-selection-overview) calls the provider SDKs that T4.1 wraps. [T3.1](/learn/prompt-and-context-engineering/prompt-engineering-patterns/prompt-engineering-patterns-overview) writes the prompt patterns that T4.1 turns into templates, and [T3.2](/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-overview) sends images through the same message lists.
-- **Next:** [T4.2](/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-runnables-and-chains-overview) pipes templates, models and parsers into LCEL chains. [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) builds the first RAG pipeline from them, and [T9.2](/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview) returns to structured output for agents. [T10.1](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview) grades retrieved passages with schema-bound model calls.
+- **Next:** [T4.2](/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-runnables-and-chains-overview) pipes templates, models and parsers into LCEL chains. [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) builds the first RAG pipeline from them, and [T7.2](/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview) returns to structured output for agents. [T9.1](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview) grades retrieved passages with schema-bound model calls.
 
 ## Key Takeaways
 

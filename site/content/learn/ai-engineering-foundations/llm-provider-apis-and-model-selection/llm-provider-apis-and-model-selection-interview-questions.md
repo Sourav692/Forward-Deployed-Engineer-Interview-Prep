@@ -9,7 +9,7 @@
 - Reads `usage.completion_tokens_details.reasoning_tokens` per call: those tokens are inside `completion_tokens`, billed at the output rate, and never appear in the reply
 - Recomputes cost from `usage` (prompt tokens times input price plus completion tokens times output price), never from the length of the reply text
 - Splits spend by question type and finds how much of the traffic is lookups such as *How long does a refund take?*, where reasoning buys nothing
-- Proposes routing ([T9.3](/learn/agentic-systems/agentic-workflow-patterns/agentic-workflow-patterns-overview)) or a lower effort for lookups, and logs reasoning tokens per request so the next change shows up in a dashboard instead of an invoice
+- Proposes routing ([T7.3](/learn/agentic-systems/agentic-workflow-patterns/agentic-workflow-patterns-overview)) or a lower effort for lookups, and logs reasoning tokens per request so the next change shows up in a dashboard instead of an invoice
 
 ### 2. The product team wants one model for every Larkspur question. You have a fast model and a reasoning model. Which questions go where, and how do you defend the split?
 
@@ -31,7 +31,7 @@
 
 **What a strong answer covers:**
 - Recognises a missing fact: the amount lives in the account system, not in the handbook or the model, so no amount of thinking finds it
-- Adds a tool call to the billing API ([T9.1](/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-overview)) or retrieval over account data, and an explicit "I don't have that" path when the data is absent
+- Adds a tool call to the billing API ([T7.1](/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-overview)) or retrieval over account data, and an explicit "I don't have that" path when the data is absent
 - Points to the signature in lesson 4 of T2.2: flat accuracy while reasoning tokens climb means the wrong lever
 - Caps reasoning spend per request and alerts when reasoning tokens rise with no change in the quality metric
 

@@ -35,7 +35,7 @@ Extraction turns prose into candidate facts. Stable identities let those facts c
 ## How it connects
 
 - **Before:** [T13.1](/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/hierarchical-and-memory-augmented-retrieval-overview) compares hierarchical summaries, memory and lightweight graph retrieval.
-- **Next:** [T13.3](/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/graphrag-techniques-overview) uses graph structure for traversal, community retrieval and expansion. [T14.1](/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-overview) compares complete architecture choices.
+- **Next:** [T13.3](/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/graphrag-techniques-overview) uses graph structure for traversal, community retrieval and expansion. [T14.2](/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-overview) compares complete architecture choices.
 
 ## Key Takeaways
 

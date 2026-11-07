@@ -1425,6 +1425,11 @@ export const RENAMED: Record<string, string | null> = {
   ...RENAMED_T7,
   ...RENAMED_T8,
   ...RENAMED_T9,
+  // 2026-11-08: the course's v2 layout moved these two lessons into its new M26 module.
+  'react-agents-and-langchain-create-agent/applied-react-web-research-swe-and-computer-use-agents':
+    'coding-computer-use-and-deep-agents/applied-react-web-research-swe-and-computer-use-agents',
+  'multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory':
+    'coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory',
 }
 
 /**

@@ -52,7 +52,7 @@ Both routes must return evidence that the answer can cite. The graph supplies ca
 ## How it connects
 
 - **Before:** [T13.1](/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/hierarchical-and-memory-augmented-retrieval-overview) retrieves at different abstraction levels. [T13.2](/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/knowledge-graphs-with-neo4j-overview) models and queries factual relationships. This module uses graph structure to choose evidence.
-- **Next:** [T14.1](/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-overview) compares complete agentic RAG architectures, including the cost of routing and repeated retrieval.
+- **Next:** [T14.2](/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-overview) compares complete agentic RAG architectures, including the cost of routing and repeated retrieval.
 
 ## Key Takeaways
 

@@ -6,7 +6,7 @@
 <title>The window and the archive</title>
 <meta name="description" content="M34 lab: a MemGPT-style main context pages old messages out to archival memory; move the window size and the search query and see when the agent can still find a fact.">
 <style>
-/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0) · redesign: none, a new lab in the M11 lab system
+/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0) · redesign: none, a new lab in the M10 lab system
  * nav: top bar, the wordmark and the lab's name · signature: the message ledger, with the firm magenta rule where the archive ends and the main context window begins · states: full only; the page computes every value itself, so it has no loading, empty or error state beyond a query with no results, which the results table states
  * axes: mid/grotesk-sans/chromatic-magenta · posture: restrained · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the ledger repeats the conversation text, kept because the reader must see which words the search can match */
@@ -311,7 +311,7 @@ function render(){
     co.innerHTML=`<b>The fact is archived and this query misses it.</b> ` +
       (shared ? `It shares ${shared} word${shared>1?'s':''} with the turn-2 message, but ${hits.length} other entries tie or beat it for the 3 slots. ` : `It shares no word with the turn-2 message. `) +
       (near.length ? `<code>${near.map(esc).join(', ')}</code> would match if punctuation were stripped. ` : '') +
-      `Embedding search (M14) matches meaning instead of exact words; a bigger window keeps the message in view and costs tokens on every call.`;
+      `Embedding search (M13) matches meaning instead of exact words; a bigger window keeps the message in view and costs tokens on every call.`;
   }
 }
 $('win').addEventListener('input',render);

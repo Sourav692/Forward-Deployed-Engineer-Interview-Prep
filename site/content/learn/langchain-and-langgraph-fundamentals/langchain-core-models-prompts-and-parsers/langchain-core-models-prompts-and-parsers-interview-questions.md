@@ -32,8 +32,8 @@
 **What a strong answer covers:**
 - Chat models keep no state; the second call saw only the second question unless the app resent the first turn and the reply
 - Puts history in a `MessagesPlaceholder` and appends the `AIMessage` after each turn
-- Bounds the history: keep the last few turns, or summarise older ones ([T11.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview)), and measures the input-token cost per turn
-- Rewrites the follow-up into a standalone question before retrieval, because the retriever needs "annual plans" and "refund" in one query ([T11.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview))
+- Bounds the history: keep the last few turns, or summarise older ones ([T10.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview)), and measures the input-token cost per turn
+- Rewrites the follow-up into a standalone question before retrieval, because the retriever needs "annual plans" and "refund" in one query ([T10.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview))
 
 ### 5. You move the refund assistant from `gpt-4o-mini` to a Groq-hosted open model to cut cost. The chain code does not change. What can still break?
 

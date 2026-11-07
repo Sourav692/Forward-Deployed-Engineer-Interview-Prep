@@ -3,7 +3,7 @@
 
 A multimodal model reads pictures, documents and sound in the same request as the question. The prompt becomes an ordered list of parts, and each part has a token price you can work out before you send it. The T3.2 notebooks build on three ideas: how an image goes into a prompt, how a PDF or an audio file goes in, and how a video becomes sampled frames plus a transcript.
 
-The running example is the Larkspur Cloud handbook from [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) to [T6.2](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview), in the forms a support team holds it: a pricing page as a screenshot, the handbook as a PDF, a recorded support call, and a 90-second screen recording of the data export. The [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) question *Can I export my data after I cancel my plan?* now has visual evidence as well: the export walkthrough, which the lab samples frame by frame.
+The running example is the Larkspur Cloud handbook from [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) to [T5.3](/learn/llm-and-retrieval/chunking-and-indexing/chunking-and-indexing-overview), in the forms a support team holds it: a pricing page as a screenshot, the handbook as a PDF, a recorded support call, and a 90-second screen recording of the data export. The [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) question *Can I export my data after I cancel my plan?* now has visual evidence as well: the export walkthrough, which the lab samples frame by frame.
 
 ## In short
 
@@ -30,12 +30,12 @@ Whatever the provider, the request is a list of parts and the model reads every 
 
 ## Interactive lab
 
-[**Frame sampling**](/labs/rag/m06_multimodal_prompting/frame-sampling-lab.html): open the file in a browser. Start at the notebook's default gap of 2 s and find the step no frame lands on. Drop to 1 s to catch all eight steps and read what that costs, then try 2.5 s, which catches all eight by luck. Switch to high detail to see the same frames cost 13 times as much.
+[**Frame sampling**](/labs/rag/m05_multimodal_prompting/frame-sampling-lab.html): open the file in a browser. Start at the notebook's default gap of 2 s and find the step no frame lands on. Drop to 1 s to catch all eight steps and read what that costs, then try 2.5 s, which catches all eight by luck. Switch to high detail to see the same frames cost 13 times as much.
 
 ## How it connects
 
 - **Before:** [T3.1](/learn/prompt-and-context-engineering/prompt-engineering-patterns/prompt-engineering-patterns-overview) taught prompt patterns such as few-shot and chain-of-thought on text; this module sends the same kind of instructions alongside images, documents and sound.
-- **Next:** [T4.1](/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-core-models-prompts-and-parsers-overview) wraps model calls in LangChain models, prompts and parsers. [T6.1](/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) turns PDFs into text for an index instead of sending the pages to a model, and [T8.2](/learn/complete-rag-applications/multimodal-rag/multimodal-rag-overview) retrieves images and pages before a multimodal model reads them.
+- **Next:** [T4.1](/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-core-models-prompts-and-parsers-overview) wraps model calls in LangChain models, prompts and parsers. [T5.2](/learn/llm-and-retrieval/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) turns PDFs into text for an index instead of sending the pages to a model, and [T6.5](/learn/retrieval-quality-engineering/multimodal-rag/multimodal-rag-overview) retrieves images and pages before a multimodal model reads them.
 
 ## Key Takeaways
 
