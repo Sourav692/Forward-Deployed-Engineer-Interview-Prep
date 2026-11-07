@@ -20,6 +20,7 @@
  */
 import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, RETIRED_TRACKS, movedFrom } from './curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './curriculum-href.ts'
+import { RAG_ASSET_MOVES } from './rag-asset-moves.ts'
 import { CASEBOOK_MODULE, scenarioHref } from './scenario.ts'
 
 export type Redirect = { source: string; destination: string; permanent: boolean }
@@ -327,6 +328,8 @@ export const REDIRECTS: Redirect[] = [
   ...casebookRedirects,
   ...behaviouralRedirects,
   ...finalWeekRedirects,
+  // RAG course labs and figures renamed by the course's v2 module folders.
+  ...Object.entries(RAG_ASSET_MOVES).map(([source, destination]) => ({ source, destination, permanent: true })),
   // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
   { source: '/guide', destination: '/start', permanent: true },
   { source: '/learning-map', destination: '/start', permanent: true },

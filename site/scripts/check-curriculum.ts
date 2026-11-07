@@ -18,6 +18,7 @@ import { MODULE_HOMES, isLearnTrack } from '../src/lib/curriculum-href.ts'
 import { LEARN_STAGES } from '../src/lib/learn-stages.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
+import { RAG_ASSET_MOVES } from '../src/lib/rag-asset-moves.ts'
 import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
@@ -269,6 +270,14 @@ for (const mod of Object.keys(MOVED_MODULES)) {
     const next = sources.find((s) => s.re.test(r.destination.split('#')[0]))
     if (next) fail(`redirect chain: ${r.source} → ${r.destination} → ${next.destination}; point ${r.source} straight at the final page`)
   }
+}
+
+// A moved RAG lab or figure redirects to a file the import still vendors, and its old path
+// is not served again (a redirect runs before public/ and would hide the file).
+for (const [from, to] of Object.entries(RAG_ASSET_MOVES)) {
+  const pub = (p: string) => resolve(import.meta.dirname, '../public' + p)
+  if (!existsSync(pub(to))) fail(`RAG_ASSET_MOVES sends ${from} to ${to}, which is not in public/`)
+  if (existsSync(pub(from))) fail(`RAG_ASSET_MOVES redirects ${from}, which public/ serves again`)
 }
 
 // Area pages drop the track from the URL (/design/<slug>, /practice/<slug>; MODULE_AREAS
