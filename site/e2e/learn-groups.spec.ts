@@ -21,7 +21,7 @@ test('Learn lists eight topic groups as cards, with Coming soon for empty ones',
   // A live card opens its group page, and the group shows in the track's breadcrumb.
   await groups.getByRole('link', { name: 'AI Engineering', exact: true }).click()
   await expect(page).toHaveURL(/\/learn\/topics\/ai-engineering$/)
-  await page.getByRole('link', { name: 'Agent Foundations for RAG', exact: true }).click()
+  await page.getByRole('link', { name: 'Agent Foundations', exact: true }).click()
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'AI Engineering' })).toHaveAttribute('href', '/learn/topics/ai-engineering')
 })
 
@@ -52,17 +52,17 @@ test('AI Engineering lists the course tracks in part order, then production AI',
   await expect(page.getByRole('main').getByRole('heading', { level: 2 })).toHaveText([
     'AI Engineering Foundations',
     'Prompt & Context Engineering',
-    'LangChain & LangGraph Fundamentals',
-    'RAG Foundations',
-    'The Ingestion & Indexing Pipeline',
-    'Retrieval Quality Engineering',
-    'Building Complete RAG Applications',
-    'Agent Foundations for RAG',
-    'Agentic & Self-Correcting RAG',
-    'Memory & Multi-Agent RAG',
+    'LLM Application Frameworks: LangChain & LangGraph',
+    'RAG Foundations: Ingestion & Indexing',
+    'Retrieval Quality & RAG Applications',
+    'Agent Foundations',
+    'Advanced Agents',
+    'Agentic RAG',
+    'The Memory Layer',
+    'Multi-Agent Systems',
     'Agent Protocols: MCP & A2A',
-    'Hierarchical, Memory & Graph RAG',
-    'Architecture Synthesis & Capstone',
+    'Knowledge Graphs & GraphRAG',
+    'Design Decisions: Model Adaptation & Architecture',
     'Production AI Systems',
   ])
 })

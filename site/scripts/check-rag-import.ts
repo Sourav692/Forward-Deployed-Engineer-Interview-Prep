@@ -59,9 +59,9 @@ assert.equal(transformLine('See M11, M13 and [13.2](x.md).', coded), 'See [T5.1]
 assert.equal(transformLine('## How M13 connects', coded), '## How T6.2 connects')
 
 // The ```lab fence the import writes becomes a lab chunk in the lesson (FE-05).
-const fence = '```lab\nsrc: /labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html\ntitle: Top-k and the baseline\n```'
+const fence = '```lab\nsrc: /labs/rag/m10_rag_lifecycle/top-k-retrieval-lab.html\ntitle: Top-k and the baseline\n```'
 assert.deepEqual(parseReading(`# T\n\n## A\n\n${fence}\n`, 'lesson').sections[0].chunks, [
-  { kind: 'lab', src: '/labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html', title: 'Top-k and the baseline' },
+  { kind: 'lab', src: '/labs/rag/m10_rag_lifecycle/top-k-retrieval-lab.html', title: 'Top-k and the baseline' },
 ])
 assert.equal(parseLabFence('src: https://evil.example/x.html\ntitle: X'), null)
 assert.equal(parseLabFence('src: /labs/../secret.html\ntitle: X'), null)

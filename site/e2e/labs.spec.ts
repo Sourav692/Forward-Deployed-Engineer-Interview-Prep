@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 // Phase 2 of the AI Engineering integration: course labs framed in lessons (FE-10, SEC-01).
 const LESSON = '/learn/llm-and-retrieval/rag-from-first-principles/indexing-from-scratch-with-tf-idf-and-nearest-neighbours'
-const LAB = '/labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html'
+const LAB = '/labs/rag/m10_rag_lifecycle/top-k-retrieval-lab.html'
 
 test('labs may be framed by the site only, make no requests and are not indexed', async ({ request }) => {
   const lesson = (await request.get(LESSON)).headers()['content-security-policy']

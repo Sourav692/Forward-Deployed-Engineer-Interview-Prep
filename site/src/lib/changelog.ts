@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-08',
+    title: 'AI Engineering follows the course\'s new part order',
+    summary:
+      'The RAG & Agents Engineering course regrouped its parts, and the AI Engineering tracks follow it. Ingestion and indexing joined RAG Foundations, the complete RAG application modules joined Retrieval Quality, and two new tracks, Advanced Agents and Multi-Agent Systems, take the planning, approval and multi-agent modules. Advanced Agents adds a module on coding, computer use and deep agents, and Fine-tuning moved to the closing design decisions track. Track codes T6 to T11, and some module codes, changed with the new order. Old links redirect to the new pages, and saved progress carries over.',
+  },
+  {
     date: '2026-11-04',
     title: 'Staff AI System Design: a new course in Learn',
     summary:
