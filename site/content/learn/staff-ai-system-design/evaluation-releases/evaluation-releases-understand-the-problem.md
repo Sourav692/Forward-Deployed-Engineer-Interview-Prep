@@ -7,7 +7,7 @@ This remains the same hypothetical procurement system. The runnable evaluator sc
 
 ## Inherit a Recoverable, Protected Platform
 
-[T17.8](/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) and [ADR-007](/learn/staff-ai-system-design/architecture-decisions/adr-007-consistency-and-recovery) establish data-class consistency, result/outbox atomicity, projection freshness, bounded recovery and diagnostic contracts. Retain current identity/policy/audit, approved egress, source citations, immutable-cache safety, worker epochs, stable operation identity and fair provider budgets.
+[T18.8](/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-understand-the-problem), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) and [ADR-007](/learn/staff-ai-system-design/architecture-decisions/adr-007-consistency-and-recovery) establish data-class consistency, result/outbox atomicity, projection freshness, bounded recovery and diagnostic contracts. Retain current identity/policy/audit, approved egress, source citations, immutable-cache safety, worker epochs, stable operation identity and fair provider budgets.
 
 ```mermaid
 flowchart TD
@@ -38,13 +38,13 @@ The candidate answers five ordinary supplier questions correctly and refuses an 
 | Evaluation architecture | Taught here | Build depth: versioned cases, rubric/slices, coverage binding, quality/safety/latency/cost gates and tests |
 | Release management and experimentation | Taught here | Build depth: approved bundles, sticky eligible canaries, shadow contract, CAS promotion and rollback |
 | Observability systems | Taught here | Build depth: version/cohort telemetry schema, metrics/logs/traces, privacy/cardinality and release diagnosis |
-| Distributed state and transactions | Revisited from T17.8 | Build depth: atomic generation-checked release pointer; rollback preserves durable result identity |
-| End-to-end AI application design | Revisited from T17.2 | Build depth: bind prompt/retrieval/model and source context into one reproducible outcome |
-| Agentic application system architecture | Revisited from T17.3 | Build depth: shadow/evaluation cannot perform live business side effects |
-| Enterprise AI security | Revisited from T17.7 | Build depth: known safety cases gate release separately; logs and shadows retain data boundaries |
-| Performance and incident diagnosis | Revisited from T17.8 | Build depth: compare version/cohort and retrieval/generation failure rather than global health alone |
-| Model and data lifecycle infrastructure | Context only | T17.11, Design depth: use immutable IDs now; broader training/registry lifecycle follows |
-| Architecture economics | Deferred | T17.13, Build depth: no unrelated total-cost platform programme |
+| Distributed state and transactions | Revisited from T18.8 | Build depth: atomic generation-checked release pointer; rollback preserves durable result identity |
+| End-to-end AI application design | Revisited from T18.2 | Build depth: bind prompt/retrieval/model and source context into one reproducible outcome |
+| Agentic application system architecture | Revisited from T18.3 | Build depth: shadow/evaluation cannot perform live business side effects |
+| Enterprise AI security | Revisited from T18.7 | Build depth: known safety cases gate release separately; logs and shadows retain data boundaries |
+| Performance and incident diagnosis | Revisited from T18.8 | Build depth: compare version/cohort and retrieval/generation failure rather than global health alone |
+| Model and data lifecycle infrastructure | Context only | T18.11, Design depth: use immutable IDs now; broader training/registry lifecycle follows |
+| Architecture economics | Deferred | T18.13, Build depth: no unrelated total-cost platform programme |
 
 Outcomes: execute a reproducible fixture evaluation; inspect slice failures; block known safety/cost/latency regressions; control a release pointer without stale writes; and diagnose/roll back without rewriting saved operations. Exit gates assess the learner separately from artefact verification.
 

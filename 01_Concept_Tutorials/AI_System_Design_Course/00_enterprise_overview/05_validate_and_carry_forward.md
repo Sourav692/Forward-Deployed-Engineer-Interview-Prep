@@ -7,36 +7,36 @@ The map is a preview. A role appearing here does not count as teaching or master
 
 | Stage | Pressure that earns the next change | What to locate in the target architecture |
 | --- | --- | --- |
-| [T17.2](../01_mvp/01_understand_the_problem.md): Build the MVP | Alice needs a saved draft from supplied text | API, hosted-model adapter, trusted scope, Metadata DB/history |
-| [T17.3](../02_distributed_execution/01_understand_the_problem.md): Distributed Execution | Long work outlives an interactive request or worker | Durable jobs, Queue, Workers, epochs and uncertain-effect inspection |
-| [T17.4](../03_enterprise_knowledge/01_understand_the_problem.md): Enterprise Knowledge | Supplied text cannot answer from changing internal policy | Document Ingestion, source versions, Search Index and authorised context |
-| [T17.5](../04_application_scaling/01_understand_the_problem.md): Scale the Application | One application instance or data path becomes a bottleneck | Stateless replicas, shared authority and bounded immutable caches |
-| [T17.6](../05_overload_fairness/01_understand_the_problem.md): Handle Overload and Fair Scheduling | One tenant consumes finite shared provider capacity | Bounded admission/queues, fair scheduling and request/token/slot budgets |
-| [T17.7](../06_enterprise_security/01_understand_the_problem.md): Enterprise Security | Enterprise identity, isolation and data handling become explicit | Identity/Policy Service, current resource checks, audit and approved egress |
-| [T17.8](../07_reliability_consistency/01_understand_the_problem.md): Reliability and Consistency | Crashes, stale replicas and lost responses break naive retries | Consistency by data class, durable operation evidence and recovery |
-| [T17.9](../08_evaluation_releases/01_understand_the_problem.md): Production AI Quality and Releases | A behaviour change regresses supplier outcomes | Evaluation Service, immutable bundles, approval, canary and rollback |
-| [T17.10](../09_inference_gpu/01_understand_the_problem.md): Inference and GPU Infrastructure | Serving cost, latency or data-path constraints need comparison | Model Gateway, approved providers, optional self-hosted engine and GPU Pool |
-| [T17.11](../10_fine_tuning/01_understand_the_problem.md): Fine-Tuning and Model Customisation | Stable behaviour misses justify a governed challenger | Dataset versions, Fine-Tuning Jobs, checkpoints and Model Registry |
-| [T17.12](../11_multi_region/01_understand_the_problem.md): Global Multi-Region Platform | Residency and regional recovery change placement and economics | Eligible regional cells, replication, fencing, capacity and usage evidence |
-| [T17.13](../12_staff_platform/01_understand_the_problem.md): Staff-Level Platform Architecture | Several app teams duplicate risky integration work | Versioned manifests, shared contracts, ownership, migration and total cost |
+| [T18.2](../01_mvp/01_understand_the_problem.md): Build the MVP | Alice needs a saved draft from supplied text | API, hosted-model adapter, trusted scope, Metadata DB/history |
+| [T18.3](../02_distributed_execution/01_understand_the_problem.md): Distributed Execution | Long work outlives an interactive request or worker | Durable jobs, Queue, Workers, epochs and uncertain-effect inspection |
+| [T18.4](../03_enterprise_knowledge/01_understand_the_problem.md): Enterprise Knowledge | Supplied text cannot answer from changing internal policy | Document Ingestion, source versions, Search Index and authorised context |
+| [T18.5](../04_application_scaling/01_understand_the_problem.md): Scale the Application | One application instance or data path becomes a bottleneck | Stateless replicas, shared authority and bounded immutable caches |
+| [T18.6](../05_overload_fairness/01_understand_the_problem.md): Handle Overload and Fair Scheduling | One tenant consumes finite shared provider capacity | Bounded admission/queues, fair scheduling and request/token/slot budgets |
+| [T18.7](../06_enterprise_security/01_understand_the_problem.md): Enterprise Security | Enterprise identity, isolation and data handling become explicit | Identity/Policy Service, current resource checks, audit and approved egress |
+| [T18.8](../07_reliability_consistency/01_understand_the_problem.md): Reliability and Consistency | Crashes, stale replicas and lost responses break naive retries | Consistency by data class, durable operation evidence and recovery |
+| [T18.9](../08_evaluation_releases/01_understand_the_problem.md): Production AI Quality and Releases | A behaviour change regresses supplier outcomes | Evaluation Service, immutable bundles, approval, canary and rollback |
+| [T18.10](../09_inference_gpu/01_understand_the_problem.md): Inference and GPU Infrastructure | Serving cost, latency or data-path constraints need comparison | Model Gateway, approved providers, optional self-hosted engine and GPU Pool |
+| [T18.11](../10_fine_tuning/01_understand_the_problem.md): Fine-Tuning and Model Customisation | Stable behaviour misses justify a governed challenger | Dataset versions, Fine-Tuning Jobs, checkpoints and Model Registry |
+| [T18.12](../11_multi_region/01_understand_the_problem.md): Global Multi-Region Platform | Residency and regional recovery change placement and economics | Eligible regional cells, replication, fencing, capacity and usage evidence |
+| [T18.13](../12_staff_platform/01_understand_the_problem.md): Staff-Level Platform Architecture | Several app teams duplicate risky integration work | Versioned manifests, shared contracts, ownership, migration and total cost |
 
-## Recall Before Starting T17.2
+## Recall Before Starting T18.2
 
 1. What is the customer’s complete outcome? Alice gets a permitted current policy answer, prepares a supplier reply, and reopens its committed saved result.
 2. Why are drafting, grounded answering, and document preparation different paths? They need supplied text, current authorised evidence, and durable background progress respectively.
 3. Which four paths form the target? Customer requests, document ingestion, quality/model lifecycle, and platform/regional control.
 4. What must stay true as the system grows? Trusted current access, tenant boundaries, bounded capacity, approved releases/routes, and honest durable outcome reporting.
-5. Must you build every target component in T17.2? No. Build the smallest saved-draft path and use each later requirement to justify the next change.
+5. Must you build every target component in T18.2? No. Build the smallest saved-draft path and use each later requirement to justify the next change.
 
 Use the HTML map to locate a component without notes, trace Alice’s request aloud, and explain one blocked or uncertain outcome. Those orientation checks are unassessed. Production ownership is assessed by the individual stages’ deeper exit gates.
 
-Continue to [T17.2: Build the MVP](../01_mvp/01_understand_the_problem.md), or open its [Markdown guide](../01_mvp/01_understand_the_problem.md). Return here when a stage adds a component and locate its role in the final request flow.
+Continue to [T18.2: Build the MVP](../01_mvp/01_understand_the_problem.md), or open its [Markdown guide](../01_mvp/01_understand_the_problem.md). Return here when a stage adds a component and locate its role in the final request flow.
 
 ## Source and Verification Record
 
-This orientation synthesises the actual [T17.2](../01_mvp/01_understand_the_problem.md), [T17.4](../03_enterprise_knowledge/01_understand_the_problem.md), [T17.6](../05_overload_fairness/01_understand_the_problem.md), [T17.7](../06_enterprise_security/01_understand_the_problem.md), [T17.8](../07_reliability_consistency/01_understand_the_problem.md), [T17.9](../08_evaluation_releases/01_understand_the_problem.md), [T17.10](../09_inference_gpu/01_understand_the_problem.md), [T17.11](../10_fine_tuning/01_understand_the_problem.md), [T17.12](../11_multi_region/01_understand_the_problem.md), and [T17.13](../12_staff_platform/01_understand_the_problem.md) artefacts. See the [latest accepted architecture](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) and [ADR portfolio](../12_staff_platform/04_think_like_a_staff_engineer.md#lesson-decision-exercise-veto-the-top-score-and-write-the-adr).
+This orientation synthesises the actual [T18.2](../01_mvp/01_understand_the_problem.md), [T18.4](../03_enterprise_knowledge/01_understand_the_problem.md), [T18.6](../05_overload_fairness/01_understand_the_problem.md), [T18.7](../06_enterprise_security/01_understand_the_problem.md), [T18.8](../07_reliability_consistency/01_understand_the_problem.md), [T18.9](../08_evaluation_releases/01_understand_the_problem.md), [T18.10](../09_inference_gpu/01_understand_the_problem.md), [T18.11](../10_fine_tuning/01_understand_the_problem.md), [T18.12](../11_multi_region/01_understand_the_problem.md), and [T18.13](../12_staff_platform/01_understand_the_problem.md) artefacts. See the [latest accepted architecture](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) and [ADR portfolio](../12_staff_platform/04_think_like_a_staff_engineer.md#lesson-decision-exercise-veto-the-top-score-and-write-the-adr).
 
-T17.1 does not change the accepted architecture or imply that the target system has been deployed.
+T18.1 does not change the accepted architecture or imply that the target system has been deployed.
 
 ## Key Takeaways
 

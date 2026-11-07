@@ -21,7 +21,7 @@ The 60-second card: durable source event; immutable version; coherent publicatio
 
 [ADR-003](../architecture_decisions/adr_003_versioned_retrieval.md) records the versioned retrieval choice. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/architecture-after.md) preserves actual evidence.
 
-A later T17.5 may add stateless app replicas and caching when this path faces broader enterprise traffic. It must preserve authoritative version/permission checks and citeable source identities; a cache hit cannot grant access. No advanced governance, embedding deployment, or evaluation platform is added here.
+A later T18.5 may add stateless app replicas and caching when this path faces broader enterprise traffic. It must preserve authoritative version/permission checks and citeable source identities; a cache hit cannot grant access. No advanced governance, embedding deployment, or evaluation platform is added here.
 
 ## Primary References
 

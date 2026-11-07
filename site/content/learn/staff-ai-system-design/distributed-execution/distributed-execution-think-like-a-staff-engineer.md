@@ -5,7 +5,7 @@
 
 Track accepted jobs, queue age, claim latency, lease expiries, attempts, unknown/dead counts, tool rejection, and completion age. Separate acceptance latency from job turnaround. Metadata-only traces join request ID, job ID, and attempt epoch; avoid storing source text or tokens in ordinary logs. Exporters and alerts are proposed controls, not installed by the fixture.
 
-When oldest-job age rises, first compare arrival and completion rates. Check available workers and provider quotas, then inspect DB lock time and slow tools. A growing queue with idle workers suggests claim/configuration failure; busy workers at a dependency limit need demand control rather than more claimers. T17.6 will teach those admission/fairness controls in depth.
+When oldest-job age rises, first compare arrival and completion rates. Check available workers and provider quotas, then inspect DB lock time and slow tools. A growing queue with idle workers suggests claim/configuration failure; busy workers at a dependency limit need demand control rather than more claimers. T18.6 will teach those admission/fairness controls in depth.
 
 For a dead job, fix the poison input/tool bug before replay. For unknown work, preserve its operation identity and provider evidence; do not delete the row to make dashboards green. Cancellation should prevent unstarted actions and report whether a started action remains uncertain. This slice does not implement cancellation, heartbeat renewal, an outbox, or provider reconciliation. Deployment also needs durable storage, backup/restore, real identity, process supervision, and bounded tool networking.
 

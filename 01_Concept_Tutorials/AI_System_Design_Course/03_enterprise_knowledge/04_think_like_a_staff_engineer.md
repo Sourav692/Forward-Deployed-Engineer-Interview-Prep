@@ -7,7 +7,7 @@ Measure source-cursor lag, oldest ingestion-job age, parser failures, index publ
 
 If Alice receives an old policy, inspect the connector cursor, published version, and the final context citation before blaming generation. If the object exists but is not published, inspect the failed ingestion attempt; do not point readers to it manually. If new access rules are unavailable, apply the stated freshness/fail-closed policy. Never use a stale search copy as the sole authority for immediate revocation.
 
-Limit ingestion file size, parse time, context tokens, and query length in the real API adapter. The fixture bounds source characters and final result count but does not implement production upload security, distributed storage, source authentication, or a tokeniser. A real search-service migration needs versioned indexes, alias/pointer cutover, deletion/ACL reconciliation, and rollback that does not revive restricted data. T17.7 will expand governance rather than retell this retrieval baseline.
+Limit ingestion file size, parse time, context tokens, and query length in the real API adapter. The fixture bounds source characters and final result count but does not implement production upload security, distributed storage, source authentication, or a tokeniser. A real search-service migration needs versioned indexes, alias/pointer cutover, deletion/ACL reconciliation, and rollback that does not revive restricted data. T18.7 will expand governance rather than retell this retrieval baseline.
 
 ## Interview 1: Why Not Start With Vector Search?
 

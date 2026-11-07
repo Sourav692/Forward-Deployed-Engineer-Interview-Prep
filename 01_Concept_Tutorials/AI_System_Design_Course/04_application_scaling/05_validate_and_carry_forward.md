@@ -21,7 +21,7 @@ The 60-second card: preserve one durable authority; route only to ready replicas
 
 [ADR-004](../architecture_decisions/adr_004_stateless_scale_and_cache.md) records the explicit shared-state migration and immutable-body cache choice. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) preserves the educational evidence.
 
-A later T17.6 will address one tenant flooding a fixed model budget. It must preserve scoped history and retrieval, bounded cache safety, durable worker authority, and the fact that a scheduler cannot create provider capacity. This stage does not quietly implement fair admission or distributed quotas.
+A later T18.6 will address one tenant flooding a fixed model budget. It must preserve scoped history and retrieval, bounded cache safety, durable worker authority, and the fact that a scheduler cannot create provider capacity. This stage does not quietly implement fair admission or distributed quotas.
 
 ## Primary References
 

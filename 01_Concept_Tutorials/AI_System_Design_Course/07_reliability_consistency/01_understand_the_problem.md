@@ -7,7 +7,7 @@ This continues the same hypothetical platform. The executable uses two SQLite fi
 
 ## Inherit Security and Execution Before Adding Recovery
 
-[T17.7](../06_enterprise_security/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](../architecture_decisions/adr_006_trusted_enterprise_boundaries.md) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
+[T18.7](../06_enterprise_security/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](../architecture_decisions/adr_006_trusted_enterprise_boundaries.md) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
 
 ```mermaid
 flowchart TD
@@ -43,16 +43,16 @@ Now imagine the failed dependency is policy authority. A stale replica may still
 | Latency and performance | Taught here | Build depth: critical-path budgets, pool/queue/dependency waits and diagnosis |
 | SRE and production operations | Taught here | Build depth: service indicators, error budget, incident roles, runbook, restore/failover evidence |
 | Performance and incident diagnosis | Taught here | Build depth: symptom-to-boundary reasoning, traces, hypothesis and recovery checks |
-| APIs and streaming protocols | Revisited from T17.2 | Build depth: lost response and minimum-version read; same operation identity |
-| Backpressure and overload management | Revisited from T17.6 | Build depth: retry/probe limits preserve finite downstream capacity |
-| Database architecture | Revisited from T17.2 | Design depth: transaction/constraint boundaries under injected failure |
-| Caching systems | Revisited from T17.5 | Design depth: immutable body reuse does not become stale authority |
-| Document ingestion and indexing | Revisited from T17.4 | Build depth: derived publication may lag but versions/tombstones remain authoritative |
-| Enterprise retrieval governance | Revisited from T17.7 | Build depth: failover cannot silently widen policy freshness |
-| Identity and access control | Revisited from T17.7 | Build depth: authority outage denies protected access, even when history can be read |
-| Observability systems | Context only | T17.9, Build depth: use diagnostic signals now; version-aware telemetry architecture follows |
-| Distributed architecture patterns | Deferred | T17.13, Design depth: no catalogue of unrelated architectures |
-| Cloud networking and deployment | Context only | T17.12, Design depth: regional recovery needs a later deployment contract |
+| APIs and streaming protocols | Revisited from T18.2 | Build depth: lost response and minimum-version read; same operation identity |
+| Backpressure and overload management | Revisited from T18.6 | Build depth: retry/probe limits preserve finite downstream capacity |
+| Database architecture | Revisited from T18.2 | Design depth: transaction/constraint boundaries under injected failure |
+| Caching systems | Revisited from T18.5 | Design depth: immutable body reuse does not become stale authority |
+| Document ingestion and indexing | Revisited from T18.4 | Build depth: derived publication may lag but versions/tombstones remain authoritative |
+| Enterprise retrieval governance | Revisited from T18.7 | Build depth: failover cannot silently widen policy freshness |
+| Identity and access control | Revisited from T18.7 | Build depth: authority outage denies protected access, even when history can be read |
+| Observability systems | Context only | T18.9, Build depth: use diagnostic signals now; version-aware telemetry architecture follows |
+| Distributed architecture patterns | Deferred | T18.13, Design depth: no catalogue of unrelated architectures |
+| Cloud networking and deployment | Context only | T18.12, Design depth: regional recovery needs a later deployment contract |
 
 Outcomes: choose consistency per class; reproduce rollback/lost acknowledgement; reject false projection catch-up; bound recovery attempts; diagnose the latency path and write a verifiable recovery procedure. Prerequisites are the first six stages.
 

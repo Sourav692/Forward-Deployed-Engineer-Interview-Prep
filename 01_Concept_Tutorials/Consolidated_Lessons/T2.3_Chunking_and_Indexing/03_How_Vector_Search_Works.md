@@ -73,7 +73,7 @@ Post-filtering is fast but can filter out the only good hits if k was too small.
 
 Dense search is brilliant at paraphrase. It is bad at exact identifiers. `MRD-5031`, `MRD-5030`, and `MRD-4290` look alike, so they embed to nearly the same place. Ask "What is MRD-5031?" and dense search may return the MRD-5030 guide. Keyword scoring (BM25) treats a rare token as strong evidence and finds MRD-5031 at once. It has no idea, though, that "data not showing up" and "commit lag" describe the same problem.
 
-Enterprise corpora are full of error codes, product codes, and ticket IDs, and users ask in plain language, so most production systems use both. Combining dense and keyword search (hybrid search), merging the lists, and reranking are covered in [T7.1 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
+Enterprise corpora are full of error codes, product codes, and ticket IDs, and users ask in plain language, so most production systems use both. Combining dense and keyword search (hybrid search), merging the lists, and reranking are covered in [T6.1 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
 
 ## Worked Example: One Query Through the Index
 

@@ -37,7 +37,7 @@ Threat exercises should include forged tenant headers, guessed IDs, stale allow 
 
 **Prompt:** An allow audit event exists. Does that prove the external provider processed the request once?
 
-**Spoken answer:** “It records our decision and protected resource references at a defined boundary. It does not prove remote execution or erase a lost-response ambiguity. I keep request/job/reservation IDs correlated while preserving T17.3 and T17.6 unknown outcomes. If audit commitment is mandatory before disclosure, failure must block or enter a separately designed durable buffering path.”
+**Spoken answer:** “It records our decision and protected resource references at a defined boundary. It does not prove remote execution or erase a lost-response ambiguity. I keep request/job/reservation IDs correlated while preserving T18.3 and T18.6 unknown outcomes. If audit commitment is mandatory before disclosure, failure must block or enter a separately designed durable buffering path.”
 
 **Trade-off:** Conservative evidence requirements can reduce availability. **Changed constraint:** Define the incident workflow for matching audit events, provider usage and an unknown reservation without exposing source text.
 

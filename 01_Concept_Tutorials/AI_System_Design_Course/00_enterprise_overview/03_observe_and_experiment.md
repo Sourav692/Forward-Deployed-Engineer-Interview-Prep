@@ -64,7 +64,7 @@ For the example policy, the answer should explain that Alice needs written suppl
 
 ## A Capacity Preview With Correct Units
 
-Use T17.12’s recovery scenario as a preview, not a new benchmark. At 60 requests/second and 1,000 budgeted tokens/request, token demand is 60 ×1,000×60 =3.6 million tokens/minute. At two assumed active seconds/request, the steady-state active-slot estimate is 60×2 =120. A bigger application fleet cannot fix a provider quota below the required token budget.
+Use T18.12’s recovery scenario as a preview, not a new benchmark. At 60 requests/second and 1,000 budgeted tokens/request, token demand is 60 ×1,000×60 =3.6 million tokens/minute. At two assumed active seconds/request, the steady-state active-slot estimate is 60×2 =120. A bigger application fleet cannot fix a provider quota below the required token budget.
 
 If one app replica supports an assumed 20 requests/second and we plan at 70% utilisation, it supplies 14 planned requests/second. The app calculation is ceil(60/14)=5 replicas. We still need sufficient database/search capacity, provider request quota, token quota, active slots, and ready model capacity. The later lessons teach those independent bottlenecks and the limits of this arithmetic.
 

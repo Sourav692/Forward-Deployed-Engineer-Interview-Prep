@@ -98,7 +98,7 @@ export const TRACKS: CurriculumTrack[] = [
   ...RAG_TRACKS,
   {
     slug: 'production-ai',
-    code: 'T15',
+    code: 'T16',
     title: 'Production AI Systems',
     objective: 'Run AI systems safely at cost and scale',
     forWhom: 'All technical paths',
@@ -165,12 +165,12 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'ai-systems-design',
-    code: 'T16',
+    code: 'T17',
     title: 'AI System Design',
     objective: 'Produce a structured 45–60 min design answer',
     forWhom: 'All',
     prerequisites: ['llm-and-retrieval', 'agentic-systems', 'production-ai'],
-    prerequisiteNote: 'T5, T9 and T15 (T15 can run in parallel)',
+    prerequisiteNote: 'T5, T7 and T16 (T16 can run in parallel)',
     required: 'yes',
     exitCompetencies: ['Run the 12-part framework within time and defend trade-offs'],
     sections: [
@@ -201,12 +201,12 @@ export const TRACKS: CurriculumTrack[] = [
   ...SD_TRACKS,
   {
     slug: 'forward-deployed',
-    code: 'T18',
+    code: 'T19',
     title: 'Forward Deployed Engineering',
     objective: 'Take a vague customer need to an adopted deployment',
     forWhom: 'FDE, consultant, architect',
     prerequisites: ['orientation', 'ai-systems-design'],
-    prerequisiteNote: 'T0; T16 recommended',
+    prerequisiteNote: 'T0; T17 recommended',
     required: 'fde-path',
     exitCompetencies: ['Decompose, scope, plan delivery gates, debug in customer environments'],
     sections: [
@@ -240,7 +240,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'communication-and-behavioural',
-    code: 'T19',
+    code: 'T20',
     title: 'Communication and Behavioural',
     objective: 'Tell grounded stories and explain trade-offs to any audience',
     forWhom: 'All',
@@ -296,7 +296,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'capstone-and-portfolio',
-    code: 'T20',
+    code: 'T21',
     title: 'Capstone and Portfolio',
     objective: 'Build and present evidence of real capability',
     forWhom: 'Career changers, architects',
@@ -349,7 +349,7 @@ export const MODULES: CurriculumModule[] = [
     status: 'ready',
     practiceMinutes: 30,
     objective: 'Explain how FDE differs from SWE and solutions roles',
-    scope: 'Role and cadence; delivery detail lives in T18.4',
+    scope: 'Role and cadence; delivery detail lives in T19.4',
     prerequisites: [],
     deliverable: 'Write a 3-sentence "why FDE" answer',
     assessment: 'Quiz',
@@ -372,7 +372,7 @@ export const MODULES: CurriculumModule[] = [
     status: 'ready',
     practiceMinutes: 45,
     objective: 'Apply a fixed opening routine: clarify, scope, metric',
-    scope: 'Opening routine only; full framework in T16.1',
+    scope: 'Opening routine only; full framework in T17.1',
     prerequisites: [],
     deliverable: 'Run the routine on 3 prompts from the decomposition bank',
     assessment: 'Quiz + recorded opening',
@@ -517,7 +517,7 @@ export const MODULES: CurriculumModule[] = [
   ...SD_MODULES,
   {
     slug: 'tool-design-mcp-a2a',
-    code: 'T15.1',
+    code: 'T16.1',
     title: 'Tool design and the agent-computer interface',
     track: 'production-ai',
     section: 'agent-engineering-in-production',
@@ -542,7 +542,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'context-engineering',
-    code: 'T15.2',
+    code: 'T16.2',
     title: 'Context engineering and orchestration',
     track: 'production-ai',
     section: 'agent-engineering-in-production',
@@ -566,14 +566,14 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'robust-agents',
-    code: 'T15.3',
+    code: 'T16.3',
     title: 'Robust agents: retries, fallbacks and guards',
     track: 'production-ai',
     section: 'agent-engineering-in-production',
     status: 'ready',
     practiceMinutes: 135,
     objective: 'Make tool calls safe and recoverable',
-    scope: 'Single-agent reliability; platform security in T15.6',
+    scope: 'Single-agent reliability; platform security in T16.6',
     prerequisites: ['tool-design-mcp-a2a'],
     deliverable: 'Debug a failing agent',
     assessment: 'Rubric',
@@ -590,7 +590,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'agentic-workflow-platforms',
-    code: 'T15.4',
+    code: 'T16.4',
     title: 'Agentic workflow platforms',
     track: 'production-ai',
     section: 'agent-engineering-in-production',
@@ -616,7 +616,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'enterprise-rag-in-production',
-    code: 'T15.5',
+    code: 'T16.5',
     title: 'Enterprise RAG in production',
     track: 'production-ai',
     section: 'quality-and-safety',
@@ -642,7 +642,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'evaluation-and-release-gates',
-    code: 'T15.7',
+    code: 'T16.7',
     title: 'Evaluation and release gates',
     track: 'production-ai',
     section: 'evaluation-and-safe-releases',
@@ -667,7 +667,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'security-tenancy-prompt-injection',
-    code: 'T15.6',
+    code: 'T16.6',
     title: 'Security, tenancy and prompt injection',
     track: 'production-ai',
     section: 'quality-and-safety',
@@ -692,7 +692,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'observability-and-diagnosis',
-    code: 'T15.9',
+    code: 'T16.9',
     title: 'Observability and production diagnosis',
     track: 'production-ai',
     section: 'operations-and-scale',
@@ -717,7 +717,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'cost-and-latency',
-    code: 'T15.10',
+    code: 'T16.10',
     title: 'Cost and latency optimisation',
     track: 'production-ai',
     section: 'operations-and-scale',
@@ -744,7 +744,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'scaling-and-reliability',
-    code: 'T15.11',
+    code: 'T16.11',
     title: 'Scaling and reliability',
     track: 'production-ai',
     section: 'operations-and-scale',
@@ -769,7 +769,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'agentops',
-    code: 'T15.8',
+    code: 'T16.8',
     title: 'AgentOps: versioning, rollout, CI/CD, red teaming',
     track: 'production-ai',
     section: 'evaluation-and-safe-releases',
@@ -795,7 +795,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'model-adaptation-and-serving',
-    code: 'T15.12',
+    code: 'T16.12',
     title: 'Model adaptation and inference serving',
     track: 'production-ai',
     section: 'model-adaptation',
@@ -819,14 +819,14 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'design-framework',
-    code: 'T16.1',
+    code: 'T17.1',
     title: 'The design framework: 12 parts and 15 principles',
     track: 'ai-systems-design',
     section: 'design-method',
     status: 'ready',
     practiceMinutes: 135,
     objective: 'Apply a shared structure to any design prompt',
-    scope: 'Framework; patterns in T16.3',
+    scope: 'Framework; patterns in T17.3',
     prerequisites: ['retrieval-hybrid-rerank', 'robust-agents', 'evaluation-and-release-gates'],
     deliverable: 'Outline 2 prompts',
     assessment: 'Worksheet',
@@ -843,7 +843,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'sixty-minute-whiteboard',
-    code: 'T16.2',
+    code: 'T17.2',
     title: 'The 60-minute whiteboard method',
     track: 'ai-systems-design',
     section: 'design-method',
@@ -864,14 +864,14 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'architecture-patterns',
-    code: 'T16.3',
+    code: 'T17.3',
     title: 'Architecture patterns and trade-offs',
     track: 'ai-systems-design',
     section: 'design-method',
     status: 'ready',
     practiceMinutes: 150,
     objective: 'Choose patterns and articulate trade-offs',
-    scope: 'Patterns; cases in T16.4',
+    scope: 'Patterns; cases in T17.4',
     prerequisites: ['design-framework'],
     deliverable: 'Architecture design exercise',
     assessment: 'Rubric',
@@ -888,7 +888,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'classic-ai-designs',
-    code: 'T16.4',
+    code: 'T17.4',
     title: 'Classic AI designs',
     track: 'ai-systems-design',
     section: 'casebook',
@@ -918,7 +918,7 @@ export const MODULES: CurriculumModule[] = [
   // Casebook; this module is no longer listed or assigned in the Learn curriculum.
   {
     slug: 'scenario-library',
-    code: 'T16.5',
+    code: 'T17.5',
     title: 'Scenario library',
     track: 'ai-systems-design',
     section: 'casebook',
@@ -974,14 +974,14 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'customer-discovery',
-    code: 'T18.1',
+    code: 'T19.1',
     title: 'Customer discovery and problem decomposition',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
     status: 'ready',
     practiceMinutes: 210,
     objective: 'Turn a vague ask into requirements, constraints and metrics',
-    scope: 'Discovery only; scoping in T18.2',
+    scope: 'Discovery only; scoping in T19.2',
     prerequisites: ['first-ten-minutes'],
     deliverable: 'Discovery worksheets (10 existing) + 3 bank cases aloud',
     assessment: 'Worksheet rubric',
@@ -998,7 +998,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'scoping-an-fde-project',
-    code: 'T18.2',
+    code: 'T19.2',
     title: 'Scoping an FDE project',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
@@ -1024,7 +1024,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'judgement-cases',
-    code: 'T18.3',
+    code: 'T19.3',
     title: 'Judgement cases',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
@@ -1042,7 +1042,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'delivery-stages-and-gates',
-    code: 'T18.4',
+    code: 'T19.4',
     title: 'Delivery: six stages, gates, two-week launch',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1068,7 +1068,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'adoption-and-impact',
-    code: 'T18.5',
+    code: 'T19.5',
     title: 'Adoption, change management and business impact',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1091,7 +1091,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'debugging-customer-environment',
-    code: 'T18.6',
+    code: 'T19.6',
     title: 'Debugging in the customer\'s environment',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1110,7 +1110,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'telling-the-build-story',
-    code: 'T19.1',
+    code: 'T20.1',
     title: 'Telling the build story',
     track: 'communication-and-behavioural',
     section: 'stories-and-communication',
@@ -1136,7 +1136,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'building-the-story-bank',
-    code: 'T19.2',
+    code: 'T20.2',
     title: 'The behavioural round',
     track: 'communication-and-behavioural',
     section: 'stories-and-communication',
@@ -1366,7 +1366,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'capstone-build',
-    code: 'T20.1',
+    code: 'T21.1',
     title: 'Capstone build',
     track: 'capstone-and-portfolio',
     section: 'capstone',
@@ -1388,7 +1388,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'portfolio-write-up',
-    code: 'T20.2',
+    code: 'T21.2',
     title: 'Portfolio write-up and presentation',
     track: 'capstone-and-portfolio',
     section: 'capstone',
@@ -1629,7 +1629,7 @@ export const INTERVIEW_ROUNDS: InterviewRound[] = [
         ],
       },
       {
-        // The staff interview questions of the Staff AI System Design course (T17), one lesson
+        // The staff interview questions of the Staff AI System Design course (T18), one lesson
         // per stage; Stage 12's sit in its own lesson because its part 4 is over the page limit.
         title: 'Staff platform questions',
         lessons: [

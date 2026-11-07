@@ -5,7 +5,7 @@
 
 [ADR-001](/learn/staff-ai-system-design/architecture-decisions/adr-001-synchronous-mvp) accepts a synchronous single-application MVP for this educational architecture. [Current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md) records version `v0.1-stage-01`; it is an accepted teaching baseline, not a deployment approval.
 
-Keep the request schema, scoped history, adapter interface, no-automatic-retry rule, and commit-before-success contract. A future T17.3 starts when document processing or another long task blocks interactive requests or must survive a worker crash. It can introduce durable jobs with a migration decision. No T17.3 artefacts are generated here.
+Keep the request schema, scoped history, adapter interface, no-automatic-retry rule, and commit-before-success contract. A future T18.3 starts when document processing or another long task blocks interactive requests or must survive a worker crash. It can introduce durable jobs with a migration decision. No T18.3 artefacts are generated here.
 
 Unresolved pre-pilot questions include real identity/provider contracts, durable hosting, retention and backup deletion, a recovery policy for uncertain rows, measured load/latency, and cost/quota values. Keep these visible rather than marking the platform production-ready.
 

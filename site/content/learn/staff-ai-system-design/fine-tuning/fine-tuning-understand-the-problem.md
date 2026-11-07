@@ -7,7 +7,7 @@ All workloads, costs, and acceptance counts below are illustrative. The local ex
 
 ## Inherit the Actual Runtime
 
-[T17.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) and [ADR-009](/learn/staff-ai-system-design/architecture-decisions/adr-009-approved-inference-boundaries) already separate the Model Gateway from a proposed serving engine. Current resource access, mandatory audit, private-approved routes, versioned retrieval/cache, fair request/token/concurrency budgets, and durable operation identity remain mandatory. Short drafting and grounded supplier-policy answering remain distinct routes. An unknown provider result still requires reconciliation; a new adapter cannot justify regeneration under the old key.
+[T18.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) and [ADR-009](/learn/staff-ai-system-design/architecture-decisions/adr-009-approved-inference-boundaries) already separate the Model Gateway from a proposed serving engine. Current resource access, mandatory audit, private-approved routes, versioned retrieval/cache, fair request/token/concurrency budgets, and durable operation identity remain mandatory. Short drafting and grounded supplier-policy answering remain distinct routes. An unknown provider result still requires reconciliation; a new adapter cannot justify regeneration under the old key.
 
 ```mermaid
 flowchart TD
@@ -27,18 +27,18 @@ First compare the approved prompt, schema-constrained generation where the route
 
 | Module | Treatment | Depth, evidence, and boundary |
 | --- | --- | --- |
-| Background execution systems | Revisited from [T17.3](/learn/staff-ai-system-design/distributed-execution/distributed-execution-understand-the-problem) | Build depth: training intent/checkpoint recovery differs from unknown provider outcomes |
-| Object storage and data lifecycle | Revisited from [T17.4](/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-understand-the-problem) | Explain depth: training snapshots and derived artefacts need retention and deletion lineage |
-| GPU architecture fundamentals | Revisited from [T17.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: training memory includes gradients, activations and optimiser state |
-| Distributed GPU execution | Revisited from [T17.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: replicated versus sharded state is contextual, not a distributed trainer |
-| GPU infrastructure and scheduling | Revisited from [T17.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: reserve a bounded training pool without consuming serving headroom |
+| Background execution systems | Revisited from [T18.3](/learn/staff-ai-system-design/distributed-execution/distributed-execution-understand-the-problem) | Build depth: training intent/checkpoint recovery differs from unknown provider outcomes |
+| Object storage and data lifecycle | Revisited from [T18.4](/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-understand-the-problem) | Explain depth: training snapshots and derived artefacts need retention and deletion lineage |
+| GPU architecture fundamentals | Revisited from [T18.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: training memory includes gradients, activations and optimiser state |
+| Distributed GPU execution | Revisited from [T18.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: replicated versus sharded state is contextual, not a distributed trainer |
+| GPU infrastructure and scheduling | Revisited from [T18.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Explain depth: reserve a bounded training pool without consuming serving headroom |
 | Fine-tuning fundamentals | Taught here | Design depth: behaviour versus knowledge, prompt/retrieval/adapter alternatives, holdout design and acceptance exercise |
 | Fine-tuning platform architecture | Taught here | Explain depth: job, tracking, checkpoint, registry and approval boundaries; no trainer service |
 | Distributed training infrastructure | Context only; awareness depth deferred specialisation | Awareness depth: six-sentence orientation only; distributed optimiser implementation deferred |
-| Evaluation architecture | Revisited from [T17.9](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem) | Build depth: supplier holdout and safety slices now bind the adapter identity |
-| Release management and experimentation | Revisited from [T17.9](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem) | Build depth: new custom models still use approved immutable release bundles |
+| Evaluation architecture | Revisited from [T18.9](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem) | Build depth: supplier holdout and safety slices now bind the adapter identity |
+| Release management and experimentation | Revisited from [T18.9](/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem) | Build depth: new custom models still use approved immutable release bundles |
 | Model and data lifecycle infrastructure | Taught here | Design depth: immutable lineage, retirement, deletion and promotion checks |
-| Container and orchestration architecture | Revisited from [T17.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Design depth: pin training image/recipe and drain or restart at verified checkpoints |
+| Container and orchestration architecture | Revisited from [T18.10](/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem) | Design depth: pin training image/recipe and drain or restart at verified checkpoints |
 
 Outcomes: choose a justified customisation path, explain dataset-to-release lineage, evaluate a frozen holdout, and block a candidate with unsafe or mismatched evidence. Revisited topics apply to new model artefacts rather than repeat their original tutorials.
 

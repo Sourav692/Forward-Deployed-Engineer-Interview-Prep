@@ -1,6 +1,6 @@
-# T15.11 Scaling and Reliability: Consolidated Lessons
+# T16.11 Scaling and Reliability: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T15.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
+These six lessons are the site's teaching copy of module T16.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
 
 | # | Lesson | Site slug |
 |---|---|---|

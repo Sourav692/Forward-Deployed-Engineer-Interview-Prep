@@ -1,6 +1,6 @@
-# T15.4 Agentic Workflow Platforms: Consolidated Lessons
+# T16.4 Agentic Workflow Platforms: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T15.4 "Agentic workflow platforms". Each concept is taught once, in the house tutorial format, drawing only on the FDE Handbook's Agentic Workflow Platforms documents. The site publishes them at `/learn/agentic-systems/agentic-workflow-platforms`.
+These seven lessons are the site's teaching copy of module T16.4 "Agentic workflow platforms". Each concept is taught once, in the house tutorial format, drawing only on the FDE Handbook's Agentic Workflow Platforms documents. The site publishes them at `/learn/agentic-systems/agentic-workflow-platforms`.
 
 | # | Lesson | Site slug |
 |---|---|---|

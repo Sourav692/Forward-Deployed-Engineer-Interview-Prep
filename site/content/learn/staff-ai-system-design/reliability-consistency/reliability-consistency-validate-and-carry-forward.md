@@ -21,7 +21,7 @@ The 60-second card: consistency per class; one authoritative writer; minimum-ver
 
 [ADR-007](/learn/staff-ai-system-design/architecture-decisions/adr-007-consistency-and-recovery) and the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) preserve the evidence.
 
-A future T17.9 adds versioned quality evaluation and release controls. It inherits these telemetry, transaction and recovery boundaries, and must roll back a model/retrieval change without reviving stale permissions or overwriting durable operation identity.
+A future T18.9 adds versioned quality evaluation and release controls. It inherits these telemetry, transaction and recovery boundaries, and must roll back a model/retrieval change without reviving stale permissions or overwriting durable operation identity.
 
 ## Primary References
 

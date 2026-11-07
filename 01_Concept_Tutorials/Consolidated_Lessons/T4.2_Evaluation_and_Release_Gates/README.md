@@ -1,6 +1,6 @@
-# T15.7 Evaluation and Release Gates: Consolidated Lessons
+# T16.7 Evaluation and Release Gates: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T15.7 "Evaluation and release gates". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/production-ai/evaluation-and-release-gates`.
+These six lessons are the site's teaching copy of module T16.7 "Evaluation and release gates". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/production-ai/evaluation-and-release-gates`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -15,7 +15,7 @@ These six lessons are the site's teaching copy of module T15.7 "Evaluation and r
 
 - `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md` (own material).
 - `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md`, Chapter 12 of *Cracking Agentic AI System Design Interviews* (third-party; its ideas are summarised in our own words, and every lesson here carries a credit line).
-- `01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md`, §8 "CI/CD Rigor for AI Systems" only (own material). Its rollout, rollback and A/B material belongs to T15.8 AgentOps.
+- `01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md`, §8 "CI/CD Rigor for AI Systems" only (own material). Its rollout, rollback and A/B material belongs to T16.8 AgentOps.
 
 The source files stay in the repository unchanged. The site no longer publishes the first two as separate lessons; old URLs redirect to the matching lesson here.
 

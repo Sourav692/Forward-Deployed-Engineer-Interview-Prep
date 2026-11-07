@@ -66,7 +66,7 @@ Open the [consistency/deadline experiment](/labs/system-design/07_reliability_co
 | Authority | Authority, lag 0 or 10, remaining 1,000 ms | Primary current authority only |
 | Exhausted | Either class, remaining 200 ms | No new read/generation; zero dependency allowance |
 
-Lag zero stands for a proven minimum version in this toy model, not a real method of measuring replication freshness from wall time alone. The read decision is a data leg; protected disclosure still requires T17.7's current access and audit gates. A primary authority outage denies protected access even when historical bytes exist elsewhere.
+Lag zero stands for a proven minimum version in this toy model, not a real method of measuring replication freshness from wall time alone. The read decision is a data leg; protected disclosure still requires T18.7's current access and audit gates. A primary authority outage denies protected access even when historical bytes exist elsewhere.
 
 ## Run the code lab
 

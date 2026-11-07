@@ -12,6 +12,6 @@ These two lessons are the site's teaching copy of module T0.3 "The first ten min
 - `01_Concept_Tutorials/FDE_Handbook/00_Orientation/03_The_First_Ten_Minutes.md` (own material).
 - `01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md` (own material): the post-filter failure used in lesson 2's worked example.
 
-The source files stay in the repository unchanged. The site no longer publishes `the-first-ten-minutes` as a separate lesson; its old URL redirects to lesson 1. The full 60-minute design method belongs to T16.1.
+The source files stay in the repository unchanged. The site no longer publishes `the-first-ten-minutes` as a separate lesson; its old URL redirects to lesson 1. The full 60-minute design method belongs to T17.1.
 
 Every claim in these lessons comes from the sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

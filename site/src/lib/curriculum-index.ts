@@ -820,7 +820,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-overview",
-    "code": "T17.1",
+    "code": "T18.1",
     "title": "Enterprise use case and target architecture",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -834,7 +834,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "mvp",
-    "code": "T17.2",
+    "code": "T18.2",
     "title": "Build the MVP",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -848,7 +848,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "distributed-execution",
-    "code": "T17.3",
+    "code": "T18.3",
     "title": "Distributed execution",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -862,7 +862,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-knowledge",
-    "code": "T17.4",
+    "code": "T18.4",
     "title": "Enterprise knowledge",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -876,7 +876,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "application-scaling",
-    "code": "T17.5",
+    "code": "T18.5",
     "title": "Scale the application",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -890,7 +890,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "overload-fairness",
-    "code": "T17.6",
+    "code": "T18.6",
     "title": "Handle overload and fair scheduling",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -904,7 +904,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-security",
-    "code": "T17.7",
+    "code": "T18.7",
     "title": "Enterprise security",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -918,7 +918,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "reliability-consistency",
-    "code": "T17.8",
+    "code": "T18.8",
     "title": "Reliability and consistency",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -932,7 +932,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "evaluation-releases",
-    "code": "T17.9",
+    "code": "T18.9",
     "title": "Production AI quality and releases",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -946,7 +946,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "inference-gpu",
-    "code": "T17.10",
+    "code": "T18.10",
     "title": "Inference and GPU infrastructure",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -960,7 +960,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "fine-tuning",
-    "code": "T17.11",
+    "code": "T18.11",
     "title": "Fine-tuning and model customisation",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -974,7 +974,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-region",
-    "code": "T17.12",
+    "code": "T18.12",
     "title": "Global multi-region platform",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -988,7 +988,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "staff-platform",
-    "code": "T17.13",
+    "code": "T18.13",
     "title": "Staff-level platform architecture",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -1003,7 +1003,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "architecture-decisions",
-    "code": "T17.14",
+    "code": "T18.14",
     "title": "Architecture decision records",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -1024,7 +1024,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "tool-design-mcp-a2a",
-    "code": "T15.1",
+    "code": "T16.1",
     "title": "Tool design and the agent-computer interface",
     "track": "production-ai",
     "lessons": [
@@ -1039,7 +1039,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "context-engineering",
-    "code": "T15.2",
+    "code": "T16.2",
     "title": "Context engineering and orchestration",
     "track": "production-ai",
     "lessons": [
@@ -1053,7 +1053,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "robust-agents",
-    "code": "T15.3",
+    "code": "T16.3",
     "title": "Robust agents: retries, fallbacks and guards",
     "track": "production-ai",
     "lessons": [
@@ -1067,7 +1067,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-workflow-platforms",
-    "code": "T15.4",
+    "code": "T16.4",
     "title": "Agentic workflow platforms",
     "track": "production-ai",
     "lessons": [
@@ -1083,7 +1083,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-rag-in-production",
-    "code": "T15.5",
+    "code": "T16.5",
     "title": "Enterprise RAG in production",
     "track": "production-ai",
     "lessons": [
@@ -1099,7 +1099,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "evaluation-and-release-gates",
-    "code": "T15.7",
+    "code": "T16.7",
     "title": "Evaluation and release gates",
     "track": "production-ai",
     "lessons": [
@@ -1114,7 +1114,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "security-tenancy-prompt-injection",
-    "code": "T15.6",
+    "code": "T16.6",
     "title": "Security, tenancy and prompt injection",
     "track": "production-ai",
     "lessons": [
@@ -1129,7 +1129,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "observability-and-diagnosis",
-    "code": "T15.9",
+    "code": "T16.9",
     "title": "Observability and production diagnosis",
     "track": "production-ai",
     "lessons": [
@@ -1144,7 +1144,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "cost-and-latency",
-    "code": "T15.10",
+    "code": "T16.10",
     "title": "Cost and latency optimisation",
     "track": "production-ai",
     "lessons": [
@@ -1161,7 +1161,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scaling-and-reliability",
-    "code": "T15.11",
+    "code": "T16.11",
     "title": "Scaling and reliability",
     "track": "production-ai",
     "lessons": [
@@ -1176,7 +1176,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentops",
-    "code": "T15.8",
+    "code": "T16.8",
     "title": "AgentOps: versioning, rollout, CI/CD, red teaming",
     "track": "production-ai",
     "lessons": [
@@ -1192,7 +1192,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "model-adaptation-and-serving",
-    "code": "T15.12",
+    "code": "T16.12",
     "title": "Model adaptation and inference serving",
     "track": "production-ai",
     "lessons": [
@@ -1205,7 +1205,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "design-framework",
-    "code": "T16.1",
+    "code": "T17.1",
     "title": "The design framework: 12 parts and 15 principles",
     "track": "ai-systems-design",
     "lessons": [
@@ -1219,7 +1219,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "sixty-minute-whiteboard",
-    "code": "T16.2",
+    "code": "T17.2",
     "title": "The 60-minute whiteboard method",
     "track": "ai-systems-design",
     "lessons": [
@@ -1230,7 +1230,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "architecture-patterns",
-    "code": "T16.3",
+    "code": "T17.3",
     "title": "Architecture patterns and trade-offs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1244,7 +1244,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "classic-ai-designs",
-    "code": "T16.4",
+    "code": "T17.4",
     "title": "Classic AI designs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1262,7 +1262,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scenario-library",
-    "code": "T16.5",
+    "code": "T17.5",
     "title": "Scenario library",
     "track": "ai-systems-design",
     "lessons": [
@@ -1303,7 +1303,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "customer-discovery",
-    "code": "T18.1",
+    "code": "T19.1",
     "title": "Customer discovery and problem decomposition",
     "track": "forward-deployed",
     "lessons": [
@@ -1317,7 +1317,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scoping-an-fde-project",
-    "code": "T18.2",
+    "code": "T19.2",
     "title": "Scoping an FDE project",
     "track": "forward-deployed",
     "lessons": [
@@ -1333,7 +1333,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "judgement-cases",
-    "code": "T18.3",
+    "code": "T19.3",
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
@@ -1341,7 +1341,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "delivery-stages-and-gates",
-    "code": "T18.4",
+    "code": "T19.4",
     "title": "Delivery: six stages, gates, two-week launch",
     "track": "forward-deployed",
     "lessons": [
@@ -1357,7 +1357,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adoption-and-impact",
-    "code": "T18.5",
+    "code": "T19.5",
     "title": "Adoption, change management and business impact",
     "track": "forward-deployed",
     "lessons": [
@@ -1369,7 +1369,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "debugging-customer-environment",
-    "code": "T18.6",
+    "code": "T19.6",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
     "lessons": [],
@@ -1377,7 +1377,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "telling-the-build-story",
-    "code": "T19.1",
+    "code": "T20.1",
     "title": "Telling the build story",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1392,7 +1392,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-the-story-bank",
-    "code": "T19.2",
+    "code": "T20.2",
     "title": "The behavioural round",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1520,7 +1520,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "capstone-build",
-    "code": "T20.1",
+    "code": "T21.1",
     "title": "Capstone build",
     "track": "capstone-and-portfolio",
     "lessons": [
@@ -1531,7 +1531,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "portfolio-write-up",
-    "code": "T20.2",
+    "code": "T21.2",
     "title": "Portfolio write-up and presentation",
     "track": "capstone-and-portfolio",
     "lessons": [],
@@ -1879,7 +1879,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "production-ai",
-    "code": "T15",
+    "code": "T16",
     "title": "Production AI Systems",
     "modules": [
       "tool-design-mcp-a2a",
@@ -1898,7 +1898,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "ai-systems-design",
-    "code": "T16",
+    "code": "T17",
     "title": "AI System Design",
     "modules": [
       "design-framework",
@@ -1909,7 +1909,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "staff-ai-system-design",
-    "code": "T17",
+    "code": "T18",
     "title": "Staff AI System Design: Building an Enterprise AI Platform",
     "modules": [
       "enterprise-overview",
@@ -1930,7 +1930,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "forward-deployed",
-    "code": "T18",
+    "code": "T19",
     "title": "Forward Deployed Engineering",
     "modules": [
       "customer-discovery",
@@ -1943,7 +1943,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "communication-and-behavioural",
-    "code": "T19",
+    "code": "T20",
     "title": "Communication and Behavioural",
     "modules": [
       "telling-the-build-story",
@@ -1964,7 +1964,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "capstone-and-portfolio",
-    "code": "T20",
+    "code": "T21",
     "title": "Capstone and Portfolio",
     "modules": [
       "capstone-build",

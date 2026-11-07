@@ -227,7 +227,7 @@ type FlagSpec = Partial<Record<ModuleFlag, string[]>>
 function flags(fallback: ModuleFlag, spec: FlagSpec): Record<string, ModuleFlag> {
   const out: Record<string, ModuleFlag> = {}
   for (const slug of ALL_MODULES) out[slug] = fallback
-  // The Staff AI System Design course (T17) is an optional deep dive on every path; a path's own
+  // The Staff AI System Design course (T18) is an optional deep dive on every path; a path's own
   // spec can still raise it. Optional modules add nothing to a path's hours.
   for (const slug of TRACK_MODULES['staff-ai-system-design']) out[slug] = 'optional'
   for (const level of FLAG_ORDER) for (const item of spec[level] ?? []) for (const slug of expand(item)) out[slug] = level
@@ -553,7 +553,7 @@ export const PATHS: LearningPath[] = [
         'communication-and-behavioural',
         'portfolio-write-up',
       ],
-      // Architects are asked staff-level design questions, so the T17 course is recommended here.
+      // Architects are asked staff-level design questions, so the T18 course is recommended here.
       recommended: ['staff-ai-system-design'],
       optional: [
         'engineering-foundations',
@@ -616,7 +616,7 @@ export const PATHS: LearningPath[] = [
       'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
-      // T18 Forward Deployed Engineering and T15.7 Evaluation and release gates.
+      // T19 Forward Deployed Engineering and T16.7 Evaluation and release gates.
       'customer-discovery': 'required',
       'scoping-an-fde-project': 'required',
       'judgement-cases': 'required',

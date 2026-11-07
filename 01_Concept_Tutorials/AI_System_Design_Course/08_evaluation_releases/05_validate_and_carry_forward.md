@@ -21,7 +21,7 @@ The 60-second card: freeze versions; validate coverage; score slices; hard-stop 
 
 [ADR-008](../architecture_decisions/adr_008_versioned_quality_releases.md) and the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) preserve actual artefacts.
 
-A future T17.10 compares hosted and self-hosted inference under explicit performance, policy and cost assumptions. It must use approved versioned routes, current data/tenant policy, bounded provider budgets and the inherited unknown-outcome rules, rather than treating a cheaper endpoint as an automatic fallback.
+A future T18.10 compares hosted and self-hosted inference under explicit performance, policy and cost assumptions. It must use approved versioned routes, current data/tenant policy, bounded provider budgets and the inherited unknown-outcome rules, rather than treating a cheaper endpoint as an automatic fallback.
 
 ## Primary References
 

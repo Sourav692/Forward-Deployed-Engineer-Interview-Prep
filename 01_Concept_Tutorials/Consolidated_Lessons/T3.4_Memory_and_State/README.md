@@ -19,6 +19,6 @@ These seven lessons are the site's teaching copy of module T11.2 "Memory and sta
 - `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_09_Memory_Databases_Caching_for_GenAI_Systems.md` (own material).
 - `01_Concept_Tutorials/Agentic_System_Design_Book/ch07_knowledge_memory_retrieval.md`, Chapter 7 of *Cracking Agentic AI System Design Interviews* (third-party; its ideas are summarised in our own words, and the lessons that use it carry a credit line).
 
-The source files stay in the repository unchanged. The site no longer publishes the first, second and fourth as separate lessons; old URLs redirect to the matching lesson here. Module 9 is still published, split into a databases and vector search lesson under T6.2 and a caching lesson under T15.10. Its memory topics are taught here.
+The source files stay in the repository unchanged. The site no longer publishes the first, second and fourth as separate lessons; old URLs redirect to the matching lesson here. Module 9 is still published, split into a databases and vector search lesson under T6.2 and a caching lesson under T16.10. Its memory topics are taught here.
 
 Every claim, number and code idea in these lessons comes from the four sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

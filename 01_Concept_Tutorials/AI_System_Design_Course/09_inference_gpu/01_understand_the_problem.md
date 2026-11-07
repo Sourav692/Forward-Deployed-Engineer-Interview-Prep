@@ -3,11 +3,11 @@
 
 Alice's supplier workflow now has an approved behaviour/release process, but hosted generation cost, queueing and data-path constraints motivate a comparison with self-hosted inference. Keep the Model Gateway responsible for approved routes and stable operations. Do not replace an uncertain hosted call with an automatic second call merely because another GPU or endpoint is available.
 
-This is the same hypothetical platform. The gateway executes injected fixture transport while composing actual T17.6 budget, T17.7 security and T17.9 release code. The GPU worksheet performs memory arithmetic only. No model, GPU, tokeniser, container cluster or real provider runs. All architecture sizes, utilisation and costs are assumptions, not benchmarks or current prices. Estimated integrated study: six to eight hours; mastery remains unassessed.
+This is the same hypothetical platform. The gateway executes injected fixture transport while composing actual T18.6 budget, T18.7 security and T18.9 release code. The GPU worksheet performs memory arithmetic only. No model, GPU, tokeniser, container cluster or real provider runs. All architecture sizes, utilisation and costs are assumptions, not benchmarks or current prices. Estimated integrated study: six to eight hours; mastery remains unassessed.
 
 ## Inherit the Approved Runtime
 
-[T17.9](../08_evaluation_releases/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](../architecture_decisions/adr_008_versioned_quality_releases.md) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
+[T18.9](../08_evaluation_releases/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/architecture-after.md) and [ADR-008](../architecture_decisions/adr_008_versioned_quality_releases.md) bind behaviour to evaluated bundles and controlled release pointers. Retain current identity/resource policy, audit/egress, durable saved result identity, read consistency, unknown remote outcomes, fair queues/quotas, versioned retrieval and safe immutable caches.
 
 ```mermaid
 flowchart TD
@@ -44,15 +44,15 @@ An enterprise may require a particular network/data-handling path or a reproduci
 | Distributed GPU execution | Taught here | Explain depth: replicas versus tensor/pipeline sharding and communication cost |
 | GPU infrastructure and scheduling | Taught here | Explain depth: placement, memory reservations, sharing/isolation and finite capacity |
 | Container and orchestration architecture | Taught here | Design depth: image/model identity, startup/readiness/drain, device resources and lifecycle exercise |
-| Estimation and capacity planning | Revisited from T17.2 | Build depth: inference memory, tokens, utilisation and conditional economics |
-| Gateway and service communication | Revisited from T17.7 | Build depth: provider/private-route constraints remain trusted policy |
-| Concurrency fundamentals | Revisited from T17.3 | Build depth: active sequences and remote calls are bounded independently of app replicas |
-| Admission; 5.2 queueing; 5.3 backpressure; 5.4 fair scheduling; 5.5 AI workload management | Revisited from T17.6 | Build depth/design depth/build depth/design depth/Build depth: apply token/slot/queue/share budgets to inference; do not repeat those tutorials |
-| Search architecture | Revisited from T17.4 | Build depth: retrieved context changes token/memory demand while access and provenance remain mandatory |
-| Latency and performance | Revisited from T17.8 | Build depth: separate queue, prefill, decode and final persistence in the critical path |
-| Release management and experimentation | Revisited from T17.9 | Build depth: only approved bundles enter eligible routes; preserve saved operations on change |
-| Observability systems | Revisited from T17.9 | Build depth: correlate model/engine/bundle, token phases and redacted outcomes |
-| Fine-tuning fundamentals | Deferred | T17.11, Design depth: no training, adapters or optimisation research added here |
+| Estimation and capacity planning | Revisited from T18.2 | Build depth: inference memory, tokens, utilisation and conditional economics |
+| Gateway and service communication | Revisited from T18.7 | Build depth: provider/private-route constraints remain trusted policy |
+| Concurrency fundamentals | Revisited from T18.3 | Build depth: active sequences and remote calls are bounded independently of app replicas |
+| Admission; 5.2 queueing; 5.3 backpressure; 5.4 fair scheduling; 5.5 AI workload management | Revisited from T18.6 | Build depth/design depth/build depth/design depth/Build depth: apply token/slot/queue/share budgets to inference; do not repeat those tutorials |
+| Search architecture | Revisited from T18.4 | Build depth: retrieved context changes token/memory demand while access and provenance remain mandatory |
+| Latency and performance | Revisited from T18.8 | Build depth: separate queue, prefill, decode and final persistence in the critical path |
+| Release management and experimentation | Revisited from T18.9 | Build depth: only approved bundles enter eligible routes; preserve saved operations on change |
+| Observability systems | Revisited from T18.9 | Build depth: correlate model/engine/bundle, token phases and redacted outcomes |
+| Fine-tuning fundamentals | Deferred | T18.11, Design depth: no training, adapters or optimisation research added here |
 
 Outcomes: defend a hosted/self-hosted boundary; build/debug an approved gateway slice; estimate peak memory without claiming speed; explain deployment and parallelism trade-offs at the assigned depth. Explain depth topics need working boundary knowledge, not a GPU-internals course.
 

@@ -5347,7 +5347,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/00_enterprise_overview/01_understand_the_problem.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/enterprise-overview/enterprise-overview-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-overview-learn-and-design",
@@ -5371,7 +5371,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/00_enterprise_overview/03_observe_and_experiment.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/enterprise-overview/enterprise-overview-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-overview-think-like-a-staff-engineer",
@@ -5395,7 +5395,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/00_enterprise_overview/05_validate_and_carry_forward.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/enterprise-overview/enterprise-overview-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "mvp-understand-the-problem",
@@ -5407,7 +5407,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/01_mvp/01_understand_the_problem.md",
       "estMinutes": 8,
       "href": "/learn/staff-ai-system-design/mvp/mvp-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "mvp-learn-and-design",
@@ -5419,7 +5419,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/01_mvp/02_learn_and_design.md",
       "estMinutes": 10,
       "href": "/learn/staff-ai-system-design/mvp/mvp-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "mvp-observe-and-experiment",
@@ -5431,7 +5431,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/01_mvp/03_observe_and_experiment.md",
       "estMinutes": 10,
       "href": "/learn/staff-ai-system-design/mvp/mvp-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "mvp-think-like-a-staff-engineer",
@@ -5455,7 +5455,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/01_mvp/05_validate_and_carry_forward.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/mvp/mvp-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "distributed-execution-understand-the-problem",
@@ -5467,7 +5467,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/02_distributed_execution/01_understand_the_problem.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/distributed-execution/distributed-execution-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "distributed-execution-learn-and-design",
@@ -5479,7 +5479,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/02_distributed_execution/02_learn_and_design.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/distributed-execution/distributed-execution-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "distributed-execution-observe-and-experiment",
@@ -5503,7 +5503,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/02_distributed_execution/04_think_like_a_staff_engineer.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/distributed-execution/distributed-execution-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "distributed-execution-validate-and-carry-forward",
@@ -5515,7 +5515,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/02_distributed_execution/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/distributed-execution/distributed-execution-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-knowledge-understand-the-problem",
@@ -5527,7 +5527,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/03_enterprise_knowledge/01_understand_the_problem.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-knowledge-learn-and-design",
@@ -5539,7 +5539,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/03_enterprise_knowledge/02_learn_and_design.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-knowledge-observe-and-experiment",
@@ -5551,7 +5551,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/03_enterprise_knowledge/03_observe_and_experiment.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-knowledge-think-like-a-staff-engineer",
@@ -5563,7 +5563,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/03_enterprise_knowledge/04_think_like_a_staff_engineer.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-knowledge-validate-and-carry-forward",
@@ -5575,7 +5575,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/03_enterprise_knowledge/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "application-scaling-understand-the-problem",
@@ -5587,7 +5587,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/04_application_scaling/01_understand_the_problem.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/application-scaling/application-scaling-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "application-scaling-learn-and-design",
@@ -5611,7 +5611,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/04_application_scaling/03_observe_and_experiment.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/application-scaling/application-scaling-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "application-scaling-think-like-a-staff-engineer",
@@ -5635,7 +5635,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/04_application_scaling/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/application-scaling/application-scaling-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "overload-fairness-understand-the-problem",
@@ -5647,7 +5647,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/05_overload_fairness/01_understand_the_problem.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/overload-fairness/overload-fairness-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "overload-fairness-learn-and-design",
@@ -5659,7 +5659,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/05_overload_fairness/02_learn_and_design.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/overload-fairness/overload-fairness-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "overload-fairness-observe-and-experiment",
@@ -5671,7 +5671,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/05_overload_fairness/03_observe_and_experiment.md",
       "estMinutes": 8,
       "href": "/learn/staff-ai-system-design/overload-fairness/overload-fairness-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "overload-fairness-think-like-a-staff-engineer",
@@ -5695,7 +5695,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/05_overload_fairness/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/overload-fairness/overload-fairness-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-security-understand-the-problem",
@@ -5707,7 +5707,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/06_enterprise_security/01_understand_the_problem.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/enterprise-security/enterprise-security-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-security-learn-and-design",
@@ -5719,7 +5719,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/06_enterprise_security/02_learn_and_design.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/enterprise-security/enterprise-security-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-security-observe-and-experiment",
@@ -5731,7 +5731,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/06_enterprise_security/03_observe_and_experiment.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/enterprise-security/enterprise-security-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-security-think-like-a-staff-engineer",
@@ -5743,7 +5743,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/06_enterprise_security/04_think_like_a_staff_engineer.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/enterprise-security/enterprise-security-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "enterprise-security-validate-and-carry-forward",
@@ -5755,7 +5755,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/06_enterprise_security/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/enterprise-security/enterprise-security-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "reliability-consistency-understand-the-problem",
@@ -5767,7 +5767,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/07_reliability_consistency/01_understand_the_problem.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "reliability-consistency-learn-and-design",
@@ -5779,7 +5779,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/07_reliability_consistency/02_learn_and_design.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "reliability-consistency-observe-and-experiment",
@@ -5791,7 +5791,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/07_reliability_consistency/03_observe_and_experiment.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "reliability-consistency-think-like-a-staff-engineer",
@@ -5815,7 +5815,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/07_reliability_consistency/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/reliability-consistency/reliability-consistency-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "evaluation-releases-understand-the-problem",
@@ -5827,7 +5827,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/08_evaluation_releases/01_understand_the_problem.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "evaluation-releases-learn-and-design",
@@ -5839,7 +5839,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/08_evaluation_releases/02_learn_and_design.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "evaluation-releases-observe-and-experiment",
@@ -5851,7 +5851,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/08_evaluation_releases/03_observe_and_experiment.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "evaluation-releases-think-like-a-staff-engineer",
@@ -5863,7 +5863,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/08_evaluation_releases/04_think_like_a_staff_engineer.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "evaluation-releases-validate-and-carry-forward",
@@ -5875,7 +5875,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/08_evaluation_releases/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/evaluation-releases/evaluation-releases-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "inference-gpu-understand-the-problem",
@@ -5887,7 +5887,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/09_inference_gpu/01_understand_the_problem.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/inference-gpu/inference-gpu-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "inference-gpu-learn-and-design",
@@ -5899,7 +5899,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/09_inference_gpu/02_learn_and_design.md",
       "estMinutes": 8,
       "href": "/learn/staff-ai-system-design/inference-gpu/inference-gpu-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "inference-gpu-observe-and-experiment",
@@ -5923,7 +5923,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/09_inference_gpu/04_think_like_a_staff_engineer.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/inference-gpu/inference-gpu-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "inference-gpu-validate-and-carry-forward",
@@ -5935,7 +5935,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/09_inference_gpu/05_validate_and_carry_forward.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/inference-gpu/inference-gpu-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "fine-tuning-understand-the-problem",
@@ -5947,7 +5947,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/10_fine_tuning/01_understand_the_problem.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/fine-tuning/fine-tuning-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "fine-tuning-learn-and-design",
@@ -5971,7 +5971,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/10_fine_tuning/03_observe_and_experiment.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/fine-tuning/fine-tuning-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "fine-tuning-think-like-a-staff-engineer",
@@ -5995,7 +5995,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/10_fine_tuning/05_validate_and_carry_forward.md",
       "estMinutes": 2,
       "href": "/learn/staff-ai-system-design/fine-tuning/fine-tuning-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "multi-region-understand-the-problem",
@@ -6007,7 +6007,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/11_multi_region/01_understand_the_problem.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/multi-region/multi-region-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "multi-region-learn-and-design",
@@ -6019,7 +6019,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/11_multi_region/02_learn_and_design.md",
       "estMinutes": 13,
       "href": "/learn/staff-ai-system-design/multi-region/multi-region-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "multi-region-observe-and-experiment",
@@ -6031,7 +6031,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/11_multi_region/03_observe_and_experiment.md",
       "estMinutes": 11,
       "href": "/learn/staff-ai-system-design/multi-region/multi-region-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "multi-region-think-like-a-staff-engineer",
@@ -6055,7 +6055,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/11_multi_region/05_validate_and_carry_forward.md",
       "estMinutes": 5,
       "href": "/learn/staff-ai-system-design/multi-region/multi-region-validate-and-carry-forward",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-understand-the-problem",
@@ -6067,7 +6067,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/12_staff_platform/01_understand_the_problem.md",
       "estMinutes": 6,
       "href": "/learn/staff-ai-system-design/staff-platform/staff-platform-understand-the-problem",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-learn-and-design",
@@ -6079,7 +6079,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/12_staff_platform/02_learn_and_design.md",
       "estMinutes": 11,
       "href": "/learn/staff-ai-system-design/staff-platform/staff-platform-learn-and-design",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-observe-and-experiment",
@@ -6091,7 +6091,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/12_staff_platform/03_observe_and_experiment.md",
       "estMinutes": 11,
       "href": "/learn/staff-ai-system-design/staff-platform/staff-platform-observe-and-experiment",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-think-like-a-staff-engineer",
@@ -6103,7 +6103,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/12_staff_platform/04_think_like_a_staff_engineer.md",
       "estMinutes": 11,
       "href": "/learn/staff-ai-system-design/staff-platform/staff-platform-think-like-a-staff-engineer",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-staff-interview-practice",
@@ -6115,7 +6115,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/12_staff_platform/04b_staff_interview_practice.md",
       "estMinutes": 9,
       "href": "/learn/staff-ai-system-design/staff-platform/staff-platform-staff-interview-practice",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "staff-platform-validate-and-carry-forward",
@@ -6139,7 +6139,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_001_synchronous_mvp.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-001-synchronous-mvp",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-002-durable-execution",
@@ -6151,7 +6151,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_002_durable_execution.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-002-durable-execution",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-003-versioned-retrieval",
@@ -6163,7 +6163,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_003_versioned_retrieval.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-003-versioned-retrieval",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-004-stateless-scale-and-cache",
@@ -6175,7 +6175,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_004_stateless_scale_and_cache.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-004-stateless-scale-and-cache",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-005-bounded-fair-dispatch",
@@ -6187,7 +6187,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_005_bounded_fair_dispatch.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-005-bounded-fair-dispatch",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-006-trusted-enterprise-boundaries",
@@ -6199,7 +6199,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_006_trusted_enterprise_boundaries.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-006-trusted-enterprise-boundaries",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-007-consistency-and-recovery",
@@ -6211,7 +6211,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_007_consistency_and_recovery.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-007-consistency-and-recovery",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-008-versioned-quality-releases",
@@ -6223,7 +6223,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_008_versioned_quality_releases.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-008-versioned-quality-releases",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-009-approved-inference-boundaries",
@@ -6235,7 +6235,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_009_approved_inference_boundaries.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-009-approved-inference-boundaries",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-010-governed-model-customisation",
@@ -6247,7 +6247,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_010_governed_model_customisation.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-010-governed-model-customisation",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-011-residency-aware-regional-cells",
@@ -6259,7 +6259,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_011_residency_aware_regional_cells.md",
       "estMinutes": 3,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-011-residency-aware-regional-cells",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-012-versioned-regional-platform-contracts",
@@ -6271,7 +6271,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_012_versioned_regional_platform_contracts.md",
       "estMinutes": 4,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-012-versioned-regional-platform-contracts",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "adr-013-regional-authority-and-route-generations",
@@ -6283,7 +6283,7 @@
       "source": "01_Concept_Tutorials/AI_System_Design_Course/architecture_decisions/adr_013_regional_authority_and_route_generations.md",
       "estMinutes": 7,
       "href": "/learn/staff-ai-system-design/architecture-decisions/adr-013-regional-authority-and-route-generations",
-      "updated": "2026-11-04"
+      "updated": "2026-11-08"
     },
     {
       "slug": "the-discovery-conversation",
