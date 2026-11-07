@@ -3,8 +3,11 @@
  * module-code rewriting, and the module page split. Run: `npm run check:rag-import`.
  */
 import assert from 'node:assert/strict'
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, coursePage, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 import { siteText } from './site-text-edits.mjs'
 
@@ -94,5 +97,20 @@ assert.throws(() => siteText('x.md', 'Runs on a Unity Catalog volume.'), /vendor
 // Behavioural pages word the author's story tags for readers.
 assert.equal(siteText('04_Behavioral_and_Leadership/x.md', '**GROUNDED: the insurer**\n**PARTLY GROUNDED.** Fill it.\n**Grounding:** GROUNDED.'),
   '**Example story: the insurer**\n**Add your own detail.** Fill it.\n**Grounding:** nothing beyond your own facts; the story is complete.')
+
+// Each vendored page comes from the course's part folders: the module page in mandatory/theory,
+// a lesson page in whichever tier folder holds it, and never from both.
+const course = mkdtempSync(join(tmpdir(), 'rag-course-'))
+for (const page of ['mandatory/theory/README.md', 'mandatory/theory/01_a/README.md', 'optional/theory/02_b/README.md', 'mandatory/theory/03_c/README.md', 'optional/theory/03_c/README.md']) {
+  mkdirSync(join(course, 'p04_x/m10_y', page, '..'), { recursive: true })
+  writeFileSync(join(course, 'p04_x/m10_y', page), '# T\n')
+}
+const vendored = (file: string) => `01_Concept_Tutorials/RAG_Agents_Engineering/p04_x/m10_y/${file}`
+assert.equal(coursePage(course, vendored('00_overview.md')), join(course, 'p04_x/m10_y/mandatory/theory/README.md'))
+assert.equal(coursePage(course, vendored('99_interview_questions.md')), join(course, 'p04_x/m10_y/mandatory/theory/README.md'))
+assert.equal(coursePage(course, vendored('01_a.md')), join(course, 'p04_x/m10_y/mandatory/theory/01_a/README.md'))
+assert.equal(coursePage(course, vendored('02_b.md')), join(course, 'p04_x/m10_y/optional/theory/02_b/README.md'))
+assert.throws(() => coursePage(course, vendored('03_c.md')), /both tiers/)
+assert.throws(() => coursePage(course, vendored('04_d.md')), /no lesson page/)
 
 console.log('rag import transforms: all checks pass')
