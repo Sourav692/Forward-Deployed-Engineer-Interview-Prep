@@ -790,7 +790,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "slug": "fine-tuning-fundamentals",
     "code": "T14.1",
     "title": "Fine-Tuning & Model Adaptation",
-    "track": "architecture-synthesis-and-capstone",
+    "track": "fine-tuning-and-model-adaptation",
     "lessons": [
       "fine-tuning-fundamentals-overview",
       "why-fine-tune",
@@ -806,7 +806,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
-    "code": "T14.2",
+    "code": "T15.1",
     "title": "Architecture Synthesis: Choosing a System Design",
     "track": "architecture-synthesis-and-capstone",
     "lessons": [
@@ -1862,11 +1862,18 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     ]
   },
   {
-    "slug": "architecture-synthesis-and-capstone",
+    "slug": "fine-tuning-and-model-adaptation",
     "code": "T14",
-    "title": "Design Decisions: Model Adaptation & Architecture",
+    "title": "Fine-Tuning & Model Adaptation",
     "modules": [
-      "fine-tuning-fundamentals",
+      "fine-tuning-fundamentals"
+    ]
+  },
+  {
+    "slug": "architecture-synthesis-and-capstone",
+    "code": "T15",
+    "title": "Architecture Decisions",
+    "modules": [
       "agentic-rag-architectures-choosing-a-design"
     ]
   },

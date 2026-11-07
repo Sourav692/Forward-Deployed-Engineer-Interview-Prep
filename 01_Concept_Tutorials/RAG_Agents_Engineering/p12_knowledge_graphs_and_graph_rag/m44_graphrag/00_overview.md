@@ -52,7 +52,7 @@ Both routes must return evidence that the answer can cite. The graph supplies ca
 ## How it connects
 
 - **Before:** [T13.1](../m42_hierarchical_memory_rag/00_overview.md) retrieves at different abstraction levels. [T13.2](../m43_knowledge_graphs_neo4j/00_overview.md) models and queries factual relationships. This module uses graph structure to choose evidence.
-- **Next:** [T14.2](../../p13_design_decisions/m46_architecture_synthesis/00_overview.md) compares complete agentic RAG architectures, including the cost of routing and repeated retrieval.
+- **Next:** [T15.1](../../p14_architecture_decisions/m46_architecture_synthesis/00_overview.md) compares complete agentic RAG architectures, including the cost of routing and repeated retrieval.
 
 ## Key Takeaways
 

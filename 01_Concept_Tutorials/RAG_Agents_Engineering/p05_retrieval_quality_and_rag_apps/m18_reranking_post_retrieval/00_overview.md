@@ -109,7 +109,7 @@ Each stage has its own metric and its own failure. Stage 1 fails when the eviden
 ## How it connects
 
 - **Before:** [T5.1](../../p04_rag_foundations/m10_rag_lifecycle/00_overview.md) defines recall@k and precision@k and the baseline every change is measured against. [T5.3](../../p04_rag_foundations/m12_chunking/00_overview.md) sets the chunk size that compression and enrichment windows work around. [T5.4](../../p04_rag_foundations/m13_embeddings/00_overview.md) covers the embedding models that stage 1 runs as bi-encoders. [T6.1](../m16_retrievers_hybrid_search/00_overview.md) builds the hybrid first stage, and [T6.2](../m17_query_transformation/00_overview.md) rewrites the question before it reaches it.
-- **Next:** [T6.4](../m19_end_to_end_rag_systems/00_overview.md) assembles the full pipeline with sources and citations on top of these stages. [T9.1](../../p08_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md) and [T9.2](../../p08_agentic_rag/m29_crag_and_self_rag/00_overview.md) add an LLM grader that judges each retrieved chunk, the same pointwise judgement as the LLM reranker in 19.3, with a yes or no instead of a score.
+- **Next:** [T6.4](../m19_end_to_end_rag_systems/00_overview.md) assembles the full pipeline with sources and citations on top of these stages. [T9.1](../../p08_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md) and [T9.2](../../p08_agentic_rag/m29_crag_and_self_rag/00_overview.md) add an LLM grader that judges each retrieved chunk, the same pointwise judgement as the LLM reranker in 18.3, with a yes or no instead of a score.
 
 ## Key Takeaways
 

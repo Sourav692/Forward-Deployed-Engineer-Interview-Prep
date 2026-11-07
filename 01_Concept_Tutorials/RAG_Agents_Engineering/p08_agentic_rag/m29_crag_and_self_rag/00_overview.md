@@ -94,7 +94,7 @@ There are two places to catch a bad answer. CRAG checks the context before gener
 ## How it connects
 
 - **Before:** [T5.1](../../p04_rag_foundations/m10_rag_lifecycle/00_overview.md) supplies the handbook, the golden questions and the baseline these pipelines are compared against. [T6.2](../../p05_retrieval_quality_and_rag_apps/m17_query_transformation/00_overview.md) teaches query rewriting, and [T9.1](../m28_retrieval_grading_rewriting/00_overview.md) the relevance grader and bounded retry loop that CRAG and Self-RAG both reuse. [T8.1](../../p07_advanced_agents/m25_planning_reflection_reasoning/00_overview.md) covers reflection as a general agent pattern.
-- **Next:** [T9.3](../m30_adaptive_rag_routing/00_overview.md) routes the question before retrieval and adds a hallucination grader of its own. [T9.5](../m32_reliability_feedback/00_overview.md) turns these checks into feedback loops, and [T14.2](../../p13_design_decisions/m46_architecture_synthesis/00_overview.md) weighs CRAG and Self-RAG against the other agentic RAG designs.
+- **Next:** [T9.3](../m30_adaptive_rag_routing/00_overview.md) routes the question before retrieval and adds a hallucination grader of its own. [T9.5](../m32_reliability_feedback/00_overview.md) turns these checks into feedback loops, and [T15.1](../../p14_architecture_decisions/m46_architecture_synthesis/00_overview.md) weighs CRAG and Self-RAG against the other agentic RAG designs.
 
 ## Key Takeaways
 

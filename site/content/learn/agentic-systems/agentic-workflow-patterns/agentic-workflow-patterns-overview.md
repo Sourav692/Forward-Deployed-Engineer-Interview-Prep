@@ -10,7 +10,7 @@ The running example is the Larkspur Cloud support assistant from [T5.1](/learn/l
 - In a workflow, code fixes the path through the LLM calls; in an agent ([T7.2](/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview)), the model picks its next step. Each T7.3 pattern hands the model one decision at most: a gate's verdict, a route, a vote, a plan's length or a grade.
 - A **quality gate** checks an intermediate result before the next step spends tokens on it. In lesson 1 of T7.3 a concrete topic passed on attempt 1 (four LLM calls); an abstract one was rejected three times and stopped before drafting (six calls, no email).
 - Routing by model tier sent 1 of 7 requests to `o4-mini` and scored 86%, against 71% for all-cheap and 100% for all-reasoning. The router's costly mistake is sending a hard request to the cheap tier.
-- A **fan-out** lasts as long as its slowest branch: the 25.3 sections took 7.0 s in parallel against a 13.4 s sum. In the lab a cap of two concurrent branches costs nothing on that workload, until the slowest branch is submitted last.
+- A **fan-out** lasts as long as its slowest branch: the 24.3 sections took 7.0 s in parallel against a 13.4 s sum. In the lab a cap of two concurrent branches costs nothing on that workload, until the slowest branch is submitted last.
 - Every loop gets a cap in code. LCEL cannot loop at all, so a generate, critique, refine cycle lives in LangGraph, a Python loop or agent middleware, and at `MAX_ITERATIONS = 5` it makes at most ten LLM calls.
 
 ## Mental model

@@ -105,7 +105,7 @@ Three of the four steps between the question and the answer are prompts, and eac
 
 ## How it connects
 
-- **Before:** [T2.2](../../p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/00_overview.md) calls the provider APIs these prompts are sent through. Fine-tuning, the alternative when a prompt cannot carry enough examples, comes later in [T14.1](../../p13_design_decisions/m45_fine_tuning_model_adaptation/00_overview.md).
+- **Before:** [T2.2](../../p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/00_overview.md) calls the provider APIs these prompts are sent through. Fine-tuning, the alternative when a prompt cannot carry enough examples, comes later in [T14.1](../../p13_fine_tuning/m45_fine_tuning_model_adaptation/00_overview.md).
 - **Next:** [T3.2](../m05_multimodal_prompting/00_overview.md) applies the patterns to image inputs, and [T4.1](../../p03_llm_application_frameworks/m06_langchain_core/00_overview.md) turns them into LangChain prompt templates and output parsers. The rewrite prompt returns in [T6.2](../../p05_retrieval_quality_and_rag_apps/m17_query_transformation/00_overview.md), the grading prompt in [T9.1](../../p08_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md), the ReAct loop in [T7.1](../../p06_agent_foundations/m22_agent_loop_and_tools/00_overview.md) and [T7.2](../../p06_agent_foundations/m23_react_agents/00_overview.md), and self-consistency with tree of thoughts in [T8.1](../../p07_advanced_agents/m25_planning_reflection_reasoning/00_overview.md).
 
 ## Key Takeaways

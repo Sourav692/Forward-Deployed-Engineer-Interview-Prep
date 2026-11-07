@@ -400,13 +400,43 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     ]
   },
   {
-    "slug": "architecture-synthesis-and-capstone",
+    "slug": "fine-tuning-and-model-adaptation",
     "code": "T14",
-    "title": "Design Decisions: Model Adaptation & Architecture",
-    "objective": "Two decisions that close the course: whether to fine-tune or retrieve, then which architecture to build for the capstone and why each component beats a simpler one",
-    "forWhom": "Engineers preparing a portfolio project or a design round",
+    "title": "Fine-Tuning & Model Adaptation",
+    "objective": "Whether to fine-tune or retrieve: when a model needs new behaviour rather than new facts, and how to adapt one through instruction tuning, data preparation, training and evaluation",
+    "forWhom": "ML engineers and anyone weighing fine-tuning against retrieval",
     "prerequisites": [
       "hierarchical-memory-and-graph-rag"
+    ],
+    "required": "no",
+    "exitCompetencies": [
+      "Decide whether a problem needs fine-tuning or retrieval, and argue it from a measured comparison",
+      "Prepare instruction data, train a small model and evaluate it against a retrieval baseline"
+    ],
+    "sections": [
+      {
+        "slug": "fine-tuning-and-model-adaptation",
+        "title": "Fine-Tuning & Model Adaptation",
+        "whyItMatters": "Fine-tuning changes how a model behaves, not what it knows, and picking it for the wrong reason costs weeks.",
+        "outcomes": "Prepare instruction data, fine-tune a small model and compare it with a RAG baseline on the same questions",
+        "exercise": "Fine-tune a small model on refund and billing questions and score it against the RAG baseline",
+        "assessment": "Each module's Interview questions",
+        "interviewRelevance": "Fine-tune versus RAG questions",
+        "doneWhen": "You can answer every module's Interview questions without notes",
+        "modules": [
+          "fine-tuning-fundamentals"
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "architecture-synthesis-and-capstone",
+    "code": "T15",
+    "title": "Architecture Decisions",
+    "objective": "The decision that closes the course: which architecture to build for the capstone, and why each component beats a simpler one",
+    "forWhom": "Engineers preparing a portfolio project or a design round",
+    "prerequisites": [
+      "fine-tuning-and-model-adaptation"
     ],
     "required": "no",
     "exitCompetencies": [
@@ -415,7 +445,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "sections": [
       {
         "slug": "architecture-synthesis-and-capstone",
-        "title": "Design Decisions: Model Adaptation & Architecture",
+        "title": "Architecture Decisions",
         "whyItMatters": "Interviews ask you to pick a design and defend it, not to list every technique.",
         "outcomes": "Compare the agentic RAG architectures side by side and choose one for a problem",
         "exercise": "Choose an architecture for a real problem, build it and write up the trade-offs",
@@ -423,7 +453,6 @@ export const RAG_TRACKS: CurriculumTrack[] = [
         "interviewRelevance": "Design round questions",
         "doneWhen": "You can answer every module's Interview questions without notes",
         "modules": [
-          "fine-tuning-fundamentals",
           "agentic-rag-architectures-choosing-a-design"
         ]
       }
@@ -2161,8 +2190,8 @@ export const RAG_MODULES: CurriculumModule[] = [
     "slug": "fine-tuning-fundamentals",
     "code": "T14.1",
     "title": "Fine-Tuning & Model Adaptation",
-    "track": "architecture-synthesis-and-capstone",
-    "section": "architecture-synthesis-and-capstone",
+    "track": "fine-tuning-and-model-adaptation",
+    "section": "fine-tuning-and-model-adaptation",
     "status": "ready",
     "practiceMinutes": 260,
     "objective": "Explain when fine-tuning beats prompting or RAG, and where it fits after pre-training",
@@ -2191,7 +2220,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
-    "code": "T14.2",
+    "code": "T15.1",
     "title": "Architecture Synthesis: Choosing a System Design",
     "track": "architecture-synthesis-and-capstone",
     "section": "architecture-synthesis-and-capstone",
@@ -4455,7 +4484,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "fine-tuning-fundamentals-overview",
     "title": "Fine-Tuning & Model Adaptation: overview",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/00_overview.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/00_overview.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4463,7 +4492,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "why-fine-tune",
     "title": "Why fine-tune",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/01_why_fine_tune.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/01_why_fine_tune.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4471,7 +4500,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "where-fine-tuning-fits",
     "title": "Where fine-tuning fits",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/02_where_fine_tuning_fits.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/02_where_fine_tuning_fits.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4479,7 +4508,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "instruction-tuning",
     "title": "Instruction tuning",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/03_instruction_tuning.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/03_instruction_tuning.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4487,7 +4516,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "data-preparation",
     "title": "Data preparation",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/04_data_preparation.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/04_data_preparation.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4495,7 +4524,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "training",
     "title": "Training",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/05_training.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/05_training.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4503,7 +4532,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "evaluation",
     "title": "Evaluation",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/06_evaluation.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/06_evaluation.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4511,7 +4540,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "fine-tuning-llama-2-with-autotrain",
     "title": "Fine-tuning Llama 2 with AutoTrain",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/07_fine_tuning_llama_2_with_autotrain.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/07_fine_tuning_llama_2_with_autotrain.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4519,7 +4548,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "fine-tuning-fundamentals-interview-questions",
     "title": "Fine-Tuning & Model Adaptation: interview questions",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m45_fine_tuning_model_adaptation/99_interview_questions.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/99_interview_questions.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
     "publish": "own"
@@ -4527,7 +4556,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "agentic-rag-architectures-choosing-a-design-overview",
     "title": "Architecture Synthesis: Choosing a System Design: overview",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m46_architecture_synthesis/00_overview.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/00_overview.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
     "publish": "own"
@@ -4535,7 +4564,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "the-agentic-rag-architecture-map",
     "title": "The agentic RAG architecture map",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m46_architecture_synthesis/01_the_agentic_rag_architecture_map.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/01_the_agentic_rag_architecture_map.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
     "publish": "own"
@@ -4543,7 +4572,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "end-to-end-rag-ecosystem-walkthrough-incl-colbert-and-ragas",
     "title": "End-to-end RAG ecosystem walkthrough (incl. ColBERT and RAGAS)",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m46_architecture_synthesis/02_end_to_end_rag_ecosystem_walkthrough_incl_colbert_and_ragas.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/02_end_to_end_rag_ecosystem_walkthrough_incl_colbert_and_ragas.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
     "publish": "own"
@@ -4551,7 +4580,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "decision-framework-picking-the-simplest-architecture-that-works",
     "title": "Decision framework: picking the simplest architecture that works",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m46_architecture_synthesis/03_decision_framework_picking_the_simplest_architecture_that_works.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/03_decision_framework_picking_the_simplest_architecture_that_works.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
     "publish": "own"
@@ -4559,7 +4588,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "agentic-rag-architectures-choosing-a-design-interview-questions",
     "title": "Architecture Synthesis: Choosing a System Design: interview questions",
-    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_design_decisions/m46_architecture_synthesis/99_interview_questions.md",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/99_interview_questions.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
     "publish": "own"

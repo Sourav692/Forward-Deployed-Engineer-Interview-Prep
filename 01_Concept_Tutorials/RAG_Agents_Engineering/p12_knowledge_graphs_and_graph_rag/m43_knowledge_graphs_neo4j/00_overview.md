@@ -35,7 +35,7 @@ Extraction turns prose into candidate facts. Stable identities let those facts c
 ## How it connects
 
 - **Before:** [T13.1](../m42_hierarchical_memory_rag/00_overview.md) compares hierarchical summaries, memory and lightweight graph retrieval.
-- **Next:** [T13.3](../m44_graphrag/00_overview.md) uses graph structure for traversal, community retrieval and expansion. [T14.2](../../p13_design_decisions/m46_architecture_synthesis/00_overview.md) compares complete architecture choices.
+- **Next:** [T13.3](../m44_graphrag/00_overview.md) uses graph structure for traversal, community retrieval and expansion. [T15.1](../../p14_architecture_decisions/m46_architecture_synthesis/00_overview.md) compares complete architecture choices.
 
 ## Key Takeaways
 

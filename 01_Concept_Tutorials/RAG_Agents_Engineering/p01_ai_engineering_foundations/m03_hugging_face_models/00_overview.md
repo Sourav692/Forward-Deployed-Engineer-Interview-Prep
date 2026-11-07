@@ -121,7 +121,7 @@ Only the first call touches the network; every later call reads the cache, and a
 ## How it connects
 
 - **Before:** [T2.2](../m02_llm_apis_and_model_selection/00_overview.md) calls hosted models and counts their tokens on the bill; this module runs open ones locally and counts tokens against the model's limit. [T2.1](../m01_python_data_refresher/00_overview.md) covers the Python and NumPy the notebooks use.
-- **Next:** [T14.1](../../p13_design_decisions/m45_fine_tuning_model_adaptation/00_overview.md) trains these models instead of only running them. [T5.3](../../p04_rag_foundations/m12_chunking/00_overview.md) sizes chunks, and the token limit here is the ceiling for that size. [T5.4](../../p04_rag_foundations/m13_embeddings/00_overview.md) loads `all-MiniLM-L6-v2` with sentence-transformers, and [T6.3](../../p05_retrieval_quality_and_rag_apps/m18_reranking_post_retrieval/00_overview.md) loads cross-encoder rerankers from the same cache.
+- **Next:** [T14.1](../../p13_fine_tuning/m45_fine_tuning_model_adaptation/00_overview.md) trains these models instead of only running them. [T5.3](../../p04_rag_foundations/m12_chunking/00_overview.md) sizes chunks, and the token limit here is the ceiling for that size. [T5.4](../../p04_rag_foundations/m13_embeddings/00_overview.md) loads `all-MiniLM-L6-v2` with sentence-transformers, and [T6.3](../../p05_retrieval_quality_and_rag_apps/m18_reranking_post_retrieval/00_overview.md) loads cross-encoder rerankers from the same cache.
 
 ## Key Takeaways
 

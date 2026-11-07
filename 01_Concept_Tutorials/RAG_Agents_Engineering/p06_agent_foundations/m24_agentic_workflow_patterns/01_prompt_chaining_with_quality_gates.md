@@ -37,7 +37,7 @@ The lesson 1 of T7.3 graph shows how little the model controls. `get_graph()` pr
 
 ### Step 1: Place the gate before drafting
 
-Prompt chaining splits one task into a fixed sequence of focused calls, each reading the previous step's output. The 25.1 chain turns a topic into an email: extract three key points, draft, polish. A **quality gate** sits between steps and decides whether the intermediate result may go on. Failing at step 1 costs one cheap check. Failing at the end costs a draft and a polish written from nothing.
+Prompt chaining splits one task into a fixed sequence of focused calls, each reading the previous step's output. The 24.1 chain turns a topic into an email: extract three key points, draft, polish. A **quality gate** sits between steps and decides whether the intermediate result may go on. Failing at step 1 costs one cheap check. Failing at the end costs a draft and a polish written from nothing.
 
 ```animated
 <figure class="anim sheet" aria-labelledby="anim-gate-cap">

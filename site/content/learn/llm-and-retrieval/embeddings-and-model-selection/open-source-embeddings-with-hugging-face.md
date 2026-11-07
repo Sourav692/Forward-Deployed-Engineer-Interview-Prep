@@ -46,7 +46,7 @@ flowchart TD
     B -- no --> H["Shortlist hosted and<br/>open models"]
 ```
 
-Every shortlist then goes through the same scoring on the golden set: recall@k, margin, cost and latency. A useful golden set for Larkspur holds the [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) questions plus **hard negatives**: chunks on the same topic that do not answer the question, such as `cancel` for *Can I export my data after I cancel my plan?* Notebook 1 of T5.5's exercise asks for exactly this, because a six-document toy set separates no models.
+Every shortlist then goes through the same scoring on the golden set: recall@k, margin, cost and latency. A useful golden set for Larkspur holds the [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) questions plus **hard negatives**: chunks on the same topic that do not answer the question, such as `cancel` for *Can I export my data after I cancel my plan?* Notebook 1 of T5.4's exercise asks for exactly this, because a six-document toy set separates no models.
 
 Score more than one thing. An optional notebook in the course indexes eight short documents with three open models in a managed vector index and grades the top-5 results for 15 queries with MLflow's `RetrievalRelevance` and `RetrievalGroundedness` scorers. Its recorded result:
 

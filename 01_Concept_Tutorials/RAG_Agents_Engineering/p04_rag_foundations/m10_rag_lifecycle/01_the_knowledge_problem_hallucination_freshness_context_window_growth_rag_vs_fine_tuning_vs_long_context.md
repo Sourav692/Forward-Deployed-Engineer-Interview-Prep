@@ -34,7 +34,7 @@ The three ways to give a model new knowledge solve different problems:
 | Best at | Facts that change, private data, auditability | Style, format, domain vocabulary, behaviour | Small corpora that fit, one-off analysis |
 | Fails when | Retrieval misses the evidence | Facts change after training | The corpus outgrows the window, or the answer sits mid-context |
 
-Fine-tuning and RAG combine well: fine-tune for tone and format, retrieve for facts. [T14.1](../../p13_design_decisions/m45_fine_tuning_model_adaptation/00_overview.md) covers when fine-tuning is worth it.
+Fine-tuning and RAG combine well: fine-tune for tone and format, retrieve for facts. [T14.1](../../p13_fine_tuning/m45_fine_tuning_model_adaptation/00_overview.md) covers when fine-tuning is worth it.
 
 ## Key Takeaways
 
@@ -61,6 +61,6 @@ With RAG you re-index one document. With fine-tuning you retrain. With long cont
 <details>
 <summary>3. Larkspur wants answers in its house tone that also state current policy with citations. Which approach fits?</summary>
 
-Combine them: fine-tune for tone and format, retrieve for facts. Fine-tuning alone gives no citations and goes wrong when facts change after training; RAG cites per chunk and picks up a change with a re-index. [T14.1](../../p13_design_decisions/m45_fine_tuning_model_adaptation/00_overview.md) covers when fine-tuning is worth it.
+Combine them: fine-tune for tone and format, retrieve for facts. Fine-tuning alone gives no citations and goes wrong when facts change after training; RAG cites per chunk and picks up a change with a re-index. [T14.1](../../p13_fine_tuning/m45_fine_tuning_model_adaptation/00_overview.md) covers when fine-tuning is worth it.
 
 </details>
