@@ -507,7 +507,8 @@ test('final week: a review keeps saved progress, opens its recall card tab, and 
   await expect(page.locator('#recall-card')).toBeHidden()
 
   await page.getByRole('tab', { name: 'Recall card' }).click()
-  await expect(page.locator('#recall-card h2')).toContainText('One-Page Memory Card')
+  // The card's own heading: its diagrams add a closed full-size dialog with an h2 once they hydrate.
+  await expect(page.locator('#recall-card').getByRole('heading', { level: 2, name: /^One-Page Memory Card/ })).toBeVisible()
   await expect(page).toHaveURL(`${review}#recall-card`)
 
   // ENH-18b: the retired static recall card redirects to that tab; the review keeps its
