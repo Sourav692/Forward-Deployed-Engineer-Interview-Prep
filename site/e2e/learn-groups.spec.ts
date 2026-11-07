@@ -62,7 +62,8 @@ test('AI Engineering lists the course tracks in part order, then production AI',
     'Multi-Agent Systems',
     'Agent Protocols: MCP & A2A',
     'Knowledge Graphs & GraphRAG',
-    'Design Decisions: Model Adaptation & Architecture',
+    'Fine-Tuning & Model Adaptation',
+    'Architecture Decisions',
     'Production AI Systems',
   ])
 })

@@ -1463,13 +1463,13 @@ export const RETIRED_TRACKS: Record<string, string> = {
 }
 
 /**
- * Modules that left their track, live or retired: module slug -> the track it used to sit in
+ * Modules that left their track, live or retired: module slug -> the track (or tracks) it used to sit in
  * (FE-14, AI Engineering integration). redirects.ts sends the old /learn/<track>/<module>
  * URLs from there: the module page, each RENAMED lesson straight to its replacement, and any
  * other lesson to the same lesson in the module's new track. A retired module listed here
  * gets its lesson redirects too, which RETIRED_MODULES alone does not give.
  */
-export const MOVED_MODULES: Record<string, string> = {
+export const MOVED_MODULES: Record<string, string | readonly string[]> = {
   // 2026-10-31: AI Engineering integration (course tracks and the production-ai move).
   'how-llms-behave': 'llm-and-retrieval',
   'ml-fundamentals': 'llm-and-retrieval',
@@ -1486,7 +1486,8 @@ export const MOVED_MODULES: Record<string, string> = {
   'multi-agent-systems': 'agentic-systems',
   // 2026-11-08: the course's v2 layout retired the ingestion-and-indexing-pipeline and
   // complete-rag-applications tracks and re-sequenced its parts.
-  'fine-tuning-fundamentals': 'ai-engineering-foundations',
+  // Its first v2 export put it in the capstone track; the Part XIII split moved it again.
+  'fine-tuning-fundamentals': ['ai-engineering-foundations', 'architecture-synthesis-and-capstone'],
   'document-ingestion-and-metadata-design': 'ingestion-and-indexing-pipeline',
   'embeddings-and-model-selection': 'ingestion-and-indexing-pipeline',
   'vector-stores-and-index-operations': 'ingestion-and-indexing-pipeline',
@@ -1500,6 +1501,9 @@ export const MOVED_MODULES: Record<string, string> = {
   'collaboration-control-and-parallel-agents': 'memory-and-multi-agent-rag',
   'multi-agent-applied-builds-and-deep-agents': 'memory-and-multi-agent-rag',
 }
+
+/** Every track a module listed in MOVED_MODULES used to sit in; empty when it never moved. */
+export const movedFrom = (mod: string): readonly string[] => [MOVED_MODULES[mod] ?? []].flat()
 
 const DISCOVERY_WORKSHEETS = [
   'internal-knowledge-assistant',

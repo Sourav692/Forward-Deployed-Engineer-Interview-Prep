@@ -37,6 +37,7 @@ export const LEARN_STAGES: LearnGroup[] = [
       'multi-agent-systems',
       'agent-protocols-mcp-and-a2a',
       'hierarchical-memory-and-graph-rag',
+      'fine-tuning-and-model-adaptation',
       'architecture-synthesis-and-capstone',
       'production-ai',
     ],
