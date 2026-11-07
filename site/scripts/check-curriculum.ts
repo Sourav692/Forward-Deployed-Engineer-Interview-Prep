@@ -13,7 +13,7 @@
  * drop a heading or name a heading the source lacks.
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
-import { INTERVIEW_ROUNDS, LESSONS, MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { INTERVIEW_ROUNDS, LESSONS, MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, RETIRED_TRACKS, TRACKS } from '../src/lib/curriculum.ts'
 import { MODULE_HOMES, isLearnTrack } from '../src/lib/curriculum-href.ts'
 import { LEARN_STAGES } from '../src/lib/learn-stages.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
@@ -233,9 +233,14 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   if (!moduleBySlug.has(to)) fail(`RETIRED_MODULES maps ${from} to ${to}, which is not a module`)
 }
 
+for (const [from, to] of Object.entries(RETIRED_TRACKS)) {
+  if (TRACKS.some((t) => t.slug === from) || moduleBySlug.has(from)) fail(`RETIRED_TRACKS key ${from} is reused by a live track or module`)
+  if (!TRACKS.some((t) => t.slug === to)) fail(`RETIRED_TRACKS maps ${from} to ${to}, which is not a track`)
+}
+
 for (const [mod, oldTrack] of Object.entries(MOVED_MODULES)) {
   if (!moduleBySlug.has(mod) && !(mod in RETIRED_MODULES)) fail(`MOVED_MODULES key ${mod} is neither a module nor retired`)
-  if (!TRACKS.some((t) => t.slug === oldTrack)) fail(`MOVED_MODULES maps ${mod} to ${oldTrack}, which is not a track`)
+  if (!TRACKS.some((t) => t.slug === oldTrack) && !(oldTrack in RETIRED_TRACKS)) fail(`MOVED_MODULES maps ${mod} to ${oldTrack}, which is neither a track nor retired`)
   if (moduleBySlug.get(mod)?.track === oldTrack) fail(`MOVED_MODULES: ${mod} is still in ${oldTrack}`)
 }
 

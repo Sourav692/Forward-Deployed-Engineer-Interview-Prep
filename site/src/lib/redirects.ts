@@ -18,7 +18,7 @@
  *
  * Imported by `next.config.ts` and the check scripts, so it has no runtime imports.
  */
-import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES } from './curriculum.ts'
+import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, RETIRED_TRACKS } from './curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './curriculum-href.ts'
 import { CASEBOOK_MODULE, scenarioHref } from './scenario.ts'
 
@@ -89,6 +89,10 @@ const retiredModuleRedirects = (): Redirect[] =>
     destination: curriculumHref(trackOf.get(to)!, to),
     permanent: true,
   }))
+
+/** Removed tracks (RETIRED_TRACKS) redirect to the track that took over their modules. */
+const retiredTrackRedirects = (): Redirect[] =>
+  Object.entries(RETIRED_TRACKS).map(([from, to]) => ({ source: curriculumHref(from), destination: curriculumHref(to), permanent: true }))
 
 /**
  * A live module that moved track (MOVED_MODULES) keeps its slug and lessons; its old module
@@ -312,6 +316,7 @@ export const REDIRECTS: Redirect[] = [
   ...companyPrepRedirects,
   ...retiredModuleRedirects(),
   ...movedModuleRedirects(),
+  ...retiredTrackRedirects(),
   ...casebookRedirects,
   ...behaviouralRedirects,
   ...finalWeekRedirects,

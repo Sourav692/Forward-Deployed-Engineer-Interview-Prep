@@ -1452,6 +1452,17 @@ export const RETIRED_MODULES: Record<string, string> = {
 }
 
 /**
+ * Tracks removed from the curriculum: track slug -> the track that took over its modules.
+ * redirects.ts sends the bare track URL there; its module and lesson URLs follow
+ * MOVED_MODULES, which may name a retired track. A retired slug is never reused.
+ */
+export const RETIRED_TRACKS: Record<string, string> = {
+  // 2026-11-08: the course's v2 layout merged these into the tracks before them.
+  'ingestion-and-indexing-pipeline': 'llm-and-retrieval',
+  'complete-rag-applications': 'retrieval-quality-engineering',
+}
+
+/**
  * Modules that left their track, live or retired: module slug -> the track it used to sit in
  * (FE-14, AI Engineering integration). redirects.ts sends the old /learn/<track>/<module>
  * URLs from there: the module page, each RENAMED lesson straight to its replacement, and any
@@ -1462,7 +1473,8 @@ export const MOVED_MODULES: Record<string, string> = {
   // 2026-10-31: AI Engineering integration (course tracks and the production-ai move).
   'how-llms-behave': 'llm-and-retrieval',
   'ml-fundamentals': 'llm-and-retrieval',
-  'chunking-and-indexing': 'llm-and-retrieval',
+  // 2026-11-08: back in llm-and-retrieval after the course's v2 layout; its last old track was ingestion.
+  'chunking-and-indexing': 'ingestion-and-indexing-pipeline',
   'retrieval-hybrid-rerank': 'llm-and-retrieval',
   'langchain-and-langgraph': 'llm-and-retrieval',
   'the-tool-calling-loop': 'agentic-systems',
@@ -1472,6 +1484,21 @@ export const MOVED_MODULES: Record<string, string> = {
   'robust-agents': 'agentic-systems',
   'agentic-workflow-platforms': 'agentic-systems',
   'multi-agent-systems': 'agentic-systems',
+  // 2026-11-08: the course's v2 layout retired the ingestion-and-indexing-pipeline and
+  // complete-rag-applications tracks and re-sequenced its parts.
+  'fine-tuning-fundamentals': 'ai-engineering-foundations',
+  'document-ingestion-and-metadata-design': 'ingestion-and-indexing-pipeline',
+  'embeddings-and-model-selection': 'ingestion-and-indexing-pipeline',
+  'vector-stores-and-index-operations': 'ingestion-and-indexing-pipeline',
+  'advanced-indexing-strategies': 'ingestion-and-indexing-pipeline',
+  'end-to-end-rag-systems': 'complete-rag-applications',
+  'multimodal-rag': 'complete-rag-applications',
+  'framework-fluency-llamaindex': 'complete-rag-applications',
+  'planning-reflection-and-reasoning-patterns': 'agentic-systems',
+  'human-approval-and-applied-single-agent-builds': 'agentic-systems',
+  'multi-agent-architectures': 'memory-and-multi-agent-rag',
+  'collaboration-control-and-parallel-agents': 'memory-and-multi-agent-rag',
+  'multi-agent-applied-builds-and-deep-agents': 'memory-and-multi-agent-rag',
 }
 
 const DISCOVERY_WORKSHEETS = [
