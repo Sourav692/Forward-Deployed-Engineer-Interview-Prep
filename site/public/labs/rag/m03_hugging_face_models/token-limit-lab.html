@@ -196,7 +196,7 @@ html.embedded .sheet--cmp { order: 4; }
           <thead><tr><th scope="col">Text</th><th class="num" scope="col">Characters</th><th class="num" scope="col">GPT-2</th><th class="num" scope="col">MiniLM</th></tr></thead>
           <tbody id="cmp"></tbody>
         </table></div>
-        <p class="note" style="margin-top: var(--space-sm)">Token counts as each model receives them; MiniLM’s include <code>[CLS]</code> and <code>[SEP]</code>. M11 estimates tokens as characters divided by four.</p>
+        <p class="note" style="margin-top: var(--space-sm)">Token counts as each model receives them; MiniLM’s include <code>[CLS]</code> and <code>[SEP]</code>. M10 estimates tokens as characters divided by four.</p>
       </section>
     </div>
   </div>
@@ -279,7 +279,7 @@ function render(){
     const words=text.text.trim().split(/\s+/).length;
     co.innerHTML=`<b>All ${n} tokens fit under ${N}.</b> ${T.name} turns ${words} word${words>1?'s':''} into ${textTok} text tokens${T.sp?', plus <code>[CLS]</code> and <code>[SEP]</code>':''}, ${(text.text.length/textTok).toFixed(2)} characters each. `+
       (ti==='larkspur'?`Neither vocabulary has “Larkspur”, so both build it from pieces: ${tk==='gpt2'?'<code>L</code>, <code>arks</code>, <code>pur</code>':'<code>lark</code>, <code>##sp</code>, <code>##ur</code>'}.`:
-       ti==='notebook'?`Rare words split into several pieces, so this sentence costs ${(text.text.length/textTok).toFixed(2)} characters per token, well under M11’s four.`:
+       ti==='notebook'?`Rare words split into several pieces, so this sentence costs ${(text.text.length/textTok).toFixed(2)} characters per token, well under M10’s four.`:
        `Lower the limit to see where ${T.name} would cut this text.`);
   } else {
     const lastKept=r.kept.filter(i=>!(T.sp&&SPECIAL.has(enc.d[i]))).pop();

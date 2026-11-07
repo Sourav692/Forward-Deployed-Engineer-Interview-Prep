@@ -7,7 +7,7 @@ The same hypothetical procurement platform now has three hypothetical tenants. E
 
 ## Inherit the Actual Scale-Out Contract
 
-[T17.5](/learn/staff-ai-system-design/application-scaling/application-scaling-understand-the-problem) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](/learn/staff-ai-system-design/architecture-decisions/adr-004-stateless-scale-and-cache) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
+[T18.5](/learn/staff-ai-system-design/application-scaling/application-scaling-understand-the-problem) introduced stateless app/shared-authority design and bounded immutable-body caching with a live policy gate. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/architecture-after.md) and [ADR-004](/learn/staff-ai-system-design/architecture-decisions/adr-004-stateless-scale-and-cache) are the before-state. Preserve short drafting/history, stable operation keys, durable Queue/Workers and epochs, versioned source ingestion, authorised retrieval/citations, cache safety, and the model adapter boundary.
 
 ```mermaid
 flowchart TD
@@ -43,12 +43,12 @@ At the same time, a single global first-in-first-out queue can let A’s large b
 | Backpressure and overload management | Taught here | Build depth: finite queues, rejection/deadline/retry policy, failure exercises |
 | Fair scheduling and workload prioritisation | Taught here | Design depth: FIFO, strict priority, RR, WRR, starvation and cost-normalised trade-offs |
 | AI workload management | Taught here | Build depth: token reservation, provider slots, workload classes and explicit unknown outcomes |
-| Concurrency fundamentals | Revisited from T17.3 | Build depth: apply atomic authority to simultaneous budget reservations |
-| Messaging and event streams | Revisited from T17.3 | Build depth: queue/prefetch/retry limits preserve durable completion and ownership |
-| Caching systems | Revisited from T17.5 | Design depth: hits save body work without bypassing admission or permission |
-| Scaling and traffic engineering | Revisited from T17.5 | Build depth: provider capacity stays binding while app replicas increase |
-| AI gateway and provider management | Context only | T17.10, Build depth: the guard protects a provider boundary; routing/fallback is not retaught here |
-| Inference performance optimisation | Deferred | T17.10, Explain depth: no kernel, batching-engine, or GPU optimisation implementation |
+| Concurrency fundamentals | Revisited from T18.3 | Build depth: apply atomic authority to simultaneous budget reservations |
+| Messaging and event streams | Revisited from T18.3 | Build depth: queue/prefetch/retry limits preserve durable completion and ownership |
+| Caching systems | Revisited from T18.5 | Design depth: hits save body work without bypassing admission or permission |
+| Scaling and traffic engineering | Revisited from T18.5 | Build depth: provider capacity stays binding while app replicas increase |
+| AI gateway and provider management | Context only | T18.10, Build depth: the guard protects a provider boundary; routing/fallback is not retaught here |
+| Inference performance optimisation | Deferred | T18.10, Explain depth: no kernel, batching-engine, or GPU optimisation implementation |
 
 Outcomes: distinguish the five budgets; enforce a race-safe provider reservation; reproduce noisy-neighbour outcomes; expire waiting work; and explain why retries/extra replicas cannot create capacity. Prerequisites are the first four stage contracts.
 

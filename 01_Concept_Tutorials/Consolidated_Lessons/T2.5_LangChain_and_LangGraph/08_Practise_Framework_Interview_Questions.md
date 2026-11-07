@@ -46,7 +46,7 @@ The state schema. A messages field with no reducer overwrites on every node; it 
 ## Answer Durability and Approval Questions
 
 **Checkpointer or cross-thread store?**
-The checkpointer is within-thread memory: resume this exact run, scoped by `thread_id`. A store is cross-thread memory for facts about a user that outlive any one conversation. See [Checkpoints, Interrupts, and Human Approval](06_Checkpoints_Interrupts_and_Human_Approval.md) and [T11.2 Memory and state](/learn/agentic-systems/memory-and-state).
+The checkpointer is within-thread memory: resume this exact run, scoped by `thread_id`. A store is cross-thread memory for facts about a user that outlive any one conversation. See [Checkpoints, Interrupts, and Human Approval](06_Checkpoints_Interrupts_and_Human_Approval.md) and [T10.2 Memory and state](/learn/agentic-systems/memory-and-state).
 
 **The process crashes mid-run. What survives?**
 State up to the last checkpoint survives, and the run resumes from there without replaying finished nodes. Side effects already sent to the outside world are not recovered. Give external actions idempotency keys so a resumed run cannot repeat them.

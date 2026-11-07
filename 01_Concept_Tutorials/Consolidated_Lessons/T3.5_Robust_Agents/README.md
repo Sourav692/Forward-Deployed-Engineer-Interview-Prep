@@ -1,6 +1,6 @@
-# T15.3 Robust Agents: Consolidated Lessons
+# T16.3 Robust Agents: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T15.3 "Robust agents: retries, fallbacks and guards". Each concept is taught once, in the house tutorial format, drawing only on five repository sources. The site publishes them at `/learn/agentic-systems/robust-agents`.
+These six lessons are the site's teaching copy of module T16.3 "Robust agents: retries, fallbacks and guards". Each concept is taught once, in the house tutorial format, drawing only on five repository sources. The site publishes them at `/learn/agentic-systems/robust-agents`.
 
 | # | Lesson | Site slug |
 |---|---|---|

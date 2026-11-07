@@ -21,7 +21,7 @@ The 60-second card: approved route; current access; stable operation; bound cont
 
 [ADR-009](../architecture_decisions/adr_009_approved_inference_boundaries.md) and the [snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/architecture-after.md) preserve actual evidence.
 
-Stop after T17.10. A future T17.11 considers fine-tuning/customisation only when behaviour requirements justify it, retaining approved data, release and serving boundaries. No training, GPU provisioning or production endpoint has been performed here.
+Stop after T18.10. A future T18.11 considers fine-tuning/customisation only when behaviour requirements justify it, retaining approved data, release and serving boundaries. No training, GPU provisioning or production endpoint has been performed here.
 
 ## Primary References
 

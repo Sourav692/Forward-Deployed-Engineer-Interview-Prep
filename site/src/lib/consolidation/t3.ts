@@ -32,7 +32,7 @@ export const RENAMED_T3: Record<string, string | null> = {
   // multi-agent-coordination-patterns and failure-isolation-and-evaluation keep their slugs.
   'multi-agent-systems/reference-architecture-handoffs': 'multi-agent-architectures/handoffs-and-swarms',
   'multi-agent-systems/case-study-research-platform': 'agentops/anatomy-of-a-deployed-multi-agent-platform',
-  'multi-agent-systems/case-study-supervisor-to-deep-agent': 'multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory',
+  'multi-agent-systems/case-study-supervisor-to-deep-agent': 'coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory',
   'multi-agent-systems/multi-agent-systems-interview-tutorial': 'multi-agent-architectures/multi-agent-architectures-interview-questions',
   // T3.7 consolidated into seven lessons; determinism-over-free-text and
   // durability-and-idempotency keep their slugs.
@@ -61,7 +61,7 @@ export const RENAMED_T3: Record<string, string | null> = {
   'multi-agent-systems/shared-state-routing-and-termination': 'multi-agent-architectures/supervisors-and-hierarchical-teams',
   'multi-agent-systems/handoffs-and-permission-scope': 'multi-agent-architectures/handoffs-and-swarms',
   'multi-agent-systems/failure-isolation-and-evaluation': 'multi-agent-applied-builds-and-deep-agents/hardening-edge-cases-testing-and-system-wide-error-handling',
-  'multi-agent-systems/from-supervisor-to-deep-agent': 'multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory',
+  'multi-agent-systems/from-supervisor-to-deep-agent': 'coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory',
   'multi-agent-systems/practise-multi-agent-systems': 'multi-agent-architectures/multi-agent-architectures-interview-questions',
   'multi-agent-systems/anatomy-of-a-deployed-multi-agent-platform': 'agentops/anatomy-of-a-deployed-multi-agent-platform',
 }

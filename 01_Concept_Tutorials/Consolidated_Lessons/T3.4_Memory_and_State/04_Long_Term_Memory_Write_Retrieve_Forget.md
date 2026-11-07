@@ -91,7 +91,7 @@ The two sources pull in slightly different directions. The book warns against we
 
 Module 9 also gives the storage layout behind this read path. Each memory has metadata in a relational table: agent ID, user ID, `memory_type`, created and last-accessed times, access count, relevance score, tags. Its full text sits in a document store and its embedding in a vector database. Vector search answers open questions such as "find memories relevant to this situation". Structured queries answer exact ones such as "all decisions about project X in the last 30 days".
 
-One scaling note from the interview tutorial: an unfiltered `store.search()` over a namespace scans everything the user has saved. That works with 10 memories and fails with 10,000. Configure an embedding index on the store and pass a real query. For how vector search works underneath, see [T6.2 Chunking and indexing](/learn/llm-and-retrieval/chunking-and-indexing).
+One scaling note from the interview tutorial: an unfiltered `store.search()` over a namespace scans everything the user has saved. That works with 10 memories and fails with 10,000. Configure an embedding index on the store and pass a real query. For how vector search works underneath, see [T5.3 Chunking and indexing](/learn/llm-and-retrieval/chunking-and-indexing).
 
 ## Forget on a Schedule
 

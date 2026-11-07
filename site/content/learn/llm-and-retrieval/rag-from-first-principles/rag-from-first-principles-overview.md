@@ -3,7 +3,7 @@
 
 A language model answers from what it memorised during training. RAG adds a second source: passages retrieved from your own documents at the moment the question arrives. The T5.1 notebooks build on four ideas: where knowledge lives, the stages of the pipeline, how many chunks to retrieve, and why you measure a baseline before you optimise anything.
 
-The running example throughout these pages and the lab is a small product handbook for a fictional cloud host, Larkspur Cloud. [T6.1](/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) and [T6.2](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview) reuse the same handbook.
+The running example throughout these pages and the lab is a small product handbook for a fictional cloud host, Larkspur Cloud. [T5.2](/learn/llm-and-retrieval/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) and [T5.3](/learn/llm-and-retrieval/chunking-and-indexing/chunking-and-indexing-overview) reuse the same handbook.
 
 ## In short
 
@@ -120,12 +120,12 @@ The index is the only thing the two phases share. A bad chunk written at indexin
 
 ## Interactive lab
 
-[**Top-k and the baseline**](/labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html): open the file in a browser. Pick *Can I export my data after I cancel my plan?* and slide `k` from 1 to 12 to see recall saturate at `k = 2` while tokens keep climbing. Then switch to *What happens if my server goes down?* and look for a `k` that helps; there is none.
+[**Top-k and the baseline**](/labs/rag/m10_rag_lifecycle/top-k-retrieval-lab.html): open the file in a browser. Pick *Can I export my data after I cancel my plan?* and slide `k` from 1 to 12 to see recall saturate at `k = 2` while tokens keep climbing. Then switch to *What happens if my server goes down?* and look for a `k` that helps; there is none.
 
 ## How it connects
 
 - **Before:** [T4.1](/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-core-models-prompts-and-parsers-overview) to [T4.4](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview) teach the LangChain and LangGraph pieces this pipeline is built from.
-- **Next:** [T6.1](/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) and [T6.2](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview) open up the first two indexing steps. [T6.3](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview) to [T6.5](/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/advanced-indexing-strategies-overview) cover embedding, storing and changing what gets indexed; [T7.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview) to [T7.3](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview) improve retrieval against this module's baseline.
+- **Next:** [T5.2](/learn/llm-and-retrieval/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview) and [T5.3](/learn/llm-and-retrieval/chunking-and-indexing/chunking-and-indexing-overview) open up the first two indexing steps. [T5.4](/learn/llm-and-retrieval/embeddings-and-model-selection/embeddings-and-model-selection-overview) to [T5.6](/learn/llm-and-retrieval/advanced-indexing-strategies/advanced-indexing-strategies-overview) cover embedding, storing and changing what gets indexed; [T6.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview) to [T6.3](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview) improve retrieval against this module's baseline.
 
 ## Key Takeaways
 

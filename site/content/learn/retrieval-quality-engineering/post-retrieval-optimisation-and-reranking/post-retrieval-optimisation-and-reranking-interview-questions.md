@@ -6,7 +6,7 @@
 ### 1. You add a cross-encoder reranker over the top 50 for Larkspur's support assistant. Latency per question jumps, and answers to “How long does a refund take?” are no better. Where do you look?
 
 **What a strong answer covers:**
-- Checks recall@50 first: if `refund-timing` is not among the 50 candidates, no reranker can promote it, and the fix belongs in stage 1 (hybrid search in [T7.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview), query rewriting in [T7.2](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview))
+- Checks recall@50 first: if `refund-timing` is not among the 50 candidates, no reranker can promote it, and the fix belongs in stage 1 (hybrid search in [T6.1](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview), query rewriting in [T6.2](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview))
 - Profiles the rerank step: model loaded once at start-up rather than per request (the walkthrough notebook builds its `CrossEncoder` inside the rerank function), pairs scored in one batch, long chunks truncated to the model's input limit
 - Compares precision@5 with and without the reranker on the golden set, per question, so one regression is not hidden in the mean
 - Lowers the depth to where recall@k stops rising, which cuts the pair count and the latency with it
@@ -14,7 +14,7 @@
 ### 2. The team wants the best possible ranking for a high-traffic support chat and proposes an LLM reranker. What do you recommend?
 
 **What a strong answer covers:**
-- Pointwise LLM reranking costs one call per candidate (up to 30 calls per question in the 19.3 notebook); listwise costs one long call whose output must be parsed back into an order
+- Pointwise LLM reranking costs one call per candidate (up to 30 calls per question in the 18.3 notebook); listwise costs one long call whose output must be parsed back into an order
 - A cross-encoder scores every pair locally in one batch, with no parsing step that can fail
 - Default to the cross-encoder and reserve the LLM for low-volume, high-stakes questions, or for re-scoring only the top few after the cross-encoder
 - Decides on golden-set precision@5 and p95 latency together, not on a demo query
@@ -31,9 +31,9 @@
 
 **What a strong answer covers:**
 - Recognises a boundary problem: the ranking is right and the unit of context is too small
-- Expands each top chunk to its neighbours (19.5) or extracts a contiguous segment (19.6), using a key-value lookup by document and chunk index
+- Expands each top chunk to its neighbours (18.5) or extracts a contiguous segment (18.6), using a key-value lookup by document and chunk index
 - Accounts for the extra tokens in the context budget, for example by keeping fewer chunks
-- Checks that compression (19.4) is not the step dropping the qualifier, since an extractor can cut the condition from a rule
+- Checks that compression (18.4) is not the step dropping the qualifier, since an extractor can cut the condition from a rule
 
 ### 5. The reranker has run in production for a month. How do you show it is still earning its latency?
 

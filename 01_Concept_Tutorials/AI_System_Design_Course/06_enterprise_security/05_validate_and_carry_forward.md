@@ -21,7 +21,7 @@ The 60-second card: verify identity; bind current scope; separate service and us
 
 [ADR-006](../architecture_decisions/adr_006_trusted_enterprise_boundaries.md) and the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) preserve the actual teaching evidence.
 
-A future T17.8 addresses authority lag, dependency outage, failover and duplicate effects without weakening these disclosure/audit rules. It must distinguish stale body reuse from stale authorisation. No security deployment or certification is claimed here.
+A future T18.8 addresses authority lag, dependency outage, failover and duplicate effects without weakening these disclosure/audit rules. It must distinguish stale body reuse from stale authorisation. No security deployment or certification is claimed here.
 
 ## Primary References
 

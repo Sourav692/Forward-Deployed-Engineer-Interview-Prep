@@ -7,7 +7,7 @@ This lesson models capacity and exercises cache/history correctness locally. It 
 
 ## Preserve the Retrieval Contract
 
-[T17.4](/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-understand-the-problem) established versioned ingestion, current/tombstone metadata, trusted permission checks, and exact passage citations. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/architecture-after.md) is the actual before-state. Keep the original short draft/history path, T17.3 durable jobs and worker epochs, connector/index pipeline, model adapter, and metadata-only Telemetry contract.
+[T18.4](/learn/staff-ai-system-design/enterprise-knowledge/enterprise-knowledge-understand-the-problem) established versioned ingestion, current/tombstone metadata, trusted permission checks, and exact passage citations. [Its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/architecture-after.md) is the actual before-state. Keep the original short draft/history path, T18.3 durable jobs and worker epochs, connector/index pipeline, model adapter, and metadata-only Telemetry contract.
 
 ```mermaid
 flowchart TD
@@ -39,13 +39,13 @@ A second shortcut also fails: cache final supplier answers solely by question te
 | --- | --- | --- |
 | Caching systems | Taught here | Design depth: key scope, immutable version, TTL, bounded LRU eviction, live policy and outage exercise |
 | Scaling and traffic engineering | Taught here | Build depth: load path, capacity budgets, replicas, health/warmup/drain, autoscaling and failure tests |
-| Requirements and architecture methodology | Revisited from T17.2 | Build depth: change the workload and preserve the saved-answer/security contract |
-| Estimation and capacity planning | Revisited from T17.2 | Build depth: find the minimum app/DB/provider budget rather than repeat the basic units tutorial |
-| APIs and streaming protocols | Revisited from T17.2 | Build depth: preserve key/status/commit semantics across instances and retry paths |
-| End-to-end AI application design | Revisited from T17.2 | Build depth: shared state and provider boundaries across replicas |
-| Search architecture | Revisited from T17.4 | Build depth: cache only what current retrieval authority can safely validate |
-| Rate limiting and admission control | Context only | T17.6, Build depth: identify unserved demand now; design fair rejection next |
-| Container and orchestration architecture | Deferred | T17.10, Design depth: no Kubernetes implementation needed to reason about a replica |
+| Requirements and architecture methodology | Revisited from T18.2 | Build depth: change the workload and preserve the saved-answer/security contract |
+| Estimation and capacity planning | Revisited from T18.2 | Build depth: find the minimum app/DB/provider budget rather than repeat the basic units tutorial |
+| APIs and streaming protocols | Revisited from T18.2 | Build depth: preserve key/status/commit semantics across instances and retry paths |
+| End-to-end AI application design | Revisited from T18.2 | Build depth: shared state and provider boundaries across replicas |
+| Search architecture | Revisited from T18.4 | Build depth: cache only what current retrieval authority can safely validate |
+| Rate limiting and admission control | Context only | T18.6, Build depth: identify unserved demand now; design fair rejection next |
+| Container and orchestration architecture | Deferred | T18.10, Design depth: no Kubernetes implementation needed to reason about a replica |
 
 Outcomes: preserve history across app instances; choose cache scope safely; prove warm hits respect changes; calculate the current limiting budget; and plan warmup/draining without inventing measured throughput. Prerequisites are the prior three actual stage contracts.
 

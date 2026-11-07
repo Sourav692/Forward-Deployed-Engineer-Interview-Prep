@@ -6,7 +6,7 @@
 <title>Grade, rewrite, retry</title>
 <meta name="description" content="M28 lab: the lesson 28.3 retry loop on five Larkspur golden questions; set the rewrite bound and the topic check, and read the path, the retrievals and the LLM calls.">
 <style>
-/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0, shared with the M11 to M13 labs) · redesign: none
+/* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0, shared with the M10 to M12 labs) · redesign: none
  * nav: top bar, the wordmark and the lab's name · signature: the attempt ledger, one block per retrieval with each chunk's grade and the decision the router took · states: full only; the page computes every value itself, so it has no loading, empty or error state
  * axes: mid/grotesk-sans/chromatic-magenta · posture: restrained · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the ledger grows with the bound, so at max 3 the student-discount trace runs long; the stats above it carry the answer first */
@@ -218,7 +218,7 @@ html.embedded .sheet.notes { order: 3; }
       </section>
       <section class="sheet notes" aria-labelledby="notesHead">
         <div class="sheet__head"><h2 id="notesHead">What is real here</h2></div>
-        <p class="note">Retrieval is real: TF-IDF with scikit-learn’s defaults over the twelve M11 handbook chunks, top 2 as in notebook <code>03a</code>. The routing and the call counts follow <code>03a</code>: one call for the topic check, one grader call per chunk, one per rewrite, one to generate; the handlers are fixed text. Three parts are stand-ins. The grader passes a chunk only if the golden set lists it as the answer, the topic check reads the golden label, and the rewrites are hand-written in the style the <code>03a</code> optimiser prompt asks for. A real LLM grader and rewriter make mistakes these do not.</p>
+        <p class="note">Retrieval is real: TF-IDF with scikit-learn’s defaults over the twelve M10 handbook chunks, top 2 as in notebook <code>03a</code>. The routing and the call counts follow <code>03a</code>: one call for the topic check, one grader call per chunk, one per rewrite, one to generate; the handlers are fixed text. Three parts are stand-ins. The grader passes a chunk only if the golden set lists it as the answer, the topic check reads the golden label, and the rewrites are hand-written in the style the <code>03a</code> optimiser prompt asks for. A real LLM grader and rewriter make mistakes these do not.</p>
       </section>
     </div>
   </div>

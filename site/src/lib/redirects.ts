@@ -18,8 +18,9 @@
  *
  * Imported by `next.config.ts` and the check scripts, so it has no runtime imports.
  */
-import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES } from './curriculum.ts'
+import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, RETIRED_TRACKS, movedFrom } from './curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './curriculum-href.ts'
+import { RAG_ASSET_MOVES } from './rag-asset-moves.ts'
 import { CASEBOOK_MODULE, scenarioHref } from './scenario.ts'
 
 export type Redirect = { source: string; destination: string; permanent: boolean }
@@ -43,19 +44,22 @@ function lessonRedirects(): Redirect[] {
     // A retired module's lessons go with it (retiredModuleRedirects sends the module on),
     // unless it left its track: then each lesson goes straight to its replacement.
     if (mod in RETIRED_MODULES && !(mod in MOVED_MODULES)) continue
-    // A lesson of a module that moved track was published under the old track.
-    const src = resolveKey(from, MOVED_MODULES[mod] ?? trackOf.get(mod))
     const dst = resolveKey(to ?? RETIRED_MODULES[mod] ?? mod)
     const destination = curriculumHref(dst.track, dst.mod, dst.lesson)
-    out.push({ source: curriculumHref(src.track, src.mod, src.lesson), destination, permanent: true })
-    // A lesson retired after its module moved was published under the current track too.
+    // A lesson of a module that moved track was published under each old track, and a
+    // lesson retired after its module moved was published under the current track too.
     const here = trackOf.get(mod)
-    if (here && here !== src.track) out.push({ source: curriculumHref(here, src.mod, src.lesson), destination, permanent: true })
-    // A track that moved out of /learn keeps its old /learn URL, sent straight to the
-    // final page so the redirect never chains through the area rule below.
-    if (src.track in AREA_TRACKS) {
-      const source = [`/learn/${src.track}`, src.mod, src.lesson].filter(Boolean).join('/')
-      out.push({ source, destination, permanent: true })
+    const moved = movedFrom(mod)
+    const published = moved.length ? [...moved, ...(here && !moved.includes(here) ? [here] : [])] : [here]
+    for (const track of published) {
+      const src = resolveKey(from, track)
+      out.push({ source: curriculumHref(src.track, src.mod, src.lesson), destination, permanent: true })
+      // A track that moved out of /learn keeps its old /learn URL, sent straight to the
+      // final page so the redirect never chains through the area rule below.
+      if (src.track in AREA_TRACKS) {
+        const source = [`/learn/${src.track}`, src.mod, src.lesson].filter(Boolean).join('/')
+        out.push({ source, destination, permanent: true })
+      }
     }
   }
   return out
@@ -84,11 +88,17 @@ const companyPrepRedirects: Redirect[] = [
 
 /** Removed modules (RETIRED_MODULES in curriculum.ts) redirect to the module that took them over. */
 const retiredModuleRedirects = (): Redirect[] =>
-  Object.entries(RETIRED_MODULES).map(([from, to]) => ({
-    source: curriculumHref(MOVED_MODULES[from] ?? trackOf.get(to)!, from),
-    destination: curriculumHref(trackOf.get(to)!, to),
-    permanent: true,
-  }))
+  Object.entries(RETIRED_MODULES).flatMap(([from, to]) =>
+    (movedFrom(from).length ? movedFrom(from) : [trackOf.get(to)!]).map((oldTrack) => ({
+      source: curriculumHref(oldTrack, from),
+      destination: curriculumHref(trackOf.get(to)!, to),
+      permanent: true,
+    })),
+  )
+
+/** Removed tracks (RETIRED_TRACKS) redirect to the track that took over their modules. */
+const retiredTrackRedirects = (): Redirect[] =>
+  Object.entries(RETIRED_TRACKS).map(([from, to]) => ({ source: curriculumHref(from), destination: curriculumHref(to), permanent: true }))
 
 /**
  * A live module that moved track (MOVED_MODULES) keeps its slug and lessons; its old module
@@ -98,14 +108,16 @@ const retiredModuleRedirects = (): Redirect[] =>
 const movedModuleRedirects = (): Redirect[] =>
   Object.entries(MOVED_MODULES)
     .filter(([mod]) => trackOf.has(mod))
-    .flatMap(([mod, oldTrack]) => [
-      { source: curriculumHref(oldTrack, mod), destination: curriculumHref(trackOf.get(mod)!, mod), permanent: true },
-      {
-        source: `${curriculumHref(oldTrack, mod)}/:lesson`,
-        destination: `${curriculumHref(trackOf.get(mod)!, mod)}/:lesson`,
-        permanent: true,
-      },
-    ])
+    .flatMap(([mod]) =>
+      movedFrom(mod).flatMap((oldTrack) => [
+        { source: curriculumHref(oldTrack, mod), destination: curriculumHref(trackOf.get(mod)!, mod), permanent: true },
+        {
+          source: `${curriculumHref(oldTrack, mod)}/:lesson`,
+          destination: `${curriculumHref(trackOf.get(mod)!, mod)}/:lesson`,
+          permanent: true,
+        },
+      ]),
+    )
 
 /**
  * The worksheets moved from /modules/<module>/<track>/<slug> to /practice/<slug>, and the
@@ -312,9 +324,12 @@ export const REDIRECTS: Redirect[] = [
   ...companyPrepRedirects,
   ...retiredModuleRedirects(),
   ...movedModuleRedirects(),
+  ...retiredTrackRedirects(),
   ...casebookRedirects,
   ...behaviouralRedirects,
   ...finalWeekRedirects,
+  // RAG course labs and figures renamed by the course's v2 module folders.
+  ...Object.entries(RAG_ASSET_MOVES).map(([source, destination]) => ({ source, destination, permanent: true })),
   // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
   { source: '/guide', destination: '/start', permanent: true },
   { source: '/learning-map', destination: '/start', permanent: true },

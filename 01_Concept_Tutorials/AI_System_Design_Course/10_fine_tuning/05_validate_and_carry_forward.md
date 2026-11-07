@@ -13,7 +13,7 @@
 
 ## Evidence and Carry Forward
 
-Read the [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/architecture-after.md) and [decision](../architecture_decisions/adr_010_governed_model_customisation.md). Local content verification and learner completion are separate. T17.12 inherits approved candidate lineage and the unchanged runtime, then adds regional boundaries. No actual model training or deployment has occurred.
+Read the [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/architecture-after.md) and [decision](../architecture_decisions/adr_010_governed_model_customisation.md). Local content verification and learner completion are separate. T18.12 inherits approved candidate lineage and the unchanged runtime, then adds regional boundaries. No actual model training or deployment has occurred.
 
 Review after about one, seven, and 21 days. Stop when you can explain the change in two minutes, draw it within the inherited platform, defend two alternatives, and diagnose a fault from an observable signal. For build depth modules also build, test, and debug the representative slice. These learner gates remain unassessed. Production integrations and deployment controls described here are proposals unless the validation report explicitly records an executed check.
 

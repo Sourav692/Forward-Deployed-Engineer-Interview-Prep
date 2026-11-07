@@ -8,7 +8,7 @@
 **What a strong answer covers:**
 - Tokenizes the page with the model's own tokenizer and compares the count with `max_seq_length` (256 here); the FAQ page is 291 tokens, so the support answer is past the cut
 - Proves it by embedding the page and its first 1,231 characters: the two vectors are identical (cosine 1.0000), so the tail never mattered
-- Fixes it at chunking time ([T6.2](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview)), with chunk sizes counted in the embedding model's tokens, not characters
+- Fixes it at chunking time ([T5.3](/learn/llm-and-retrieval/chunking-and-indexing/chunking-and-indexing-overview)), with chunk sizes counted in the embedding model's tokens, not characters
 - Adds a check at indexing time that logs or rejects any chunk over the limit, since the library raises no error
 
 ### 2. A teammate's service calls `pipeline("sentiment-analysis")` with no model argument to tag tickets. Is that ready to ship?

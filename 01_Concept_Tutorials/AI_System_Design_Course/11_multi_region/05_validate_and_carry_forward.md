@@ -36,7 +36,7 @@ Exit gates for this stage:
 
 ## Evidence and Carry Forward
 
-Read the [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/11-multi-region/architecture-after.md), [decisions](../architecture_decisions/adr_011_residency_aware_regional_cells.md) and [ADR-013](../architecture_decisions/adr_013_regional_authority_and_route_generations.md). Local content verification and learner completion are separate. ADR-013 amends ADR-011 with authority placement, endpoint residency and fencing order; ADR-011's text is otherwise unchanged. T17.13 inherits these regional cells, the EU authority quorum, model lineage, recovery gates, and explicit deployment gaps to define shared platform contracts and migration.
+Read the [architecture snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/11-multi-region/architecture-after.md), [decisions](../architecture_decisions/adr_011_residency_aware_regional_cells.md) and [ADR-013](../architecture_decisions/adr_013_regional_authority_and_route_generations.md). Local content verification and learner completion are separate. ADR-013 amends ADR-011 with authority placement, endpoint residency and fencing order; ADR-011's text is otherwise unchanged. T18.13 inherits these regional cells, the EU authority quorum, model lineage, recovery gates, and explicit deployment gaps to define shared platform contracts and migration.
 
 Review after about one, seven, and 21 days. Stop when the five gates pass. These learner gates remain unassessed. Production integrations and deployment controls described here are proposals unless the validation report explicitly records an executed check.
 

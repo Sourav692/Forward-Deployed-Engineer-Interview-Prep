@@ -1,6 +1,6 @@
-# T15.1 Tool Design, MCP and A2A: Consolidated Lessons
+# T16.1 Tool Design, MCP and A2A: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T15.1 "Tool design, the agent-computer interface, MCP and A2A". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/agentic-systems/tool-design-mcp-a2a`.
+These seven lessons are the site's teaching copy of module T16.1 "Tool design, the agent-computer interface, MCP and A2A". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/agentic-systems/tool-design-mcp-a2a`.
 
 | # | Lesson | Site slug |
 |---|---|---|

@@ -38,13 +38,13 @@ Give an explicit policy. Either return partial results with a clear "1 of 10 fai
 ## Practise the Planning Questions
 
 **6. "ReAct or plan-and-execute?"**
-If the steps can be sketched before running anything, plan first, with a replanning path. If each step depends on the last tool result, use ReAct. → [Planning and Self-Correction Patterns](/learn/agentic-systems/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
+If the steps can be sketched before running anything, plan first, with a replanning path. If each step depends on the last tool result, use ReAct. → [Planning and Self-Correction Patterns](/learn/advanced-agents/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
 
 **7. "Compare a plain planner and executor with PEV on a flaky tool."**
-The plain version treats the tool's error string as data and produces a confident wrong figure. The verifier in PEV classifies the string as a failure, triggers a replan with a different query, and recovers. → [Planning and Self-Correction Patterns](/learn/agentic-systems/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
+The plain version treats the tool's error string as data and produces a confident wrong figure. The verifier in PEV classifies the string as a failure, triggers a replan with a different query, and recovers. → [Planning and Self-Correction Patterns](/learn/advanced-agents/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
 
 **8. "Convince me the verifier's extra call is worth it, with a number."**
-The cost is one extra model call per step. Price it against a confident wrong answer in a domain where that is expensive, such as finance or anything customer-facing. In the source comparison, the verifier is what wins on the error-handling score. → [Planning and Self-Correction Patterns](/learn/agentic-systems/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
+The cost is one extra model call per step. Price it against a confident wrong answer in a domain where that is expensive, such as finance or anything customer-facing. In the source comparison, the verifier is what wins on the error-handling score. → [Planning and Self-Correction Patterns](/learn/advanced-agents/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan)
 
 ## Practise the Context Questions
 

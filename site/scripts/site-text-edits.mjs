@@ -41,19 +41,19 @@ export const SITE_TEXT_EDITS = {
   [`${BEHAVIOURAL}/answer_keys/07_leading_people_answer_key.md`]: [
     ['the evaluation dataset, the Genie Space curation', 'the evaluation dataset, curating the text-to-SQL space'],
   ],
-  [`${COURSE}/p05_ingestion_and_indexing/m14_embeddings/03_open_source_embeddings_with_hugging_face.md`]: [
+  [`${COURSE}/p04_rag_foundations/m13_embeddings/03_open_source_embeddings_with_hugging_face.md`]: [
     [
       /The optional lesson \d+ of T[\d.]+ notebook, \[[^\]]*\]\([^)]*05a_compare_embedding_models_databricks\.ipynb\), (indexes eight short documents with three open models) in Databricks Vector Search/,
       'An optional notebook in the course $1 in a managed vector index',
     ],
   ],
-  [`${COURSE}/p06_retrieval_quality/m17_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md`]: [
+  [`${COURSE}/p05_retrieval_quality_and_rag_apps/m16_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md`]: [
     [/^(# .*) on Databricks Vector Search$/m, '$1 in a managed vector store'],
     ['`06b` moves hybrid search and reranking into the vector store. On a Databricks Vector Search index it embeds', '`06b`, an optional notebook, moves hybrid search and reranking into a managed vector store. It embeds'],
     ['and `reranker=DatabricksReranker(columns_to_rerank=["text"])`', 'and a `reranker` over the `text` column'],
     ['Notebook 06b says the Databricks reranker', "Notebook 06b says the store's reranker"],
   ],
-  [`${COURSE}/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/06_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md`]: [
+  [`${COURSE}/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/03_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md`]: [
     ['four Databricks Genie tools for', 'four tools over a managed text-to-SQL service for'],
     ['`databricks-claude-opus-4-6`, temperature 0.1', 'Claude Opus 4.6 on a model-serving endpoint, temperature 0.1'],
     ['| A Unity Catalog volume |', '| A governed storage volume |'],

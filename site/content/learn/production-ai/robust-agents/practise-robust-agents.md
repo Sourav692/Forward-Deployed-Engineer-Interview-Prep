@@ -43,10 +43,10 @@ A pause is not a failure. Falling back on it would let a blocked destructive cal
 ## Practise the Concurrency and Telemetry Questions
 
 **7. "When do you run tool calls in parallel?"**
-"Independent reads fan out, and the latency becomes the max instead of the sum. Dependent steps stay sequential, and writes never race. A fan-out shares one rate limiter and has a join timeout, so a burst degrades into a partial answer rather than a throttled failure." → [Parallel and Sequential Tool Calls](/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming)
+"Independent reads fan out, and the latency becomes the max instead of the sum. Dependent steps stay sequential, and writes never race. A fan-out shares one rate limiter and has a join timeout, so a burst degrades into a partial answer rather than a throttled failure." → [Parallel and Sequential Tool Calls](/learn/multi-agent-systems/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming)
 
 **8. "The model emitted three tool calls at once. Do you just run them?"**
-No. The parallel proposal is a signal that the calls are independent, not an authorisation. The system checks that none is destructive, that the combined rate-limit cost fits, and that a join timeout exists. → [Parallel and Sequential Tool Calls](/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming)
+No. The parallel proposal is a signal that the calls are independent, not an authorisation. The system checks that none is destructive, that the combined rate-limit cost fits, and that a join timeout exists. → [Parallel and Sequential Tool Calls](/learn/multi-agent-systems/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming)
 
 **9. "Why did the agent close the wrong ticket?"**
 Read the per-call trace: which search ran, what it returned, which ID the agent chose. Every call is a record of tool, arguments, status, latency, and result or error. The five statuses map one-to-one onto the executor's branches, so the trace is complete by construction. In production that is one span per call, under one span per turn, under one trace per conversation. → [Observability for Tool Calls](/learn/production-ai/robust-agents/observability-for-tool-calls)

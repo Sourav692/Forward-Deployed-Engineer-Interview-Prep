@@ -2,7 +2,7 @@
 # ADR-001: Synchronous MVP with durable history
 
 **Status:** accepted for the educational baseline  
-**Module:** T17.2  
+**Module:** T18.2  
 **Date:** 2026-11-02  
 **Superseded by:** none
 

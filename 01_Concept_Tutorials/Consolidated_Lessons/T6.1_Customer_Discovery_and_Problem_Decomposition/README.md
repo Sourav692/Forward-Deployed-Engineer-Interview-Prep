@@ -1,6 +1,6 @@
-# T18.1 Customer Discovery and Problem Decomposition: Consolidated Lessons
+# T19.1 Customer Discovery and Problem Decomposition: Consolidated Lessons
 
-These five lessons are the site's teaching copy of module T18.1 "Customer discovery and problem decomposition". Each concept is taught once, in the house tutorial format, drawing only on the repository's problem decomposition question bank. The site publishes them at `/learn/forward-deployed/customer-discovery`.
+These five lessons are the site's teaching copy of module T19.1 "Customer discovery and problem decomposition". Each concept is taught once, in the house tutorial format, drawing only on the repository's problem decomposition question bank. The site publishes them at `/learn/forward-deployed/customer-discovery`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -14,6 +14,6 @@ These five lessons are the site's teaching copy of module T18.1 "Customer discov
 
 - `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (own material).
 
-The source file stays in the repository unchanged. The site no longer publishes it as a separate lesson; its old URL redirects to the first lesson here. Its adoption follow-up (case 17) is taught in T18.5 "Diagnosing Low Adoption".
+The source file stays in the repository unchanged. The site no longer publishes it as a separate lesson; its old URL redirects to the first lesson here. Its adoption follow-up (case 17) is taught in T19.5 "Diagnosing Low Adoption".
 
 Every claim, number and example in these lessons comes from the source. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

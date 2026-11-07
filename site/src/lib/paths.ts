@@ -85,7 +85,6 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'python-and-data-toolkit-refresher',
     'llm-provider-apis-and-model-selection',
     'hugging-face-models-and-gradio-demos',
-    'fine-tuning-fundamentals',
   ],
   'prompt-and-context-engineering': ['prompt-engineering-patterns', 'multimodal-prompting'],
   'langchain-and-langgraph-fundamentals': [
@@ -94,8 +93,8 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'langchain-and-langgraph',
     'langgraph-runtime-persistence-hitl-and-streaming',
   ],
-  'llm-and-retrieval': ['rag-from-first-principles'],
-  'ingestion-and-indexing-pipeline': [
+  'llm-and-retrieval': [
+    'rag-from-first-principles',
     'document-ingestion-and-metadata-design',
     'chunking-and-indexing',
     'embeddings-and-model-selection',
@@ -106,13 +105,18 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'retrieval-hybrid-rerank',
     'query-transformation-and-routing',
     'post-retrieval-optimisation-and-reranking',
+    'end-to-end-rag-systems',
+    'multimodal-rag',
+    'framework-fluency-llamaindex',
   ],
-  'complete-rag-applications': ['end-to-end-rag-systems', 'multimodal-rag', 'framework-fluency-llamaindex'],
   'agentic-systems': [
     'the-agent-loop-and-tool-calling',
     'react-agents-and-langchain-create-agent',
     'agentic-workflow-patterns',
+  ],
+  'advanced-agents': [
     'planning-reflection-and-reasoning-patterns',
+    'coding-computer-use-and-deep-agents',
     'human-approval-and-applied-single-agent-builds',
   ],
   'agentic-and-self-correcting-rag': [
@@ -125,6 +129,8 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
   'memory-and-multi-agent-rag': [
     'conversation-memory-and-conversational-rag',
     'memory-and-state',
+  ],
+  'multi-agent-systems': [
     'multi-agent-architectures',
     'collaboration-control-and-parallel-agents',
     'multi-agent-applied-builds-and-deep-agents',
@@ -140,6 +146,7 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'knowledge-graphs-with-neo4j',
     'graphrag-techniques',
   ],
+  'fine-tuning-and-model-adaptation': ['fine-tuning-fundamentals'],
   'architecture-synthesis-and-capstone': ['agentic-rag-architectures-choosing-a-design'],
   'production-ai': [
     'tool-design-mcp-a2a',
@@ -220,7 +227,7 @@ type FlagSpec = Partial<Record<ModuleFlag, string[]>>
 function flags(fallback: ModuleFlag, spec: FlagSpec): Record<string, ModuleFlag> {
   const out: Record<string, ModuleFlag> = {}
   for (const slug of ALL_MODULES) out[slug] = fallback
-  // The Staff AI System Design course (T17) is an optional deep dive on every path; a path's own
+  // The Staff AI System Design course (T18) is an optional deep dive on every path; a path's own
   // spec can still raise it. Optional modules add nothing to a path's hours.
   for (const slug of TRACK_MODULES['staff-ai-system-design']) out[slug] = 'optional'
   for (const level of FLAG_ORDER) for (const item of spec[level] ?? []) for (const slug of expand(item)) out[slug] = level
@@ -293,12 +300,12 @@ const FDE_FLAGS = flags('recommended', {
     'prompt-and-context-engineering',
     'langchain-and-langgraph-fundamentals',
     'llm-and-retrieval',
-    'ingestion-and-indexing-pipeline',
     'retrieval-quality-engineering',
-    'complete-rag-applications',
     'agentic-systems',
+    'advanced-agents',
     'agentic-and-self-correcting-rag',
     'memory-and-multi-agent-rag',
+    'multi-agent-systems',
     'agent-protocols-mcp-and-a2a',
     'production-ai',
     'ai-systems-design',
@@ -310,6 +317,7 @@ const FDE_FLAGS = flags('recommended', {
     'engineering-foundations',
     'capstone-and-portfolio',
     'hierarchical-memory-and-graph-rag',
+    'fine-tuning-and-model-adaptation',
     'architecture-synthesis-and-capstone',
   ],
 })
@@ -335,12 +343,12 @@ export const PATHS: LearningPath[] = [
         'prompt-and-context-engineering',
         'langchain-and-langgraph-fundamentals',
         'llm-and-retrieval',
-        'ingestion-and-indexing-pipeline',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'agentic-systems',
+        'advanced-agents',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'enterprise-rag-in-production',
         'evaluation-and-release-gates',
@@ -362,10 +370,11 @@ export const PATHS: LearningPath[] = [
         'interview-practice',
         'capstone-and-portfolio',
         'hierarchical-memory-and-graph-rag',
+        'fine-tuning-and-model-adaptation',
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 244,
+    estHours: 242,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -386,12 +395,12 @@ export const PATHS: LearningPath[] = [
         'prompt-and-context-engineering',
         'langchain-and-langgraph-fundamentals',
         'llm-and-retrieval',
-        'ingestion-and-indexing-pipeline',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'agentic-systems',
+        'advanced-agents',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'production-ai',
         'ai-systems-design',
@@ -406,10 +415,11 @@ export const PATHS: LearningPath[] = [
         'model-adaptation-and-serving',
         'capstone-and-portfolio',
         'hierarchical-memory-and-graph-rag',
+        'fine-tuning-and-model-adaptation',
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 290,
+    estHours: 287,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -434,17 +444,17 @@ export const PATHS: LearningPath[] = [
         'prompt-and-context-engineering',
         'langchain-and-langgraph-fundamentals',
         'llm-and-retrieval',
-        'ingestion-and-indexing-pipeline',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'agentic-systems',
+        'advanced-agents',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'production-ai',
         'ai-systems-design',
@@ -453,14 +463,19 @@ export const PATHS: LearningPath[] = [
       ],
       optional: [
         'engineering-foundations',
-        'ingestion-and-indexing-pipeline',
+        'document-ingestion-and-metadata-design',
+        'chunking-and-indexing',
+        'embeddings-and-model-selection',
+        'vector-stores-and-index-operations',
+        'advanced-indexing-strategies',
         'forward-deployed',
         'capstone-and-portfolio',
         'hierarchical-memory-and-graph-rag',
+        'fine-tuning-and-model-adaptation',
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 252,
+    estHours: 250,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -479,8 +494,10 @@ export const PATHS: LearningPath[] = [
       required: [
         'orientation',
         'agentic-systems',
+        'advanced-agents',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'production-ai',
         'ai-systems-design',
@@ -495,15 +512,14 @@ export const PATHS: LearningPath[] = [
         'prompt-and-context-engineering',
         'langchain-and-langgraph-fundamentals',
         'llm-and-retrieval',
-        'ingestion-and-indexing-pipeline',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'capstone-and-portfolio',
         'hierarchical-memory-and-graph-rag',
+        'fine-tuning-and-model-adaptation',
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 204,
+    estHours: 207,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -524,12 +540,12 @@ export const PATHS: LearningPath[] = [
         'prompt-and-context-engineering',
         'langchain-and-langgraph-fundamentals',
         'llm-and-retrieval',
-        'ingestion-and-indexing-pipeline',
         'retrieval-quality-engineering',
-        'complete-rag-applications',
         'agentic-systems',
+        'advanced-agents',
         'agentic-and-self-correcting-rag',
         'memory-and-multi-agent-rag',
+        'multi-agent-systems',
         'agent-protocols-mcp-and-a2a',
         'production-ai',
         'ai-systems-design',
@@ -537,17 +553,18 @@ export const PATHS: LearningPath[] = [
         'communication-and-behavioural',
         'portfolio-write-up',
       ],
-      // Architects are asked staff-level design questions, so the T17 course is recommended here.
+      // Architects are asked staff-level design questions, so the T18 course is recommended here.
       recommended: ['staff-ai-system-design'],
       optional: [
         'engineering-foundations',
         'model-adaptation-and-serving',
         'capstone-build',
         'hierarchical-memory-and-graph-rag',
+        'fine-tuning-and-model-adaptation',
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 374,
+    estHours: 372,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -562,7 +579,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 295,
+    estHours: 292,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -599,7 +616,7 @@ export const PATHS: LearningPath[] = [
       'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
-      // T18 Forward Deployed Engineering and T15.7 Evaluation and release gates.
+      // T19 Forward Deployed Engineering and T16.7 Evaluation and release gates.
       'customer-discovery': 'required',
       'scoping-an-fde-project': 'required',
       'judgement-cases': 'required',
@@ -612,7 +629,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 325,
+    estHours: 322,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,

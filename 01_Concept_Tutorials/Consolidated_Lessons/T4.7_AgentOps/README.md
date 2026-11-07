@@ -1,6 +1,6 @@
-# T15.8 AgentOps: Versioning, Rollout, CI/CD, and Red Teaming: Consolidated Lessons
+# T16.8 AgentOps: Versioning, Rollout, CI/CD, and Red Teaming: Consolidated Lessons
 
-These lessons are the site's teaching copy of module T15.8 "AgentOps: versioning, rollout, CI/CD, red teaming". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/agentops`.
+These lessons are the site's teaching copy of module T16.8 "AgentOps: versioning, rollout, CI/CD, red teaming". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/agentops`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -13,7 +13,7 @@ These lessons are the site's teaching copy of module T15.8 "AgentOps: versioning
 | 7 | [Infrastructure as Code and the Release Pipeline](07_Infrastructure_as_Code_and_the_Release_Pipeline.md) | `infrastructure-as-code-and-the-release-pipeline` |
 | 8 | [Practise AgentOps Interview Questions](08_Practise_AgentOps_Interview_Questions.md) | `practise-agentops` |
 
-Lessons 3 and 4 are Databricks-specific and are not published on the site (`publish: 'excluded'` in `site/src/lib/curriculum.ts`). They wait for a platform track, listed under future additions in the production plan; their old URLs redirect to lesson 1 and to the access-control lesson of T15.5.
+Lessons 3 and 4 are Databricks-specific and are not published on the site (`publish: 'excluded'` in `site/src/lib/curriculum.ts`). They wait for a platform track, listed under future additions in the production plan; their old URLs redirect to lesson 1 and to the access-control lesson of T16.5.
 
 ## Sources
 
@@ -23,4 +23,4 @@ Lessons 3 and 4 are Databricks-specific and are not published on the site (`publ
 - `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`: unit testing with mocks, red teaming, guardrails, moderation and PII masking (own material; web-sourced interview answers not reused).
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/` notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook* (lesson 2 only, summarised in our own words, with a credit line).
 
-The source files stay in the repository unchanged. The site no longer publishes the seven old T15.8 lessons separately; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+The source files stay in the repository unchanged. The site no longer publishes the seven old T16.8 lessons separately; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

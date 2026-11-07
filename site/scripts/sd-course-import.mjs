@@ -35,7 +35,7 @@
  *  - prose takes British spelling (src/lib/spelling.ts, plus "artefact"; never code, link targets or
  *    diagrams), and stage and part titles take sentence case;
  *  - the course's own numbering becomes the site's (4 Nov 2026 audit, IA-08): "Stage N" becomes the
- *    module code T17.(N+1), the curriculum topic codes ("1.1", "13.1") leave table cells, and the depth
+ *    module code T18.(N+1), the curriculum topic codes ("1.1", "13.1") leave table cells, and the depth
  *    tags D0 to D3 become words (awareness, explain, design, build depth);
  *  - course bookkeeping goes (PQ-07): links to the stage plan, state and validation records and to
  *    the progress maps leave their sentence, a sentence left with no link goes, and so do sentences
@@ -279,11 +279,11 @@ function dropPackageSentences(lines) {
   return out
 }
 
-/** The site code of course stage `n`: Stage 0 is T17.1 (task SDC-05). */
+/** The site code of course stage `n`: Stage 0 is T18.1 (task SDC-05). */
 function stageCode(n) {
   const k = Number(n)
   if (k > 12) throw new Error(`no module for Stage ${n}`)
-  return `T17.${k + 1}`
+  return `T18.${k + 1}`
 }
 
 const capitalise = (word) => word.charAt(0).toUpperCase() + word.slice(1)

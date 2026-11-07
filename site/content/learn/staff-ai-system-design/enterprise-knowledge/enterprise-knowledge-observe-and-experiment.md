@@ -55,7 +55,7 @@ Assume 1,000 documents, 10 chunks/document, and 500 tokens/chunk. That is 10,000
 
 At 200 changed documents/hour, 10 chunks/document yields 2,000 changed chunks/hour. At an assumed 0.5 seconds of embedding-service work/chunk, the batch requires 1,000 worker-seconds/hour. One continuously available worker has 3,600 seconds/hour in the idealised arithmetic, but quotas, parsing, bursts, retries, and batching change real capacity. The lexical fixture makes no embedding calls and proves no embedding throughput.
 
-For a serial text-extraction capacity of 20 seconds/document inherited from T17.3, 200 changes/hour require 4,000 worker-seconds/hour before indexing. That exceeds one worker’s hour. Three independent workers have nominal headroom only if those external/storage limits permit it. Evaluate the bottleneck of each pipeline stage, not just the final model call.
+For a serial text-extraction capacity of 20 seconds/document inherited from T18.3, 200 changes/hour require 4,000 worker-seconds/hour before indexing. That exceeds one worker’s hour. Three independent workers have nominal headroom only if those external/storage limits permit it. Evaluate the bottleneck of each pipeline stage, not just the final model call.
 
 ## Lab: Which Evidence May Leave the Application?
 
@@ -87,7 +87,7 @@ python3 10_AI_System_Design/stages/03-enterprise-knowledge/labs/test_knowledge.p
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-[knowledge.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/labs/knowledge.py) uses a real SQLite FTS5 index and immutable/current metadata tables. Tests cover relevant scoped results, duplicate publication, content replacement, tombstone ordering, revocation between search/context, forged/stale hits, orphan publication failure, immutable-version conflict, and query syntax. A pipeline test also uses T17.3’s durable job store to claim and complete an ingestion event. Python must include SQLite FTS5 and JSON functions; a missing extension is a prerequisite failure, not permission to silently substitute an untested search engine.
+[knowledge.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/labs/knowledge.py) uses a real SQLite FTS5 index and immutable/current metadata tables. Tests cover relevant scoped results, duplicate publication, content replacement, tombstone ordering, revocation between search/context, forged/stale hits, orphan publication failure, immutable-version conflict, and query syntax. A pipeline test also uses T18.3’s durable job store to claim and complete an ingestion event. Python must include SQLite FTS5 and JSON functions; a missing extension is a prerequisite failure, not permission to silently substitute an untested search engine.
 
 For build depth practice, add an allowed policy paraphrase and an exact supplier code. Measure retrieval hits against a small labelled set before changing ranking. Compute recall@k as relevant retrieved passages divided by all labelled relevant passages for each query, and distinguish it from precision@k. The local test has a tiny relevance expectation; it is not a production quality benchmark. For explain depth object lifecycle, explain which blob can be orphaned and why pointer rollback must preserve the previous readable version.
 

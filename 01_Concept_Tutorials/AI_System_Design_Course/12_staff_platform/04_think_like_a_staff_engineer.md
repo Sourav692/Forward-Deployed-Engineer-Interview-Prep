@@ -3,25 +3,25 @@
 
 ## Apply Earlier Decisions to the Platform
 
-**1.1 Requirements** ([T17.2](../01_mvp/01_understand_the_problem.md)). T17.2 turned Alice's need into measurable acceptance criteria before choosing components. Here the customers are four app teams and three tenants, so the criteria name onboarding, rejected violations and rollback evidence, not only latency.
+**1.1 Requirements** ([T18.2](../01_mvp/01_understand_the_problem.md)). T18.2 turned Alice's need into measurable acceptance criteria before choosing components. Here the customers are four app teams and three tenants, so the criteria name onboarding, rejected violations and rollback evidence, not only latency.
 
-**11.1 Fine-tuning fundamentals** ([T17.11](../10_fine_tuning/01_understand_the_problem.md)). T17.11 ran an adapter challenger only after prompting, retrieval and schema fixes failed on measured behaviour. The platform keeps that order: a manifest may reference an approved adapter, but the template does not offer tuning as a default step.
+**11.1 Fine-tuning fundamentals** ([T18.11](../10_fine_tuning/01_understand_the_problem.md)). T18.11 ran an adapter challenger only after prompting, retrieval and schema fixes failed on measured behaviour. The platform keeps that order: a manifest may reference an approved adapter, but the template does not offer tuning as a default step.
 
-**11.2 Fine-tuning platform architecture** ([T17.11](../10_fine_tuning/02_learn_and_design.md#lesson-design-the-artefact-chain)). T17.11 created an adapter only through Fine-Tuning Jobs, a versioned dataset and a registry approval gate, and [T17.12](../11_multi_region/01_understand_the_problem.md) kept each approval in the tenant region's authority store. The platform stays on the consuming side of that workflow. A manifest may reference only a registry-approved adapter digest, and the cell rechecks that approval before it applies a route. Creating or retraining an adapter never runs from the app template.
+**11.2 Fine-tuning platform architecture** ([T18.11](../10_fine_tuning/02_learn_and_design.md#lesson-design-the-artefact-chain)). T18.11 created an adapter only through Fine-Tuning Jobs, a versioned dataset and a registry approval gate, and [T18.12](../11_multi_region/01_understand_the_problem.md) kept each approval in the tenant region's authority store. The platform stays on the consuming side of that workflow. A manifest may reference only a registry-approved adapter digest, and the cell rechecks that approval before it applies a route. Creating or retraining an adapter never runs from the app template.
 
-**11.3 Distributed training infrastructure** ([T17.11](../10_fine_tuning/02_learn_and_design.md#lesson-distributed-training-at-awareness-depth)). T17.11 kept distributed training at orientation depth, and [T17.12](../11_multi_region/01_understand_the_problem.md) copied finished adapters by digest rather than training in each region. It stays deferred here: the platform routes approved artefacts and has no measured training workload that would justify multi-accelerator jobs.
+**11.3 Distributed training infrastructure** ([T18.11](../10_fine_tuning/02_learn_and_design.md#lesson-distributed-training-at-awareness-depth)). T18.11 kept distributed training at orientation depth, and [T18.12](../11_multi_region/01_understand_the_problem.md) copied finished adapters by digest rather than training in each region. It stays deferred here: the platform routes approved artefacts and has no measured training workload that would justify multi-accelerator jobs.
 
-**14.1 Evaluation architecture** ([T17.9](../08_evaluation_releases/01_understand_the_problem.md)). T17.9 froze the bundle and dataset that a release gate judged. Shadow evidence applies the same rule to routes: it binds to a baseline generation, and a changed bundle needs fresh evidence.
+**14.1 Evaluation architecture** ([T18.9](../08_evaluation_releases/01_understand_the_problem.md)). T18.9 froze the bundle and dataset that a release gate judged. Shadow evidence applies the same rule to routes: it binds to a baseline generation, and a changed bundle needs fresh evidence.
 
-**14.3 Model and data lifecycle** ([T17.11](../10_fine_tuning/01_understand_the_problem.md)). T17.11 traced each model to its dataset version and recipe. Because manifests pin the bundle, withdrawing a dataset now names every app route that must move before its descendant model retires.
+**14.3 Model and data lifecycle** ([T18.11](../10_fine_tuning/01_understand_the_problem.md)). T18.11 traced each model to its dataset version and recipe. Because manifests pin the bundle, withdrawing a dataset now names every app route that must move before its descendant model retires.
 
-**15.2 SRE and production operations** ([T17.8](../07_reliability_consistency/01_understand_the_problem.md)). T17.8 set latency and reliability budgets and a bounded incident procedure. Centralising contracts does not move regional on-call to the platform team: the platform owns contract and control-plane availability, and each cell's SRE owner still owns recovery.
+**15.2 SRE and production operations** ([T18.8](../07_reliability_consistency/01_understand_the_problem.md)). T18.8 set latency and reliability budgets and a bounded incident procedure. Centralising contracts does not move regional on-call to the platform team: the platform owns contract and control-plane availability, and each cell's SRE owner still owns recovery.
 
-**16.2 Cloud networking and deployment** ([T17.12](../11_multi_region/01_understand_the_problem.md)). T17.12 kept private endpoints and controlled egress inside each cell. Platform templates deploy only into those approved network boundaries, and a manifest cannot add an endpoint outside them.
+**16.2 Cloud networking and deployment** ([T18.12](../11_multi_region/01_understand_the_problem.md)). T18.12 kept private endpoints and controlled egress inside each cell. Platform templates deploy only into those approved network boundaries, and a manifest cannot add an endpoint outside them.
 
-**17.1 AI unit economics** ([T17.12](../11_multi_region/01_understand_the_problem.md)). T17.12 priced cost per successful workflow, not per request. Platform showback keeps that denominator, so retries and failed calls stay visible in each team's cost.
+**17.1 AI unit economics** ([T18.12](../11_multi_region/01_understand_the_problem.md)). T18.12 priced cost per successful workflow, not per request. Platform showback keeps that denominator, so retries and failed calls stay visible in each team's cost.
 
-**17.2 Capacity planning** ([T17.12](../11_multi_region/01_understand_the_problem.md)). T17.12 sized each cell's request, token and slot capacity. Onboarding an app adds demand, not capacity, so the pilot review checks the target cell's headroom before cutover.
+**17.2 Capacity planning** ([T18.12](../11_multi_region/01_understand_the_problem.md)). T18.12 sized each cell's request, token and slot capacity. Onboarding an app adds demand, not capacity, so the pilot review checks the target cell's headroom before cutover.
 
 ## Define Ownership and Review Authority
 
@@ -73,7 +73,7 @@ Rubric. Pass only when every line is observably true:
 
 <p><strong>Context.</strong> Tenant B's regulator forbids storing or operating B's control records outside the EU, even opaque ones. Under ADR-012 and ADR-013 the global control plane in the US stores and signs B's route generations, which name B's apps only by opaque IDs, and holds the signing keys.</p>
 
-<p><strong>Options.</strong> Hard constraints first. Templates only: pass; templates add no record outside the EU, and T17.12's regional runtime still checks current access. One global control plane: veto, because B's route generations and signing keys sit in the US. Separate EU control plane: pass; B's control records and keys stay in the EU, and runtime checks are unchanged. Totals for the survivors: templates 0.2×5 + 0.3×2 + 0.3×2 + 0.2×2 = 2.6; EU control plane 0.2×2 + 0.3×5 + 0.3×3 + 0.2×3 = 3.4. The vetoed option would have won at 4.1.</p>
+<p><strong>Options.</strong> Hard constraints first. Templates only: pass; templates add no record outside the EU, and T18.12's regional runtime still checks current access. One global control plane: veto, because B's route generations and signing keys sit in the US. Separate EU control plane: pass; B's control records and keys stay in the EU, and runtime checks are unchanged. Totals for the survivors: templates 0.2×5 + 0.3×2 + 0.3×2 + 0.2×2 = 2.6; EU control plane 0.2×2 + 0.3×5 + 0.3×3 + 0.2×3 = 3.4. The vetoed option would have won at 4.1.</p>
 
 <p><strong>Decision.</strong> Run a second control-plane instance in the EU, with EU-held signing keys, for Tenants A and B. Tenant C stays on the US instance. Cells, runtime checks and migration gates do not change. Owner: the platform owner, with approval from the security and data owner.</p>
 

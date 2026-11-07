@@ -155,24 +155,6 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 200
   },
   {
-    "slug": "fine-tuning-fundamentals",
-    "code": "T2.4",
-    "title": "Fine-Tuning Fundamentals",
-    "track": "ai-engineering-foundations",
-    "lessons": [
-      "fine-tuning-fundamentals-overview",
-      "why-fine-tune",
-      "where-fine-tuning-fits",
-      "instruction-tuning",
-      "data-preparation",
-      "training",
-      "evaluation",
-      "fine-tuning-llama-2-with-autotrain",
-      "fine-tuning-fundamentals-interview-questions"
-    ],
-    "practiceMinutes": 260
-  },
-  {
     "slug": "prompt-engineering-patterns",
     "code": "T3.1",
     "title": "Prompt Engineering Patterns",
@@ -285,9 +267,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "document-ingestion-and-metadata-design",
-    "code": "T6.1",
+    "code": "T5.2",
     "title": "Document Ingestion & Metadata Design",
-    "track": "ingestion-and-indexing-pipeline",
+    "track": "llm-and-retrieval",
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
@@ -301,9 +283,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "chunking-and-indexing",
-    "code": "T6.2",
+    "code": "T5.3",
     "title": "Chunking Strategies",
-    "track": "ingestion-and-indexing-pipeline",
+    "track": "llm-and-retrieval",
     "lessons": [
       "chunking-and-indexing-overview",
       "splitter-fundamentals-character-recursive-token-and-structure-aware",
@@ -316,9 +298,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "embeddings-and-model-selection",
-    "code": "T6.3",
+    "code": "T5.4",
     "title": "Embeddings & Model Selection",
-    "track": "ingestion-and-indexing-pipeline",
+    "track": "llm-and-retrieval",
     "lessons": [
       "embeddings-and-model-selection-overview",
       "embedding-fundamentals-similarity-metrics-and-model-selection",
@@ -331,9 +313,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "vector-stores-and-index-operations",
-    "code": "T6.4",
+    "code": "T5.5",
     "title": "Vector Stores & Index Operations",
-    "track": "ingestion-and-indexing-pipeline",
+    "track": "llm-and-retrieval",
     "lessons": [
       "vector-stores-and-index-operations-overview",
       "index-operations-create-query-update-delete-persist",
@@ -347,9 +329,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "advanced-indexing-strategies",
-    "code": "T6.5",
+    "code": "T5.6",
     "title": "Advanced Indexing Strategies",
-    "track": "ingestion-and-indexing-pipeline",
+    "track": "llm-and-retrieval",
     "lessons": [
       "advanced-indexing-strategies-overview",
       "multi-representation-indexing-search-summaries-return-documents",
@@ -363,7 +345,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "retrieval-hybrid-rerank",
-    "code": "T7.1",
+    "code": "T6.1",
     "title": "Retrievers & Hybrid Search",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -380,7 +362,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "query-transformation-and-routing",
-    "code": "T7.2",
+    "code": "T6.2",
     "title": "Query Transformation & Routing",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -396,7 +378,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
-    "code": "T7.3",
+    "code": "T6.3",
     "title": "Post-Retrieval Optimisation & Reranking",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -413,9 +395,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "end-to-end-rag-systems",
-    "code": "T8.1",
+    "code": "T6.4",
     "title": "End-to-End RAG Systems",
-    "track": "complete-rag-applications",
+    "track": "retrieval-quality-engineering",
     "lessons": [
       "end-to-end-rag-systems-overview",
       "environment-setup-and-a-complete-rag-system",
@@ -429,9 +411,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multimodal-rag",
-    "code": "T8.2",
+    "code": "T6.5",
     "title": "Multimodal RAG",
-    "track": "complete-rag-applications",
+    "track": "retrieval-quality-engineering",
     "lessons": [
       "multimodal-rag-overview",
       "shared-text-image-embedding-space-with-clip",
@@ -443,9 +425,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "framework-fluency-llamaindex",
-    "code": "T8.3",
+    "code": "T6.6",
     "title": "Framework Fluency: LlamaIndex",
-    "track": "complete-rag-applications",
+    "track": "retrieval-quality-engineering",
     "lessons": [
       "framework-fluency-llamaindex-overview",
       "simple-pdf-and-csv-rag-in-llamaindex",
@@ -458,7 +440,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "the-agent-loop-and-tool-calling",
-    "code": "T9.1",
+    "code": "T7.1",
     "title": "The Agent Loop & Tool Calling",
     "track": "agentic-systems",
     "lessons": [
@@ -474,7 +456,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
-    "code": "T9.2",
+    "code": "T7.2",
     "title": "ReAct Agents & LangChain create_agent",
     "track": "agentic-systems",
     "lessons": [
@@ -483,14 +465,13 @@ export const INDEX_MODULES: IndexModule[] = [
       "react-with-langchain-create-agent",
       "models-messages-and-structured-output-in-langchain-1-x",
       "middleware-including-human-in-the-loop",
-      "applied-react-web-research-swe-and-computer-use-agents",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 200
   },
   {
     "slug": "agentic-workflow-patterns",
-    "code": "T9.3",
+    "code": "T7.3",
     "title": "Agentic Workflow Patterns",
     "track": "agentic-systems",
     "lessons": [
@@ -506,9 +487,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
-    "code": "T9.4",
+    "code": "T8.1",
     "title": "Planning, Reflection & Reasoning Patterns",
-    "track": "agentic-systems",
+    "track": "advanced-agents",
     "lessons": [
       "planning-reflection-and-reasoning-patterns-overview",
       "plan-and-execute-vs-react-decompose-execute-replan",
@@ -519,10 +500,23 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 320
   },
   {
+    "slug": "coding-computer-use-and-deep-agents",
+    "code": "T8.2",
+    "title": "Coding, Computer-Use & Deep Agents",
+    "track": "advanced-agents",
+    "lessons": [
+      "coding-computer-use-and-deep-agents-overview",
+      "applied-react-web-research-swe-and-computer-use-agents",
+      "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
+      "coding-computer-use-and-deep-agents-interview-questions"
+    ],
+    "practiceMinutes": 270
+  },
+  {
     "slug": "human-approval-and-applied-single-agent-builds",
-    "code": "T9.5",
+    "code": "T8.3",
     "title": "Human Approval & Applied Single-Agent Builds",
-    "track": "agentic-systems",
+    "track": "advanced-agents",
     "lessons": [
       "human-approval-and-applied-single-agent-builds-overview",
       "dry-run-harness-and-human-approval",
@@ -534,7 +528,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
-    "code": "T10.1",
+    "code": "T9.1",
     "title": "Agentic RAG Foundations: Grading & Query Rewriting",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -543,11 +537,11 @@ export const INDEX_MODULES: IndexModule[] = [
       "guardrails-query-optimisation-and-a-retry-loop",
       "agentic-rag-foundations-grading-and-query-rewriting-interview-questions"
     ],
-    "practiceMinutes": 230
+    "practiceMinutes": 200
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag",
-    "code": "T10.2",
+    "code": "T9.2",
     "title": "Self-Correcting RAG: CRAG & Self-RAG",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -561,7 +555,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adaptive-rag-and-query-routing",
-    "code": "T10.3",
+    "code": "T9.3",
     "title": "Adaptive RAG & Query Routing",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -576,7 +570,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "rag-as-an-agent-tool",
-    "code": "T10.4",
+    "code": "T9.4",
     "title": "RAG as an Agent Tool",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -590,7 +584,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "reliability-feedback-loops-and-diversity",
-    "code": "T10.5",
+    "code": "T9.5",
     "title": "Reliability, Feedback Loops & Diversity",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -604,8 +598,8 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "conversation-memory-and-conversational-rag",
-    "code": "T11.1",
-    "title": "Conversation Memory & Conversational RAG",
+    "code": "T10.1",
+    "title": "Short-Term Memory & Conversation State",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
       "conversation-memory-and-conversational-rag-overview",
@@ -620,7 +614,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "memory-and-state",
-    "code": "T11.2",
+    "code": "T10.2",
     "title": "Long-Term & Agentic Memory",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -636,9 +630,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-agent-architectures",
-    "code": "T11.3",
+    "code": "T11.1",
     "title": "Multi-Agent Architectures",
-    "track": "memory-and-multi-agent-rag",
+    "track": "multi-agent-systems",
     "lessons": [
       "multi-agent-architectures-overview",
       "monolithic-vs-multi-agent-a-crew-from-scratch",
@@ -652,9 +646,9 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "collaboration-control-and-parallel-agents",
-    "code": "T11.4",
+    "code": "T11.2",
     "title": "Collaboration, Control & Parallel Agents",
-    "track": "memory-and-multi-agent-rag",
+    "track": "multi-agent-systems",
     "lessons": [
       "collaboration-control-and-parallel-agents-overview",
       "blackboard-architectures",
@@ -668,19 +662,18 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents",
-    "code": "T11.5",
-    "title": "Multi-Agent Applied Builds & Deep Agents",
-    "track": "memory-and-multi-agent-rag",
+    "code": "T11.3",
+    "title": "Multi-Agent Applied Builds",
+    "track": "multi-agent-systems",
     "lessons": [
       "multi-agent-applied-builds-and-deep-agents-overview",
       "hotel-system-environment-coordinator-reservation-agent-compliance",
       "hardening-edge-cases-testing-and-system-wide-error-handling",
       "scaling-parallel-agents-memory-merging-language-and-sentiment-web-search",
       "research-systems-supervisor-financial-research-summarisation-full-research-syste",
-      "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
       "multi-agent-applied-builds-and-deep-agents-interview-questions"
     ],
-    "practiceMinutes": 320
+    "practiceMinutes": 200
   },
   {
     "slug": "mcp-foundations",
@@ -794,9 +787,27 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 290
   },
   {
-    "slug": "agentic-rag-architectures-choosing-a-design",
+    "slug": "fine-tuning-fundamentals",
     "code": "T14.1",
-    "title": "Agentic RAG Architectures: Choosing a Design",
+    "title": "Fine-Tuning & Model Adaptation",
+    "track": "fine-tuning-and-model-adaptation",
+    "lessons": [
+      "fine-tuning-fundamentals-overview",
+      "why-fine-tune",
+      "where-fine-tuning-fits",
+      "instruction-tuning",
+      "data-preparation",
+      "training",
+      "evaluation",
+      "fine-tuning-llama-2-with-autotrain",
+      "fine-tuning-fundamentals-interview-questions"
+    ],
+    "practiceMinutes": 260
+  },
+  {
+    "slug": "agentic-rag-architectures-choosing-a-design",
+    "code": "T15.1",
+    "title": "Architecture Synthesis: Choosing a System Design",
     "track": "architecture-synthesis-and-capstone",
     "lessons": [
       "agentic-rag-architectures-choosing-a-design-overview",
@@ -809,7 +820,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-overview",
-    "code": "T17.1",
+    "code": "T18.1",
     "title": "Enterprise use case and target architecture",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -823,7 +834,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "mvp",
-    "code": "T17.2",
+    "code": "T18.2",
     "title": "Build the MVP",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -837,7 +848,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "distributed-execution",
-    "code": "T17.3",
+    "code": "T18.3",
     "title": "Distributed execution",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -851,7 +862,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-knowledge",
-    "code": "T17.4",
+    "code": "T18.4",
     "title": "Enterprise knowledge",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -865,7 +876,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "application-scaling",
-    "code": "T17.5",
+    "code": "T18.5",
     "title": "Scale the application",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -879,7 +890,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "overload-fairness",
-    "code": "T17.6",
+    "code": "T18.6",
     "title": "Handle overload and fair scheduling",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -893,7 +904,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-security",
-    "code": "T17.7",
+    "code": "T18.7",
     "title": "Enterprise security",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -907,7 +918,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "reliability-consistency",
-    "code": "T17.8",
+    "code": "T18.8",
     "title": "Reliability and consistency",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -921,7 +932,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "evaluation-releases",
-    "code": "T17.9",
+    "code": "T18.9",
     "title": "Production AI quality and releases",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -935,7 +946,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "inference-gpu",
-    "code": "T17.10",
+    "code": "T18.10",
     "title": "Inference and GPU infrastructure",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -949,7 +960,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "fine-tuning",
-    "code": "T17.11",
+    "code": "T18.11",
     "title": "Fine-tuning and model customisation",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -963,7 +974,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-region",
-    "code": "T17.12",
+    "code": "T18.12",
     "title": "Global multi-region platform",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -977,7 +988,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "staff-platform",
-    "code": "T17.13",
+    "code": "T18.13",
     "title": "Staff-level platform architecture",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -992,7 +1003,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "architecture-decisions",
-    "code": "T17.14",
+    "code": "T18.14",
     "title": "Architecture decision records",
     "track": "staff-ai-system-design",
     "lessons": [
@@ -1013,7 +1024,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "tool-design-mcp-a2a",
-    "code": "T15.1",
+    "code": "T16.1",
     "title": "Tool design and the agent-computer interface",
     "track": "production-ai",
     "lessons": [
@@ -1028,7 +1039,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "context-engineering",
-    "code": "T15.2",
+    "code": "T16.2",
     "title": "Context engineering and orchestration",
     "track": "production-ai",
     "lessons": [
@@ -1042,7 +1053,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "robust-agents",
-    "code": "T15.3",
+    "code": "T16.3",
     "title": "Robust agents: retries, fallbacks and guards",
     "track": "production-ai",
     "lessons": [
@@ -1056,7 +1067,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-workflow-platforms",
-    "code": "T15.4",
+    "code": "T16.4",
     "title": "Agentic workflow platforms",
     "track": "production-ai",
     "lessons": [
@@ -1072,7 +1083,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-rag-in-production",
-    "code": "T15.5",
+    "code": "T16.5",
     "title": "Enterprise RAG in production",
     "track": "production-ai",
     "lessons": [
@@ -1088,7 +1099,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "evaluation-and-release-gates",
-    "code": "T15.7",
+    "code": "T16.7",
     "title": "Evaluation and release gates",
     "track": "production-ai",
     "lessons": [
@@ -1103,7 +1114,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "security-tenancy-prompt-injection",
-    "code": "T15.6",
+    "code": "T16.6",
     "title": "Security, tenancy and prompt injection",
     "track": "production-ai",
     "lessons": [
@@ -1118,7 +1129,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "observability-and-diagnosis",
-    "code": "T15.9",
+    "code": "T16.9",
     "title": "Observability and production diagnosis",
     "track": "production-ai",
     "lessons": [
@@ -1133,7 +1144,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "cost-and-latency",
-    "code": "T15.10",
+    "code": "T16.10",
     "title": "Cost and latency optimisation",
     "track": "production-ai",
     "lessons": [
@@ -1150,7 +1161,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scaling-and-reliability",
-    "code": "T15.11",
+    "code": "T16.11",
     "title": "Scaling and reliability",
     "track": "production-ai",
     "lessons": [
@@ -1165,7 +1176,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentops",
-    "code": "T15.8",
+    "code": "T16.8",
     "title": "AgentOps: versioning, rollout, CI/CD, red teaming",
     "track": "production-ai",
     "lessons": [
@@ -1181,7 +1192,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "model-adaptation-and-serving",
-    "code": "T15.12",
+    "code": "T16.12",
     "title": "Model adaptation and inference serving",
     "track": "production-ai",
     "lessons": [
@@ -1194,7 +1205,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "design-framework",
-    "code": "T16.1",
+    "code": "T17.1",
     "title": "The design framework: 12 parts and 15 principles",
     "track": "ai-systems-design",
     "lessons": [
@@ -1208,7 +1219,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "sixty-minute-whiteboard",
-    "code": "T16.2",
+    "code": "T17.2",
     "title": "The 60-minute whiteboard method",
     "track": "ai-systems-design",
     "lessons": [
@@ -1219,7 +1230,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "architecture-patterns",
-    "code": "T16.3",
+    "code": "T17.3",
     "title": "Architecture patterns and trade-offs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1233,7 +1244,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "classic-ai-designs",
-    "code": "T16.4",
+    "code": "T17.4",
     "title": "Classic AI designs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1251,7 +1262,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scenario-library",
-    "code": "T16.5",
+    "code": "T17.5",
     "title": "Scenario library",
     "track": "ai-systems-design",
     "lessons": [
@@ -1292,7 +1303,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "customer-discovery",
-    "code": "T18.1",
+    "code": "T19.1",
     "title": "Customer discovery and problem decomposition",
     "track": "forward-deployed",
     "lessons": [
@@ -1306,7 +1317,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scoping-an-fde-project",
-    "code": "T18.2",
+    "code": "T19.2",
     "title": "Scoping an FDE project",
     "track": "forward-deployed",
     "lessons": [
@@ -1322,7 +1333,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "judgement-cases",
-    "code": "T18.3",
+    "code": "T19.3",
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
@@ -1330,7 +1341,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "delivery-stages-and-gates",
-    "code": "T18.4",
+    "code": "T19.4",
     "title": "Delivery: six stages, gates, two-week launch",
     "track": "forward-deployed",
     "lessons": [
@@ -1346,7 +1357,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adoption-and-impact",
-    "code": "T18.5",
+    "code": "T19.5",
     "title": "Adoption, change management and business impact",
     "track": "forward-deployed",
     "lessons": [
@@ -1358,7 +1369,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "debugging-customer-environment",
-    "code": "T18.6",
+    "code": "T19.6",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
     "lessons": [],
@@ -1366,7 +1377,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "telling-the-build-story",
-    "code": "T19.1",
+    "code": "T20.1",
     "title": "Telling the build story",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1381,7 +1392,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-the-story-bank",
-    "code": "T19.2",
+    "code": "T20.2",
     "title": "The behavioural round",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1509,7 +1520,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "capstone-build",
-    "code": "T20.1",
+    "code": "T21.1",
     "title": "Capstone build",
     "track": "capstone-and-portfolio",
     "lessons": [
@@ -1520,7 +1531,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "portfolio-write-up",
-    "code": "T20.2",
+    "code": "T21.2",
     "title": "Portfolio write-up and presentation",
     "track": "capstone-and-portfolio",
     "lessons": [],
@@ -1729,8 +1740,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     "modules": [
       "python-and-data-toolkit-refresher",
       "llm-provider-apis-and-model-selection",
-      "hugging-face-models-and-gradio-demos",
-      "fine-tuning-fundamentals"
+      "hugging-face-models-and-gradio-demos"
     ]
   },
   {
@@ -1745,7 +1755,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   {
     "slug": "langchain-and-langgraph-fundamentals",
     "code": "T4",
-    "title": "LangChain & LangGraph Fundamentals",
+    "title": "LLM Application Frameworks: LangChain & LangGraph",
     "modules": [
       "langchain-core-models-prompts-and-parsers",
       "lcel-runnables-and-chains",
@@ -1756,16 +1766,9 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   {
     "slug": "llm-and-retrieval",
     "code": "T5",
-    "title": "RAG Foundations",
+    "title": "RAG Foundations: Ingestion & Indexing",
     "modules": [
-      "rag-from-first-principles"
-    ]
-  },
-  {
-    "slug": "ingestion-and-indexing-pipeline",
-    "code": "T6",
-    "title": "The Ingestion & Indexing Pipeline",
-    "modules": [
+      "rag-from-first-principles",
       "document-ingestion-and-metadata-design",
       "chunking-and-indexing",
       "embeddings-and-model-selection",
@@ -1775,19 +1778,12 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "retrieval-quality-engineering",
-    "code": "T7",
-    "title": "Retrieval Quality Engineering",
+    "code": "T6",
+    "title": "Retrieval Quality & RAG Applications",
     "modules": [
       "retrieval-hybrid-rerank",
       "query-transformation-and-routing",
-      "post-retrieval-optimisation-and-reranking"
-    ]
-  },
-  {
-    "slug": "complete-rag-applications",
-    "code": "T8",
-    "title": "Building Complete RAG Applications",
-    "modules": [
+      "post-retrieval-optimisation-and-reranking",
       "end-to-end-rag-systems",
       "multimodal-rag",
       "framework-fluency-llamaindex"
@@ -1795,20 +1791,28 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "agentic-systems",
-    "code": "T9",
-    "title": "Agent Foundations for RAG",
+    "code": "T7",
+    "title": "Agent Foundations",
     "modules": [
       "the-agent-loop-and-tool-calling",
       "react-agents-and-langchain-create-agent",
-      "agentic-workflow-patterns",
+      "agentic-workflow-patterns"
+    ]
+  },
+  {
+    "slug": "advanced-agents",
+    "code": "T8",
+    "title": "Advanced Agents",
+    "modules": [
       "planning-reflection-and-reasoning-patterns",
+      "coding-computer-use-and-deep-agents",
       "human-approval-and-applied-single-agent-builds"
     ]
   },
   {
     "slug": "agentic-and-self-correcting-rag",
-    "code": "T10",
-    "title": "Agentic & Self-Correcting RAG",
+    "code": "T9",
+    "title": "Agentic RAG",
     "modules": [
       "agentic-rag-foundations-grading-and-query-rewriting",
       "self-correcting-rag-crag-and-self-rag",
@@ -1819,11 +1823,18 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "memory-and-multi-agent-rag",
-    "code": "T11",
-    "title": "Memory & Multi-Agent RAG",
+    "code": "T10",
+    "title": "The Memory Layer",
     "modules": [
       "conversation-memory-and-conversational-rag",
-      "memory-and-state",
+      "memory-and-state"
+    ]
+  },
+  {
+    "slug": "multi-agent-systems",
+    "code": "T11",
+    "title": "Multi-Agent Systems",
+    "modules": [
       "multi-agent-architectures",
       "collaboration-control-and-parallel-agents",
       "multi-agent-applied-builds-and-deep-agents"
@@ -1843,7 +1854,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   {
     "slug": "hierarchical-memory-and-graph-rag",
     "code": "T13",
-    "title": "Hierarchical, Memory & Graph RAG",
+    "title": "Knowledge Graphs & GraphRAG",
     "modules": [
       "hierarchical-and-memory-augmented-retrieval",
       "knowledge-graphs-with-neo4j",
@@ -1851,16 +1862,24 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     ]
   },
   {
-    "slug": "architecture-synthesis-and-capstone",
+    "slug": "fine-tuning-and-model-adaptation",
     "code": "T14",
-    "title": "Architecture Synthesis & Capstone",
+    "title": "Fine-Tuning & Model Adaptation",
+    "modules": [
+      "fine-tuning-fundamentals"
+    ]
+  },
+  {
+    "slug": "architecture-synthesis-and-capstone",
+    "code": "T15",
+    "title": "Architecture Decisions",
     "modules": [
       "agentic-rag-architectures-choosing-a-design"
     ]
   },
   {
     "slug": "production-ai",
-    "code": "T15",
+    "code": "T16",
     "title": "Production AI Systems",
     "modules": [
       "tool-design-mcp-a2a",
@@ -1879,7 +1898,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "ai-systems-design",
-    "code": "T16",
+    "code": "T17",
     "title": "AI System Design",
     "modules": [
       "design-framework",
@@ -1890,7 +1909,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "staff-ai-system-design",
-    "code": "T17",
+    "code": "T18",
     "title": "Staff AI System Design: Building an Enterprise AI Platform",
     "modules": [
       "enterprise-overview",
@@ -1911,7 +1930,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "forward-deployed",
-    "code": "T18",
+    "code": "T19",
     "title": "Forward Deployed Engineering",
     "modules": [
       "customer-discovery",
@@ -1924,7 +1943,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "communication-and-behavioural",
-    "code": "T19",
+    "code": "T20",
     "title": "Communication and Behavioural",
     "modules": [
       "telling-the-build-story",
@@ -1945,7 +1964,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "capstone-and-portfolio",
-    "code": "T20",
+    "code": "T21",
     "title": "Capstone and Portfolio",
     "modules": [
       "capstone-build",
@@ -2044,7 +2063,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "robust-agents/guarding-tool-calls": "robust-agents/the-eight-guard-checks",
   "multi-agent-systems/reference-architecture-handoffs": "multi-agent-architectures/handoffs-and-swarms",
   "multi-agent-systems/case-study-research-platform": "agentops/anatomy-of-a-deployed-multi-agent-platform",
-  "multi-agent-systems/case-study-supervisor-to-deep-agent": "multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
+  "multi-agent-systems/case-study-supervisor-to-deep-agent": "coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
   "multi-agent-systems/multi-agent-systems-interview-tutorial": "multi-agent-architectures/multi-agent-architectures-interview-questions",
   "agentic-workflow-platforms/the-problem-in-plain-english": "agentic-workflow-platforms/why-workflow-automation-is-a-trust-problem",
   "agentic-workflow-platforms/canonical-events-and-channels": "agentic-workflow-platforms/canonical-events-and-routing",
@@ -2069,7 +2088,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "multi-agent-systems/shared-state-routing-and-termination": "multi-agent-architectures/supervisors-and-hierarchical-teams",
   "multi-agent-systems/handoffs-and-permission-scope": "multi-agent-architectures/handoffs-and-swarms",
   "multi-agent-systems/failure-isolation-and-evaluation": "multi-agent-applied-builds-and-deep-agents/hardening-edge-cases-testing-and-system-wide-error-handling",
-  "multi-agent-systems/from-supervisor-to-deep-agent": "multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
+  "multi-agent-systems/from-supervisor-to-deep-agent": "coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
   "multi-agent-systems/practise-multi-agent-systems": "multi-agent-architectures/multi-agent-architectures-interview-questions",
   "multi-agent-systems/anatomy-of-a-deployed-multi-agent-platform": "agentops/anatomy-of-a-deployed-multi-agent-platform",
   "enterprise-rag-in-production/why-enterprise-changes-the-problem": "enterprise-rag-in-production/why-access-control-shapes-enterprise-rag",
@@ -2159,5 +2178,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "hiring-manager-round/scale-beyond-self": null,
   "mock-interviews/short-practice-mocks": "mock-interviews/running-and-scoring-a-mock-interview",
   "mock-interviews/full-mock-interviews": "mock-interviews/running-and-scoring-a-mock-interview",
-  "capstone-build/companion-course": "capstone-build/choose-a-capstone-project"
+  "capstone-build/companion-course": "capstone-build/choose-a-capstone-project",
+  "react-agents-and-langchain-create-agent/applied-react-web-research-swe-and-computer-use-agents": "coding-computer-use-and-deep-agents/applied-react-web-research-swe-and-computer-use-agents",
+  "multi-agent-applied-builds-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory": "coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory"
 }

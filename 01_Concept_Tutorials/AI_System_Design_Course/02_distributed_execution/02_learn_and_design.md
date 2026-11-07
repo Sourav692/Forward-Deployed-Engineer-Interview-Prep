@@ -3,7 +3,7 @@
 
 ## Separate Acceptance From Execution
 
-Create a new job path rather than silently changing `/requests`. The proposed `POST /jobs` facade validates an allowed job kind, a bounded payload/reference, and a scoped operation key. In one transaction it creates a `queued` row. Only after commit may it return `202` and a job ID with a status location. `202` means accepted for processing, not that generation finished; see [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). The executable tests the store behind this contract; it does not add an HTTP facade to T17.2.
+Create a new job path rather than silently changing `/requests`. The proposed `POST /jobs` facade validates an allowed job kind, a bounded payload/reference, and a scoped operation key. In one transaction it creates a `queued` row. Only after commit may it return `202` and a job ID with a status location. `202` means accepted for processing, not that generation finished; see [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). The executable tests the store behind this contract; it does not add an HTTP facade to T18.2.
 
 A status read uses trusted tenant and user from identity, never owner fields supplied in JSON. Proposed `GET /jobs/<id>` returns state, attempt count, and a saved result only when available. Unknown or out-of-scope IDs return the same not-found outcome. Keep public error codes bounded: invalid input `400`, unauthenticated `401`, conflicting key `409`, unavailable durable store `503`. The new route is a design contract, not a claim of executed HTTP tests for it.
 

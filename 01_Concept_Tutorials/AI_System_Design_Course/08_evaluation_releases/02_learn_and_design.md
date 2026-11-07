@@ -31,7 +31,7 @@ Known access/refusal violations are a separate hard stop even if a relaxed aggre
 
 Canary assignment should be stable for an explicit experiment unit such as tenant/user, not randomly flip every request. The fixture hashes `(tenant, user)` into a bucket, applies the configured percentage only to eligible Tenant A, and keeps Tenant B on the approved stable bundle. With small cohorts the realised fraction need not equal the requested percentage exactly. Record cohort and bundle with each result so comparisons are attributable.
 
-A shadow call still crosses a provider data boundary and consumes request/token/concurrency budget. It must obey T17.7 approved egress and current source access, T17.6 limits and T17.3 tool restrictions. It cannot send an email, mutate customer state, or return its answer as the live result. A flag saying “shadow” is insufficient unless the execution path enforces no business side effects; this fixture records that policy but does not launch shadow inference.
+A shadow call still crosses a provider data boundary and consumes request/token/concurrency budget. It must obey T18.7 approved egress and current source access, T18.6 limits and T18.3 tool restrictions. It cannot send an email, mutate customer state, or return its answer as the live result. A flag saying “shadow” is insufficient unless the execution path enforces no business side effects; this fixture records that policy but does not launch shadow inference.
 
 Promotion changes a durable pointer with an expected generation, using compare-and-swap (CAS). If another operator already changed the pointer, a stale action fails rather than overwriting it. Candidate approval is bound to the evaluated bundle. Withdrawing an active canary keeps the current stable release; rolling back a completed promotion points to the prior approved stable release. These are different states and both are tested.
 
@@ -59,7 +59,7 @@ Metrics summarise rates/distributions; logs record bounded events; traces connec
 
 Include trusted bundle/evaluator/index/policy identities, cohort, bounded outcome/reason, latency and numeric token usage where available. Keep request/job IDs in protected trace/log context, not as unbounded metric-label dimensions. Tenant-specific dashboards need access controls and a privacy/cardinality plan; a metric label per document/prompt or arbitrary user text can leak data and overwhelm storage.
 
-Use allowlisted attributes. Do not emit raw source context, bearer tokens, secrets or full prompt/answer bodies by default. Sampling should preserve enough failure/tail evidence without turning sampled traces into the only error counter. Keep security audit separate from diagnostic event retention, with the T17.7 durable disclosure contract intact.
+Use allowlisted attributes. Do not emit raw source context, bearer tokens, secrets or full prompt/answer bodies by default. Sampling should preserve enough failure/tail evidence without turning sampled traces into the only error counter. Keep security audit separate from diagnostic event retention, with the T18.7 durable disclosure contract intact.
 
 A production quality metric often arrives later than infrastructure telemetry: user correction, human review or a scheduled judged sample. Refusal rate, citation count or token usage are useful signals but not ground truth for correctness. Compare candidate/control within relevant slices and correlate source freshness, policy outcomes and retrieval hits before deciding the model regressed.
 

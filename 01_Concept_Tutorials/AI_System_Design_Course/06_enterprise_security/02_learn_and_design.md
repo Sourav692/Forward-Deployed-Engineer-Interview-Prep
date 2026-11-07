@@ -13,7 +13,7 @@ Service-to-service transport identity and end-user identity are distinct. Mutual
 
 ## Make Current Policy and Freshness Explicit
 
-A valid identity token may describe who Alice is without proving she is still a member or may still read this document. Check active membership, a current policy epoch, action permission, current source version/tombstone and document readers before returning context. An epoch mismatch means re-establish authority, not “try the cached allow.” The existing T17.4 context builder reloads trusted stored text and rejects forged hit bodies.
+A valid identity token may describe who Alice is without proving she is still a member or may still read this document. Check active membership, a current policy epoch, action permission, current source version/tombstone and document readers before returning context. An epoch mismatch means re-establish authority, not “try the cached allow.” The existing T18.4 context builder reloads trusted stored text and rejects forged hit bodies.
 
 Choose an illustrative maximum membership-policy age of 30 seconds for the simulator. That is a local rule, not measured upstream revocation latency. If source polling itself takes five minutes, a 30-second cache age alone cannot promise 30-second corporate revocation. Track source observation lag, publication lag, authority-read age and cache reuse separately. Define behaviour when authority is unavailable: for this protected retrieval path, missing/expired authority denies disclosure.
 
@@ -30,7 +30,7 @@ Connector identity has a separate scope: an ingestion worker may fetch approved 
 | Schema or database per tenant | Clearer restore/migration and some isolation boundaries | More migrations, pools, backups and tenant routing | Consider for stronger enterprise needs |
 | Dedicated service/data plane | Stronger failure/compute boundaries | Highest fleet cost and slower pooled utilisation | Justify for contractual requirements rather than assume it by default |
 
-Separate logical access, compute fairness and encryption boundaries. T17.6 fair queues do not constitute tenant authorisation. A shared encryption key does not make rows public, but some customers may require tenant-specific key administration or dedicated storage. Assess backup restore, export, support/debug tools, migrations and batch administration: these privileged paths can bypass the ordinary request predicate if left implicit.
+Separate logical access, compute fairness and encryption boundaries. T18.6 fair queues do not constitute tenant authorisation. A shared encryption key does not make rows public, but some customers may require tenant-specific key administration or dedicated storage. Assess backup restore, export, support/debug tools, migrations and batch administration: these privileged paths can bypass the ordinary request predicate if left implicit.
 
 Migration to stronger isolation needs a trusted tenant-to-destination directory, versioned schema and cutover/restore tests. Do not route based on a caller header. Preserve stable operation/source IDs and worker scope across the move. Test list, item, search, cache, job status, export and audit retrieval with another tenant’s identity; one successful negative item test is not evidence every path is safe.
 

@@ -134,7 +134,7 @@ Working memory is not a cache, but a cache can sit beside it inside the loop. Th
 
 Module 9 draws the line. **Cache** tool-call results that have not changed, such as a customer lookup, planning output for similar tasks, and documents retrieved for the task. **Do not cache** reasoning steps that depend on the growing context: the same visible input still arrives with a different history. **Never cache** tool calls with side effects, such as `send_email` or `update_database`; those must run every time. Scope tool-result caches to the current task and expire them when it ends. Keep longer-lived caches for stable reference data only.
 
-Answer caches, semantic caches and invalidation are a cost topic, covered in [T15.10 Cost and latency](/learn/production-ai/cost-and-latency).
+Answer caches, semantic caches and invalidation are a cost topic, covered in [T16.10 Cost and latency](/learn/production-ai/cost-and-latency).
 
 ## Worked Example: A Support Thread That Reaches Turn 300
 

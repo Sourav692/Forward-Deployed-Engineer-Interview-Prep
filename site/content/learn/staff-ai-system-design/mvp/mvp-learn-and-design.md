@@ -65,7 +65,7 @@ Use this proposed deadline hierarchy: provider total four seconds, app budget 4.
 
 ## 7. API and Data Contracts
 
-Choose a complete JSON response for T17.2. The Client needs a saved draft, and the illustrative healthy path fits the five-second target. The application can return `201` only once it has persisted the answer.
+Choose a complete JSON response for T18.2. The Client needs a saved draft, and the illustrative healthy path fits the five-second target. The application can return `201` only once it has persisted the answer.
 
 | Protocol | When to choose it | What changes in the failure contract |
 | --- | --- | --- |

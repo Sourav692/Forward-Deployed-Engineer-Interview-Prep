@@ -31,7 +31,7 @@
 
 **What a strong answer covers:**
 - Checks the tool results first: TF-IDF matches exact tokens, so "refund" never meets "Refunds" in the `refund-timing` chunk; the tool returned the wrong chunk or nothing, and the model kept rephrasing
-- Fixes the retriever (embeddings or query rewriting, [T6.3](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview) and [T7.2](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview)) rather than the loop, and makes the empty result say so plainly, so the model can stop
+- Fixes the retriever (embeddings or query rewriting, [T5.4](/learn/llm-and-retrieval/embeddings-and-model-selection/embeddings-and-model-selection-overview) and [T6.2](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview)) rather than the loop, and makes the empty result say so plainly, so the model can stop
 - Caps the loop anyway: `max_rounds` in the from-scratch agent, `recursion_limit` in LangGraph, with a fallback answer when the cap is hit
 - Detects repeated near-identical calls in the trace as a monitoring signal, since they cost a model call each round
 

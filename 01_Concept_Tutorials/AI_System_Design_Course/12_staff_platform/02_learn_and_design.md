@@ -14,9 +14,9 @@ Separate a control plane, which checks contracts and publishes desired configura
 | One global request service | Fewer centrally managed endpoints | Global blast radius, residency coupling, control-plane dependency | Reject for A and B placement and cell isolation |
 | Rewrite every role as a microservice | Independent scaling and team releases where needed | New network and transaction boundaries, more operations and migration risk | Extract only when measured ownership or scale requires it |
 
-Each distributed pattern earns its place on one T17.13 interaction, and each has a failure it must handle.
+Each distributed pattern earns its place on one T18.13 interaction, and each has a failure it must handle.
 
-| Pattern | T17.13 interaction | When it wins | Failure to handle |
+| Pattern | T18.13 interaction | When it wins | Failure to handle |
 | --- | --- | --- | --- |
 | Modular monolith, extract later | Manifest validation inside the existing regional API | One owner and no new network contract | An early split adds a network failure between validating and recording; extract only for measured ownership or scale |
 | Cell | Each region's runtime and route authority | A bad release or outage stays inside one cell | A cell cannot borrow another cell's capacity or authority |
@@ -76,7 +76,7 @@ Status reads return the current generation and named blockers. The runnable SQLi
 
 ## Place Route Authority in Each Cell
 
-Each cell's route records live in its region's authority store, never in one global table. [T17.12](../11_multi_region/01_understand_the_problem.md) gave each tenant region a consensus-replicated authority store for policy, membership and writer ownership: an EU store for Tenants A and B, and Tenant C's equivalent in its US-home cell. T17.13 adds one record type to it: each app's current route generation and the previous one.
+Each cell's route records live in its region's authority store, never in one global table. [T18.12](../11_multi_region/01_understand_the_problem.md) gave each tenant region a consensus-replicated authority store for policy, membership and writer ownership: an EU store for Tenants A and B, and Tenant C's equivalent in its US-home cell. T18.13 adds one record type to it: each app's current route generation and the previous one.
 
 The global control plane holds opaque placement, contract versions and signed, versioned route generations that refer to opaque tenant, app and profile IDs. It holds no customer content, policy or membership, and it is never authority. Each cell pulls new generations, verifies the signature, and rejects any generation that is unsigned or older than its current one. It then checks current eligibility (approval, residency and policy) in its own authority store, because a signature proves origin, not present permission. Only then does it apply the generation with a compare-and-set (CAS) on its current generation number, so a request is served under generation N or N+1, never a mix. The cell keeps the last verified generation as last-known-good, with an illustrative staleness bound of 15 minutes before it alerts.
 

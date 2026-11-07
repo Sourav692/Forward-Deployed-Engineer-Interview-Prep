@@ -7,7 +7,7 @@ Record approved bundle/model/engine identity, route type, queue wait, input/outp
 
 When TTFT rises, distinguish admission wait, cold loading, prefill and network setup. When token streaming stalls, inspect decode scheduling, active sequences, memory pressure and communication rather than only app CPU. When memory errors occur after weights load, compare peak retained tokens/concurrency and actual overhead. A paging/eviction policy can protect memory while harming latency; measure both.
 
-Quality and safety evaluation remain required for dtype, quantisation, engine, prompt or model changes. Continuous batching, prefix reuse and sharding can alter timing/reproducibility and operational isolation. Roll them out as versioned changes through T17.9 rather than untracked “performance-only” flags. Reject or degrade within approved policy when the supported envelope cannot fit.
+Quality and safety evaluation remain required for dtype, quantisation, engine, prompt or model changes. Continuous batching, prefix reuse and sharding can alter timing/reproducibility and operational isolation. Roll them out as versioned changes through T18.9 rather than untracked “performance-only” flags. Reject or degrade within approved policy when the supported envelope cannot fit.
 
 A production test matrix needs the actual approved model/engine/hardware, context/output distributions, concurrent tenants/classes, startup/drain, failure/cancellation, token budgets, privacy/egress and recovery. No local memory calculator or fixture transport validates that matrix. The serving option is concrete enough to evaluate, but not secretly deployed by this lesson.
 

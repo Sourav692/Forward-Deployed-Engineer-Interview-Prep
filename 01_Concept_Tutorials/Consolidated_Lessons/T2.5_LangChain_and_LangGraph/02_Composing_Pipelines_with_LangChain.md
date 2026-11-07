@@ -27,7 +27,7 @@ A LangChain RAG pipeline is an assembly line. Each station hands its output to t
 | Retrievers | Add filtering, re-ranking or multi-query expansion on top of a store | Any store-backed retriever |
 | Prompt, model, parser | Fill the prompt with chunks and question, call the model, shape the output | `ChatPromptTemplate`, a chat model, an output parser |
 
-At query time one request runs: question, retriever (embed the question, find the top-k chunks), prompt template, model, output parser, answer. How chunking and indexing work underneath is covered in [T6.2 Chunking and indexing](/learn/llm-and-retrieval/chunking-and-indexing).
+At query time one request runs: question, retriever (embed the question, find the top-k chunks), prompt template, model, output parser, answer. How chunking and indexing work underneath is covered in [T5.3 Chunking and indexing](/learn/llm-and-retrieval/chunking-and-indexing).
 
 ## Compose With One Interface
 

@@ -52,7 +52,7 @@ Derived representations can make distributed evidence easier to find. They also 
 
 ## How it connects
 
-- **Before:** [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) establishes the flat retrieval baseline. [T11.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview) and [T11.2](/learn/memory-and-multi-agent-rag/memory-and-state/memory-and-state-overview) cover conversational and persistent agent memory; this module's memory represents a document corpus.
+- **Before:** [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) establishes the flat retrieval baseline. [T10.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview) and [T10.2](/learn/memory-and-multi-agent-rag/memory-and-state/memory-and-state-overview) cover conversational and persistent agent memory; this module's memory represents a document corpus.
 - **Next:** [T13.2](/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/knowledge-graphs-with-neo4j-overview) makes graph modelling and queries explicit. [T13.3](/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/graphrag-techniques-overview) compares graph traversal, community reports and graph expansion.
 
 ## Key Takeaways

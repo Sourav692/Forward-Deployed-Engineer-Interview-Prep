@@ -7,7 +7,7 @@ This is an educational design for a hypothetical customer. All workload, latency
 
 Follow five learning phases: understand the problem, learn and design, observe and experiment, think like a Staff engineer, then validate and carry forward. The detailed material stays within the original MVP scope.
 
-Before this lesson, read the [T17.1 overview](/learn/staff-ai-system-design/enterprise-overview/enterprise-overview-understand-the-problem) for the complete customer journey and target architecture. Then return here to build the first saved-draft path.
+Before this lesson, read the [T18.1 overview](/learn/staff-ai-system-design/enterprise-overview/enterprise-overview-understand-the-problem) for the complete customer journey and target architecture. Then return here to build the first saved-draft path.
 
 ## 1. Before This Stage
 
@@ -70,13 +70,13 @@ Nearby concepts have narrower treatment:
 
 | Module | Treatment here | Where it is taught |
 | --- | --- | --- |
-| Design documentation and communication | Context only: use an ADR, without teaching a documentation portfolio | T17.13, build depth |
-| Gateway and service communication | Context only: name an ingress role; do not teach service-to-service architecture | T17.7, build depth |
-| Identity and access control | Context only: trusted caller scope and fixture checks | T17.7, build depth |
-| Background execution systems | Deferred: no durable jobs or worker recovery | T17.3, build depth |
-| Document ingestion and indexing | Deferred: supplied text only, no internal knowledge pipeline | T17.4, build depth |
+| Design documentation and communication | Context only: use an ADR, without teaching a documentation portfolio | T18.13, build depth |
+| Gateway and service communication | Context only: name an ingress role; do not teach service-to-service architecture | T18.7, build depth |
+| Identity and access control | Context only: trusted caller scope and fixture checks | T18.7, build depth |
+| Background execution systems | Deferred: no durable jobs or worker recovery | T18.3, build depth |
+| Document ingestion and indexing | Deferred: supplied text only, no internal knowledge pipeline | T18.4, build depth |
 
-Build depth means explaining, choosing, building a representative slice, observing failure, and mitigating it. Design depth requires architectural explanation and a small design exercise. There are no revisit modules in T17.2.
+Build depth means explaining, choosing, building a representative slice, observing failure, and mitigating it. Design depth requires architectural explanation and a small design exercise. There are no revisit modules in T18.2.
 
 Before starting, be able to read basic Python, JSON, SQL, and HTTP. Stop at the MVP boundary. Defer retrieval, durable workers, caches, Kubernetes, GPU hosting, and advanced tenant scheduling until a requirement motivates them.
 
@@ -86,7 +86,7 @@ Suppose the server calls the model and immediately sends Alice the text, then tr
 
 Reverse the acknowledgement boundary. First insert a `processing` row and commit it. Then call the provider without an open database write transaction. After generation, update the row to `completed` with its answer and commit. Only then return a successful answer. If the final write fails, return a storage error; the earlier row may remain `processing` and need investigation.
 
-This ordering creates a visible ambiguity: the provider might have generated and charged for an answer that the database never recorded. A database transaction cannot atomically include an independent hosted-model API. Preserve the request ID, avoid automatic retries, and make this gap explicit. T17.3 can later strengthen job recovery; this lesson does not claim exactly-once model execution.
+This ordering creates a visible ambiguity: the provider might have generated and charged for an answer that the database never recorded. A database transaction cannot atomically include an independent hosted-model API. Preserve the request ID, avoid automatic retries, and make this gap explicit. T18.3 can later strengthen job recovery; this lesson does not claim exactly-once model execution.
 
 ## Key Takeaways
 

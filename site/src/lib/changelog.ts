@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-08',
+    title: 'AI Engineering follows the course\'s new part order',
+    summary:
+      'The RAG & Agents Engineering course regrouped its parts, and the AI Engineering group follows it. The group now lists the course\'s 14 tracks, T2 to T15, then Production AI. Three tracks are new. Advanced Agents takes the planning and approval modules and adds one on coding, computer use and deep agents. Multi-Agent Systems takes the multi-agent modules. Fine-Tuning & Model Adaptation takes the fine-tuning module, which used to sit in AI Engineering Foundations. Ingestion and indexing merged into RAG Foundations, and the complete RAG application modules merged into Retrieval Quality, so those two tracks were retired. The last course track, Architecture Decisions, now covers architecture decisions and the capstone. Retrieval Quality is now T6, Agent Foundations T7, Agentic RAG T9, The Memory Layer T10 and Architecture Decisions T15, and module codes changed with the new order. Later tracks moved up one code: Production AI is now T16, AI System Design T17, Staff AI System Design T18, Forward Deployed Engineering T19, Communication and Behavioural T20, and Capstone and Portfolio T21. Old links, lab and figure URLs redirect to the new pages, and saved progress is unchanged.',
+  },
+  {
     date: '2026-11-04',
     title: 'Staff AI System Design: a new course in Learn',
     summary:

@@ -9,7 +9,7 @@
 - Prints the fused list with each chunk's votes and ranks: the reboot chunk can win because four of five variants matched "server" or "does", which is agreement on a distractor
 - Checks the variants themselves; a variant that drifts ("How do I restart a server…") adds a vote for the wrong chunk
 - Looks at the cut: at three chunks both evidence chunks are in, at two only `sla` is, so the number of chunks sent matters as much as the fusion
-- Fixes with a reranker over the fused pool ([T7.3](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview)), a lower `k` or fewer drifting variants, and adds the question to the golden set at the production cut
+- Fixes with a reranker over the fused pool ([T6.3](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview)), a lower `k` or fewer drifting variants, and adds the question to the golden set at the production cut
 
 ### 2. Your latency budget is 1.5 s and a plain retrieval takes 300 ms. Product wants multi-query, HyDE and decomposition "on every question". What do you propose?
 

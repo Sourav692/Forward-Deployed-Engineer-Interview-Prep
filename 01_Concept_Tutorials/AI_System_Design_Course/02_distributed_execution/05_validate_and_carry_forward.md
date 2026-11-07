@@ -19,11 +19,11 @@ The 60-second card: accept durably; claim atomically; separate overlap from dura
 
 ## Decisions, Package, and Next Dependency
 
-[ADR-002](../architecture_decisions/adr_002_durable_execution.md) adds durable background execution without replacing T17.2’s short request contract. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) records the accepted educational after-state independently of the mutable [current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md).
+[ADR-002](../architecture_decisions/adr_002_durable_execution.md) adds durable background execution without replacing T18.2’s short request contract. The [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/architecture-after.md) records the accepted educational after-state independently of the mutable [current system](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/architecture/current-system.md).
 
 The complete distribution contains this stage, required earlier guides/labs, architecture/ADRs, and local reference/licence files with their relative paths preserved. No production readiness is inferred.
 
-A later T17.4 can use these durable jobs for document ingestion and versioned indexing. It must preserve trusted scope, replay-safe writes, job status, and uncertainty boundaries. It is not needed to understand or run T17.3.
+A later T18.4 can use these durable jobs for document ingestion and versioned indexing. It must preserve trusted scope, replay-safe writes, job status, and uncertainty boundaries. It is not needed to understand or run T18.3.
 
 ## Primary References
 

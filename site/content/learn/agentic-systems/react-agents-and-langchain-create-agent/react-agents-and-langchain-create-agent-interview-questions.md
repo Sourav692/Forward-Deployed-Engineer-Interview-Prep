@@ -18,6 +18,7 @@
 - ReAct pays off when the next step depends on what a result says; a batch report has no such step
 - Testing and debugging are easier when every run takes the same path; failures are recorded per step instead of steering the run
 - Keeps the agent for open support questions, and considers plan first, then react, if a summary section sometimes needs follow-up
+- Lesson 1 of T8.2 ([T8.2](/learn/advanced-agents/coding-computer-use-and-deep-agents/coding-computer-use-and-deep-agents-overview), `p07_advanced_agents/m26_coding_computer_use_and_deep_agents/`) works through planned pipelines against the ReAct loop on applied agents
 
 ### 3. You replace the T5.1 baseline retriever with a ReAct agent that uses it as a tool. How do you show the change is worth it?
 

@@ -5,7 +5,7 @@
 
 The gateway binds trusted principal, operation key, current source policy, approved bundle and provider profile. The serving engine runs generation for a specific model revision. A production profile must identify supported context/output bounds, model/engine versions, readiness, approved network/data path, credential reference and quota scope. An unregistered or unapproved route must not become a destination from user/model-supplied text.
 
-For Tenant A the fixture requires a private-approved profile as trusted configuration, not a request flag the caller can downgrade. The boolean tests policy composition only; it does not prove any network endpoint is private. The same current T17.7 retrieval/audit gate runs before new disclosure, and secret references/provider allowlists remain scoped. The gateway accepts a supplied token estimate to demonstrate budgeting; real adapters must count/tokenise under the actual model/provider rules.
+For Tenant A the fixture requires a private-approved profile as trusted configuration, not a request flag the caller can downgrade. The boolean tests policy composition only; it does not prove any network endpoint is private. The same current T18.7 retrieval/audit gate runs before new disclosure, and secret references/provider allowlists remain scoped. The gateway accepts a supplied token estimate to demonstrate budgeting; real adapters must count/tokenise under the actual model/provider rules.
 
 Validate input plus requested output against model context, and requested output against the profile's output maximum. Reserve shared request/token/concurrency budgets before transport. App replicas, ready GPU processes and an approved model do not eliminate those budgets. Only a fresh grant permits a new provider attempt; a duplicate grant is inspection/replay, not permission to call again.
 
@@ -23,7 +23,7 @@ If a transport outcome is unknown, persist uncertainty and retain the conservati
 | One replica per model on a single GPU | Simpler serving when peak memory fits | One failure domain and finite active context | Useful baseline to profile, not a throughput guarantee |
 | Model sharded over several GPUs | Fit larger models or change execution profile | Communication/topology, rollout and failure coordination | Use only after model/engine support and profiling justify it |
 
-A lower per-token price is not enough to justify migration. Include quality/refusal behaviour, source handling, tenant policy, burst headroom, staff operations and actual utilisation. A self-hosted route is a new evaluated bundle, not a drop-in endpoint alias. T17.9 gates still apply, and an older hosted result remains its original operation.
+A lower per-token price is not enough to justify migration. Include quality/refusal behaviour, source handling, tenant policy, burst headroom, staff operations and actual utilisation. A self-hosted route is a new evaluated bundle, not a drop-in endpoint alias. T18.9 gates still apply, and an older hosted result remains its original operation.
 
 ## Understand Execution Without Studying Kernels
 
@@ -31,7 +31,7 @@ Prefill consumes the supplied input tokens and establishes attention state. Deco
 
 TTFT includes queue/scheduling and prefill before the first output; ITL describes subsequent token timing. Total user latency also includes verification/retrieval, queueing, generation and final save/audit. Streaming can improve perceived progress while leaving commit-before-saved-success unchanged. A disconnected stream still needs stable operation inspection; it does not prove generation stopped.
 
-Batching combines eligible work for engine efficiency. Static batches can make short requests wait for long ones; continuous batching can admit/remove sequences as others finish, but engine policy and memory constraints matter. Larger batches may improve throughput while worsening user latency. Prefix/KV reuse requires compatible model/tokenisation/engine state and an approved isolation policy; it is not T17.5's immutable-body cache and never grants document access. [vLLM's paged-attention design](https://docs.vllm.ai/en/latest/design/paged_attention/) is a primary implementation reference, not an installed dependency.
+Batching combines eligible work for engine efficiency. Static batches can make short requests wait for long ones; continuous batching can admit/remove sequences as others finish, but engine policy and memory constraints matter. Larger batches may improve throughput while worsening user latency. Prefix/KV reuse requires compatible model/tokenisation/engine state and an approved isolation policy; it is not T18.5's immutable-body cache and never grants document access. [vLLM's paged-attention design](https://docs.vllm.ai/en/latest/design/paged_attention/) is a primary implementation reference, not an installed dependency.
 
 At explain depth optimisation depth, know the decision boundaries: weight quantisation may reduce weight memory while changing quality and hardware compatibility; KV quantisation is a separate choice; cache management/batching can reduce waste but cannot create physical bandwidth or unlimited active context. [Transformers optimisation guidance](https://huggingface.co/docs/transformers/main/en/llm_optims) gives implementation examples. Profile the approved model/dtype/engine/workload instead of copying a speed claim from another setup.
 
@@ -41,7 +41,7 @@ VRAM holds weights, KV state, activations/workspaces and runtime allocations. Me
 
 A data-parallel serving replica usually loads another copy of the model to serve independent work. Tensor parallelism splits selected tensor computation/storage across devices and adds communication; pipeline parallelism places layer stages on different devices and adds stage/queue coordination. Actual KV partitioning depends on model attention layout and engine implementation. Do not divide every memory component by GPU count automatically. [vLLM parallelism/scaling documentation](https://docs.vllm.ai/en/latest/serving/parallelism_scaling/) describes concrete serving choices.
 
-Placement must account for model/dtype compatibility, peak memory, interconnect/topology when sharded, ready warm capacity and tenant/workload isolation. Time-sharing or a shared process is not automatically strong isolation. Hardware partitioning/virtualisation may offer different boundaries depending on the platform; neither is demonstrated here. T17.6 admission/fair queues still limit active work and service shares before device scheduling.
+Placement must account for model/dtype compatibility, peak memory, interconnect/topology when sharded, ready warm capacity and tenant/workload isolation. Time-sharing or a shared process is not automatically strong isolation. Hardware partitioning/virtualisation may offer different boundaries depending on the platform; neither is demonstrated here. T18.6 admission/fair queues still limit active work and service shares before device scheduling.
 
 ```mermaid
 flowchart TD

@@ -1,6 +1,6 @@
-# T16.3 Architecture Patterns and Trade-offs: Consolidated Lessons
+# T17.3 Architecture Patterns and Trade-offs: Consolidated Lessons
 
-These five lessons are the site's teaching copy of module T16.3 "Architecture patterns and trade-offs". The first teaches the monolith and microservices trade-off; the other four teach the six families of agent design patterns, each pattern paired with the measurement that justifies it. The site publishes them at `/learn/ai-systems-design/architecture-patterns`.
+These five lessons are the site's teaching copy of module T17.3 "Architecture patterns and trade-offs". The first teaches the monolith and microservices trade-off; the other four teach the six families of agent design patterns, each pattern paired with the measurement that justifies it. The site publishes them at `/learn/ai-systems-design/architecture-patterns`.
 
 | # | Lesson | Site slug |
 |---|---|---|

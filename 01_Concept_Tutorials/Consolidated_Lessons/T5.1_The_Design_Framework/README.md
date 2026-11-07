@@ -1,6 +1,6 @@
-# T16.1 The Design Framework: Consolidated Lessons
+# T17.1 The Design Framework: Consolidated Lessons
 
-These five lessons are the site's teaching copy of module T16.1 "The design framework: 12 parts and 15 principles". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/ai-systems-design/design-framework`.
+These five lessons are the site's teaching copy of module T17.1 "The design framework: 12 parts and 15 principles". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/ai-systems-design/design-framework`.
 
 | # | Lesson | Site slug |
 |---|---|---|

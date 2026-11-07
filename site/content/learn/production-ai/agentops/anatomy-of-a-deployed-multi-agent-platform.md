@@ -2,7 +2,7 @@
 
 *A layered platform around a few agents makes them safe, cheap, and observable, but each layer is one more thing to build and to know the limits of.*
 
-In a deployed multi-agent system the agents are one layer of nine, and most of the engineering sits around them. Read the platform one layer at a time, asking what each does and why, as [Failure Isolation and Evaluation](/learn/memory-and-multi-agent-rag/multi-agent-applied-builds-and-deep-agents/hardening-edge-cases-testing-and-system-wide-error-handling) did per agent.
+In a deployed multi-agent system the agents are one layer of nine, and most of the engineering sits around them. Read the platform one layer at a time, asking what each does and why, as [Failure Isolation and Evaluation](/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/hardening-edge-cases-testing-and-system-wide-error-handling) did per agent.
 
 **Objectives:**
 

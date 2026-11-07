@@ -161,7 +161,7 @@ Generation succeeded, the final update failed, and the row still says processing
 <details>
 <summary>Reveal the explanation after answering</summary>
 
-<p>No. The provider may already have generated and charged for the answer. A new key can repeat the work and hide the evidence. Keep the row, inspect storage and the request ID, and use an explicit reconciliation policy. Durable recovery is deferred to T17.3.</p>
+<p>No. The provider may already have generated and charged for the answer. A new key can repeat the work and hide the evidence. Keep the row, inspect storage and the request ID, and use an explicit reconciliation policy. Durable recovery is deferred to T18.3.</p>
 
 </details>
 

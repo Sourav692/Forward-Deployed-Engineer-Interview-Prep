@@ -21,7 +21,7 @@ The 60-second card: authenticate first; deduplicate operations; budget requests/
 
 [ADR-005](../architecture_decisions/adr_005_bounded_fair_dispatch.md) accepts bounded fair dispatch under fixed dependency budgets. [Snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/architecture-after.md) preserves checked artefacts and limits.
 
-Stop after T17.6. A future T17.7 expands enterprise identity, isolation, audit, private connectivity, and retrieval governance. It inherits the current tenant/policy gates and all execution/overload uncertainty boundaries; it has not been authored here.
+Stop after T18.6. A future T18.7 expands enterprise identity, isolation, audit, private connectivity, and retrieval governance. It inherits the current tenant/policy gates and all execution/overload uncertainty boundaries; it has not been authored here.
 
 ## Primary References
 

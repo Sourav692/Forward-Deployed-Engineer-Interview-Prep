@@ -39,7 +39,7 @@ The FDE Handbook argues that four rules matter far more than the chosen size.
 
 First, split on structure, such as headings and sections, before falling back to size. Second, overlap a little, so a fact that straddles a boundary survives on one side. Third, prefix each chunk with its document title and section. Fourth, make every chunk inherit its parent document's permissions.
 
-The title prefix is cheap and puts the subject inside the searchable text. A chunk that says only "10% credit" retrieves badly. One that says "Vertex Financial MSA › Service credits › 10% credit" retrieves well. The permission rule is not optional: a chunk is the unit of retrieval, so it is the unit of access control. Access control itself is covered in [T15.5 Enterprise RAG in production](/learn/production-ai/enterprise-rag-in-production).
+The title prefix is cheap and puts the subject inside the searchable text. A chunk that says only "10% credit" retrieves badly. One that says "Vertex Financial MSA › Service credits › 10% credit" retrieves well. The permission rule is not optional: a chunk is the unit of retrieval, so it is the unit of access control. Access control itself is covered in [T16.5 Enterprise RAG in production](/learn/production-ai/enterprise-rag-in-production).
 
 ## Set Overlap by What Sits at the Boundary
 
