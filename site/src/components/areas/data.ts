@@ -86,7 +86,7 @@ export type SiteCounts = {
   /** Tracks listed under /learn, and how many study hours they add up to. */
   learnTracks: number
   learnHours: number
-  /** Modules listed in Learn tracks, how many are ready, and the lesson pages they hold (links to other areas not counted). */
+  /** Modules listed in Learn tracks (Coming soon scaffolds not counted), how many are ready, and the lesson pages they hold (links to other areas not counted). */
   learnModules: number
   learnReady: number
   learnLessons: number
@@ -116,7 +116,8 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
   const scenarios = await getAllScenarios()
   const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
   const listed = new Set(CURRICULUM_TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modules)))
-  const learnModules = CURRICULUM_MODULES.filter((m) => listed.has(m.slug) && isLearnTrack(m.track))
+  // Coming soon modules are planned scaffolds with no lessons, so they are not counted.
+  const learnModules = CURRICULUM_MODULES.filter((m) => listed.has(m.slug) && isLearnTrack(m.track) && m.status !== 'coming-soon')
   const learn = learnTracks()
   const inTrack = (moduleId: string, trackId: string) => scenarios.filter((s) => s.moduleId === moduleId && s.trackId === trackId).length
   return {
