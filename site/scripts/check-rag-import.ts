@@ -35,8 +35,8 @@ const { overview, interview, spotlight } = splitModulePage(page)
 assert.ok(!overview.includes('Lessons') && !overview.includes('Part IV') && !overview.includes('Previous') && overview.includes('## Key Takeaways'))
 assert.equal(interview, '# Interview questions\n\n### 1. Q?\n')
 assert.equal(spotlight, 'Interview Spotlight: 5 Questions')
-assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`02a_creating_an_mcp_server.ipynb`](b) · [All theory pages](c)*\n\n## A\n'),
-  '# T\n\n*Notebooks on GitHub: [Creating an MCP server](b)*\n\n## A\n')
+assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`02a_creating_an_mcp_server.ipynb`](b) · [All theory pages](c)*\n\n## A\n\n## Key Takeaways\n\nK.\n'),
+  '# T\n\n\n## A\n\n' + '## Run the notebooks\n\nThe code for this lesson is in these notebooks. Colab runs one in your browser: install the packages its first cell imports and set the API keys it reads. To run every notebook as written, clone the repository and use its uv environment.\n\n| Notebook | GitHub | Colab |\n|---|---|---|\n| Creating an MCP server | [Open on GitHub](b) | [Open in Colab](colab:b) |\n\n' + '## Key Takeaways\n\nK.\n')
 assert.equal(fileTitle('01_open_source_llms_with_langchain.ipynb'), 'Open source LLMs with LangChain')
 
 // The course's numbering becomes the site's (IA-08).
@@ -89,8 +89,8 @@ assert.equal(parseAnimatedFence('<div class="anim"></div>'), null)
 // The site names no vendor platform: such a notebook leaves the header, and a page still
 // naming one fails unless the mention is only a link target to another lesson file.
 assert.equal(trimLessonPage('*[M17 theory](../README.md) · Lesson 17.6 · Notebooks: [`06a_patterns.ipynb`](a), [`06b_hybrid_databricks.ipynb`](b) (optional) · [All theory pages](c)*\n'),
-  '*Notebooks on GitHub: [Patterns](a)*\n')
-assert.equal(trimLessonPage('*[M14 theory](../README.md) · Lesson 14.5 · Notebooks: [`05a_compare_databricks.ipynb`](a) · [All theory pages](c)*\n'), '\n')
+  '## Run the notebooks\n\nThe code for this lesson is in these notebooks. Colab runs one in your browser: install the packages its first cell imports and set the API keys it reads. To run every notebook as written, clone the repository and use its uv environment.\n\n| Notebook | GitHub | Colab |\n|---|---|---|\n| Patterns | [Open on GitHub](a) | [Open in Colab](colab:a) |\n')
+assert.equal(trimLessonPage('*[M14 theory](../README.md) · Lesson 14.5 · Notebooks: [`05a_compare_databricks.ipynb`](a) · [All theory pages](c)*\n'), '')
 assert.equal(siteText('x.md', 'See [lesson 6](06_on_databricks_vector_search.md#a).'), 'See [lesson 6](06_on_databricks_vector_search.md#a).')
 assert.throws(() => siteText('x.md', 'Runs on a Unity Catalog volume.'), /vendor platform/)
 

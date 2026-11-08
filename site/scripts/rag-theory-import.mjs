@@ -223,16 +223,45 @@ export function fileTitle(name) {
 }
 
 /**
- * A lesson page without its header line (notebooks kept, by title) and footer. A notebook that
- * names a vendor platform stays in the course and off the site (site-text-edits.mjs).
+ * A lesson page without its header line and footer. Its notebooks move to a "Run the notebooks"
+ * section before Key Takeaways, each with a GitHub and a Colab link (the Colab target is
+ * `colab:<course path>`, which `link` resolves). A notebook that names a vendor platform stays in
+ * the course and off the site (site-text-edits.mjs).
  */
 export function trimLessonPage(md) {
-  return md
+  let section = ''
+  const body = md
     .replace(/\n---\n\*Previous:[\s\S]*$/, '\n')
-    .replace(/^\*\[M\d+ theory\]\([^)]*\) · Lesson [\d.]+ · (?:Notebooks: (.*?) · )?\[All theory pages\]\([^)]*\)\*$/m, (_, nbs) => {
+    .replace(/^\*\[M\d+ theory\]\([^)]*\) · Lesson [\d.]+ · (?:Notebooks: (.*?) · )?\[All theory pages\]\([^)]*\)\*\n?/m, (_, nbs) => {
       const kept = (nbs ?? '').split(/, (?=\[`)/).filter((nb) => nb && !namesVendor(nb))
-      return kept.length ? `*Notebooks on GitHub: ${kept.join(', ').replace(/\[`([^`]+)`\]/g, (_, file) => `[${fileTitle(file)}]`)}*` : ''
+      section = notebookSection(kept)
+      return ''
     })
+  if (!section) return body
+  const at = body.indexOf('\n## Key Takeaways')
+  if (at < 0) return body.trim() ? `${body.trimEnd()}\n\n${section}` : section
+  return `${body.slice(0, at)}\n${section}${body.slice(at)}`
+}
+
+/** The "Run the notebooks" section for header entries such as "[`01b_tool_use.ipynb`](path) (optional)". */
+function notebookSection(entries) {
+  if (!entries.length) return ''
+  const rows = entries.map((entry) => {
+    const [, file, target, rest] = entry.match(/^\[`([^`]+)`\]\(([^)\s]+)\)(.*)$/)
+    const optional = rest.includes('optional') ? ' (optional)' : ''
+    const colab = file.endsWith('.ipynb') ? `[Open in Colab](colab:${target})` : 'Run locally'
+    return `| ${fileTitle(file)}${optional} | [Open on GitHub](${target}) | ${colab} |`
+  })
+  return [
+    '## Run the notebooks',
+    '',
+    'The code for this lesson is in these notebooks. Colab runs one in your browser: install the packages its first cell imports and set the API keys it reads. To run every notebook as written, clone the repository and use its uv environment.',
+    '',
+    '| Notebook | GitHub | Colab |',
+    '|---|---|---|',
+    ...rows,
+    '',
+  ].join('\n')
 }
 
 const ROMAN = { I: 1, V: 5, X: 10 }
@@ -377,6 +406,7 @@ export function importTheory(from) {
       return hit
     }
     const link = (target) => {
+      if (target.startsWith('colab:')) return link(target.slice(6)).replace(`https://github.com/${REPO}/blob/`, `https://colab.research.google.com/github/${REPO}/blob/`)
       if (/^(https?:|mailto:)/.test(target)) return target
       const [path, anchor] = target.split('#')
       const abs = path ? resolve(dirname(p.src), decodeURI(path)) : p.src
