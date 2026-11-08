@@ -70,6 +70,8 @@ jobs:
         working-directory: site
         run: |
           npm ci
+          # sync renders new Mermaid diagrams to SVG in Chromium; without it check:content fails
+          npx playwright install --with-deps chromium
           npm run import:rag-theory -- --from ../rag-course
           npm run sync
           node scripts/curriculum-index.ts

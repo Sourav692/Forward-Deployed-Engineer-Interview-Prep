@@ -446,6 +446,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "the-agent-loop-and-tool-calling-overview",
       "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
+      "a-real-world-agent-on-raw-api-calls-hacker-news-chatbot",
       "defining-tools-and-binding-them-to-a-model",
       "the-manual-tool-loop-and-the-augmented-llm-in-langgraph",
       "tool-errors-and-evaluating-tool-calls",

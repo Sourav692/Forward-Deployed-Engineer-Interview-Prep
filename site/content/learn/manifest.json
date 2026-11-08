@@ -1933,6 +1933,18 @@
       "updated": "2026-11-09"
     },
     {
+      "slug": "a-real-world-agent-on-raw-api-calls-hacker-news-chatbot",
+      "title": "A real-world agent on raw API calls (Hacker News chatbot)",
+      "track": "agentic-systems",
+      "module": "the-agent-loop-and-tool-calling",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/02_a_real_world_agent_on_raw_api_calls_hacker_news_chatbot.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/a-real-world-agent-on-raw-api-calls-hacker-news-chatbot",
+      "updated": "2026-11-09"
+    },
+    {
       "slug": "defining-tools-and-binding-them-to-a-model",
       "title": "Defining tools and binding them to a model",
       "track": "agentic-systems",
