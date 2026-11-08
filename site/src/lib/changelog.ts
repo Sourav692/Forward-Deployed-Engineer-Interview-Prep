@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-11-08',
+    title: 'Production AI Engineering becomes its own Learn group',
+    summary:
+      'Production AI moved out of the AI Engineering group into a new topic group, Production AI Engineering, right after AI Engineering on the Learn page. The track is now called Production AI Engineering. It keeps its code, T16, and all 12 of its modules, with their lessons and order unchanged. It also lists 18 planned modules in seven new sections, from evaluation foundations to a capstone. They are a scaffold, to be filled in later: each is marked Coming soon, shows only its title and scope, has no lessons, and adds nothing to track hours, path hours or progress. Links and saved progress are unchanged.',
+  },
+  {
+    date: '2026-11-08',
     title: 'AI Engineering follows the course\'s new part order',
     summary:
       'The RAG & Agents Engineering course regrouped its parts, and the AI Engineering group follows it. The group now lists the course\'s 14 tracks, T2 to T15, then Production AI. Three tracks are new. Advanced Agents takes the planning and approval modules and adds one on coding, computer use and deep agents. Multi-Agent Systems takes the multi-agent modules. Fine-Tuning & Model Adaptation takes the fine-tuning module, which used to sit in AI Engineering Foundations. Ingestion and indexing merged into RAG Foundations, and the complete RAG application modules merged into Retrieval Quality, so those two tracks were retired. The last course track, Architecture Decisions, now covers architecture decisions and the capstone. Retrieval Quality is now T6, Agent Foundations T7, Agentic RAG T9, The Memory Layer T10 and Architecture Decisions T15, and module codes changed with the new order. Later tracks moved up one code: Production AI is now T16, AI System Design T17, Staff AI System Design T18, Forward Deployed Engineering T19, Communication and Behavioural T20, and Capstone and Portfolio T21. Old links, lab and figure URLs redirect to the new pages, and saved progress is unchanged.',

@@ -2,12 +2,12 @@
 
 *A reading list is easy to start and hard to finish, so this material is built as a sequence where each lesson assumes the one before.*
 
-If you have not picked a path yet, start at [Choose your path](/start); this lesson explains what you will find once you do. It covers the three principles behind the material, the eight topic groups that hold the Learn tracks, and the fixed shape every lesson follows. The path marks which modules are required, recommended or optional for your background and interview date.
+If you have not picked a path yet, start at [Choose your path](/start); this lesson explains what you will find once you do. It covers the three principles behind the material, the nine topic groups that hold the Learn tracks, and the fixed shape every lesson follows. The path marks which modules are required, recommended or optional for your background and interview date.
 
 **Objectives:**
 
 - name the three principles behind the material and what breaks if each is dropped;
-- place a topic in one of the eight topic groups, and know where to practise it;
+- place a topic in one of the nine topic groups, and know where to practise it;
 - use the fixed shape of a lesson to find what you need quickly.
 
 ---
@@ -22,14 +22,15 @@ The material is written for a reader with Python and a little experience of an L
 
 **Honest about what is proven.** The projects behind the material were built with a *coverage map*: for each claim, is it shown in code, or is it cheat-sheet knowledge? That discipline runs through every later track.
 
-## Find a Topic in Eight Groups
+## Find a Topic in Nine Groups
 
-The Learn page sorts every track into eight topic groups, one per discipline. Track codes run T0, T1, T2 and onwards in the same order, so a lower code usually comes earlier in a path.
+The Learn page sorts every track into nine topic groups, one per discipline. Track codes run T0, T1, T2 and onwards in the same order, so a lower code usually comes earlier in a path.
 
 | Group | What it covers |
 |---|---|
 | Start here | The FDE role, then programming, APIs, data and deployment |
-| AI Engineering | Retrieval pipelines and agents, then evaluating, securing and running them in production |
+| AI Engineering | LLM applications, retrieval pipelines and agents, from the first prompt to multi-agent systems |
+| Production AI Engineering | Proving an AI system works, keeping it safe and running it in production |
 | Harness Engineering | The runtime around an agent: the loop, its tools and the checks that keep it on task |
 | Inference Engineering | Serving models quickly and cheaply on real hardware |
 | AI System Design | Turning a vague brief into an architecture you can defend in an interview |
@@ -66,7 +67,7 @@ They fail one question. That is the signal to reread one section, not the whole 
 ## Key Takeaways
 
 - Three principles shape the material: grounded in code, problem before solution, and honest about what is proven.
-- Learn sorts its tracks into eight topic groups; Interview, Practice and the Casebook are where you rehearse what Learn teaches.
+- Learn sorts its tracks into nine topic groups; Interview, Practice and the Casebook are where you rehearse what Learn teaches.
 - Every lesson has the same shape; Key Takeaways and Check Yourself are the parts to use under time pressure.
 
 ## Check Yourself
@@ -81,7 +82,7 @@ Grounded in implementations, problem before solution, and honest about what is p
 <details>
 <summary>2. You want to learn how to evaluate a retrieval pipeline, then rehearse explaining the design. Where do you go?</summary>
 
-The AI Engineering group in Learn for the lessons, then the AI system design round in Interview, or a case in the Casebook, to rehearse.
+The Production AI Engineering group in Learn for the evaluation lessons (the AI Engineering group teaches the pipeline itself), then the AI system design round in Interview, or a case in the Casebook, to rehearse.
 
 </details>
 
