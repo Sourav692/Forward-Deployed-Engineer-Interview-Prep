@@ -1,0 +1,118 @@
+name: Course sync
+
+# Publishes the RAG & Agents Engineering course (github.com/Sourav692/rag-agents-engineering) to the
+# site once its main branch moves: re-exports the curriculum (rag-tracks.ts), re-imports the theory
+# pages, re-syncs content, runs the full CI on the result and fast-forwards main, which Vercel deploys.
+# New parts, modules, lessons and topics arrive this way; nothing here is edited by hand.
+#
+# Triggers: the course's notify-site.yml sends `course-updated` on every push to its main (needs the
+# SITE_DISPATCH_TOKEN secret there); the hourly schedule catches anything the dispatch missed.
+
+on:
+  repository_dispatch:
+    types: [course-updated]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: course-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Import the course
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      # Full history: sync dates each page from its last commit (PQ-15), as ci.yml does.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Sourav692/rag-agents-engineering
+          ref: main
+          path: rag-course
+
+      - name: Skip when the vendored copy is current
+        id: pin
+        run: |
+          echo rag-course >> .git/info/exclude
+          head=$(git -C rag-course rev-parse HEAD)
+          pinned=$(node -p "require('./01_Concept_Tutorials/RAG_Agents_Engineering/source.json').commit")
+          echo "course main $head, site has $pinned"
+          if [ "$head" = "$pinned" ]; then echo "stale=false" >> "$GITHUB_OUTPUT"; else echo "stale=true" >> "$GITHUB_OUTPUT"; fi
+
+      - if: steps.pin.outputs.stale == 'true'
+        uses: astral-sh/setup-uv@v6
+
+      - name: Export the curriculum
+        if: steps.pin.outputs.stale == 'true'
+        run: uv run --no-project --python 3.12 --with pyyaml python rag-course/scripts/export_site_curriculum.py --out site/src/lib/rag-tracks.ts
+
+      - if: steps.pin.outputs.stale == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Import theory and sync content
+        if: steps.pin.outputs.stale == 'true'
+        working-directory: site
+        run: |
+          npm ci
+          npm run import:rag-theory -- --from ../rag-course
+          npm run sync
+          node scripts/curriculum-index.ts
+
+      # content/manifest.json records when sync ran, so it changes on every run; it alone is no change.
+      - name: Commit to bot/course-sync
+        id: commit
+        if: steps.pin.outputs.stale == 'true'
+        run: |
+          if [ -z "$(git status --porcelain -- . ':!site/content/manifest.json')" ]; then
+            echo "Nothing to publish."
+            exit 0
+          fi
+          git status --short
+          course=$(git -C rag-course rev-parse --short HEAD)
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -B bot/course-sync
+          git add -A
+          git commit -q -m "content: sync the RAG course at $course" -m "Automated by .github/workflows/course-sync.yml."
+          git push -f origin bot/course-sync
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  verify:
+    name: CI
+    needs: sync
+    if: needs.sync.outputs.sha != ''
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.sync.outputs.sha }}
+
+  publish:
+    name: Fast-forward main
+    needs: [sync, verify]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.sync.outputs.sha }}
+          fetch-depth: 0
+
+      # A plain push only fast-forwards: if main moved meanwhile it fails, and the next run re-imports.
+      - name: Push to main
+        run: |
+          git push origin "${{ needs.sync.outputs.sha }}:refs/heads/main"
+          git push origin --delete bot/course-sync
