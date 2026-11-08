@@ -4,9 +4,15 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  # course-sync.yml runs these checks on its branch before it moves main.
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ inputs.ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -22,6 +28,7 @@ jobs:
       # and a shallow clone would date every page by its one commit.
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.ref }}
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
@@ -102,6 +109,8 @@ jobs:
       PORT: 3307
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
 
       - uses: actions/setup-node@v4
         with:
