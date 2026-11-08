@@ -452,7 +452,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "hosted-vs-client-side-tools-code-execution-and-image-generation",
       "the-agent-loop-and-tool-calling-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
