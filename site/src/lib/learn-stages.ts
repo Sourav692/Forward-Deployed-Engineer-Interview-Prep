@@ -1,5 +1,5 @@
 /**
- * The eight topic groups on /learn (site structure decided 30 October 2026; see "Site
+ * The nine topic groups on /learn (site structure decided 30 October 2026; see "Site
  * structure (groups)" in CLAUDE.md). Navigation only: track URLs, requirements and
  * progress never depend on them. A group with no tracks yet shows as a Coming soon card
  * with its `planned` topics and has no page of its own.
@@ -23,7 +23,7 @@ export const LEARN_STAGES: LearnGroup[] = [
   {
     slug: 'ai-engineering',
     title: 'AI Engineering',
-    summary: 'Build retrieval pipelines and agents, then evaluate, secure and run them in production.',
+    summary: 'Build LLM applications, retrieval pipelines and agents, from the first prompt to multi-agent systems.',
     tracks: [
       'ai-engineering-foundations',
       'prompt-and-context-engineering',
@@ -39,8 +39,13 @@ export const LEARN_STAGES: LearnGroup[] = [
       'hierarchical-memory-and-graph-rag',
       'fine-tuning-and-model-adaptation',
       'architecture-synthesis-and-capstone',
-      'production-ai',
     ],
+  },
+  {
+    slug: 'production-ai-engineering',
+    title: 'Production AI Engineering',
+    summary: 'Prove an AI system works, keep it safe and run it in production.',
+    tracks: ['production-ai'],
   },
   {
     slug: 'harness-engineering',

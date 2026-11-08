@@ -62,18 +62,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/on-hold/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
 
-- **Learn by topic.** Learn tracks sit in eight topic groups, in this order:
+- **Learn by topic.** Learn tracks sit in nine topic groups, in this order:
   1. Start here
   2. AI Engineering
-  3. Harness Engineering
-  4. Inference Engineering
-  5. AI System Design
-  6. Forward Deployed Engineering
-  7. Coding
-  8. Career
+  3. Production AI Engineering (the `production-ai` track, T16, moved out of AI Engineering on 8 November 2026; its planned modules are Coming soon scaffolds)
+  4. Harness Engineering
+  5. Inference Engineering
+  6. AI System Design
+  7. Forward Deployed Engineering
+  8. Coding
+  9. Career
 - **Groups are navigation only.** They are defined in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`), and track ids, URLs and progress never depend on them. Every Learn track sits in exactly one group (`check:curriculum` enforces it).
 - **Group cards and pages.**
-  - `/learn` shows the eight groups as square, bordered cards (`components/learn/GroupCard.tsx`, `cb-group-card` in `editorial.css`). A card shows the group's number, title, summary, track count, hours and progress. It does not list track names.
+  - `/learn` shows the nine groups as square, bordered cards (`components/learn/GroupCard.tsx`, `cb-group-card` in `editorial.css`). A card shows the group's number, title, summary, track count, hours and progress. It does not list track names.
   - A live group's card is one link to its page at `/learn/topics/<group>`, which lists its tracks with the requirement and progress filters.
   - A group with no tracks yet is a Coming soon card (dashed border, second paper). It shows its `planned` topics, has no link and no page (its URL is a 404), and stays out of the sitemap. Never promise a date.
   - Breadcrumbs on Learn track, module and lesson pages run Learn, group, track (`groupTrail` and `trackTrail` in `site/src/lib/learn.ts`).

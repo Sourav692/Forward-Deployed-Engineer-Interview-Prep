@@ -139,24 +139,27 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                   key={s.slug}
                   id={s.slug}
                   title={s.title}
-                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}, ${formatMinutes(minutes)}`}
+                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? `, ${formatMinutes(minutes)}` : ', coming soon'}`}
                 >
-                  <p className="text-sm text-muted">{s.whyItMatters}</p>
-                  <ul className="mt-3 space-y-2">
+                  {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
+                  <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>
                     {modules.map((m) => (
                       <li key={m.slug}>
                         <ModuleCard module={m} />
                       </li>
                     ))}
                   </ul>
-                  <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
-                    <Fact term="Exercise">
-                      <DiagnosticText text={s.exercise} />
-                    </Fact>
-                    <Fact term="Done when">
-                      <DiagnosticText text={s.doneWhen} />
-                    </Fact>
-                  </dl>
+                  {/* A planned section (scaffold) has no exercise yet. */}
+                  {s.exercise && (
+                    <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
+                      <Fact term="Exercise">
+                        <DiagnosticText text={s.exercise} />
+                      </Fact>
+                      <Fact term="Done when">
+                        <DiagnosticText text={s.doneWhen} />
+                      </Fact>
+                    </dl>
+                  )}
                 </SectionAccordion>
               )
             })}

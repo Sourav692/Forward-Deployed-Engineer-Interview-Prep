@@ -63,7 +63,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     path: learnHref.module(mod),
     title: `${mod.title} · ${getTrack(trackSlug)?.title ?? mod.track}`,
     ogTitle: mod.title,
-    description: capitalise(mod.objective),
+    // A scaffold module has no objective yet; its scope says what it will cover.
+    description: capitalise(mod.objective || mod.scope),
   })
 }
 
@@ -112,7 +113,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
           <PageHead
             tag={moduleTag(mod) ?? undefined}
             title={mod.title}
-            standfirst={`${capitalise(mod.objective)}.`}
+            standfirst={mod.objective ? `${capitalise(mod.objective)}.` : undefined}
             facts={[
               // A paused or planned module has nothing to spend time on yet.
               ...(mod.status === 'on-hold' || mod.status === 'coming-soon'
