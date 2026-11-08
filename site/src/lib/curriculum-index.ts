@@ -1204,6 +1204,132 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 285
   },
   {
+    "slug": "the-evaluation-lifecycle",
+    "code": "T16.13",
+    "title": "The evaluation lifecycle",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "golden-datasets-and-test-design",
+    "code": "T16.14",
+    "title": "Golden datasets and test design",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "model-judges-and-human-calibration",
+    "code": "T16.15",
+    "title": "Model judges and human calibration",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "retrieval-evaluation",
+    "code": "T16.16",
+    "title": "Retrieval evaluation",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "answer-quality-and-evidence",
+    "code": "T16.17",
+    "title": "Answer quality and evidence",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "rag-regression-comparisons",
+    "code": "T16.18",
+    "title": "RAG regression comparisons",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "tools-and-side-effects",
+    "code": "T16.19",
+    "title": "Tools and side effects",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "trajectories-and-task-completion",
+    "code": "T16.20",
+    "title": "Trajectories and task completion",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "multi-turn-state",
+    "code": "T16.21",
+    "title": "Multi-turn state",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "evaluation-harness-and-ci",
+    "code": "T16.22",
+    "title": "The evaluation harness and CI",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "release-gates-and-reliable-measurement",
+    "code": "T16.23",
+    "title": "Release gates and reliable measurement",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "tracing-and-observability",
+    "code": "T16.24",
+    "title": "Tracing and observability",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "online-evaluation-and-production-monitoring",
+    "code": "T16.25",
+    "title": "Online evaluation and production monitoring",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "cost-latency-and-performance",
+    "code": "T16.26",
+    "title": "Cost, latency and performance",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "guardrails-and-moderation",
+    "code": "T16.27",
+    "title": "Guardrails and moderation",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "red-teaming-and-adversarial-testing",
+    "code": "T16.28",
+    "title": "Red teaming and adversarial testing",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "security-privacy-and-multi-tenant-governance",
+    "code": "T16.29",
+    "title": "Security, privacy and multi-tenant governance",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
+    "slug": "production-evaluation-capstone",
+    "code": "T16.30",
+    "title": "Production-grade evaluation capstone",
+    "track": "production-ai",
+    "lessons": []
+  },
+  {
     "slug": "design-framework",
     "code": "T17.1",
     "title": "The design framework: 12 parts and 15 principles",
@@ -1880,7 +2006,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   {
     "slug": "production-ai",
     "code": "T16",
-    "title": "Production AI Systems",
+    "title": "Production AI Engineering",
     "modules": [
       "tool-design-mcp-a2a",
       "context-engineering",
@@ -1893,7 +2019,25 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
       "observability-and-diagnosis",
       "cost-and-latency",
       "scaling-and-reliability",
-      "model-adaptation-and-serving"
+      "model-adaptation-and-serving",
+      "the-evaluation-lifecycle",
+      "golden-datasets-and-test-design",
+      "model-judges-and-human-calibration",
+      "retrieval-evaluation",
+      "answer-quality-and-evidence",
+      "rag-regression-comparisons",
+      "tools-and-side-effects",
+      "trajectories-and-task-completion",
+      "multi-turn-state",
+      "evaluation-harness-and-ci",
+      "release-gates-and-reliable-measurement",
+      "tracing-and-observability",
+      "online-evaluation-and-production-monitoring",
+      "cost-latency-and-performance",
+      "guardrails-and-moderation",
+      "red-teaming-and-adversarial-testing",
+      "security-privacy-and-multi-tenant-governance",
+      "production-evaluation-capstone"
     ]
   },
   {

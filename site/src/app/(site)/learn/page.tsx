@@ -11,7 +11,7 @@ import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { siteCounts } from '@/components/areas/data'
 
 /**
- * /learn: the curriculum overview (FE-06). A static Server Component listing the eight
+ * /learn: the curriculum overview (FE-06). A static Server Component listing the nine
  * topic groups as cards (site structure, 30 October 2026). A live group's card opens its
  * page at /learn/topics/<group>, where its tracks and filters are; a group with no tracks
  * yet shows as Coming soon.
@@ -20,7 +20,7 @@ import { siteCounts } from '@/components/areas/data'
 export const metadata: Metadata = pageMetadata({
   path: '/learn',
   title: 'Learn',
-  description: 'The Forward Deployed curriculum in eight topic groups, from AI Engineering and AI System Design to Forward Deployed Engineering and Career, with progress you can track in this browser. Interview practice lives under Interview.',
+  description: 'The Forward Deployed curriculum in nine topic groups, from AI Engineering and AI System Design to Forward Deployed Engineering and Career, with progress you can track in this browser. Interview practice lives under Interview.',
 })
 
 export default async function LearnPage() {

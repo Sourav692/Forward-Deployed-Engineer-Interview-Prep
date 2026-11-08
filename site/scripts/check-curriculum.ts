@@ -161,6 +161,12 @@ for (const m of MODULES) {
   if ((m.status === 'ready' || m.status === 'partly') && count === 0) fail(`module ${m.code} is ${m.status} but has no lessons`)
   if (m.status === 'coming-soon' && count > 0) fail(`module ${m.code} is coming-soon but lists lessons`)
   if (m.status === 'partly' && !m.gapNote) fail(`module ${m.code} is partly ready without a gapNote`)
+  if (m.coveredBy && m.status !== 'coming-soon') fail(`module ${m.code} has coveredBy but is ${m.status}; only Coming soon modules point elsewhere`)
+  for (const slug of m.coveredBy ?? []) {
+    const target = moduleBySlug.get(slug)
+    if (!target) fail(`module ${m.code}: coveredBy names unknown module "${slug}"`)
+    else if (target.status === 'coming-soon') fail(`module ${m.code}: coveredBy names ${target.code}, which is Coming soon`)
+  }
 }
 
 // Lesson slices (CurriculumLesson.sections). Lessons that share a source must split
@@ -309,12 +315,13 @@ for (const [from, to] of Object.entries(RAG_ASSET_MOVES)) {
   }
   // Study time (ENH-22): a module with lessons of its own is timed by their reading plus
   // `practiceMinutes` (studyTime in src/lib/study-time.ts); only a module without any
-  // carries a hand estimate, so no hand number can drift from the lessons.
+  // carries a hand estimate, so no hand number can drift from the lessons. A Coming soon
+  // module may leave it out: a scaffold has no time to show (the Production AI Engineering plan).
   const synced = new Set(learn.map((l) => l.slug))
   for (const m of MODULES) {
     const own = m.lessons.some((slug) => synced.has(slug))
     if (own && m.estMinutes !== undefined) fail(`module ${m.slug}: its time is its lessons' reading plus practiceMinutes; remove estMinutes`)
-    if (!own && m.estMinutes === undefined) fail(`module ${m.slug}: has no lessons of its own, so it needs an estMinutes estimate`)
+    if (!own && m.estMinutes === undefined && m.status !== 'coming-soon') fail(`module ${m.slug}: has no lessons of its own, so it needs an estMinutes estimate`)
   }
   for (const r of REVIEWS) {
     const lesson = lessonBySlug.get(r.dir)

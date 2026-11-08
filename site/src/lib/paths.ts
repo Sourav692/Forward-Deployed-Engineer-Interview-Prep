@@ -161,6 +161,25 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'cost-and-latency',
     'scaling-and-reliability',
     'model-adaptation-and-serving',
+    // Production AI Engineering scaffold (PA01 to PA18): Coming soon, so also in GAP_MODULES.
+    'the-evaluation-lifecycle',
+    'golden-datasets-and-test-design',
+    'model-judges-and-human-calibration',
+    'retrieval-evaluation',
+    'answer-quality-and-evidence',
+    'rag-regression-comparisons',
+    'tools-and-side-effects',
+    'trajectories-and-task-completion',
+    'multi-turn-state',
+    'evaluation-harness-and-ci',
+    'release-gates-and-reliable-measurement',
+    'tracing-and-observability',
+    'online-evaluation-and-production-monitoring',
+    'cost-latency-and-performance',
+    'guardrails-and-moderation',
+    'red-teaming-and-adversarial-testing',
+    'security-privacy-and-multi-tenant-governance',
+    'production-evaluation-capstone',
   ],
   'ai-systems-design': ['design-framework', 'sixty-minute-whiteboard', 'architecture-patterns', 'classic-ai-designs'],
   'forward-deployed': [
@@ -209,6 +228,7 @@ export const GAP_MODULES: readonly string[] = [
   'coding-interview-patterns',
   'company-loops',
   'coding-round-practice',
+  ...TRACK_MODULES['production-ai'].slice(TRACK_MODULES['production-ai'].indexOf('the-evaluation-lifecycle')),
 ]
 
 const ALL_MODULES = Object.values(TRACK_MODULES).flat()

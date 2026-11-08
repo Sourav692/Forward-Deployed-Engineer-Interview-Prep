@@ -24,10 +24,13 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
             </Link>
           </h3>
         </div>
-        <p className="mt-0.5 pl-11 text-xs text-muted">
-          {formatMinutes(moduleTime(mod).total)}
-          {input.reading.length > 0 && `, ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
-        </p>
+        {/* A scaffold module (Coming soon, no estimate) has no time to show. */}
+        {moduleTime(mod).total > 0 && (
+          <p className="mt-0.5 pl-11 text-xs text-muted">
+            {formatMinutes(moduleTime(mod).total)}
+            {input.reading.length > 0 && `, ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
+          </p>
+        )}
       </div>
       <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-2 pl-11 sm:pl-0">
         <ModulePathFlag moduleSlug={mod.slug} size="xs" />
