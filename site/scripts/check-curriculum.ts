@@ -161,6 +161,12 @@ for (const m of MODULES) {
   if ((m.status === 'ready' || m.status === 'partly') && count === 0) fail(`module ${m.code} is ${m.status} but has no lessons`)
   if (m.status === 'coming-soon' && count > 0) fail(`module ${m.code} is coming-soon but lists lessons`)
   if (m.status === 'partly' && !m.gapNote) fail(`module ${m.code} is partly ready without a gapNote`)
+  if (m.coveredBy && m.status !== 'coming-soon') fail(`module ${m.code} has coveredBy but is ${m.status}; only Coming soon modules point elsewhere`)
+  for (const slug of m.coveredBy ?? []) {
+    const target = moduleBySlug.get(slug)
+    if (!target) fail(`module ${m.code}: coveredBy names unknown module "${slug}"`)
+    else if (target.status === 'coming-soon') fail(`module ${m.code}: coveredBy names ${target.code}, which is Coming soon`)
+  }
 }
 
 // Lesson slices (CurriculumLesson.sections). Lessons that share a source must split

@@ -114,4 +114,11 @@ test('planned Production AI Engineering modules are Coming soon scaffolds with n
   expect(response?.status()).toBe(200)
   await expect(page.getByRole('heading', { level: 1, name: 'The evaluation lifecycle' })).toBeVisible()
   await expect(page.getByRole('region', { name: 'Lessons' })).toHaveCount(0)
+  const note = page.locator('p', { hasText: 'Until this module is built, see' })
+  await expect(note).toBeVisible()
+  await expect(note.getByRole('link', { name: 'T16.7 Evaluation and release gates', exact: true })).toHaveAttribute(
+    'href',
+    '/learn/production-ai/evaluation-and-release-gates',
+  )
+  await expect(page.getByText('No other module covers this topic yet')).toHaveCount(0)
 })

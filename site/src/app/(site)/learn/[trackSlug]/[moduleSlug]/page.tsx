@@ -80,6 +80,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const input = moduleInput(mod)
   const checkpoint = getCheckpoint(mod.slug)
   const related = relatedModules(mod)
+  // A Coming soon module can name the live modules that teach its topic today.
+  const coveredBy = (mod.coveredBy ?? []).map((s) => getModuleBySlug(s)).filter((m): m is CurriculumModule => !!m)
   const gap = mod.status === 'coming-soon' || mod.status === 'on-hold'
   const prereqModules = mod.prerequisites.map((s) => getModuleBySlug(s)).filter((m): m is CurriculumModule => !!m)
   // A module with no lessons of its own that is not ready is planned work: its list
@@ -297,7 +299,24 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
               </ul>
             </section>
           )}
-          {gap && related.length === 0 && <p className="mt-8 text-sm text-muted">{COPY.comingSoonNoRelated}</p>}
+          {gap && coveredBy.length > 0 && (
+            <p className="mt-8 text-sm text-muted">
+              {COPY.comingSoonCoveredBy}{' '}
+              {coveredBy.map((m, i) => (
+                <span key={m.slug}>
+                  {i > 0 && (i === coveredBy.length - 1 ? ' and ' : ', ')}
+                  <Link href={learnHref.module(m)} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+                    {m.code} {m.title}
+                  </Link>
+                </span>
+              ))}
+              .
+            </p>
+          )}
+          {/* "No other module" is only claimed where the gap note says nothing exists; a planned scaffold says it is planned. */}
+          {gap && related.length === 0 && coveredBy.length === 0 && (
+            <p className="mt-8 text-sm text-muted">{mod.gapNote || mod.status === 'on-hold' ? COPY.comingSoonNoRelated : COPY.comingSoonPlanned}</p>
+          )}
 
           <PrevNext
             prev={prevModule && { href: learnHref.module(prevModule), title: prevModule.title }}

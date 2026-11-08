@@ -111,6 +111,12 @@ export type CurriculumModule = {
    * repeating the list (T5.5 and the casebook, ENH-16). The lessons still count for progress.
    */
   listedOn?: { href: string; label: string; lead: string }
+  /**
+   * Coming soon only: live module slugs that teach this topic today. The module page links
+   * them ("Until this module is built, see …"); `check:curriculum` checks each one exists
+   * and is not itself Coming soon.
+   */
+  coveredBy?: string[]
   /** What is still missing (Partly ready) or why nothing exists (Coming soon). */
   gapNote?: string
   /** Owner-facing reason a module is on hold. Not for public display. */

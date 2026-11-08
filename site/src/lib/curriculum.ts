@@ -913,6 +913,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'golden-datasets-and-test-design',
@@ -930,6 +931,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'model-judges-and-human-calibration',
@@ -947,6 +949,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'retrieval-evaluation',
@@ -964,6 +967,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'answer-quality-and-evidence',
@@ -981,6 +985,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'rag-regression-comparisons',
@@ -998,6 +1003,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'tools-and-side-effects',
@@ -1015,6 +1021,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'trajectories-and-task-completion',
@@ -1032,6 +1039,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'multi-turn-state',
@@ -1049,6 +1057,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'evaluation-harness-and-ci',
@@ -1066,6 +1075,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'release-gates-and-reliable-measurement',
@@ -1083,6 +1093,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['evaluation-and-release-gates'],
   },
   {
     slug: 'tracing-and-observability',
@@ -1100,6 +1111,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['observability-and-diagnosis'],
   },
   {
     slug: 'online-evaluation-and-production-monitoring',
@@ -1117,6 +1129,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['observability-and-diagnosis'],
   },
   {
     slug: 'cost-latency-and-performance',
@@ -1134,6 +1147,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['cost-and-latency'],
   },
   {
     slug: 'guardrails-and-moderation',
@@ -1151,6 +1165,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['agentops'],
   },
   {
     slug: 'red-teaming-and-adversarial-testing',
@@ -1168,6 +1183,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['agentops'],
   },
   {
     slug: 'security-privacy-and-multi-tenant-governance',
@@ -1185,6 +1201,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: [],
     lessons: [],
     seeAlso: [],
+    coveredBy: ['security-tenancy-prompt-injection'],
   },
   {
     slug: 'production-evaluation-capstone',

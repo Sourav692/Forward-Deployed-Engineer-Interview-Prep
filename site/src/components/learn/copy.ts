@@ -12,6 +12,8 @@ export const COPY = {
   comingSoonLead:
     'This module has no lessons yet. The objective and scope below say what it will cover, and the related modules teach part of it today.',
   comingSoonNoRelated: 'No other module covers this topic yet. Check back after the next content update.',
+  comingSoonPlanned: 'Its lessons are planned and will be added in a later content update.',
+  comingSoonCoveredBy: 'Until this module is built, see',
   onHoldTitle: 'Paused, will return',
   onHoldLead:
     'This module is paused while its material is reworked. It will return; until then, the related modules below cover the nearest ground.',
