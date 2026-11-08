@@ -1916,9 +1916,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/00_overview.md",
-      "estMinutes": 4,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-overview",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
@@ -1928,9 +1928,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/01_agentic_patterns_from_scratch_reflection_tool_use_react_planning.md",
-      "estMinutes": 6,
+      "estMinutes": 13,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/agentic-patterns-from-scratch-reflection-tool-use-react-planning",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "defining-tools-and-binding-them-to-a-model",
@@ -1940,9 +1940,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/03_defining_tools_and_binding_them_to_a_model.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/defining-tools-and-binding-them-to-a-model",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "the-manual-tool-loop-and-the-augmented-llm-in-langgraph",
@@ -1952,9 +1952,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/04_the_manual_tool_loop_and_the_augmented_llm_in_langgraph.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/the-manual-tool-loop-and-the-augmented-llm-in-langgraph",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "tool-errors-and-evaluating-tool-calls",
@@ -1966,7 +1966,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/05_tool_errors_and_evaluating_tool_calls.md",
       "estMinutes": 14,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/tool-errors-and-evaluating-tool-calls",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "hosted-vs-client-side-tools-code-execution-and-image-generation",
@@ -1976,9 +1976,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/06_hosted_vs_client_side_tools_code_execution_and_image_generation.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/hosted-vs-client-side-tools-code-execution-and-image-generation",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "the-agent-loop-and-tool-calling-interview-questions",
@@ -1990,7 +1990,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/99_interview_questions.md",
       "estMinutes": 5,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-interview-questions",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "react-agents-and-langchain-create-agent-overview",
