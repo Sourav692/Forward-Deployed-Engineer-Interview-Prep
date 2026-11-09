@@ -8,10 +8,10 @@
 **What a strong answer covers:**
 - Pulls the trace: the retrieved chunks, the grader's verdict on each, the kept set, the answer and the hallucination grader's input
 - Checks retrieval first: on the [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) TF-IDF index `refund-timing` scores 0 for this question, so the kept set may hold only `refund-window`, which gives no duration at all
-- Checks the generation prompt: `01a` tells the model to answer "based upon your knowledge", which invites a remembered number; a grounded system says "only from the documents"
+- Checks the generation prompt: the lesson's example tells the model to answer "based upon your knowledge", which invites a remembered number; a grounded system says "only from the documents"
 - Treats the grader as a model with an error rate: labels a sample of answers by hand, measures how often the grader agrees, and adds this case to that set
 
-### 2. Product wants a thumbs-up and thumbs-down on every answer, feeding a re-ranker like the one in `02a`. What do you tell them it will and will not fix?
+### 2. Product wants a thumbs-up and thumbs-down on every answer, feeding a re-ranker like the one in lesson 2 of T9.5. What do you tell them it will and will not fix?
 
 **What a strong answer covers:**
 - It reorders the candidates retrieval returns, so it fixes questions whose evidence is retrieved but ranked low (the lab's credit question goes from recall@2 0.00 to 1.00 after one thumbs-down)
@@ -25,9 +25,9 @@
 - Logs every verdict with the question, chunk ids and answer, so rates can be tracked per question type and per document
 - Watches the share of questions where every chunk is graded irrelevant, and the share of answers graded not grounded; a jump after an index or prompt change points at the change
 - Samples graded traffic for human labels each week and tracks the graders' agreement with them, separately for "yes" and "no", since a lenient grader fails in one direction
-- Counts the cost: `01a` makes five grader calls per answer (one per chunk at `k = 4`, plus one grounding call) and a sixth for highlighting, and the latency they add belongs on the same dashboard
+- Counts the cost: five grader calls per answer (one per chunk at k = 4, plus one grounding call) and a sixth for highlighting, and the latency they add belongs on the same dashboard
 
-### 4. `fine_tune_index` has been folding highly rated question and answer pairs into the index every week. Larkspur then changes its refund rule. What goes wrong, and how do you guard against it?
+### 4. A weekly job has been folding highly rated question and answer pairs into the index. Larkspur then changes its refund rule. What goes wrong, and how do you guard against it?
 
 **What a strong answer covers:**
 - Old answers that quote the old rule are now chunks in the index, and they match refund questions better than the handbook does because they were written as answers to those questions

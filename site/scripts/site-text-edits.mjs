@@ -50,8 +50,19 @@ export const SITE_TEXT_EDITS = {
   [`${COURSE}/p05_retrieval_quality_and_rag_apps/m16_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md`]: [
     [/^(# .*) on Databricks Vector Search$/m, '$1 in a managed vector store'],
     ['`06b` moves hybrid search and reranking into the vector store. On a Databricks Vector Search index it embeds', '`06b`, an optional notebook, moves hybrid search and reranking into a managed vector store. It embeds'],
-    ['and `reranker=DatabricksReranker(columns_to_rerank=["text"])`', 'and a `reranker` over the `text` column'],
     ['Notebook 06b says the Databricks reranker', "Notebook 06b says the store's reranker"],
+  ],
+  [`${COURSE}/p08_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md`]: [
+    ['onto a managed Databricks index', 'onto a managed vector index'],
+  ],
+  [`${COURSE}/p08_agentic_rag/m28_retrieval_grading_rewriting/02_the_same_agent_on_databricks_vector_search.md`]: [
+    [/^(# .*) on Databricks Vector Search$/m, '$1 on a managed vector store'],
+    [/Databricks Vector Search/g, 'a managed vector store'],
+    [/served on Databricks/g, 'served on a managed endpoint'],
+    ['behind a managed index on Databricks', 'behind a managed vector index'],
+    [/Delta Sync index/g, 'Managed-sync index'],
+    ['Databricks offers three kinds of index', 'The platform offers three kinds of index'],
+    ['inside a Databricks workspace', 'inside a managed platform workspace'],
   ],
   [`${COURSE}/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/03_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md`]: [
     ['four Databricks Genie tools for', 'four tools over a managed text-to-SQL service for'],

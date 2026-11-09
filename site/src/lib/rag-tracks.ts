@@ -1073,9 +1073,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "retrieval-quality-engineering",
     "section": "retrieval-quality-engineering",
     "status": "ready",
-    "practiceMinutes": 260,
+    "practiceMinutes": 230,
     "objective": "Use the retriever interface: similarity, score threshold, MMR, multi-query, compression, ensemble",
-    "scope": "Practice time includes about 4 h of notebook work on GitHub",
+    "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Hybrid upgrade: add BM25 to the vector retriever, tune the fusion weights on the golden set, and find three queries that only hybrid search answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1106,9 +1106,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "retrieval-quality-engineering",
     "section": "retrieval-quality-engineering",
     "status": "ready",
-    "practiceMinutes": 380,
+    "practiceMinutes": 350,
     "objective": "Rewrite and expand queries with an LLM",
-    "scope": "Practice time includes about 6 h of notebook work on GitHub",
+    "scope": "Practice time includes about 5.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Query-transformation matrix: run multi-query, RAG-Fusion, HyDE and decomposition on the same 30 questions and record which question types each one helps, which it hurts, and the added latency and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1121,55 +1121,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "lessons": [
       "query-transformation-and-routing-overview",
       "query-rewriting-and-expansion",
+      "multi-query-retrieval",
       "rag-fusion-with-reciprocal-rank-fusion",
+      "step-back-prompting",
       "hyde-embed-a-hypothetical-answer",
       "query-decomposition-for-multi-hop-questions",
       "routing-llm-classifier-and-semantic-routing",
+      "self-querying-natural-language-to-metadata-filter",
       "query-transformation-and-routing-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Multi-query retrieval",
-        "notebooks": [
-          {
-            "title": "Multi query retrieval",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m17_query_transformation/mandatory/notebook/02a_multi_query_retrieval.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Multiquery retrieval walkthrough",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m17_query_transformation/optional/notebook/02b_multiquery_retrieval_walkthrough.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Better queries",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m17_query_transformation/optional/notebook/02c_better_queries.ipynb",
-            "optional": true
-          }
-        ]
-      },
-      {
-        "title": "Step-back prompting",
-        "notebooks": [
-          {
-            "title": "Step back prompting",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m17_query_transformation/mandatory/notebook/04a_step_back_prompting.ipynb",
-            "optional": false
-          }
-        ]
-      },
-      {
-        "title": "Self-querying: natural language to metadata filter",
-        "notebooks": [
-          {
-            "title": "Self querying retrieval",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m17_query_transformation/mandatory/notebook/08a_self_querying_retrieval.ipynb",
-            "optional": false
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
@@ -1327,9 +1288,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Build a ReAct agent in LangGraph and explain how it differs from single-shot tool calling",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your T6 system.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1345,26 +1306,10 @@ export const RAG_MODULES: CurriculumModule[] = [
       "react-with-langchain-create-agent",
       "models-messages-and-structured-output-in-langchain-1-x",
       "middleware-including-human-in-the-loop",
+      "exercise-intelligent-travel-assistant-agent-with-solution",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Exercise: intelligent travel assistant agent (with solution)",
-        "notebooks": [
-          {
-            "title": "Intelligent travel assistant agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p06_agent_foundations/m23_react_agents/optional/notebook/05a_intelligent_travel_assistant_agent.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Intelligent travel assistant solution",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p06_agent_foundations/m23_react_agents/optional/notebook/05b_intelligent_travel_assistant_solution.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "agentic-workflow-patterns",
@@ -1373,9 +1318,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
     "status": "ready",
-    "practiceMinutes": 380,
+    "practiceMinutes": 350,
     "objective": "Chain prompts with quality gates between steps",
-    "scope": "Practice time includes about 6 h of notebook work on GitHub",
+    "scope": "Practice time includes about 5.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Pattern mapping: rebuild query decomposition (M17) as orchestrator–worker and an answer-quality check as evaluator–optimizer, then compare latency and cost with the chain versions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1403,9 +1348,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "advanced-agents",
     "section": "advanced-agents",
     "status": "ready",
-    "practiceMinutes": 320,
+    "practiceMinutes": 290,
     "objective": "Compare ReAct with plan-and-execute and add replanning",
-    "scope": "Practice time includes about 5 h of notebook work on GitHub",
+    "scope": "Practice time includes about 4.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Verified answers: add chain-of-verification to your RAG answer step and measure how many unsupported claims it removes on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1413,88 +1358,21 @@ export const RAG_MODULES: CurriculumModule[] = [
     "commonMistakes": [
       "Setting `max_iterations` with no room for replanning after a wrong result",
       "Verifying each claim in a call that can still see the draft",
-      "Trusting a majority vote when the samples share a systematic error"
+      "Trusting a majority vote when the samples share a systematic error",
+      "Trusting a self-critic's `has_errors` verdict without running the code against tests"
     ],
     "lessons": [
       "planning-reflection-and-reasoning-patterns-overview",
       "plan-and-execute-vs-react-decompose-execute-replan",
+      "deep-research-and-reflective-dynamic-planners",
+      "reflection-and-reflexion-agents",
       "chain-of-verification-and-constitutional-critique",
+      "self-discover-and-reflective-code-generation",
       "self-consistency-tree-of-thoughts-and-lats",
+      "simulator-in-the-loop-metacognition-and-exemplar-memory",
       "planning-reflection-and-reasoning-patterns-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Deep-research and reflective dynamic planners",
-        "notebooks": [
-          {
-            "title": "Planning agent deep research",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/mandatory/notebook/02a_planning_agent_deep_research.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Reflective dynamic planning agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/02b_reflective_dynamic_planning_agent.ipynb",
-            "optional": true
-          }
-        ]
-      },
-      {
-        "title": "Reflection and Reflexion agents",
-        "notebooks": [
-          {
-            "title": "Reflection agents",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/mandatory/notebook/03a_reflection_agents.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Reflexion agents",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/mandatory/notebook/03b_reflexion_agents.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Reflection architecture",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/03c_reflection_architecture.ipynb",
-            "optional": true
-          }
-        ]
-      },
-      {
-        "title": "Self-Discover and reflective code generation",
-        "notebooks": [
-          {
-            "title": "Self discover",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/05a_self_discover.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Reflective code generation agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/05b_reflective_code_generation_agent.ipynb",
-            "optional": true
-          }
-        ]
-      },
-      {
-        "title": "Simulator-in-the-loop, metacognition and exemplar memory",
-        "notebooks": [
-          {
-            "title": "Mental loop simulator",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/07a_mental_loop_simulator.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Reflexive metacognitive",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/07b_reflexive_metacognitive.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Self improving exemplar memory",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m25_planning_reflection_reasoning/optional/notebook/07c_self_improving_exemplar_memory.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "coding-computer-use-and-deep-agents",
@@ -1513,27 +1391,17 @@ export const RAG_MODULES: CurriculumModule[] = [
     "commonMistakes": [
       "Choosing a ReAct agent for a fixed-shape weekly report instead of a planned pipeline",
       "Running a vision-driven computer-use agent with no step cap",
-      "Assuming `USE_SANDBOX=true` runs commands in a sandbox rather than `LocalShellBackend`"
+      "Assuming `USE_SANDBOX=true` runs commands in a sandbox rather than `LocalShellBackend`",
+      "Trusting a tool-less tester agent's reported pass rate as executed test results"
     ],
     "lessons": [
       "coding-computer-use-and-deep-agents-overview",
       "applied-react-web-research-swe-and-computer-use-agents",
+      "developer-vs-tester-agents",
       "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
       "coding-computer-use-and-deep-agents-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Developer vs tester agents",
-        "notebooks": [
-          {
-            "title": "Developer vs tester agents",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/optional/notebook/02a_developer_vs_tester_agents.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds",
@@ -1542,9 +1410,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "advanced-agents",
     "section": "advanced-agents",
     "status": "ready",
-    "practiceMinutes": 260,
+    "practiceMinutes": 230,
     "objective": "Put a dry-run and approval gate in front of consequential actions",
-    "scope": "Practice time includes about 4 h of notebook work on GitHub",
+    "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "SQL or vectors: answer the same 20 questions over a product catalogue with CSV RAG (M19) and with the text-to-SQL agent, and record which wins for each question type.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1552,43 +1420,19 @@ export const RAG_MODULES: CurriculumModule[] = [
     "commonMistakes": [
       "Generating the dry-run preview inside the review node before `interrupt()`",
       "Counting sale lines in generated SQL where the question needs summed `Quantity`",
-      "Asking the model to merge checked parts instead of rendering a template"
+      "Asking the model to merge checked parts instead of rendering a template",
+      "Trusting an evidence URL the agent's own searches never returned"
     ],
     "lessons": [
       "human-approval-and-applied-single-agent-builds-overview",
       "dry-run-harness-and-human-approval",
+      "research-and-competitive-intelligence-agents",
+      "financial-analyst-agent",
       "text-to-sql-workflow-vs-react-agent",
       "llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
       "human-approval-and-applied-single-agent-builds-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Research and competitive-intelligence agents",
-        "notebooks": [
-          {
-            "title": "Research assistant agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m27_human_approval_applied_agents/mandatory/notebook/02a_research_assistant_agent.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Competitive intelligence agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m27_human_approval_applied_agents/optional/notebook/02b_competitive_intelligence_agent.ipynb",
-            "optional": true
-          }
-        ]
-      },
-      {
-        "title": "Financial analyst agent",
-        "notebooks": [
-          {
-            "title": "Financial analyst agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p07_advanced_agents/m27_human_approval_applied_agents/optional/notebook/03a_financial_analyst_agent.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
@@ -1612,6 +1456,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "lessons": [
       "agentic-rag-foundations-grading-and-query-rewriting-overview",
       "retriever-as-a-tool-grade-then-rewrite-in-langgraph",
+      "the-same-agent-on-a-managed-vector-search-index",
       "guardrails-query-optimisation-and-a-retry-loop",
       "agentic-rag-foundations-grading-and-query-rewriting-interview-questions"
     ],
@@ -3095,9 +2940,25 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "multi-query-retrieval",
+    "title": "Multi-query retrieval",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m17_query_transformation/02_multi_query_retrieval.md",
+    "home": "query-transformation-and-routing",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "rag-fusion-with-reciprocal-rank-fusion",
     "title": "RAG-Fusion with Reciprocal Rank Fusion",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m17_query_transformation/03_rag_fusion_with_reciprocal_rank_fusion.md",
+    "home": "query-transformation-and-routing",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "step-back-prompting",
+    "title": "Step-back prompting",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m17_query_transformation/04_step_back_prompting.md",
     "home": "query-transformation-and-routing",
     "kind": "sync",
     "publish": "own"
@@ -3122,6 +2983,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "routing-llm-classifier-and-semantic-routing",
     "title": "Routing: LLM classifier and semantic routing",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m17_query_transformation/07_routing_llm_classifier_and_semantic_routing.md",
+    "home": "query-transformation-and-routing",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "self-querying-natural-language-to-metadata-filter",
+    "title": "Self-querying: natural language to metadata filter",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m17_query_transformation/08_self_querying_natural_language_to_metadata_filter.md",
     "home": "query-transformation-and-routing",
     "kind": "sync",
     "publish": "own"
@@ -3447,6 +3316,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "exercise-intelligent-travel-assistant-agent-with-solution",
+    "title": "Exercise: intelligent travel assistant agent (with solution)",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/05_exercise_intelligent_travel_assistant_agent_with_solution.md",
+    "home": "react-agents-and-langchain-create-agent",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "react-agents-and-langchain-create-agent-interview-questions",
     "title": "ReAct Agents & LangChain create_agent: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/99_interview_questions.md",
@@ -3527,6 +3404,22 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "deep-research-and-reflective-dynamic-planners",
+    "title": "Deep-research and reflective dynamic planners",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/02_deep_research_and_reflective_dynamic_planners.md",
+    "home": "planning-reflection-and-reasoning-patterns",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "reflection-and-reflexion-agents",
+    "title": "Reflection and Reflexion agents",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/03_reflection_and_reflexion_agents.md",
+    "home": "planning-reflection-and-reasoning-patterns",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "chain-of-verification-and-constitutional-critique",
     "title": "Chain-of-verification and constitutional critique",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/04_chain_of_verification_and_constitutional_critique.md",
@@ -3535,9 +3428,25 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "self-discover-and-reflective-code-generation",
+    "title": "Self-Discover and reflective code generation",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/05_self_discover_and_reflective_code_generation.md",
+    "home": "planning-reflection-and-reasoning-patterns",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "self-consistency-tree-of-thoughts-and-lats",
     "title": "Self-consistency, tree of thoughts and LATS",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/06_self_consistency_tree_of_thoughts_and_lats.md",
+    "home": "planning-reflection-and-reasoning-patterns",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "simulator-in-the-loop-metacognition-and-exemplar-memory",
+    "title": "Simulator-in-the-loop, metacognition and exemplar memory",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/07_simulator_in_the_loop_metacognition_and_exemplar_memory.md",
     "home": "planning-reflection-and-reasoning-patterns",
     "kind": "sync",
     "publish": "own"
@@ -3562,6 +3471,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "applied-react-web-research-swe-and-computer-use-agents",
     "title": "Applied ReAct: web research, SWE and computer-use agents",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/01_applied_react_web_research_swe_and_computer_use_agents.md",
+    "home": "coding-computer-use-and-deep-agents",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "developer-vs-tester-agents",
+    "title": "Developer vs tester agents",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/02_developer_vs_tester_agents.md",
     "home": "coding-computer-use-and-deep-agents",
     "kind": "sync",
     "publish": "own"
@@ -3594,6 +3511,22 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "dry-run-harness-and-human-approval",
     "title": "Dry-run harness and human approval",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/01_dry_run_harness_and_human_approval.md",
+    "home": "human-approval-and-applied-single-agent-builds",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "research-and-competitive-intelligence-agents",
+    "title": "Research and competitive-intelligence agents",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/02_research_and_competitive_intelligence_agents.md",
+    "home": "human-approval-and-applied-single-agent-builds",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "financial-analyst-agent",
+    "title": "Financial analyst agent",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/03_financial_analyst_agent.md",
     "home": "human-approval-and-applied-single-agent-builds",
     "kind": "sync",
     "publish": "own"
@@ -3634,6 +3567,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "retriever-as-a-tool-grade-then-rewrite-in-langgraph",
     "title": "Retriever as a tool; grade then rewrite in LangGraph",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m28_retrieval_grading_rewriting/01_retriever_as_a_tool_grade_then_rewrite_in_langgraph.md",
+    "home": "agentic-rag-foundations-grading-and-query-rewriting",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "the-same-agent-on-a-managed-vector-search-index",
+    "title": "The same agent on a managed vector search index",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m28_retrieval_grading_rewriting/02_the_same_agent_on_databricks_vector_search.md",
     "home": "agentic-rag-foundations-grading-and-query-rewriting",
     "kind": "sync",
     "publish": "own"
