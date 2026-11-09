@@ -273,6 +273,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
+      "plain-text-and-markdown-single-vs-element-mode",
       "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
       "pdf-and-word-parser-comparison-and-element-level-parsing",
       "web-youtube-and-arxiv-sources-bulk-directory-loading",
@@ -307,6 +308,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "hosted-embeddings-openai-models-and-dimensions",
       "open-source-embeddings-with-hugging-face",
       "production-concerns-batching-caching-and-similarity-behaviour",
+      "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
       "embeddings-and-model-selection-interview-questions"
     ],
     "practiceMinutes": 200
@@ -620,10 +622,11 @@ export const INDEX_MODULES: IndexModule[] = [
       "runnablewithmessagehistory-multi-user-sessions-and-persistence",
       "trimming-windowing-and-summary-memory",
       "conversational-rag-with-history-aware-retrieval",
+      "memory-apps-product-recommender-and-research-agent-with-sql-memory",
       "langgraph-threads-checkpoints-and-memory-optimisations",
       "conversation-memory-and-conversational-rag-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "memory-and-state",
@@ -639,7 +642,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "memgpt-tiers-voyager-skill-library-agent-workflow-memory",
       "memory-and-state-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "multi-agent-architectures",
@@ -655,7 +658,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "handoffs-and-swarms",
       "multi-agent-architectures-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "collaboration-control-and-parallel-agents",
@@ -671,7 +674,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "parallel-agents-async-nodes-and-streaming",
       "collaboration-control-and-parallel-agents-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents",
@@ -686,7 +689,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "research-systems-supervisor-financial-research-summarisation-full-research-syste",
       "multi-agent-applied-builds-and-deep-agents-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "mcp-foundations",

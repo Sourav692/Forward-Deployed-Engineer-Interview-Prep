@@ -923,30 +923,14 @@ export const RAG_MODULES: CurriculumModule[] = [
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
+      "plain-text-and-markdown-single-vs-element-mode",
       "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
       "pdf-and-word-parser-comparison-and-element-level-parsing",
       "web-youtube-and-arxiv-sources-bulk-directory-loading",
       "custom-loaders-with-lazy-loading",
       "document-ingestion-and-metadata-design-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Plain text and Markdown (single vs element mode)",
-        "notebooks": [
-          {
-            "title": "Text loader",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p04_rag_foundations/m11_document_ingestion/optional/notebook/02a_text_loader.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Markdown loader",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p04_rag_foundations/m11_document_ingestion/optional/notebook/02b_markdown_loader.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "chunking-and-indexing",
@@ -1002,6 +986,7 @@ export const RAG_MODULES: CurriculumModule[] = [
       "hosted-embeddings-openai-models-and-dimensions",
       "open-source-embeddings-with-hugging-face",
       "production-concerns-batching-caching-and-similarity-behaviour",
+      "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
       "embeddings-and-model-selection-interview-questions"
     ],
     "seeAlso": []
@@ -1582,9 +1567,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
     "status": "ready",
-    "practiceMinutes": 260,
+    "practiceMinutes": 230,
     "objective": "Explain why LLMs forget and add message histories, windows and summaries",
-    "scope": "Practice time includes about 4 h of notebook work on GitHub",
+    "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Follow-up test: write 15 three-turn conversations and compare retrieval hit rate on turns two and three with and without history-aware query rewriting.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1600,27 +1585,11 @@ export const RAG_MODULES: CurriculumModule[] = [
       "runnablewithmessagehistory-multi-user-sessions-and-persistence",
       "trimming-windowing-and-summary-memory",
       "conversational-rag-with-history-aware-retrieval",
+      "memory-apps-product-recommender-and-research-agent-with-sql-memory",
       "langgraph-threads-checkpoints-and-memory-optimisations",
       "conversation-memory-and-conversational-rag-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Memory apps: product recommender and research agent with SQL memory",
-        "notebooks": [
-          {
-            "title": "Multi user product recommender",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p09_memory_layer/m33_short_term_memory_conversation_state/optional/notebook/05a_multi_user_product_recommender.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Multi user research agent SQL memory",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p09_memory_layer/m33_short_term_memory_conversation_state/optional/notebook/05b_multi_user_research_agent_sql_memory.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "memory-and-state",
@@ -1629,9 +1598,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
     "status": "ready",
-    "practiceMinutes": 260,
+    "practiceMinutes": 230,
     "objective": "Share memory across threads with a LangGraph `Store` (in-memory and Postgres)",
-    "scope": "Practice time includes about 4 h of notebook work on GitHub",
+    "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Personal RAG: give your assistant semantic memory of user preferences and show that answers in a new thread use them.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1659,9 +1628,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "multi-agent-systems",
     "section": "multi-agent-systems",
     "status": "ready",
-    "practiceMinutes": 260,
+    "practiceMinutes": 230,
     "objective": "Decide when a task needs several agents instead of one",
-    "scope": "Practice time includes about 4 h of notebook work on GitHub",
+    "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Specialist retrievers: replace the single router from M30 with a supervisor over three specialist RAG agents and compare routing accuracy and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1689,9 +1658,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "multi-agent-systems",
     "section": "multi-agent-systems",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Share intermediate results through a blackboard",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Parallel retrieval: run the sub-questions of a decomposed query as parallel agents and stream partial answers, then report the latency saved.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1719,9 +1688,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "multi-agent-systems",
     "section": "multi-agent-systems",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Build a multi-agent hotel reservation system step by step, including compliance, testing and error handling",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Research team: build a supervisor with a RAG researcher, a web researcher and a writer that cites sources, then test it on edge cases (no results, conflicting sources, tool failure).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2612,6 +2581,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "plain-text-and-markdown-single-vs-element-mode",
+    "title": "Plain text and Markdown (single vs element mode)",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/02_plain_text_and_markdown_single_vs_element_mode.md",
+    "home": "document-ingestion-and-metadata-design",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
     "title": "Semi-structured sources: CSV rows and JSON / JSONL with jq schemas",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/03_semi_structured_sources_csv_rows_and_json_jsonl_with_jq_schemas.md",
@@ -2735,6 +2712,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "production-concerns-batching-caching-and-similarity-behaviour",
     "title": "Production concerns: batching, caching and similarity behaviour",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/04_production_concerns_batching_caching_and_similarity_behaviour.md",
+    "home": "embeddings-and-model-selection",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
+    "title": "Benchmarking embedding models with MLflow on a managed platform",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/05_benchmarking_embedding_models_with_mlflow_databricks.md",
     "home": "embeddings-and-model-selection",
     "kind": "sync",
     "publish": "own"
@@ -3799,6 +3784,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "conversational-rag-with-history-aware-retrieval",
     "title": "Conversational RAG with history-aware retrieval",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/04_conversational_rag_with_history_aware_retrieval.md",
+    "home": "conversation-memory-and-conversational-rag",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "memory-apps-product-recommender-and-research-agent-with-sql-memory",
+    "title": "Memory apps: product recommender and research agent with SQL memory",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/05_memory_apps_product_recommender_and_research_agent_with_sql_memory.md",
     "home": "conversation-memory-and-conversational-rag",
     "kind": "sync",
     "publish": "own"
