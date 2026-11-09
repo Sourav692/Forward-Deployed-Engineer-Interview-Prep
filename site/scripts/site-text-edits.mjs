@@ -42,10 +42,16 @@ export const SITE_TEXT_EDITS = {
     ['the evaluation dataset, the Genie Space curation', 'the evaluation dataset, curating the text-to-SQL space'],
   ],
   [`${COURSE}/p04_rag_foundations/m13_embeddings/03_open_source_embeddings_with_hugging_face.md`]: [
-    [
-      /The optional lesson \d+ of T[\d.]+ notebook, \[[^\]]*\]\([^)]*05a_compare_embedding_models_databricks\.ipynb\), (indexes eight short documents with three open models) in Databricks Vector Search/,
-      'An optional notebook in the course $1 in a managed vector index',
-    ],
+    ['through two automatic judges on Databricks,', 'through two automatic judges on a managed platform,'],
+  ],
+  [`${COURSE}/p04_rag_foundations/m13_embeddings/04_production_concerns_batching_caching_and_similarity_behaviour.md`]: [
+    ['compares embedding models on Databricks with automatic judges', 'compares embedding models on a managed platform with automatic judges'],
+  ],
+  [`${COURSE}/p04_rag_foundations/m13_embeddings/05_benchmarking_embedding_models_with_mlflow_databricks.md`]: [
+    [/^(# .*) \(Databricks\)$/m, '$1 on a managed platform'],
+    ['## The project: an embedding model bake-off on Databricks', '## The project: an embedding model bake-off on a managed platform'],
+    ["Databricks Vector Search serves each model's vectors", "a managed vector search service serves each model's vectors"],
+    ["a Databricks workspace with Vector Search and MLflow's GenAI evaluation", "a workspace on the platform with vector search and MLflow's GenAI evaluation"],
   ],
   [`${COURSE}/p05_retrieval_quality_and_rag_apps/m16_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md`]: [
     [/^(# .*) on Databricks Vector Search$/m, '$1 in a managed vector store'],
