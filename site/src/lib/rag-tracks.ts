@@ -1327,9 +1327,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Build a ReAct agent in LangGraph and explain how it differs from single-shot tool calling",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your T6 system.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1345,26 +1345,10 @@ export const RAG_MODULES: CurriculumModule[] = [
       "react-with-langchain-create-agent",
       "models-messages-and-structured-output-in-langchain-1-x",
       "middleware-including-human-in-the-loop",
+      "exercise-intelligent-travel-assistant-agent-with-solution",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Exercise: intelligent travel assistant agent (with solution)",
-        "notebooks": [
-          {
-            "title": "Intelligent travel assistant agent",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p06_agent_foundations/m23_react_agents/optional/notebook/05a_intelligent_travel_assistant_agent.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Intelligent travel assistant solution",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p06_agent_foundations/m23_react_agents/optional/notebook/05b_intelligent_travel_assistant_solution.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "agentic-workflow-patterns",
@@ -1373,9 +1357,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
     "status": "ready",
-    "practiceMinutes": 380,
+    "practiceMinutes": 350,
     "objective": "Chain prompts with quality gates between steps",
-    "scope": "Practice time includes about 6 h of notebook work on GitHub",
+    "scope": "Practice time includes about 5.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Pattern mapping: rebuild query decomposition (M17) as orchestrator–worker and an answer-quality check as evaluator–optimizer, then compare latency and cost with the chain versions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -3442,6 +3426,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "middleware-including-human-in-the-loop",
     "title": "Middleware, including human-in-the-loop",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/04_middleware_including_human_in_the_loop.md",
+    "home": "react-agents-and-langchain-create-agent",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "exercise-intelligent-travel-assistant-agent-with-solution",
+    "title": "Exercise: intelligent travel assistant agent (with solution)",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/05_exercise_intelligent_travel_assistant_agent_with_solution.md",
     "home": "react-agents-and-langchain-create-agent",
     "kind": "sync",
     "publish": "own"

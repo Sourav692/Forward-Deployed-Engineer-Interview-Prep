@@ -2024,7 +2024,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/01_the_react_loop_in_langgraph_tool_calling_vs_react.md",
-      "estMinutes": 9,
+      "estMinutes": 12,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/the-react-loop-in-langgraph-tool-calling-vs-react",
       "updated": "2026-11-09"
     },
@@ -2036,7 +2036,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/02_react_with_langchain_create_agent.md",
-      "estMinutes": 7,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/react-with-langchain-create-agent",
       "updated": "2026-11-09"
     },
@@ -2048,7 +2048,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/03_models_messages_and_structured_output_in_langchain_1_x.md",
-      "estMinutes": 6,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/models-messages-and-structured-output-in-langchain-1-x",
       "updated": "2026-11-09"
     },
@@ -2060,8 +2060,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/04_middleware_including_human_in_the_loop.md",
-      "estMinutes": 7,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/middleware-including-human-in-the-loop",
+      "updated": "2026-11-09"
+    },
+    {
+      "slug": "exercise-intelligent-travel-assistant-agent-with-solution",
+      "title": "Exercise: intelligent travel assistant agent (with solution)",
+      "track": "agentic-systems",
+      "module": "react-agents-and-langchain-create-agent",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m23_react_agents/05_exercise_intelligent_travel_assistant_agent_with_solution.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/exercise-intelligent-travel-assistant-agent-with-solution",
       "updated": "2026-11-09"
     },
     {
@@ -2096,7 +2108,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m24_agentic_workflow_patterns/01_prompt_chaining_with_quality_gates.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/prompt-chaining-with-quality-gates",
       "updated": "2026-11-09"
     },
@@ -2108,7 +2120,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m24_agentic_workflow_patterns/02_routing_by_handler_and_by_model_tier.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/routing-by-handler-and-by-model-tier",
       "updated": "2026-11-09"
     },
@@ -2120,7 +2132,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m24_agentic_workflow_patterns/03_parallelization_sectioning_and_voting.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/parallelization-sectioning-and-voting",
       "updated": "2026-11-09"
     },
@@ -2132,7 +2144,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m24_agentic_workflow_patterns/04_orchestrator_worker_with_the_send_api.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/orchestrator-worker-with-the-send-api",
       "updated": "2026-11-09"
     },
@@ -2144,7 +2156,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m24_agentic_workflow_patterns/05_evaluator_optimizer_loops_always_bounded_langgraph_vs_lcel.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/evaluator-optimizer-loops-always-bounded-langgraph-vs-lcel",
       "updated": "2026-11-09"
     },
