@@ -466,9 +466,10 @@ export const INDEX_MODULES: IndexModule[] = [
       "react-with-langchain-create-agent",
       "models-messages-and-structured-output-in-langchain-1-x",
       "middleware-including-human-in-the-loop",
+      "exercise-intelligent-travel-assistant-agent-with-solution",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "agentic-workflow-patterns",
@@ -484,7 +485,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "evaluator-optimizer-loops-always-bounded-langgraph-vs-lcel",
       "agentic-workflow-patterns-interview-questions"
     ],
-    "practiceMinutes": 380
+    "practiceMinutes": 350
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
