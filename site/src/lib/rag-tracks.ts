@@ -698,15 +698,15 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "prompt-and-context-engineering",
     "section": "prompt-and-context-engineering",
     "status": "ready",
-    "practiceMinutes": 110,
+    "practiceMinutes": 80,
     "objective": "Prompt Gemini with images, PDFs, audio and video",
-    "scope": "Practice time includes about 1.5 h of notebook work on GitHub",
+    "scope": "Practice time includes about 1 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Report reader: answer five questions about a chart-heavy PDF page by prompting a multimodal model with the page image.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur summarises recorded export walkthroughs with GPT-4o, sampling a frame every 3 seconds. A customer's summary says the export \"may not have finished\", but the recording shows an \"Export ready\" toast. What went wrong, and how do you fix it?",
     "commonMistakes": [
-      "Sending files inline above the 20 MB cap instead of uploading them",
+      "Re-sending a recording's bytes with every prompt instead of reusing one uploaded handle",
       "Sampling video frames at a gap longer than the shortest event",
       "Checking that the balance sheet adds up in the prompt, not in code"
     ],
@@ -726,9 +726,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Call commercial and open-source models natively and through LangChain",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Structured answers: build a prompt template and parser that turn a question plus three passages into a JSON answer with a citations list.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -742,40 +742,14 @@ export const RAG_MODULES: CurriculumModule[] = [
       "langchain-core-models-prompts-and-parsers-overview",
       "langchain-introduction-and-the-1-x-package-split",
       "commercial-llms-natively-and-with-langchain",
+      "open-source-llms-transformers-inference-client-groq-langchain",
       "inputs-and-outputs-messages-llm-vs-chat-model",
       "prompt-templates-and-few-shot-composition",
       "output-parsers",
       "langchain-1-x-recap-course-ending-in-a-structured-output-q-and-a-bot",
       "langchain-core-models-prompts-and-parsers-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Open-source LLMs: Transformers, Inference Client, Groq, LangChain",
-        "notebooks": [
-          {
-            "title": "Open Source LLMs with LangChain",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p03_llm_application_frameworks/m06_langchain_core/mandatory/notebook/03a_Open_Source_LLMs_with_LangChain.ipynb",
-            "optional": false
-          },
-          {
-            "title": "Open Source LLMs HF Transformers",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p03_llm_application_frameworks/m06_langchain_core/optional/notebook/03b_Open_Source_LLMs_HF_Transformers.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Open Source LLMs HF Inference Client",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p03_llm_application_frameworks/m06_langchain_core/optional/notebook/03c_Open_Source_LLMs_HF_Inference_Client.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Open Source LLMs Groq Cloud",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p03_llm_application_frameworks/m06_langchain_core/optional/notebook/03d_Open_Source_LLMs_Groq_Cloud.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "lcel-runnables-and-chains",
@@ -814,9 +788,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Build a StateGraph with nodes, edges and reducers, including MessagesState",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "First graph: build a graph that classifies a question, routes it to one of two nodes, and returns a structured answer.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -844,9 +818,9 @@ export const RAG_MODULES: CurriculumModule[] = [
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
     "status": "ready",
-    "practiceMinutes": 200,
+    "practiceMinutes": 170,
     "objective": "Persist graph state with checkpointers, threads and branching",
-    "scope": "Practice time includes about 3 h of notebook work on GitHub",
+    "scope": "Practice time includes about 2.5 h of notebook work on GitHub",
     "prerequisites": [],
     "deliverable": "Approval loop: add a checkpointer and an interrupt before the answer node of your M08 graph, resume it after approval, and stream the steps.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2288,6 +2262,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "commercial-llms-natively-and-with-langchain",
     "title": "Commercial LLMs natively and with LangChain",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/02_commercial_llms_natively_and_with_langchain.md",
+    "home": "langchain-core-models-prompts-and-parsers",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "open-source-llms-transformers-inference-client-groq-langchain",
+    "title": "Open-source LLMs: Transformers, Inference Client, Groq, LangChain",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/03_open_source_llms_transformers_inference_client_groq_langchain.md",
     "home": "langchain-core-models-prompts-and-parsers",
     "kind": "sync",
     "publish": "own"

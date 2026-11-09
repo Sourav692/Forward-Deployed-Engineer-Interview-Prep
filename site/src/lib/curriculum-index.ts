@@ -181,7 +181,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "exercise-financial-report-analysis",
       "multimodal-prompting-interview-questions"
     ],
-    "practiceMinutes": 110
+    "practiceMinutes": 80
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers",
@@ -192,13 +192,14 @@ export const INDEX_MODULES: IndexModule[] = [
       "langchain-core-models-prompts-and-parsers-overview",
       "langchain-introduction-and-the-1-x-package-split",
       "commercial-llms-natively-and-with-langchain",
+      "open-source-llms-transformers-inference-client-groq-langchain",
       "inputs-and-outputs-messages-llm-vs-chat-model",
       "prompt-templates-and-few-shot-composition",
       "output-parsers",
       "langchain-1-x-recap-course-ending-in-a-structured-output-q-and-a-bot",
       "langchain-core-models-prompts-and-parsers-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "lcel-runnables-and-chains",
@@ -230,7 +231,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "input-output-schemas-and-configuration",
       "langchain-and-langgraph-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming",
@@ -247,7 +248,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "state-management-in-practice",
       "langgraph-runtime-persistence-hitl-and-streaming-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "rag-from-first-principles",
