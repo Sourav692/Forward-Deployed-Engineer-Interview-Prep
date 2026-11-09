@@ -1376,7 +1376,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m15_advanced_indexing/01_multi_representation_indexing_search_summaries_return_documents.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/advanced-indexing-strategies/multi-representation-indexing-search-summaries-return-documents",
       "updated": "2026-11-09"
     },
@@ -1388,7 +1388,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m15_advanced_indexing/02_parent_document_retrieval_in_memory_and_on_postgres.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/advanced-indexing-strategies/parent-document-retrieval-in-memory-and-on-postgres",
       "updated": "2026-11-09"
     },
@@ -1400,7 +1400,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m15_advanced_indexing/03_hierarchical_indices_summary_tier_and_detail_tier.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/llm-and-retrieval/advanced-indexing-strategies/hierarchical-indices-summary-tier-and-detail-tier",
       "updated": "2026-11-09"
     },
@@ -1412,7 +1412,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m15_advanced_indexing/04_question_side_indexing_hype_and_document_augmentation.md",
-      "estMinutes": 6,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/advanced-indexing-strategies/question-side-indexing-hype-and-document-augmentation",
       "updated": "2026-11-09"
     },
@@ -1424,7 +1424,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m15_advanced_indexing/05_context_aware_chunks_contextual_headers_and_contextual_retrieval.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/advanced-indexing-strategies/context-aware-chunks-contextual-headers-and-contextual-retrieval",
       "updated": "2026-11-09"
     },
@@ -3584,7 +3584,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m42_hierarchical_memory_rag/01_raptor_clustering_and_recursive_summarisation.md",
-      "estMinutes": 6,
+      "estMinutes": 12,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/raptor-clustering-and-recursive-summarisation",
       "updated": "2026-11-09"
     },
@@ -3596,7 +3596,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m42_hierarchical_memory_rag/02_memorag_global_memory_and_clue_guided_retrieval.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/memorag-global-memory-and-clue-guided-retrieval",
       "updated": "2026-11-09"
     },
@@ -3608,7 +3608,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m42_hierarchical_memory_rag/03_lightrag_low_level_and_high_level_graph_retrieval.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/lightrag-low-level-and-high-level-graph-retrieval",
       "updated": "2026-11-09"
     },
@@ -3644,7 +3644,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/01_graph_fundamentals_and_cypher.md",
-      "estMinutes": 4,
+      "estMinutes": 10,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/graph-fundamentals-and-cypher",
       "updated": "2026-11-09"
     },
@@ -3656,7 +3656,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/02_from_csv_to_knowledge_graph.md",
-      "estMinutes": 4,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/from-csv-to-knowledge-graph",
       "updated": "2026-11-09"
     },
@@ -3668,7 +3668,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/03_natural_language_graph_qa_text_to_cypher.md",
-      "estMinutes": 4,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/natural-language-graph-qa-text-to-cypher",
       "updated": "2026-11-09"
     },
@@ -3680,7 +3680,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/04_vector_indexes_on_graph_nodes.md",
-      "estMinutes": 4,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/vector-indexes-on-graph-nodes",
       "updated": "2026-11-09"
     },
@@ -3692,7 +3692,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/05_llm_entity_and_relationship_extraction.md",
-      "estMinutes": 4,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/llm-entity-and-relationship-extraction",
       "updated": "2026-11-09"
     },
@@ -3704,7 +3704,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m43_knowledge_graphs_neo4j/06_end_to_end_knowledge_graph_rag.md",
-      "estMinutes": 4,
+      "estMinutes": 8,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/end-to-end-knowledge-graph-rag",
       "updated": "2026-11-09"
     },
@@ -3740,7 +3740,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m44_graphrag/01_concept_graph_traversal.md",
-      "estMinutes": 5,
+      "estMinutes": 11,
       "href": "/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/concept-graph-traversal",
       "updated": "2026-11-09"
     },
@@ -3752,7 +3752,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m44_graphrag/02_local_graphrag_with_source_attribution.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/local-graphrag-with-source-attribution",
       "updated": "2026-11-09"
     },
@@ -3764,7 +3764,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m44_graphrag/03_microsoft_graphrag_communities_global_vs_local_search.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/microsoft-graphrag-communities-global-vs-local-search",
       "updated": "2026-11-09"
     },
@@ -3776,7 +3776,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m44_graphrag/04_graph_expansion_inside_a_vector_database_milvus.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/graph-expansion-inside-a-vector-database-milvus",
       "updated": "2026-11-09"
     },
@@ -3812,7 +3812,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/01_why_fine_tune.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/why-fine-tune",
       "updated": "2026-11-09"
     },
@@ -3824,7 +3824,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/02_where_fine_tuning_fits.md",
-      "estMinutes": 4,
+      "estMinutes": 7,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/where-fine-tuning-fits",
       "updated": "2026-11-09"
     },
@@ -3836,7 +3836,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/03_instruction_tuning.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/instruction-tuning",
       "updated": "2026-11-09"
     },
@@ -3848,7 +3848,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/04_data_preparation.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/data-preparation",
       "updated": "2026-11-09"
     },
@@ -3860,7 +3860,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/05_training.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/training",
       "updated": "2026-11-09"
     },
@@ -3872,7 +3872,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/06_evaluation.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/evaluation",
       "updated": "2026-11-09"
     },
@@ -3884,7 +3884,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_fine_tuning/m45_fine_tuning_model_adaptation/07_fine_tuning_llama_2_with_autotrain.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/fine-tuning-and-model-adaptation/fine-tuning-fundamentals/fine-tuning-llama-2-with-autotrain",
       "updated": "2026-11-09"
     },
@@ -3920,7 +3920,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/01_the_agentic_rag_architecture_map.md",
-      "estMinutes": 6,
+      "estMinutes": 11,
       "href": "/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/the-agentic-rag-architecture-map",
       "updated": "2026-11-09"
     },
@@ -3932,7 +3932,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/02_end_to_end_rag_ecosystem_walkthrough_incl_colbert_and_ragas.md",
-      "estMinutes": 8,
+      "estMinutes": 13,
       "href": "/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/end-to-end-rag-ecosystem-walkthrough-incl-colbert-and-ragas",
       "updated": "2026-11-09"
     },
@@ -3944,9 +3944,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p14_architecture_decisions/m46_architecture_synthesis/03_decision_framework_picking_the_simplest_architecture_that_works.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/decision-framework-picking-the-simplest-architecture-that-works",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "agentic-rag-architectures-choosing-a-design-interview-questions",

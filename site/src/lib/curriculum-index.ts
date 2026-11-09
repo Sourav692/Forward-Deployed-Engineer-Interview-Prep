@@ -768,7 +768,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "lightrag-low-level-and-high-level-graph-retrieval",
       "hierarchical-and-memory-augmented-retrieval-interview-questions"
     ],
-    "practiceMinutes": 230
+    "practiceMinutes": 200
   },
   {
     "slug": "knowledge-graphs-with-neo4j",
@@ -785,7 +785,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "end-to-end-knowledge-graph-rag",
       "knowledge-graphs-with-neo4j-interview-questions"
     ],
-    "practiceMinutes": 320
+    "practiceMinutes": 290
   },
   {
     "slug": "graphrag-techniques",
@@ -800,7 +800,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "graph-expansion-inside-a-vector-database-milvus",
       "graphrag-techniques-interview-questions"
     ],
-    "practiceMinutes": 290
+    "practiceMinutes": 260
   },
   {
     "slug": "fine-tuning-fundamentals",
@@ -818,7 +818,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "fine-tuning-llama-2-with-autotrain",
       "fine-tuning-fundamentals-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
