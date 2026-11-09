@@ -1311,25 +1311,14 @@ export const RAG_MODULES: CurriculumModule[] = [
     "lessons": [
       "the-agent-loop-and-tool-calling-overview",
       "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
+      "a-real-world-agent-on-raw-api-calls-hacker-news-chatbot",
       "defining-tools-and-binding-them-to-a-model",
       "the-manual-tool-loop-and-the-augmented-llm-in-langgraph",
       "tool-errors-and-evaluating-tool-calls",
       "hosted-vs-client-side-tools-code-execution-and-image-generation",
       "the-agent-loop-and-tool-calling-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "A real-world agent on raw API calls (Hacker News chatbot)",
-        "notebooks": [
-          {
-            "title": "Real world agent hacker news chatbot",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p06_agent_foundations/m22_agent_loop_and_tools/optional/notebook/02a_real_world_agent_hacker_news_chatbot.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
@@ -3365,6 +3354,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
     "title": "Agentic patterns from scratch: reflection, tool use, ReAct planning",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/01_agentic_patterns_from_scratch_reflection_tool_use_react_planning.md",
+    "home": "the-agent-loop-and-tool-calling",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "a-real-world-agent-on-raw-api-calls-hacker-news-chatbot",
+    "title": "A real-world agent on raw API calls (Hacker News chatbot)",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_agent_foundations/m22_agent_loop_and_tools/02_a_real_world_agent_on_raw_api_calls_hacker_news_chatbot.md",
     "home": "the-agent-loop-and-tool-calling",
     "kind": "sync",
     "publish": "own"
