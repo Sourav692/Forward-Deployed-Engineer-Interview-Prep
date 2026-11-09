@@ -923,30 +923,14 @@ export const RAG_MODULES: CurriculumModule[] = [
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
+      "plain-text-and-markdown-single-vs-element-mode",
       "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
       "pdf-and-word-parser-comparison-and-element-level-parsing",
       "web-youtube-and-arxiv-sources-bulk-directory-loading",
       "custom-loaders-with-lazy-loading",
       "document-ingestion-and-metadata-design-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Plain text and Markdown (single vs element mode)",
-        "notebooks": [
-          {
-            "title": "Text loader",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p04_rag_foundations/m11_document_ingestion/optional/notebook/02a_text_loader.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Markdown loader",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p04_rag_foundations/m11_document_ingestion/optional/notebook/02b_markdown_loader.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "chunking-and-indexing",
@@ -1002,6 +986,7 @@ export const RAG_MODULES: CurriculumModule[] = [
       "hosted-embeddings-openai-models-and-dimensions",
       "open-source-embeddings-with-hugging-face",
       "production-concerns-batching-caching-and-similarity-behaviour",
+      "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
       "embeddings-and-model-selection-interview-questions"
     ],
     "seeAlso": []
@@ -2612,6 +2597,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
+    "slug": "plain-text-and-markdown-single-vs-element-mode",
+    "title": "Plain text and Markdown (single vs element mode)",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/02_plain_text_and_markdown_single_vs_element_mode.md",
+    "home": "document-ingestion-and-metadata-design",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
     "slug": "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
     "title": "Semi-structured sources: CSV rows and JSON / JSONL with jq schemas",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/03_semi_structured_sources_csv_rows_and_json_jsonl_with_jq_schemas.md",
@@ -2735,6 +2728,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "production-concerns-batching-caching-and-similarity-behaviour",
     "title": "Production concerns: batching, caching and similarity behaviour",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/04_production_concerns_batching_caching_and_similarity_behaviour.md",
+    "home": "embeddings-and-model-selection",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
+    "title": "Benchmarking embedding models with MLflow on a managed platform",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/05_benchmarking_embedding_models_with_mlflow_databricks.md",
     "home": "embeddings-and-model-selection",
     "kind": "sync",
     "publish": "own"

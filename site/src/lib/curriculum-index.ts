@@ -273,6 +273,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
+      "plain-text-and-markdown-single-vs-element-mode",
       "semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
       "pdf-and-word-parser-comparison-and-element-level-parsing",
       "web-youtube-and-arxiv-sources-bulk-directory-loading",
@@ -307,6 +308,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "hosted-embeddings-openai-models-and-dimensions",
       "open-source-embeddings-with-hugging-face",
       "production-concerns-batching-caching-and-similarity-behaviour",
+      "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
       "embeddings-and-model-selection-interview-questions"
     ],
     "practiceMinutes": 200

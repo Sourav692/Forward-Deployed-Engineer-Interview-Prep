@@ -956,9 +956,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/01_the_knowledge_problem_hallucination_freshness_context_window_growth_rag_vs_fine_tuning_vs_long_context.md",
-      "estMinutes": 4,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/the-knowledge-problem-hallucination-freshness-context-window-growth-rag-vs-fine",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "indexing-from-scratch-with-tf-idf-and-nearest-neighbours",
@@ -968,7 +968,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/02_indexing_from_scratch_with_tf_idf_and_nearest_neighbours.md",
-      "estMinutes": 4,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/indexing-from-scratch-with-tf-idf-and-nearest-neighbours",
       "updated": "2026-11-09"
     },
@@ -980,7 +980,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/03_semantic_retrieval_with_embedding_similarity.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/semantic-retrieval-with-embedding-similarity",
       "updated": "2026-11-09"
     },
@@ -992,7 +992,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/04_your_first_langchain_rag_with_chroma.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/your-first-langchain-rag-with-chroma",
       "updated": "2026-11-09"
     },
@@ -1004,7 +1004,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/05_the_rag_lifecycle_and_a_measured_baseline.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/the-rag-lifecycle-and-a-measured-baseline",
       "updated": "2026-11-09"
     },
@@ -1018,7 +1018,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m10_rag_lifecycle/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-interview-questions",
-      "updated": "2026-11-08"
+      "updated": "2026-11-09"
     },
     {
       "slug": "document-ingestion-and-metadata-design-overview",
@@ -1040,8 +1040,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/01_the_document_abstraction_and_metadata_design.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/the-document-abstraction-and-metadata-design",
+      "updated": "2026-11-09"
+    },
+    {
+      "slug": "plain-text-and-markdown-single-vs-element-mode",
+      "title": "Plain text and Markdown (single vs element mode)",
+      "track": "llm-and-retrieval",
+      "module": "document-ingestion-and-metadata-design",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/02_plain_text_and_markdown_single_vs_element_mode.md",
+      "estMinutes": 7,
+      "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/plain-text-and-markdown-single-vs-element-mode",
       "updated": "2026-11-09"
     },
     {
@@ -1052,7 +1064,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/03_semi_structured_sources_csv_rows_and_json_jsonl_with_jq_schemas.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/semi-structured-sources-csv-rows-and-json-jsonl-with-jq-schemas",
       "updated": "2026-11-09"
     },
@@ -1064,7 +1076,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/04_pdf_and_word_parser_comparison_and_element_level_parsing.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/pdf-and-word-parser-comparison-and-element-level-parsing",
       "updated": "2026-11-09"
     },
@@ -1076,7 +1088,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/05_web_youtube_and_arxiv_sources_bulk_directory_loading.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/web-youtube-and-arxiv-sources-bulk-directory-loading",
       "updated": "2026-11-09"
     },
@@ -1088,7 +1100,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_document_ingestion/06_custom_loaders_with_lazy_loading.md",
-      "estMinutes": 3,
+      "estMinutes": 6,
       "href": "/learn/llm-and-retrieval/document-ingestion-and-metadata-design/custom-loaders-with-lazy-loading",
       "updated": "2026-11-09"
     },
@@ -1124,7 +1136,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m12_chunking/01_splitter_fundamentals_character_recursive_token_and_structure_aware.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/splitter-fundamentals-character-recursive-token-and-structure-aware",
       "updated": "2026-11-09"
     },
@@ -1136,7 +1148,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m12_chunking/02_semantic_chunking_breakpoints_on_embedding_distance.md",
-      "estMinutes": 4,
+      "estMinutes": 6,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/semantic-chunking-breakpoints-on-embedding-distance",
       "updated": "2026-11-09"
     },
@@ -1148,7 +1160,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m12_chunking/03_proposition_chunking_with_llm_quality_checks.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/proposition-chunking-with-llm-quality-checks",
       "updated": "2026-11-09"
     },
@@ -1160,7 +1172,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m12_chunking/04_choosing_chunk_size_empirically_retrieval_quality_faithfulness_latency.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/choosing-chunk-size-empirically-retrieval-quality-faithfulness-latency",
       "updated": "2026-11-09"
     },
@@ -1196,7 +1208,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/01_embedding_fundamentals_similarity_metrics_and_model_selection.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/embeddings-and-model-selection/embedding-fundamentals-similarity-metrics-and-model-selection",
       "updated": "2026-11-09"
     },
@@ -1208,7 +1220,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/02_hosted_embeddings_openai_models_and_dimensions.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/embeddings-and-model-selection/hosted-embeddings-openai-models-and-dimensions",
       "updated": "2026-11-09"
     },
@@ -1220,7 +1232,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/03_open_source_embeddings_with_hugging_face.md",
-      "estMinutes": 6,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/embeddings-and-model-selection/open-source-embeddings-with-hugging-face",
       "updated": "2026-11-09"
     },
@@ -1232,8 +1244,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/04_production_concerns_batching_caching_and_similarity_behaviour.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/embeddings-and-model-selection/production-concerns-batching-caching-and-similarity-behaviour",
+      "updated": "2026-11-09"
+    },
+    {
+      "slug": "benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
+      "title": "Benchmarking embedding models with MLflow on a managed platform",
+      "track": "llm-and-retrieval",
+      "module": "embeddings-and-model-selection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m13_embeddings/05_benchmarking_embedding_models_with_mlflow_databricks.md",
+      "estMinutes": 7,
+      "href": "/learn/llm-and-retrieval/embeddings-and-model-selection/benchmarking-embedding-models-with-mlflow-on-a-managed-platform",
       "updated": "2026-11-09"
     },
     {
@@ -1268,7 +1292,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m14_vector_stores/01_index_operations_create_query_update_delete_persist.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/vector-stores-and-index-operations/index-operations-create-query-update-delete-persist",
       "updated": "2026-11-09"
     },
@@ -1280,7 +1304,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m14_vector_stores/02_embedded_stores_chroma_and_faiss.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/vector-stores-and-index-operations/embedded-stores-chroma-and-faiss",
       "updated": "2026-11-09"
     },
@@ -1292,7 +1316,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m14_vector_stores/03_managed_stores_astra_db_and_pinecone.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/vector-stores-and-index-operations/managed-stores-astra-db-and-pinecone",
       "updated": "2026-11-09"
     },
@@ -1304,7 +1328,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m14_vector_stores/04_postgres_pgvector_with_metadata_filtered_search.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/vector-stores-and-index-operations/postgres-pgvector-with-metadata-filtered-search",
       "updated": "2026-11-09"
     },
@@ -1316,7 +1340,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m14_vector_stores/05_incremental_indexing_indexing_api_and_record_manager.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/llm-and-retrieval/vector-stores-and-index-operations/incremental-indexing-indexing-api-and-record-manager",
       "updated": "2026-11-09"
     },
