@@ -53,8 +53,7 @@ export const SITE_TEXT_EDITS = {
     ['Notebook 06b says the Databricks reranker', "Notebook 06b says the store's reranker"],
   ],
   [`${COURSE}/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/03_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md`]: [
-    ['and four Databricks Genie tools over an insurer', 'and four tools over a managed text-to-SQL service, covering an insurer'],
-    ['The scripts need a Databricks endpoint and a Tavily key.', 'The scripts need a model-serving endpoint and a Tavily key.'],
+    ['four Databricks Genie tools for', 'four tools over a managed text-to-SQL service for'],
     ['`databricks-claude-opus-4-6`, temperature 0.1', 'Claude Opus 4.6 on a model-serving endpoint, temperature 0.1'],
     ['| A Unity Catalog volume |', '| A governed storage volume |'],
   ],

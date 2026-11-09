@@ -36,7 +36,7 @@ The scripts configure each part as follows:
 | Part | What it gives the orchestrator | In the scripts |
 |---|---|---|
 | Built-in tools | File operations (`ls`, `read_file`, `write_file`, `edit_file`, `glob`, `grep`), `execute` for shell commands, and `task` to call a sub-agent | Added by `create_deep_agent`. `execute` returns an error unless the backend can run commands |
-| Custom tools | Domain actions | 03a: `name_project`, `internet_search` (Tavily, 5 results by default) and four tools over a managed text-to-SQL service, covering an insurer's customer, distribution, policy and claims data. 03b adds `save_memory`, `recall_memories`, `forget_memory` |
+| Custom tools | Domain actions | 03a: `name_project`, `internet_search` (Tavily, 5 results by default) and four tools over a managed text-to-SQL service for an insurer's customer, distribution, policy and claims data. 03b adds `save_memory`, `recall_memories`, `forget_memory` |
 | Sub-agents | Specialists, each a dict of `name`, `description`, `system_prompt`, `skills` and `tools` | 03a: 7 (`senior-developer`, `code-reviewer`, `research-agent` and four insurer analytics agents). 03b adds `memory-manager` |
 | Skills | Instructions in `SKILL.md` files under `/skills/` | 8 skills, one per sub-agent. Each sub-agent's prompt says to follow its skill |
 | Backend | Where files live and whether commands run | A `CompositeBackend` that routes `/skills/` to the skills folder and everything else to `FilesystemBackend(virtual_mode=True)`, or to `LocalShellBackend` when `USE_SANDBOX=true` |
