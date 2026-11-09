@@ -50,13 +50,27 @@ export const SITE_TEXT_EDITS = {
   [`${COURSE}/p05_retrieval_quality_and_rag_apps/m16_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md`]: [
     [/^(# .*) on Databricks Vector Search$/m, '$1 in a managed vector store'],
     ['`06b` moves hybrid search and reranking into the vector store. On a Databricks Vector Search index it embeds', '`06b`, an optional notebook, moves hybrid search and reranking into a managed vector store. It embeds'],
-    ['and `reranker=DatabricksReranker(columns_to_rerank=["text"])`', 'and a `reranker` over the `text` column'],
     ['Notebook 06b says the Databricks reranker', "Notebook 06b says the store's reranker"],
   ],
   [`${COURSE}/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/03_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md`]: [
-    ['four Databricks Genie tools for', 'four tools over a managed text-to-SQL service for'],
+    ['and four Databricks Genie tools over an insurer', 'and four tools over a managed text-to-SQL service, covering an insurer'],
+    ['The scripts need a Databricks endpoint and a Tavily key.', 'The scripts need a model-serving endpoint and a Tavily key.'],
     ['`databricks-claude-opus-4-6`, temperature 0.1', 'Claude Opus 4.6 on a model-serving endpoint, temperature 0.1'],
     ['| A Unity Catalog volume |', '| A governed storage volume |'],
+  ],
+  [`${COURSE}/p08_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md`]: [
+    ['which moves the same graph onto a managed Databricks index', 'which moves the same graph onto a managed vector index'],
+  ],
+  [`${COURSE}/p08_agentic_rag/m28_retrieval_grading_rewriting/02_the_same_agent_on_databricks_vector_search.md`]: [
+    [/^(# .*) on Databricks Vector Search$/m, '$1 on a managed vector search index'],
+    ['## The project: the same agent on Databricks Vector Search', '## The project: the same agent on a managed vector search index'],
+    ['with models served on Databricks.', 'with models served on the same platform.'],
+    ['behind a managed index on Databricks.', 'behind a managed vector search index.'],
+    ['| **Delta Sync index** |', '| **Synced index** |'],
+    ['Databricks offers three kinds of index', 'The platform offers three kinds of index'],
+    ['uses a model served on Databricks, so', 'uses a model served on the platform, so'],
+    ['runs only inside a Databricks workspace, with permission to create a catalog, a schema and a Vector Search endpoint.', "runs only inside the platform's workspace, with permission to create a catalog, a schema and a vector search endpoint."],
+    ['swaps an in-memory vector store for Databricks Vector Search.', 'swaps an in-memory vector store for a managed vector search index.'],
   ],
   [`${COURSE}/p11_agent_protocols/m39_building_mcp_servers_and_clients/05_transports_sse_and_streamable_http.md`]: [
     [/Lesson \d+ of T[\d.]+'s Databricks server ends with `mcp\.run\(\)`\./, 'A server written for local use often ends with `mcp.run()`.'],

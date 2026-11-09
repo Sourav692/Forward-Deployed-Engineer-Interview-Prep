@@ -358,7 +358,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store",
       "retrieval-hybrid-rerank-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "query-transformation-and-routing",
@@ -368,13 +368,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "query-transformation-and-routing-overview",
       "query-rewriting-and-expansion",
+      "multi-query-retrieval",
       "rag-fusion-with-reciprocal-rank-fusion",
+      "step-back-prompting",
       "hyde-embed-a-hypothetical-answer",
       "query-decomposition-for-multi-hop-questions",
       "routing-llm-classifier-and-semantic-routing",
+      "self-querying-natural-language-to-metadata-filter",
       "query-transformation-and-routing-interview-questions"
     ],
-    "practiceMinutes": 380
+    "practiceMinutes": 350
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
@@ -466,9 +469,10 @@ export const INDEX_MODULES: IndexModule[] = [
       "react-with-langchain-create-agent",
       "models-messages-and-structured-output-in-langchain-1-x",
       "middleware-including-human-in-the-loop",
+      "exercise-intelligent-travel-assistant-agent-with-solution",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "agentic-workflow-patterns",
@@ -484,7 +488,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "evaluator-optimizer-loops-always-bounded-langgraph-vs-lcel",
       "agentic-workflow-patterns-interview-questions"
     ],
-    "practiceMinutes": 380
+    "practiceMinutes": 350
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
@@ -494,11 +498,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "planning-reflection-and-reasoning-patterns-overview",
       "plan-and-execute-vs-react-decompose-execute-replan",
+      "deep-research-and-reflective-dynamic-planners",
+      "reflection-and-reflexion-agents",
       "chain-of-verification-and-constitutional-critique",
+      "self-discover-and-reflective-code-generation",
       "self-consistency-tree-of-thoughts-and-lats",
+      "simulator-in-the-loop-metacognition-and-exemplar-memory",
       "planning-reflection-and-reasoning-patterns-interview-questions"
     ],
-    "practiceMinutes": 320
+    "practiceMinutes": 290
   },
   {
     "slug": "coding-computer-use-and-deep-agents",
@@ -508,6 +516,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "coding-computer-use-and-deep-agents-overview",
       "applied-react-web-research-swe-and-computer-use-agents",
+      "developer-vs-tester-agents",
       "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
       "coding-computer-use-and-deep-agents-interview-questions"
     ],
@@ -521,11 +530,13 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "human-approval-and-applied-single-agent-builds-overview",
       "dry-run-harness-and-human-approval",
+      "research-and-competitive-intelligence-agents",
+      "financial-analyst-agent",
       "text-to-sql-workflow-vs-react-agent",
       "llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
       "human-approval-and-applied-single-agent-builds-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
@@ -535,6 +546,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "lessons": [
       "agentic-rag-foundations-grading-and-query-rewriting-overview",
       "retriever-as-a-tool-grade-then-rewrite-in-langgraph",
+      "the-same-agent-on-a-managed-vector-search-index",
       "guardrails-query-optimisation-and-a-retry-loop",
       "agentic-rag-foundations-grading-and-query-rewriting-interview-questions"
     ],
