@@ -3,7 +3,7 @@
 
 Larkspur retrieves a refund-related passage that does not answer when payment arrives. You will grade that evidence, rewrite the query and prove the retry loop stops when the handbook has no answer. The tutorials connect conditional edges, document grading, topic checks and explicit retry budgets.
 
-The notebooks run on a research paper (lesson 1 of T9.1) and a fictional company's support documents (lesson 3 of T9.1). These pages put the same graphs on the Larkspur Cloud handbook from [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview): its twelve chunks, and five golden questions that each take a different path through the loop. *Can I export my data after I cancel my plan?* is answered on the first retrieval, *How long does a refund take?* after one rewrite, *What happens if my server goes down?* after two, *Do you offer a student discount?* has no answer in the handbook, and *What's the weather like today?* is off topic.
+The notebooks run on a research paper (lesson 1 of T9.1, and lesson 2 of T9.1, which moves the same graph onto a managed vector index) and a fictional company's support documents (lesson 3 of T9.1). These pages put the same graphs on the Larkspur Cloud handbook from [T5.1](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview): its twelve chunks, and five golden questions that each take a different path through the loop. *Can I export my data after I cancel my plan?* is answered on the first retrieval, *How long does a refund take?* after one rewrite, *What happens if my server goes down?* after two, *Do you offer a student discount?* has no answer in the handbook, and *What's the weather like today?* is off topic.
 
 ## In short
 
