@@ -28,3 +28,6 @@ website_audit
 /.system_design_review/
 linkedin_post
 screenshot_linkedin
+
+# Local notes comparing third-party courses with the site
+educative_sync/
