@@ -3,6 +3,7 @@ import { formatMinutes, type LearnLesson } from '@/lib/learn'
 import { cx, focusRing } from '@/components/ui'
 import { COPY } from './copy'
 import { LessonReadMark } from './ProgressIslands'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * A module's reading list. Synced lessons open their /learn page; live lessons open
@@ -24,10 +25,10 @@ export function ReadingList({ lessons, numbered = true }: { lessons: LearnLesson
                   {l.title}
                 </Link>
                 <p className="mt-0.5 text-xs text-muted">
-                  {l.estMinutes ? `${formatMinutes(l.estMinutes)}` : null}
-                  {l.estMinutes && live ? ' · ' : null}
+                  {SHOW_STUDY_TIME && l.estMinutes ? `${formatMinutes(l.estMinutes)}` : null}
+                  {SHOW_STUDY_TIME && l.estMinutes && live ? ' · ' : null}
                   {live && <span>{COPY.liveLessonHint(l.href)}</span>}
-                  {l.publish === 'credited' && ' · Credited source'}
+                  {l.publish === 'credited' && `${(SHOW_STUDY_TIME && l.estMinutes) || live ? ' · ' : ''}Credited source`}
                 </p>
               </div>
             </div>

@@ -8,6 +8,7 @@ import type { TwinLink } from '@/lib/twins'
 import type { ExplorerData } from '@/lib/explorers/types'
 import { PageHead } from '@/components/editorial/PageHead'
 import { LessonExperience } from '@/components/explorers/LessonExperience'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * A final-week review's "One-Page Memory Card" H2 opens a second tab, Recall card (owner
@@ -43,7 +44,7 @@ export function LessonReader({ page, twins = [], explorer, tag }: { page: Lesson
         title={lesson.title}
         titleId="lesson-title"
         facts={[
-          ...(lesson.estMinutes ? [{ term: 'Reading time', value: formatMinutes(lesson.estMinutes) }] : []),
+          ...(SHOW_STUDY_TIME && lesson.estMinutes ? [{ term: 'Reading time', value: formatMinutes(lesson.estMinutes) }] : []),
           ...(sourceNote ? [{ term: 'Source', value: sourceNote }] : []),
         ]}
         updated={lesson.updated}

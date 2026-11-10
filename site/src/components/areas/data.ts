@@ -5,7 +5,7 @@ import { getAllScenarios, getTracks } from '@/lib/content'
 import { INTERVIEW_ROUNDS, MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule } from '@/lib/curriculum-types'
 import { FAMILY_META, LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
-import { getLearnManifest, learnTracks, trackHours } from '@/lib/learn'
+import { getLearnManifest, learnTracks, notebookCount, trackHours } from '@/lib/learn'
 import { isLearnTrack } from '@/lib/curriculum-href'
 import { liveRounds } from '@/lib/interview-rounds'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
@@ -86,6 +86,8 @@ export type SiteCounts = {
   /** Tracks listed under /learn, and how many study hours they add up to. */
   learnTracks: number
   learnHours: number
+  /** Distinct notebooks the Learn tracks point to. */
+  learnNotebooks: number
   /** Modules listed in Learn tracks (Coming soon scaffolds not counted), how many are ready, and the lesson pages they hold (links to other areas not counted). */
   learnModules: number
   learnReady: number
@@ -123,6 +125,7 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
   return {
     learnTracks: learn.length,
     learnHours: learn.reduce((sum, t) => sum + trackHours(t), 0),
+    learnNotebooks: notebookCount(learn),
     learnModules: learnModules.length,
     learnReady: learnModules.filter((m) => m.status === 'ready').length,
     learnLessons: getLearnManifest().filter((l) => l.kind === 'sync' && isLearnTrack(l.track)).length,

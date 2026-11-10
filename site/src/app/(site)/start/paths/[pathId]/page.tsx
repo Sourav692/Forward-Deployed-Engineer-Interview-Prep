@@ -12,6 +12,7 @@ import { Tag, cx, focusRing } from '@/components/ui'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { PageHead } from '@/components/editorial/PageHead'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * Path detail (FE-10). Prerendered for every path (`generateStaticParams` +
@@ -62,7 +63,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
           standfirst={path.summary}
           facts={[
             ...(persona ? [{ term: 'For', value: `${persona.title}. ${persona.startingPoint}.` }] : []),
-            { term: 'Study time', value: `About ${path.estHours} h, required and recommended` },
+            ...(SHOW_STUDY_TIME ? [{ term: 'Study time', value: `About ${path.estHours} h, required and recommended` }] : []),
             {
               term: 'Modules',
               value: counts

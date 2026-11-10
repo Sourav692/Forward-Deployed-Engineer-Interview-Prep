@@ -40,6 +40,7 @@ import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { moduleTag } from '@/lib/curriculum-href'
 import { PageHead } from '@/components/editorial/PageHead'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * Module page (FE-07). Prerendered for every Learn module (`generateStaticParams` +
@@ -118,7 +119,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
             standfirst={mod.objective ? `${capitalise(mod.objective)}.` : undefined}
             facts={[
               // A paused or planned module has nothing to spend time on yet.
-              ...(mod.status === 'on-hold' || mod.status === 'coming-soon'
+              ...(!SHOW_STUDY_TIME || mod.status === 'on-hold' || mod.status === 'coming-soon'
                 ? []
                 : [{ term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` }]),
               ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
@@ -142,7 +143,11 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
           )}
 
           <dl className="mt-6 grid gap-4 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
-            {mod.scope && <Fact term="Scope">{capitalise(mod.scope)}</Fact>}
+            {/* The course's 46 module scopes are only its notebook-time estimate ("Practice time
+                includes about 3 h of notebook work"), which hides with the rest of the study time. */}
+            {mod.scope && (SHOW_STUDY_TIME || !/^Practice time includes/.test(mod.scope)) && (
+              <Fact term="Scope">{capitalise(mod.scope)}</Fact>
+            )}
             {!gap && (
               <Fact term="Prerequisites">
                 {prereqModules.length === 0 ? (

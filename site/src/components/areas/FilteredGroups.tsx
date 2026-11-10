@@ -8,6 +8,7 @@ import { Button, EmptyState } from '@/components/ui'
 import { ContentsGroup } from '@/components/editorial/ContentsGroup'
 import { AreaGroup, LinkList } from './Area'
 import type { GroupItem, TrackGroup } from './data'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 const TIME: ChipOption[] = [
   { value: '', label: 'Any length' },
@@ -31,7 +32,7 @@ export function FilteredGroups({
   levels,
   noun,
   unit,
-  time = false,
+  time: timeProp = false,
   contents = false,
 }: {
   groups: TrackGroup[]
@@ -44,6 +45,8 @@ export function FilteredGroups({
   /** Render each group as a casebook contents block (`ContentsGroup`) instead of a card. */
   contents?: boolean
 }) {
+  // The reading-time filter goes with the rest of the study time (SHOW_STUDY_TIME).
+  const time = timeProp && SHOW_STUDY_TIME
   const params = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
-import { trackHours } from '@/lib/learn'
+import { notebookCount, trackHours } from '@/lib/learn'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 import { groupHref, type LearnGroup } from '@/lib/learn-stages'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { GroupProgress } from './ProgressIslands'
@@ -22,6 +23,7 @@ export function GroupCard({
 }) {
   const live = tracks.length > 0
   const hours = tracks.reduce((sum, t) => sum + trackHours(t), 0)
+  const notebooks = notebookCount(tracks)
 
   return (
     <article className={cx('cb-group-card relative flex w-full flex-col', !live && 'is-soon')}>
@@ -44,7 +46,12 @@ export function GroupCard({
             <span>
               {tracks.length} {tracks.length === 1 ? 'track' : 'tracks'}
             </span>
-            <span>About {hours} h</span>
+            {notebooks > 0 && (
+              <span>
+                {notebooks} {notebooks === 1 ? 'notebook' : 'notebooks'}
+              </span>
+            )}
+            {SHOW_STUDY_TIME && <span>About {hours} h</span>}
           </p>
           <div className="mt-auto pt-4">
             <GroupProgress weights={Object.fromEntries(tracks.map((t) => [t.slug, trackHours(t) || 1]))} minutes={minutes} />

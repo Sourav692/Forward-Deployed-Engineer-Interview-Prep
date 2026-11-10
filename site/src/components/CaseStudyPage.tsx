@@ -8,6 +8,7 @@ import { Breadcrumbs, type Crumb } from '@/components/learn/Breadcrumbs'
 import { BeforeYouStart, Fact, WhereNext } from '@/components/PageIntro'
 import { PageHead } from '@/components/editorial/PageHead'
 import { pageTwins } from '@/lib/twins'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 export const caseDescription = (study: CaseStudy) =>
   study.ref.moduleId === '16-company-oriented-prep'
@@ -53,7 +54,11 @@ export async function CaseStudyPage({
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
           { term: 'Level', value: itemLevel(`${study.ref.trackId}/${study.ref.slug}`, meta.difficulty) },
-          { term: 'Reading time', value: documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min` },
+          ...(SHOW_STUDY_TIME
+            ? [{ term: 'Reading time', value: documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min` }]
+            : documents.length > 1
+              ? [{ term: 'Documents', value: String(documents.length) }]
+              : []),
         ]}
         updated={study.ref.updated}
         twins={twins}
@@ -116,9 +121,11 @@ function DocumentLink({ document: d }: { document: CaseDocument }) {
       <a href={`#${d.tab}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
         {d.label}
       </a>{' '}
-      <span className="text-subtle">
-        ({d.minutes} min{d.parts.length > 1 && `, ${d.parts.length} parts`})
-      </span>
+      {(SHOW_STUDY_TIME || d.parts.length > 1) && (
+        <span className="text-subtle">
+          ({[...(SHOW_STUDY_TIME ? [`${d.minutes} min`] : []), ...(d.parts.length > 1 ? [`${d.parts.length} parts`] : [])].join(', ')})
+        </span>
+      )}
     </>
   )
 }

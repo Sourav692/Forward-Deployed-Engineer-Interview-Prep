@@ -10,6 +10,7 @@ import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * /practice/<slug>: one technical or behavioural worksheet (ENH-17). The URL drops the
@@ -83,8 +84,8 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
           { term: 'Level', value: itemLevel(`${ref.trackId}/${ref.slug}`, meta.difficulty) },
-          ...(meta.practiceMinutes ? [{ term: 'Practice time', value: `About ${meta.practiceMinutes} min` }] : []),
-          ...(ref.minutes ? [{ term: 'Reading time', value: `${ref.minutes} min` }] : []),
+          ...(SHOW_STUDY_TIME && meta.practiceMinutes ? [{ term: 'Practice time', value: `About ${meta.practiceMinutes} min` }] : []),
+          ...(SHOW_STUDY_TIME && ref.minutes ? [{ term: 'Reading time', value: `${ref.minutes} min` }] : []),
           ...(meta.personalisation ? [{ term: 'Progress', value: 'Track each answer as you practise' }] : []),
         ]}
         updated={ref.updated}

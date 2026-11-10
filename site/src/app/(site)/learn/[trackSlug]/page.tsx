@@ -12,6 +12,7 @@ import {
   groupTrail,
   learnHref,
   trackMinutes,
+  trackNotebooks,
   trackParams,
 } from '@/lib/learn'
 import type { CurriculumModule } from '@/lib/curriculum-types'
@@ -24,6 +25,7 @@ import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
 import { TextLink } from '@/components/areas/Area'
 import { PageHead } from '@/components/editorial/PageHead'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * Track page (FE-06). Every track is prerendered at build time: `generateStaticParams`
@@ -83,7 +85,8 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
             facts={[
               { term: 'Requirement', value: REQUIREMENT_LABEL[track.required] },
               { term: 'For whom', value: track.forWhom },
-              { term: 'Time', value: formatMinutes(trackMinutes(track)) },
+              ...(trackNotebooks(track) ? [{ term: 'Notebooks', value: String(trackNotebooks(track)) }] : []),
+              ...(SHOW_STUDY_TIME ? [{ term: 'Time', value: formatMinutes(trackMinutes(track)) }] : []),
               {
                 term: 'Before this track',
                 value: (
@@ -139,7 +142,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                   key={s.slug}
                   id={s.slug}
                   title={s.title}
-                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? `, ${formatMinutes(minutes)}` : ', coming soon'}`}
+                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? (SHOW_STUDY_TIME ? `, ${formatMinutes(minutes)}` : '') : ', coming soon'}`}
                 >
                   {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
                   <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>

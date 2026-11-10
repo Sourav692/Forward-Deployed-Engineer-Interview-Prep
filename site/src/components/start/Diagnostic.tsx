@@ -14,6 +14,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { DIAGNOSTIC, getPathById, pathVariants, scoreDiagnostic, weeklyPlan, type DiagnosticResult } from '@/lib/paths'
 import { Button, LinkButton, ProgressBar, cx, focusRing } from '@/components/ui'
 import { savePath } from './path-state'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 export type ModuleRef = { code: string; title: string; href: string; minutes: number }
 
@@ -83,9 +84,11 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
           {path.title}
         </h3>
         <p className="mt-2 text-base text-muted">{path.summary}</p>
-        <p className="mt-1 text-sm text-muted">
-          About {path.estHours} hours of required and recommended study.
-        </p>
+        {SHOW_STUDY_TIME && (
+          <p className="mt-1 text-sm text-muted">
+            About {path.estHours} hours of required and recommended study.
+          </p>
+        )}
 
         {result.reasons.length > 0 && (
           <>
@@ -118,40 +121,45 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
           </>
         )}
 
-        <h4 className="mt-5 text-sm font-semibold">Your Weekly Plan</h4>
-        <p className="mt-1 text-sm text-muted">
-          About {Math.round(plan.minutes / 60)} hours over {plan.totalWeeks} {plan.totalWeeks === 1 ? 'week' : 'weeks'} at{' '}
-          {result.weeklyHours} hours a week
-          {plan.skipped > 0 && `, leaving out ${plan.skipped} ${plan.skipped === 1 ? 'module' : 'modules'} you may be able to skip`}. Only
-          modules with lessons ready to study are included.
-        </p>
-        <ol className="mt-2 space-y-1.5 text-sm">
-          {shown.map((w, i) => {
-            // A long module runs on until the next one starts.
-            const end = (plan.weeks[i + 1]?.week ?? plan.totalWeeks + 1) - 1
-            return (
-              <li key={w.week} className="flex gap-3">
-                <span className="w-24 shrink-0 font-semibold tabular-nums text-subtle">
-                  {end > w.week ? `Weeks ${w.week}–${end}` : `Week ${w.week}`}
-                </span>
-                <span className="min-w-0">
-                  {w.modules
-                    .filter((slug) => modules[slug])
-                    .map((slug, j) => (
-                      <span key={slug}>
-                        {j > 0 && ', '}
-                        <Link href={modules[slug].href} className={cx('rounded-sm text-accent underline underline-offset-2', focusRing)}>
-                          {modules[slug].title}
-                        </Link>
-                      </span>
-                    ))}
-                </span>
-              </li>
-            )
-          })}
-        </ol>
-        {plan.totalWeeks > PLAN_WEEKS_SHOWN && (
-          <p className="mt-1.5 text-sm text-muted">The full path lists the remaining modules in order.</p>
+        {/* The weekly plan is built from study-time estimates, so it hides with them. */}
+        {SHOW_STUDY_TIME && (
+          <>
+          <h4 className="mt-5 text-sm font-semibold">Your Weekly Plan</h4>
+          <p className="mt-1 text-sm text-muted">
+            About {Math.round(plan.minutes / 60)} hours over {plan.totalWeeks} {plan.totalWeeks === 1 ? 'week' : 'weeks'} at{' '}
+            {result.weeklyHours} hours a week
+            {plan.skipped > 0 && `, leaving out ${plan.skipped} ${plan.skipped === 1 ? 'module' : 'modules'} you may be able to skip`}. Only
+            modules with lessons ready to study are included.
+          </p>
+          <ol className="mt-2 space-y-1.5 text-sm">
+            {shown.map((w, i) => {
+              // A long module runs on until the next one starts.
+              const end = (plan.weeks[i + 1]?.week ?? plan.totalWeeks + 1) - 1
+              return (
+                <li key={w.week} className="flex gap-3">
+                  <span className="w-24 shrink-0 font-semibold tabular-nums text-subtle">
+                    {end > w.week ? `Weeks ${w.week}–${end}` : `Week ${w.week}`}
+                  </span>
+                  <span className="min-w-0">
+                    {w.modules
+                      .filter((slug) => modules[slug])
+                      .map((slug, j) => (
+                        <span key={slug}>
+                          {j > 0 && ', '}
+                          <Link href={modules[slug].href} className={cx('rounded-sm text-accent underline underline-offset-2', focusRing)}>
+                            {modules[slug].title}
+                          </Link>
+                        </span>
+                      ))}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
+          {plan.totalWeeks > PLAN_WEEKS_SHOWN && (
+            <p className="mt-1.5 text-sm text-muted">The full path lists the remaining modules in order.</p>
+          )}
+          </>
         )}
 
         {variants.length > 0 && (

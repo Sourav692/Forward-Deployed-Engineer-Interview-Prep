@@ -13,6 +13,7 @@ import type { ProgressExport } from '@/lib/progress/types'
 import { usePath, useStorageAvailable } from '@/lib/progress/useProgress'
 import { useChosenPath } from '@/components/start/path-state'
 import { Button, ConfirmDialog, ErrorState, Input, Skeleton, btn, cx, toast } from '@/components/ui'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -37,11 +38,11 @@ function PathSection({ blocked }: { blocked: boolean }) {
   return (
     <section aria-labelledby="settings-path">
       <h2 id="settings-path" className="text-xl font-semibold">
-        Path and pace
+        {SHOW_STUDY_TIME ? 'Path and pace' : 'Path'}
       </h2>
       {chosen === null ? (
         <p className="mt-2 text-sm text-muted">
-          No path chosen yet. A path sets your weekly hours and flags which modules to study first.{' '}
+          No path chosen yet. A path {SHOW_STUDY_TIME && 'sets your weekly hours and '}flags which modules to study first.{' '}
           <Link href="/start" className="text-accent underline underline-offset-2">
             Choose a path
           </Link>
@@ -100,32 +101,36 @@ function PaceForm({
         </Link>
         .
       </p>
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="block text-sm">
-          <span className="font-semibold">Weekly study hours</span>
-          <Input
-            type="number"
-            inputMode="numeric"
-            min={1}
-            max={40}
-            step={1}
-            value={value}
-            onChange={(e) => setDraft(e.target.value)}
-            disabled={disabled}
-            aria-invalid={!valid}
-            aria-describedby="settings-hours-help"
-            className="mt-1 max-w-28"
-          />
-        </label>
-        <Button type="submit" variant="secondary" disabled={disabled || !valid || draft === null}>
-          Save hours
-        </Button>
-      </div>
-      <p id="settings-hours-help" className="text-sm text-muted">
-        {valid
-          ? `This path is about ${estHours} hours: roughly ${Math.max(1, Math.round(estHours / hours))} weeks at ${hours} hours a week.`
-          : 'Enter a whole number of hours from 1 to 40.'}
-      </p>
+      {SHOW_STUDY_TIME && (
+        <>
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="block text-sm">
+            <span className="font-semibold">Weekly study hours</span>
+            <Input
+              type="number"
+              inputMode="numeric"
+              min={1}
+              max={40}
+              step={1}
+              value={value}
+              onChange={(e) => setDraft(e.target.value)}
+              disabled={disabled}
+              aria-invalid={!valid}
+              aria-describedby="settings-hours-help"
+              className="mt-1 max-w-28"
+            />
+          </label>
+          <Button type="submit" variant="secondary" disabled={disabled || !valid || draft === null}>
+            Save hours
+          </Button>
+        </div>
+        <p id="settings-hours-help" className="text-sm text-muted">
+          {valid
+            ? `This path is about ${estHours} hours: roughly ${Math.max(1, Math.round(estHours / hours))} weeks at ${hours} hours a week.`
+            : 'Enter a whole number of hours from 1 to 40.'}
+        </p>
+        </>
+      )}
     </form>
   )
 }

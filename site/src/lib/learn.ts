@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { cache } from 'react'
 import { marked } from 'marked'
@@ -198,6 +198,38 @@ export const countedMinutes = (modules: CurriculumModule[]): number =>
 /** A track's study minutes and hours: its modules' study time, summed. */
 export const trackMinutes = (track: CurriculumTrack): number => countedMinutes(trackModules(track))
 export const trackHours = (track: CurriculumTrack): number => Math.round(trackMinutes(track) / 60)
+
+/** A notebook link's identity: `owner/repo/path`, so a GitHub link and its Colab twin count once. */
+const NOTEBOOK = /([\w.-]+\/[\w.-]+)\/blob\/[^/\s]+\/([^)\s"'`#?]+\.ipynb)/g
+
+/**
+ * The notebooks a track points to, each counted once: `.ipynb` links in its synced
+ * lessons (`content/learn/<track>/`) plus its modules' notebook-only lessons.
+ */
+const notebooksByTrack = cache((): Map<string, Set<string>> => {
+  const out = new Map<string, Set<string>>()
+  const add = (track: string, text: string) => {
+    const set = out.get(track) ?? new Set<string>()
+    for (const m of text.matchAll(NOTEBOOK)) set.add(`${m[1]}/${m[2]}`)
+    out.set(track, set)
+  }
+  for (const t of TRACKS) {
+    const dir = join(LEARN_DIR, t.slug)
+    if (!existsSync(dir)) continue
+    for (const f of readdirSync(dir, { recursive: true, encoding: 'utf8' })) {
+      if (f.endsWith('.md')) add(t.slug, readFileSync(join(dir, f), 'utf8'))
+    }
+  }
+  for (const m of MODULES) {
+    for (const l of m.notebookOnly ?? []) for (const n of l.notebooks) add(m.track, n.href)
+  }
+  return out
+})
+
+/** How many distinct notebooks a set of tracks points to (one shared notebook counts once). */
+export const notebookCount = (tracks: CurriculumTrack[]): number =>
+  new Set(tracks.flatMap((t) => [...(notebooksByTrack().get(t.slug) ?? [])])).size
+export const trackNotebooks = (track: CurriculumTrack): number => notebookCount([track])
 
 // ── Static params ──────────────────────────────────────────────────────────
 

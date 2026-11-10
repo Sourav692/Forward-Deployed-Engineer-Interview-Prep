@@ -1,5 +1,14 @@
 import type { CurriculumModule } from './curriculum-types'
 
+/**
+ * Whether the site shows study time: lesson minutes, module and track times, group and
+ * path hours, and the weekly-hours planner. Owner decision, 10 Nov 2026: times hang on a
+ * reading speed and hand-set practice allowances that differ for every reader, so they
+ * are hidden. The data and the checks that keep it right stay, so setting this back to
+ * `true` restores every figure.
+ */
+export const SHOW_STUDY_TIME = false
+
 export type StudyTime = { reading: number; practice: number; total: number }
 
 /**

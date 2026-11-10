@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CHECKPOINTS } from '../src/lib/checkpoints'
+import { SHOW_STUDY_TIME } from '../src/lib/study-time'
 import {
   CASE_STUDY,
   CHECKPOINT_MODULE,
@@ -40,9 +41,14 @@ test('path flow: landing → start → keyboard diagnostic → path flag on /lea
   }
 
   await expect(page.getByText('Your Recommended Path')).toBeVisible()
-  // ON: the result is a week-by-week plan, not just a path name.
-  await expect(page.getByRole('heading', { name: 'Your Weekly Plan' })).toBeVisible()
-  await expect(page.getByText(/^Weeks? 1(–\d+)?$/)).toBeVisible()
+  // ON: the result is a week-by-week plan, not just a path name. The plan is built from
+  // study-time estimates, so it shows only while SHOW_STUDY_TIME is on.
+  if (SHOW_STUDY_TIME) {
+    await expect(page.getByRole('heading', { name: 'Your Weekly Plan' })).toBeVisible()
+    await expect(page.getByText(/^Weeks? 1(–\d+)?$/)).toBeVisible()
+  } else {
+    await expect(page.getByRole('heading', { name: 'Your Weekly Plan' })).toHaveCount(0)
+  }
   const follow = page.getByRole('button', { name: /^Start first module|^Choose this path/ })
   await tabTo(page, follow)
   await page.keyboard.press('Enter')
@@ -660,7 +666,7 @@ test('entry points: express lane, Frontier Lab hours, diagnostic links', async (
     await expect(page.getByRole('link', { name: 'Go straight to the final-week review' })).toHaveAttribute('href', '/interview/final-week')
   }
   await expect(page.getByRole('link', { name: 'Forward Deployed Engineer: Frontier Lab Loop' })).toBeVisible()
-  await expect(page.getByText(/Loop variant of the .+ path, about \d+ h/)).toBeVisible()
+  await expect(page.getByText(/Loop variant of the .+ path/)).toBeVisible()
   await page.goto('/learn/orientation')
   await hydrated(page)
   // Sections start collapsed on narrow screens.

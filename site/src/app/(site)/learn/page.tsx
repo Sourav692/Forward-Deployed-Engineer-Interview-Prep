@@ -9,6 +9,7 @@ import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { GroupCard } from '@/components/learn/GroupCard'
 import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { siteCounts } from '@/components/areas/data'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * /learn: the curriculum overview (FE-06). A static Server Component listing the nine
@@ -34,7 +35,7 @@ export default async function LearnPage() {
         <div>
           <h1>Learn</h1>
           <p className="cb-standfirst">
-            {counts.learnTracks} tracks in {LEARN_STAGES.length} topic groups, about {counts.learnHours} hours in all. Open a
+            {counts.learnTracks} tracks in {LEARN_STAGES.length} topic groups, {counts.learnNotebooks} notebooks{SHOW_STUDY_TIME && `, about ${counts.learnHours} hours`} in all. Open a
             group to see its tracks.
           </p>
         </div>
