@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
-import { REQUIREMENT_LABEL, isRequired, learnHref, trackHours, trackModules } from '@/lib/learn'
+import { REQUIREMENT_LABEL, isRequired, learnHref, trackHours, trackModules, trackNotebooks } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { TrackPathSummary } from './PathFlagIslands'
 import { TrackProgress } from './ProgressIslands'
 import { trackTag } from '@/lib/curriculum-href'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * TrackCard (FE-06): one track on /learn, a ruled entry in the Editorial theme. The whole
@@ -28,8 +29,13 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
       </h2>
       <p className="cb-entry-body">{track.objective}</p>
       <p className="cb-entry-facts">
-        <span>About {trackHours(track)} h</span>
+        {SHOW_STUDY_TIME && <span>About {trackHours(track)} h</span>}
         <span>{modules.length} modules</span>
+        {trackNotebooks(track) > 0 && (
+          <span>
+            {trackNotebooks(track)} {trackNotebooks(track) === 1 ? 'notebook' : 'notebooks'}
+          </span>
+        )}
       </p>
       <TrackPathSummary trackSlug={track.slug} />
       <div className="mt-auto pt-4">

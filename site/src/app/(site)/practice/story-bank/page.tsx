@@ -13,6 +13,7 @@ import { ReadingPanel } from '@/components/CaseStudyView'
 import { LessonTabs } from '@/components/learn/LessonTabs'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * The behavioural Story Bank (CONTENT-15): markdown from
@@ -46,7 +47,7 @@ export default async function StoryBankPage() {
           { term: 'Kind', value: MODES[STORY_BANK_META.mode].label },
           // The worksheets' level vocabulary (Foundation, Core, Advanced), not the meta's "Intermediate".
           { term: 'Level', value: LEVEL_LABEL.core },
-          { term: 'Reading time', value: `${bank.minutes} min` },
+          ...(SHOW_STUDY_TIME ? [{ term: 'Reading time', value: `${bank.minutes} min` }] : []),
         ]}
         updated={bank.updated}
         report={{ title: STORY_BANK.title, path: STORY_BANK.href }}

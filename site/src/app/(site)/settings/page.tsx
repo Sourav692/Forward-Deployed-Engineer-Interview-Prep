@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { SettingsView } from '@/components/progress/SettingsView'
 import { Toaster } from '@/components/ui'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * /settings (FE-17). A static shell: the settings themselves are a client island that
@@ -10,7 +11,7 @@ import { Toaster } from '@/components/ui'
 
 export const metadata: Metadata = {
   title: 'Settings',
-  description: 'Weekly study hours, and export, import or reset of the progress stored in this browser.',
+  description: `${SHOW_STUDY_TIME ? 'Weekly study hours' : 'Your learning path'}, and export, import or reset of the progress stored in this browser.`,
 }
 
 export default function SettingsPage() {

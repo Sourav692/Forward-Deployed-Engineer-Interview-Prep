@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Dashboard } from '@/components/progress/Dashboard'
 import { dashboardData } from '@/lib/dashboard'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * /progress (FE-16): next up, interview readiness, revision queue, finish-by date,
@@ -25,7 +26,7 @@ export default async function ProgressPage() {
           <Link href="/settings" className="text-accent underline underline-offset-2">
             Settings
           </Link>{' '}
-          has your weekly hours and export, import and reset.
+          has {SHOW_STUDY_TIME ? 'your weekly hours and ' : 'your path and '}export, import and reset.
         </p>
       </header>
       <Dashboard modules={data.modules} sheets={data.sheets} />

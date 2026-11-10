@@ -5,6 +5,7 @@ import { Tag, cx, focusRing } from '@/components/ui'
 import { ModulePathFlag } from './PathFlagIslands'
 import { ModuleProgress, ModuleStatusBadge } from './ProgressIslands'
 import { moduleTag } from '@/lib/curriculum-href'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * ModuleCard (FE-06): one module row on a track page, with code, title, status,
@@ -25,10 +26,12 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
           </h3>
         </div>
         {/* A scaffold module (Coming soon, no estimate) has no time to show. */}
-        {moduleTime(mod).total > 0 && (
+        {(SHOW_STUDY_TIME ? moduleTime(mod).total > 0 : input.reading.length > 0) && (
           <p className="mt-0.5 pl-11 text-xs text-muted">
-            {formatMinutes(moduleTime(mod).total)}
-            {input.reading.length > 0 && `, ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
+            {[
+              ...(SHOW_STUDY_TIME ? [formatMinutes(moduleTime(mod).total)] : []),
+              ...(input.reading.length > 0 ? [`${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`] : []),
+            ].join(', ')}
           </p>
         )}
       </div>

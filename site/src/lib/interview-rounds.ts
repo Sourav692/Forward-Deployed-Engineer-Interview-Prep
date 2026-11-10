@@ -3,6 +3,7 @@ import type { InterviewRound } from './curriculum-types'
 import { FAMILY_META } from './editorial'
 import { scenarioHref, type ScenarioRef } from './scenario'
 import { formatMinutes, getModuleBySlug, getPublishedLesson, learnHref, moduleTime, readingList } from './learn'
+import { SHOW_STUDY_TIME } from './study-time'
 
 /** Rounds with content. A planned round has no page and stays out of the sitemap. */
 export const liveRounds = () => INTERVIEW_ROUNDS.filter((r) => !r.planned)
@@ -32,7 +33,7 @@ export function lessonRow(slug: string, worksheets?: WorksheetFacts): Row {
   if (!lesson || !mod) throw new Error(`Interview round: lesson "${slug}" is not in the learn manifest. Run npm run sync.`)
   const sheet = worksheets?.get(lesson.href)
   const minutes = sheet ? sheet.minutes : lesson.estMinutes
-  return { href: lesson.href, title: lesson.title, facts: [sheet?.set ?? mod.title, ...(minutes ? [formatMinutes(minutes)] : [])] }
+  return { href: lesson.href, title: lesson.title, facts: [sheet?.set ?? mod.title, ...(SHOW_STUDY_TIME && minutes ? [formatMinutes(minutes)] : [])] }
 }
 
 /** A Learn module as a row: its reading time and lesson count. */
@@ -43,6 +44,6 @@ export function moduleRow(slug: string): Row {
   return {
     href: learnHref.module(mod),
     title: mod.title,
-    facts: [formatMinutes(moduleTime(mod).total), ...(lessons ? [`${lessons} ${lessons === 1 ? 'lesson' : 'lessons'}`] : [])],
+    facts: [...(SHOW_STUDY_TIME ? [formatMinutes(moduleTime(mod).total)] : []), ...(lessons ? [`${lessons} ${lessons === 1 ? 'lesson' : 'lessons'}`] : [])],
   }
 }

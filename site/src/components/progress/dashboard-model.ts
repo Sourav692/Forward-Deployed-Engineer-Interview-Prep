@@ -24,6 +24,7 @@ import type { ActivityEvent, PathChoice } from '@/lib/progress/types'
 import type { CompetencySheet } from '@/lib/dashboard'
 import { isRead, learnerStatus, moduleRevision, type ModuleInput } from '@/components/learn/progress-model'
 import { MOCK_MODULE, MOCK_ROUNDS, mockAssessmentId, mockRoundsFor } from './mock-rubric'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 const moduleBySlug = new Map(INDEX_MODULES.map((m) => [m.slug, m]))
@@ -190,7 +191,9 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
           const hours = Math.max(1, Math.round(remainingMinutes(input) / 60))
           return {
             module: mod,
-            reason: `You have started it; finishing it moves your path ${hours} h closer.`,
+            reason: SHOW_STUDY_TIME
+              ? `You have started it; finishing it moves your path ${hours} h closer.`
+              : 'You have started it; finish it before starting another.',
             action: 'Continue module',
             href: moduleHref(mod),
           }

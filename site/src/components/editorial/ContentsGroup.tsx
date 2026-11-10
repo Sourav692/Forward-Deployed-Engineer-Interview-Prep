@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { LEVEL_LABEL } from '@/lib/editorial'
 import type { TrackGroup } from '@/components/areas/data'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * One theme or track as a magazine contents block (Hallmark, Editorial theme): the
@@ -30,7 +31,7 @@ export function ContentsGroup({ group, unit }: { group: TrackGroup; unit: [strin
                 <span className="cb-row-facts">
                   {kind && <span>{kind}</span>}
                   <span>{LEVEL_LABEL[item.level]}</span>
-                  {item.minutes !== undefined && <span>{item.minutes} min</span>}
+                  {SHOW_STUDY_TIME && item.minutes !== undefined && <span>{item.minutes} min</span>}
                 </span>
               </Link>
               {item.twin && (

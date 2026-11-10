@@ -7,6 +7,7 @@ import { documentsOf, hasChapters, qualifiedTitle, scenarioHref, type CaseDocume
 import type { ReadingDocument } from '@/lib/reading'
 import { loadLastPart, loadRead, notifyProgress, saveLastPart, saveRead } from '@/lib/storage'
 import { Diagram, hasStaticDiagram } from './Diagram'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * A reading page: one case study, four documents, one tab each.
@@ -289,9 +290,13 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
           <div className="cb-purpose no-print">
             <p className="cb-purpose-label">
               <strong>{d.label}</strong>
-              <span>
-                {d.minutes} min{split && ` in ${d.parts.length} parts`}
-              </span>
+              {SHOW_STUDY_TIME ? (
+                <span>
+                  {d.minutes} min{split && ` in ${d.parts.length} parts`}
+                </span>
+              ) : (
+                split && <span>{d.parts.length} parts</span>
+              )}
               {d.optional && <span>Optional</span>}
             </p>
             <p className="cb-purpose-text">{d.purpose}</p>
@@ -485,7 +490,7 @@ function NavItem({
       {done ? (
         <Check className="h-3.5 w-3.5 shrink-0 text-success" />
       ) : (
-        minutes !== undefined && <span className="cb-nav-min">{minutes} min</span>
+        SHOW_STUDY_TIME && minutes !== undefined && <span className="cb-nav-min">{minutes} min</span>
       )}
     </button>
   )

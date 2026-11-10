@@ -15,6 +15,7 @@ import { useProgress } from '@/lib/progress/useProgress'
 import type { MeasuredReadiness } from '@/lib/progress/rules'
 import { LinkButton, ProgressBar, SkeletonCard, cx, focusRing } from '@/components/ui'
 import { moduleTag } from '@/lib/curriculum-href'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 import {
   describeActivity,
   finishByNow,
@@ -125,6 +126,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
 
       <div className="min-w-0 space-y-6">
         <ReadinessPanel readiness={view.readiness} sheets={sheets} modules={modules} />
+        {SHOW_STUDY_TIME && (
         <Panel title="Finish By">
           {view.finish ? (
             <>
@@ -145,6 +147,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
             </p>
           )}
         </Panel>
+        )}
         {view.activity.length > 0 && (
           <Panel title="Recent Activity" more={{ href: '/progress/history', label: 'History' }}>
             <ul className="space-y-2 text-sm">

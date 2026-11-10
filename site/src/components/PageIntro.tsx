@@ -9,6 +9,7 @@ import {
 } from '@/lib/editorial'
 import { qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { TwinLink } from '@/lib/twins'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * The editorial contract, rendered: every page says near its top what it is, who it is
@@ -31,7 +32,7 @@ export function MetaStrip({
       <span className="font-semibold text-accent">{MODES[meta.mode].label}</span>
       <Dot />
       <span>{meta.difficulty}</span>
-      {minutes !== null && (
+      {SHOW_STUDY_TIME && minutes !== null && (
         <>
           <Dot />
           <span>{minutes} min read</span>

@@ -3,13 +3,14 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { allMinutes, getTrack, isRequired, learnHref, trackHours } from '@/lib/learn'
+import { allMinutes, getTrack, isRequired, learnHref, notebookCount, trackHours } from '@/lib/learn'
 import { groupHref, liveGroups } from '@/lib/learn-stages'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { TrackCard } from '@/components/learn/TrackCard'
 import { PageHead } from '@/components/editorial/PageHead'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
  * A topic group's page: its tracks as cards with the requirement and progress filters.
@@ -60,7 +61,8 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
         standfirst={group.summary}
         facts={[
           { term: 'Tracks', value: String(tracks.length) },
-          { term: 'Time', value: `About ${tracks.reduce((sum, t) => sum + trackHours(t), 0)} h` },
+          ...(notebookCount(tracks) ? [{ term: 'Notebooks', value: String(notebookCount(tracks)) }] : []),
+          ...(SHOW_STUDY_TIME ? [{ term: 'Time', value: `About ${tracks.reduce((sum, t) => sum + trackHours(t), 0)} h` }] : []),
         ]}
       />
       <StorageNotice />

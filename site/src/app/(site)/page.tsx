@@ -8,7 +8,8 @@ import { LearningJourney } from '@/components/landing/LearningJourney'
 import styles from '@/components/landing/landing.module.css'
 import '@/components/landing/tokens.css'
 import { SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
-import { getTrack, trackHours } from '@/lib/learn'
+import { getTrack, notebookCount, trackHours } from '@/lib/learn'
+import { SHOW_STUDY_TIME } from '@/lib/study-time'
 import { LEARN_STAGES, groupHref } from '@/lib/learn-stages'
 import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -58,7 +59,7 @@ export default async function HomePage() {
   const inside: { label: string; count: number; unit: string; purpose: string; rows: [string, string | number][]; href: string; cta: string }[] = [
     {
       label: 'Learn', count: counts.learnLessons, unit: 'lessons', purpose: 'The curriculum, from foundations to production AI, grouped by topic.',
-      rows: [['Topic groups live', `${liveGroups} of ${LEARN_STAGES.length}`], ['Tracks', counts.learnTracks], ['Modules', counts.learnModules]],
+      rows: [['Topic groups live', `${liveGroups} of ${LEARN_STAGES.length}`], ['Tracks', counts.learnTracks], ['Modules', counts.learnModules], ['Notebooks', counts.learnNotebooks]],
       href: '/learn', cta: 'Browse the curriculum',
     },
     {
@@ -127,11 +128,17 @@ export default async function HomePage() {
           {LEARN_STAGES.map((g, i) => {
             const tracks = g.tracks.flatMap((slug) => getTrack(slug) ?? [])
             const hours = tracks.reduce((sum, t) => sum + trackHours(t), 0)
+            const notebooks = notebookCount(tracks)
+            const facts = [
+              `${tracks.length} ${tracks.length === 1 ? 'track' : 'tracks'}`,
+              ...(notebooks ? [`${notebooks} ${notebooks === 1 ? 'notebook' : 'notebooks'}`] : []),
+              ...(SHOW_STUDY_TIME ? [`about ${hours} h`] : []),
+            ]
             const body = (
               <>
                 <span className={styles.insideNum}>{i + 1}</span>
                 <h4 className={styles.insideGroupTitle}>{g.title}</h4>
-                <p>{tracks.length ? `${tracks.length} ${tracks.length === 1 ? 'track' : 'tracks'}, about ${hours} h` : 'Coming soon'}</p>
+                <p>{tracks.length ? facts.join(', ') : 'Coming soon'}</p>
               </>
             )
             return (
