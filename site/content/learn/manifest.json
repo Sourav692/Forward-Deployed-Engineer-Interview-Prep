@@ -4661,6 +4661,18 @@
       "updated": "2026-10-12"
     },
     {
+      "slug": "define-working-with-slis-and-slos",
+      "title": "Define Working With SLIs and SLOs",
+      "track": "production-ai",
+      "module": "observability-and-diagnosis",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/07_Define_Working_With_SLIs_and_SLOs.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/observability-and-diagnosis/define-working-with-slis-and-slos",
+      "updated": "2026-11-12"
+    },
+    {
       "slug": "practise-observability-and-diagnosis",
       "title": "Practise Observability and Diagnosis Interview Questions",
       "track": "production-ai",
@@ -4672,7 +4684,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/06_Practise_Observability_and_Diagnosis_Interview_Questions.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/observability-and-diagnosis/practise-observability-and-diagnosis",
-      "updated": "2026-10-05"
+      "updated": "2026-11-12"
     },
     {
       "slug": "why-cost-and-latency-decide-production",

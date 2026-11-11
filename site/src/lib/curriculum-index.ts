@@ -1161,6 +1161,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "standard-tracing-and-customer-facing-dashboards",
       "production-monitoring-metrics-drift-and-slos",
       "diagnosing-production-incidents",
+      "define-working-with-slis-and-slos",
       "practise-observability-and-diagnosis"
     ],
     "practiceMinutes": 150

@@ -796,6 +796,7 @@ export const MODULES: CurriculumModule[] = [
       'standard-tracing-and-customer-facing-dashboards',
       'production-monitoring-metrics-drift-and-slos',
       'diagnosing-production-incidents',
+      'define-working-with-slis-and-slos',
       'practise-observability-and-diagnosis',
     ],
     seeAlso: ['g14-observability-and-production-diagnosis'],
@@ -3841,6 +3842,14 @@ export const LESSONS: CurriculumLesson[] = [
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
     rights: 'permitted',
+  },
+  {
+    slug: 'define-working-with-slis-and-slos',
+    title: 'Define Working With SLIs and SLOs',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/07_Define_Working_With_SLIs_and_SLOs.md',
+    home: 'observability-and-diagnosis',
+    kind: 'sync',
+    publish: 'own',
   },
   {
     slug: 'practise-observability-and-diagnosis',

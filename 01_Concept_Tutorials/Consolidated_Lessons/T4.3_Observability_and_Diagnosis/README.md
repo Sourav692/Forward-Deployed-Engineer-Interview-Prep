@@ -1,6 +1,6 @@
 # T16.9 Observability and Production Diagnosis: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T16.9 "Observability and production diagnosis". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/observability-and-diagnosis`.
+These seven lessons are the site's teaching copy of module T16.9 "Observability and production diagnosis". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/observability-and-diagnosis`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -9,7 +9,8 @@ These six lessons are the site's teaching copy of module T16.9 "Observability an
 | 3 | [Standard Tracing and Customer-Facing Dashboards](03_Standard_Tracing_and_Customer_Facing_Dashboards.md) | `standard-tracing-and-customer-facing-dashboards` |
 | 4 | [Production Monitoring: Metrics, Drift, and SLOs](04_Production_Monitoring_Metrics_Drift_and_SLOs.md) | `production-monitoring-metrics-drift-and-slos` |
 | 5 | [Diagnosing Production Incidents](05_Diagnosing_Production_Incidents.md) | `diagnosing-production-incidents` |
-| 6 | [Practise Observability and Diagnosis Interview Questions](06_Practise_Observability_and_Diagnosis_Interview_Questions.md) | `practise-observability-and-diagnosis` |
+| 6 | [Define Working With SLIs and SLOs](07_Define_Working_With_SLIs_and_SLOs.md) | `define-working-with-slis-and-slos` |
+| 7 | [Practise Observability and Diagnosis Interview Questions](06_Practise_Observability_and_Diagnosis_Interview_Questions.md) | `practise-observability-and-diagnosis` |
 
 ## Sources
 
@@ -19,3 +20,5 @@ These six lessons are the site's teaching copy of module T16.9 "Observability an
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/` notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook* (summarised in our own words; lessons 2, 4, 5 and 6 carry a credit line).
 
 The source files stay in the repository unchanged. The site no longer publishes the four old T16.9 lessons separately; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+Lesson 6 (file `07`, added in November 2026) is written for this site to close a gap found against an outside course outline. It also carries the SLI and SLO content planned in the Production Engineering coverage plan's step 10. Its worked-example figures are illustrative.
