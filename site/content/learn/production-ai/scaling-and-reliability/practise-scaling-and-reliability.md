@@ -61,6 +61,9 @@ No. Rollout is a deliberate, role-gated change that may only affect future check
 **"The customer asks for 99.9% uptime on an LLM feature. What do you say?"**
 Separate our infrastructure's uptime from the upstream provider's. We cannot promise more than our dependency provides. Fallback and circuit-breaker design buy margin, not a guarantee.
 
+**"Where does your AI system keep its state?"**
+In at least five stores: conversation, workflow state, retrieval index, memory, and artifacts and audit. Each has a named owner, purpose and retention. Operational state lives in stores the runtime controls, the prompt is only a view, and stable tenant, user, run and step IDs link them. → [Know Every Store You Run](/learn/production-ai/scaling-and-reliability/know-every-store-you-run)
+
 ## Worked Example: Design a Production LLM Gateway
 
 The prompt: design a gateway in front of a customer-support agent. It must survive a provider outage without visible downtime, resist prompt injection and PII leaks, stay under $500 a day, and keep P95 latency under 3 seconds.

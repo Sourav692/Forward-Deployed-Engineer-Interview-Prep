@@ -1187,6 +1187,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "capacity-latency-and-cost-at-scale",
       "retries-circuit-breakers-and-bulkheads",
       "failover-graceful-degradation-and-kill-switches",
+      "know-every-store-you-run",
       "practise-scaling-and-reliability"
     ],
     "practiceMinutes": 135
