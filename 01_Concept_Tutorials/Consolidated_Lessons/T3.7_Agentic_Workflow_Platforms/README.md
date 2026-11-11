@@ -26,3 +26,5 @@ All sources are own material in `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Wo
 `06_Module_Reference.md` is a function-by-function reference to the companion code and is not used: the lessons teach the concepts, not the package API.
 
 The source files stay in the repository unchanged. The site no longer publishes the five Handbook documents as separate lessons; old URLs redirect to the matching lesson here. Every claim, number and code idea in these lessons comes from the sources above. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+The section "Choose How to Build the Loop" in Durability and Idempotency was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

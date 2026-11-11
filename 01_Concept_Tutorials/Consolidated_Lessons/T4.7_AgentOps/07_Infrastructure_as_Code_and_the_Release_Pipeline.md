@@ -64,6 +64,19 @@ Every arrow is a place a bad change can be stopped, and every stop is automatic.
 
 > **Warning: a secret baked into an image is a secret in every copy of it.** Images are pushed to registries, cached and shared. Read secrets from the vault at startup, or at request time for user tokens, and never commit them.
 
+## Ship Changes Safely by Plane
+
+Not every change carries the same risk, and the pipeline should treat them differently.
+
+| Plane | What changes | How it ships |
+|---|---|---|
+| Data plane | Code that serves requests | Normal CI, canary, rollback |
+| Control plane | Prompts, policies, routing, model versions, feature flags | Versioned config, evaluation gate, staged rollout, fast flag rollback |
+| Knowledge plane | Indexes, documents, memories | Build a new index beside the old one, evaluate, switch an alias, keep the old one for rollback |
+| Operations plane | Alerts, dashboards, runbooks, quotas | Reviewed like code, tested in a drill |
+
+Two changes break running work and need extra care. A **contract change** between components needs the version-and-overlap method from [Typed Tool Results and Teachable Errors](../T3.2_Tool_Design_MCP_and_A2A/03_Typed_Tool_Results_and_Teachable_Errors.md). A **checkpoint format change** must keep in-flight runs readable: the new release either reads the old checkpoint shape, migrates it, or lets old runs finish on the old version before it is removed. A release that cannot resume yesterday's paused approvals is a broken release, however good its scores.
+
 ## Worked Example: A Policy Change Ships Itself
 
 A security engineer tightens the PII mask in the row-filter SQL and opens a pull request. The change lives in the bundle beside the pipelines and the endpoint, so it is reviewed like code.

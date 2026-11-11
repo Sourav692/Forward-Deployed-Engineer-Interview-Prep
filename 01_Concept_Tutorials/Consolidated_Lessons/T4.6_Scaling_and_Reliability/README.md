@@ -22,3 +22,5 @@ These seven lessons are the site's teaching copy of module T16.11 "Scaling and r
 The source files stay in the repository unchanged. The old lesson "Scaling to Twenty Million Documents" now redirects here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
 
 Lesson 6 (file `07`, added in November 2026) is written for this site to close a gap found against an outside course outline. It links to the lessons whose mechanisms it relies on rather than repeating them.
+
+The section "Rehearse Failure Before It Happens" in Failover, Graceful Degradation, and Kill Switches was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

@@ -23,3 +23,5 @@ The source files stay in the repository unchanged. The site no longer publishes 
 **Known gap.** None of the sources covers the A2A (agent-to-agent) protocol, so these lessons do not teach it. The module page keeps its gap note.
 
 Every claim, number and code idea in these lessons comes from the three sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+The section "Version the Contract Between Components" in Typed Tool Results and Teachable Errors was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

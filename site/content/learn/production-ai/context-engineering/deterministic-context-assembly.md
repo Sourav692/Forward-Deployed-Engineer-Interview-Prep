@@ -42,6 +42,22 @@ A deterministic assembler is also a debugging tool. Given the trace, it can rebu
 
 When a section exceeds its cap, trim proportionally inside that section. Leave an explicit marker such as "[...240 tokens omitted...]". The model, and anyone reading the trace, can then see that content existed and was cut. Never let content vanish as though it was never there.
 
+## Record Where Each Item Came From and How Fresh It Is
+
+Fixed sections tell you where an item sits. Two more facts decide whether it should be there at all: who owns it and how fresh it is.
+
+| Section | Owner | Freshness rule |
+|---|---|---|
+| Instructions and policy | Platform team, versioned | Changes only on release |
+| Tool schema | Each tool's owner, versioned | Changes only on release |
+| Durable facts and profile | The memory store, with provenance | Reconfirmed or expired on a schedule |
+| Retrieved evidence | The source system, by document version | As fresh as the index; stamp the index version |
+| History summary | Derived from the conversation | Regenerated from the source, never edited by hand |
+
+Stamp each item with its source and version when it enters the context. When an answer cites a superseded policy, the trace then shows whether the index was stale, the memory was old, or the model ignored a fresher item.
+
+Keep run state out of the window altogether. The current step, pending approvals, budgets and completed tool calls live in the workflow store, as [Know Every Store You Run](/learn/production-ai/scaling-and-reliability/know-every-store-you-run) explains. The context shows the model only the slice of that state it needs for this step.
+
 ## Worked Example: Retrieval Overflows on One Step
 
 On a long step, the ops agent's retriever returns more evidence than the 5,000-token cap allows.
