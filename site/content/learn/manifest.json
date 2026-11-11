@@ -4873,6 +4873,42 @@
       "updated": "2026-11-12"
     },
     {
+      "slug": "what-a-model-gateway-owns",
+      "title": "What a Model Gateway Owns",
+      "track": "production-ai",
+      "module": "scaling-and-reliability",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/08_What_a_Model_Gateway_Owns.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/scaling-and-reliability/what-a-model-gateway-owns",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "route-from-evidence-and-fall-back-with-care",
+      "title": "Route From Evidence and Fall Back With Care",
+      "track": "production-ai",
+      "module": "scaling-and-reliability",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/09_Route_From_Evidence_and_Fall_Back_With_Care.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/scaling-and-reliability/route-from-evidence-and-fall-back-with-care",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "direct-provider-apis-or-a-managed-platform",
+      "title": "Direct Provider APIs or a Managed Platform",
+      "track": "production-ai",
+      "module": "scaling-and-reliability",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/10_Direct_Provider_APIs_or_a_Managed_Platform.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/scaling-and-reliability/direct-provider-apis-or-a-managed-platform",
+      "updated": "2026-11-12"
+    },
+    {
       "slug": "practise-scaling-and-reliability",
       "title": "Practise Scaling and Reliability Interview Questions",
       "track": "production-ai",
@@ -4880,7 +4916,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/06_Practise_Scaling_and_Reliability_Interview_Questions.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/production-ai/scaling-and-reliability/practise-scaling-and-reliability",
       "updated": "2026-11-12"
     },

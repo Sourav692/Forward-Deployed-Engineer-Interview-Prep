@@ -1195,6 +1195,9 @@ export const INDEX_MODULES: IndexModule[] = [
       "retries-circuit-breakers-and-bulkheads",
       "failover-graceful-degradation-and-kill-switches",
       "know-every-store-you-run",
+      "what-a-model-gateway-owns",
+      "route-from-evidence-and-fall-back-with-care",
+      "direct-provider-apis-or-a-managed-platform",
       "practise-scaling-and-reliability"
     ],
     "practiceMinutes": 135
