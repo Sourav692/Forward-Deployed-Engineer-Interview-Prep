@@ -439,7 +439,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 290,
+    estHours: 291,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -495,7 +495,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 251,
+    estHours: 252,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -599,7 +599,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 295,
+    estHours: 296,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -649,7 +649,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 325,
+    estHours: 326,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
