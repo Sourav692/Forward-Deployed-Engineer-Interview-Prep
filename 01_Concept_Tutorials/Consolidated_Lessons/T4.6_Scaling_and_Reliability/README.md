@@ -1,6 +1,6 @@
 # T16.11 Scaling and Reliability: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T16.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
+These seven lessons are the site's teaching copy of module T16.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -9,7 +9,8 @@ These six lessons are the site's teaching copy of module T16.11 "Scaling and rel
 | 3 | [Capacity, Latency, and Cost at Scale](03_Capacity_Latency_and_Cost_at_Scale.md) | `capacity-latency-and-cost-at-scale` |
 | 4 | [Retries, Circuit Breakers, and Bulkheads](04_Retries_Circuit_Breakers_and_Bulkheads.md) | `retries-circuit-breakers-and-bulkheads` |
 | 5 | [Failover, Graceful Degradation, and Kill Switches](05_Failover_Graceful_Degradation_and_Kill_Switches.md) | `failover-graceful-degradation-and-kill-switches` |
-| 6 | [Practise Scaling and Reliability Interview Questions](06_Practise_Scaling_and_Reliability_Interview_Questions.md) | `practise-scaling-and-reliability` |
+| 6 | [Know Every Store You Run](07_Know_Every_Store_You_Run.md) | `know-every-store-you-run` |
+| 7 | [Practise Scaling and Reliability Interview Questions](06_Practise_Scaling_and_Reliability_Interview_Questions.md) | `practise-scaling-and-reliability` |
 
 ## Sources
 
@@ -19,3 +20,5 @@ These six lessons are the site's teaching copy of module T16.11 "Scaling and rel
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*, summarised in our own words; lesson 3 carries a credit line) and `ADDITIONS_BEYOND_PLAYBOOK.md` (Little's Law).
 
 The source files stay in the repository unchanged. The old lesson "Scaling to Twenty Million Documents" now redirects here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+Lesson 6 (file `07`, added in November 2026) is written for this site to close a gap found against an outside course outline. It links to the lessons whose mechanisms it relies on rather than repeating them.
