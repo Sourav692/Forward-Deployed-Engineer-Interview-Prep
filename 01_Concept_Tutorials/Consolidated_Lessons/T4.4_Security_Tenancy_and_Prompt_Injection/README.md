@@ -1,6 +1,6 @@
 # T16.6 Security, Tenancy and Prompt Injection: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T16.6 "Security, tenancy and prompt injection". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/production-ai/security-tenancy-prompt-injection`.
+These ten lessons are the site's teaching copy of module T16.6 "Security, tenancy and prompt injection". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/production-ai/security-tenancy-prompt-injection`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -9,7 +9,11 @@ These six lessons are the site's teaching copy of module T16.6 "Security, tenanc
 | 3 | [Prompt Injection and Egress Control](03_Prompt_Injection_and_Egress_Control.md) | `prompt-injection-and-egress-control` |
 | 4 | [Tenant Isolation Levels](04_Tenant_Isolation_Levels.md) | `tenant-isolation-levels` |
 | 5 | [Fair Sharing Between Tenants](05_Fair_Sharing_Between_Tenants.md) | `fair-sharing-between-tenants` |
-| 6 | [Practise Security and Tenancy Interview Questions](06_Practise_Security_and_Tenancy_Interview_Questions.md) | `practise-security-and-tenancy` |
+| 6 | [Threat Model Each Request Path](07_Threat_Model_Each_Request_Path.md) | `threat-model-each-request-path` |
+| 7 | [Delegated Authority and Zero Ambient Authority](08_Delegated_Authority_and_Zero_Ambient_Authority.md) | `delegated-authority-and-zero-ambient-authority` |
+| 8 | [Tool Poisoning, Memory Poisoning and the Supply Chain](09_Tool_Poisoning_Memory_Poisoning_and_the_Supply_Chain.md) | `tool-poisoning-memory-poisoning-and-the-supply-chain` |
+| 9 | [Policy Lives Outside the Prompt](10_Policy_Lives_Outside_the_Prompt.md) | `policy-lives-outside-the-prompt` |
+| 10 | [Practise Security and Tenancy Interview Questions](06_Practise_Security_and_Tenancy_Interview_Questions.md) | `practise-security-and-tenancy` |
 
 ## Sources
 
@@ -23,4 +27,4 @@ The source files stay in the repository unchanged. The site no longer publishes 
 
 The quick reference's other sections are taught elsewhere: §2 "Standard Tracing" and §7 "Failure Pattern Detection" belong to T16.9 Observability; §3 "Semantic Caching" and §9 "Build vs. Buy" to T16.10 Cost and latency; §4 "AgentOps on Databricks" and the rollout, A/B and rollback parts of §8 to T16.8 AgentOps; the evaluation parts of §8 are taught in T16.7 Evaluation and release gates; and §5 "Guarding Tool Calls" to T16.3 Robust agents.
 
-Every claim, number and code idea in these lessons comes from the sources. Where two sources describe different mechanisms under the same name, the lesson says so: the enterprise RAG client's circuit breaker (3 consecutive outage exhaustions, 30 s) guards the model provider, while the quick reference's per-tenant breaker (50% errors, 60 s) guards other tenants. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+Lessons 1 to 5 and the practise lesson draw only on the sources above. Lessons 6 to 9 (files `07` to `10`, added in November 2026) are written for this site to close gaps found against an outside course outline. They cite public standards in their References and link to the earlier lessons rather than repeat them. Every claim, number and code idea in lessons 1 to 5 comes from the sources. Where two sources describe different mechanisms under the same name, the lesson says so: the enterprise RAG client's circuit breaker (3 consecutive outage exhaustions, 30 s) guards the model provider, while the quick reference's per-tenant breaker (50% errors, 60 s) guards other tenants. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
