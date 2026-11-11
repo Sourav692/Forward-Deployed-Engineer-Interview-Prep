@@ -83,6 +83,19 @@ A kill switch differs in three ways. It halts everything in scope, including wor
 
 > **Warning: a fallback nobody can see is a silent quality regression.** If the backup answers for an hour and nothing records it, every quality and cost metric for that hour is misattributed to the primary. Tag the source on every response and surface it in the trace.
 
+## Rehearse Failure Before It Happens
+
+Failover, degradation and kill switches only work if someone has used them. Run a **game day**: a planned exercise where the team triggers a failure in a safe environment and follows the runbook.
+
+Good scenarios for an AI system:
+
+- The primary model provider goes down for an hour.
+- Cost runs away: an agent loops and spend climbs ten times faster than normal.
+- A tool starts acting outside its permissions after a bad configuration change.
+- Throttling from a dependency, malformed uploads and duplicate webhook deliveries arrive together.
+
+Test with real operating conditions, not a clean demo: the actual quotas, realistic document sizes, real token distributions and the dependencies' real rate limits. Record how long detection and recovery took, and turn every surprise into a runbook change or a new alert.
+
 ## Worked Example: The Twenty-Minute Provider Outage
 
 The primary model provider goes down for 20 minutes during business hours. Retries with backoff fail on the first requests. After three failures, the breaker opens and new calls stop hitting the provider at all.

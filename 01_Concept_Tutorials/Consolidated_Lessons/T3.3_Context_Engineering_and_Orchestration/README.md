@@ -20,3 +20,5 @@ These seven lessons are the site's teaching copy of module T16.2 "Context engine
 The source files stay in the repository unchanged. The site no longer publishes Chapter 6 as a separate lesson; its old URL redirects to a lesson here. The interview tutorial's other sections are taught in the modules that own them.
 
 Every claim, number and code idea in these lessons comes from the two sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+The section "Record Where Each Item Came From and How Fresh It Is" in Deterministic Context Assembly was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

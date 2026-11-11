@@ -22,3 +22,5 @@ These six lessons are the site's teaching copy of module T16.3 "Robust agents: r
 The source files stay in the repository unchanged. The site no longer publishes the first, second and fifth as separate lessons; their old URLs redirect to the matching lesson here. Lessons 4 and 5 keep the slugs of the lessons they replace, so their URLs and saved progress are unchanged. `02_State_Memory_Sessions.md` from the same Handbook folder is taught under T11.2 Memory and state.
 
 Every claim, number and code idea in these lessons comes from the five sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+The section "Never Retry Around a Refusal or a Policy Denial" in Retries and Fallbacks was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

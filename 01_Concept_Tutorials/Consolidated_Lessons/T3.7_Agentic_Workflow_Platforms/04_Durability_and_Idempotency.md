@@ -79,6 +79,18 @@ The fix moves the idempotency check before authorisation. A replay of an applied
 
 > **Warning: a correct-looking idempotency guarantee can still be false under retry.** Check every place a step leaves a mark, including counters, budgets, and logs, not only the external call. Bug 2 passed every happy-path test.
 
+## Choose How to Build the Loop
+
+The checkpoint and the idempotency key can live in three kinds of implementation.
+
+| Option | Fits when | Watch for |
+|---|---|---|
+| A custom loop over a database table | One or two workflows, a team that wants full control | You build retries, timeouts and resume yourself |
+| An agent framework with persistence, such as LangGraph checkpointers | Agent-shaped flows with branching and human interrupts | Checkpoint format and compatibility across framework upgrades |
+| A durable execution engine, such as Temporal | Long-running, many-step business processes that must survive restarts for days | Workflow code must be deterministic. Model and tool calls run as activities |
+
+The guarantees in this lesson are the same in all three. What changes is how much of them you write yourself. Pick the lightest option that keeps the run resumable and every action idempotent.
+
 ## Worked Example: A Refund Run That Pauses, Resumes, and Retries
 
 The project's demo runs `run_001` on the ticket-triage workflow, version 1.

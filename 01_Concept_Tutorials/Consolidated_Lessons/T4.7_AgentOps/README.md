@@ -28,3 +28,5 @@ Lessons 3 and 4 are Databricks-specific and are not published on the site (`publ
 The source files stay in the repository unchanged. The site no longer publishes the seven old T16.8 lessons separately; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
 
 Lessons 8 and 9 (files `09` and `10`, added in November 2026) are written for this site to close gaps found against an outside course outline. They cite public regulations and frameworks in their References.
+
+The section "Ship Changes Safely by Plane" in Infrastructure as Code and the Release Pipeline was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.

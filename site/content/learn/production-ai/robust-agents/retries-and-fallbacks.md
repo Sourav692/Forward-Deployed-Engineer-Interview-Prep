@@ -109,6 +109,15 @@ flowchart TD
 
 Two rules never bend. Never silently swallow a failure inside an agent loop: recover, or surface it so a human or the next turn can decide. And never auto-retry a destructive call without re-checking the confirmation.
 
+## Never Retry Around a Refusal or a Policy Denial
+
+Two failures look permanent and tempt a team into a fallback that defeats a safety control.
+
+- **A policy denial** means your own rules said no: the user lacks permission, the amount is over the limit, the data may not go to that provider. Retrying, or sending the call to another tool or model, is a way around the rule. Return the denial's reason code and stop. [Typed Tool Results and Teachable Errors](/learn/production-ai/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors) covers how a denial is returned without explaining the rule to the model.
+- **A model refusal** means the model declined the request. A fallback to a more obliging model turns the refusal into an outcome nobody chose. Log it and send it to a person.
+
+Invalid output is different. A schema-validation failure can be repaired once, by retrying with the validation error in the prompt, and escalated if the second attempt fails too.
+
 ## Worked Example: A 503 Four Times in a Row
 
 The search tool returns a 503 on every attempt, and a fallback to an archival search is declared.

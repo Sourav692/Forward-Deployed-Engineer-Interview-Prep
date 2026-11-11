@@ -54,6 +54,19 @@ A vague `"Error"` teaches nothing. The model tries the same call again, and an a
 
 The interview tutorial shows the other half of this. A deliberately flaky web-search tool returned "Error: Could not retrieve data. The API endpoint is currently unavailable." A plain planner-executor appended that string to its steps as if it were data. It then confidently reported Apple's R&D spend per employee as roughly $186,969, using an estimated headcount. Nothing told it an error string from a result string. Typed states fix that at the source. The tutorial's other fix, a verifier step that classifies each tool output before synthesis, is covered with the orchestration patterns.
 
+## Version the Contract Between Components
+
+The five result states are a contract between a tool and the agent. The same idea applies to every boundary inside the system: tool to agent, agent to agent, retrieval to answer step, gateway to application. Natural language is not a contract. A typed schema is.
+
+Give each contract a version and change it the way you would change a public API:
+
+- **Add, don't change.** New optional fields are safe. Renaming or removing a field, or changing what a value means, is a breaking change and needs a new version.
+- **Carry the version in the payload,** so a consumer can tell which shape it received and refuse one it does not understand.
+- **Run both versions during a change.** The producer emits the new version while consumers move over, then the old one is retired on a date.
+- **Test the contract, not just the code.** A contract test runs each producer's real output against each consumer's schema in CI, so a breaking change fails the build instead of a production run.
+
+A tool that silently renames `order_id` to `orderId` does not throw an error. The agent simply stops finding the order, and the failure looks like a model mistake.
+
 ## Worked Example: An Order Lookup During an Outage
 
 The order database goes down for five minutes. Follow the support agent through two designs.
