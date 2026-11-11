@@ -66,6 +66,17 @@ Separate our infrastructure's uptime from the upstream provider's. We cannot pro
 **"Where does your AI system keep its state?"**
 In at least five stores: conversation, workflow state, retrieval index, memory, and artifacts and audit. Each has a named owner, purpose and retention. Operational state lives in stores the runtime controls, the prompt is only a view, and stable tenant, user, run and step IDs link them. → [Know Every Store You Run](07_Know_Every_Store_You_Run.md)
 
+## Answer the Gateway and Provider Questions
+
+**"Why put a gateway in front of the model providers?"**
+So access, policy, routing, quotas, resilience, normalisation, telemetry and model lifecycle are solved once. Applications send a task-based request with required capabilities and never name a provider, and the gateway fails loudly when no model meets the capabilities. → [What a Model Gateway Owns](08_What_a_Model_Gateway_Owns.md)
+
+**"The primary model is down. Can you just switch to another one?"**
+Only to a fallback that meets the task's required capabilities and passes its evaluation set, with fallback answers tagged. Retry outages and respect rate limits, but never route around a refusal or a policy denial. → [Route From Evidence and Fall Back With Care](09_Route_From_Evidence_and_Fall_Back_With_Care.md)
+
+**"Direct API or Bedrock?"**
+Usually the same model either way. Decide on identity, private networking, approved data terms, logging, billing and feature lag for the exact model and region, then put both behind the gateway and choose per task. → [Direct Provider APIs or a Managed Platform](10_Direct_Provider_APIs_or_a_Managed_Platform.md)
+
 ## Worked Example: Design a Production LLM Gateway
 
 The prompt: design a gateway in front of a customer-support agent. It must survive a provider outage without visible downtime, resist prompt injection and PII leaks, stay under $500 a day, and keep P95 latency under 3 seconds.

@@ -1,6 +1,6 @@
 # T16.11 Scaling and Reliability: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T16.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
+These ten lessons are the site's teaching copy of module T16.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -10,7 +10,10 @@ These seven lessons are the site's teaching copy of module T16.11 "Scaling and r
 | 4 | [Retries, Circuit Breakers, and Bulkheads](04_Retries_Circuit_Breakers_and_Bulkheads.md) | `retries-circuit-breakers-and-bulkheads` |
 | 5 | [Failover, Graceful Degradation, and Kill Switches](05_Failover_Graceful_Degradation_and_Kill_Switches.md) | `failover-graceful-degradation-and-kill-switches` |
 | 6 | [Know Every Store You Run](07_Know_Every_Store_You_Run.md) | `know-every-store-you-run` |
-| 7 | [Practise Scaling and Reliability Interview Questions](06_Practise_Scaling_and_Reliability_Interview_Questions.md) | `practise-scaling-and-reliability` |
+| 7 | [What a Model Gateway Owns](08_What_a_Model_Gateway_Owns.md) | `what-a-model-gateway-owns` |
+| 8 | [Route From Evidence and Fall Back With Care](09_Route_From_Evidence_and_Fall_Back_With_Care.md) | `route-from-evidence-and-fall-back-with-care` |
+| 9 | [Direct Provider APIs or a Managed Platform](10_Direct_Provider_APIs_or_a_Managed_Platform.md) | `direct-provider-apis-or-a-managed-platform` |
+| 10 | [Practise Scaling and Reliability Interview Questions](06_Practise_Scaling_and_Reliability_Interview_Questions.md) | `practise-scaling-and-reliability` |
 
 ## Sources
 
@@ -24,3 +27,5 @@ The source files stay in the repository unchanged. The old lesson "Scaling to Tw
 Lesson 6 (file `07`, added in November 2026) is written for this site to close a gap found against an outside course outline. It links to the lessons whose mechanisms it relies on rather than repeating them.
 
 The section "Rehearse Failure Before It Happens" in Failover, Graceful Degradation, and Kill Switches was added in November 2026, written for this site to close a gap found against an outside course outline. It does not come from the sources above.
+
+Lessons 7 to 9 (files `08` to `10`, added in November 2026) are written for this site to close gaps found against an outside course outline. The plan first placed them in T16.12, but they sit here beside the gateway design and failover lessons they extend. Their worked-example figures are illustrative.
