@@ -4911,6 +4911,30 @@
       "updated": "2026-10-29"
     },
     {
+      "slug": "govern-ai-systems-by-risk-tier",
+      "title": "Govern AI Systems by Risk Tier",
+      "track": "production-ai",
+      "module": "agentops",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/09_Govern_AI_Systems_by_Risk_Tier.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/agentops/govern-ai-systems-by-risk-tier",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "the-data-lifecycle-across-every-store",
+      "title": "The Data Lifecycle Across Every Store",
+      "track": "production-ai",
+      "module": "agentops",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/10_The_Data_Lifecycle_Across_Every_Store.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/agentops/the-data-lifecycle-across-every-store",
+      "updated": "2026-11-12"
+    },
+    {
       "slug": "practise-agentops",
       "title": "Practise AgentOps Interview Questions",
       "track": "production-ai",
@@ -4918,9 +4942,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/08_Practise_AgentOps_Interview_Questions.md",
-      "estMinutes": 6,
+      "estMinutes": 7,
       "href": "/learn/production-ai/agentops/practise-agentops",
-      "updated": "2026-10-29"
+      "updated": "2026-11-12"
     },
     {
       "slug": "four-learning-surfaces",

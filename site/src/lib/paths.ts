@@ -539,7 +539,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 207,
+    estHours: 208,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -584,7 +584,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 375,
+    estHours: 376,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',

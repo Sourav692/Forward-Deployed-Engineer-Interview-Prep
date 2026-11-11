@@ -58,6 +58,14 @@ Images are pushed, cached and shared, so a baked secret spreads to every copy. R
 
 > **Warning: "we test it before release" is not an answer.** Name the gate, what it compares against, what number blocks the release, and what happens after promotion.
 
+## Govern Systems and Their Data
+
+**"You have forty AI features. How do you govern them without slowing everything down?"**
+Keep one inventory with owners, data, models, actions, tier and the disable path. Tier each system by whether it acts, who is affected and whether harm can be undone, and attach controls per tier, so low-risk tools ship fast and agents that move money carry full controls. → [Govern AI Systems by Risk Tier](/learn/production-ai/agentops/govern-ai-systems-by-risk-tier)
+
+**"A customer asks you to delete their data. What happens?"**
+A tested deletion workflow finds every copy by tenant and user ID: conversation, summaries, memory, documents and their embeddings, traces and evaluation copies. It deletes or redacts each, keeps only what law requires with personal fields removed, records what the model provider still holds, and confirms. → [The Data Lifecycle Across Every Store](/learn/production-ai/agentops/the-data-lifecycle-across-every-store)
+
 ## Worked Example: The Full Pipeline in One Answer
 
 Question: "Walk me through how a change reaches production."
