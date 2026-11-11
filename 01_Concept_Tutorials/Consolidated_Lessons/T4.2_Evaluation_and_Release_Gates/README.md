@@ -1,6 +1,6 @@
 # T16.7 Evaluation and Release Gates: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T16.7 "Evaluation and release gates". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/production-ai/evaluation-and-release-gates`.
+These eight lessons are the site's teaching copy of module T16.7 "Evaluation and release gates". Each concept is taught once, in the house tutorial format, drawing only on three repository sources. The site publishes them at `/learn/production-ai/evaluation-and-release-gates`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -9,7 +9,9 @@ These six lessons are the site's teaching copy of module T16.7 "Evaluation and r
 | 3 | [Golden Sets and Sample Size](03_Golden_Sets_and_Sample_Size.md) | `golden-sets-and-sample-size` |
 | 4 | [Validating LLM Judges](04_Validating_LLM_Judges.md) | `validating-llm-judges` |
 | 5 | [Release Gates: Safety, Quality, and Cost](05_Release_Gates_Safety_Quality_and_Cost.md) | `release-gates-safety-quality-and-cost` |
-| 6 | [Practise Evaluation and Release-Gate Interview Questions](06_Practise_Evaluation_Interview_Questions.md) | `practise-evaluation-and-release-gates` |
+| 6 | [Reliability Is an Evidence System](07_Reliability_Is_an_Evidence_System.md) | `reliability-is-an-evidence-system` |
+| 7 | [Run a Readiness Review](08_Run_a_Readiness_Review.md) | `run-a-readiness-review` |
+| 8 | [Practise Evaluation and Release-Gate Interview Questions](06_Practise_Evaluation_Interview_Questions.md) | `practise-evaluation-and-release-gates` |
 
 ## Sources
 
@@ -22,3 +24,5 @@ The source files stay in the repository unchanged. The site no longer publishes 
 Two source conflicts are named in the lessons. The Handbook calibrates its judge on 6 labelled cases, while Chapter 12 asks for at least 100 (lesson 4). The quick reference promotes a canary on a 3-point gain from a 250-query arm, which Chapter 12's sample-size rule says is far too small (lesson 5).
 
 Every claim, number and code idea in these lessons comes from the three sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+Lessons 6 and 7 (files `07` and `08`, added in November 2026) are written for this site to close gaps found against an outside course outline. Their worked-example figures are illustrative.

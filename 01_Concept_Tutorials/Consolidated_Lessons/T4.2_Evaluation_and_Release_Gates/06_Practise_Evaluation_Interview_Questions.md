@@ -69,6 +69,14 @@ Tie user feedback to the trace's `run_id`. Use escalation-to-human rate as a pro
 
 > **Warning: never let the security number into an average.** A candidate who reports "92% overall, including security" has just described a system where a leak can ship. Say out loud that leak rate is a separate gate that must be exactly zero.
 
+## Practise the Readiness Questions
+
+**14. "Is your system reliable?"**
+Answer with evidence, not adjectives: golden-set scores by stratum against targets set by the cost of failure, safety gates at zero, latency against its target, and pilot results on real users. Say which source is missing. → [Reliability Is an Evidence System](07_Reliability_Is_an_Evidence_System.md)
+
+**15. "The scores passed. Is it ready to launch?"**
+Not yet proven. Run a readiness review: an evidence pack tied to the release version, a checklist across reliability, operability, AI quality, data, security and release, and a failure exercise on the top scenarios. Record every open gap with an owner and an expiry, and end in ready, ready with conditions, or not ready. → [Run a Readiness Review](08_Run_a_Readiness_Review.md)
+
 ## Worked Example: Write the Evaluation Plan for an Enterprise RAG Assistant
 
 The prompt: "Write the evaluation plan for a permission-aware support assistant before it goes live."
