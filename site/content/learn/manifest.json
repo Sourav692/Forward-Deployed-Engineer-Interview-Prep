@@ -4437,6 +4437,30 @@
       "updated": "2026-10-05"
     },
     {
+      "slug": "reliability-is-an-evidence-system",
+      "title": "Reliability Is an Evidence System",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/07_Reliability_Is_an_Evidence_System.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/evaluation-and-release-gates/reliability-is-an-evidence-system",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "run-a-readiness-review",
+      "title": "Run a Readiness Review",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/08_Run_a_Readiness_Review.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/evaluation-and-release-gates/run-a-readiness-review",
+      "updated": "2026-11-12"
+    },
+    {
       "slug": "practise-evaluation-and-release-gates",
       "title": "Practise Evaluation and Release-Gate Interview Questions",
       "track": "production-ai",
@@ -4446,9 +4470,9 @@
       "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/production-ai/evaluation-and-release-gates/practise-evaluation-and-release-gates",
-      "updated": "2026-10-05"
+      "updated": "2026-11-12"
     },
     {
       "slug": "identity-verification-with-sso-and-oidc",

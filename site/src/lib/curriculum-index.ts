@@ -1125,6 +1125,8 @@ export const INDEX_MODULES: IndexModule[] = [
       "golden-sets-and-sample-size",
       "validating-llm-judges",
       "release-gates-safety-quality-and-cost",
+      "reliability-is-an-evidence-system",
+      "run-a-readiness-review",
       "practise-evaluation-and-release-gates"
     ],
     "practiceMinutes": 195
