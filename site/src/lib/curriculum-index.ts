@@ -1140,6 +1140,10 @@ export const INDEX_MODULES: IndexModule[] = [
       "prompt-injection-and-egress-control",
       "tenant-isolation-levels",
       "fair-sharing-between-tenants",
+      "threat-model-each-request-path",
+      "delegated-authority-and-zero-ambient-authority",
+      "tool-poisoning-memory-poisoning-and-the-supply-chain",
+      "policy-lives-outside-the-prompt",
       "practise-security-and-tenancy"
     ],
     "practiceMinutes": 210

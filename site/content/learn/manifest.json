@@ -4511,6 +4511,54 @@
       "updated": "2026-10-29"
     },
     {
+      "slug": "threat-model-each-request-path",
+      "title": "Threat Model Each Request Path",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/07_Threat_Model_Each_Request_Path.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/threat-model-each-request-path",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "delegated-authority-and-zero-ambient-authority",
+      "title": "Delegated Authority and Zero Ambient Authority",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "tool-poisoning-memory-poisoning-and-the-supply-chain",
+      "title": "Tool Poisoning, Memory Poisoning and the Supply Chain",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/09_Tool_Poisoning_Memory_Poisoning_and_the_Supply_Chain.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/tool-poisoning-memory-poisoning-and-the-supply-chain",
+      "updated": "2026-11-12"
+    },
+    {
+      "slug": "policy-lives-outside-the-prompt",
+      "title": "Policy Lives Outside the Prompt",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/10_Policy_Lives_Outside_the_Prompt.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/policy-lives-outside-the-prompt",
+      "updated": "2026-11-12"
+    },
+    {
       "slug": "practise-security-and-tenancy",
       "title": "Practise Security and Tenancy Interview Questions",
       "track": "production-ai",
@@ -4518,9 +4566,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/06_Practise_Security_and_Tenancy_Interview_Questions.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/practise-security-and-tenancy",
-      "updated": "2026-10-12"
+      "updated": "2026-11-12"
     },
     {
       "slug": "logs-metrics-and-traces",

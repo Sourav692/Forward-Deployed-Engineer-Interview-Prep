@@ -57,6 +57,20 @@ Use per-tenant quotas, a per-tenant circuit breaker and a query timeout. Add dai
 
 > **Warning: do not conflate the controls.** Authorisation, rate limits, fair queues, action allow-lists and destination allow-lists each answer a different question. Answering one question with another's control is the most common mistake these prompts are designed to expose.
 
+## Practise the Threat-Model and Authority Questions
+
+**12. "Threat-model this agent for me."**
+Pick one request path and walk it. Mark where untrusted content enters and where authority changes. Write each threat as attacker, asset, entry point and authority boundary, then give each a control that holds even if the model is fully persuaded. Rank by impact and reversibility. → [Threat Model Each Request Path](/learn/production-ai/security-tenancy-prompt-injection/threat-model-each-request-path)
+
+**13. "Your agent uses a service account. What is wrong with that?"**
+The account holds ambient authority across every user and tenant, so any injection can spend it. Exchange the user's token for a short-lived one scoped to this user, tenant and task, and have each tool check the end user on every call. → [Delegated Authority and Zero Ambient Authority](/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority)
+
+**14. "How would someone attack you without touching the request?"**
+Through a tool description or result (tool poisoning), through text stored in memory that fires in a later session (memory poisoning), or through a dependency the coding assistant invented (slopsquatting). Pin and review tool definitions, gate memory writes and never let memory authorise, and install only reviewed, locked packages. → [Tool Poisoning, Memory Poisoning and the Supply Chain](/learn/production-ai/security-tenancy-prompt-injection/tool-poisoning-memory-poisoning-and-the-supply-chain)
+
+**15. "The refund limit is in the system prompt. Is that enough?"**
+No. The prompt makes good proposals likely, but the model can be persuaded and is not consistent. A policy engine outside the model decides on facts from trusted sources, versioned apart from the prompt, and returns a safe reason code. → [Policy Lives Outside the Prompt](/learn/production-ai/security-tenancy-prompt-injection/policy-lives-outside-the-prompt)
+
 ## Worked Example: Threat-Model a Multi-Tenant Agent Platform
 
 The prompt: *"Your platform runs support agents for many companies. It connects to their helpdesks and CRMs and can issue refunds and send email. Walk me through the threats."*
