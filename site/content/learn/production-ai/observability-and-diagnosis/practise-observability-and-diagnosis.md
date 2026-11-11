@@ -64,6 +64,9 @@ Drift alerts on refusal rate, tool error rate and cost per run against a rolling
 
 > **Warning: do not answer an incident question with a fix.** "I would switch to a bigger model" before any measurement is the weak answer in every playbook case. Clarify and measure first, even if you already suspect the cause.
 
+**"Your dashboards are green but users say the assistant got worse. What SLOs were missing?"**
+Infrastructure SLOs only show up and fast. Add workflow (runs reaching their end state), product outcome (task completion, repeat contact) and AI quality (judged grounded rate, unsafe-action rate) indicators, with an error-budget policy that names the work that stops. Join them to offline evaluation by version and case ID. → [Define Working With SLIs and SLOs](/learn/production-ai/observability-and-diagnosis/define-working-with-slis-and-slos)
+
 ## Worked Example: A One-Minute Answer
 
 Question: "Latency jumped from 2 seconds to 20 seconds after a deploy."
