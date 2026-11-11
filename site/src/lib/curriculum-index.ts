@@ -1207,6 +1207,8 @@ export const INDEX_MODULES: IndexModule[] = [
       "channel-adapters-and-human-escalation",
       "red-teaming-and-layered-guardrails",
       "infrastructure-as-code-and-the-release-pipeline",
+      "govern-ai-systems-by-risk-tier",
+      "the-data-lifecycle-across-every-store",
       "practise-agentops",
       "anatomy-of-a-deployed-multi-agent-platform"
     ],

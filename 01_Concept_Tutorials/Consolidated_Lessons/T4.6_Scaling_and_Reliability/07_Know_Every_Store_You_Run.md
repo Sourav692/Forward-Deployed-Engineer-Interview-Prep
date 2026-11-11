@@ -66,7 +66,7 @@ A customer of a support assistant asks for their data to be deleted.
 4. **Memory.** Three memories carry the user ID and their provenance. All are deleted.
 5. **Artifacts and audit.** Refund records must be kept for the period the finance regulator sets. The audit entries are kept, with the customer's personal fields removed and the reason for retention recorded.
 
-Without the IDs from the previous section, step 3 would have been a manual search through embeddings. Without the store list, step 4 would have been missed entirely. The lesson on governing the data lifecycle in T16.8 AgentOps builds the full deletion and retention policy on this list.
+Without the IDs from the previous section, step 3 would have been a manual search through embeddings. Without the store list, step 4 would have been missed entirely. [The Data Lifecycle Across Every Store](../T4.7_AgentOps/10_The_Data_Lifecycle_Across_Every_Store.md) builds the full deletion and retention policy on this list.
 
 ---
 

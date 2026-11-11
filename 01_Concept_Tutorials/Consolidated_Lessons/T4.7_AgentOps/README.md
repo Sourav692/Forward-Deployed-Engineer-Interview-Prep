@@ -11,7 +11,9 @@ These lessons are the site's teaching copy of module T16.8 "AgentOps: versioning
 | 5 | [Channel Adapters and Human Escalation](05_Channel_Adapters_and_Human_Escalation.md) | `channel-adapters-and-human-escalation` |
 | 6 | [Red Teaming and Layered Guardrails](06_Red_Teaming_and_Layered_Guardrails.md) | `red-teaming-and-layered-guardrails` |
 | 7 | [Infrastructure as Code and the Release Pipeline](07_Infrastructure_as_Code_and_the_Release_Pipeline.md) | `infrastructure-as-code-and-the-release-pipeline` |
-| 8 | [Practise AgentOps Interview Questions](08_Practise_AgentOps_Interview_Questions.md) | `practise-agentops` |
+| 8 | [Govern AI Systems by Risk Tier](09_Govern_AI_Systems_by_Risk_Tier.md) | `govern-ai-systems-by-risk-tier` |
+| 9 | [The Data Lifecycle Across Every Store](10_The_Data_Lifecycle_Across_Every_Store.md) | `the-data-lifecycle-across-every-store` |
+| 10 | [Practise AgentOps Interview Questions](08_Practise_AgentOps_Interview_Questions.md) | `practise-agentops` |
 
 Lessons 3 and 4 are Databricks-specific and are not published on the site (`publish: 'excluded'` in `site/src/lib/curriculum.ts`). They wait for a platform track, listed under future additions in the production plan; their old URLs redirect to lesson 1 and to the access-control lesson of T16.5.
 
@@ -24,3 +26,5 @@ Lessons 3 and 4 are Databricks-specific and are not published on the site (`publ
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/` notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook* (lesson 2 only, summarised in our own words, with a credit line).
 
 The source files stay in the repository unchanged. The site no longer publishes the seven old T16.8 lessons separately; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+Lessons 8 and 9 (files `09` and `10`, added in November 2026) are written for this site to close gaps found against an outside course outline. They cite public regulations and frameworks in their References.
