@@ -31,3 +31,9 @@ screenshot_linkedin
 
 # Local notes comparing third-party courses with the site
 educative_sync/
+
+# Local cram summaries of fdehandbook.com Learn pages (third-party, personal study only)
+fdehandbook_learn/
+
+# Local mapping of fdehandbook.com courses against the site
+/FDE_Handbook/
