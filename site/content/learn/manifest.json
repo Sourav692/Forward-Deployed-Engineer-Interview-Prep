@@ -2516,9 +2516,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m28_retrieval_grading_rewriting/01_retriever_as_a_tool_grade_then_rewrite_in_langgraph.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/retriever-as-a-tool-grade-then-rewrite-in-langgraph",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "the-same-agent-on-a-managed-vector-search-index",
@@ -2528,9 +2528,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m28_retrieval_grading_rewriting/02_the_same_agent_on_databricks_vector_search.md",
-      "estMinutes": 7,
+      "estMinutes": 10,
       "href": "/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/the-same-agent-on-a-managed-vector-search-index",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "guardrails-query-optimisation-and-a-retry-loop",
@@ -2540,9 +2540,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m28_retrieval_grading_rewriting/03_guardrails_query_optimisation_and_a_retry_loop.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/guardrails-query-optimisation-and-a-retry-loop",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "agentic-rag-foundations-grading-and-query-rewriting-interview-questions",
