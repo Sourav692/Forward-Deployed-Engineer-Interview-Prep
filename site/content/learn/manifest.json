@@ -3260,9 +3260,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/01_from_a_tool_calling_chatbot_to_mcp.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/from-a-tool-calling-chatbot-to-mcp",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "building-an-mcp-server",
@@ -3272,9 +3272,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/02_building_an_mcp_server.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/building-an-mcp-server",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "building-an-mcp-client",
@@ -3284,9 +3284,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/03_building_an_mcp_client.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/building-an-mcp-client",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "connecting-to-reference-servers",
@@ -3296,9 +3296,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/04_connecting_to_reference_servers.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/connecting-to-reference-servers",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "prompts-and-resources",
@@ -3308,9 +3308,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/05_prompts_and_resources.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/prompts-and-resources",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "remote-servers-and-deployment",
@@ -3320,9 +3320,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/06_remote_servers_and_deployment.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/remote-servers-and-deployment",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "mcp-foundations-interview-questions",
@@ -3332,9 +3332,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/99_interview_questions.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/mcp-foundations-interview-questions",
-      "updated": "2026-11-02"
+      "updated": "2026-11-13"
     },
     {
       "slug": "building-mcp-servers-and-clients-overview",
@@ -3356,9 +3356,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/01_single_server_mcp_with_resources.md",
-      "estMinutes": 7,
+      "estMinutes": 11,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/single-server-mcp-with-resources",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "multi-server-mcp",
@@ -3368,9 +3368,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/02_multi_server_mcp.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/multi-server-mcp",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "your-own-client-and-a-multi-server-client",
@@ -3380,9 +3380,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/04_your_own_client_and_a_multi_server_client.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/your-own-client-and-a-multi-server-client",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "transports-sse-and-streamable-http",
@@ -3392,9 +3392,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/05_transports_sse_and_streamable_http.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/transports-sse-and-streamable-http",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "building-mcp-servers-and-clients-interview-questions",
@@ -3428,9 +3428,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/01_your_first_mcp_server_and_a_local_agent.md",
-      "estMinutes": 6,
+      "estMinutes": 11,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/your-first-mcp-server-and-a-local-agent",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "mcp-servers-with-claude-desktop",
@@ -3440,9 +3440,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/02_mcp_servers_with_claude_desktop.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/mcp-servers-with-claude-desktop",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "mcp-servers-for-data-analysis",
@@ -3452,9 +3452,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/03_mcp_servers_for_data_analysis.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/mcp-servers-for-data-analysis",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "tools-resources-and-prompts-together",
@@ -3464,9 +3464,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/04_tools_resources_and_prompts_together.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/tools-resources-and-prompts-together",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "rag-over-mcp-with-langchain",
@@ -3476,9 +3476,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/05_rag_over_mcp_with_langchain.md",
-      "estMinutes": 7,
+      "estMinutes": 11,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/rag-over-mcp-with-langchain",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "research-assistant-with-mcp-and-langgraph",
@@ -3488,9 +3488,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/06_research_assistant_with_mcp_and_langgraph.md",
-      "estMinutes": 7,
+      "estMinutes": 10,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/research-assistant-with-mcp-and-langgraph",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "deploying-an-mcp-server-on-ec2",
@@ -3500,9 +3500,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/07_deploying_an_mcp_server_on_ec2.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/deploying-an-mcp-server-on-ec2",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "mcp-applications-and-rag-over-mcp-interview-questions",

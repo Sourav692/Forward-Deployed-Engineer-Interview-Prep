@@ -708,7 +708,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "remote-servers-and-deployment",
       "mcp-foundations-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "building-mcp-servers-and-clients",
@@ -741,7 +741,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "deploying-an-mcp-server-on-ec2",
       "mcp-applications-and-rag-over-mcp-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "a2a-agent-to-agent-protocol",
