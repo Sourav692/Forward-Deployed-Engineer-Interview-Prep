@@ -3008,9 +3008,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m35_multi_agent_architectures/01_monolithic_vs_multi_agent_a_crew_from_scratch.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/multi-agent-systems/multi-agent-architectures/monolithic-vs-multi-agent-a-crew-from-scratch",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "the-five-multi-agent-architectures-and-agent-communication",
@@ -3020,9 +3020,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m35_multi_agent_architectures/02_the_five_multi_agent_architectures_and_agent_communication.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/multi-agent-systems/multi-agent-architectures/the-five-multi-agent-architectures-and-agent-communication",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "supervisor-workflow-with-human-review",
@@ -3032,9 +3032,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m35_multi_agent_architectures/03_supervisor_workflow_with_human_review.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/multi-agent-systems/multi-agent-architectures/supervisor-workflow-with-human-review",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "supervisors-and-hierarchical-teams",
@@ -3044,9 +3044,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m35_multi_agent_architectures/04_supervisors_and_hierarchical_teams.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/multi-agent-systems/multi-agent-architectures/supervisors-and-hierarchical-teams",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "handoffs-and-swarms",
@@ -3056,9 +3056,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m35_multi_agent_architectures/05_handoffs_and_swarms.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/multi-agent-systems/multi-agent-architectures/handoffs-and-swarms",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "multi-agent-architectures-interview-questions",
@@ -3092,9 +3092,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m36_collaboration_parallel_agents/01_blackboard_architectures.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/multi-agent-systems/collaboration-control-and-parallel-agents/blackboard-architectures",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "debate",
@@ -3104,9 +3104,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m36_collaboration_parallel_agents/02_debate.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/multi-agent-systems/collaboration-control-and-parallel-agents/debate",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "storm-multi-perspective-research-and-writing",
@@ -3116,9 +3116,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m36_collaboration_parallel_agents/03_storm_multi_perspective_research_and_writing.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/multi-agent-systems/collaboration-control-and-parallel-agents/storm-multi-perspective-research-and-writing",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "meta-controllers-ensembles-and-emergent-systems",
@@ -3128,9 +3128,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m36_collaboration_parallel_agents/04_meta_controllers_ensembles_and_emergent_systems.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/multi-agent-systems/collaboration-control-and-parallel-agents/meta-controllers-ensembles-and-emergent-systems",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "parallel-agents-async-nodes-and-streaming",
@@ -3140,9 +3140,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m36_collaboration_parallel_agents/05_parallel_agents_async_nodes_and_streaming.md",
-      "estMinutes": 13,
+      "estMinutes": 14,
       "href": "/learn/multi-agent-systems/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "collaboration-control-and-parallel-agents-interview-questions",
@@ -3176,9 +3176,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/01_hotel_system_environment_coordinator_reservation_agent_compliance.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/hotel-system-environment-coordinator-reservation-agent-compliance",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "hardening-edge-cases-testing-and-system-wide-error-handling",
@@ -3188,9 +3188,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/02_hardening_edge_cases_testing_and_system_wide_error_handling.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/hardening-edge-cases-testing-and-system-wide-error-handling",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "scaling-parallel-agents-memory-merging-language-and-sentiment-web-search",
@@ -3200,9 +3200,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/03_scaling_parallel_agents_memory_merging_language_and_sentiment_web_search.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/scaling-parallel-agents-memory-merging-language-and-sentiment-web-search",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "research-systems-supervisor-financial-research-summarisation-full-research-syste",
@@ -3212,9 +3212,21 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/04_research_systems_supervisor_financial_research_summarisation_full_research_system.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/research-systems-supervisor-financial-research-summarisation-full-research-syste",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
+    },
+    {
+      "slug": "five-practical-agent-patterns-side-by-side",
+      "title": "Five practical agent patterns, side by side",
+      "track": "multi-agent-systems",
+      "module": "multi-agent-applied-builds-and-deep-agents",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/05_five_practical_agent_patterns_side_by_side.md",
+      "estMinutes": 14,
+      "href": "/learn/multi-agent-systems/multi-agent-applied-builds-and-deep-agents/five-practical-agent-patterns-side-by-side",
+      "updated": "2026-11-13"
     },
     {
       "slug": "multi-agent-applied-builds-and-deep-agents-interview-questions",
