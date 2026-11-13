@@ -582,7 +582,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "strategy-per-query-type",
       "adaptive-rag-and-query-routing-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "rag-as-an-agent-tool",

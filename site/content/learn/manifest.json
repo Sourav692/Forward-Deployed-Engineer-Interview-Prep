@@ -2636,9 +2636,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m30_adaptive_rag_routing/01_router_agentic_rag_over_multiple_knowledge_bases.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/router-agentic-rag-over-multiple-knowledge-bases",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "customer-facing-routing-with-sentiment-and-human-escalation",
@@ -2648,9 +2648,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m30_adaptive_rag_routing/02_customer_facing_routing_with_sentiment_and_human_escalation.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/customer-facing-routing-with-sentiment-and-human-escalation",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "adaptive-rag-vector-store-vs-web-with-hallucination-grading",
@@ -2660,9 +2660,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m30_adaptive_rag_routing/03_adaptive_rag_vector_store_vs_web_with_hallucination_grading.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-vector-store-vs-web-with-hallucination-grading",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "strategy-per-query-type",
@@ -2672,9 +2672,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m30_adaptive_rag_routing/04_strategy_per_query_type.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/strategy-per-query-type",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "adaptive-rag-and-query-routing-interview-questions",
@@ -2708,9 +2708,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m31_rag_as_agent_tool/01_rag_as_a_tool_inside_a_langgraph_agent.md",
-      "estMinutes": 13,
+      "estMinutes": 14,
       "href": "/learn/agentic-and-self-correcting-rag/rag-as-an-agent-tool/rag-as-a-tool-inside-a-langgraph-agent",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "managed-rag-platforms-contextual-ai",
@@ -2720,9 +2720,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m31_rag_as_agent_tool/02_managed_rag_platforms_contextual_ai.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/agentic-and-self-correcting-rag/rag-as-an-agent-tool/managed-rag-platforms-contextual-ai",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "exercise-llamaindex-wikipedia-agent-with-chainlit",
@@ -2732,9 +2732,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m31_rag_as_agent_tool/03_exercise_llamaindex_wikipedia_agent_with_chainlit.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/agentic-and-self-correcting-rag/rag-as-an-agent-tool/exercise-llamaindex-wikipedia-agent-with-chainlit",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "rag-as-an-agent-tool-interview-questions",
@@ -2768,9 +2768,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m32_reliability_feedback/01_reliable_rag_relevance_checks_hallucination_checks_source_highlighting.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/reliable-rag-relevance-checks-hallucination-checks-source-highlighting",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "retrieval-with-a-user-feedback-loop",
@@ -2780,9 +2780,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m32_reliability_feedback/02_retrieval_with_a_user_feedback_loop.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/retrieval-with-a-user-feedback-loop",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "dartboard-rag-relevance-and-diversity-together",
@@ -2792,9 +2792,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m32_reliability_feedback/03_dartboard_rag_relevance_and_diversity_together.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/dartboard-rag-relevance-and-diversity-together",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "reliability-feedback-loops-and-diversity-interview-questions",
