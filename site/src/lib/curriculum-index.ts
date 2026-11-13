@@ -688,6 +688,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "hardening-edge-cases-testing-and-system-wide-error-handling",
       "scaling-parallel-agents-memory-merging-language-and-sentiment-web-search",
       "research-systems-supervisor-financial-research-summarisation-full-research-syste",
+      "five-practical-agent-patterns-side-by-side",
       "multi-agent-applied-builds-and-deep-agents-interview-questions"
     ],
     "practiceMinutes": 170

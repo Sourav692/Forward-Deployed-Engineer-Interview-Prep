@@ -1679,41 +1679,10 @@ export const RAG_MODULES: CurriculumModule[] = [
       "hardening-edge-cases-testing-and-system-wide-error-handling",
       "scaling-parallel-agents-memory-merging-language-and-sentiment-web-search",
       "research-systems-supervisor-financial-research-summarisation-full-research-syste",
+      "five-practical-agent-patterns-side-by-side",
       "multi-agent-applied-builds-and-deep-agents-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Five practical agent patterns, side by side",
-        "notebooks": [
-          {
-            "title": "Sequential and conditional workflows",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p10_multi_agent_systems/m37_multi_agent_applied_builds/optional/notebook/05a_sequential_and_conditional_workflows.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Supervisor agents as tools",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p10_multi_agent_systems/m37_multi_agent_applied_builds/optional/notebook/05b_supervisor_agents_as_tools.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Parallel fan out fan in",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p10_multi_agent_systems/m37_multi_agent_applied_builds/optional/notebook/05c_parallel_fan_out_fan_in.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Generator critic loop",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p10_multi_agent_systems/m37_multi_agent_applied_builds/optional/notebook/05d_generator_critic_loop.ipynb",
-            "optional": true
-          },
-          {
-            "title": "Handoffs with swarm",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/p10_multi_agent_systems/m37_multi_agent_applied_builds/optional/notebook/05e_handoffs_with_swarm.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "mcp-foundations",
@@ -3998,6 +3967,14 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "slug": "research-systems-supervisor-financial-research-summarisation-full-research-syste",
     "title": "Research systems: supervisor financial research, summarisation, full research system",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/04_research_systems_supervisor_financial_research_summarisation_full_research_system.md",
+    "home": "multi-agent-applied-builds-and-deep-agents",
+    "kind": "sync",
+    "publish": "own"
+  },
+  {
+    "slug": "five-practical-agent-patterns-side-by-side",
+    "title": "Five practical agent patterns, side by side",
+    "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_multi_agent_systems/m37_multi_agent_applied_builds/05_five_practical_agent_patterns_side_by_side.md",
     "home": "multi-agent-applied-builds-and-deep-agents",
     "kind": "sync",
     "publish": "own"

@@ -488,7 +488,7 @@ export const NOT_ACRONYMS = new Set([
   // (LangGraph END, SQLite PRAGMA, Postgres JSONB, the A2A JSONRPC transport), fragments of
   // inline code (ORD-88213, /PATH/TO/), names (AWS EC2, BAAI, the ARC benchmark, the SIGIR and
   // NAACL conferences), a file type and a Roman numeral (Part II).
-  'TF', 'IDF', 'END', 'PRAGMA', 'JSONB', 'JSONRPC', 'ORD', 'TO', 'EC2', 'BAAI', 'ARC', 'SIGIR', 'NAACL',
+  'TF', 'IDF', 'END', 'PRAGMA', 'JSONB', 'JSONRPC', 'ORD', 'TO', 'EC2', 'BAAI', 'ARC', 'SIGIR', 'NAACL', 'ACM',
   'DOCX', 'II',
 ])
 
