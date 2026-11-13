@@ -2576,9 +2576,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m29_crag_and_self_rag/01_corrective_rag_in_langgraph_with_web_search_fallback.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/corrective-rag-in-langgraph-with-web-search-fallback",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "self-rag-retrieve-or-not-relevance-groundedness-utility",
@@ -2588,9 +2588,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m29_crag_and_self_rag/02_self_rag_retrieve_or_not_relevance_groundedness_utility.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/self-rag-retrieve-or-not-relevance-groundedness-utility",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "trade-offs-when-correction-is-worth-the-extra-calls",
@@ -2600,9 +2600,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agentic_rag/m29_crag_and_self_rag/03_trade_offs_when_correction_is_worth_the_extra_calls.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/trade-offs-when-correction-is-worth-the-extra-calls",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "self-correcting-rag-crag-and-self-rag-interview-questions",
