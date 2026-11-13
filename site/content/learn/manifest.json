@@ -2828,9 +2828,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/01_why_llms_forget_classic_memory_classes.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/why-llms-forget-classic-memory-classes",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "runnablewithmessagehistory-multi-user-sessions-and-persistence",
@@ -2840,9 +2840,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/02_runnablewithmessagehistory_multi_user_sessions_and_persistence.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/runnablewithmessagehistory-multi-user-sessions-and-persistence",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "trimming-windowing-and-summary-memory",
@@ -2852,9 +2852,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/03_trimming_windowing_and_summary_memory.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/trimming-windowing-and-summary-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "conversational-rag-with-history-aware-retrieval",
@@ -2864,9 +2864,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/04_conversational_rag_with_history_aware_retrieval.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversational-rag-with-history-aware-retrieval",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "memory-apps-product-recommender-and-research-agent-with-sql-memory",
@@ -2876,9 +2876,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/05_memory_apps_product_recommender_and_research_agent_with_sql_memory.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/memory-apps-product-recommender-and-research-agent-with-sql-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "langgraph-threads-checkpoints-and-memory-optimisations",
@@ -2888,9 +2888,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m33_short_term_memory_conversation_state/06_langgraph_threads_checkpoints_and_memory_optimisations.md",
-      "estMinutes": 10,
+      "estMinutes": 13,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/langgraph-threads-checkpoints-and-memory-optimisations",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "conversation-memory-and-conversational-rag-interview-questions",
@@ -2924,9 +2924,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m34_long_term_agentic_memory/01_cross_thread_memory_with_a_store.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/cross-thread-memory-with-a-store",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "session-semantic-episodic-and-procedural-memory-on-sqlite",
@@ -2936,9 +2936,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m34_long_term_agentic_memory/02_session_semantic_episodic_and_procedural_memory_on_sqlite.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/session-semantic-episodic-and-procedural-memory-on-sqlite",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "a-combined-memory-agent",
@@ -2948,9 +2948,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m34_long_term_agentic_memory/03_a_combined_memory_agent.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/a-combined-memory-agent",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "episodic-semantic-stack-and-multi-hop-graph-memory",
@@ -2960,9 +2960,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m34_long_term_agentic_memory/04_episodic_semantic_stack_and_multi_hop_graph_memory.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/episodic-semantic-stack-and-multi-hop-graph-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "memgpt-tiers-voyager-skill-library-agent-workflow-memory",
@@ -2974,7 +2974,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_memory_layer/m34_long_term_agentic_memory/05_memgpt_tiers_voyager_skill_library_agent_workflow_memory.md",
       "estMinutes": 13,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/memgpt-tiers-voyager-skill-library-agent-workflow-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-13"
     },
     {
       "slug": "memory-and-state-interview-questions",
