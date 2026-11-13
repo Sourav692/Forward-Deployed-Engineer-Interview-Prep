@@ -1,6 +1,7 @@
 import { Diagram } from '@/components/Diagram'
 import { AnimatedDiagram } from '@/components/learn/AnimatedDiagram'
 import { LabFrame } from '@/components/learn/LabFrame'
+import { WidgetProse } from '@/components/learn/LearningWidgets'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
 import { toPlainText, type ReadingSection } from '@/lib/reading'
 import { LessonTabs } from '@/components/learn/LessonTabs'
@@ -22,7 +23,8 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * LessonReader (FE-07). A Server Component: the markdown was parsed at build time by
  * `parseReading` (the same `marked` pipeline as the live case-study pages), so the
  * HTML ships in the static page. Only ```mermaid fences become the client `Diagram`
- * island, which loads mermaid on demand.
+ * island, which loads mermaid on demand, and prose holding a course learning widget becomes
+ * `WidgetProse`, which wires its controls.
  *
  * Under the title: the author and last-updated line, then reading time, the source
  * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
@@ -95,6 +97,8 @@ function Sections({ sections }: { sections: ReadingSection[] }) {
                 <LabFrame key={i} src={chunk.src} title={chunk.title} />
               ) : chunk.kind === 'animated' ? (
                 <AnimatedDiagram key={i} html={chunk.html} />
+              ) : chunk.html.includes('learning-widget') ? (
+                <WidgetProse key={i} className="prose reading" html={chunk.html} />
               ) : (
                 <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
               ),

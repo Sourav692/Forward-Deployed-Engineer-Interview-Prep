@@ -480,3 +480,45 @@
   .editorial-page .anim__steps li { grid-template-columns: 3ch minmax(0, 1fr); }
   .editorial-page .anim__steps li > span { grid-column: 2; }
 }
+/*
+ * Learning widgets in a lesson (WidgetProse in LearningWidgets.tsx), ported from the course's
+ * standalone site.css: a walkthrough (.step-controls, one .step-panel at a time, Previous and Next)
+ * and a comparison (.mode-controls, one .mode-panel at a time). The controls carry `hidden` until
+ * script wires them, so without script every panel shows; print shows every panel too.
+ */
+.editorial-page .learning-widget { max-width: 100%; margin: 1.5rem 0 2rem; padding: 1.25rem 0; border-top: 2px solid var(--color-ink); border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .learning-widget .widget-intro { max-width: 65ch; font-weight: 600; color: var(--color-ink); }
+.editorial-page .learning-widget .step-controls { display: grid; grid-template-columns: repeat(var(--step-columns, 3), minmax(0, 1fr)); gap: 0.5rem; margin: 1.125rem 0; }
+.editorial-page .learning-widget .mode-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.editorial-page .learning-widget button { min-height: 44px; padding: 0.625rem 0.875rem; border: var(--rule-hair) solid var(--color-rule-2); border-radius: 0; background: var(--color-paper); color: var(--color-ink); font-size: var(--text-sm); font-weight: 500; line-height: 1.25; text-align: left; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out); }
+.editorial-page .learning-widget button:hover { background: var(--color-paper-2); }
+.editorial-page .learning-widget button:active { background: var(--color-paper-3); }
+.editorial-page .learning-widget button[aria-pressed='true'] { border-color: var(--color-ink); background: var(--color-ink); color: var(--color-paper); }
+.editorial-page .learning-widget button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.editorial-page .learning-widget button:disabled { cursor: not-allowed; opacity: 0.5; background: var(--color-paper-2); color: var(--color-muted); }
+.editorial-page .learning-widget .step-panel { min-height: 16rem; padding-top: 0.75rem; border-top: var(--rule-hair) solid var(--color-rule); }
+.editorial-page .learning-widget .step-panel h4, .editorial-page .learning-widget .mode-panel h4 { margin: 0.75rem 0 1.125rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; line-height: 1.3; color: var(--color-ink); }
+.editorial-page .learning-widget .step-panel dl { display: grid; grid-template-columns: minmax(0, 0.28fr) minmax(0, 0.72fr); gap: 0.75rem 1.25rem; margin: 0; }
+.editorial-page .learning-widget .step-panel dt { font-size: var(--text-sm); color: var(--color-muted); }
+.editorial-page .learning-widget .step-panel dd { min-width: 0; margin: 0; }
+.editorial-page .learning-widget .step-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 1rem; }
+.editorial-page .learning-widget .step-status, .editorial-page .learning-widget .switch-status { margin: 0; font-size: var(--text-sm); line-height: 1.5; color: var(--color-muted); }
+.editorial-page .learning-widget .switch-status { margin-top: 0.75rem; }
+.editorial-page .learning-widget .mode-panel { max-width: 65ch; min-height: 15.5rem; padding-top: 0.75rem; border-top: var(--rule-hair) solid var(--color-rule); }
+@media (max-width: 40rem) {
+  .editorial-page .learning-widget { padding: 1rem 0; }
+  .editorial-page .learning-widget .step-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .editorial-page .learning-widget .step-panel { min-height: 22.5rem; }
+  .editorial-page .learning-widget .step-panel dl { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  .editorial-page .learning-widget .step-panel dd { margin-bottom: 0.75rem; }
+  .editorial-page .learning-widget .step-footer { flex-wrap: wrap; }
+  .editorial-page .learning-widget .step-status { order: 3; flex-basis: 100%; text-align: center; }
+  .editorial-page .learning-widget .mode-panel { min-height: 22.5rem; }
+}
+/* In Tailwind's base layer: preflight hides [hidden] with !important there, and an important
+   declaration in a layer beats any unlayered one, so only a more specific base rule can show a panel. */
+@layer base { @media print {
+  .editorial-page .learning-widget :is(.step-controls, .step-footer, .mode-controls, .switch-status) { display: none !important; }
+  .editorial-page .learning-widget :is(.step-panel, .mode-panel)[hidden] { display: block !important; }
+  .editorial-page .learning-widget :is(.step-panel, .mode-panel) { min-height: 0 !important; }
+} }
