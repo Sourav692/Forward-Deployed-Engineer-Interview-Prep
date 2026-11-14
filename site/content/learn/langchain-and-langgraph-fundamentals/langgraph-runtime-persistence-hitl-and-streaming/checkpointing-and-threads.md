@@ -2,6 +2,7 @@
 # Checkpointing and threads
 
 <!-- subtitle: How a checkpointer and a thread id let one compiled graph remember, survive restarts and rewind each refund on its own -->
+<!-- format: approved -->
 
 ## A graph that forgets every refund
 
@@ -149,6 +150,18 @@ Finance asks why `refund-17` was paid without review. With a checkpointer and th
 4. If it was wrong, fork from step 2 with `risk` set to high and continue. The thread parks at `human_gate` beside the original branch, as in Table 4, and the billing team sees it.
 
 [Lesson 2 of T4.4](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/interrupts-and-human-in-the-loop) uses the same saved state to stop a run on purpose and wait for a person.
+
+## Limits of this evidence
+
+- **Stub nodes, no model.** Every count on this page comes from offline runs with stub nodes and `InMemorySaver` on LangGraph 1.2.18, rerun on 14 November 2026. A real model changes the values in state, not the number of checkpoints.
+- **The restart row is reasoned.** Table 3's last row follows from `InMemorySaver` living in process memory. The `SqliteSaver` restart was run; `PostgresSaver` with several workers was not.
+- **Version-specific details.** The metadata fields, the `fork` source on replay and the re-routing of `update_state` are 1.2.18 behaviour. Recheck them after an upgrade.
+- **refund-17 and refund-99 are labels.** The notebook's own refund agent uses one thread, `order-42`. The two Larkspur requests are this module's running example.
+
+## References
+
+1. LangChain documentation, [Persistence in LangGraph](https://docs.langchain.com/oss/python/langgraph/persistence): checkpoints, threads, state history, replay and `update_state`.
+2. LangChain documentation, [Graph API overview](https://docs.langchain.com/oss/python/langgraph/graph-api): state, reducers and super-steps.
 
 ## Run the notebooks
 

@@ -272,9 +272,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/03_numpy_pandas_and_matplotlib.md",
-      "estMinutes": 7,
+      "estMinutes": 10,
       "href": "/learn/ai-engineering-foundations/python-and-data-toolkit-refresher/numpy-pandas-and-matplotlib",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "databases-from-python-sqlite-mysql-postgresql",
@@ -284,9 +284,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/04_databases_from_python_sqlite_mysql_postgresql.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/ai-engineering-foundations/python-and-data-toolkit-refresher/databases-from-python-sqlite-mysql-postgresql",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "concurrency-threads-processes-the-gil-and-asyncio-22-runnable-scripts",
@@ -296,9 +296,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/06_concurrency_threads_processes_the_gil_and_asyncio_22_runnable_scripts.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/ai-engineering-foundations/python-and-data-toolkit-refresher/concurrency-threads-processes-the-gil-and-asyncio-22-runnable-scripts",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "python-and-data-toolkit-refresher-interview-questions",
@@ -332,9 +332,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/01_calling_commercial_llm_apis_openai_and_gemini.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/calling-commercial-llm-apis-openai-and-gemini",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "open-source-llms-via-hugging-face-inference-and-locally",
@@ -344,9 +344,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/02_open_source_llms_via_hugging_face_inference_and_locally.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/open-source-llms-via-hugging-face-inference-and-locally",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "reasoning-vs-non-reasoning-models",
@@ -356,9 +356,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/03_reasoning_vs_non_reasoning_models.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/reasoning-vs-non-reasoning-models",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "reasoning-effort-levers-and-cost",
@@ -368,9 +368,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/04_reasoning_effort_levers_and_cost.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/reasoning-effort-levers-and-cost",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "llm-provider-apis-and-model-selection-interview-questions",
@@ -404,9 +404,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/01_hub_setup_datasets_and_models.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/hub-setup-datasets-and-models",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "pipelines-tokenization-and-pretrained-models",
@@ -416,9 +416,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/02_pipelines_tokenization_and_pretrained_models.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/pipelines-tokenization-and-pretrained-models",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "building-demos-with-gradio",
@@ -428,9 +428,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/05_building_demos_with_gradio.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/building-demos-with-gradio",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "hugging-face-models-and-gradio-demos-interview-questions",
@@ -464,9 +464,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m04_prompt_engineering_patterns/01_core_prompt_patterns.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/core-prompt-patterns",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "reasoning-prompts-chain-of-thought-self-consistency-least-to-most-react",
@@ -476,9 +476,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m04_prompt_engineering_patterns/02_reasoning_prompts_chain_of_thought_self_consistency_least_to_most_react.md",
-      "estMinutes": 13,
+      "estMinutes": 14,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/reasoning-prompts-chain-of-thought-self-consistency-least-to-most-react",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "the-same-tasks-across-models",
@@ -488,9 +488,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m04_prompt_engineering_patterns/03_the_same_tasks_across_models.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/the-same-tasks-across-models",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "applied-prompting-on-business-tasks",
@@ -500,9 +500,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m04_prompt_engineering_patterns/04_applied_prompting_on_business_tasks.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/applied-prompting-on-business-tasks",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "prompt-engineering-patterns-interview-questions",
@@ -536,9 +536,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_multimodal_prompting/01_multimodal_prompting_with_gemini.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-with-gemini",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "multimodal-prompting-with-gpt-4o",
@@ -548,9 +548,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_multimodal_prompting/02_multimodal_prompting_with_gpt_4o.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-with-gpt-4o",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "exercise-financial-report-analysis",
@@ -560,9 +560,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_multimodal_prompting/03_exercise_financial_report_analysis.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/exercise-financial-report-analysis",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "multimodal-prompting-interview-questions",
@@ -598,7 +598,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/01_langchain_introduction_and_the_1_x_package_split.md",
       "estMinutes": 8,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-introduction-and-the-1-x-package-split",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "commercial-llms-natively-and-with-langchain",
@@ -608,9 +608,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/02_commercial_llms_natively_and_with_langchain.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/commercial-llms-natively-and-with-langchain",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "open-source-llms-transformers-inference-client-groq-langchain",
@@ -620,9 +620,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/03_open_source_llms_transformers_inference_client_groq_langchain.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/open-source-llms-transformers-inference-client-groq-langchain",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "inputs-and-outputs-messages-llm-vs-chat-model",
@@ -632,9 +632,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/04_inputs_and_outputs_messages_llm_vs_chat_model.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/inputs-and-outputs-messages-llm-vs-chat-model",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "prompt-templates-and-few-shot-composition",
@@ -644,9 +644,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/05_prompt_templates_and_few_shot_composition.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/prompt-templates-and-few-shot-composition",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "output-parsers",
@@ -656,9 +656,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/06_output_parsers.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/output-parsers",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "langchain-1-x-recap-course-ending-in-a-structured-output-q-and-a-bot",
@@ -668,9 +668,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m06_langchain_core/07_langchain_1_x_recap_course_ending_in_a_structured_output_q_a_bot.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-1-x-recap-course-ending-in-a-structured-output-q-and-a-bot",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "langchain-core-models-prompts-and-parsers-interview-questions",
@@ -704,9 +704,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m07_lcel_runnables_and_chains/01_lcel_and_the_runnable_interface.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "lcel-deep-dive",
@@ -716,9 +716,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m07_lcel_runnables_and_chains/02_lcel_deep_dive.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-deep-dive",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "branching-routing-and-merging-chains",
@@ -728,9 +728,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m07_lcel_runnables_and_chains/03_branching_routing_and_merging_chains.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/branching-routing-and-merging-chains",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "legacy-chains-and-migration-to-lcel",
@@ -740,9 +740,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m07_lcel_runnables_and_chains/04_legacy_chains_and_migration_to_lcel.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/legacy-chains-and-migration-to-lcel",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "summarization-stuff-map-reduce-refine",
@@ -752,9 +752,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m07_lcel_runnables_and_chains/05_summarization_stuff_map_reduce_refine.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/summarization-stuff-map-reduce-refine",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "lcel-runnables-and-chains-interview-questions",
@@ -788,9 +788,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m08_langgraph_core/01_state_graphs_and_reducers.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/state-graphs-and-reducers",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "conditional-edges-and-llm-nodes",
@@ -800,9 +800,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m08_langgraph_core/02_conditional_edges_and_llm_nodes.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/conditional-edges-and-llm-nodes",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "state-schemas-and-validation",
@@ -812,9 +812,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m08_langgraph_core/03_state_schemas_and_validation.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/state-schemas-and-validation",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "nodes-runtime-context-and-command",
@@ -824,9 +824,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m08_langgraph_core/04_nodes_runtime_context_and_command.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/nodes-runtime-context-and-command",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "input-output-schemas-and-configuration",
@@ -836,9 +836,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m08_langgraph_core/05_input_output_schemas_and_configuration.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/input-output-schemas-and-configuration",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "langchain-and-langgraph-interview-questions",
@@ -872,9 +872,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/01_checkpointing_and_threads.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/checkpointing-and-threads",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "interrupts-and-human-in-the-loop",
@@ -884,9 +884,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/02_interrupts_and_human_in_the_loop.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/interrupts-and-human-in-the-loop",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "subgraphs",
@@ -896,9 +896,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/03_subgraphs.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/subgraphs",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "async-and-streaming",
@@ -908,9 +908,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/04_async_and_streaming.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/async-and-streaming",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "retry-policies-and-bounded-cycles",
@@ -920,9 +920,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/05_retry_policies_and_bounded_cycles.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/retry-policies-and-bounded-cycles",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "state-management-in-practice",
@@ -932,9 +932,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_llm_application_frameworks/m09_langgraph_runtime/06_state_management_in_practice.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/state-management-in-practice",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "langgraph-runtime-persistence-hitl-and-streaming-interview-questions",

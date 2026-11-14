@@ -167,7 +167,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "applied-prompting-on-business-tasks",
       "prompt-engineering-patterns-interview-questions"
     ],
-    "practiceMinutes": 140
+    "practiceMinutes": 110
   },
   {
     "slug": "multimodal-prompting",
@@ -215,7 +215,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "summarization-stuff-map-reduce-refine",
       "lcel-runnables-and-chains-interview-questions"
     ],
-    "practiceMinutes": 140
+    "practiceMinutes": 110
   },
   {
     "slug": "langchain-and-langgraph",

@@ -2,6 +2,7 @@
 # lesson 5 of T4.4 Theory: Retry policies and bounded cycles
 
 <!-- subtitle: How a node retries a flaky call without the caller noticing, which errors it should retry, and how to make a loop stop when the model never gets it right -->
+<!-- format: approved -->
 
 ## Flaky providers and endless loops
 
@@ -151,6 +152,8 @@ We ran the loop offline with stub nodes and a validator that fails every time, t
 
 That is 7 node runs, 3 errors accumulated through the `operator.add` reducer, and a result whose `success` is still false. The caller must handle that result: a capped loop ends, but it does not end well.
 
+> **Pitfall: the pass-through that returns everything.** The notebook's `finalize` returns the whole state as its update. The `operator.add` reducer then adds the three errors a second time: our rerun of that shape ended with 6 errors. A pass-through node should return an empty update.
+
 ### Planted failure: the counter in the router
 
 Move the increment into the router function and the guard stops working. We ran that version with the same always-failing validator:
@@ -176,6 +179,18 @@ The support chat's "rewrite until the tone checker passes" loop gets the same tr
 5. The model call inside the rewriting node gets a `RetryPolicy` with `retry_on` naming the provider's connection and 5xx errors, and nothing else.
 
 [T9.2](../../p08_agentic_rag/m29_crag_and_self_rag/00_overview.md)'s grade-and-rewrite loops are built this way. [Lesson 6 of T4.4](06_state_management_in_practice.md) puts retries, resumes and crashes together and counts what reaches the outside world.
+
+## Limits of this evidence
+
+- **Read from the installed source.** The wait formula, the default policy, the default retry rule and the 10,007 default limit come from LangGraph 1.2.18's own code, checked on 14 November 2026. They can change in a later release.
+- **Stub loops, no model.** Tables 3 and 4 come from offline runs with stub nodes and a validator that always fails. The third row of Table 4 follows from the default limit and was not run to 10,007 steps.
+- **The failure odds assume independence.** The 0.168 figure treats the notebook's 70% failure rate as independent per attempt, as its random draw is. A real outage fails attempts together.
+- **No wall-clock measurement.** The waits are computed from the formula, not timed.
+
+## References
+
+1. LangChain documentation, [Graph API build checklist](https://docs.langchain.com/oss/python/langgraph/use-graph-api): adding a retry policy to a node and setting `recursion_limit`.
+2. LangChain documentation, [Graph API overview](https://docs.langchain.com/oss/python/langgraph/graph-api): conditional edges and the reducers that accumulate a loop's errors.
 
 ## Run the notebooks
 
