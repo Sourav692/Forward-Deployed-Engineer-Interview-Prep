@@ -380,7 +380,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "self-querying-natural-language-to-metadata-filter",
       "query-transformation-and-routing-interview-questions"
     ],
-    "practiceMinutes": 350
+    "practiceMinutes": 320
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
@@ -397,7 +397,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "relevant-segment-extraction",
       "post-retrieval-optimisation-and-reranking-interview-questions"
     ],
-    "practiceMinutes": 200
+    "practiceMinutes": 170
   },
   {
     "slug": "end-to-end-rag-systems",
@@ -413,7 +413,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "fully-local-rag-with-hugging-face-and-faiss",
       "end-to-end-rag-systems-interview-questions"
     ],
-    "practiceMinutes": 380
+    "practiceMinutes": 350
   },
   {
     "slug": "multimodal-rag",
