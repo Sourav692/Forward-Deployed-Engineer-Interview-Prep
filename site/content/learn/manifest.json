@@ -2264,9 +2264,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/01_plan_and_execute_vs_react_decompose_execute_replan.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/plan-and-execute-vs-react-decompose-execute-replan",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "deep-research-and-reflective-dynamic-planners",
@@ -2276,9 +2276,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/02_deep_research_and_reflective_dynamic_planners.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/deep-research-and-reflective-dynamic-planners",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "reflection-and-reflexion-agents",
@@ -2288,9 +2288,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/03_reflection_and_reflexion_agents.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/reflection-and-reflexion-agents",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "chain-of-verification-and-constitutional-critique",
@@ -2300,9 +2300,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/04_chain_of_verification_and_constitutional_critique.md",
-      "estMinutes": 10,
+      "estMinutes": 13,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/chain-of-verification-and-constitutional-critique",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "self-discover-and-reflective-code-generation",
@@ -2312,9 +2312,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/05_self_discover_and_reflective_code_generation.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/self-discover-and-reflective-code-generation",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "self-consistency-tree-of-thoughts-and-lats",
@@ -2324,9 +2324,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/06_self_consistency_tree_of_thoughts_and_lats.md",
-      "estMinutes": 10,
+      "estMinutes": 14,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/self-consistency-tree-of-thoughts-and-lats",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "simulator-in-the-loop-metacognition-and-exemplar-memory",
@@ -2336,9 +2336,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m25_planning_reflection_reasoning/07_simulator_in_the_loop_metacognition_and_exemplar_memory.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/advanced-agents/planning-reflection-and-reasoning-patterns/simulator-in-the-loop-metacognition-and-exemplar-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "planning-reflection-and-reasoning-patterns-interview-questions",
@@ -2372,9 +2372,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/01_applied_react_web_research_swe_and_computer_use_agents.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/advanced-agents/coding-computer-use-and-deep-agents/applied-react-web-research-swe-and-computer-use-agents",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "developer-vs-tester-agents",
@@ -2384,9 +2384,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/02_developer_vs_tester_agents.md",
-      "estMinutes": 7,
+      "estMinutes": 10,
       "href": "/learn/advanced-agents/coding-computer-use-and-deep-agents/developer-vs-tester-agents",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
@@ -2396,9 +2396,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m26_coding_computer_use_and_deep_agents/03_deep_agents_orchestrator_sub_agents_skills_and_long_term_memory.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/advanced-agents/coding-computer-use-and-deep-agents/deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "coding-computer-use-and-deep-agents-interview-questions",
@@ -2432,9 +2432,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/01_dry_run_harness_and_human_approval.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/advanced-agents/human-approval-and-applied-single-agent-builds/dry-run-harness-and-human-approval",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "research-and-competitive-intelligence-agents",
@@ -2444,9 +2444,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/02_research_and_competitive_intelligence_agents.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/advanced-agents/human-approval-and-applied-single-agent-builds/research-and-competitive-intelligence-agents",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "financial-analyst-agent",
@@ -2456,9 +2456,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/03_financial_analyst_agent.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/advanced-agents/human-approval-and-applied-single-agent-builds/financial-analyst-agent",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "text-to-sql-workflow-vs-react-agent",
@@ -2468,9 +2468,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/04_text_to_sql_workflow_vs_react_agent.md",
-      "estMinutes": 12,
+      "estMinutes": 14,
       "href": "/learn/advanced-agents/human-approval-and-applied-single-agent-builds/text-to-sql-workflow-vs-react-agent",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
@@ -2480,9 +2480,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_advanced_agents/m27_human_approval_applied_agents/05_llm_workflow_apps_review_analyst_it_support_desk_tailored_writer_quiz_generator.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/advanced-agents/human-approval-and-applied-single-agent-builds/llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
-      "updated": "2026-11-09"
+      "updated": "2026-11-14"
     },
     {
       "slug": "human-approval-and-applied-single-agent-builds-interview-questions",

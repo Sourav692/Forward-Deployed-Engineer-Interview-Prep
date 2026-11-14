@@ -509,7 +509,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "simulator-in-the-loop-metacognition-and-exemplar-memory",
       "planning-reflection-and-reasoning-patterns-interview-questions"
     ],
-    "practiceMinutes": 290
+    "practiceMinutes": 260
   },
   {
     "slug": "coding-computer-use-and-deep-agents",
@@ -523,7 +523,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
       "coding-computer-use-and-deep-agents-interview-questions"
     ],
-    "practiceMinutes": 270
+    "practiceMinutes": 240
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds",
