@@ -2,6 +2,7 @@
 # lesson 5 of T5.1 Theory: The RAG lifecycle and a measured baseline
 
 <!-- subtitle: Find the half that failed before you fix anything, then beat a baseline one change at a time -->
+<!-- format: approved -->
 
 ## Indexing vs retrieval vs generation
 
@@ -181,6 +182,18 @@ Lesson 3 of T5.1's switch to embeddings is the first change to run through the l
 4. **Decide.** The change broke a question it was not aimed at. The loop says revert, or rework it (raise `k` to 3, or add the exact-word signal back with hybrid search in [T6.1](../../p05_retrieval_quality_and_rag_apps/m16_retrievers_hybrid_search/00_overview.md)) and run the golden set again.
 
 > **Interview tip:** when someone reports a mean improvement, ask for the per-question rows. A better average can hide a question type the change broke.
+
+## Limits of this evidence
+
+- **The notebook builds the pipeline; the lab gives the row.** Notebook `05a` runs load, split, embed (FAISS with `text-embedding-3-small`), retrieve and generate over its own restaurant text and a PDF, and prints scores for the diagnosis check. It keeps no golden set and computes no recall. Table 3 comes from the lesson 2 of T5.1 lab, and the embedding comparison from lesson 3 of T5.1.
+- **A retrieval-only row.** The Larkspur baseline has recall and precision but no answer correctness, faithfulness, latency or cost yet. Those columns are added when a module measures them ([T6.4](../../p05_retrieval_quality_and_rag_apps/m19_end_to_end_rag_systems/00_overview.md) for answers).
+- **Three questions decide nothing alone.** The 20 to 50 question range is this course's working rule for a first golden set, not a statistical threshold. With three questions, one regression is a third of the set.
+- **Table 4 is a map, not a measurement.** Its rows follow the notebook's own failure list. The order code `ORD-88213` is an illustration, not a handbook entry.
+
+## References
+
+1. LlamaIndex, [Evaluating](https://developers.llamaindex.ai/python/framework/module_guides/evaluating/), defining retrieval metrics such as hit rate and mean reciprocal rank.
+2. Ragas, [Context recall](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_recall/), a recall measure computed against reference answers.
 
 ## Run the notebooks
 

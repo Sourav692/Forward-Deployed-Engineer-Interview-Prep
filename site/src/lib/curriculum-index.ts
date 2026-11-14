@@ -281,7 +281,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "custom-loaders-with-lazy-loading",
       "document-ingestion-and-metadata-design-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "chunking-and-indexing",
@@ -328,7 +328,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "incremental-indexing-indexing-api-and-record-manager",
       "vector-stores-and-index-operations-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "advanced-indexing-strategies",
@@ -344,7 +344,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "context-aware-chunks-contextual-headers-and-contextual-retrieval",
       "advanced-indexing-strategies-interview-questions"
     ],
-    "practiceMinutes": 260
+    "practiceMinutes": 230
   },
   {
     "slug": "retrieval-hybrid-rerank",
