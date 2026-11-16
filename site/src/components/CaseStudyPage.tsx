@@ -16,7 +16,9 @@ import { SHOW_STUDY_TIME } from '@/lib/study-time'
 export const caseDescription = (study: CaseStudy) =>
   study.ref.moduleId === '16-company-oriented-prep'
     ? `Company-oriented interview preparation: ${study.title}.`
-    : `FDE case study: ${study.title} — ${documentsOf(study).filter((d) => d.tab !== 'intro').map((d) => d.label.toLowerCase()).join(', ')}.`
+    : study.subtitle
+      ? `FDE case study: ${study.title}. ${study.subtitle}`
+      : `FDE case study: ${study.title} — ${documentsOf(study).filter((d) => d.tab !== 'intro').map((d) => d.label.toLowerCase()).join(', ')}.`
 
 /**
  * A reading page: the casebook designs at /design/<slug> (ENH-16), and the company prep
@@ -36,7 +38,7 @@ export async function CaseStudyPage({
   const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
   // The Introduction is the case's landing page, not one of its documents.
   const documents = documentsOf(study).filter((d) => d.tab !== 'intro')
-  const minutes = documents.reduce((sum, d) => sum + d.minutes, 0)
+  const minutes = rewrite ? (study.ref.minutes ?? 0) : documents.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
     <div className={rewrite ? "casebook-rewrite-page pb-20 pt-8" : "pb-20 pt-8"}>
@@ -78,7 +80,7 @@ export async function CaseStudyPage({
       </PageHead>
 
       {rewrite ? <>
-        <CasebookReader payload={rewrite} progressId={`${study.ref.trackId}/${study.ref.slug}`} legacyTabs={study.docs.map(doc => doc.tab)} />
+        <CasebookReader payload={rewrite} progressId={`${study.ref.trackId}/${study.ref.slug}`} legacyTabs={(study.ref.tabs ?? []).map(tab => tab.id)} />
       </> : <CaseStudyView study={study} />}
 
       <WhereNext reviews={related.reviews} counterpart={related.counterpart} next={null} />

@@ -41,7 +41,7 @@
  *    the progress maps leave their sentence, a sentence left with no link goes, and so do sentences
  *    about first-teaching coverage and the course's study-time estimates (PQ-04);
  *  - each lesson ends with Key Takeaways (PQ-06) from site/sd-course-pages/key-takeaways.md, a
- *    site-side file like site/case-pages/: the course has none, and the import fails on a lesson
+ *    site-side file: the course has none, and the import fails on a lesson
  *    without an entry or an entry without a lesson;
  *  - a part over the site's page limit (WORD_LIMIT, as check:content counts words) splits before its
  *    first "Interview" heading into a further "staff interview practice" lesson, `0Kb_…md`.

@@ -471,6 +471,8 @@ export const NOT_ACRONYMS = new Set([
   'US', 'EU', 'APAC', 'EMEA', 'AMER', 'AWS', 'SAP', 'VIP', 'OS', 'IT', 'IP', 'KB', 'GB', 'MB', 'TB',
   'UI', 'UX', 'URL', 'HTTP', 'HTTPS', 'ASCII', 'SHA256', 'V1', 'V2', 'Q3', 'CD', 'CI', 'SOC',
   'DM',
+  // A file name (README.md), not an acronym
+  'README',
   // SQL keywords and name fragments: ROW FILTER, MT-Bench, and PCI / DSS as the two
   // halves of the 'PCI DSS' entry above.
   'ROW', 'MT', 'PCI', 'DSS',

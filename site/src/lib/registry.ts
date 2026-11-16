@@ -139,8 +139,8 @@ export const MODULES: ModuleMeta[] = [
     number: 15,
     title: 'Worked System Designs',
     blurb:
-      'Read 20 complete system designs at three depths — interview answer, technical ' +
-      'deep dive, and quick review — plus 13 additional reference cases.',
+      'Read 33 complete system designs, each in five sections: case brief, design ' +
+      'walkthrough, technical deep dives, practice and quick review.',
     status: 'live',
     kind: 'reading',
   },

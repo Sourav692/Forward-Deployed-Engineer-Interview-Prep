@@ -34,7 +34,7 @@ The course site syncs these folders: the customer-discovery and system-design wo
 | Interview area | Where to study | Where to practise |
 |---|---|---|
 | Problem decomposition and discovery | `07_Last_Day_Revision/` reviews 01–03; `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/` | `03_.../Customer_Discovery_Worksheets/`, `03_.../Problem_Decomposition_Bank/` |
-| AI system design | `01_.../FDE_Handbook/02_System_Design_Fundamentals/`, `02_.../Classic_Design_Walkthroughs/` | `03_.../System_Design_Worksheets/`, `02_.../Scenario_Packs_G01_G20/` |
+| AI system design | `01_.../FDE_Handbook/02_System_Design_Fundamentals/`, `02_.../Classic_Design_Walkthroughs/` | `03_.../System_Design_Worksheets/`, `02_.../Casebook_Rewrites/` |
 | RAG and retrieval | `01_.../RAG_and_Agent_Topic_Guides/`, `01_.../FDE_Handbook/04_Enterprise_RAG/` | Scenario packs G01, G06, G08 |
 | Agents and multi-agent systems | `01_.../FDE_Handbook/03_Robust_Agents/`, `07_Multi_Agent_Systems/`, `01_.../Agentic_System_Design_Book/` | Scenario packs G03, G11, G15 |
 | Production, security, cost | `01_.../Production_and_Platform_Judgment/`, `01_.../Cost_and_Latency_Optimization/`, Handbook chapters 06 and 08 | Scenario packs G07, G10, G13, G14 |

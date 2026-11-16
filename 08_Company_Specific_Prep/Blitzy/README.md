@@ -69,6 +69,6 @@ The final round tests engineering fit, ownership, and executive communication. T
 | Reliability patterns (retries, breakers, idempotency) | `07_Last_Day_Revision/module-12-reliability-and-failure-handling.md` |
 | Release mechanics (shadow, canary, kill switch) | `07_Last_Day_Revision/module-14-release-and-change-management.md` |
 | Incident drill with real telemetry | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_.../04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` |
-| AI coding-assistant system design | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/` |
-| Use-case prioritization scoring | `02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/` |
+| AI coding-assistant system design | `02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/` |
+| Use-case prioritization scoring | `02_System_Design_Case_Studies/Casebook_Rewrites/prioritize-ai-use-cases/` |
 | Communication and influence answer key | `04_Behavioral_and_Leadership/fde_competencies/answer_keys/02_communication_and_influence_answer_key.md` |
