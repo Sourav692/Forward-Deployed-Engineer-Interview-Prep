@@ -1,0 +1,1328 @@
+{
+  "title": "Enterprise Knowledge Assistant",
+  "slug": "enterprise-knowledge-assistant",
+  "subtitle": "Design a cited internal assistant that preserves permissions as sources and identities change.",
+  "theme": "Knowledge and Retrieval",
+  "kind": "System design",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "main-intro": "brief-scenario",
+    "main-0-the-mental-model": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "brief-task",
+    "main-the-anchor-case-study": "brief-task",
+    "deep-dive-intro": "brief-task",
+    "full-pack-intro": "brief-task",
+    "main-1-how-i-would-open": "walk-discovery",
+    "full-pack-1-name-permission-fidelity-as-the-constraint-before-drawing-": "walk-discovery",
+    "main-2-requirements-functional-non-functional": "walk-requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "main-part-2-15-scale-and-latency": "walk-sizing",
+    "full-pack-3-size-on-peak-qps-and-permission-refresh": "walk-sizing",
+    "main-3-architecture": "walk-architecture",
+    "full-pack-part-2-5-draw-the-architecture-end-to-end": "walk-architecture",
+    "main-4-ingestion-normalise-permissions-first": "dive-ingestion",
+    "main-5-freshness-and-deletion": "dive-ingestion",
+    "deep-dive-1-acl-normalisation": "dive-ingestion",
+    "deep-dive-4-source-specific-risks": "dive-ingestion",
+    "deep-dive-5-ingestion-correctness": "dive-ingestion",
+    "deep-dive-6-freshness-vs-authorisation": "dive-ingestion",
+    "full-pack-part-2-4-map-every-source-with-its-permission-model": "dive-ingestion",
+    "full-pack-part-2-6-normalise-permissions-at-ingestion-and-refuse-what-has-non": "dive-ingestion",
+    "main-6-authorisation-two-layers": "dive-authorisation",
+    "main-part-2-7-abac": "dive-authorisation",
+    "main-part-2-18-multi-tenancy": "dive-authorisation",
+    "deep-dive-2-two-authorisation-layers": "dive-authorisation",
+    "deep-dive-3-abac": "dive-authorisation",
+    "full-pack-part-2-7-enforce-before-the-model-sees-anything": "dive-authorisation",
+    "main-part-2-8-retrieval": "dive-retrieval",
+    "main-part-2-9-reranking-and-context": "dive-retrieval",
+    "main-part-2-10-generation-citations-and-abstention": "dive-retrieval",
+    "deep-dive-7-retrieval-details": "dive-retrieval",
+    "deep-dive-8-reranking": "dive-retrieval",
+    "deep-dive-9-evidence-selection": "dive-retrieval",
+    "deep-dive-10-citation-verification": "dive-retrieval",
+    "deep-dive-11-abstention": "dive-retrieval",
+    "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement": "dive-retrieval",
+    "main-part-2-11-prompt-injection": "dive-failures",
+    "main-part-2-17-safe-caching": "dive-failures",
+    "main-part-2-19-failure-playbook": "dive-failures",
+    "deep-dive-12-prompt-injection-and-tools": "dive-failures",
+    "deep-dive-17-cache-safety": "dive-failures",
+    "deep-dive-20-failure-playbook": "dive-failures",
+    "full-pack-part-2-9-degrade-on-everything-except-authorisation": "dive-failures",
+    "main-part-2-12-evaluation": "walk-evaluation",
+    "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score": "walk-evaluation",
+    "main-part-2-13-persona-based-testing": "dive-evaluation",
+    "main-part-2-14-observability-and-audit": "dive-evaluation",
+    "deep-dive-13-evaluation-dataset": "dive-evaluation",
+    "deep-dive-14-leak-suite": "dive-evaluation",
+    "deep-dive-15-observability": "dive-evaluation",
+    "deep-dive-21-project-story-lessons": "dive-evaluation",
+    "full-pack-part-4-13-tell-it-as-something-built": "dive-evaluation",
+    "main-part-2-16-scalability-latency-cost-production-design": "dive-cost",
+    "main-part-2-20-cost-optimisation": "dive-cost",
+    "main-part-2-21-100-ms-pivot": "dive-cost",
+    "deep-dive-16-scale-reasoning": "dive-cost",
+    "deep-dive-18-100-ms-design": "dive-cost",
+    "deep-dive-19-cost-design": "dive-cost",
+    "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes": "dive-cost",
+    "full-pack-part-3-11-roll-out-one-corpus-at-a-time": "walk-rollout",
+    "main-part-2-22-interview-story": "practice-pivots",
+    "main-part-2-23-interview-trigger-answer": "practice-pivots",
+    "main-part-2-24-60-minute-delivery": "practice-pivots",
+    "full-pack-part-3-12-deliver-it-in-sixty-minutes": "practice-pivots",
+    "full-pack-part-5-15-debug-the-incidents-on-this-design": "practice-pivots",
+    "full-pack-part-5-level-calibration": "practice-pivots",
+    "full-pack-part-5-check-yourself": "practice-checks",
+    "cheat-sheet-problem": "review-decisions",
+    "cheat-sheet-core-architecture": "review-decisions",
+    "cheat-sheet-five-rules": "review-decisions",
+    "cheat-sheet-pre-filter-vs-post-check": "review-decisions",
+    "cheat-sheet-retrieval": "review-decisions",
+    "cheat-sheet-freshness": "review-decisions",
+    "cheat-sheet-rag-quality": "review-decisions",
+    "cheat-sheet-one-sentence": "review-decisions",
+    "full-pack-part-5-key-takeaways": "review-decisions",
+    "cheat-sheet-security-tests": "review-tests",
+    "cheat-sheet-scale-numbers": "review-tests",
+    "cheat-sheet-cost-latency": "review-tests",
+    "cheat-sheet-failure-playbook": "review-tests",
+    "cheat-sheet-project-story": "review-tests",
+    "cheat-sheet-interview-triggers": "review-tests",
+    "full-pack-part-5-references": "dive-references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "main-part-2": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "discovery",
+      "label": "Scope, users and assumptions",
+      "hint": "Which answers change your design?"
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture and trust boundaries",
+      "hint": "Trace one case and each failure gate."
+    },
+    {
+      "id": "tradeoffs",
+      "label": "Decisions and alternatives",
+      "hint": "Explain what you chose and when you would revisit it."
+    },
+    {
+      "id": "validation",
+      "label": "Evaluation, rollout and ownership",
+      "hint": "Name the evidence required before expansion."
+    }
+  ],
+  "rubric": [
+    "I traced both permission checks before reranking/model exposure.",
+    "I separated freshness/deletion from access and explained reconciliation.",
+    "I justified hybrid fusion and evidence/citation selection.",
+    "I sized peak work and kept caches permission/version sensitive.",
+    "I named zero-leak tests, owners and a staged rollout."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Overview",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "The core idea",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "main-0-the-mental-model",
+      "teaching_item": "0. The mental model",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Who it is for",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "What it assumes",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "How to use it",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "The sections",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Practise it",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "main-the-anchor-case-study",
+      "teaching_item": "The anchor case study",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure."
+      }
+    },
+    {
+      "source_id": "main-1-how-i-would-open",
+      "teaching_item": "1. How I would open",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Authority conflicts, revocation/freshness windows and passage citation requirements precede the architecture. Source discovery and stakeholder tables preserve the questions and ownership details."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-permission-fidelity-as-the-constraint-before-drawing-",
+      "teaching_item": "1. Name Permission Fidelity as the Constraint Before Drawing Anything",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Authority conflicts, revocation/freshness windows and passage citation requirements precede the architecture. Source discovery and stakeholder tables preserve the questions and ownership details."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "2. Requirements: Functional + Non-Functional",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Incremental ingestion, stable versions, permission checks, abstention, governed feedback and explicit MVP exclusions are explained; all three source requirement tables retain acceptance and component details."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "2. State Requirements as Testable Constraints",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Incremental ingestion, stable versions, permission checks, abstention, governed feedback and explicit MVP exclusions are explained; all three source requirement tables retain acceptance and component details."
+      }
+    },
+    {
+      "source_id": "main-part-2-15-scale-and-latency",
+      "teaching_item": "15. Scale and latency",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "100k employees, 50M chunks, 20 average/100 peak QPS and the 300 in-flight calculation retain the difference between identity cardinality and concurrent generation."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-on-peak-qps-and-permission-refresh",
+      "teaching_item": "3. Size on Peak QPS and Permission Refresh",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "100k employees, 50M chunks, 20 average/100 peak QPS and the 300 in-flight calculation retain the difference between identity cardinality and concurrent generation."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "3. Architecture",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Async source ingestion and the verified-identity request path are explained separately from the versioned control plane. Four original architecture figures and the component failure table remain."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "5. Draw the Architecture End to End",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Async source ingestion and the verified-identity request path are explained separately from the versioned control plane. Four original architecture figures and the component failure table remain."
+      }
+    },
+    {
+      "source_id": "main-4-ingestion-normalise-permissions-first",
+      "teaching_item": "4. Ingestion: normalise permissions first",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "main-5-freshness-and-deletion",
+      "teaching_item": "5. Freshness and deletion",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-acl-normalisation",
+      "teaching_item": "1. ACL normalisation",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-source-specific-risks",
+      "teaching_item": "4. Source-specific risks",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-ingestion-correctness",
+      "teaching_item": "5. Ingestion correctness",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-freshness-vs-authorisation",
+      "teaching_item": "6. Freshness vs authorisation",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-map-every-source-with-its-permission-model",
+      "teaching_item": "4. Map Every Source With Its Permission Model",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-normalise-permissions-at-ingestion-and-refuse-what-has-non",
+      "teaching_item": "6. Normalise Permissions at Ingestion and Refuse What Has None",
+      "anchors": [
+        "dive-ingestion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source inheritance exceptions, document/chunk/ticket/feedback/trace records, idempotency, hashes, ACL-only refresh, tombstones and reconciliation are retained. Stale serving is limited by content policy and never excuses revoked permissions."
+      }
+    },
+    {
+      "source_id": "main-6-authorisation-two-layers",
+      "teaching_item": "6. Authorisation: two layers",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "main-part-2-7-abac",
+      "teaching_item": "7. ABAC",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "main-part-2-18-multi-tenancy",
+      "teaching_item": "18. Multi-tenancy",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-two-authorisation-layers",
+      "teaching_item": "2. Two authorisation layers",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-abac",
+      "teaching_item": "3. ABAC",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-enforce-before-the-model-sees-anything",
+      "teaching_item": "Search alternatives and permitted recall",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-enforce-before-the-model-sees-anything",
+      "teaching_item": "Seven ABAC rules and source propagation",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-enforce-before-the-model-sees-anything",
+      "teaching_item": "Authoritative recheck before model exposure",
+      "anchors": [
+        "dive-authorisation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Post-filter, partition and in-search alternatives are explained before comparison; authoritative recheck catches propagation and obligations. Seven ABAC rules, default deny, upstream lag and historical metadata syntax remain qualified."
+      }
+    },
+    {
+      "source_id": "main-part-2-8-retrieval",
+      "teaching_item": "8. Retrieval",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "main-part-2-9-reranking-and-context",
+      "teaching_item": "9. Reranking and context",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "main-part-2-10-generation-citations-and-abstention",
+      "teaching_item": "10. Generation, citations and abstention",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "deep-dive-7-retrieval-details",
+      "teaching_item": "7. Retrieval details",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "deep-dive-8-reranking",
+      "teaching_item": "8. Reranking",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "deep-dive-9-evidence-selection",
+      "teaching_item": "9. Evidence selection",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "deep-dive-10-citation-verification",
+      "teaching_item": "10. Citation verification",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "deep-dive-11-abstention",
+      "teaching_item": "11. Abstention",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement",
+      "teaching_item": "Exact IDs versus semantic paraphrases",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement",
+      "teaching_item": "RRF calculation and score normalisation",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement",
+      "teaching_item": "Retrieval extensions, cost and evidence selection",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The MRD-4290/paraphrase contrast, RRF k=60 calculation, raw-score mismatch, normalised alpha, multi-query/HyDE/decomposition costs and permitted-only reranking are retained. Evidence coverage and exact-support citation checks include abstention and conflicts."
+      }
+    },
+    {
+      "source_id": "main-part-2-11-prompt-injection",
+      "teaching_item": "11. Prompt injection",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "main-part-2-17-safe-caching",
+      "teaching_item": "17. Safe caching",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "main-part-2-19-failure-playbook",
+      "teaching_item": "19. Failure playbook",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "deep-dive-12-prompt-injection-and-tools",
+      "teaching_item": "12. Prompt injection and tools",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "deep-dive-17-cache-safety",
+      "teaching_item": "17. Cache safety",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "deep-dive-20-failure-playbook",
+      "teaching_item": "20. Failure playbook",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-on-everything-except-authorisation",
+      "teaching_item": "9. Degrade on Everything Except Authorisation",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retrieved injection cannot alter identity or tool authority; the failure table retains vector/model/reranker fallbacks and closed policy failures. Cache keys bind tenant, permission and versions; 10x lexical growth and index migration preserve enforcement."
+      }
+    },
+    {
+      "source_id": "main-part-2-12-evaluation",
+      "teaching_item": "12. Evaluation",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Release bars are labelled illustrative and owned: zero leaks, 90% groundedness, 95% citation/escalation and 80% completion. The source metric table preserves bad thresholds, datasets and ownership."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score",
+      "teaching_item": "Zero-leak release gate and persona suite",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Release bars are labelled illustrative and owned: zero leaks, 90% groundedness, 95% citation/escalation and 80% completion. The source metric table preserves bad thresholds, datasets and ownership."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score",
+      "teaching_item": "Quality, freshness, task and cost thresholds",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Release bars are labelled illustrative and owned: zero leaks, 90% groundedness, 95% citation/escalation and 80% completion. The source metric table preserves bad thresholds, datasets and ownership."
+      }
+    },
+    {
+      "source_id": "main-part-2-13-persona-based-testing",
+      "teaching_item": "13. Persona-based testing",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "main-part-2-14-observability-and-audit",
+      "teaching_item": "14. Observability and audit",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "deep-dive-13-evaluation-dataset",
+      "teaching_item": "13. Evaluation dataset",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "deep-dive-14-leak-suite",
+      "teaching_item": "14. Leak suite",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "deep-dive-15-observability",
+      "teaching_item": "15. Observability",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "deep-dive-21-project-story-lessons",
+      "teaching_item": "21. Project-story lessons",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "13. Tell It as Something Built",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine personas/22 documents/six strategies retain their limited demonstration scope; allowed-contract mislabelling and masked-rule tests distinguish policy failures from relevance distractors. Replay commands and privacy-minimised trace fields remain."
+      }
+    },
+    {
+      "source_id": "main-part-2-16-scalability-latency-cost-production-design",
+      "teaching_item": "16. Scalability, latency & cost: production design",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "main-part-2-20-cost-optimisation",
+      "teaching_item": "20. Cost optimisation",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "main-part-2-21-100-ms-pivot",
+      "teaching_item": "21. 100 ms pivot",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "deep-dive-16-scale-reasoning",
+      "teaching_item": "16. Scale reasoning",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "deep-dive-18-100-ms-design",
+      "teaching_item": "18. 100 ms design",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "deep-dive-19-cost-design",
+      "teaching_item": "19. Cost design",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "14. Answer the Cost Pivot in Ten Minutes",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost by stage and workflow, legal under-eight-second variant, selective models and the 100ms architectural pivot are retained. Streaming first-token time is distinguished from complete verified answers and the dated 0.4s example is not a service guarantee."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-one-corpus-at-a-time",
+      "teaching_item": "11. Roll Out One Corpus at a Time",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The week-by-week staged corpus rollout and tradeoff/revisit tables retain ownership, gates, model/index rollback and customer-specific connector freshness."
+      }
+    },
+    {
+      "source_id": "main-part-2-22-interview-story",
+      "teaching_item": "22. Interview story",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "main-part-2-23-interview-trigger-answer",
+      "teaching_item": "23. Interview trigger \u2192 answer",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "main-part-2-24-60-minute-delivery",
+      "teaching_item": "24. 60-minute delivery",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "12. Deliver It in Sixty Minutes",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-15-debug-the-incidents-on-this-design",
+      "teaching_item": "15. Debug the Incidents on This Design",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Level calibration",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timing, follow-up/weak-answer tables, seven adjacent incident drills, honest reference-project story and Senior/Staff/Principal scope are preserved with substantive worked answers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Check Yourself",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All nine self-check concepts have independent native answer reveals: recall, post-check, missed delete, authorisation before rerank, leakage, sizing, 10x BM25, alpha and legal cost."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-problem",
+      "teaching_item": "Problem",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-core-architecture",
+      "teaching_item": "Core architecture",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-pre-filter-vs-post-check",
+      "teaching_item": "Pre-filter vs post-check",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-retrieval",
+      "teaching_item": "Retrieval",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-freshness",
+      "teaching_item": "Freshness",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-rag-quality",
+      "teaching_item": "RAG quality",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One sentence",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Key Takeaways",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Recall is consolidated from the source cheat sheet and key takeaways after the complete mechanisms are taught; it retains trust order, freshness/access distinction, evidence support and abstention."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-security-tests",
+      "teaching_item": "Security tests",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-scale-numbers",
+      "teaching_item": "Scale numbers",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-cost-latency",
+      "teaching_item": "Cost / latency",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-playbook",
+      "teaching_item": "Failure playbook",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-project-story",
+      "teaching_item": "Project story",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-interview-triggers",
+      "teaching_item": "Interview triggers",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security, scale, cost, failover, reference-story limits and trigger answers are recalled compactly with full explanations in the corresponding deep dives and Practice."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "References",
+      "anchors": [
+        "dive-references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Original external primary-reference links are retained with the source\u2019s check/update dates and implementation-version caveats."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure. Per-item coverage preserves the source mechanisms, numbers and qualifications."
+  },
+  "required_answer_reveals": [
+    "enterprise-answer-1",
+    "enterprise-answer-2",
+    "enterprise-answer-3",
+    "enterprise-answer-4",
+    "enterprise-answer-5",
+    "enterprise-answer-6",
+    "enterprise-answer-7",
+    "enterprise-answer-8",
+    "enterprise-answer-9",
+    "enterprise-incident-answer",
+    "enterprise-story-answer"
+  ],
+  "visual_review": {
+    "status": "reviewed",
+    "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 10 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
+    "opening_decision": "Two brief topics use Priya\u2019s question as the running example; related variants remain in a native optional disclosure. No redundant example, glossary or learning-goal subsection added."
+  },
+  "source_refresh_review": {
+    "date": "2026-11-16",
+    "status": "unchanged",
+    "sections": 91,
+    "evidence": "See source-refresh.json: fresh live capture compared by source-section text_sha256 and image sha256, with no content or diagram changes."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "3437bdf87d3583aa3c458a9d9f7141e3e4d3fccb5a73ea757f2617fd2a13fa0b",
+  "html_sha256": "0f6e5c463e337bf1d0216286e0ea413d83b2c5d54fe11d3e110d7bbdb076b218",
+  "config_sha256": "a978c5abe160f8e76051aa326d14b65eacedd99abe56c0d4e4a8ad45d33bba63",
+  "source_url": "https://forwarddeployedprep.com/design/prioritize-ai-use-cases",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 27,
+    "coverage_rows": 61,
+    "worked_answers": 28,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Compared all 27 captured sections of the insurer prioritisation case against the previous casebook item by item and split them into 61 coverage rows. The previous version kept every table and figure but had thinned the prose: it dropped the verbatim prompt, the 'avoid the most impressive demo' quote, the six first-pick properties as a list, the source's spoken framing, the 'two-week clock' quote, the reasons for the weights, the gap explanation for the $5M slide, the figure-explanation text for the platform (gateway controls, ingestion inputs, retrieval scope), wave 1's 'no headline' rationale, the 'portfolio only grows' kill-criteria rationale, the accelerator reuse rate, the executive script, the two-minute spoken answer, 'cache safely' and the cost-complaint rule; it also contradicted the source's 'no deep background' assumption and softened the US rate-filing fact. All restored. Recomputed all thirty weighted scores (all match) and the $1,890,000 estimate. The brief now opens on the thirty-idea problem, defines card, gate, enabler, wave, kill criteria and SME, and traces #7 through the method because the vocabulary is otherwise unfamiliar. Added, and labelled as added: a filled #7 card, three scoring drills, three changed-constraint exercises, and a numbers table in Quick review. Source inconsistencies resolved in text (2026-11-16): bucket rules never placed a score under 2.6 \u2192 added rule 6 'a score under 2.6 is No', matching #24 (2.05, No) and the bucket totals; executive script's 'in four months' for settlement recommendations \u2192 dates from the source's own wave plan (claims summaries within eight months, #29 recommendations in shadow from month fourteen), since the wave table and #29 route are the consistent majority."
+    }
+  }
+}

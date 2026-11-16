@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "0232033c5af4a22589b7fd8af5b199bb9feec1562863063774dcd2a94efc6ee1",
+  "html_sha256": "f2015aebabf10b5fd661987a311001efbed4ca57f7ba34b19a53a6a54427a3a6",
+  "config_sha256": "31e5116be60dafa791b3a5b1b3afc9b3e2d26e292c0168493877fed2cc314d6d",
+  "source_url": "https://forwarddeployedprep.com/design/configurable-platform-customer-workflows",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 46,
+    "coverage_rows": 100,
+    "worked_answers": 31,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: read all 46 captured sections (tutorial parts 1-8, coverage notes, takeaways, calibration, sources, 11 worksheet parts, 14 model-answer parts) and all 13 light/dark diagram pairs, then wrote casebook.md from scratch in teach mode. The brief now defines tenant, configuration, fork, control and data plane before using them and adds a labelled illustrative trace that reuses the source's own acme / tpl-9 / version 17 values; the old Tutorial/Worksheet/Model Answer navigation and 70-entry TOC are replaced by the five sections with every old fragment aliased. Tutorial parts 1-4 and 6-7 became walkthrough steps 1-8 (part 6's controls, policy table and loop drill moved before rollout; part 8's trade-offs moved into step 8); part 5's records, API contracts and all three code blocks became deep dives, with the code reproduced exactly. Two source figures had blank alt text (failure overlay, idempotency sequence); both are now narrated from their drawn labels, and the overlay sits beside the loop drill instead of in the architecture section. Practice keeps every worksheet prompt and grid, all 13 model-answer parts as reveals, the four follow-ups, five weak-answer repairs, two 90-second summaries, pacing plan, rubric and calibration; three reveals (users grid, integration map, cycle validator) are newly authored and labelled. LaTeX leverage equation rendered as plain text; glossary terms (FDE, CRM, ERP, MVP, SLO, SLA, SRE, SSO, IdP, BPM, SOX, HIPAA, DoS) defined inline at first use. Source inconsistencies resolved in text (2026-11-16): the model answer's 3x peak versus the tutorial's ~6x \u2192 ~6x everywhere, because the source's own sizing (500 of 1,000 daily versions in 2 hours = 250/h vs 41.7/h average = 6.0x) produces it; the first sketch's Registry, whose Map keyed by configId alone replaced each earlier entry despite 'never overwrites' \u2192 the sketch now appends every version to a per-configId list and the misnamed 'hash' field is renamed 'snapshot', so the code teaches the immutable registry the text describes. The first code block is therefore no longer byte-identical to the source in the Registry class. Test gap closed (2026-11-16): Registry gained a read-only versions() accessor and the allowlist-miss test asserts no version was written; this code no longer matches the source verbatim."
+    }
+  }
+}

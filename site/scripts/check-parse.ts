@@ -45,6 +45,7 @@ import { mermaidFences } from './render-diagrams.mjs'
 import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
 import { checkExplorerSnapshots } from './explorers.mjs'
+import { checkCasebookRewrites } from './check-casebook-rewrites.mjs'
 import { CUT } from './case-site-edits.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
@@ -932,6 +933,12 @@ try {
   rows.push(`\n  ${await checkExplorerSnapshots(resolve(CONTENT, '../..'), resolve(CONTENT, '..'))}`)
 } catch (error) {
   failures.push(`explorers: ${error instanceof Error ? error.message : String(error)}`)
+}
+
+try {
+  rows.push(`\n  ${await checkCasebookRewrites(resolve(CONTENT, '../..'), resolve(CONTENT, '..'))}`)
+} catch (error) {
+  failures.push(`casebook rewrites: ${error instanceof Error ? error.message : String(error)}`)
 }
 
 console.log(rows.join('\n'))

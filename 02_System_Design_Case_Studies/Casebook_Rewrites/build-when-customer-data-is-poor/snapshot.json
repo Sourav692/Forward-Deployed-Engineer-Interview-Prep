@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "87e603da1483a2eddb137258b2be4eb4f4796f7e5c55bc50521d919c289f71f7",
+  "html_sha256": "4396b577a80e05e77f71baa87b1c65cf5782e20b7c6f4e12d0e43f44dae0e5cb",
+  "config_sha256": "72b942fd3f38c02f2f44b07dfe155ca13c1bf7f55e56b68a786ce68c30691d93",
+  "source_url": "https://forwarddeployedprep.com/design/build-when-customer-data-is-poor",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 27,
+    "coverage_rows": 46,
+    "worked_answers": 19,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Re-review against all 27 captured sections, split into 46 coverage rows. The previous version kept the tables and the 13 checks but thinned most prose: the two-minute spoken answer, two of four follow-up answers, the section 8 cost-asymmetry argument and its two quotes, the data_access_granted gate, the Snorkel/synthetic/intake quotes, the strata list, the datasheet estimate, shadow-mode definition and 11 of 15 takeaways were missing, and it misquoted '38% of claims' as new claims. I restored each, split section 8 and 11 into their own walkthrough steps (8, 9) and failure modes into its own dive, rewrote the brief around the verbatim prompt with an illustrative claim trace, added a labelled kappa example and worked sample-size arithmetic (rechecked: 1004.8 and 0.112), and replaced generic figure alt text with node-accurate text. Duplicate prose restatements of the FR/NFR tables were removed. Source inconsistencies resolved in text (2026-11-16): 'lower half' of the picture versus flowcharts that run top to bottom \u2192 the prose now describes the flowcharts as drawn (repair stages first, decision layer after), since the figures are hashed originals; 'agree about half the time beyond chance' for \u03ba = 0.52 \u2192 the step 9 quote now says the adjusters reach about half of the agreement possible beyond chance, which is what \u03ba = (0.52) means by its definition in step 4."
+    }
+  }
+}

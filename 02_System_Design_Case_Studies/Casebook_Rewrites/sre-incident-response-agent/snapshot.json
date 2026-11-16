@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "e6283f0c20c24c84cb737362078b5c79c8e4c8bbae73f55cf81dcbb3c54cfeba",
+  "html_sha256": "cbd2dac2a4fd5423ef850c6a77aa972ca41758536b73845776e839477cd84168",
+  "config_sha256": "10b0ad3d26416940189494db111682591ea0151dc1cd2a99ac0cc7bd3515ded8",
+  "source_url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 55,
+    "coverage_rows": 97,
+    "worked_answers": 12,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Compared all 55 captured sections of the SRE case against the earlier draft section by section. The draft had silently dropped the weak/average/strong answer tiers, the five-person people map, the non-goals exception for draft timeline and approved Jira writes, the eight 'lines that carry the round', the full two-minute spoken answer, the recovery-moves figure's content, one of five weak-answer repairs, and the DENIED/INVALID confusion; all are restored. Added a numbered checkout-5xx trace to the brief, plain definitions (on-call, commander, blast radius, change freeze, dry run, MTTA, MoSCoW, fail closed), split failure handling into a walkthrough step plus a ladder dive, and recaptioned all ten source figures from their actual SVG labels (the gateway and typed-result figures are flagged as generic refund/order examples). Removed an unsupported 'model-serving CPU' claim; the 28-second upper-bound sum and the idempotency reconciliation caveat are labelled as additions. Old tab navigation is consolidated, not reproduced. Source inconsistencies resolved in text (2026-11-16): two reused pattern figures show order/refund examples inside an incident-agent case \u2192 captions no longer attribute the mismatch to the source; they state neutrally that the figure's example is generic and how the same mechanism applies here (figures are hashed originals, left unchanged)."
+    }
+  }
+}

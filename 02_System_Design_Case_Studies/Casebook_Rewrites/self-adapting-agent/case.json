@@ -1,0 +1,1403 @@
+{
+  "title": "Agent That Adapts to New Tasks",
+  "slug": "self-adapting-agent",
+  "subtitle": "Design an operations agent that learns new tasks on its own, adapting in the cheapest reversible place first and sending every self-change through the same gate as a human change.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/self-adapting-agent",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "guide-intro": "adapt-ladder",
+    "guide-1-pin-down-what-adapt-means-before-drawing-anything": "adapt-ladder",
+    "guide-2-state-requirements-as-testable-constraints": "requirements",
+    "guide-3-size-the-adaptation-before-choosing-a-rung": "sizing",
+    "guide-4-draw-the-architecture-as-two-loops-with-one-gate": "architecture",
+    "guide-5-detect-the-unknown-before-trying-to-handle-it": "novelty",
+    "guide-6-adapt-within-one-request-before-changing-anything-permanen": "runtime-adaptation",
+    "guide-part-2-7-remember-facts-through-a-write-policy": "memory",
+    "guide-part-2-8-promote-procedures-through-a-gate-not-a-single-success": "skills",
+    "guide-part-2-9-optimise-prompts-as-experiments-not-edits": "prompts",
+    "guide-part-2-10-update-weights-last-and-only-for-the-three-cases-that-ear": "weights",
+    "guide-part-2-11-gate-every-self-modification-like-a-human-pull-request": "release-gate",
+    "guide-part-2-12-bound-the-autonomy-the-agent-has-over-itself": "autonomy",
+    "guide-part-2-13-name-the-failure-modes-before-the-interviewer-does": "failure-modes",
+    "guide-part-3-14-deliver-it-in-sixty-minutes": "practice-sixty",
+    "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes": "practice-cost-pivot",
+    "guide-part-3-level-calibration": "practice-levels",
+    "guide-part-3-key-takeaways": "review-ladder",
+    "guide-part-3-check-yourself": "practice-check",
+    "guide-part-3-references": "references",
+    "interview-template-1-problem-statement": "brief-task",
+    "interview-template-2-what-does-self-adapting-mean": "adapt-ladder",
+    "interview-template-3-functional-requirements": "requirements",
+    "interview-template-4-non-functional-requirements": "requirements",
+    "interview-template-5-high-level-architecture": "architecture",
+    "interview-template-6-core-architecture-principle": "architecture",
+    "interview-template-7-capability-registry": "dive-registry",
+    "interview-template-8-novelty-detection": "novelty",
+    "interview-template-9-safe-general-fallback": "novelty",
+    "interview-template-10-adapt-inside-one-request-first": "runtime-adaptation",
+    "interview-template-11-memory-write-policy": "memory",
+    "interview-template-12-skill-learning": "skills",
+    "interview-template-13-prompt-optimisation": "prompts",
+    "interview-template-14-model-fine-tuning": "weights",
+    "interview-template-15-evaluation-and-release-gate": "release-gate",
+    "interview-template-16-evaluate-the-trajectory-not-only-final-answer": "release-gate",
+    "interview-template-17-shadow-testing": "dive-gate-checks",
+    "interview-template-18-automatic-demotion": "dive-gate-checks",
+    "interview-template-19-safety-boundary": "autonomy",
+    "interview-template-20-goal-drift-and-metric-gaming": "dive-governance",
+    "interview-template-21-failure-modes": "failure-modes",
+    "interview-template-22-scaling-considerations": "sizing",
+    "interview-template-23-latency-strategy": "dive-latency",
+    "interview-template-24-cost-optimisation": "dive-cost",
+    "interview-template-25-security-and-governance": "dive-governance",
+    "interview-template-26-data-model": "dive-registry",
+    "interview-template-27-end-to-end-example": "orion-trace",
+    "interview-template-28-main-tradeoffs": "dive-tradeoffs",
+    "interview-template-29-mvp-design": "delivery",
+    "interview-template-30-what-i-would-prioritise-as-an-fde": "delivery",
+    "interview-template-31-interview-delivery-structure": "practice-sixty",
+    "interview-template-32-strong-discovery-questions": "discovery",
+    "interview-template-33-what-to-remember-for-interview": "review-ladder",
+    "interview-template-34-one-line-interview-explanation": "practice-summary",
+    "interview-template-35-30-second-interview-summary": "practice-summary",
+    "guide": "brief-task",
+    "interview-template": "brief-task",
+    "intro": "case-brief",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "What adapt means and what changes the design",
+      "hint": "Name the five rungs and the discovery questions whose answers move the design."
+    },
+    {
+      "id": "architecture",
+      "label": "Two loops, one gate and the registry",
+      "hint": "Trace a known and a novel request, then a candidate from trace to live."
+    },
+    {
+      "id": "gate",
+      "label": "Gate numbers and what they prove",
+      "hint": "State 5, 200, 4 and 3 points, and the sample-size limit of a 200-attempt shadow."
+    },
+    {
+      "id": "bounds",
+      "label": "Autonomy bounds, failures and cost",
+      "hint": "Separate what the agent may change from what only a human may, then answer the cost pivot."
+    }
+  ],
+  "rubric": [
+    "Defines five rungs from context to weights and starts from the cheap, reversible end.",
+    "Detects novelty with more than one signal and runs unknown tasks in a tighter fallback mode.",
+    "Requires an external outcome signal for Reflexion and skill promotion, never self-grading.",
+    "Leads memory design with a four-gate write policy, typed facts and supersession.",
+    "Gates every candidate on held-out, paired, per-stratum evaluation with a 3-point floor, then shadow and auto-demotion.",
+    "Explains that 200 shadow attempts prove 'not much worse', not a 5-point gain.",
+    "Keeps permissions, budgets, irreversible actions and re-promotion with humans.",
+    "Funds fine-tuning only for format at volume, missing vocabulary or a cost or latency ceiling.",
+    "Answers the cost pivot through candidate dedupe, staged suites and learning spend per promotion."
+  ],
+  "required_answer_reveals": [
+    "check-rungs",
+    "check-floor",
+    "check-rare-type",
+    "check-loops-meet",
+    "check-unmatched",
+    "check-reflexion",
+    "check-vendor",
+    "check-gate-numbers",
+    "check-prompt-overfit",
+    "check-no-finetune",
+    "check-79-81",
+    "check-never",
+    "check-gaming",
+    "check-skeleton",
+    "check-cost-line",
+    "probe-versioning",
+    "probe-pollution",
+    "probe-memory-types",
+    "probe-99",
+    "probe-goal-drift",
+    "probe-orchestrator",
+    "probe-loops",
+    "probe-cost-explosion",
+    "probe-human",
+    "probe-metrics",
+    "constraint-no-signal",
+    "constraint-daily",
+    "constraint-regulator",
+    "cost-pivot-answer",
+    "summary-one-line",
+    "summary-thirty"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Ops agent scenario, weekly new request types, unreviewed-regression constraint, five rungs and one gate",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 keep 'restart service X'/'roll back flag Y', weekly new types, 'never quietly get worse' and the three things it must never grant itself; paragraph after the core-idea figure restates five rungs at ~10x each, two loops and the gate a human pull request would pass. Added plain definitions of skill, rung, gate, shadow and stratum before use."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its decision diagram",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The one-sentence core idea is kept verbatim in meaning and introduces fig-core-idea (881fac light / e762a0 dark); the caption names every node of the SVG: known task type, current skills, fallback mode, outcome and lessons, evaluation gate, promote or discard/demote."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "LLM glossary definition",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "LLM is expanded on first use with the source glossary definition carried in the abbr title (em dash replaced by 'such as')."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates, agent learning rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design' names the same audience and the 'how a system learns or improves over time' round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Learning objectives: end-to-end design plus seven follow-up areas",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same paragraph lists every objective follow-up: novelty detection, memory write policy, skill promotion/demotion, prompt optimisation, when to fine-tune, autonomy limits, cost pivot; the task paragraph turns them into the design brief."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Advanced level and assumed background",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task states the case is advanced and assumes LLM agents, tool calling, agent memory, offline evaluation, shadow testing and release gates."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading and rehearsal guidance (read guide, practise template from memory, rehearse 60-minute plan, revisit calibration)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old 'mark each part as read' navigation dropped; the substantive advice survives as the last brief-task paragraph linking the 60-minute plan, level calibration and Quick review for the night before."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old Interview Guide / Answer Template section table and MVP glossary",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The two-track navigation table is obsolete in the five-section format; its contents are distributed (guide steps to walkthrough, template sections to walkthrough, dives and practice). MVP is defined with the source glossary text in step 16 where first needed."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Framing: autonomy vs unreviewed regression, 'adapt' is not 'retrain'",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 opening states 'Autonomously adapt does not mean retrain itself' and the cheap reversible places; the unreviewed-regression framing is in the brief."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Provenance: no worked answer, decomposition question bank, book's learning/memory/validation chapters, assumption labels, running example",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fourth brief-task paragraph keeps all provenance claims: no worked answer, question bank origin, four learning surfaces, promotion gate, data flywheel, memory and validation chapters, and that 'assumption' numbers are whiteboard illustrations. The sections 1-14 / section 15 contribution table is old navigation and is consolidated."
+      }
+    },
+    {
+      "source_id": "guide-1-pin-down-what-adapt-means-before-drawing-anything",
+      "teaching_item": "Book's four surfaces plus prompt optimisation as a fifth rung, ~10x per rung",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraphs 1-2 keep the four places (context, memory, procedure, parameters), the ten-times rule and why prompt optimisation is inserted between procedure and parameters (broad like training, reversible like a prompt)."
+      }
+    },
+    {
+      "source_id": "guide-1-pin-down-what-adapt-means-before-drawing-anything",
+      "teaching_item": "Five-rung table with ops examples, iteration time and undo",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'five rungs of adaptation' table reproduces all five rows and four columns exactly, including 'Supersede the fact', 'Pin the previous version' and 'Days to weeks'."
+      }
+    },
+    {
+      "source_id": "guide-1-pin-down-what-adapt-means-before-drawing-anything",
+      "teaching_item": "Work down the table; fine-tuning bakes defects into weights",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after fig-ladder-short keeps the book's rule and the claim that teams reaching for fine-tuning have unfixed tool schemas, retrieval or example selection."
+      }
+    },
+    {
+      "source_id": "guide-1-pin-down-what-adapt-means-before-drawing-anything",
+      "teaching_item": "Six discovery questions and why each changes the design",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 table keeps all six question/consequence rows (new task definition, external success signal, reversibility, ownership, speed, per-user/tenant/global)."
+      }
+    },
+    {
+      "source_id": "guide-1-pin-down-what-adapt-means-before-drawing-anything",
+      "teaching_item": "Safe default assumptions and the spoken opening line",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 final paragraph states the four safe defaults; step 1 ends with the spoken quotation unchanged, labelled as a spoken version."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Wish vs constraint, the 14-day example",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 opening keeps 'a requirement that cannot fail a test is a wish' and the 14-day no-regression example with its assumption label."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Six functional must-haves and the should-haves",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list of six must-haves verbatim in meaning; should-haves (per-tenant specialisation, tuned small model, weekly learning dashboard) follow the template's ten-step list."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Non-functional constraint table with sourced/assumed labels",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table keeps all eight rows with 3-point floor (ch12), 5-point/200 shadow (book), 4-point demotion, 14 days, safety, traceability, 150 ms p95, 10% cost cap and each sourced/assumption label."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Requirement-to-component ownership table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final table of step 3 keeps all six requirement/component rows and is introduced as the bridge to the architecture diagrams."
+      }
+    },
+    {
+      "source_id": "guide-3-size-the-adaptation-before-choosing-a-rung",
+      "teaching_item": "Sizing table",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 table keeps 20,000/40 types, 3 new types (~150/year, evict), 30/day (~7 days shadow), $0.03 ($600/day), 640 paired = 1,280 runs = $38.40, 50 candidates = $1,920 = ~46% of $4,200. I rechecked each product."
+      }
+    },
+    {
+      "source_id": "guide-3-size-the-adaptation-before-choosing-a-rung",
+      "teaching_item": "Two lessons: rare types slow to promote; candidate volume drives learning cost",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs 2-3 show the arithmetic (200/30, 7 x $600) and the 'almost five times over' 10% budget breach with dedupe/pre-filter consequence."
+      }
+    },
+    {
+      "source_id": "guide-3-size-the-adaptation-before-choosing-a-rung",
+      "teaching_item": "Sample-size formula; 200 cases see ~11 points, 5 points needs ~1,000; shadow proves not much worse",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs 4-5 keep n = 15.7 p(1-p)/delta^2 and add the worked substitution at p = 0.8 (0.16) that yields ~11 points and ~1,000 per arm; the 'say it aloud' advice kept."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-as-two-loops-with-one-gate",
+      "teaching_item": "Two loops meet at one gate; runtime and learning loop diagrams",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 traces one request through fig-runtime-loop (3cac02/fdc115) and walks the learning loop through fig-learning-loop (649822/d84091), naming every node including '4 points below baseline: auto-demote'."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-as-two-loops-with-one-gate",
+      "teaching_item": "Control plane notes and full Mermaid-alternative diagram",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before fig-full-architecture keeps registry versioning of ownership, status, permissions, budgets and kill switches, live-only runtime reads, the four candidate statuses and the safety floor/visible cost; the 'for viewers that render Mermaid' note is reframed as provenance and the rendered SVG (4dea9a/2a3585) kept."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-as-two-loops-with-one-gate",
+      "teaching_item": "Sixteen-row component/job/failure table",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table at the end of step 5 keeps all sixteen rows from capability registry to live monitor with their failure columns unchanged."
+      }
+    },
+    {
+      "source_id": "guide-5-detect-the-unknown-before-trying-to-handle-it",
+      "teaching_item": "Forced fit as hardest failure; three novelty signals",
+      "anchors": [
+        "novelty"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps 'I do not know how is the easy case', adds the template's Kubernetes/serverless illustration, and lists the three signals (low retrieval score, unknown system/tool, close top two)."
+      }
+    },
+    {
+      "source_id": "guide-5-detect-the-unknown-before-trying-to-handle-it",
+      "teaching_item": "Fallback as a different operating mode; first dozen runs riskiest and most valuable",
+      "anchors": [
+        "novelty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs after the signals keep cut step budget, read-only freely, approval for writes, escalate earlier, and the first-dozen-runs point."
+      }
+    },
+    {
+      "source_id": "guide-5-detect-the-unknown-before-trying-to-handle-it",
+      "teaching_item": "Skill-loading pattern, counterexamples in triggers, evaluate triggering separately",
+      "anchors": [
+        "novelty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-6 paragraph keeps catalogue-then-load-then-release, counterexamples, and 'a skill that runs perfectly after the wrong trigger is still a wrong answer'."
+      }
+    },
+    {
+      "source_id": "guide-6-adapt-within-one-request-before-changing-anything-permanen",
+      "teaching_item": "Dynamic example selection, outcome ranking, diversity, scoring formula",
+      "anchors": [
+        "runtime-adaptation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Dynamic example selection' subsection keeps fixed examples optimal for none, outcome ranking, diversity and the formula lambda x relevance - (1-lambda) x redundancy + 0.15 x outcome; lambda's role is explained."
+      }
+    },
+    {
+      "source_id": "guide-6-adapt-within-one-request-before-changing-anything-permanen",
+      "teaching_item": "Prefix-cache cost of per-request examples; cache per cluster",
+      "anchors": [
+        "runtime-adaptation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph defines a prefix cache, keeps 'only tool definitions and fixed system prompt still hit' and the per-cluster remedy; repeated in the latency dive."
+      }
+    },
+    {
+      "source_id": "guide-6-adapt-within-one-request-before-changing-anything-permanen",
+      "teaching_item": "Reflexion three conditions, ISO 8601 lesson example, self-grading risk, external evaluator, actor/evaluator/self-reflection",
+      "anchors": [
+        "runtime-adaptation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Reflexion with an external judge' keeps the three conditions, both lesson examples, confidently wrong lessons contaminating retries, the three roles and 'the same model's opinion does not' count."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-remember-facts-through-a-write-policy",
+      "teaching_item": "Lead with the write policy; four gates; drop on write path",
+      "anchors": [
+        "memory"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps 'retrieval cannot fix a bad write policy', the four gates with their questions (durable next month, reusable, source/timestamp/confidence, regulated categories) and 'the read path is too late'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-remember-facts-through-a-write-policy",
+      "teaching_item": "Typed subject-predicate-value facts, supersession, vendor A/B worked failure",
+      "anchors": [
+        "memory"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Vendor paragraph keeps January/February, separate episodes, about one time in four until May, and both fixes (typed facts, contradiction-seeding gate test)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-remember-facts-through-a-write-policy",
+      "teaching_item": "Environment-fact examples, per-predicate half-life decay, offline consolidation",
+      "anchors": [
+        "memory"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last step-8 paragraph keeps both example facts and explains salience decay in plain words; offline consolidation also placed in the latency dive."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-promote-procedures-through-a-gate-not-a-single-success",
+      "teaching_item": "Skill definition and six-step promotion pipeline with 5/200/4 numbers",
+      "anchors": [
+        "skills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 numbered list keeps all six steps including 'grading on source traces measures memory', with fig-skill-promotion beside it."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-promote-procedures-through-a-gate-not-a-single-success",
+      "teaching_item": "Demotion as important as promotion; library liability in about two quarters",
+      "anchors": [
+        "skills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the key rule keeps environment drift, last quarter's API shape and the book's two-quarter estimate."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-promote-procedures-through-a-gate-not-a-single-success",
+      "teaching_item": "Voyager code skills vs Agent Workflow Memory templates and when to choose each",
+      "anchors": [
+        "skills"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two alternatives are taught separately (reuse/compose, sandbox, tests vs placeholder templates) before the selection rule, tied back to the restart sequence."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-promote-procedures-through-a-gate-not-a-single-success",
+      "teaching_item": "Procedures highest risk; approval outside reasoning loop; rollback re-approves",
+      "anchors": [
+        "skills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-9 paragraph keeps graph pause for human decision, rollback re-approval and the widening rule."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-optimise-prompts-as-experiments-not-edits",
+      "teaching_item": "Prompt optimisation as automated search; position on ladder",
+      "anchors": [
+        "prompts"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 keeps metric, scored dev set, variant generation, compile-from-program frameworks and why it sits between procedure and parameters (broad but revertible in seconds)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-optimise-prompts-as-experiments-not-edits",
+      "teaching_item": "Three honesty rules: hidden test, per-stratum, treat as candidate",
+      "anchors": [
+        "prompts"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered three-rule list is kept with each reason."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-optimise-prompts-as-experiments-not-edits",
+      "teaching_item": "Source caveat: DSPy optimisers not covered, section rests on general knowledge",
+      "anchors": [
+        "prompts"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-10 paragraph states the caveat plainly and points to the MIPROv2 reference rather than overstating sourcing."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-update-weights-last-and-only-for-the-three-cases-that-ear",
+      "teaching_item": "Three cases where weights win; knowledge gaps are retrieval",
+      "anchors": [
+        "weights"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 numbered list keeps format at volume, missing vocabulary and cost/latency ceiling via distillation, merged with the template's phrasing; the losing case and published-studies claim follow."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-update-weights-last-and-only-for-the-three-cases-that-ear",
+      "teaching_item": "Rules out training per task; frozen task definition; keep prompted fallback",
+      "anchors": [
+        "weights"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs keep 'new task is new knowledge and new procedure' and the frozen-definition cost."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-update-weights-last-and-only-for-the-three-cases-that-ear",
+      "teaching_item": "Flywheel data gates and the 94%/81%/78%/83% routing fine-tune failure",
+      "anchors": [
+        "weights"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last step-11 paragraph keeps dedupe, time-and-user split, adjudication, 94% vs 81% baseline, ~78% production, 140,000 traces / ~9,000 distinct, old-system labels, ~83% honest, within two points, and 'suspect leakage first'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-gate-every-self-modification-like-a-human-pull-request",
+      "teaching_item": "Gate framing and the OpenAI-round assumption with its caveat",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 opening keeps the merge-button metaphor and reports the differentiator claim as an assumption with 'no public source says so'; first-person 'I'd expect' recast as 'likely'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-gate-every-self-modification-like-a-human-pull-request",
+      "teaching_item": "Three-layer CI gate: safety absolute, quality per stratum paired, cost visible with ceiling",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after fig-agent-release keeps all three layers and the 'triples spend' example."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-gate-every-self-modification-like-a-human-pull-request",
+      "teaching_item": "79%->81% aggregate hiding 82%->67% stratum at ~4% of eval set; 3-point floor",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Per-stratum paragraph keeps every number and maps strata to task types."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-gate-every-self-modification-like-a-human-pull-request",
+      "teaching_item": "Worry-to-gate-check table and trajectory property assertions",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-row worry table unchanged; trajectory paragraph keeps read-before-write, approval-before-irreversible, tool-list, safety-first."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-bound-the-autonomy-the-agent-has-over-itself",
+      "teaching_item": "May / only-a-human table",
+      "anchors": [
+        "autonomy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 13 table keeps all five paired rows."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-bound-the-autonomy-the-agent-has-over-itself",
+      "teaching_item": "Controls enforcing the line: gateway, irreversible to person, budgets, kill switch",
+      "anchors": [
+        "autonomy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered control list keeps gateway-per-call, before-and-after review, steps/tokens/wall time/spend per run and per day, and kill switch pinning last reviewed versions; the guide announces five controls and names four in prose, so the fifth is supplied from its own table (permission changes always need a human), giving a five-item list that matches the count with no meta note."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-bound-the-autonomy-the-agent-has-over-itself",
+      "teaching_item": "Goal drift, trajectory-shape monitors, ticket-closing gaming, second signal; injection via learned content and provenance",
+      "anchors": [
+        "autonomy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two step-13 paragraphs keep goal-drift definition, tool mix/steps/escalation monitors, reopen rate or sampled review, 'always approve refunds' injection and provenance tagging."
+      }
+    },
+    {
+      "source_id": "guide-part-2-13-name-the-failure-modes-before-the-interviewer-does",
+      "teaching_item": "Ten-row failure/symptom/guard table and pattern audit",
+      "anchors": [
+        "failure-modes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 14 table keeps all ten rows; the 3 a.m. on-call pattern audit closes the step."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Six-step decomposition framework and 60-minute table",
+      "anchors": [
+        "practice-sixty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice 'Deliver it in sixty minutes' keeps the framework steps, the evaluation-differentiator assumption and all eight time rows."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Walking skeleton and increment order",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 16 keeps rungs 1 and 2 plus traces, the five skeleton components, skill library after a month of traces, prompts third, training last if ever."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Three mid-round constraint changes",
+      "anchors": [
+        "practice-constraints"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each constraint is a separate answer reveal (no success signal, daily change, regulator approval) with the source answer; the daily-change answer adds one sentence of reasoning."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Ten follow-up probes with strong answers",
+      "anchors": [
+        "practice-probes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each probe row became an answer-reveal (probe-versioning to probe-metrics) with its answer unchanged in substance."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost pivot table: driver, cheapest lever, metric, do-not, 60-second line",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table inside the cost-pivot-answer reveal keeps all five rows verbatim in meaning."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Four verbs: measure, route, bound, cache safely",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table in the same reveal keeps all four verbs and baseline-result reuse."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice 'Calibrate your answer' keeps the framing sentence and all three rows with quotes and 'missing' columns."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-ladder"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review's three groups restate every takeaway (ladder, requirements, sizing, two loops, novelty, runtime adaptation, memory, skill gate, prompt, weights, PR gate, autonomy, failures, hour plan, cost pivot) across review-ladder, review-numbers and review-closing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Fifteen self-check questions with answers",
+      "anchors": [
+        "practice-check"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fifteen questions are answer-reveals check-rungs to check-cost-line, each answer kept and a few given the supporting number (200/30, 4% of eval set)."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Nine fact-check references dated 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "References dive lists all nine links with their one-line claims and the check date; notes the book is unnamed in the capture."
+      }
+    },
+    {
+      "source_id": "interview-template-1-problem-statement",
+      "teaching_item": "Problem statement, cheap-first rule, IT operations example",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task's first paragraph restates the design task and the brief example uses the template's IT operations agent; the 'weights last' rule is step 1's principle."
+      }
+    },
+    {
+      "source_id": "interview-template-2-what-does-self-adapting-mean",
+      "teaching_item": "Five levels with payment-service-X examples and ladder diagram",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 traces one restart request up the ladder (runbook/examples/memory loaded, drain fact, workflow, prompt versions, weights) beside fig-ladder (ea01bb)."
+      }
+    },
+    {
+      "source_id": "interview-template-2-what-does-self-adapting-mean",
+      "teaching_item": "Level-3 workflow diagram and interview-principle chain",
+      "anchors": [
+        "adapt-ladder"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-level3-workflow (a26486) and fig-ladder-short (c9bfff) sit beside the rung-3 example and the cheap-to-expensive principle. The source reused c9bfff in section 33; it is placed once here and recalled in Quick review prose."
+      }
+    },
+    {
+      "source_id": "interview-template-3-functional-requirements",
+      "teaching_item": "Ten functional capabilities",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraph after the six must-haves lists all ten template steps in order."
+      }
+    },
+    {
+      "source_id": "interview-template-4-non-functional-requirements",
+      "teaching_item": "Reliability, safety, observability fields, cost, latency, six auditability questions",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bold-labelled paragraph in step 3 keeps every observability field and all six audit questions."
+      }
+    },
+    {
+      "source_id": "interview-template-5-high-level-architecture",
+      "teaching_item": "Template high-level flowchart",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-template-architecture (1fb85d) is introduced by a walk-through of its nodes: known-task branch, policy layer, validator, four candidate types, reject/keep previous, shadow, healthy, owner review, registry."
+      }
+    },
+    {
+      "source_id": "interview-template-6-core-architecture-principle",
+      "teaching_item": "Two loops and one gate, runtime/learning diagrams, important separation",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 opens with fig-two-loops, fig-runtime-short and fig-learning-short, each with its sentence (approved versions only, studies traces) and the runtime/learning/evaluation separation."
+      }
+    },
+    {
+      "source_id": "interview-template-7-capability-registry",
+      "teaching_item": "Registry entry example, five states, v3-to-v2 rollback",
+      "anchors": [
+        "dive-registry"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Registry dive keeps the YAML entry as a code block, explains owner/permissions/previous_version, and places fig-registry-states (20d28e) and fig-registry-rollback (debf84)."
+      }
+    },
+    {
+      "source_id": "interview-template-8-novelty-detection",
+      "teaching_item": "Kubernetes vs serverless example, four signals, 0.43 vs 0.75 illustrative threshold",
+      "anchors": [
+        "novelty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps both request strings, the fourth signal and the illustrative 0.43/0.75 numbers with the author's 'tune on real routing data' caveat."
+      }
+    },
+    {
+      "source_id": "interview-template-9-safe-general-fallback",
+      "teaching_item": "Stricter execution mode diagram and the five risks it prevents",
+      "anchors": [
+        "novelty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-fallback (d8a745) sits beside 'less confidence, less freedom'; the following paragraph lists dangerous tool usage, infinite loops, accidental writes, permission misuse, costly experimentation."
+      }
+    },
+    {
+      "source_id": "interview-template-10-adapt-inside-one-request-first",
+      "teaching_item": "Dynamic examples diagram; relevant, successful, diverse",
+      "anchors": [
+        "runtime-adaptation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-dynamic-examples (d0360e) and the three preferences, plus 'a similar failed trace is not necessarily a good example'."
+      }
+    },
+    {
+      "source_id": "interview-template-10-adapt-inside-one-request-first",
+      "teaching_item": "Reflexion example diagram, external validators list, max retries = 2 as author's choice",
+      "anchors": [
+        "runtime-adaptation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-reflexion (5ab9d0) beside the conditions; the six validators and 'Max retries = 2' with its 'not a standard' caveat are kept."
+      }
+    },
+    {
+      "source_id": "interview-template-11-memory-write-policy",
+      "teaching_item": "Ask what may become memory; good vs weak memory; structured record; supersession diagram",
+      "anchors": [
+        "memory"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps the vector-database contrast, both example memories with why one is weak, the five-field record as a code block, restart_precondition = none and fig-supersede (56bd3b)."
+      }
+    },
+    {
+      "source_id": "interview-template-12-skill-learning",
+      "teaching_item": "Repeated workflow diagram, safe_restart, promotion flow, evidence-not-permission rule",
+      "anchors": [
+        "skills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-repeated-restart (95f4f6) and fig-skill-promotion (90d041, caption names reject/healthy/owner review/live) beside the six steps; the key interview rule is a standalone sentence."
+      }
+    },
+    {
+      "source_id": "interview-template-13-prompt-optimisation",
+      "teaching_item": "Bad vs better process diagrams, hidden test reason, 80/84, 90/95, 86/68 example",
+      "anchors": [
+        "prompts"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-prompt-bad (ba2472) and fig-prompt-good (78332c) bracket the search explanation; the made-up per-task numbers and the block decision are kept and labelled illustrative."
+      }
+    },
+    {
+      "source_id": "interview-template-14-model-fine-tuning",
+      "teaching_item": "Three good reasons, rule against fine-tuning changing facts, decision diagram",
+      "anchors": [
+        "weights"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Template reasons merged into the step 11 list; 'do not fine-tune to teach business facts that change' kept; fig-finetune-decision (670160) maps each problem to its rung."
+      }
+    },
+    {
+      "source_id": "interview-template-15-evaluation-and-release-gate",
+      "teaching_item": "CI/CD analogy diagrams; CI/CD glossary",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-cicd (087b7c) and fig-agent-release (813c95) open the gate layers in step 12; CI/CD expanded with the source glossary text."
+      }
+    },
+    {
+      "source_id": "interview-template-15-evaluation-and-release-gate",
+      "teaching_item": "Deterministic vs non-deterministic checks and evaluator types",
+      "anchors": [
+        "dive-gate-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Gate-checks dive lists all seven deterministic and five judged checks and the four evaluator types, and adds why deterministic checks run first."
+      }
+    },
+    {
+      "source_id": "interview-template-16-evaluate-the-trajectory-not-only-final-answer",
+      "teaching_item": "Delete-before-read example and the seven trajectory dimensions",
+      "anchors": [
+        "release-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-unsafe-path (023fe7) and fig-safe-path (daaa54) sit in step 12 with 'result may look correct, path was unsafe' and the seven evaluated dimensions."
+      }
+    },
+    {
+      "source_id": "interview-template-17-shadow-testing",
+      "teaching_item": "Shadow diagram and six comparison metrics",
+      "anchors": [
+        "dive-gate-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-shadow (bc90c4) with success rate, tool choice, latency, cost, safety violations, human feedback; adds the sample-size limit from step 4."
+      }
+    },
+    {
+      "source_id": "interview-template-18-automatic-demotion",
+      "teaching_item": "API-change scenario and demotion diagram",
+      "anchors": [
+        "dive-gate-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-demotion (9f8fa9) follows the go-live/API-change/drop scenario; adds why demotion is agent-allowed and re-promotion human-only."
+      }
+    },
+    {
+      "source_id": "interview-template-19-safety-boundary",
+      "teaching_item": "Learns-how/policy/executor diagram, may and must-not lists, refund $50,000 example",
+      "anchors": [
+        "autonomy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-safety-boundary (39fda1) opens step 13; the six protected settings and refund_customer() vs 'I can now refund $50,000' follow the table."
+      }
+    },
+    {
+      "source_id": "interview-template-20-goal-drift-and-metric-gaming",
+      "teaching_item": "Tickets-closed gaming example and five independent signals; QA glossary",
+      "anchors": [
+        "dive-governance"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Governance dive keeps % tickets closed, close-every-ticket, the five signals (closed, reopened, CSAT, human QA, resolution time) and explains divergence detection; QA expanded with the source definition."
+      }
+    },
+    {
+      "source_id": "interview-template-21-failure-modes",
+      "teaching_item": "Thirteen-row template failure table",
+      "anchors": [
+        "failure-modes"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the guide table maps all thirteen template rows, naming the two it adds (contradictory memory, infinite retry) and pairing every other row with its protection."
+      }
+    },
+    {
+      "source_id": "interview-template-22-scaling-considerations",
+      "teaching_item": "Whiteboard numbers, 200/30 about 7 days, 50 candidates x 1,000 cases, staged evaluation diagram",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 keeps 200/30 and the 1,000-case variant; fig-staged-eval (ce521f) is placed in the cost dive where staged evaluation is explained, linked from step 4."
+      }
+    },
+    {
+      "source_id": "interview-template-22-scaling-considerations",
+      "teaching_item": "Staged evaluation funnel figure",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-staged-eval caption names dedupe, cheap smoke test, small eval set, strong candidates, full evaluation."
+      }
+    },
+    {
+      "source_id": "interview-template-23-latency-strategy",
+      "teaching_item": "Online path vs offline path component lists",
+      "anchors": [
+        "dive-latency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency dive keeps all seven online components and six offline jobs and ties them to the 150 ms p95 assumption."
+      }
+    },
+    {
+      "source_id": "interview-template-24-cost-optimisation",
+      "teaching_item": "Cost formula, seven controls, six metrics",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost dive keeps candidates x cases x calls, the seven numbered controls and all six metrics, and links the first metric to the 10% cap."
+      }
+    },
+    {
+      "source_id": "interview-template-25-security-and-governance",
+      "teaching_item": "Gateway checks, audit log fields, human approval list",
+      "anchors": [
+        "dive-governance"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Governance dive keeps the six gateway checks, seven audit fields and five approval categories, and relates them to step 13."
+      }
+    },
+    {
+      "source_id": "interview-template-26-data-model",
+      "teaching_item": "Execution trace, memory record, skill, learning candidate fields",
+      "anchors": [
+        "dive-registry"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Data-model table keeps every field of all four objects; the paragraph after it explains which fields serve attribution, supersession, gateway checks and baseline comparison."
+      }
+    },
+    {
+      "source_id": "interview-template-27-end-to-end-example",
+      "teaching_item": "Ten-step Orion trace",
+      "anchors": [
+        "orion-trace"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 15 keeps all ten steps, the four memory checks, safe_orion_restart(service), Candidate to LIVE and the demotion chain."
+      }
+    },
+    {
+      "source_id": "interview-template-27-end-to-end-example",
+      "teaching_item": "Orion diagrams (router no-match, explore, perform)",
+      "anchors": [
+        "orion-trace"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each Orion figure (router, explore, drain/restart) is placed beside the step its labels depict; the text simply says each diagram sits beside its step, with no note about the original placement."
+      }
+    },
+    {
+      "source_id": "interview-template-28-main-tradeoffs",
+      "teaching_item": "Fast learning vs safety with demotion diagram",
+      "anchors": [
+        "dive-tradeoffs"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Trade-offs dive: the source text for the automatic-promotion side was only a colon before the demotion figure (7610c3); the rewrite explains that faster promotion relies on that demotion net and keeps 'slower adaptation but higher reliability'."
+      }
+    },
+    {
+      "source_id": "interview-template-28-main-tradeoffs",
+      "teaching_item": "Memory vs skill, general agent vs skills, fine-tuning vs retrieval",
+      "anchors": [
+        "dive-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each pair keeps its source attributes (batch size 100 fact, flexible/expensive/less predictable vs fast/cheap/predictable/less flexible, harder rollback vs easy update) and adds when each wins."
+      }
+    },
+    {
+      "source_id": "interview-template-29-mvp-design",
+      "teaching_item": "MVP start list and then-add diagram",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 16 notes the template list matches the skeleton plus evaluation pipeline; fig-mvp-then (5627ed) shows skill learning, prompt optimisation, fine-tuning only when justified."
+      }
+    },
+    {
+      "source_id": "interview-template-30-what-i-would-prioritise-as-an-fde",
+      "teaching_item": "Three-phase FDE priorities and reason",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Phase table keeps every item of phases 1-3 and the reason that observability and safety precede autonomous improvement."
+      }
+    },
+    {
+      "source_id": "interview-template-31-interview-delivery-structure",
+      "teaching_item": "Template 60-minute flow",
+      "anchors": [
+        "practice-sixty"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the guide's table lists the template's eight time blocks with their labels."
+      }
+    },
+    {
+      "source_id": "interview-template-32-strong-discovery-questions",
+      "teaching_item": "Four strong discovery questions with options and consequences; KPI glossary",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list in step 2 keeps all four questions, their option lists and what each determines; KPI expanded with the source definition."
+      }
+    },
+    {
+      "source_id": "interview-template-33-what-to-remember-for-interview",
+      "teaching_item": "Remember list and every-candidate pipeline diagram",
+      "anchors": [
+        "review-ladder"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review keeps each remembered rule (ladder, separate loops, detect unknown, stricter fallback, write policy, one trace is not a skill, full trajectory, learn-how vs policy) and places fig-review-pipeline (8c5495). The repeated ladder figure is not duplicated."
+      }
+    },
+    {
+      "source_id": "interview-template-34-one-line-interview-explanation",
+      "teaching_item": "One-paragraph spoken explanation",
+      "anchors": [
+        "practice-summary"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "summary-one-line reveal quotes the paragraph unchanged."
+      }
+    },
+    {
+      "source_id": "interview-template-35-30-second-interview-summary",
+      "teaching_item": "Thirty-second summary diagram and one-line principle",
+      "anchors": [
+        "practice-summary"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "summary-thirty reveal gives the line and a prose walk of the diagram; fig-thirty-second (1c1d76) sits in review-closing with every node named in its caption."
+      }
+    },
+    {
+      "source_id": "interview-template-35-30-second-interview-summary",
+      "teaching_item": "Closing principle in Quick review",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-closing ends with 'controlled learning, not uncontrolled self-modification'."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Built a 104-row inventory from the 62 captured sections (27 Interview Guide parts, 35 Answer Template sections, intro), splitting rich sections such as the sizing, gate and weights parts into separate mechanism rows. The guide and template repeat the ladder, architecture, failures, MVP and 60-minute plan; these are merged into one walkthrough step each, with every template-only detail (Kubernetes/serverless example, 0.43/0.75 threshold, max retries 2, six audit questions, contradictory-memory and infinite-retry rows, 1,000-case variant) kept and named. I rechecked all sizing products and worked the sample-size formula at p = 0.8 into the text. Source gaps handled: the fast-learning trade-off had only a figure, explained as the demotion net; the prompt-optimisation section's admitted lack of optimiser sources is kept. First-person interview phrasing outside spoken examples was recast. The brief opens on the ops agent and the unreviewed-regression constraint, defines skill, rung, gate, shadow and stratum, and gives a short Orion trace before the task, since the five-rung vocabulary is otherwise unfamiliar. Source inconsistencies resolved in text (2026-11-16): 'five controls' with four named \u2192 five listed, the fifth (permission changes always need a human) taken from the guide's own autonomy table; Orion diagrams one step off their text \u2192 placed beside the steps they depict and the reader-facing note about the misplacement removed."
+  }
+}

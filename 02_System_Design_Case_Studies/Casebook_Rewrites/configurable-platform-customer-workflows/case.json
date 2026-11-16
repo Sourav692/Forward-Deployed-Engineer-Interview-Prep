@@ -1,0 +1,1468 @@
+{
+  "title": "Configurable Platform for Customer-Specific Workflows",
+  "slug": "configurable-platform-customer-workflows",
+  "subtitle": "Serve ten customers' different fields, approvals, branding and integrations from one stable workflow core, with customisation that is safe, versioned and supportable instead of ten forks.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/configurable-platform-customer-workflows",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "brief-task",
+    "tutorial-v2-table-of-contents": "walk-discovery",
+    "tutorial-v2-1-the-customer-problem-and-discovery": "walk-reframe",
+    "tutorial-v2-2-clarifying-questions-requirements-and-constraints": "walk-req-vs-pref",
+    "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity": "walk-load-shape",
+    "tutorial-v2-part-2-4-architecture-and-end-to-end-flow": "walk-planes",
+    "tutorial-v2-part-3-5-data-model-apis-and-working-code": "dive-records",
+    "tutorial-v2-part-4-6-security-reliability-and-failure-handling": "walk-red-team",
+    "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact": "walk-proofs",
+    "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice": "practice-opening",
+    "tutorial-v2-part-7-coverage-notes": "dive-coverage-review",
+    "tutorial-v2-part-7-key-takeaways": "review-decisions",
+    "tutorial-v2-part-7-level-calibration": "practice-calibration",
+    "tutorial-v2-part-7-sources-checked-27-sep-2026": "dive-references",
+    "worksheet-1-interview-prompt": "practice-prompt",
+    "worksheet-2-clarify-the-customer-problem": "practice-prompt",
+    "worksheet-3-users-and-workflows": "practice-prompt",
+    "worksheet-4-requirements": "practice-prompt",
+    "worksheet-5-data-and-integration-map": "practice-prompt",
+    "worksheet-6-proposed-architecture": "practice-prompt",
+    "worksheet-7-evaluation-plan": "practice-prompt",
+    "worksheet-8-failure-modes": "practice-prompt",
+    "worksheet-9-rollout-plan": "practice-prompt",
+    "worksheet-10-weak-vs-strong-answer": "practice-prompt",
+    "worksheet-11-candidate-scorecard": "practice-prompt",
+    "answer-key-intro": "practice-answers",
+    "answer-key-strong-discovery-questions": "answer-discovery",
+    "answer-key-strong-functional-requirements": "answer-functional",
+    "answer-key-strong-non-functional-requirements": "answer-nonfunctional",
+    "answer-key-architecture-explanation": "answer-architecture-explained",
+    "answer-key-data-model-integration-assumptions": "answer-data-model",
+    "answer-key-red-team-risks": "answer-red-team",
+    "answer-key-rollout-plan": "answer-rollout-weeks",
+    "answer-key-evaluation-plan": "answer-evaluation",
+    "answer-key-weak-answer": "answer-levels",
+    "answer-key-average-answer": "answer-levels",
+    "answer-key-strong-answer": "answer-levels",
+    "answer-key-interviewer-scorecard": "answer-scorecard",
+    "answer-key-final-2-minute-spoken-answer": "answer-spoken",
+    "tutorial-v2": "walk-discovery",
+    "worksheet": "practice-prompt",
+    "answer-key": "practice-answers",
+    "1-the-customer-problem-and-discovery": "walk-discovery",
+    "reframing-the-request": "walk-reframe",
+    "stakeholder-map": "walk-stakeholders",
+    "discovery-question-tree": "walk-question-tree",
+    "assumption-ledger": "walk-ledger",
+    "weak-vs-strong-answers": "walk-openings",
+    "2-clarifying-questions-requirements-and-constraints": "walk-requirements",
+    "requirement-vs-preference": "walk-req-vs-pref",
+    "the-six-question-interview-tree": "walk-six-questions",
+    "must-have-functional-requirements": "walk-functional",
+    "measurable-non-functional-requirements": "walk-nonfunctional",
+    "mvp-non-goals--scope-fence": "walk-scope",
+    "requirement-to-component-traceability": "walk-traceability",
+    "handling-partial-answers": "walk-partial",
+    "the-strong-candidate-move": "walk-partial",
+    "3-scale-estimates-slos-and-capacity": "walk-sizing",
+    "load-shape-not-marketing-shape": "walk-load-shape",
+    "the-four-step-capacity-envelope": "walk-envelope",
+    "slos-tied-to-customer-pain": "walk-slos",
+    "leverage-and-what-belongs-in-core": "walk-leverage",
+    "a-whiteboard-estimate-that-changes-component-choice": "walk-estimate-changes",
+    "sensitivity-table-across-growth-scenarios": "walk-sensitivity",
+    "average-vs-peak-headroom-as-a-product-feature": "walk-headroom",
+    "decision-rule-to-carry-forward": "walk-headroom",
+    "4-architecture-and-end-to-end-flow": "walk-architecture",
+    "control-plane-vs-data-plane": "walk-planes",
+    "architecture-diagram-and-trust-boundaries": "walk-diagram",
+    "core-components-in-dependency-order": "walk-components",
+    "failure-path-overlay-infinite-approval-loop": "figure-loop-overlay",
+    "happy-path-sequence-author-to-promotion": "walk-happy-path",
+    "systems-of-record-caches-queues-and-backpressure": "walk-state-placement",
+    "mvp-vs-later-evolution": "walk-mvp",
+    "90-second-interview-summary": "answer-summary-architecture",
+    "5-data-model-apis-and-working-code": "dive-records",
+    "four-core-records-and-ownership": "dive-records",
+    "four-api-contracts": "dive-contracts",
+    "idempotent-deployment-creation-walkthrough": "dive-idempotency",
+    "the-smallest-safe-code-path-config-publication": "dive-publish-sketch",
+    "what-the-whiteboard-version-omits-on-purpose": "dive-production-additions",
+    "contract-and-failure-injection-tests": "dive-tests",
+    "6-security-reliability-and-failure-handling": "walk-failures",
+    "the-red-team-question": "walk-red-team",
+    "four-security-controls": "walk-controls",
+    "failure-policy-decision-table": "walk-failure-policy",
+    "blast-radius-containment-levels": "walk-blast-radius",
+    "failure-drill-infinite-approval-loop": "walk-loop-drill",
+    "other-named-failure-cases": "dive-failure-cases",
+    "six-operational-primitives": "dive-primitives",
+    "evidence-runbooks-and-launch-gates": "dive-runbooks",
+    "interview-sized-production-sketch": "dive-production-sketch",
+    "what-to-say-in-the-interview": "walk-reliability-story",
+    "7-delivery-plan-observability-and-business-impact": "walk-rollout",
+    "rollout-as-a-series-of-proofs": "walk-proofs",
+    "the-four-phase-rollout-plan": "walk-phases",
+    "the-six-metric-scorecard": "walk-scorecard",
+    "four-layers-of-metrics": "walk-layers",
+    "dashboard-in-the-language-of-the-user": "walk-dashboard",
+    "ownership-before-launch": "walk-owners",
+    "gono-go-and-rollback-triggers": "walk-triggers",
+    "config-vs-adapter-vs-shared-service-vs-core": "walk-four-homes",
+    "the-risk-register": "walk-risk-register",
+    "8-interview-walkthrough-trade-offs-and-practice": "practice-interview",
+    "minute-zero-opening": "practice-opening",
+    "the-50-minute-pacing-plan": "practice-pacing",
+    "four-trade-off-pairs": "walk-tradeoffs",
+    "expected-follow-up-questions": "practice-followups",
+    "weak-answers-and-their-repairs": "answer-repair-configurable",
+    "scoring-rubric": "practice-calibration",
+    "interview-rehearsal-checklist": "practice-checklist",
+    "90-second-architecture-summary": "answer-summary-close",
+    "coverage-notes": "dive-coverage-review",
+    "my-perspective-on-the-gaps": "dive-cost-model",
+    "key-takeaways": "review-decisions",
+    "level-calibration": "practice-calibration",
+    "intro": "case-brief",
+    "tutorial-v2-part-2": "walkthrough",
+    "tutorial-v2-part-3": "walkthrough",
+    "tutorial-v2-part-4": "walkthrough",
+    "tutorial-v2-part-5": "walkthrough",
+    "tutorial-v2-part-6": "walkthrough",
+    "tutorial-v2-part-7": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "outcome",
+      "label": "Outcome and discovery",
+      "hint": "Separate the feature from the outcome, make safe, versioned and supportable testable, and ask the questions that change components."
+    },
+    {
+      "id": "sizing",
+      "label": "Peak load and component boundaries",
+      "hint": "Show the 42 versus 250 versions-per-hour arithmetic and what it moves: save, validation, deployment, partitioning."
+    },
+    {
+      "id": "architecture",
+      "label": "Control plane, data plane and versions",
+      "hint": "Trace one tenant change from edit to flagged exposure, and say which record tells you what is live."
+    },
+    {
+      "id": "failures",
+      "label": "Failure policy and the approval loop",
+      "hint": "Give detection, containment, recovery and prevention, and the default for each failure type."
+    },
+    {
+      "id": "rollout",
+      "label": "Rollout gates and metrics",
+      "hint": "Name the four phase gates, the rollback triggers and how fork count and share-handled-by-config are measured."
+    }
+  ],
+  "rubric": [
+    "Separates the requested feature (configuration) from the outcome (no forks) and makes safe, versioned and supportable testable.",
+    "Treats who authors configuration as an architecture decision that changes validation, preview and authorisation.",
+    "Sizes for the release-window peak and uses it to split fast saves from queued validation and idempotent deployment.",
+    "Separates publishing an immutable version from exposing it behind a tenant flag, and names ConfigDeployment as the record of what is live.",
+    "Orders the publish path parse, validate, authorise-by-policy, persist, and explains why it fails closed.",
+    "States the idempotency key behaviour: same key and body returns the same deployment, changed body 422, in-flight retry 409.",
+    "Contains an infinite approval loop with detection, version freeze, last-known-good recovery and publish-time cycle rejection.",
+    "Denies arbitrary code by default and scopes adapters and secrets per tenant.",
+    "Rolls out through gated phases and widens configuration only when a second and third customer reuse it without a fork."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Ten customers, one product, ten-fork risk; safe/versioned/supportable constraint; control/data plane split; immutable versions, tenant flag and append-only ledger",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief opening keeps the ten-customer fields/approvals/branding/integrations scenario and the ten-fork risk, restates all three constraint clauses (no skipped authorisation or unreviewed behaviour, visible live definition, trace and roll back) and admins-as-authors. Adds plain definitions of tenant, configuration, fork, control plane, data plane before the two overview bullets, which are retained as the final brief paragraph (ledger makes rollback a new event)."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the admin-edit-to-live-workflow diagram",
+      "anchors": [
+        "brief-scenario",
+        "figure-core-idea"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The one-sentence core idea is kept verbatim in substance, and figure b1e7cf74/50e21bf6 (both variants) sits after a paragraph that walks the diagram's actual labels: save draft, validate and authorise, rejected with nothing written, published version, tenant flag one tenant then cohort, live workflows."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Worked trace of one change (added, illustrative) using the source's acme / tpl-9 / version 17 values",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New 'Follow one change' subsection traces save, validate (cycle fails closed), harness, publish v17, idempotent deploy behind Acme-only flag, observe and rollback. It labels the compliance step and CRM sync as illustrative and attributes acme, tpl-9 and version 17 to the source's deployment walkthrough; the admin/platform/vendor responsibility split comes from the source's stated assumption."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions, applied-AI interviews; multi-tenant SaaS, low-code, workflow rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design' names Forward Deployed, solutions and applied-AI interviews and the multi-tenant SaaS, low-code/workflow and 'configuration that could become a fork' rounds."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the outcome; answer follow-ups on peak load, publish validation, idempotency, sandboxing, approval loops, tenant isolation",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of brief-task restates the outcome-first objective and lists all six follow-up topics from the source objectives (peak deployment load, validation at publish, idempotent deployment calls, sandboxed extensions, approval loops, tenant isolation)."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: multi-tenant SaaS, API design and idempotency, feature flags and rollback",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task second paragraph states the same three prerequisites."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading method: read in order, attempt worksheet blind, compare with model answer, reread gaps, mark read, revisit calibration before interview",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old tutorial/worksheet/model-answer reading route is translated to the five-section shell: walkthrough in order, deep dives, Practice attempt before reveals, reread weak steps, level calibration the night before; reading progress is described as separate browser state."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old three-part navigation (Tutorial 7 parts, Practice Worksheet, Model Answer, all mandatory)",
+      "anchors": [
+        "brief-task",
+        "practice-prompt",
+        "practice-answers"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three mandatory tracks are not reproduced as competing navigation: tutorial content is distributed into walkthrough and deep dives, the worksheet becomes practice-prompt and the model answer becomes the practice-answers reveals; brief-task explains this route. Old #tutorial-v2, #worksheet and #answer-key fragments are aliased."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "External interactive worksheet is separate and read-only here",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task states the source's interactive worksheet is not connected and its prompts and answers are reproduced in Practice; practice-prompt says notes stay in this browser."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-table-of-contents",
+      "teaching_item": "Old tutorial table of contents and its 70+ heading fragments",
+      "anchors": [
+        "walk-discovery",
+        "dive-records"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The TOC is replaced by the five-section navigation. Every TOC fragment (e.g. #reframing-the-request, #four-api-contracts, #my-perspective-on-the-gaps) is mapped in aliases to the specific h4 anchor that now teaches that subsection."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Reframing: outcome statement, feature vs result split, testable safe/versioned/supportable, vanity metric, job to be done, memorise-the-outcome pointer",
+      "anchors": [
+        "walk-reframe"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-reframe keeps the outcome sentence, the 'implementer skips it, FDE leads with it' split, the three testable definitions as a list, the no-fork/no-hotfix/no-escalation metric versus configurable-field vanity count, and the job-to-be-done framing. The interview pointer is expanded to show which later component each word drives (validation/sandbox, registry/ledger, rollback/observability)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Stakeholder map: four groups, consequences of missing support or platform engineers, four concrete roles, diagram",
+      "anchors": [
+        "walk-stakeholders",
+        "figure-stakeholders"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stakeholders lists all four groups with their concerns, keeps both 'miss this group' consequences and explains them against figure 18c82ee6/1017d47d whose labels match, then lists end user, operator, security owner and executive sponsor."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Discovery question tree: four branches with eight questions, outputs, stated-assumption fallback, diagram",
+      "anchors": [
+        "walk-question-tree",
+        "figure-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-question-tree keeps workflow shape, ownership and control, risk and recovery, success branches with both questions each, the five outputs, the exact admin-configures/vendor-approves assumption sentence, and figure 873fdc1d/4a4eeecb."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Assumption ledger: scope, assumptions, risks, success criteria",
+      "anchors": [
+        "walk-ledger"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-ledger defines all four ledger entries in one paragraph with the source's risk examples (bad config, permission slip, failed integration)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Weak vs strong restatement and the spoken opening, with why it works",
+      "anchors": [
+        "walk-openings"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-openings quotes the weak and strong restatements, notes the strong one names flexibility vs fragmentation, keeps the full spoken opening as an attributed blockquote and the 'holds architecture back until owners and a metric exist' explanation."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Requirement vs preference; recurring differences as first fork; too-thin vs bespoke-rules-engine failure",
+      "anchors": [
+        "walk-req-vs-pref"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-req-vs-pref keeps who/governance/upgrade-promise questions, sorting requirements from preferences, recurring differences as the first fork, and both failure directions."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Six-question interview tree with the design consequence of each, diagram and custom-code follow-up pointer",
+      "anchors": [
+        "walk-six-questions",
+        "figure-six-questions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-six-questions numbers all six questions and keeps each consequence: core abstraction, guardrails for admins reshaping UX/validation/authz, integration list fixing adapter interface and sync/async and block-vs-degrade, upgrade promise needing versioning/migration/rollback, three code-boundary options with declarative default, hours-vs-week tooling investment. Figure 0ac2d23f/fbbad8d1 follows; the question-5 pointer now links to step 4 sandbox and step 5 controls."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Six must-have functional requirements and how they fit",
+      "anchors": [
+        "walk-functional"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-functional lists all six requirements and the fit paragraph (one engine, one release train, variation in config, adapters not special cases, narrow extension points); adds a plain definition of declarative."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Four measurable NFRs and the failure each prevents",
+      "anchors": [
+        "walk-nonfunctional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-nonfunctional keeps release train, configuration isolation, backward-compatible upgrades, observable behaviour, and the three consequences (no observability = no support, etc.)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Five MVP non-goals",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-scope lists the five exclusions verbatim in meaning and keeps 'prove safe variation, not model every workflow on day one'; MVP is defined."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Requirement-to-component traceability table (10 rows)",
+      "anchors": [
+        "walk-traceability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All ten requirement/component rows reproduced as a table in walk-traceability."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Handling partial answers and the strong candidate move",
+      "anchors": [
+        "walk-partial"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-partial keeps the mixed-authorship assumption (admins own declarative fields, ops signs off extensions/schema), what it guards, what the interviewer tests, and the five-step strong sequence."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Load shape: 100 tenants, 50 templates, 1,000 versions/day, ~42/h, ~250/h peak, size above average",
+      "anchors": [
+        "walk-load-shape"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-load-shape keeps every number and adds the arithmetic (500 versions in 2 hours, about 6x the average), flags the assumption as case-chosen, and keeps retries/failed validations/resubmissions on top."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Four-step capacity envelope incl. 2-10 s validation guess, fan-out, expressive-power caps, retention",
+      "anchors": [
+        "walk-envelope"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-envelope numbers the four steps with the 2-10 s CPU guess attributed to the source, fast-feedback vs async split and the two-level SLO promise, fan-out over edits, field/clause/plugin caps, and keeping rollback metadata first-class; SLO defined inline."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Six SLO dimensions and per-step latency budget",
+      "anchors": [
+        "walk-slos"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-slos lists availability, latency, freshness, quality, security and cost questions and the save/preview/deployment budget split, with the reason not to make every step synchronous."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Leverage ratio, 80-tenant example, brittle edge-case example, support cost",
+      "anchors": [
+        "walk-leverage"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The LaTeX equation is rendered as a plain-text formula block in walk-leverage with the 80-tenant high-ratio and edge-case low-ratio examples and the support-cost correction."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Whiteboard estimate that moves validation out of the save API",
+      "anchors": [
+        "walk-estimate-changes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-estimate-changes explains why in-API validation breaks at peak (slowest rule set, one slow tenant), the save/validation/deployment split and 'tenant count matters less than run frequency and cost'."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Sensitivity table (1,000 / 10,000 / 100,000), 10x needs repartitioning, noisy-neighbour pointer",
+      "anchors": [
+        "walk-sensitivity"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row sensitivity table kept with the 'not benchmarks' caveat; follow-on paragraph keeps cached plans, partial evaluation, compile-time checks and out-of-process plugins; noisy neighbour is defined and the pointer explained."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Headroom as product feature, support load in unit economics, every estimate as a design lever",
+      "anchors": [
+        "walk-headroom"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-headroom keeps average-vs-peak, the three headroom scenarios, the cheap-but-hands-on vs dearer-but-supportable comparison and the decision rule list (queue, quota, latency budget, support process, component boundary)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Control plane vs data plane duties and where the trust boundary sits",
+      "anchors": [
+        "walk-planes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-planes keeps the follow-one-request-then-replay-unhealthy method, the danger of customer approval logic in the shared runtime, both duty lists and 'point at this split first'."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Architecture diagram read top to bottom and the two trust boundaries",
+      "anchors": [
+        "walk-diagram",
+        "figure-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-diagram walks every box and the numbered arrows actually drawn in figure 3cd408da/d3b3833c (change request, publish immutable version, release target, gated exposure, external calls); the two boundaries keep 'never runs with full trust', 'approved extensions still isolated', and adapter timeouts/retries/idempotency/backoff."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Component table in dependency order and why validator, flags and sandbox exist",
+      "anchors": [
+        "walk-components"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All nine component rows with responsibility, state and boundary are kept; ERP is defined; the three 'why it exists' explanations follow the table."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Failure-path overlay for the infinite approval loop",
+      "anchors": [
+        "walk-loop-drill",
+        "figure-loop-overlay"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The overlay figure 403986a4/e5b18aca (alt text was blank in the source) is moved beside the loop drill in step 5 and the prose now narrates its labels: validator may miss a semantic cycle, harness should catch it, flag limits exposure, runtime loop guard and audit alerts, flag switched back, migration service preserves instance state."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Seven-step happy path, publish vs exposure, sync vs async steps, diagram",
+      "anchors": [
+        "walk-happy-path",
+        "figure-happy-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-happy-path keeps all seven steps with their detail (authors, checks, harness scenarios, artifact metadata, tenant-cohort-wider rollout, observed signals, promote or flag back/pinned), figure 0d91ecd4/c030f239, and the blocking vs async paragraph."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Systems of record, caches, queues, backpressure, tenant-ID partitioning",
+      "anchors": [
+        "walk-state-placement"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-state-placement lists all four state homes with the source's examples and the partition-key paragraph (tenant ID plus definition ID or environment; noisy tenant, replay, quotas)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "MVP vs later evolution; 90-second interview summary",
+      "anchors": [
+        "walk-mvp",
+        "answer-summary-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-mvp keeps the MVP component list, immutable-over-live-editing preference and the four later items; the 90-second summary is a Practice reveal (answer-summary-architecture) reproduced in full."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "Four records with keys, lifecycle, retention and ownership; ConfigDeployment pointer",
+      "anchors": [
+        "dive-records",
+        "dive-template",
+        "dive-tenant-config",
+        "dive-adapter-definition",
+        "dive-ledger"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each record has its own h4 with fields, lifecycle states (including draft/needs_fix keeping its version), retention rules and owner; an added summary table compares them; the ownership paragraph and the ConfigDeployment-not-TenantConfig pointer are kept and expanded to say why TenantConfig cannot answer it."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "Four API contracts with auth, body, idempotency rules and every status code; shared rules",
+      "anchors": [
+        "dive-contracts"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-contracts keeps all four endpoints with auth, body and every status code (200/400/403/422; 401/403/404/409/422; 404/403/422/502; 404/409/422), the IETF draft attribution, and the shared rules; an added at-a-glance table summarises them and idempotency key is defined."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "Idempotent deployment walkthrough dep-555 with sequence diagram",
+      "anchors": [
+        "dive-idempotency",
+        "figure-idempotency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-step trace with acme, configVersion 17/18, tpl-9, key deploy-2024-11-18-001, 201 dep-555, same-result retry and 422; figure 4fd6b7e1/3e8fc336 (blank alt in source) now described; adds why the third check matters."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "Publish-path TypeScript sketch, what each part teaches, parse/validate/authorise/persist diagram and pointer",
+      "anchors": [
+        "dive-publish-sketch",
+        "figure-publish-order"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First code block reproduced except the Registry class, corrected 2026-11-16 to append each version to a per-configId list (field renamed snapshot) so it never replaces an earlier version; the eight 'what each part teaches' bullets kept and made more specific (role/positive SLA, empty mapping keys, internal_error); figure 921e87e0/f9410905 and the why-that-order pointer kept. The paragraph after the figure now states that the registry keeps every version and that production stores artifacts under (configId, version) with a content digest."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "What the whiteboard omits: optimistic concurrency (409 body vs 412 If-Match), idempotency, safe retries, observability tags",
+      "anchors": [
+        "dive-production-additions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-production-additions lists the four omissions with the 409/412 distinction, never replaying rejected validation, and the four observability tags."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-working-code",
+      "teaching_item": "Contract and failure-injection tests (vitest) and further tests a real service needs; FDE hiring note",
+      "anchors": [
+        "dive-tests"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second code block reproduced exactly; explanation names duplicate manager role -> duplicate_role and the allowlist miss; notes the second test asserts only the result, not registry emptiness; keeps the three further tests and the pain-to-state-model-to-API-to-code hiring sentence. 2026-11-16: the failure-injection test now also asserts registry.versions(\"cfg-2\") is empty, using a read-only Registry.versions accessor added to the first sketch, so the test proves \"without publishing state\"; the suggestion sentence in #dive-tests is replaced by that statement."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Red-team question, pre-activation cycle rejection, runtime stop, audit snapshot, 'make loops dull'",
+      "anchors": [
+        "walk-red-team"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-red-team keeps the hardest realistic request, the reviewer's question, the three tests (limit damage, keep evidence, serve others), publish-time rejection, runtime stop via hidden state or race, inactive revision, last working version and the who/when/tenant/rule-graph snapshot."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Four security controls paired with running code, leaking secrets, resource abuse, lost change tracking",
+      "anchors": [
+        "walk-controls"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each control is kept with its detail (declarations, sandbox or approval-gated path; two places for least privilege and the support-engineer example; nested conditions, regexes, lookup tables, recursive paths, caps and cycle detection; publisher/diff/gate/replaced version) and now names its failure inline."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Six-row failure-policy decision table",
+      "anchors": [
+        "walk-failure-policy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six events with default and reason kept in a table; SLA defined; an added paragraph contrasts transient timeout, deterministic cycle and irreversible side effect."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Blast-radius containment at tenant, region, workflow, dependency; layered defences",
+      "anchors": [
+        "walk-blast-radius"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-blast-radius keeps all four levels and the validation/sandbox/rate-limits/observability layering; blast radius defined."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Infinite approval loop drill: setup, detection, containment, recovery, prevention, evidence, diagram",
+      "anchors": [
+        "walk-loop-drill",
+        "figure-loop-drill"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Manager-compliance-manager setup kept; four numbered stages with max-hop/max-revisit guard and topological order both defined; operator review for side effects; evidence list; figure 65ba2deb/a23f5d31 placed after the stages."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Four other named failure cases",
+      "anchors": [
+        "dive-failure-cases"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-failure-cases keeps adapter contract change, v1-to-v2 field mapping, untested flag combination and sandbox escape with every mitigation (pinning, quarantine, drain old mapping, safe-combination matrix, fail closed on unreviewed combos, outbound limits, shut extension path)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Six operational primitives and least-dangerous-next-state rule",
+      "anchors": [
+        "dive-primitives"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Timeouts, retries, idempotency, circuit breakers, dead-letter handling and human escalation each kept with conditions; the least-dangerous-state rule opens the subsection."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Evidence, runbooks and launch gates",
+      "anchors": [
+        "dive-runbooks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-runbooks lists all six runbook topics (publish rights, approvals, disabling a workflow, adapter rotation, secret revocation, single-tenant replay) and the calm-conditions sentence."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "Interview-sized production sketch with caps 50/10/20/168 h and unknown-adapter test",
+      "anchors": [
+        "dive-production-sketch"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third code block reproduced exactly; caps attributed as stand-ins with the companion-repo caveats; added comparison with the first sketch (single error string, no persistence, field-type allowlist, duplicate keys) and the arbitrary-shell invariant."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-6-security-reliability-and-failure-handling",
+      "teaching_item": "What to say in the interview: judgement out loud, four-level policy, publish-time invariant, hiring note",
+      "anchors": [
+        "walk-reliability-story"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-reliability-story keeps the five judgements, degrade/queue/block never guess, the four-level policy with publish-time invariant, and the hiring-team sentence."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Rollout as a series of proofs: shared workflow, willing customer canary, widen on repeated evidence",
+      "anchors": [
+        "walk-proofs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-proofs keeps the trust question shift, the least-contested single path/integration/field set/brand, owner + single gate + known rollback + canary, and the three-part widening rule."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Four-phase plan with owners, exit criteria and gates; diagram; gates pointer",
+      "anchors": [
+        "walk-phases",
+        "figure-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four phases keep owner, exit and gate; figure adf85b45/0a4dabdd labels (owners and go/no-go texts) match; the gates pointer and 'shipped because the demo went well' are kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Six-metric scorecard with data source, owner, alert",
+      "anchors": [
+        "walk-scorecard"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The six metric bullets are converted to a table with definition, data source, owner and alert condition for each; no values changed."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Four layers of metrics and why to keep them apart",
+      "anchors": [
+        "walk-layers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Technical health, config quality (exception requests), adoption and business outcome kept, plus both failure examples."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Dashboard in the user's language with illustrative headline",
+      "anchors": [
+        "walk-dashboard"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Under-two-days / zero manual edits / one retry / no incident headline kept and labelled illustrative; per-tenant signals and 'CPU, logs and queue depth are not enough' kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Six owners before launch",
+      "anchors": [
+        "walk-owners"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six roles kept; SRE defined inline."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Go/no-go, rollback triggers, separate migration and rollback plans, launch package",
+      "anchors": [
+        "walk-triggers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four publish conditions, four rollback triggers, the separate-plans rule (expanded to explain stranded in-flight instances) and the four-document launch package with change-log contents."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Config vs adapter vs shared service vs core, with decision diagram",
+      "anchors": [
+        "walk-four-homes",
+        "figure-exception"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four homes with examples kept; the figure d2bfc78b/badf5bc3 decision order (business model -> adapter -> shared service -> configuration) is narrated explicitly, matching its yes/no branches."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Risk register (four rows) and definition of finished",
+      "anchors": [
+        "walk-risk-register",
+        "walk-finished"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row register with owner, mitigation and trigger kept as a table; 'part of running the platform' kept; walk-finished keeps the three-part finished definition and the forward-deployed hiring sentence."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Minute-zero opening and adapting to shifted ground",
+      "anchors": [
+        "practice-opening"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The full opening is an attributed blockquote in practice-opening with the regulated sign-off / proprietary connector adaptation note."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "50-minute pacing plan minute by minute, diagram",
+      "anchors": [
+        "practice-pacing",
+        "figure-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every minute assignment from 0 to 49 kept across seven blocks; figure bab34016/92137cab follows with matching block labels."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Four trade-off pairs with weak and better lines",
+      "anchors": [
+        "walk-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-tradeoffs keeps config vs code (with weak/better quotes), generic engine vs domain product, plugin flexibility vs security (trusted service boundary), compatibility vs simplification (deprecation policy, archaeology)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Four expected follow-up questions with answers",
+      "anchors": [
+        "answer-core",
+        "answer-versioning",
+        "answer-fork",
+        "answer-sandbox"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each follow-up is a native answer reveal in practice-followups with the complete source answer (core contents, frozen versions and pinned runs, three fork conditions plus the reliability exception, sandbox layers)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Five weak answers and their repairs",
+      "anchors": [
+        "answer-repair-configurable",
+        "answer-repair-plugins",
+        "answer-repair-fork-later",
+        "answer-repair-compat",
+        "answer-repair-details"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each weak answer is a reveal whose body gives the source repair, expanded with the mechanism from the walkthrough it points to."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Scoring rubric, rehearsal checklist, 90-second architecture summary, practice plan, equation note, closing",
+      "anchors": [
+        "practice-calibration",
+        "practice-checklist",
+        "answer-summary-close",
+        "practice-plan",
+        "walk-finished"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-criterion rubric table kept; five-point checklist kept; closing 90-second summary is a reveal; solo/pair/implementation exercises kept, with an added labelled worked answer (answer-cycle-validator); the no-new-equation note now links to step 3; the FDE closing sentence ends walk-finished."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-coverage-notes",
+      "teaching_item": "Source's 20-point checklist verdicts",
+      "anchors": [
+        "dive-coverage-review"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All 20 items with Met / Partly / Not met verdicts reproduced in a table that also links where each is covered in this casebook; the 'four items fall short as deliberate scope' summary kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-coverage-notes",
+      "teaching_item": "Gap item 7: four-line cost model, tenant-driven validation cost, per-tenant reporting",
+      "anchors": [
+        "dive-cost-model"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost-model keeps the four cost lines, tenants-set-validation-cost driver and per-tenant reporting; section-number references rewritten as links to the envelope step."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-coverage-notes",
+      "teaching_item": "Gap item 10: build or buy the engine; buy SSO; adapter SDK in between",
+      "anchors": [
+        "dive-build-buy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-build-buy keeps BPM/workflow-as-a-service option, buy-commodity rule with SSO/IdP example, build the constrained config model, reuse connector frameworks but keep the contract in-house; BPM, SSO and IdP defined."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-coverage-notes",
+      "teaching_item": "Gap item 17: data residency, region fields, SOC 2 CC8.1, SOX ITGC, HIPAA limits, retention",
+      "anchors": [
+        "dive-regulation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-regulation keeps region-fixed registry/audit store, region field on TenantConfig and ConfigDeployment, CC8.1 and SOX ITGC coverage, HIPAA's wider audit scope, per-regulation retention and the SOX segregation-of-duties interview move."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-coverage-notes",
+      "teaching_item": "Gap item 18: no AI component; AI authoring helper as untrusted input",
+      "anchors": [
+        "dive-ai-authoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-ai-authoring keeps 'nothing is AI, say so', the approval-graph drafting helper passing the same gates, and the more-volume-same-trust-model trade-off."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-numbers"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fifteen takeaways are present across review-decisions (outcome, authorship, planes, flag exposure, ledger, publish order, idempotency codes, sandbox, loop) and review-numbers (42/250 per hour, save/validate/deploy split, fan-out, tenant partitioning and 100x quotas, second/third reuse and fork count); each is also taught in full in the walkthrough."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-level-calibration",
+      "teaching_item": "Senior / Staff / Principal calibration table",
+      "anchors": [
+        "practice-calibration"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row table with 'sounds like' and 'missing' columns reproduced in practice-calibration."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-sources-checked-27-sep-2026",
+      "teaching_item": "Five sources checked 27 Sep 2026",
+      "anchors": [
+        "dive-references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five links kept with their claims, and each now names the section it supports (contracts, optimistic concurrency, regulation)."
+      }
+    },
+    {
+      "source_id": "worksheet-1-interview-prompt",
+      "teaching_item": "Worksheet interview prompt",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt sentence reproduced as the opening of practice-prompt."
+      }
+    },
+    {
+      "source_id": "worksheet-2-clarify-the-customer-problem",
+      "teaching_item": "Five clarifying questions",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five questions kept in worksheet item 1 of practice-prompt."
+      }
+    },
+    {
+      "source_id": "worksheet-3-users-and-workflows",
+      "teaching_item": "Blank users-and-workflows grid",
+      "anchors": [
+        "practice-prompt",
+        "answer-users"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Grid reproduced blank with its five columns and four users; an authored, labelled worked answer (answer-users) fills it from the stakeholder map and explains why the AI-assist column is empty in the base design."
+      }
+    },
+    {
+      "source_id": "worksheet-4-requirements",
+      "teaching_item": "Functional and non-functional requirement prompts",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Worksheet item 3 asks for three functional requirements and the five NFR targets (latency, availability, cost, security/privacy, audit/compliance)."
+      }
+    },
+    {
+      "source_id": "worksheet-5-data-and-integration-map",
+      "teaching_item": "Blank data and integration map",
+      "anchors": [
+        "practice-prompt",
+        "answer-integration-map"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Worksheet item 4 keeps the six columns; an authored, labelled reveal (answer-integration-map) fills six sources from the records and failure cases, noting freshness is qualitative because the source sets no numbers."
+      }
+    },
+    {
+      "source_id": "worksheet-6-proposed-architecture",
+      "teaching_item": "Architecture parts to cover",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Worksheet item 5 lists runtime, registry, schema validation, adapter SDK, sandbox and flags, migration and rollback."
+      }
+    },
+    {
+      "source_id": "worksheet-7-evaluation-plan",
+      "teaching_item": "Pre-filled evaluation plan (four metrics)",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row table with good/bad thresholds, dataset and owner reproduced exactly."
+      }
+    },
+    {
+      "source_id": "worksheet-8-failure-modes",
+      "teaching_item": "Six failure modes to explain",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six failure modes kept in worksheet item 7, including the resource-exhausting validation rule."
+      }
+    },
+    {
+      "source_id": "worksheet-9-rollout-plan",
+      "teaching_item": "Six-step rollout outline",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six steps kept in worksheet item 8 with the instruction to add owners and gates."
+      }
+    },
+    {
+      "source_id": "worksheet-10-weak-vs-strong-answer",
+      "teaching_item": "Weak vs strong worksheet answer",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both quotes reproduced in worksheet item 9 with a prompt to explain the difference."
+      }
+    },
+    {
+      "source_id": "worksheet-11-candidate-scorecard",
+      "teaching_item": "Candidate scorecard (five areas)",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-area 1/3/5 scorecard table with blank score column reproduced."
+      }
+    },
+    {
+      "source_id": "answer-key-intro",
+      "teaching_item": "Model answer introduction",
+      "anchors": [
+        "practice-answers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of practice-answers says to try the worksheet first and what a strong candidate shows; 'GenAI' qualifier dropped because the source's own gap notes say the design has no AI component."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-discovery-questions",
+      "teaching_item": "Eight strong discovery questions",
+      "anchors": [
+        "answer-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight questions in the answer-discovery reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-functional-requirements",
+      "teaching_item": "Strong functional requirements",
+      "anchors": [
+        "answer-functional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Core workflow plus five requirements in answer-functional."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-non-functional-requirements",
+      "teaching_item": "Strong NFRs incl. 1,000/day with 3x peaks",
+      "anchors": [
+        "answer-nonfunctional"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six NFRs kept. The availability bullet now uses the ~6x peak (half of 1,000 daily versions in a 2-hour window = 250/h against a 42/h average), matching the walkthrough's sizing; the model answer's 3x figure was resolved in text on 2026-11-16 and the reader-facing note about it removed."
+      }
+    },
+    {
+      "source_id": "answer-key-architecture-explanation",
+      "teaching_item": "Architecture explanation (eight points)",
+      "anchors": [
+        "answer-architecture-explained"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight points in answer-architecture."
+      }
+    },
+    {
+      "source_id": "answer-key-data-model-integration-assumptions",
+      "teaching_item": "Data model and integration assumptions",
+      "anchors": [
+        "answer-data-model"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four record signatures, ledger states, rollback-as-new-state, expected-version writes and four telemetry tags kept."
+      }
+    },
+    {
+      "source_id": "answer-key-red-team-risks",
+      "teaching_item": "Five red-team risks",
+      "anchors": [
+        "answer-red-team"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summary line and five risk explanations kept in answer-red-team."
+      }
+    },
+    {
+      "source_id": "answer-key-rollout-plan",
+      "teaching_item": "Week-by-week rollout plan",
+      "anchors": [
+        "answer-rollout-weeks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weeks 0-1 through after-pilot kept in answer-rollout."
+      }
+    },
+    {
+      "source_id": "answer-key-evaluation-plan",
+      "teaching_item": "Six-metric evaluation table with thresholds",
+      "anchors": [
+        "answer-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Not-industry-standard caveat and the six-row table kept in answer-evaluation."
+      }
+    },
+    {
+      "source_id": "answer-key-weak-answer",
+      "teaching_item": "Weak answer and why it falls short",
+      "anchors": [
+        "answer-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weak paragraph in answer-levels."
+      }
+    },
+    {
+      "source_id": "answer-key-average-answer",
+      "teaching_item": "Average answer and its three gaps",
+      "anchors": [
+        "answer-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Average paragraph with primitives, rule cost and old-schema gaps in answer-levels."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-answer",
+      "teaching_item": "Strong answer",
+      "anchors": [
+        "answer-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Strong answer quoted in full in answer-levels."
+      }
+    },
+    {
+      "source_id": "answer-key-interviewer-scorecard",
+      "teaching_item": "Eight-area interviewer scorecard",
+      "anchors": [
+        "answer-scorecard"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row table kept; DoS defined below it."
+      }
+    },
+    {
+      "source_id": "answer-key-final-2-minute-spoken-answer",
+      "teaching_item": "Final two-minute spoken answer",
+      "anchors": [
+        "answer-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full spoken answer quoted in answer-spoken."
+      }
+    }
+  ],
+  "required_answer_reveals": [
+    "answer-discovery",
+    "answer-users",
+    "answer-functional",
+    "answer-nonfunctional",
+    "answer-architecture-explained",
+    "answer-data-model",
+    "answer-integration-map",
+    "answer-red-team",
+    "answer-rollout-weeks",
+    "answer-evaluation",
+    "answer-levels",
+    "answer-scorecard",
+    "answer-spoken",
+    "answer-cycle-validator",
+    "answer-core",
+    "answer-versioning",
+    "answer-fork",
+    "answer-sandbox",
+    "answer-loop",
+    "answer-live-version",
+    "answer-order",
+    "answer-partitioning",
+    "answer-gates",
+    "answer-boundary",
+    "answer-repair-configurable",
+    "answer-repair-plugins",
+    "answer-repair-fork-later",
+    "answer-repair-compat",
+    "answer-repair-details",
+    "answer-summary-architecture",
+    "answer-summary-close"
+  ],
+  "required_anchors": [
+    "walk-loop-drill",
+    "dive-ledger",
+    "dive-idempotency",
+    "dive-publish-sketch",
+    "walk-sizing",
+    "walk-phases"
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: read all 46 captured sections (tutorial parts 1-8, coverage notes, takeaways, calibration, sources, 11 worksheet parts, 14 model-answer parts) and all 13 light/dark diagram pairs, then wrote casebook.md from scratch in teach mode. The brief now defines tenant, configuration, fork, control and data plane before using them and adds a labelled illustrative trace that reuses the source's own acme / tpl-9 / version 17 values; the old Tutorial/Worksheet/Model Answer navigation and 70-entry TOC are replaced by the five sections with every old fragment aliased. Tutorial parts 1-4 and 6-7 became walkthrough steps 1-8 (part 6's controls, policy table and loop drill moved before rollout; part 8's trade-offs moved into step 8); part 5's records, API contracts and all three code blocks became deep dives, with the code reproduced exactly. Two source figures had blank alt text (failure overlay, idempotency sequence); both are now narrated from their drawn labels, and the overlay sits beside the loop drill instead of in the architecture section. Practice keeps every worksheet prompt and grid, all 13 model-answer parts as reveals, the four follow-ups, five weak-answer repairs, two 90-second summaries, pacing plan, rubric and calibration; three reveals (users grid, integration map, cycle validator) are newly authored and labelled. LaTeX leverage equation rendered as plain text; glossary terms (FDE, CRM, ERP, MVP, SLO, SLA, SRE, SSO, IdP, BPM, SOX, HIPAA, DoS) defined inline at first use. Source inconsistencies resolved in text (2026-11-16): the model answer's 3x peak versus the tutorial's ~6x \u2192 ~6x everywhere, because the source's own sizing (500 of 1,000 daily versions in 2 hours = 250/h vs 41.7/h average = 6.0x) produces it; the first sketch's Registry, whose Map keyed by configId alone replaced each earlier entry despite 'never overwrites' \u2192 the sketch now appends every version to a per-configId list and the misnamed 'hash' field is renamed 'snapshot', so the code teaches the immutable registry the text describes. The first code block is therefore no longer byte-identical to the source in the Registry class. Test gap closed (2026-11-16): Registry gained a read-only versions() accessor and the allowlist-miss test asserts no version was written; this code no longer matches the source verbatim."
+  }
+}

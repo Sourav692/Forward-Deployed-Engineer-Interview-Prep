@@ -1,0 +1,1026 @@
+{
+  "title": "Sales Copilot",
+  "slug": "sales-copilot",
+  "subtitle": "Prepare cited account briefs, respect current CRM permissions and approve every consequential change.",
+  "theme": "Agents and Copilots in Real Workflows",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/sales-copilot",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief-example",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief",
+    "intro-the-sections": "brief",
+    "intro-practise-it": "practice-start",
+    "main-intro": "brief-example",
+    "main-1-start-with-the-workflow-and-risk-boundary": "discovery",
+    "main-2-requirements-functional-non-functional": "requirements",
+    "main-3-architecture": "architecture",
+    "main-4-source-authority-and-permission-fidelity": "sources",
+    "main-5-route-questions-to-the-right-evidence": "routing",
+    "main-6-claims-and-write-back": "claims",
+    "main-7-failure-latency-and-cost": "failure",
+    "main-8-evaluation-rollout-and-regression-drill": "evaluation",
+    "main-9-interview-delivery": "interview-spoken",
+    "deep-dive-intro": "architecture",
+    "deep-dive-1-source-and-permission-map": "sources",
+    "deep-dive-2-identity-and-crm-sharing-mirror": "permissions",
+    "deep-dive-3-snapshot-as-a-materialized-view": "snapshot",
+    "deep-dive-4-structured-versus-semantic-routing": "routing",
+    "deep-dive-5-claim-and-write-boundaries": "claims",
+    "deep-dive-6-failure-decisions": "failure",
+    "deep-dive-7-evaluation-and-release": "evaluation",
+    "deep-dive-8-latency-pivot": "latency",
+    "deep-dive-9-model-regression-incident": "incident",
+    "deep-dive-10-interview-trade-offs": "interview-tradeoffs",
+    "cheat-sheet-intro": "review",
+    "cheat-sheet-one-sentence": "review",
+    "cheat-sheet-five-outputs-by-risk": "review",
+    "cheat-sheet-ask-first": "review",
+    "cheat-sheet-three-lanes": "review",
+    "cheat-sheet-rules": "review",
+    "cheat-sheet-source-targets": "review",
+    "cheat-sheet-failure-card": "review",
+    "cheat-sheet-rollout": "review",
+    "cheat-sheet-latency-answer": "review",
+    "cheat-sheet-regression-card": "review",
+    "cheat-sheet-interview-close": "review",
+    "full-pack-intro": "references",
+    "full-pack-1-name-the-workflow-and-the-risk-boundary-before-drawing-any": "discovery",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "full-pack-part-2-3-map-every-source-with-its-permission-model": "sources",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "architecture",
+    "full-pack-part-2-5-precompute-the-account-snapshot-before-the-meeting": "snapshot",
+    "full-pack-part-2-6-propagate-crm-permissions-and-territory-rules-into-retriev": "permissions",
+    "full-pack-part-2-7-ground-opportunity-risks-in-crm-fields-not-model-memory": "routing",
+    "full-pack-part-3-8-draft-from-approved-claims-and-preview-every-write": "claims",
+    "full-pack-part-3-9-degrade-on-everything-except-authorisation-and-approval": "failure",
+    "full-pack-part-3-10-gate-the-release-on-claims-not-fluency": "evaluation",
+    "full-pack-part-3-11-roll-out-from-read-only-to-approved-write-back": "evaluation",
+    "full-pack-part-3-12-deliver-it-in-sixty-minutes": "interview-spoken",
+    "full-pack-part-4-13-answer-the-latency-pivot-in-ten-minutes": "latency",
+    "full-pack-part-4-14-debug-the-model-regression-incident": "incident",
+    "full-pack-part-4-level-calibration": "interview-levels",
+    "full-pack-part-4-key-takeaways": "review",
+    "full-pack-part-4-check-yourself": "practice-checks",
+    "full-pack-part-4-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Workflow, outputs and risk boundary",
+      "hint": "Place the five outputs on read-only, draft-only and approved write-back, and list the questions that change the design."
+    },
+    {
+      "id": "lanes",
+      "label": "Three lanes and the two checks",
+      "hint": "Trace a question from SSO through the snapshot or route, the fresh post-check, the model and the claim verifier."
+    },
+    {
+      "id": "permissions",
+      "label": "Permissions and the territory change",
+      "hint": "Explain the CRM mirror, field masks, count leaks and what happens to a snapshot after a noon territory move."
+    },
+    {
+      "id": "release",
+      "label": "Failures, evaluation and the two pivots",
+      "hint": "Say what fails closed, which slices gate release, and how you answer the 30-45 s and model-regression drills."
+    }
+  ],
+  "rubric": [
+    "Places summary/risks, questions/drafts and CRM updates on three distinct risk tiers before drawing components.",
+    "Builds the snapshot as the rep, keys it on account plus permission signature, and rechecks fresh attributes at serve time.",
+    "Treats a count or aggregate over another territory as a leak under the same zero-violation gate.",
+    "Routes counts and IDs to reviewed CRM operations and prose to hybrid search, and grounds risks in fetched fields with citations.",
+    "Blocks, not warns, on any external claim missing from the approved-claims playbook or pricing policy.",
+    "Requires exact-field preview, rep approval and an idempotency key for every CRM write.",
+    "Explains how 96.7% over 120 hid 83.3% on six regulated claims and adds independent critical-slice gates.",
+    "Answers the 30-45 s pivot by tracing first and bounding the agent graph, and measures adoption and prep time beside safety."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Five outputs, the cost of an invented certification or peer-territory record, and the three-lane design in summary",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 name the five outputs and the \"ten-minute saving is worthless\" failure trio (invented certification, unapproved discount, peer territory); the three lanes and claim/write gates are then traced in the Sara example and taught in steps 4-7. The variants sentence moved to the discovery-variants table."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea line and the rep-asks-to-claim-check figure",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figure a67537243ba541a8 (both variants, hashed) sits after the Sara trace with a caption naming its two decision points; the following paragraph explains why identity/territory precedes fetching and the claim check follows generation. The one-line core idea is restated as the Quick review \"One sentence\"."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Absorbed into the brief-task framing (\"explain the system end to end and then answer follow-ups\"); a separate audience heading added nothing for this case."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Dangerous constraint and follow-up topics the reader must handle",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 1 states the twofold dangerous constraint (no inaccessible record; no unapproved claim or write) and lists all nine follow-up topics from the source objective."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: retrieval, CRM permission models, LLM agents, cloud architecture",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last brief-task paragraph lists the four prerequisite areas; the \"related reviews at the foot of each section\" pointer is old navigation and is dropped."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading order and progress instructions",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation for the three mandatory tracks plus optional Full Design; replaced by the five-section reader and its own progress toggles, so no instruction is carried over."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Deep Dive, Quick Review, Full Design)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four-track table describes the old site; its content routes are now the walkthrough, deep dives, practice and Quick review. No sixth Full Design track is kept; Full Design material is distributed into steps 1-8 and the deep dives."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Linked blank-page worksheet",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-start states the \"Sales Copilot for Account Executives\" worksheet exists but was not captured, so it is not reproduced; the notes prompts and the blank-page instruction take its place."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Sales-process definition, Sara/Acme end-to-end trace, one-line loop, out-of-scope list",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 1 keeps the sales-process definition and the prospecting/legal/billing exclusion; \"Follow Sara through one meeting\" turns the Acme narrative into six numbered steps and keeps the one-line loop. The guide-usage note is dropped as navigation."
+      }
+    },
+    {
+      "source_id": "main-1-start-with-the-workflow-and-risk-boundary",
+      "teaching_item": "Three risk tiers for the five outputs and the opening spoken framing",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 opens with an output/risk-tier/what-the-rep-may-do table and quotes the source opening line about separating reading, drafting and writing."
+      }
+    },
+    {
+      "source_id": "main-1-start-with-the-workflow-and-risk-boundary",
+      "teaching_item": "Interviewer questions with \"what it is really asking\" examples and decisions",
+      "anchors": [
+        "discovery-questions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The discovery table merges the guide and full-design question sets into three columns; every concrete example (Acme in 20 minutes, certification blame, 20% off, peer deal, missing contract renewal date, HIPAA audit) is kept, including the guide-only approved-claims/pricing question."
+      }
+    },
+    {
+      "source_id": "main-1-start-with-the-workflow-and-risk-boundary",
+      "teaching_item": "Safe default when answers are missing",
+      "anchors": [
+        "discovery-questions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the discovery table: read-only first release, approved accounts only, external drafts and writes gated."
+      }
+    },
+    {
+      "source_id": "main-1-start-with-the-workflow-and-risk-boundary",
+      "teaching_item": "Related sales-assistant variants table",
+      "anchors": [
+        "discovery-variants"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All three related cases (account research, slow agentic CRM assistant, model-regression incident) kept with their changes, and linked to the latency and incident deep dives."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Functional list, NFR targets, first-release exclusions and the interview shortcut",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six functional items are covered by the four must-haves and should-haves; the guide NFR rows (3-8 s, selling-hours snapshot, tenant/region and scoped secrets, write receipt in audit, no training without contract) are folded into the source constraints table and the paragraph after the ownership table; the first-release row is the non-goals paragraph; the interview shortcut is quoted verbatim."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Seven-step architecture, model/agent role and three boundaries with the compact figure",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Compact figure 670850457261be6f is captioned by lane, followed by the seven numbered steps (permission signature defined in step 2), the narrow model-role paragraph, and the precompute/trust/write boundary bullets."
+      }
+    },
+    {
+      "source_id": "main-4-source-authority-and-permission-fidelity",
+      "teaching_item": "Per-source authority and permission fidelity; structured-count leak; noon/9 a.m. revocation; vault credentials",
+      "anchors": [
+        "sources"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraph 2 gives each source its authority; the count-leak rule, the noon move invalidating the 9 a.m. snapshot, and vault-by-reference credentials are taught in step 5 and the permissions deep dive (mirror and secrets subsections)."
+      }
+    },
+    {
+      "source_id": "main-5-route-questions-to-the-right-evidence",
+      "teaching_item": "Semantic vs structured vs ID routes, mixed questions, cited risks and explicit gaps",
+      "anchors": [
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 covers the three routes plus filter-then-summarise, why vectors cannot count and generated queries can over-scan, the six risk signals with citations, and \"say what could not be checked\" for missing fields."
+      }
+    },
+    {
+      "source_id": "main-6-claims-and-write-back",
+      "teaching_item": "Approved claims, blocking verifier, personalisation, rep-owned send, write proposal path, day-one threshold",
+      "anchors": [
+        "claims"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 keeps the playbook/pricing sources, block-not-warn, personalisation from own interactions, no sending in release one, the preview to policy check to approval to idempotent gateway to receipt path, and amount/stage/close above threshold with low-risk auto-approval only later."
+      }
+    },
+    {
+      "source_id": "main-7-failure-latency-and-cost",
+      "teaching_item": "Failure/safe-response table, 10x sharding, 30-45 s trace-first fix and metrics",
+      "anchors": [
+        "failure"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The guide table rows all appear in the full-design failure table and the failure paragraphs (CRM down, permission/approval down, missing evidence, unapproved claim, injection, model or vector down); sharding is in step 5 and the failure deep dive; latency fix and metrics are in the latency deep dive."
+      }
+    },
+    {
+      "source_id": "main-8-evaluation-rollout-and-regression-drill",
+      "teaching_item": "Zero-violation gates, example thresholds, business metrics, rollout sequence, regression summary",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 states the four example thresholds plus both zero gates, independent critical slices, the business metrics, week-one slice and rollout table, pinning and canary; the 96.7%/83.3%/8.7%/1.2% regression and its containment are taught in the incident deep dive."
+      }
+    },
+    {
+      "source_id": "main-9-interview-delivery",
+      "teaching_item": "Hour allocation, guide spoken summary, short follow-ups and final mental model",
+      "anchors": [
+        "interview-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Interview section keeps the 8/7/10/15/10/10 split as the sixty-minute table, quotes the guide summary, restates the final mental model chain, and adds the \"rep changed territory\" follow-up as reveal answer-9; the other short follow-ups are covered by the full follow-up table."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deterministic routes vs bounded agent; model drafts while verifier and gateway control",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same model/agent role as main-3; carried by the model-role paragraph in step 4 and the Quick review three-lanes note."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-source-and-permission-map",
+      "teaching_item": "Seven-source permission map, record metadata, unmapped exclusion, feedback not ground truth, added-material flag",
+      "anchors": [
+        "sources"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 uses the fuller full-design source table (same seven sources, adds format/owner); integration assumptions paragraph covers ID/owner/timestamp/ACL and exclusion; feedback-after-SME-approval paragraph; the \"added from cross-cutting references\" flag is stated in step 3 and the references section."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-identity-and-crm-sharing-mirror",
+      "teaching_item": "Token validation, group drift alert, minimal JIT provisioning, mirror attributes, pre-filter and post-check, aggregate leak, vault and per-tenant keys",
+      "anchors": [
+        "permissions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Permissions deep dive split into identity, mirror and secrets subsections, each mechanism stated with the field names owner_id/territory_ids/role_visible_from and the \"derived state never grants access\" rule."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-snapshot-as-a-materialized-view",
+      "teaching_item": "Snapshot contents, run-as-rep key, version stamps, invalidation, outage behaviour, p95 vs revocation, 10x sharding",
+      "anchors": [
+        "snapshot"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 lists all six snapshot contents, defines materialised view, keeps the manager/rep difference, version stamping, outage refusal, \"precompute improves p95 but cannot honour a revocation\" and the shard-by-territory scaling paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-structured-versus-semantic-routing",
+      "teaching_item": "Four question shapes and routes, reviewed operations, risk signals with sources",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 table has all four shapes including opportunity 0065g00000; the empty \"why search fails\" cell for the call-summary row now says search is the right tool. Reviewed operations and risk signals are in the following paragraphs."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-claim-and-write-boundaries",
+      "teaching_item": "approved_claims source, warn insufficient for pending certs/internal ROI/customer references, approval_status, last_contacted later auto-approval",
+      "anchors": [
+        "claims"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 names Playbook.approved_claims and Draft.approval_status in code, lists the three warn-insufficient categories, and the last_contacted exception the first release does not assume."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-failure-decisions",
+      "teaching_item": "Failure decisions incl. vector path and model route, trace fields, control-plane settings",
+      "anchors": [
+        "failure"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure deep dive paragraph 2 adds the vector-path keyword fallback and model-route queue/fallback; trace fields are in the records deep dive audit paragraph; control-plane settings in the step 4 end-to-end figure paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-7-evaluation-and-release",
+      "teaching_item": "Datasets, thresholds, business metrics, online monitor by route/source/category, corrections, rollout steps, pinning",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 2-4 list SME briefs, sparse records, red-team across territories, citation audits, claim labels, workflow replay, online segmentation and corrections-after-review; rollout table plus pinning/canary/rollback/sign-off paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-8-latency-pivot",
+      "teaching_item": "30-45 s pivot, trace-first, fixes, metrics, distinct real-time assistant",
+      "anchors": [
+        "latency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency deep dive paragraphs 1-2 and the pivot table; Real-Time Call Assistant sibling with its sub-3-second target and precompute/stream/enrich split."
+      }
+    },
+    {
+      "source_id": "deep-dive-9-model-regression-incident",
+      "teaching_item": "Model route change, two false claims, 8.7% vs 1.2% (430, 37), 96.7%/120 vs 83.3%/6, missing cases, warn-only, detect/contain/root cause/prevent",
+      "anchors": [
+        "incident"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Incident deep dive keeps the three log lines and reads each one in prose, with every number and the three missing case names, then Detect/Contain/Root cause/Prevent paragraphs; \"eval and release control, not prose style\" is stated in Root cause."
+      }
+    },
+    {
+      "source_id": "deep-dive-10-interview-trade-offs",
+      "teaching_item": "Four trade-offs with reasons and revisit conditions",
+      "anchors": [
+        "interview-tradeoffs"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The full-design trade-off table carries the same four decisions; the paragraph after it restores the deep-dive reasons (bounds authorisation, legal/commercial risk exceeds convenience, consequential and auditable)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet usage note",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; Quick review is the recall page."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One-sentence design",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"One sentence\" line reproduces the build-as-rep, recheck, cite, block, preview sentence."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-outputs-by-risk",
+      "teaching_item": "Five outputs by risk",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Five outputs by risk\" line; taught first in the step 1 tier table."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first list",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Ask first\" line lists all eight prompts; taught in the discovery questions table."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-three-lanes",
+      "teaching_item": "Three-lane chains and LLM/agent role",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Three lanes\" bullets give the precompute, ask and write chains plus the model-role note; taught in step 4."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-rules",
+      "teaching_item": "Six rules",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Rules\" bullets keep all six, with the count-leak rule added to the routing bullet."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-source-targets",
+      "teaching_item": "Latency and gate targets",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Targets\" line with 3-8 s and all six gates, labelled as source examples."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-card",
+      "teaching_item": "Failure card",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Failure card\" line, all five failures."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-rollout",
+      "teaching_item": "Rollout card",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Rollout\" line keeps connector plus territory matrix, golden set, shadow, read-only pilot, approved drafts/writes, independent claim slices, adoption and prep time."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-latency-answer",
+      "teaching_item": "Latency answer card",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Latency answer\" line."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-regression-card",
+      "teaching_item": "Regression card",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review \"Regression card\" line with 96.7%/120, 83.3%/6, 8.7% vs 1.2%."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-interview-close",
+      "teaching_item": "Interview close quotation",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review ends with the closing quotation verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Hook, pack provenance (no bespoke design, added permission detail) and group-composition table",
+      "anchors": [
+        "references"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "References section opens with the provenance note and reproduces the five-row group table, with each contribution linked to its casebook destination. The hook line about knowing the account without seeing more of the CRM is carried by the brief."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-workflow-and-the-risk-boundary-before-drawing-any",
+      "teaching_item": "Workflow-first framing and five outputs across the boundary",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraph 1 and the tier table."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-workflow-and-the-risk-boundary-before-drawing-any",
+      "teaching_item": "Weak, average and strong answer tiers",
+      "anchors": [
+        "discovery-tiers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "\"Three answers to the same prompt\" keeps each tier with its omissions, defines RAG and ACL inline, and adds why citations alone still leave territory and claim risk."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-workflow-and-the-risk-boundary-before-drawing-any",
+      "teaching_item": "Eight discovery questions and what each decides",
+      "anchors": [
+        "discovery-questions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight questions and decisions in the merged three-column table."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-workflow-and-the-risk-boundary-before-drawing-any",
+      "teaching_item": "Stakeholder map and practice-set explore list",
+      "anchors": [
+        "discovery-people"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row people table kept intact; the explore list (marked as a likely OpenAI-style case, not official) is given in full with links to where each item lands."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint, MoSCoW must/should/could, non-goals",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 opens with the preference/constraint example, numbers the four must-haves, lists the four should-haves and three can-waits, and keeps all six non-goals with the biased lead scoring note."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Six NFRs and the requirement-to-component table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both source tables kept; the paragraph after explains why each must-have needs an owning component and why 3-8 s depends on precompute."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-every-source-with-its-permission-model",
+      "teaching_item": "Seven-source table, added-permission and assumed-freshness caveats, integration assumptions",
+      "anchors": [
+        "sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the six-column table and states that the permission column is added and freshness is a working assumption, not a vendor figure; integration assumptions paragraph keeps stable ID, exclusion of unmapped sources, embeddings never deciding permissions, and stale-source warnings."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-every-source-with-its-permission-model",
+      "teaching_item": "Core records and the two safety records",
+      "anchors": [
+        "records"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Records deep dive turns the six record schemas into a table with each record's role; step 3 and the table both name approved_claims and approval_status as the two safety records."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Control vs data plane, three lanes, versioned control plane, observability",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph 1 defines both planes and the three lanes; the end-to-end figure paragraph lists every versioned control-plane item and every monitored signal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four original lane and end-to-end diagrams",
+      "anchors": [
+        "architecture-lanes"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figures 4f11af58ddf17715, d5b99fab79e9a194, b5356c156de0bdf7 and 2062a553de3f462e (light and dark, hashed) each get a caption read from their labels and a paragraph explaining one implication (separate stores, post-check before reasoning, no model in the write lane, router branches and boundaries)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Component table and ENFORCE/APPROVE boundaries",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eleven-row component table kept in dependency order with fail-closed/degrade column; three boundary bullets name ENFORCE as the trust boundary and approval as the write boundary."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-precompute-the-account-snapshot-before-the-meeting",
+      "teaching_item": "Why precompute, snapshot contents, run-as-rep cache key, optimisation-not-permission, two-layer rule",
+      "anchors": [
+        "snapshot"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraphs 1-3 keep the calendar reasoning, the six contents, manager/rep difference, the noon/9 a.m./2 p.m. example and the two-layer rule stated in general terms."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-propagate-crm-permissions-and-territory-rules-into-retriev",
+      "teaching_item": "Identity, mirror, aggregate leak, credentials, per-tenant keys and interview lens",
+      "anchors": [
+        "permissions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Permissions deep dive keeps the \"answer key stops there\" provenance, IdP token checks, drift alert, JIT provisioning, all Salesforce visibility layers plus FLS, the three attribute names, per-connection vault references, one-key-one-tenant and crypto-shredding, and quotes the interview lens. An editorial caution on crypto-shredding is labelled as beyond the source."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-ground-opportunity-risks-in-crm-fields-not-model-memory",
+      "teaching_item": "Conversational coat, 40-day stage and slipped close date, what semantic search cannot answer",
+      "anchors": [
+        "routing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 opens with the \"structured question wearing a conversational coat\" example and the how-many/most-recent/did-it-change limits before introducing the router."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-ground-opportunity-risks-in-crm-fields-not-model-memory",
+      "teaching_item": "Router table, fixed operations as the gateway allowlist, cited risks and gaps",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-column routing table kept; reviewed-operations paragraph keeps the \"queried the whole pipeline\" incident and the same-allowlist point; risk paragraph keeps the six signals and the list of unchecked items."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-draft-from-approved-claims-and-preview-every-write",
+      "teaching_item": "Email leaves the building, claim tracing, pricing refusal, personalisation and discovery questions, proposals with idempotency, threshold",
+      "anchors": [
+        "claims"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraphs 1-2 and 4-5 keep each mechanism; idempotency key is defined in plain words; the above-threshold list includes emailing externally."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-degrade-on-everything-except-authorisation-and-approval",
+      "teaching_item": "Fail-closed vs degrade rule, ten-row failure table, injection, 10x scaling",
+      "anchors": [
+        "failure"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure deep dive states the rule and defines failing closed vs degrading, keeps the ten-row table, gives injection its \"lowers but does not stop\" treatment, and keeps config-driven connector schedules and hit-rate scaling."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-claims-not-fluency",
+      "teaching_item": "Fluency-passing suite, slice gates, seven-row metric table, business metrics, red-team list",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 opens with the beautifully-written-but-false-certification framing and the 96.7%/83.3% example, keeps the metric table with owners, the business metrics with \"safe and unused has also failed\", and all seven red-team bullets."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-from-read-only-to-approved-write-back",
+      "teaching_item": "Week-one slice and week-by-week rollout gates",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Week-one paragraph (one connector, three reps in three territories, golden set with enablement, red team) defines shadow mode; the seven-row week table is kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-from-read-only-to-approved-write-back",
+      "teaching_item": "Trade-off table with revisit conditions",
+      "anchors": [
+        "interview-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row decision/chose/revisit table kept in the trade-offs subsection."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute plan, two-minute spoken answer, eight lines",
+      "anchors": [
+        "interview-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sixty-minute table with section numbers rewritten as casebook links; the two-minute answer is quoted verbatim with a note that it is generic group text; all eight lines numbered."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Five follow-ups with answers and weak-answer repairs",
+      "anchors": [
+        "interview-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Follow-up table kept with its five answers (section 13 reference relinked to the latency pivot); four weak-answer repairs kept as a list."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-answer-the-latency-pivot-in-ten-minutes",
+      "teaching_item": "Pivot table, sixty-second line, snapshot as first node, four verbs, six moves, real-time sibling",
+      "anchors": [
+        "latency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency deep dive keeps the eight-row pivot table, quotes the sixty-second line, links the snapshot lane as the graph's first node, bolds the four verbs, lists the six moves, and keeps the sub-3-second Real-Time Call Assistant sibling. Practice reveal answer-latency-pivot rehearses it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-debug-the-model-regression-incident",
+      "teaching_item": "Incident narrative, logs, contain, root cause incl. warn-only to reduce false positives, prevent, strong/weak answers and scorecard",
+      "anchors": [
+        "incident"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Incident deep dive keeps the Evaluation and Release Gating filing note, the fluency-driven model switch, both quoted false claims, the three log lines, the false-positive reason for warn-only, \"three changes lined up\", the strong and weak answers, and the seven-row scorecard. Practice reveal answer-regression-drill rehearses it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-level-calibration",
+      "teaching_item": "Senior, staff and principal calibration",
+      "anchors": [
+        "interview-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Level table kept with the framing sentence that levels separate on how long the boundary holds rather than prose quality."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each takeaway maps to a Quick review line (outputs, three lanes, rules, failure card, rollout, latency, regression) and is taught in full in steps 1-8 and the deep dives; the requirements and hour-plan takeaways are recalled by the step 2 and sixty-minute sections rather than repeated."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-check-yourself",
+      "teaching_item": "Eight check-yourself questions with answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight questions are native answer-reveals answer-1 to answer-8 with the source answers, slightly expanded (e.g. answer-6 names the three missing case types)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-references",
+      "teaching_item": "Reference list with check date and per-link notes",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All seven links kept with their one-line notes, plus the unlinked FDE question bank entry and the 27 September 2026 check date."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-read all 60 captured sections against the earlier draft and the rewrite. The draft had dropped the Sara/Acme trace, the guide's 'what it is really asking' examples, the weak/average/strong tiers, the stakeholder table, the explore list, the related-variants table, MoSCoW and the interview shortcut, the freshness-is-an-assumption caveat, the seven-step architecture and ENFORCE/APPROVE boundaries, the 'conversational coat' routing example, the warn-only-to-reduce-false-positives cause, the strong/weak incident answers, the sixty-second latency line and sub-3-second sibling, the two-minute answer, the eight lines, and the source group table; each is now restored in its step. The four lane/end-to-end figures had generic 'source figure N' captions; each now has a caption and paragraph read from its own labels. The draft's invented spoken answer was replaced by the source's two spoken answers, an empty table cell and broken abbr punctuation were fixed, and the authored territory exercise and two pivot reveals are labelled as additions. Cheat-sheet cards are recalled in Quick review only after full teaching."
+  },
+  "required_answer_reveals": [
+    "answer-exercise-territory",
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-latency-pivot",
+    "answer-regression-drill"
+  ],
+  "required_anchors": [
+    "brief-example",
+    "brief-task",
+    "discovery-tiers",
+    "discovery-questions",
+    "discovery-people",
+    "discovery-variants",
+    "architecture-lanes",
+    "permissions-mirror",
+    "records",
+    "interview-spoken",
+    "interview-followups",
+    "practice-pivots"
+  ]
+}

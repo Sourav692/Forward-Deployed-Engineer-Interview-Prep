@@ -1,0 +1,839 @@
+{
+  "title": "Scoping to Deployed Agent",
+  "slug": "scoping-to-deployed-agent",
+  "subtitle": "Take a customer from a scoping document to a governed agent deployment in two weeks, where every stage advances only on evidence signed by the right owner.",
+  "theme": "Delivery, Evaluation, and Operations",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/scoping-to-deployed-agent",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-task",
+    "main-the-case-in-one-sentence": "walkthrough-framing",
+    "main-questions-to-ask-the-interviewer": "walkthrough-questions",
+    "main-requirements-functional-non-functional": "walkthrough-requirements",
+    "main-architecture-delivery-gates-and-the-deployed-agent": "walkthrough-architecture",
+    "main-gates-evidence-and-ownership": "walkthrough-gates",
+    "main-trade-offs-cost-and-honest-limits": "walkthrough-limits",
+    "main-evaluation-and-rollout": "walkthrough-rollout",
+    "main-two-minute-interview-answer": "walkthrough-two-minute",
+    "deep-dive-intro": "dive-two-systems",
+    "deep-dive-1-two-distinct-systems": "dive-two-systems",
+    "deep-dive-2-entry-contract-and-stages": "dive-entry-contract",
+    "deep-dive-3-accelerator-reuse-and-agent-runtime": "dive-reuse",
+    "deep-dive-4-outcomes-and-limitations": "dive-northwind-numbers",
+    "deep-dive-5-evaluation-cost-and-operations": "dive-eval-cost",
+    "cheat-sheet-intro": "review-recall",
+    "cheat-sheet-ask-first": "review-recall",
+    "cheat-sheet-seven-gated-stages": "review-recall",
+    "cheat-sheet-agent-runtime": "review-recall",
+    "cheat-sheet-demo-facts-and-caveat": "review-recall",
+    "cheat-sheet-close": "review-recall",
+    "full-pack-intro": "walkthrough-framing",
+    "full-pack-1-frame-the-round-as-an-operating-model-question": "walkthrough-framing",
+    "full-pack-2-ask-the-five-questions-that-change-the-design": "walkthrough-questions",
+    "full-pack-3-write-the-success-metrics-before-day-1": "walkthrough-requirements",
+    "full-pack-4-draw-the-architecture-end-to-end": "walkthrough-architecture",
+    "full-pack-part-2-5-walk-the-fourteen-days-in-order": "walkthrough-days",
+    "full-pack-part-2-6-make-every-gate-a-decision-with-a-named-authority": "walkthrough-gates",
+    "full-pack-part-2-7-refuse-at-intake-rather-than-start-a-clock": "walkthrough-intake",
+    "full-pack-part-2-8-turn-reuse-into-a-number": "dive-reuse",
+    "full-pack-part-2-9-make-risk-mitigations-checks-not-reminders": "dive-risk-checks",
+    "full-pack-part-2-10-raise-the-evidence-bar-behind-each-signature": "dive-evidence-bar",
+    "full-pack-part-3-11-treat-a-stalled-engagement-as-a-visible-outcome": "dive-stalls-scale",
+    "full-pack-part-3-12-read-the-northwind-numbers-honestly": "dive-northwind-numbers",
+    "full-pack-part-3-13-read-the-same-case-in-prose": "dive-references",
+    "full-pack-part-3-14-deliver-it-in-sixty-minutes": "practice-sixty-minutes",
+    "full-pack-part-3-15-answer-the-pilot-spend-pivot-in-ten-minutes": "practice-cost-pivot",
+    "full-pack-part-3-level-calibration": "practice-levels",
+    "full-pack-part-3-key-takeaways": "review-recall",
+    "full-pack-part-3-check-yourself": "practice-start",
+    "full-pack-part-3-references": "dive-references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "intake",
+      "label": "Intake and clarifying questions",
+      "hint": "What must intake refuse, and which answers change the design?"
+    },
+    {
+      "id": "gates",
+      "label": "Stages, gates and signers",
+      "hint": "Name each gate, its signer, its evidence and the deny rules."
+    },
+    {
+      "id": "agent",
+      "label": "The delivered agent and rollout",
+      "hint": "Trace one ticket and explain shadow, limited production and rollback."
+    },
+    {
+      "id": "honesty",
+      "label": "Limits, cost and stalls",
+      "hint": "Which numbers are scripted, what is unbuilt, and how does a no-go look?"
+    }
+  ],
+  "rubric": [
+    "Refuses at intake without a measurable metric, a named SME and named sources, and creates no clock.",
+    "Names all seven stages with their days and the signer of each of the six gates.",
+    "States the three deny rules and why seniority is not an override.",
+    "Distinguishes golden_set_signed_off from eval_baseline_met and security review from data access.",
+    "Explains the reuse rate as reused pulls over total pulls (83% for Northwind).",
+    "Keeps the LLM out of release decisions and humans in control of sending until autonomy is earned.",
+    "Separates the day-14 acceptance rule from the week-4 target and its named owner.",
+    "Says the Northwind numbers are scripted and names the unbuilt pieces before being asked."
+  ],
+  "required_answer_reveals": [
+    "answer-work-faster",
+    "answer-seven-stages",
+    "answer-deny-rules",
+    "answer-gate-pair",
+    "answer-refuse-intake",
+    "answer-reuse-rate",
+    "answer-rubber-stamp",
+    "answer-scale",
+    "answer-unbuilt",
+    "answer-pilot-spend",
+    "answer-sme-slip",
+    "answer-senior-fda",
+    "answer-strategic-override",
+    "answer-rollback-proof",
+    "answer-no-go",
+    "answer-cost-card"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Customer wants an agent in two weeks; Northwind triage with <5 min first response; governance on a fixed calendar; two systems; five of six components reused",
+      "anchors": [
+        "brief-scenario",
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scenario opens with the two-week request, Northwind's under-five-minute target and the 'failed gate stops or escalates, never a quiet exception' rule; brief-example separates the seven-stage deterministic state machine from the redact/classify/retrieve/draft/check/approve agent and states the five-of-six reuse. LLM is expanded on first use."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Clock starts only when outcome, expert and sources are real; gates advance on signed evidence; core-idea figure",
+      "anchors": [
+        "brief-scenario",
+        "figure-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The core-idea sentence sits directly above figure-core-idea (31318147 light, 54a81c24 dark); the paragraph after it reads the figure's two branches: no clock when intake fails, limited production and handover on 'go', stop or escalate otherwise."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates facing a delivery round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task keeps the audience sentence including the delivery-round emphasis ('scoping document to a deployed agent')."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Learning goals: explain the pipeline from its dangerous constraint; answer follow-ups on intake, gates, reuse, runtime, evaluation, rollback, cost and handover",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task restates the task as the objective, naming the dangerous constraint (no stage advances without evidence signed by the right owner; a failed gate stops the engagement) and listing all eight follow-up areas."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: LLM agents, grounded drafting, golden-set evaluation, staged rollouts such as shadow mode",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task keeps all four prerequisites; golden set and shadow mode are additionally defined in the brief-scenario term list because later steps depend on them."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions for the Interview Guide / Deep Dive / Quick Review / Full Design tracks",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation (mark parts read, open Full Design for numbers) is not reproduced; the five-section shell replaces it and the Full Design material is distributed into walkthrough steps, dives and practice. The 'revisit before the interview' role is carried by Quick review."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Table of the four old sections and their mandatory/optional status",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The old section table links to #main/#deep-dive/#cheat-sheet/#full-pack, which are replaced by the five primary sections; its content descriptions (fourteen days, gate authority, intake refusal, reuse number, stalls, numbers, pilot pivot) each map to a walkthrough step or dive listed in this coverage."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Slice: intake, gates, small live agent, rollback; Northwind steps; kill send in two minutes; humans still send; flow 'name the outcome, prove each gate, ship small, own rollback'; custom planners wait",
+      "anchors": [
+        "brief-task",
+        "walkthrough-architecture",
+        "walkthrough-rollout"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task carries the four-verb flow, 'production planned now', and that open-ended custom planners wait. The six-week access ticket point is in the walkthrough-questions table; the two-minute kill-send target and 'humans still send, autonomy earned' are in walkthrough-rollout and walkthrough-requirements. SME is defined in the brief."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "SME definition and named sources at intake",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "SME is defined in the brief-scenario term list as the customer person who can say whether an answer is right, matching the source glossary."
+      }
+    },
+    {
+      "source_id": "main-the-case-in-one-sentence",
+      "teaching_item": "One-sentence case; day-14 numbers are scripted demo results",
+      "anchors": [
+        "walkthrough-framing",
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The one-sentence case closes walkthrough-framing verbatim in substance; the scripted-demo caveat is the final paragraph of brief-task so it governs every number below."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six interviewer questions with concrete versions and decisions; do not start clock without metrics, SME and sources",
+      "anchors": [
+        "walkthrough-questions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The six-row table is reproduced with its 40-to-5-minute, Confluence-owner-on-vacation, six-week access ticket, golden-set-slip and kill-send-in-two-minutes examples; the intake-requirement closing sentence ends the step and links forward to the step-4 refusal."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional vs non-functional framing; delivery and Northwind functional lists; NFR table; interview shortcut",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-requirements defines functional vs non-functional, lists the agent's functional duties (top three categories, Confluence plus Salesforce read-only, redact, ground, escalate, humans send), keeps the Schedule/Governance/Reuse/Security/Reliability/Value table and ends with the 'drafts, not sends' shortcut answer."
+      }
+    },
+    {
+      "source_id": "main-architecture-delivery-gates-and-the-deployed-agent",
+      "teaching_item": "Deterministic delivery machine, LLM does not approve own release; runtime half is a sketch; seven-step architecture; runtime path; figure",
+      "anchors": [
+        "walkthrough-architecture",
+        "figure-two-planes"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-architecture states that the LLM never approves its own release and that the runtime half was not fully implemented, places figure-two-planes (c272542f/aa26ccd2), then walks the seven numbered control-plane steps including the day-14 decision vs week-4 owner split and the handover bundle."
+      }
+    },
+    {
+      "source_id": "main-gates-evidence-and-ownership",
+      "teaching_item": "Stage/gate/signer table with days; gate API rejects wrong roles, missing evidence, skipped stages; structured evidence; no-go is valid",
+      "anchors": [
+        "walkthrough-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The seven-row stage/gate/signer table sits in walkthrough-gates after the gate table; the closing paragraph keeps the three rejections, logging of every attempt, structured checklist plus links to eval/rollback proof, and 'a no-go is a valid outcome'."
+      }
+    },
+    {
+      "source_id": "main-trade-offs-cost-and-honest-limits",
+      "teaching_item": "83% reuse; scripted 4m12s, 63%, .83 vs .75, <2 min; None is not zero; 17 tests and five unimplemented pieces; cost per resolved ticket; vault; low-cost failing pilot is not success",
+      "anchors": [
+        "walkthrough-limits"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-limits has three paragraphs covering exactly these: reuse ratio, every scripted value plus 'None does not mean zero' and the five unimplemented capabilities, then the cost/credential/tenant/override guidance ending with the failing-pilot sentence."
+      }
+    },
+    {
+      "source_id": "main-evaluation-and-rollout",
+      "teaching_item": "Golden-ticket coverage; eight measures; shadow before limited production; refuse broad rollout without sponsor metrics and rollback evidence",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-rollout keeps the five golden-set categories, all eight measures with what each shows, the shadow-then-limited order and the refusal rule; it adds why a golden set of only easy tickets would mislead."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "walkthrough-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as a labelled spoken example in the walkthrough-two-minute disclosure, first-person wording retained and CRM expanded."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Old instruction to read with the unchanged source",
+      "anchors": [
+        "dive-two-systems"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only sentence; the deep dives now open directly with the two-systems mechanism, so no instruction is needed."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-two-distinct-systems",
+      "teaching_item": "Primary deterministic machine vs delivered agent; LLM does not adjudicate its gates; runtime diagram is a design construction; 17 deterministic tests",
+      "anchors": [
+        "dive-two-systems"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-two-systems explains determinism as decisions from recorded signer/role/evidence/order, keeps the three things the LLM never adjudicates, and states that only the gate engine is exercised by 17 tests with no LLM."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-entry-contract-and-stages",
+      "teaching_item": "Entry contract; five intake questions; missing SME/source is intake failure; seven stages with days; day-3 escalation; signer and evidence; deny overrides; audit rejected attempts; structured evidence; separation of duties; sponsor cites metrics",
+      "anchors": [
+        "dive-entry-contract"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-entry-contract lists the five questions as bullets, the stage order with all seven day ranges, day-3 escalation, deny override, a defined 'replayable event log', the five structured evidence items and builder/approver separation with the FDA/security example."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-accelerator-reuse-and-agent-runtime",
+      "teaching_item": "Reusable asset classes; five of six; pull_or_build; adapt reuse to tenant identity and policy",
+      "anchors": [
+        "dive-reuse"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-reuse names pull_or_build, the 83% calculation and adds a paragraph that pulling saves writing, not configuring, for tenant identity and customer policy."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-accelerator-reuse-and-agent-runtime",
+      "teaching_item": "Runtime path; scoped credentials, vault, segregation; retrieval miss triggers abstention; no autonomous action loop; LLM not release authority",
+      "anchors": [
+        "dive-agent-runtime"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-agent-runtime gives the eight-step path, traces a ticket through figure-agent-rollout and ends with the three runtime rules: scoped credentials/vault/segregation, abstain or escalate on retrieval miss, and no autonomous loop or LLM release authority."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-outcomes-and-limitations",
+      "teaching_item": "Full demo outputs incl .27 override, first value one day, deployed True; scripted; retention empty; 17 tests prove enforcement; five missing capabilities; no-go safer than compressing",
+      "anchors": [
+        "dive-northwind-numbers",
+        "dive-stalls-scale"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-northwind-numbers lists every demo value in one sentence, the scripted caveat, empty retention, tests-prove-enforcement and the five missing capabilities before broad promises; the no-go-over-compression point opens the second paragraph of dive-stalls-scale with why compression removes the sponsor's evidence."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-evaluation-cost-and-operations",
+      "teaching_item": "Golden-set composition; tested behaviours; shadow and limited production; separate cost/budget/review load/retention tracking; credentials and runbook; override reasons",
+      "anchors": [
+        "dive-eval-cost",
+        "dive-northwind-numbers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-eval-cost keeps the six golden-set categories with the failure each catches, the five tested behaviours, separate tracking from demo values and the runbook contents; override-reason diagnosis (weak retrieval, conservative policy, poor classification) sits with the override rate in dive-northwind-numbers."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Old cheat-sheet navigation links",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation line only; Quick review is reached from the primary section list."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Six ask-first questions",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ask first paragraph in review-recall lists all six questions."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-seven-gated-stages",
+      "teaching_item": "Stage order with days, signer/evidence/prior gate, day-3 escalation",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-recall gives stages with day ranges, the three requirements and day-3 escalation, plus a gate/signer table for recall."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-agent-runtime",
+      "teaching_item": "Runtime chain; deterministic gates; model cannot approve itself",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Agent runtime paragraph in review-recall keeps the eight-step chain and the 'cannot approve itself' line."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-demo-facts-and-caveat",
+      "teaching_item": "Demo facts, scripted caveat, unobserved retention, remaining gaps",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Demo facts paragraph keeps every listed number and gap, and adds the 0.27 override rate and scope-change gap already taught in the dives."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-close",
+      "teaching_item": "Closing spoken line",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as the final 'Close' quotation in review-recall."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Two weeks fast enough to lose trust; operating-model question; gates are code; related-case contribution table",
+      "anchors": [
+        "walkthrough-framing",
+        "dive-references"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'fast enough to lose trust' sentence and gates-as-code framing are in walkthrough-framing; the four-row 'case in the group' provenance table is in dive-references with a caption."
+      }
+    },
+    {
+      "source_id": "full-pack-1-frame-the-round-as-an-operating-model-question",
+      "teaching_item": "Framing sentence; 'work faster' trap; speed as side effect; two-question table; weak seven-box answer; one-breath restatement",
+      "anchors": [
+        "walkthrough-framing",
+        "framing-spoken"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-framing keeps the spoken framing in a labelled disclosure, explains the blank-page trap, reproduces the two-question table, and contrasts gate vs checklist before the one-breath restatement."
+      }
+    },
+    {
+      "source_id": "full-pack-2-ask-the-five-questions-that-change-the-design",
+      "teaching_item": "Five framework questions table; scope out loud; name provisioning layer",
+      "anchors": [
+        "walkthrough-questions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The five-row table is reproduced, then the SLA row is worked through (abort/re-scope vs slip, gate never moves), followed by the scope-out-loud and provisioning-layer instructions."
+      }
+    },
+    {
+      "source_id": "full-pack-3-write-the-success-metrics-before-day-1",
+      "teaching_item": "Verbatim success metrics; measurable from existing data; limited-release acceptance rule vs week-4 owner",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-requirements reproduces the two-metric table, contrasts it with 'helpful', and gives a dedicated paragraph separating the day-14 acceptance rule from the week-4 owner."
+      }
+    },
+    {
+      "source_id": "full-pack-3-write-the-success-metrics-before-day-1",
+      "teaching_item": "Delivery-framework MoSCoW requirements, agent functional requirements, NFR table with demo caveats, Zendesk OAuth detail",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both requirement tables are reproduced; the agent requirements are prose; the data-access row is unpacked (all-or-nothing tokens retiring, OAuth read scope, Confluence scoped tokens, revoke at handover)."
+      }
+    },
+    {
+      "source_id": "full-pack-3-write-the-success-metrics-before-day-1",
+      "teaching_item": "Constraints (three customer-signed gates) and four non-goals plus 'some engagements should not be two weeks'",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Constraints paragraph keeps the three customer signatures, made explicit as SME twice plus sponsor; non-goals paragraph keeps all four plus the overarching limit."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Nouns code block; narrated engagement; FDA cannot sign security",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The nouns block is kept as text code; the six-bullet narration is rewritten as one paragraph keeping the FDA/security example and the day-14 vs week-4 split."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four pipeline diagrams: signer-labelled vertical pipeline, both layers on one board, compressed Mermaid strip",
+      "anchors": [
+        "figure-pipeline-signers",
+        "figure-delivery-framework",
+        "figure-pipeline-strip"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figures a6a28521/94a63b21, 98435fa3/0a2904c3 and c0499182/110dfa93 each sit in walkthrough-architecture with a caption and a following paragraph reading their signer sequence, refusal branch and seven-stage/six-gate count."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Delivered-agent diagrams",
+      "anchors": [
+        "figure-agent-rollout",
+        "figure-agent-assets"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figures db7d3943/8ee1205a and ace5d484/e7fc6b55 moved to dive-agent-runtime with a full ticket trace and the asset-name reading; walkthrough-architecture links there."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Component table with failure without each; ABAC and ACL parallels",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The fifteen-row component table is reproduced, split by system in the following paragraph, with both RAG parallels (ABAC decision shape, no path around the ACL filter) and acronyms expanded."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-walk-the-fourteen-days-in-order",
+      "teaching_item": "Order rationale; fourteen-day table with demo evidence; source script; trust ladder; first real action watched",
+      "anchors": [
+        "walkthrough-days"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-days keeps the three order failures, the full table, attribution to run_engagement_demo.py, reads four rows in detail (live vs requested, three pulled/one built, 40 cases, 5/2 and 6/1 overrides giving 0.27 = 3/11) and the Module 05 SHADOW/LIVE ladder rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-every-gate-a-decision-with-a-named-authority",
+      "teaching_item": "Checkbox vs gate pseudocode; gate table; three deny rules; seniority",
+      "anchors": [
+        "walkthrough-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pseudocode block and both tables kept; 'deny overrides' is defined; the seniority/LLM-access-control reason is kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-every-gate-a-decision-with-a-named-authority",
+      "teaching_item": "Two similar gate pairs; Northwind stall table",
+      "anchors": [
+        "walkthrough-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both gate pairs are explained as bullets, including that both failure combinations correctly fail; the three-row stall table follows."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-refuse-at-intake-rather-than-start-a-clock",
+      "teaching_item": "ScopingRefused with no engagement; Module 04 ACL parallel; SME structural reason; strategic-customer override",
+      "anchors": [
+        "walkthrough-intake"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough-intake keeps all four points, names the two SME gates explicitly and adds that the override becomes a recorded decision."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-turn-reuse-into-a-number",
+      "teaching_item": "Pull or build with no third option; formula; ten named assets; 83% Northwind; rising custom count signal; library is names not code; harness on punch list",
+      "anchors": [
+        "dive-reuse"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-reuse keeps the formula block, all ten asset names with MRR expanded, the worked 5/6 calculation, the slip signal and the 'gate mechanism real, number not yet' limit."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-make-risk-mitigations-checks-not-reminders",
+      "teaching_item": "Reminder vs check; four-risk table with built status; honest-gap quote",
+      "anchors": [
+        "dive-risk-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-risk-checks reproduces the table, names the three built functions and the unbuilt request_scope_change(), and keeps the quoted line."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-raise-the-evidence-bar-behind-each-signature",
+      "teaching_item": "Rubber stamp vs evidence bar; security-review table; checklist fix",
+      "anchors": [
+        "dive-evidence-bar"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-evidence-bar reproduces the five-row table and explains where each non-security row belongs before the three-item checklist."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-raise-the-evidence-bar-behind-each-signature",
+      "teaching_item": "Delivery-process gaps: credential windows, golden-set sensitivity, tenancy; credential quote",
+      "anchors": [
+        "dive-evidence-bar"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three labelled bullets keep the two credential windows, sensitivity tier and tag-vs-physical separation; the credential quote closes the dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-treat-a-stalled-engagement-as-a-visible-outcome",
+      "teaching_item": "Guarantee is visibility; failure table; scale is FDA portfolio; capacity queue; needs duration data",
+      "anchors": [
+        "dive-stalls-scale"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-stalls-scale reproduces the four-row table and the portfolio-scale paragraph. FDA is expanded as Forward Deployed Architect throughout; the captured glossary's 'Food and Drug Administration' expansion was a mis-expansion and is not repeated in reader-facing text (resolved 2026-11-16)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-read-the-northwind-numbers-honestly",
+      "teaching_item": "Five on-demand metrics table; 6/6 gates, deployed True, day-3 escalation; 17 tests no LLM; one run; say so first",
+      "anchors": [
+        "dive-northwind-numbers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-northwind-numbers explains why on-demand computation avoids a second tracker, keeps the table, the run facts and the one-run caveat, and explains the override rate's falling/flat reading."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-read-the-same-case-in-prose",
+      "teaching_item": "Not a second design; five-source table; negative-control demo",
+      "anchors": [
+        "dive-references",
+        "dive-northwind-numbers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source table and 'written three ways' sentence are in dive-references; the negative-control demo sequence (refusal, three denials, stage skip with no path, day-3 escalation) is in dive-northwind-numbers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Time budget; announce the risk; minute-55 summary",
+      "anchors": [
+        "practice-sixty-minutes",
+        "sixty-minute-summary"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-sixty-minutes keeps the budget table, the risk announcement with CI/CD expanded and the summary in a disclosure. The summary's 'two of four' mitigations is stated as three of four ('which one isn't'), matching the risk table, with the three built checks named and change control as the one to build (resolved 2026-11-16; status kept as preserved because only the count was corrected)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Decision/revisit table; close forward-deployed with two unskippable gates; seven carrying lines; questions to ask them",
+      "anchors": [
+        "practice-sixty-minutes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Decision table, the golden-set and rollback-first close, all seven lines and the four closing questions are kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-15-answer-the-pilot-spend-pivot-in-ten-minutes",
+      "teaching_item": "Pilot-spend card; fits framework as third intake metric; dashboard pulled day 1; four cost verbs",
+      "anchors": [
+        "practice-cost-pivot",
+        "answer-cost-card"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The card table (blank headers given 'Card field'/'Answer') and both follow-on paragraphs sit inside the answer-cost-card reveal so the reader attempts the pivot first."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-levels reproduces the table with a line on how to use the 'missing' column."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Fifteen takeaways",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fifteen takeaways are listed in review-recall with SLA kept as taught earlier."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Ten self-check questions with answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All ten questions are native answer reveals in practice-start (answer-work-faster through answer-pilot-spend) with the source answers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "Fact-check sources with dates and links",
+      "anchors": [
+        "dive-references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-references keeps the 27 Sep 2026 check date and all five references with their original URLs, including the 27 Oct 2026 and 30 Apr 2027 Zendesk token dates."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Read all 48 captured sections (Interview Guide, Deep Dive, Cheat Sheet and the three-part Full Design) and wrote the casebook from scratch. The opening keeps a term list because SME, FDA, gate, golden set, shadow mode and accelerator library are all used before they could be explained inline, and follows one engagement and one Northwind ticket. The interview guide and Full Design overlapped heavily (gates, days, requirements, limits); each overlap was merged into one walkthrough step while keeping both source tables where they differ (e.g. stage/day/signer vs gate/blocks/signer). Every source table (24 of 25; the old navigation table is consolidated), all three code blocks and all seven figure pairs are retained beside prose that reads them. Added material (blank-page prompt, five follow-up drills, the 3/11 override arithmetic and 5/6 reuse arithmetic) is labelled or derived only from source facts. Reference URLs are the source's own. Source inconsistencies resolved in text (2026-11-16): the captured glossary expanded FDA as Food and Drug Administration \u2192 Forward Deployed Architect everywhere, with the term-list note about the mis-expansion removed; the minute-55 summary said two of four mitigations are built \u2192 three of four ('which one isn't'), matching the risk table and the code (check_escalation_triggers and the two intake refusals built, scope-change control not), with the visible correction paragraph replaced by a plain statement of the three."
+  }
+}

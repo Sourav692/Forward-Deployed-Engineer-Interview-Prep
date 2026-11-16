@@ -1,0 +1,1841 @@
+{
+  "title": "Natural Language over Governed Data",
+  "slug": "nl-over-governed-data",
+  "subtitle": "Design an assistant that answers business questions in plain language without letting the model decide what a metric means: governed definitions first, SQL checked as a tree, read-only execution and answers checked against the data.",
+  "theme": "Knowledge and Retrieval",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/nl-over-governed-data",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "fig-core-idea",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-prompt",
+    "main-intro": "brief-example",
+    "main-1-questions-to-ask-the-interviewer": "walk-discovery",
+    "main-2-requirements-functional-non-functional": "walk-requirements",
+    "main-3-architecture": "walk-architecture",
+    "main-4-three-decisions-to-defend": "walk-routing",
+    "main-5-failure-playbook": "walk-failures",
+    "main-6-scale-latency-and-cost": "walk-scale",
+    "main-7-evaluation-and-rollout": "walk-evaluation",
+    "main-8-interview-answer-to-rehearse": "deliver-rehearse",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-authority-state-and-versions": "walk-authority",
+    "deep-dive-2-query-routing-and-ambiguity": "walk-routing",
+    "deep-dive-3-sql-as-an-untrusted-proposal": "walk-execution",
+    "deep-dive-4-failure-drills-and-evidence": "dive-failures",
+    "deep-dive-5-evaluation-and-delivery-mechanics": "walk-evaluation",
+    "deep-dive-6-when-a-supervisor-is-justified": "dive-engagement",
+    "deep-dive-7-cost-and-scale-follow-ups": "dive-cost",
+    "cheat-sheet-intro": "review-flow",
+    "cheat-sheet-one-sentence": "review-flow",
+    "cheat-sheet-ask-first": "review-flow",
+    "cheat-sheet-flow": "review-flow",
+    "cheat-sheet-rules": "review-numbers",
+    "cheat-sheet-case-numbers-with-context": "review-numbers",
+    "cheat-sheet-failures-and-routes": "review-closing",
+    "cheat-sheet-cost-answer": "review-closing",
+    "cheat-sheet-interview-close": "review-closing",
+    "full-pack-intro": "brief-task",
+    "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything": "walk-risk",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "full-pack-3-map-every-source-and-who-owns-its-definition": "walk-authority",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "walk-architecture",
+    "full-pack-part-2-5-anchor-every-question-on-a-governed-metric": "walk-routing",
+    "full-pack-part-2-6-ask-when-ambiguous-never-guess": "walk-ambiguity",
+    "full-pack-part-2-7-validate-sql-as-a-tree-then-execute-read-only": "dive-sql",
+    "full-pack-part-2-8-explain-variance-from-the-data-not-from-memory": "walk-explanation",
+    "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else": "walk-failures",
+    "full-pack-part-3-10-gate-the-release-on-semantic-correctness-not-execution-su": "walk-evaluation",
+    "full-pack-part-3-11-roll-out-ten-metrics-at-a-time": "walk-rollout",
+    "full-pack-part-4-12-deliver-it-in-fifty-minutes": "practice-fifty",
+    "full-pack-part-4-13-tell-it-as-something-built": "dive-engagement",
+    "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes": "practice-cost-pivot",
+    "full-pack-part-5-level-calibration": "practice-levels",
+    "full-pack-part-5-key-takeaways": "review-closing",
+    "full-pack-part-5-check-yourself": "practice-checks",
+    "full-pack-part-5-references": "dive-sources",
+    "practice-pivots": "practice-fifty",
+    "review-decisions": "review-flow",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "The wrong-answer risk and the questions that change the design",
+      "hint": "Name the failure first, then the discovery questions about metric owners, native row and column security, ambiguity modes and scan budgets."
+    },
+    {
+      "id": "design",
+      "label": "Trace 'revenue last week' through the governed path",
+      "hint": "Identity, registry, ambiguity gate, permitted schema, SQL proposal, AST and cost checks, read-only execution as the user, table-to-prose check, QueryRun."
+    },
+    {
+      "id": "failures",
+      "label": "Failure dispositions and the five drills",
+      "hint": "Say what fails closed, degrades, queues or goes to a person, and walk the wrong-metric drill from detection to prevention."
+    },
+    {
+      "id": "evaluation",
+      "label": "Release gate, rollout and cost",
+      "hint": "Separate semantic correctness from execution accuracy, plan the ten-metric rollout with owners, and answer the cost pivot without a stronger-model retry."
+    }
+  ],
+  "rubric": [
+    "Names valid SQL that answers the wrong business question as the failure to design against, before drawing the pipeline.",
+    "Resolves every question to a versioned, owner-approved metric before touching physical schema, and treats raw schema as an approved escape hatch only.",
+    "Turns ambiguity into a clarifying question, refusal or analyst escalation with a numeric threshold, and treats the insurer's 60% as an example to calibrate.",
+    "Validates SQL as an AST against table, column, join, limit and scan-budget policy rather than with regex, and never retries a policy denial with a stronger model.",
+    "Executes read-only as the user so warehouse-native row and column security applies, re-checks entitlements at execution, and fails closed when the policy check is unavailable.",
+    "Generates prose only from the structured result, cross-checks its numbers, returns the table alone on a mismatch, and computes drivers deterministically.",
+    "Makes analyst-judged semantic correctness the release gate, separate from execution accuracy and from zero escaped policy violations.",
+    "Rolls out ten governed metrics through golden replay and analyst shadowing before executives, with named owners and rollback triggers.",
+    "Answers the cost pivot with the semantic layer, validation, dry runs, scan caps and scoped caching, measured by first-try success and warehouse compute per answer."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Executives want a slide-ready number from a plain question; booked/recognised/collected revenue; model cannot choose",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 keep 'What's Q3 revenue?', the slide, the three revenue meanings and 'the model cannot choose that definition'. Added the analyst hand-translation context from full-pack section 1 and why a wrong-definition answer is worse than an error."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Mechanism summary: versioned owner-approved metric before schema, ask or analyst on ambiguity, LLM proposes SQL, parser + scan budget, read-only gateway, SQL/lineage/freshness, prose checked, audited replay",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 4 restates each overview bullet in order (anchor to versioned metric, ask/analyst, LLM proposes, parser checks tree against policy and scan budget, read-only gateway under row/column security, SQL+lineage+freshness, prose checked, every run audited). Added plain definitions of semantic layer, grain, KPI, AST, RLS/CLS and golden case before use."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Anchors the executive dashboard, retail forecast explainer and insurer governed data assistant; reuse query path, change explanation and review",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'What you need to design' paragraph 2 and the variants table say the same three cases reuse the query path and change the explanation and review workflow."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "LLM glossary definition",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "LLM expanded on first use in brief paragraph 4 with the source glossary definition in the abbr title; the previous version's ' ,  ' em-dash artefact in glossary titles is replaced by clean punctuation in every abbr."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its decision diagram (cf26484b light / 88f8cbcc dark)",
+      "anchors": [
+        "brief-scenario",
+        "fig-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 5 keeps the core-idea sentence and introduces fig-core-idea; caption and alt text now name every SVG node (business question, pin governed metric, one approved meaning?, clarify or analyst review, check SQL and scan cost, read-only answer with lineage) instead of the old generic 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates, NL-to-SQL or analytics assistant round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'What you need to design' paragraph 4 names the same audience and the NL-to-SQL/analytics assistant round. The previous brief had replaced this with a generic 'engineers familiar with databases' line."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on ownership, ambiguity, validation, read-only, evaluation, cost, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 1 states the dangerous constraint ('valid SQL must never answer the wrong business question') and paragraph 4 lists all seven follow-up areas. Previously absent."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumes SQL/warehouses, row and column access control, LLM prompting and evaluation",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 4 lists the same three prerequisites. The source's 'related reviews at the foot of each section' points to site navigation that this bundle does not have, so it is not repeated."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading order (Interview Guide, Deep Dive, Quick Review; Full Design optional; Quick Review the night before)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 5 maps the old order onto the five sections: walkthrough first (stands alone), deep dives for follow-ups, Practice without the page open, Quick review the night before. The old mark-as-read instruction is replaced by the reader's own toggles."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Section table: Interview Guide, Technical Deep Dive, Quick Review mandatory; Full Design (5 parts) optional",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four-track table is old navigation; paragraph 5 says what each new section holds, and the Full Design's parts are distributed into walkthrough steps 1-13, the deep dives and Practice rather than kept as a sixth track."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Natural-Language-to-SQL Analytics Assistant worksheet for a blank-page attempt",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 5 names the worksheet and says it is not imported (it was not captured); practice-prompt gives the equivalent blank-page task."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Analytics process, trap of valid SQL for the wrong revenue; one slice, not chat with every table",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'What you need to design' paragraph 1 keeps the slice (map to approved metric, read-only query with paper trail) and the explicit non-scope 'chat with every table'."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Six-step exec trace for 'What's Q3 revenue?' (identity, pin to Finance metric, ask on 30 vs 90 day, generate/parse/cap/run, return with SQL lineage freshness and checked prose, replay next quarter)",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New brief-example section is a numbered list of the six steps with their concrete details (Finance's versioned metric, 30-day vs 90-day, SQL hash replay). The previous version dropped this trace entirely. Added the human boundary paragraph from main-1's board-facing row."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Path metric first, permitted SQL, bounded run, explain from result; writes and invented KPIs stay out; KPI glossary",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the numbered trace states the path and 'Writes and invented KPIs stay out of it'; KPI is defined with its glossary text in brief-scenario."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Variant table: NL-to-SQL, Executive Dashboard, Retail Demand Forecast, Insurer governed data assistant",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four rows and three columns kept as the variants table under brief-task; arrows in 'Governed metric -> permitted schema -> validated read-only query' rewritten as 'then'. Previously missing."
+      }
+    },
+    {
+      "source_id": "main-1-questions-to-ask-the-interviewer",
+      "teaching_item": "Seven questions with 'what it's really asking' and 'what you then decide' (owners, warehouse/dialect, permissions, ambiguity mode, latency/scan cost/async, SQL/lineage/reconstruction, board-facing explanations)",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as the first table in step 2 with all seven rows and three columns, including the Snowflake/finance-views example, the regional-manager salaries example and the 'change prices from this answer' row. The previous version only had the full-pack table."
+      }
+    },
+    {
+      "source_id": "main-1-questions-to-ask-the-interviewer",
+      "teaching_item": "ACL glossary",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "ACLs expanded with its glossary definition in the permissions row of the step 2 table."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Functional vs non-functional framing and nine functional requirements",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 states the two-halves framing, then a nine-item list merging main-2's nine functional requirements with full-pack-2's pipeline wording (metric first, permitted context, ask, dialect SQL, AST check, read-only gateway, SQL+lineage+caveats, prose checked, audit with versions)."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Non-functional table: correctness, security, fail-closed, latency 3-8 s, cost guards, operability",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as 'Non-functional requirements with example targets' table, all six rows. The following paragraph notes 3-8 s is a copilot-persona example, per the cheat sheet. TTL glossary kept on the operability row."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "First release (ten metrics, golden cases, analyst shadow then small exec audience) and out of scope",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before the interview shortcut lists the first release and the three out-of-scope items (general interface, write-query tool, machine that defines metrics)."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut quote for 'What are the requirements?'",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 3 quotes the shortcut answer verbatim. Previously missing."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Interview-size architecture diagram (15c2212a / 889cbe50); LLM interprets, registry/policy/warehouse/analysts keep authority",
+      "anchors": [
+        "walk-architecture",
+        "fig-interview-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 opens with the authority sentence and fig-interview-architecture; caption names the control-plane nodes (versioned registry, entitlements and query policy, versioned catalog and lineage) and the question-path nodes ending in 'deny or narrow request'."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Eight-step architecture walk (authenticate, LLM-assisted resolver, permitted schema, narrow-context SQL, AST + recheck + scan, on-behalf-of gateway, verify numbers, return and record)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list of eight steps directly under the interview figure, each with its specific rule ('proposes, does not approve', on-behalf-of, table alone on mismatch). Previously compressed into one sentence."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Agent role: governed workflow by default; supervisor only for multiple approved specialists; cannot define metrics or bypass the gate",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of step 5 keeps the default, the insurer routing list and the rule that neither agent nor LLMs define metrics or bypass the query gate, linking to dive-engagement."
+      }
+    },
+    {
+      "source_id": "main-4-three-decisions-to-defend",
+      "teaching_item": "Three decisions table: semantic layer before schema, clarify before query (<60%), fixed ops/managed SQL before open SQL",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as 'Three decisions to defend' table in step 6 with all three rows and failures to avoid; the source's stray '**<60%**' Markdown is rendered as bold. Previously missing."
+      }
+    },
+    {
+      "source_id": "main-4-three-decisions-to-defend",
+      "teaching_item": "Mixed questions routed per subtask; retail 'why' computes drivers deterministically; correlation is not causation",
+      "anchors": [
+        "walk-routing",
+        "walk-explanation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 router paragraph states semantic search/structured queries/direct lookup per subtask; step 9 carries the deterministic retail drivers and 'Correlation is not proof of causation'."
+      }
+    },
+    {
+      "source_id": "main-5-failure-playbook",
+      "teaching_item": "Seven-row failure playbook (wrong metric, schema drift, fan-out, scan budget, policy engine unavailable, warehouse/summary unavailable, summary contradicts)",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as 'Failure playbook' table in step 10 with all seven rows; the paragraph after it explains why substituting an unrestricted service account is the leak the design prevents. Previously missing."
+      }
+    },
+    {
+      "source_id": "main-6-scale-latency-and-cost",
+      "teaching_item": "Sync for resolution/auth/validation/execution; async crawl/refresh/replay partitioned; cache with tenant, permission signature, versions, freshness",
+      "anchors": [
+        "walk-scale"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 paragraph 1 keeps all three points and adds what an unscoped cache would leak."
+      }
+    },
+    {
+      "source_id": "main-6-scale-latency-and-cost",
+      "teaching_item": "Measures (first-try semantic correctness, retry rate, warehouse compute per answer with BigQuery/Snowflake units, tokens, p95 by stage), >20% warning, cheapest levers, stronger-model repair raises both bills",
+      "anchors": [
+        "walk-scale",
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 paragraphs 2-3 carry the measures, the >20% over seven-day baseline warning, the five cheapest levers and the stronger-model warning; dive-cost repeats the units with the BigQuery citation."
+      }
+    },
+    {
+      "source_id": "main-7-evaluation-and-rollout",
+      "teaching_item": "Release gate semantic correctness; execution success weaker; golden cases incl. ambiguity, grain, fan-out, hidden columns, scans, misstated summary; zero escaped policy; copilot >=90/95/95 goals",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 paragraphs 1-2 define both measures and list every golden-case trap including the summary that misstates a correct table; the metric table holds the 90%/95%/95% copilot goals with the 'agree with the customer' qualification stated before it."
+      }
+    },
+    {
+      "source_id": "main-7-evaluation-and-rollout",
+      "teaching_item": "Rollout order ten metrics -> golden replay -> shadow -> small exec release -> domain expansion; stop/rollback triggers; answer users recheck has not solved the workflow",
+      "anchors": [
+        "walk-rollout",
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 13 opens by stating the five-stage order (ten metrics, golden replay, shadow analysts, small executive release, domain expansion) as fact; the fig-rollout caption notes the diagram folds the executive release into the shadow-to-expansion step; rollback triggers paragraph; step 12 closes on the recheck sentence. Check-yourself 9 and takeaway 11 name all five stages."
+      }
+    },
+    {
+      "source_id": "main-8-interview-answer-to-rehearse",
+      "teaching_item": "Six-point interview answer and memory line",
+      "anchors": [
+        "practice-fifty",
+        "deliver-rehearse"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "deliver-rehearse reveal keeps all six first-person bullets and the memory line verbatim, labelled as a spoken answer. Previously absent; only the follow-up table existed."
+      }
+    },
+    {
+      "source_id": "main-8-interview-answer-to-rehearse",
+      "teaching_item": "Pointer to Deep Dive (parser, insurer story, drills, evaluation) and Cheat Sheet",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old cross-track pointer; brief-task paragraph 5 now says which deep dives hold those mechanisms and that Quick review is the final-minute pass."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep dive is technical backup to the source study sections 3-14",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation note only; brief-task reading guidance describes the Technical deep dives' role."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-authority-state-and-versions",
+      "teaching_item": "Catalog owns schema; metric owners own Metric(...); IdP and policy store own permissions; caches own neither",
+      "anchors": [
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph 1 states each owner and that a cache owns none of the truth; the Metric record appears with its six fields."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-authority-state-and-versions",
+      "teaching_item": "QueryRun append-only stamping metric/schema/policy/prompt/model versions; request state list",
+      "anchors": [
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 'three core records' paragraph keeps QueryRun's six fields and the five stamped versions; paragraph 2 lists interpretation, candidate SQL, AST, validation, execution trace as request state."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-authority-state-and-versions",
+      "teaching_item": "Executive adds KPIValue, refresh time, cited Insight; retail adds forecast, sales, driver signals computed then narrated; no causal claim; feedback to eval only after review",
+      "anchors": [
+        "dive-explanations",
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-explanations lists the four executive and six retail records with what each holds, and explains drivers are computed into DriverSignal before the Explanation narrates them; dive-evaluation's last paragraph keeps 'feedback feeds evaluation only after review'."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-query-routing-and-ambiguity",
+      "teaching_item": "Four-row routing table (revenue last week, high-priority count, ticket #4821, billing pattern)",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as 'Question routes in the governed assistant' table in step 6, all four rows."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-query-routing-and-ambiguity",
+      "teaching_item": "Present definitions/ask/refuse/escalate; default only with approved canonical; 60% is engagement example; catalog staleness as gate",
+      "anchors": [
+        "walk-ambiguity"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 1 keeps the three modes and the approved-default rule; paragraph 2 says the 60% is an engagement example; paragraph 3 makes staleness a gate ('never silently generates against an unknown schema')."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-sql-as-an-untrusted-proposal",
+      "teaching_item": "LLM proposes from narrow context; dialect-aware AST policy (statement, tables, columns, functions, joins, aggregates, limits, date filters, fan-out); regex limits; hidden column must fail",
+      "anchors": [
+        "walk-execution",
+        "dive-sql"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 1-2 list every policy check from the source and the hidden-column rule; dive-sql paragraph 1 expands regex's blind spots and defines CTE."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-sql-as-an-untrusted-proposal",
+      "teaching_item": "Five independent authorisation controls; model cannot rewrite access predicates; cost estimator and live timeout; auto-run conditions; do not retry policy denial",
+      "anchors": [
+        "walk-execution"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 bullet list holds the five controls; following paragraph defines access predicates, the auto-run conditions, the 'feels magical' warning and why a denial must not be retried with a stronger model."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-failure-drills-and-evidence",
+      "teaching_item": "Five-row drill table (active customers, schema drift, fan-out, excessive scan, prose disagrees) with detect/contain and prevent",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as 'The drills at a glance' table after the five per-drill subsections in dive-failures."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-failure-drills-and-evidence",
+      "teaching_item": "Disposition summary: auth closes, warehouse outage queues/degrades, summary outage returns table, definition conflict to owner/analyst, suspicious scan is correctness and reliability",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same dispositions are carried by step 10's 'pattern by category' sentence, the failure-policy table and the closing paragraph about suspicious row counts being more than a billing issue."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-evaluation-and-delivery-mechanics",
+      "teaching_item": "Golden cases contents; execution accuracy vs semantic correctness; analysts in shadow; zero policy violations separate",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 paragraphs 1-2 define both measures in the source's terms and list golden-case contents including paraphrases and date traps."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-evaluation-and-delivery-mechanics",
+      "teaching_item": "Trust 4.2/5 or 80% as example; falling trust matters; >20% drift vs seven-day baseline",
+      "anchors": [
+        "walk-evaluation",
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Stated before the step 12 metric table as source examples; 'Falling trust matters even while usage rises' follows the table; dive-evaluation repeats the two-period decline rule."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-evaluation-and-delivery-mechanics",
+      "teaching_item": "Rollout sequence and owner roles; rollback on semantic mismatch, leakage, scan jump, trust decline",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with full-pack-11's fuller owner list in step 13 (metric, application, data, security, support owners) and its rollback paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-when-a-supervisor-is-justified",
+      "teaching_item": "Story not default; BI queue days/weeks; monolith 20+ tools failed; eight-node classify/clarify<60%/resolve 16-asset index/route/compose",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-engagement opens by labelling it an attributed engagement story, keeps days/weeks, the 20+ tool monolith and the eight-node flow with the 60% and 16-asset numbers."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-when-a-supervisor-is-justified",
+      "teaching_item": "Governance: metric views, table checkpointer short retention, base+overlay prompts five-minute cache, MLflow per node, model gateway PII/rate limits, cannot guardrail agent endpoint as of 2026",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Governance bullet list in dive-engagement states five pieces and lists all five, model gateway included (from the deep-dive summary); the gateway bullet keeps the 'as of 2026 it can't guardrail the agent endpoint' limit with a note to verify on the current platform. The story-structure governance beat now names the gateway too."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-when-a-supervisor-is-justified",
+      "teaching_item": "Second pivot domain agents and memory manager; managed multi-agent not available; results days to minutes, attribution caveat; rebuild lesson",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Second pivot' and 'Results, stated honestly' subsections keep the four domains, memory manager, hand-built supervisor reason, days-to-minutes and the 'can't attribute it cleanly' quote, plus both rebuild lessons."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-when-a-supervisor-is-justified",
+      "teaching_item": "BI and PII glossary",
+      "anchors": [
+        "dive-engagement",
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "PII expanded in the gateway bullet; BI expanded in step 4's data-source table, both with glossary text."
+      }
+    },
+    {
+      "source_id": "deep-dive-7-cost-and-scale-follow-ups",
+      "teaching_item": "Measure before changing models; shrink context, reviewed ops, dry-run, cache, cap; stronger retry cannot fix missing definition; queues off hot path but auth never",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost paragraph 1 lists the six measures; the 'Applied here' paragraph keeps each lever, the stronger-retry sentence and that authorisation and policy never move off the hot path."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Navigation note for the cheat sheet",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reading guidance in brief-task replaces the cross-track pointer; Quick review is the final-minute pass."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One-sentence summary",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First sentence of review-flow, verbatim apart from punctuation; also taught in brief-scenario."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Eight ask-first questions",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of review-flow lists all eight questions as full questions; each is taught in step 2."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-flow",
+      "teaching_item": "Flow chain and agent-role sentence",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second and third paragraphs of review-flow; the arrows are written as 'then' so the chain reads aloud."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-bullet list under review-numbers, same order and content."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-case-numbers-with-context",
+      "teaching_item": "Case numbers with context (MVP, 3-8 s, 60%, metric views, 8 nodes, 16 assets, >20%) and 'confirm with customer'",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Case-numbers paragraph keeps every number with its context and the confirm-with-customer qualification; adds the trust and copilot percentages from step 12 so the recall set is complete. MVP glossary taught in step 2."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failures-and-routes",
+      "teaching_item": "Five-row trigger/response table",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as 'Failure triggers and responses' table in review-closing. Previously missing from Quick review."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-cost-answer",
+      "teaching_item": "Cost answer",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost-answer paragraph in review-closing, same levers and the 'do not retry with a stronger model' rule."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-interview-close",
+      "teaching_item": "Interview close line",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final line of the Quick review quotes it verbatim. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Answer in seconds without letting the model decide revenue; semantic layer is the product; generating SQL is easy; governance failure that looks like a working feature",
+      "anchors": [
+        "brief-scenario",
+        "walk-risk",
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 2 ('Generating the SQL is the easy part'), step 1's opening and step 6's 'The semantic layer is the product' carry these lines."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Group table: what each case contributes (anchor, executive, retail, insurer 'From Supervisor to Deep Agent', self-drill cost pivot)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 states each case's contribution, including the insurer case's title and the self-drill, with links to dive-engagement and practice-cost-pivot. Section numbers from the source are replaced by links. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "Open with the failure; analysts hand-translate weekly; naive pitch loses; more dangerous than an error; reframe to governed decision support; three day-one implications",
+      "anchors": [
+        "walk-risk"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraphs 1-2 and the three-bullet list. The analyst hand-translation line opens the brief."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "Three answer tiers: weak, average, strong with what each misses",
+      "anchors": [
+        "walk-risk"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraph 3 keeps all three tiers with their specific gaps (no AST, no cost bound; ambiguity/drift/summary unanswered; registry first, tree check, re-check at execution, ten metrics). Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "Eight discovery questions with what the answer decides",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second table in step 2 keeps all eight rows, including how often definitions change, the largest scope decision and the query-run schema question."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "User table (executive, analyst, data/platform engineer, metric owner) and why semantic layer and validator are first-class",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third table in step 2 with all four users and four columns; preceding paragraph keeps the 'first-class, not bolted onto a chat UI' reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "Two worksheet personas (executive dashboard, retail planner) add a variance-explanation step without changing architecture",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 2 describes both personas and links to step 9 for the variance step."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "Non-goals scope fence: no writes, not general exploration, does not define revenue",
+      "anchors": [
+        "walk-risk"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of step 1 keeps all three non-goals: no write queries, not a general exploration tool, and the assistant never defines revenue on the fly."
+      }
+    },
+    {
+      "source_id": "full-pack-1-name-the-wrong-answer-risk-before-drawing-anything",
+      "teaching_item": "LLM, AST, MVP, KPI glossary",
+      "anchors": [
+        "brief-scenario",
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "LLM, AST and KPI expanded in brief-scenario; MVP expanded in step 2's discovery table, each with clean glossary titles."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Correctness dominates; latency traded for safety; asking/narrowing/refusing beat guessing; depth on ten metrics",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraph 1 keeps the worst-outcome reasoning (the executive cannot tell it is wrong), latency traded for safety, and depth on ten metrics over shallow coverage."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Must-have pipeline stages and diagram (5518abd6 / 3ade0682)",
+      "anchors": [
+        "walk-requirements",
+        "fig-must-haves"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine-item list in step 3 then fig-must-haves; caption names all ten nodes including the 'ask clarifying question' branch. The previous build placed this figure after two tables with a generic caption."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Should-haves, what can wait, MVP definition of good",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs after fig-must-haves keep the three should-haves, five deferred items and the 'ten governed metrics with full lineage and explainability' definition."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraint table (correctness, latency, security incl. SSO, compliance, reliability, cost)",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Constraints stated so they can be tested' table, all six rows; SSO glossary kept."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Requirement-to-component table",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last table of step 3, all eight rows, introduced with 'if a requirement has no component, it will not happen'."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-every-source-and-who-owns-its-definition",
+      "teaching_item": "Three kinds of state with one owner; caches as performance layer; workflow state not hidden durable state",
+      "anchors": [
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraphs 1-2 name the catalog, registry, identity provider and policy store as owners, caches as a TTL/version-stamped performance layer, and request state that must not become hidden durable state."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-every-source-and-who-owns-its-definition",
+      "teaching_item": "Six-row data source table with owner, freshness, permission, risk; BI, CRM, ERP glossary",
+      "anchors": [
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 table, all six rows and five columns; BI, CRM, ERP abbr titles cleaned of the em-dash artefact."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-every-source-and-who-owns-its-definition",
+      "teaching_item": "Core records Metric, SchemaAsset, QueryRun; copilot and retail records; SKU glossary",
+      "anchors": [
+        "walk-authority",
+        "dive-explanations"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Core records paragraph in step 4 with field lists; persona records in dive-explanations with SKU expanded."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-every-source-and-who-owns-its-definition",
+      "teaching_item": "Versioning rules: retain metric versions, QueryRun write-once, version every behaviour artefact, idempotency keys and optimistic concurrency",
+      "anchors": [
+        "walk-authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-bullet versioning list in step 4, each with its reason (last quarter's dashboard, incident review, happy path vs rollout, silent overwrite)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Chain of trust boundaries; control plane vs data plane",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraph 1 and the paragraph introducing fig-request-path define both planes."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Request-path diagram (6c75cba1 / 27b203a6), background-lane diagram (5e4b6c62 / d6ec1990), component view (3e3c8041 / 5e3886d2)",
+      "anchors": [
+        "fig-request-path",
+        "fig-background-lane",
+        "fig-components"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of the three figures now has its own caption naming its nodes (request path through cross-check; crawler, refresh queue, cache, replay queue, golden-set replay, regression report; component boxes). The previous version gave all three the same generic caption."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four operating rules (version list, recheck and cancel, partition background, append run fields and alert)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-bullet list after fig-background-lane keeps the full list of versioned artefacts, recheck-and-cancel with safe fallback, partitioning by tenant/warehouse/dataset family, and the run fields plus alerts."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Component table (nine components) and 'every box answers owner, freshness, why'",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table after fig-components, all nine rows; the 'premature box' sentence introduces it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three boundaries (sync/async rule, trust at gateway, consistency re-check), registry version reuse, partitioning key",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three labelled bullets (sync/async, trust, consistency with registry-version reuse as part of consistency), then the partitioning rule introduced as a rule beside the three boundaries, so the count matches."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-anchor-every-question-on-a-governed-metric",
+      "teaching_item": "Semantic layer is the product; anchor before tables; model cannot infer unwritten definition; raw schema escape hatch",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 paragraph 1 keeps 'the semantic layer is the product', the revenue-last-week anchoring rule, the unwritten-definition argument and raw schema as an approved escape hatch."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-anchor-every-question-on-a-governed-metric",
+      "teaching_item": "Insurer metric views; 'claims by region' computed differently collapses trust",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 paragraph 2 keeps the claims-by-region example. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-anchor-every-question-on-a-governed-metric",
+      "teaching_item": "Router: semantic search never answers how many/most recent/sum; four-row question-shape table",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Router paragraph and the 'Question shape, the right tool' table; the source's em-dash cell for semantic search, previously rendered as a stray comma, now reads that search is the right tool there."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-anchor-every-question-on-a-governed-metric",
+      "teaching_item": "Two structured mechanisms (NL query over small view vs fixed operations); fixed ops default; insurer per-specialist decision",
+      "anchors": [
+        "walk-routing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table explains each mechanism separately with its failure (invented fields) and safety argument, then the insurer's managed-SQL default and one narrower hand-SQL path; adds an illustrative fixed-operation example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-anchor-every-question-on-a-governed-metric",
+      "teaching_item": "Two rehearsed answers: revenue with three definitions; riskiest assumption quote",
+      "anchors": [
+        "walk-routing",
+        "probe-riskiest"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph and blockquote of step 6; the quote is repeated inside probe-riskiest, fixing the old follow-up table that said 'say the rehearsed line from section 5' without giving it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-ask-when-ambiguous-never-guess",
+      "teaching_item": "Stop and ask on multiple metrics/grains; round trip vs executive decision; three modes",
+      "anchors": [
+        "walk-ambiguity"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 1 keeps stop-and-ask on several metrics or grains, the one-round-trip versus executive-decision comparison, and the three gate modes agreed in discovery."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-ask-when-ambiguous-never-guess",
+      "teaching_item": "Five intent classes with confidence, clarify below 60%, 'Show me the numbers' example, threshold makes behaviour testable",
+      "anchors": [
+        "walk-ambiguity"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 2 keeps the five class names, the 60% node and the 'Show me the numbers' example. Previously missing the example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-ask-when-ambiguous-never-guess",
+      "teaching_item": "Ambiguity as freshness signal: refresh via async, narrower set, or ask; no false precision; human for definition conflict",
+      "anchors": [
+        "walk-ambiguity"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 3 keeps the stale-catalog gate (refresh through the async queue, narrower question set, or ask), no pretended precision, and human intervention for definition conflicts."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-validate-sql-as-a-tree-then-execute-read-only",
+      "teaching_item": "Valid SQL is not safe SQL; regex vs parser; pattern-matching theatre",
+      "anchors": [
+        "dive-sql"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-sql paragraph 1, with DROP TABLE example and CTE defined."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-validate-sql-as-a-tree-then-execute-read-only",
+      "teaching_item": "Four-control table (least privilege, native policies, parse not regex, result hygiene)",
+      "anchors": [
+        "dive-sql"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table in dive-sql, all four rows; added the defence-in-depth explanation and the Snowflake on-behalf-of paragraph tied to the reference."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-validate-sql-as-a-tree-then-execute-read-only",
+      "teaching_item": "Hidden-column test sketch code and its production caveat",
+      "anchors": [
+        "dive-sql"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code kept unchanged in a fenced block (indentation restored); paragraphs before and after explain the invariant, that it is string-splitting not a parser, the missing imports, and the source's production version."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-validate-sql-as-a-tree-then-execute-read-only",
+      "teaching_item": "Cost estimate, timeout, row limit; bounded windows, pre-aggregation; narrow/rewrite/privileged approval; never 'just try it'; filtered metadata; risk-based auto-run; auto-execution dangerous",
+      "anchors": [
+        "dive-sql",
+        "walk-execution"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of dive-sql carries cost admission; step 8 carries filtered metadata, predicates, auto-run conditions and the 'feels magical and is dangerous' sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-explain-variance-from-the-data-not-from-memory",
+      "teaching_item": "Summary from structured result, cross-check, reject and table-only, degrade when generator down; diagram (8c72776c / 102bee73)",
+      "anchors": [
+        "walk-explanation",
+        "fig-summary-check"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 paragraph 1 and fig-summary-check with a caption naming every branch, followed by an illustrative 41.2 vs 42 million mismatch labelled as such."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-explain-variance-from-the-data-not-from-memory",
+      "teaching_item": "Copilot extensions: every driver traces to a query; executive cites definition and escalates; retail drivers and human-reviewed actions; red-team list",
+      "anchors": [
+        "walk-explanation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 paragraph 3 keeps both personas and all five retail red-team risks."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-explain-variance-from-the-data-not-from-memory",
+      "teaching_item": "Deterministic statistics (Z-scores, trends); narrate not produce drivers; show confidence; board-level via analyst",
+      "anchors": [
+        "walk-explanation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 final paragraph keeps the Z-score and trend statistics computed by the analysis agent, narrate-not-produce, showing confidence and missing evidence, and analyst review for board-level narratives."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "What fails open/closed/degrades/queues/escalates; incidents differ; memorise by category; six-row policy table",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 paragraph 1 and the six-row 'preferred policy' table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Drill 1 wrong business question with detect/contain/preserve/recover/prevent and blast radius; figure (d280d54b / 3d3162b8)",
+      "anchors": [
+        "dive-failures",
+        "fig-drill-wrong-metric"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Drill 1' subsection with its figure directly after the text; caption lists the six stages. Previously all five drill figures sat in one run under a shared generic caption, away from their explanations."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Drill 2 schema drift; figure (f318d5bc / f2162d76)",
+      "anchors": [
+        "dive-failures",
+        "fig-drill-schema-drift"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Drill 2' subsection with its figure beside it; caption names the 'business definition changed?' branch."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Drill 3 join fan-out; refuse or downgrade; figure (5e52e023 / 216c2db3)",
+      "anchors": [
+        "dive-failures",
+        "fig-drill-fan-out"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Drill 3' subsection adds an illustrative orders-to-shipments double count, then its figure."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Drill 4 excessive scans as reliability; figure (bd4c2593 / f6e7e469)",
+      "anchors": [
+        "dive-failures",
+        "fig-drill-scan"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Drill 4' subsection with its figure; caption follows the threshold and pre-aggregation branches."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Drill 5 summary contradicts table (drawn in section 8)",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Drill 5' subsection links to step 9's summary check rather than citing 'section 8'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-policy-degrade-on-everything-else",
+      "teaching_item": "Five operational safeguards; human escalation as designed path; backpressure; compact failure flow figure (c3ba7031 / 3db437cc)",
+      "anchors": [
+        "dive-failures",
+        "fig-failure-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Operational safeguards and backpressure' subsection keeps all five safeguards, the backpressure paragraph and fig-failure-flow with a caption tracing each branch."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-semantic-correctness-not-execution-su",
+      "teaching_item": "Execution accuracy vs semantic correctness; golden case composition",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 paragraphs 1-2 define execution accuracy (golden replay) and semantic correctness (analyst review, the gate) and list easy examples, paraphrases, filter/time-window edge cases and known traps."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-semantic-correctness-not-execution-su",
+      "teaching_item": "Eight-row metric table with thresholds, methods, owners; SRE, SME, ML glossary",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 metric table keeps all eight rows with good/bad thresholds, methods and owners (incl. >5 identical blocks a day, >20% compute, 4.2/5); SRE, SME and ML abbr titles cleaned."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-semantic-correctness-not-execution-su",
+      "teaching_item": "Four measurement buckets; behaviour change; layered dashboard wired to components; trust-drop diagnosis",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-evaluation paragraphs 1-2 with the four labelled buckets and the layered dashboard. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-semantic-correctness-not-execution-su",
+      "teaching_item": "Red-team definitions list and copilot additions",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-item red-team list and the four copilot additions in dive-evaluation. Previously only partly present."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-ten-metrics-at-a-time",
+      "teaching_item": "Three things to prove in order; phases widen blast radius; four-phase figure (cae789fc / e9f5e9ee)",
+      "anchors": [
+        "walk-rollout",
+        "fig-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 13 paragraph 1 states the five stages; fig-rollout caption names the four drawn phases and says the diagram folds the executive release into the shadow-to-expansion step."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-ten-metrics-at-a-time",
+      "teaching_item": "Week-by-week gate table (0-1 through After)",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Week table in step 13, all seven rows incl. the analyst marking of correct/merely plausible/wrong."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-ten-metrics-at-a-time",
+      "teaching_item": "Five owners; rollback triggers; rollback keeps partial success from incident",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Owner paragraph with bolded roles and the rollback paragraph in step 13."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-ten-metrics-at-a-time",
+      "teaching_item": "Configuration / adapter / shared service / core split; FDE glossary",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-bullet split in step 13 with FDE expanded. The previous version had mislabelled the risk table with this caption and omitted the split itself."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-ten-metrics-at-a-time",
+      "teaching_item": "Five delivery items and the three-row risk table",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Delivery-items paragraph and the 'Standing delivery risks' table, now correctly captioned."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Begin with pain; fifty-minute table",
+      "anchors": [
+        "practice-fifty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-fifty opening and the six-row minutes table; 'section 1' becomes a link to step 2."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "90-second architecture summary (seven bullets)",
+      "anchors": [
+        "deliver-ninety-seconds"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "deliver-ninety-seconds reveal keeps all seven bullets, labelled as a first-person spoken answer. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "2-minute spoken answer (seven bullets)",
+      "anchors": [
+        "deliver-two-minutes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "deliver-two-minutes reveal keeps all seven bullets. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Nine lines that carry the round",
+      "anchors": [
+        "deliver-lines"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "deliver-lines reveal, numbered 1-9 verbatim. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Four trade-offs with verdicts and 'large scan as a signal to narrow'",
+      "anchors": [
+        "practice-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four tradeoff-* reveals; the large-scan sentence sits in the speed-versus-cost answer. Previously reduced to one sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Seven follow-ups and answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven probe-* reveals with the source answers; the 'section 5' and 'Section 8' pointers are replaced by the actual quote and a step 9 reference."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Five weak-answer repairs",
+      "anchors": [
+        "practice-repairs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five repair-* reveals, one per weak answer, each with the source repair plus one clarifying sentence. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Six scoring dimensions for a dry run; RLS glossary",
+      "anchors": [
+        "practice-fifty",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of practice-fifty; RLS expanded in brief-scenario with its glossary definition including the Postgres bypass caveat."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Engagement framing (about two months, short build), opening sentence, problem beat",
+      "anchors": [
+        "dive-engagement",
+        "story-structure"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-engagement paragraph 2 carries the facts; story-structure reveal quotes the one-sentence opener and the problem beat, and practice-story warns not to present the engagement as one's own."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Three-stage evolution figure (4421793d / 37c0193f)",
+      "anchors": [
+        "fig-insurer-stages"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-insurer-stages caption names all three stages and their components (20+ tools, 8 nodes, four specialists, four domain subagents, memory manager)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "First pivot: context bloat, tool confusion, architectural fix, measurable degradation not vague confusion",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'First pivot' subsection, now tying the claim to the RAG-MCP and OpenAI references the source lists."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Eight-node supervisor figure (6ec11368 / cabab759); <60% clarify; supervisor-only resolution over 16-asset index; one-hop trade-off",
+      "anchors": [
+        "dive-engagement",
+        "fig-insurer-supervisor"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The supervisor that shipped' subsection with fig-insurer-supervisor and the resolution trade-off paragraph. The text names the eight nodes (classify, clarify, resolve, four specialists, compose) and says routing is a conditional edge the diagram draws as a box, and that clarification fires only below 60% although the diagram draws it on every path; the caption marks the clarify node 'below 60% confidence'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Four-specialist table",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Specialists table in dive-engagement keeps all four agents with role, tools and trade-off (managed read-only SQL, the one hand-SQL path, deterministic stats, real dashboards); RAG expanded."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Why-LangGraph table (conditional routing, durable state, deterministic composition)",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with a correct caption (previously captioned 'Results, qualifications and rebuilding lessons'); 'I wrote a custom checkpointer' attributed to the author; CrewAI reference placed beside it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Governance beat announced as five pieces, four listed",
+      "anchors": [
+        "dive-engagement"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Governance list shows five pieces, with an explicit note that the source's story lists four and its deep dive supplies the model gateway."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "Second pivot deep agent; results honestly; rebuild lessons; three closing threads",
+      "anchors": [
+        "dive-engagement",
+        "story-structure"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Second pivot' and 'Results' subsections; story-structure keeps the three closing threads verbatim in meaning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Pivot prompt, driver, weak vs strong move, five-row table",
+      "anchors": [
+        "practice-cost-pivot",
+        "cost-pivot-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-cost-pivot intro and the cost-pivot-answer reveal holding the full table with labelled first column (previously blank headers)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Warehouse side units, scan budgets lever, 7-day alert; four verbs measure/route/bound/cache safely",
+      "anchors": [
+        "cost-pivot-answer",
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of cost-pivot-answer and the numbered four-verb list in dive-cost. Previously the four verbs were missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Level framing and senior/staff/principal table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-levels keeps the framing that levels separate on who owns a number's meaning, not SQL quality, and the senior/staff/principal table with each level's gap."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered fourteen-item list in review-closing; each is taught in the walkthrough or deep dives first. Previously reduced to two summary paragraphs."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Eleven check-yourself questions and answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "governed-check-1 to 11 now use the source's question wording and full answers (the previous version paraphrased the questions and thinned answers, e.g. dropped 'acts on it' and 'lost access between planning and execution'). Answer 9 adds a note on where the small executive release falls."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Five fact-check references checked 27 Sep 2026 with the claim each supports",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-sources lists all five with their supporting claims and the check date, and each is also cited beside its claim (dive-sql, dive-engagement, dive-cost). Previously the claims were dropped and only titles listed."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review on 16 Nov 2026. Dumped all 53 captured sections (tables as rows) and compared them item by item with the previous casebook.md, which was a thin consolidation with generic per-row evidence. Missing before and now restored: the main-guide question table with 'what it's really asking', the non-functional target table and interview-shortcut quote, the eight-step architecture walk, the three-decisions table, the seven-row failure playbook, the weak/average/strong answer tiers, the claims-by-region and 'Show me the numbers' examples, the riskiest-assumption quote (the old follow-up table pointed to 'section 5' without it), the four measurement buckets and layered dashboard, the configuration/adapter/shared-service/core split, the 90-second summary, 2-minute answer, nine carrying lines, five weak-answer repairs, six scoring dimensions, the four cost verbs, the full Quick review (failures table, case numbers, interview close, 14 takeaways) and the brief's six-step Q3-revenue trace, variants table, objectives and audience. Wrong before and fixed: three tables carried the wrong captions (the risk table was captioned as the configuration split, the LangGraph table as results), all five drill figures sat in one run under one generic caption away from their drills, the cost table had blank headers, the em-dash cell rendered as a stray comma and abbr titles carried ' ,  ' artefacts. Restructured into 13 walkthrough steps and 7 deep dives, each drill now beside its own figure; 33 worked-answer reveals now hold every source question, follow-up, repair, trade-off and spoken answer. Source examples labelled: the 3-8 s, 60%, 20% and 4.2/5 figures are labelled source examples. Added illustrative examples are labelled (41.2 vs 42 million summary mismatch, orders-to-shipments fan-out). First-person engagement narration is attributed to the source author. The brief opens on the slide-ready number and the revenue-meaning risk, defines semantic layer, grain, KPI, AST, RLS/CLS and golden case before use, and traces the source's own example before stating the task. Source inconsistencies resolved in text (2026-11-16): governance beat announced five pieces but listed four \u2192 all five listed, model gateway taken from the deep-dive summary, in both the dive and the story-structure reveal; rollout figure four phases vs guide five steps \u2192 five stages taught (guide, requirements 'then a small executive audience' and the week plan all agree), caption says the diagram folds the executive release into one step; 'three boundaries' plus two rules \u2192 registry reuse kept inside the consistency boundary and partitioning introduced as a rule beside the three; supervisor figure nine boxes for eight nodes and unconditional clarify \u2192 eight nodes named (routing is a conditional edge, drawn as a box) and the clarify-below-60% rule stated, with one neutral sentence on what the diagram draws."
+  },
+  "required_answer_reveals": [
+    "governed-check-1",
+    "governed-check-2",
+    "governed-check-3",
+    "governed-check-4",
+    "governed-check-5",
+    "governed-check-6",
+    "governed-check-7",
+    "governed-check-8",
+    "governed-check-9",
+    "governed-check-10",
+    "governed-check-11",
+    "probe-three-revenues",
+    "probe-expensive",
+    "probe-riskiest",
+    "probe-service-account",
+    "probe-same-number",
+    "probe-number-changed",
+    "probe-explanation",
+    "repair-llm-sql",
+    "repair-db-permissions",
+    "repair-test-sql",
+    "repair-ask-unsure",
+    "repair-run-it",
+    "tradeoff-schema-vs-layer",
+    "tradeoff-auto-vs-approval",
+    "tradeoff-flex-vs-templates",
+    "tradeoff-speed-vs-cost",
+    "deliver-ninety-seconds",
+    "deliver-two-minutes",
+    "deliver-rehearse",
+    "deliver-lines",
+    "story-structure",
+    "cost-pivot-answer"
+  ],
+  "required_anchors": [
+    "walk-risk",
+    "walk-discovery",
+    "walk-requirements",
+    "walk-authority",
+    "walk-architecture",
+    "walk-routing",
+    "walk-ambiguity",
+    "walk-execution",
+    "walk-explanation",
+    "walk-failures",
+    "walk-scale",
+    "walk-evaluation",
+    "walk-rollout",
+    "dive-sql",
+    "dive-failures",
+    "dive-evaluation",
+    "dive-explanations",
+    "dive-engagement",
+    "dive-cost",
+    "dive-sources"
+  ]
+}

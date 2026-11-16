@@ -1,0 +1,959 @@
+{
+  "title": "Scale a Prototype from 100 to 100,000 Users",
+  "slug": "scale-prototype-to-production",
+  "subtitle": "Turn a hundred-user assistant into an operated, evaluated service for a hundred thousand employees.",
+  "theme": "Product Judgement and Problem Decomposition",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/scale-prototype-to-production",
+  "updated": "Teaching rewrite, reviewed 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "fig-tenfold",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "guide-intro": "brief-task",
+    "guide-1-ask-what-successful-meant-before-scaling-it": "walk-discovery",
+    "guide-2-name-what-the-prototype-was-hiding": "walk-hidden",
+    "guide-3-state-requirements-as-testable-constraints": "walk-requirements",
+    "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens": "walk-sizing",
+    "guide-5-walk-each-tenfold-step-and-name-what-breaks": "walk-steps",
+    "guide-part-2-6-draw-the-architecture-end-to-end": "walk-architecture",
+    "guide-part-2-7-admit-queue-and-route-at-one-gateway": "dive-gateway",
+    "guide-part-2-8-fail-over-before-the-provider-fails-the-users": "dive-reliability",
+    "guide-part-2-9-rebuild-the-eval-set-from-production-not-the-demo": "walk-eval",
+    "guide-part-2-10-roll-out-by-cohort-with-a-pointer-flip-rollback": "walk-rollout",
+    "guide-part-2-11-assign-owners-before-the-first-page": "walk-ownership",
+    "guide-part-2-12-measure-adoption-not-only-uptime": "walk-adoption",
+    "guide-part-3-13-cover-all-seventeen-items-the-bank-lists": "dive-failures",
+    "guide-part-3-14-deliver-it-in-forty-five-minutes": "practice-pivots",
+    "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes": "practice-cost-pivot",
+    "guide-part-3-level-calibration": "practice-levels",
+    "guide-part-3-key-takeaways": "review-decisions",
+    "guide-part-3-check-yourself": "practice-checks",
+    "guide-part-3-references": "dive-sources",
+    "intro": "case-brief",
+    "guide": "walkthrough",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "discovery",
+      "label": "What \"works\" meant and what the pilot hid",
+      "hint": "Ask the discovery questions, then name the four things demos hide and the three extra gaps."
+    },
+    {
+      "id": "sizing",
+      "label": "Users to requests, tokens and dollars",
+      "hint": "Rebuild 240,000/day, 20/s, 7.8M tokens/min, 100 in flight and the $122,000 to $67,000 cost ladder."
+    },
+    {
+      "id": "architecture",
+      "label": "Tenfold steps, gateway and three boundaries",
+      "hint": "Say what breaks at each step, then trace one request through admission, isolation and change control."
+    },
+    {
+      "id": "operate",
+      "label": "Failover, eval, rollout, owners and adoption",
+      "hint": "Retry inside a breaker with a warm fallback; slice-gated eval; user cohorts with a pointer flip; owners; week-4 retention."
+    },
+    {
+      "id": "cost-pivot",
+      "label": "The Finance cost pivot",
+      "hint": "Driver, cheapest lever, proving metric, what not to do, and the 60-second line."
+    }
+  ],
+  "rubric": [
+    "Challenged what \"works\" meant and said which pilot evidence does not transfer before sizing anything.",
+    "Sized from licensed users to requests a second, tokens a minute and dollars a month, and said adoption is a cost variable (about 300x, not 1,000x).",
+    "Named what breaks at each tenfold step in order: identity, then capacity, then fairness and organisation.",
+    "Put one gateway in front of every call and separated the rate limit (whether) from the fair queue (in what order), with budgets checked before the call.",
+    "Kept permission scope in retrieval and every cache key, with the security slice gated at zero.",
+    "Chained retry inside a breaker with a warm, separately evaluated fallback, and refused to promise more uptime than the provider gives.",
+    "Rolled out by user cohort through shadow and canary with a tested pointer-flip rollback.",
+    "Named owners, runbooks and a support ladder, and measured adoption with week-4 retention and override rate.",
+    "Answered the cost pivot with routing, prefix caching, output caps, batching and pre-call budgets, proved by cost per successful task."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "100 forgiving volunteers to 100,000 users who did not ask; thousandfold = different system sharing a prompt",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 now carry both lines; the old brief had dropped 'different system that happens to share a prompt'. Added that the useful core is document answers with citations and two read-only tools."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Prototype proved usefulness only; silent on cost, tail latency, permissions, department fairness, adoption; provider uptime caps the promise",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 2 lists all five unknowns and the provider-uptime cap, which was missing from the previous brief."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Answer outline: size users to tokens and dollars, tenfold steps, one gateway (identity, limits, fair queue, metering, routing, safe caching), production eval set, cohort rollout with pointer-flip rollback",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the tenfold figure lists each gateway duty and defines pointer flip in plain words; previously absent from the brief."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Terms used throughout (added definitions)",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New terms paragraph defines tail latency/p95/p99, token (input vs output), tenant=department, gateway, 429 and cohort before step 1 relies on them."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and tenfold diagram (identity, capacity, fairness and ownership)",
+      "anchors": [
+        "fig-tenfold",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sentence kept verbatim. The old caption ('Grow through measured cohorts with admission, isolation and release gates') did not match the SVG; new caption and alt text name its labels: 100, 1,000 identity breaks, 10,000 capacity breaks, 100,000 fairness and ownership break."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions, applied-AI candidates; demo-to-production and company-wide rollout rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design' names both round types; missing in the previous version."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end; follow-ups on users-to-tokens-and-dollars, gateway, failover, eval rebuild, rollback, ownership, adoption, cost pivot",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of brief-task lists all nine follow-up topics; previously only implied."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed knowledge: LLM APIs and token pricing, retrieval with permissions, reliability and rollout; LLM glossary",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 states the three prerequisites; LLM abbr keeps the glossary definition with the em dash replaced by 'such as'."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: predict breakage before section 5, rehearse 45-minute plan aloud with timer, mark parts read, revisit calibration and takeaways night before",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last brief-task paragraph keeps all four instructions, re-pointed to walk-steps, practice-pivots, practice-levels and review-decisions. 'Interview Guide, one part at a time' becomes 'work through the walkthrough in order' since the old three-part navigation no longer exists."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old navigation table: one mandatory Interview Guide in three parts listing its topics",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation, not reproduced. Its topic list (what successful meant through the cost pivot) is the walkthrough's step order plus the dives and practice; alias maps the fragment to brief-task."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Source-contribution table (question bank, neighbouring prompt, cram sheets, production tutorial, versioning/delivery notes, identity notes, six related cases)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as the 'Where each part of the answer comes from' table in brief-task, all seven rows, with old section numbers replaced by links to the new steps. The previous version had dropped this table entirely."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Talking points not a worked design; every number a whiteboard assumption",
+      "anchors": [
+        "brief-task",
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 3 and the dive-sources opening both state it."
+      }
+    },
+    {
+      "source_id": "guide-1-ask-what-successful-meant-before-scaling-it",
+      "teaching_item": "Prompt verbatim; attack 'works'; demo evidence says value only; bank's mistake 'Treating a prototype as a production system'",
+      "anchors": [
+        "walk-discovery",
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt quoted in brief-task and practice-prompt; step 1 paragraph 1 keeps 'works', the evidence argument and the biggest-mistake quote, all three missing before."
+      }
+    },
+    {
+      "source_id": "guide-1-ask-what-successful-meant-before-scaling-it",
+      "teaching_item": "Seven discovery questions, assumed answers and what each decides (RAG, SSO glossary)",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged in content; added a paragraph explaining why the success-measure and isolation answers reshape the design most."
+      }
+    },
+    {
+      "source_id": "guide-1-ask-what-successful-meant-before-scaling-it",
+      "teaching_item": "Weak answer (autoscaling, load balancer) vs strong answer's three points; spoken line",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored the weak/strong contrast and the spoken quote (labelled as source spoken answer); defined 'request shape' in plain words. Previous version omitted both."
+      }
+    },
+    {
+      "source_id": "guide-2-name-what-the-prototype-was-hiding",
+      "teaching_item": "Four things demos hide: traffic shape, tail latency, usage expansion, governance cost",
+      "anchors": [
+        "walk-hidden"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 2 gives each a bullet with what demo vs production looks like; previously one compressed sentence."
+      }
+    },
+    {
+      "source_id": "guide-2-name-what-the-prototype-was-hiding",
+      "teaching_item": "Six-axis prototype-to-production table with case meanings (Monday 9 a.m., 3 s to 12 s p95)",
+      "anchors": [
+        "walk-hidden"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with both columns; intro says which column is the cram sheet's wording."
+      }
+    },
+    {
+      "source_id": "guide-2-name-what-the-prototype-was-hiding",
+      "teaching_item": "Three extra gaps: live prompt edits, pilot-sized quotas, one-engineer support; 'that engineer becomes the outage'",
+      "anchors": [
+        "walk-hidden"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table; the 'becomes the outage' line was missing before."
+      }
+    },
+    {
+      "source_id": "guide-2-name-what-the-prototype-was-hiding",
+      "teaching_item": "Notebook variant prompt verbatim, its twelve discussion items, versioned tested code first (CI/CD, SLA glossary)",
+      "anchors": [
+        "walk-hidden"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph quotes the prompt and all twelve items verbatim; previous version paraphrased and dropped the quote."
+      }
+    },
+    {
+      "source_id": "guide-3-state-requirements-as-testable-constraints",
+      "teaching_item": "'A requirement that cannot fail a test is a wish'; scalable vs 20 req/s example; unchanged functional core",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraphs 1-2; the wish line and example were missing before."
+      }
+    },
+    {
+      "source_id": "guide-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Nine testable constraints (20/40 req/s, 2 s/10 s p95, 99.9% own service, zero forbidden citations, 20% fairness, budget \u00b110%, slices, runbooks and 5-minute rollback, week-4 retention)",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; new paragraph explains per-stage latency, own-service availability and how fairness is tested."
+      }
+    },
+    {
+      "source_id": "guide-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Constraint-to-component table, with adoption as its eighth constraint",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven source rows kept and an Adoption row added (cohort waves with onboarding, champions, per-cohort metrics), drawn from the source's own rollout, change-management and adoption material; the paragraph below points to steps 8-10. Source gap resolved in text 2026-11-16, no meta-commentary left."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Three numbers to approve; nine-row sizing table",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; fixed the 'Licensed users' result cell, which a prior dash cleanup had turned into ', '."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Arithmetic chain and Little's Law (halving latency halves slots)",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Added a worked paragraph (192,000 in 28,800 s, 1.44B, 120M, 130,000/s) and restored 'halving latency halves in-flight slots'. All products rechecked."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Cost table, 300x not 1,000x, adoption as cost variable, three levers nearly halve without touching the hard 30%",
+      "anchors": [
+        "walk-sizing",
+        "dive-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 summarises; dive-cost carries the table and a per-row calculation. 'Without touching quality on the hard 30%' was missing before. Caching row recomputed 2026-11-16 with the cache-write charge (1.25x input, five-minute lifetime, at most 288 writes a day, under $1.10): net saving about $193 a day, so the $2,460 and $74,000 figures stand."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Prices Sonnet 5 $2/$10, Haiku 4.5 $1/$5, checked Sep 2026; say 'I'd check current pricing'",
+      "anchors": [
+        "dive-cost",
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-cost paragraph 1 and step 4; labelled as source-reported."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Agent request = 5-20 sub-requests; multiply before trusting",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph explains what the sub-requests are."
+      }
+    },
+    {
+      "source_id": "guide-4-size-the-thousandfold-jump-from-users-down-to-tokens",
+      "teaching_item": "Provider TPM/RPM limits split by model after routing; plan 2x peak; procurement weeks before launch",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last step 4 paragraph; 'weeks before launch' restored."
+      }
+    },
+    {
+      "source_id": "guide-5-walk-each-tenfold-step-and-name-what-breaks",
+      "teaching_item": "Tenfold table (breaks, signal, fix) for three steps; 'same morning'",
+      "anchors": [
+        "walk-steps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; 'finds all of them on the same morning' restored. Added a paragraph on reading p95-up-p50-flat as queueing."
+      }
+    },
+    {
+      "source_id": "guide-5-walk-each-tenfold-step-and-name-what-breaks",
+      "teaching_item": "Expected order identity, capacity, fairness/organisation; cheap before, expensive during",
+      "anchors": [
+        "walk-steps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step 5 paragraph; both lines were missing before. Our planning-device caveat is kept and marked as ours."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-draw-the-architecture-end-to-end",
+      "teaching_item": "Admit, assemble, answer, learn and the four decisions",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 opens with the rule as four bullets; the rule itself was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-draw-the-architecture-end-to-end",
+      "teaching_item": "Three source diagrams (answer path, async and ingestion, four-plane view) both variants",
+      "anchors": [
+        "fig-answer-path",
+        "fig-async-ingestion",
+        "fig-planes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six SVGs kept by hash. Old captions were generic 'source figure 1/2/3'; each now has its own introduction, alt text and caption naming the SVG's actual labels."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-draw-the-architecture-end-to-end",
+      "teaching_item": "Control-plane contents and per-request trace bullets",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the second figure lists every control-plane item and the trace fields."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-draw-the-architecture-end-to-end",
+      "teaching_item": "Fifteen-component table with failure behaviour (SSO, PII, ACL glossary)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; added closed vs degrades explanation and an illustrative finance-analyst trace through the components."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-draw-the-architecture-end-to-end",
+      "teaching_item": "Three boundaries: admission, isolation, change",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step 6 paragraph names all three with their components."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "One gateway; Production LLM Gateway case sections 5-10; identity first with SSO, group-role mapping, scope per request",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Gateway dive intro and 'Identity first'; restored 'authorisation logic assumes identity' and the case cross-reference."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "Rate limit vs fair queue; token bucket sized in tokens; weighted fair queue per department; finance quarter-end; Secure Multi-Tenant section 7",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Defined token bucket and weighted fair queue and added a labelled 500-vs-20 illustration; 'sized in tokens' was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "Meter before the call (quote); real tokeniser because word-count heuristic lets expensive requests through",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Meter before the call' keeps the quote and the reason for the tokeniser, which was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "Routing 'single biggest cost lever'; threshold from labelled traffic; model-scoped caches, cascade = three cold prefixes; try one strong model at lower effort",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Route by intent' subsection; restored the quote."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "Safe caching rule; prefix cache first; scoped answer cache second",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Cache what is safe' adds why a prefix cache cannot leak content."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-admit-queue-and-route-at-one-gateway",
+      "teaching_item": "Streaming = perceived latency; batch API at 50%; workers scale by queue depth not CPU",
+      "anchors": [
+        "dive-gateway"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last gateway subsection; explains why CPU is the wrong signal."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-fail-over-before-the-provider-fails-the-users",
+      "teaching_item": "Anecdote vs incident with a headcount; retry, breaker, fallback, degradation; breaker-wraps-retry quote",
+      "anchors": [
+        "dive-reliability"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reliability dive paragraphs 1-2 define each link of the chain; the anecdote line and quote were missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-fail-over-before-the-provider-fails-the-users",
+      "teaching_item": "99.9% answer quote; say it before the contract",
+      "anchors": [
+        "dive-reliability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quote restored verbatim. Our note on shared dependencies such as SSO is labelled as an addition."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-fail-over-before-the-provider-fails-the-users",
+      "teaching_item": "Warm validated fallback; schemas not portable; own prompt and eval; steady share; tag the answering model",
+      "anchors": [
+        "dive-reliability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third reliability paragraph keeps the cold-fallback trap, non-portable tool schemas, the fallback's own prompt and eval run, a steady traffic share and per-response model tagging."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-fail-over-before-the-provider-fails-the-users",
+      "teaching_item": "Degrade in front of people, fail loudly in front of machines",
+      "anchors": [
+        "dive-reliability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final reliability paragraph keeps the line and explains both halves."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-rebuild-the-eval-set-from-production-not-the-demo",
+      "teaching_item": "Demo set = survivorship; Evaluation and Release Gating case",
+      "anchors": [
+        "walk-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 7; the survivorship framing was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-rebuild-the-eval-set-from-production-not-the-demo",
+      "teaching_item": "Sample first cohorts by intent and department; SME labels; adversarial permission and injection cases; security slice zero, 'A hard block, not a review comment'",
+      "anchors": [
+        "walk-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 2, quote restored."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-rebuild-the-eval-set-from-production-not-the-demo",
+      "teaching_item": "Gate on slices vs aggregate (Eval case section 8); named baseline = serving version",
+      "anchors": [
+        "walk-eval"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 3 defines a slice."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-rebuild-the-eval-set-from-production-not-the-demo",
+      "teaching_item": "Online sampled eval with thumbs, regenerates, escalations; judge is inference; stratify, cheap judge with strong audit, cache judge calls; Eval case section 14",
+      "anchors": [
+        "walk-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 last paragraph; moved from the old dive-failures group into the walkthrough beside the rest of the eval argument."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-roll-out-by-cohort-with-a-pointer-flip-rollback",
+      "teaching_item": "Never one launch day; shadow/canary/cohort waves/promote table and gates (48 h, 1/10/50/100%, tickets per 1,000, week-1 retention, sev-1, sponsor)",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 table kept; caption attributes the shadow/canary quotes to the release notes and the wave row to the source author, replacing 'Module 08 doc 1; the cohort-wave row is mine'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-roll-out-by-cohort-with-a-pointer-flip-rollback",
+      "teaching_item": "Per-user split, identical safety gate; rollback quote; previous version stays deployed; rollback_tested gate",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 last two paragraphs; the 'hot-fix under pressure' quote was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-assign-owners-before-the-first-page",
+      "teaching_item": "Builder as single point of failure; owner table (SLO glossary) with an adoption owner",
+      "anchors": [
+        "walk-ownership"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 table kept with an L1/L2/L3 ladder explanation, plus an Adoption row (product owner with the executive sponsor and department champions) added 2026-11-16 so every constraint has an owner; sponsor and champions come from the source's promote gate and change-management row."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-assign-owners-before-the-first-page",
+      "teaching_item": "Runbooks: fifteen in cram sheet, four from week one with quotes; fifth for permissions leak",
+      "anchors": [
+        "walk-ownership"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four bullets keep both quotes and the actions; 'fifteen' and the quotes were missing before. Added an example of a silent prefix invalidator."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-assign-owners-before-the-first-page",
+      "teaching_item": "Security review against evidence; gates that accept free text; adversarial and permission probes as artefacts",
+      "anchors": [
+        "walk-ownership"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step 9 paragraph keeps 'structurally real and still accept free text' and adds the concrete risk of approving a sentence that says 'tested'; adversarial and permission-boundary probes are listed artefacts."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-measure-adoption-not-only-uptime",
+      "teaching_item": "Ready but unused; override rate and week-4 retention quotes; active share, task success, cost per successful task",
+      "anchors": [
+        "walk-adoption"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 10; the week-4 retention quote and the 'cheaper model that needs a retry' line kept. The override rate is defined for this read-only assistant (a reviewer editing, rejecting or correcting an answer before use) and the source's agent-worded reading is paraphrased for the assistant (2026-11-16)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-measure-adoption-not-only-uptime",
+      "teaching_item": "Bank follow-up and nine answers verbatim",
+      "anchors": [
+        "walk-adoption",
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 quotes the question and all nine causes; reveal followup-adoption repeats them with the ordered answer. Before, the follow-up was not quoted and causes were partial."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-measure-adoption-not-only-uptime",
+      "teaching_item": "Ordered investigation: data, sessions (drop after answer, before answer, low first use, separate tab), users; executive table quote; spoken line",
+      "anchors": [
+        "walk-adoption"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered three-step list keeps every diagnostic mapping and the separate-tab example; quote and spoken line restored."
+      }
+    },
+    {
+      "source_id": "guide-part-3-13-cover-all-seventeen-items-the-bank-lists",
+      "teaching_item": "Seventeen items with where covered",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept, links re-pointed to the new steps, including the new eval and adoption steps. Added a note that champions are named but not developed in the source."
+      }
+    },
+    {
+      "source_id": "guide-part-3-13-cover-all-seventeen-items-the-bank-lists",
+      "teaching_item": "Eight failure modes with signal and mitigation",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; the last mitigation is restored to the source's 'section 12's investigation, per cohort' wording (now step 10). Defined jittered retry."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "45-minute plan; model choice is a sentence",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with section numbers turned into links; noted that requirements have no slot of their own."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored in full as reveal delivery-two-minute; the previous version had dropped it."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Seven lines that carry the round",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as a list after the reveal; previously missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Five follow-ups beyond adoption with answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each is now its own answer reveal (followup-autoscale ... followup-custom-prompt) so it can be attempted first; added why a fork escapes the gate."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Pivot prompt quote; no drill, self-drill; five-part card",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-cost-pivot quotes the pivot and keeps the card in reveal cost-pivot-answer; the card's header row was blank before and now reads Part/Answer."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Incident line quote; roadmap (instrument, quick wins, redesign); four verbs measure, route, bound, cache safely",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three paragraphs inside the reveal; all three were missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Capacity/operating/change-programme split; senior/staff/principal table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Intro sentence restored; table unchanged."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-closing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-decisions covers takeaways 1-12 in four paragraphs and review-closing covers 13-15 (seventeen items, forty-five minutes, cost pivot), which the old review omitted. Review-numbers added for recall."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Twelve self-check questions with answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All twelve kept as scale-check-1..12; questions now match the source wording and answers restore source lines the old paraphrases lost (for example 'buy margin, not a guarantee')."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Fact-check sources with details (prices, 0.1x cache reads, 50% batch, 1,024/4,096 minimums, checked 27 Sep 2026)",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both links now carry the details and the check date, which the old list dropped."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review against all 27 captured sections, item by item, producing 69 coverage rows. The previous version was a thin paraphrase: it dropped the source-contribution table, the prompt and bank quotes, the weak/strong answer, admit-assemble-answer-learn, the two-minute spoken answer, the seven carrying lines, the four cost verbs, the runbook and adoption quotes, all nine adoption causes verbatim, and the cost-pivot framing. It also mis-captioned the tenfold figure, left the three architecture figures as 'source figure 1/2/3', showed ', ' where the sizing table had a dash, and had blank cost-card headers and broken abbr text. Restored all of these, added two walkthrough steps (eval rebuild, adoption) so section 9 and 12 are no longer split across deep dives, made the six follow-ups, the cost pivot and the two-minute answer into reveals, and rewrote the Quick review to cover all fifteen takeaways. Rechecked every sizing and cost product and resolved three source issues. The brief opens on the volunteer-to-employee gap, defines tail latency, token, tenant, gateway, 429 and cohort, and skips a separate example because step 6 traces one request. Source inconsistencies resolved in text (2026-11-16): caching row assumed every mid-tier request hits and ignored the write charge \u2192 write cost added (1.25x input, five-minute lifetime, a shared prefix stays warm, at most 288 writes a day, under $1.10), net saving about $193 a day so the $2,460/$74,000 row stands; component and owner tables had no adoption entry \u2192 Adoption row added to both (cohort waves, champions and metrics; product owner with the executive sponsor and champions), from the source's own rollout and change-management material; override-rate metric worded for agents while this assistant has read-only tools \u2192 defined as a reviewer editing, rejecting or correcting an answer before use, with the source's reading paraphrased for the assistant."
+  },
+  "required_answer_reveals": [
+    "scale-check-1",
+    "scale-check-2",
+    "scale-check-3",
+    "scale-check-4",
+    "scale-check-5",
+    "scale-check-6",
+    "scale-check-7",
+    "scale-check-8",
+    "scale-check-9",
+    "scale-check-10",
+    "scale-check-11",
+    "scale-check-12",
+    "followup-adoption",
+    "followup-autoscale",
+    "followup-fallback",
+    "followup-cut",
+    "followup-router",
+    "followup-custom-prompt",
+    "cost-pivot-answer",
+    "delivery-two-minute"
+  ],
+  "required_anchors": [
+    "walk-hidden",
+    "walk-eval",
+    "walk-adoption",
+    "practice-cost-pivot",
+    "practice-followups",
+    "practice-levels",
+    "review-numbers"
+  ]
+}

@@ -1,0 +1,1001 @@
+{
+  "title": "Real-Time Call Assistant",
+  "slug": "real-time-call-assistant",
+  "subtitle": "Design a call assistant that suggests within about three seconds, then drafts a reviewed summary and CRM update after the call.",
+  "theme": "Agents and Copilots in Real Workflows",
+  "kind": "System design",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-example",
+    "main-one-call-three-clocks": "walkthrough-clocks",
+    "main-questions-to-ask-the-interviewer": "walkthrough-questions",
+    "main-requirements-functional-non-functional": "walkthrough-requirements",
+    "main-architecture": "walkthrough-architecture",
+    "main-failure-and-trust-boundaries": "walkthrough-failures",
+    "main-evaluate-and-roll-out": "walkthrough-rollout",
+    "main-two-minute-interview-answer": "rtca-two-minute",
+    "deep-dive-intro": "walkthrough-budget",
+    "deep-dive-1-three-lanes-and-the-budget": "dive-snapshot",
+    "deep-dive-2-privacy-consent-and-permissions": "dive-privacy",
+    "deep-dive-3-evaluation-without-one-correct-summary": "dive-evaluation",
+    "deep-dive-4-failure-matrix-and-rollout": "walkthrough-failures",
+    "cheat-sheet-intro": "review-ask",
+    "cheat-sheet-ask-first": "review-ask",
+    "cheat-sheet-three-clocks": "review-clocks",
+    "cheat-sheet-boundaries": "review-boundaries",
+    "cheat-sheet-numbers-and-evaluation": "review-numbers",
+    "full-pack-intro": "dive-references",
+    "full-pack-1-split-the-call-into-before-during-and-after-before-drawing": "walkthrough-clocks",
+    "full-pack-2-state-requirements-as-testable-constraints": "walkthrough-requirements",
+    "full-pack-3-map-the-audio-the-account-and-who-may-hear-them": "walkthrough-data",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "walkthrough-architecture",
+    "full-pack-part-2-5-precompute-the-account-context-before-the-call-starts": "dive-snapshot",
+    "full-pack-part-2-6-stream-the-transcript-and-suggest-from-a-small-prompt": "dive-live-lane",
+    "full-pack-part-2-7-diarize-and-redact-before-anything-is-stored": "dive-privacy",
+    "full-pack-part-2-8-summarise-and-extract-actions-after-the-call-asynchronousl": "dive-post-call",
+    "full-pack-part-3-9-propose-crm-updates-never-write-them-silently": "dive-crm-approval",
+    "full-pack-part-3-10-degrade-on-everything-except-consent-redaction-and-approv": "walkthrough-failures",
+    "full-pack-part-3-11-evaluate-summaries-without-a-single-correct-answer": "dive-evaluation",
+    "full-pack-part-3-12-roll-out-from-post-call-summaries-to-live-suggestions": "walkthrough-rollout",
+    "full-pack-part-3-13-deliver-it-in-sixty-minutes": "practice-sixty-minutes",
+    "full-pack-part-4-14-answer-the-sub-3-second-pivot-in-ten-minutes": "practice-pivot",
+    "full-pack-part-4-level-calibration": "practice-levels",
+    "full-pack-part-4-key-takeaways": "review-takeaways",
+    "full-pack-part-4-check-yourself": "practice-prompt",
+    "full-pack-part-4-references": "dive-references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "clocks",
+      "label": "Three clocks and discovery",
+      "hint": "Sort every task by when its answer is needed and name the questions that change the design."
+    },
+    {
+      "id": "budget",
+      "label": "Latency budget",
+      "hint": "Say the stage budget as arithmetic and what the headroom pays for."
+    },
+    {
+      "id": "boundaries",
+      "label": "Consent, redaction and approval",
+      "hint": "Place each boundary and say what fails closed and what degrades."
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation and rollout",
+      "hint": "Score the summary by purpose and order the launch."
+    }
+  ],
+  "rubric": [
+    "I split the work into before, during and after the call, and kept the CRM and the large model out of the three-second lane.",
+    "I stated the ~2.0 s stage budget from end-of-utterance, its ~1 s headroom and that it is a planning assumption to measure.",
+    "I placed consent before recording and redaction on the stream before storage and any model call.",
+    "I showed silence on timeout and labelled degradation for a stale snapshot or missed live lookup.",
+    "I had the model propose CRM changes with evidence-based confidence and the rep approve every write through an idempotent gateway.",
+    "I evaluated summaries by purpose, with action-item precision and recall sliced by call type and language, and launched post-call first."
+  ],
+  "required_answer_reveals": [
+    "rtca-answer-1",
+    "rtca-answer-2",
+    "rtca-answer-3",
+    "rtca-answer-4",
+    "rtca-answer-5",
+    "rtca-answer-6",
+    "rtca-answer-7",
+    "rtca-answer-8",
+    "rtca-answer-9",
+    "rtca-followup-1",
+    "rtca-followup-2",
+    "rtca-followup-3",
+    "rtca-followup-4",
+    "rtca-followup-5",
+    "rtca-followup-6",
+    "rtca-followup-7",
+    "rtca-followup-8",
+    "rtca-weak-answers",
+    "rtca-added-inbound",
+    "rtca-added-redaction",
+    "rtca-added-auto-apply",
+    "rtca-two-minute",
+    "rtca-pivot-answer"
+  ],
+  "required_anchors": [
+    "walkthrough-budget",
+    "walkthrough-failures",
+    "dive-evaluation",
+    "dive-privacy"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Live suggestion plus post-call summary, actions and CRM updates; ~3 s hard constraint; consent and redaction stop conditions",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 keep the rep-facing live bullet, the post-call summary/actions/CRM update, the 'about three seconds after the customer finishes a question' constraint, no transcription without consent and the failed-redaction stop on storage and model call; CRM is defined on first use."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Three-clock summary of the design and its link to Sales Copilot and the sub-3-second drill",
+      "anchors": [
+        "brief-scenario",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The overview's before/during/after summary (permission-scoped snapshot, streaming ASR into redaction, small prompt to fast model, silent timeout, larger model drafting a cited summary and CRM proposal the rep approves) is carried by the brief's core-idea paragraph and the Sara trace; the Sales Copilot and drill relationships are stated in brief-task."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and overview figure",
+      "anchors": [
+        "brief-scenario",
+        "figure-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The sentence 'prepare context before the call, keep the live suggestion tiny, and do the careful work after the call with a human on every write' is kept in brief-scenario, followed by figure-core-idea (both SVG variants) and a paragraph reading the figure's consent/redaction branch to 'no transcript or suggestion'."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE/solutions/applied-AI candidates facing a real-time LLM round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third brief-task paragraph names the same audience and the real-time, latency-bound LLM round with streaming input, and expands LLM on first use."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on budget, precompute, streaming, privacy, evaluation, failure, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First brief-task paragraph restates both objectives as the design task, including the three protected boundaries (consent, redaction, approval) and the full list of follow-up topics."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed background: streaming ASR, LLM latency/model choice, consented personal data",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third brief-task paragraph keeps all three assumptions; the source pointer to 'related reviews at the foot of each section' is navigation for the old site and is not reproduced."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (three mandatory sections, mark as read, Full Design optional)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only text for the old four-tab page. The five-section shell replaces it; the only substantive point, re-reading the recall sheet before the interview, is served by the Quick review section itself."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Technical Deep Dive, Quick Review, Full Design)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The table describes old tabs. Its content map is now the five sections: two-minute answer moved to practice-sixty-minutes, lanes/privacy/evaluation/failure to the deep dives, recall to Quick review, and Full Design chapters distributed (no sixth track)."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Sara/Acme end-to-end trace",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example turns the source's compressed arrow trace into six numbered steps (morning snapshot as Sara, consent at call start, end-of-utterance plus streaming ASR and redaction, ~3 s bullet or silence, slower post-call drafting, Sara approves CRM writes) and states what Sara receives."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope exclusions (voice-out, auto-send), model never writes CRM, timings are planning assumptions",
+      "anchors": [
+        "brief-task",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 2 excludes voice output and automatic sending as a different product; brief-scenario states the model never writes CRM; the closing sentence of brief-task keeps 'planning allocations, not measured vendor guarantees'."
+      }
+    },
+    {
+      "source_id": "main-one-call-three-clocks",
+      "teaching_item": "Hours / ~3 s / minutes split and the rule that the fast lane never waits on enrichment",
+      "anchors": [
+        "walkthrough-clocks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 bullets give each lane its clock and work, then explain why mixing clocks freezes the panel and state the 'never waits behind post-call enrichment' rule."
+      }
+    },
+    {
+      "source_id": "main-one-call-three-clocks",
+      "teaching_item": "Related-case table (question-bank prompt, sub-3-second drill, realtime voice / Sales Copilot)",
+      "anchors": [
+        "walkthrough-clocks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three-row related-case table is reproduced in step 1 with an introducing sentence; the voice-project row's 'voice output replaced by a rep-facing panel' is also taught in dive-live-lane."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six discovery questions with what they mean for Acme and the decision each settles",
+      "anchors": [
+        "walkthrough-questions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 reproduces the six-row table (three-second scope, precompute, streaming/timeout, current facts, languages, consent and CRM approver) and defines SLO before it, matching the source glossary entry."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional list and functional/non-functional framing",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 opens with the functional vs non-functional definition and folds the seven functional requirements (consent ingest, diarized streaming ASR, redaction before storage/model, timely live bullets, async cited summary, confidence-scored CRM proposals the rep approves, retention and corrections) into the must-have bullet."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "NFR table: p95 <3 s with separate timeout reporting, illustrative ~2.0 s budget, post-call minutes, security, no write without approval, cost/quality slices; 'source design targets'",
+      "anchors": [
+        "walkthrough-requirements",
+        "walkthrough-budget"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the fuller Full Design constraints table in step 3; the paragraph after it keeps the separately reported timeout rate, cost per call, accuracy by language and call type, and 'source design targets, not measured production results'. The illustrative 2.0 s breakdown and the 500 ms OpenAI VAD default are in step 4."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut answer for 'What are the requirements?'",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the shortcut wording as a labelled compact spoken answer: consent, live bullet, later summary and CRM proposal; three seconds, PII redacted, live lane never waits on post-call work."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Main architecture figure and nine-step flow; neither model authorises a write",
+      "anchors": [
+        "walkthrough-architecture",
+        "figure-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 places figure-architecture (both variants) after the boundary paragraph, then traces the Acme question through nine numbered steps: permission-signature cache and invalidation, regional consent stop, VAD/ASR with labels, redaction before either model, cheap trigger, minimal prompt with hard-timed allowlisted fact, two-three bullets or nothing, once-per-call queued larger model with span citations, evidence-scored proposer and approved idempotent gateway write feeding corrections."
+      }
+    },
+    {
+      "source_id": "main-failure-and-trust-boundaries",
+      "teaching_item": "Fail-closed trio, spoken injection as untrusted evidence, degrade list, PCI DSS pause/mask, short-retention raw audio",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 states the three fail-closed rules with their consequences, explains why the injection sentence 'may still sway the model' but cannot write, covers stale snapshot labelling, 'check' on timed-out price, queued post-call, CRM outage with the same idempotency key, and the PCI DSS security-code rule plus separate short-retention audio store."
+      }
+    },
+    {
+      "source_id": "main-evaluate-and-roll-out",
+      "teaching_item": "Evaluation by purpose and live-lane metrics",
+      "anchors": [
+        "walkthrough-rollout",
+        "dive-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 lists the seven purpose-based measures, slicing, the harm of invented commitments, and the live metrics (p95 first bullet, timeout, snapshot hit rate, acceptance, abandonment, cost per call); dive-evaluation teaches each in depth."
+      }
+    },
+    {
+      "source_id": "main-evaluate-and-roll-out",
+      "teaching_item": "Rollout order, per-slice widening bars and narrow auto-apply only after measured accuracy",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps post-call summary for one team and language, then reviewed proposals, then a small live cohort; widening only when redaction, transcript quality, action precision/recall and latency pass per slice; day-one human approval and later narrow auto-apply with explicit authority."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute interview answer (shorter version)",
+      "anchors": [
+        "rtca-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reproduced word for word as the second paragraph inside the rtca-two-minute reveal, labelled as the source's shorter version beside the longer Full Design answer."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Caveat: architecture and 2-second stage budget are assumptions to validate",
+      "anchors": [
+        "walkthrough-budget",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The reading-order text is old navigation; the substantive caveat is kept in brief-task's closing sentence and in step 4's instruction to measure p95 end to end and per stage under real accents, networks and model load."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-three-lanes-and-the-budget",
+      "teaching_item": "Before-call snapshot under rep identity, permission-signature cache, inbound matching, volatile facts kept out",
+      "anchors": [
+        "dive-snapshot"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-snapshot explains calendar/dialer triggers, running as the rep, the permission signature (defined), invalidation on role or territory change, the inbound caller-ID minimal snapshot during the greeting and the rule to keep price, stock and case status out of the snapshot."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-three-lanes-and-the-budget",
+      "teaching_item": "During-call budget from end-of-utterance with 300 ms aggressive VAD caveat and measurement instruction; allowlisted parallel timed lookup",
+      "anchors": [
+        "walkthrough-budget",
+        "dive-snapshot"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 sums the eight allocations to 2,000 ms, keeps 'about one second of headroom', the 500 ms OpenAI default, 'planning allocations' and per-stage p95 measurement; dive-snapshot keeps the allowlisted, read-only, parallel, timed lookup and 'avoid sequential CRM calls'."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-three-lanes-and-the-budget",
+      "teaching_item": "After-call independent queue, larger LLM once, fixed schema, idempotent retries, no queueing ahead of next call",
+      "anchors": [
+        "dive-post-call"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-post-call lists the schema fields (summary, owned and dated action items with spans, commitments, objections, proposed CRM fields) and states that retries preserve idempotency and slow work never delays the rep's next call."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-privacy-consent-and-permissions",
+      "teaching_item": "Consent, channel-based then model diarization, speaker swap as correctness issue, typed-placeholder redaction, PCI, retention alerts",
+      "anchors": [
+        "dive-privacy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-privacy covers each item: speaker-swap renewal example, dual-channel first, typed placeholders defined, card pause/mask with the security-code rule, short-retention audio, per-region retention with deletion alerts, and consent before recording."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-privacy-consent-and-permissions",
+      "teaching_item": "Snapshot mirrors rep visibility; untrusted transcript; model proposes; idempotency key; corrections logged without raw PII",
+      "anchors": [
+        "dive-privacy",
+        "dive-crm-approval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final dive-privacy paragraph keeps the other-territory deal value leak, untrusted transcript and corrections without raw PII in telemetry; dive-crm-approval defines the gateway idempotency key and the double-click case."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-evaluation-without-one-correct-summary",
+      "teaching_item": "Overlap metrics poor; seven purpose-based measures; span citations; invented actions costly; slices; corrections as cases",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-evaluation explains why word overlap punishes paraphrase (with the ROUGE references), defines precision and recall on a golden set, keeps span citations, the costly invented action, the English-sales vs accented-support slicing example and reviewed, redacted corrections."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-evaluation-without-one-correct-summary",
+      "teaching_item": "Live metrics and cost levers: trigger only useful questions, cap bullets, warm connections, cancel when rep answers; late may be worse than silence",
+      "anchors": [
+        "dive-evaluation",
+        "dive-live-lane",
+        "dive-latency-levers"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Live metrics close dive-evaluation; bullet caps, warm connections and 'a late suggestion can be worse than silence' are in dive-live-lane; cancel-on-rep-speech with the provider-billing caveat is in dive-latency-levers."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-failure-matrix-and-rollout",
+      "teaching_item": "Failure matrix by stage, isolation of post-call incidents from live capacity, retention deletion alert",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7's failure table and its final paragraph ('separate failure handling by stage, so a post-call incident cannot consume live capacity') cover every case; the retention deletion alert is also in dive-privacy."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-failure-matrix-and-rollout",
+      "teaching_item": "Rollout stages incl. five-rep cohort; week dates are a proposed plan",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 states the week-by-week dates are 'a plan, not a production outcome' before the rollout table, whose third row keeps the five-rep cohort and later narrow auto-apply."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat sheet navigation links",
+      "anchors": [
+        "review-ask"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Contains only links to the old Main, Deep Dive and source tabs; the Quick review section replaces the cheat sheet tab."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first recall list",
+      "anchors": [
+        "review-ask"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-ask keeps all six prompts (3 s scope, precompute, streaming, current facts, timeout, languages/consent/CRM approvers)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-three-clocks",
+      "teaching_item": "Three-clock recall chains",
+      "anchors": [
+        "review-clocks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-clocks keeps the before, during and after chains with the same order of stages and 'timeout means silence', adding the shared-store rule taught in step 6."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-boundaries",
+      "teaching_item": "Boundary recall",
+      "anchors": [
+        "review-boundaries"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-boundaries keeps the four source boundaries and adds the card-masking and degrade lines already taught in step 7."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-and-evaluation",
+      "teaching_item": "~2.0 s budget with ~1 s headroom, evaluation measures, live metrics, 60-second close",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-numbers repeats the stage arithmetic, measurement caveat, summary measures with slices, live metrics and the 60-second close verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Workflow-timing framing and the four-case source group table",
+      "anchors": [
+        "dive-references",
+        "walkthrough-clocks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'workflow-timing problem before a model problem' framing opens step 1; dive-references reproduces the group table and explains that its section numbers point at the old Full Design chapters, plus 'component list and evaluation list' vs 'shape and metrics'."
+      }
+    },
+    {
+      "source_id": "full-pack-1-split-the-call-into-before-during-and-after-before-drawing",
+      "teaching_item": "One system vs three systems; drill quote on workflow design",
+      "anchors": [
+        "walkthrough-clocks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 opens with the prompt quote, 'three systems with three clocks', the ten-second vs three-second argument and the drill's workflow-design line."
+      }
+    },
+    {
+      "source_id": "full-pack-1-split-the-call-into-before-during-and-after-before-drawing",
+      "teaching_item": "Drill's five questions with assumed answers; three implied questions",
+      "anchors": [
+        "walkthrough-questions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 reproduces the five-row assumed-answer table and then lists the three implied questions with what each decides."
+      }
+    },
+    {
+      "source_id": "full-pack-1-split-the-call-into-before-during-and-after-before-drawing",
+      "teaching_item": "Weak vs strong drill answers and the first-two-minutes spoken shape",
+      "anchors": [
+        "walkthrough-clocks",
+        "rtca-two-minute"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1's final paragraph keeps both drill quotes and why the weak one fails twice; the spoken 'three systems on three clocks' opener is contained in the longer two-minute answer reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint; must/should/later split; why live suggestions come after post-call",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the 'real-time is a preference' contrast, all must-have, should-have and later items, and the reason live suggestions are ordered after the summary."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Nine-row testable constraint table",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reproduced in step 3; the old '(section 11)' pointer was removed from the summary-quality cell and step 8 links to the evaluation dive instead."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Stage budget table, headroom use, reference implementation <2 s caveat",
+      "anchors": [
+        "walkthrough-budget"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 reproduces the eight-stage table, adds the explicit sum, explains the parallel dropped-on-timeout lookup, and keeps the '<2 second' stated-goal caveat and the fact that the voice project must also speak."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Requirement-to-component ownership table",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reproduced at the end of step 3 as the bridge to the step 6 diagram."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-the-audio-the-account-and-who-may-hear-them",
+      "teaching_item": "Input sensitivity/permission map and two rules (redact before leaving stream; snapshot as rep)",
+      "anchors": [
+        "walkthrough-data"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps the six-row input table, the 'a model call and a log line are both copies' reason, and the peer-territory deal-value leak example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three lanes share only snapshot and transcript store",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of step 6 and the three-boundary closing paragraph both carry the rule and its consequence for slow summaries."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Drill architecture-line figure",
+      "anchors": [
+        "figure-drill-line",
+        "walkthrough-clocks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-drill-line (both SVG variants, hashes unchanged) sits in step 1 beside the three-clock explanation, with a follow-up sentence on why nothing flows back into the during-call column."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Voice project pipeline figure and what the call assistant keeps/replaces",
+      "anchors": [
+        "figure-voice-pipeline",
+        "dive-live-lane"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-voice-pipeline sits in dive-live-lane, followed by the paragraph on keeping VAD, streaming STT and retrieval, replacing speech output with a panel, and adding the before/after lanes."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three per-lane figures",
+      "anchors": [
+        "figure-before-lane",
+        "figure-during-lane",
+        "figure-after-lane"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each lane figure is placed in the deep dive that teaches that lane (snapshot, live lane, post-call), with captions naming the boxes shown and the live-lane dive tracing one utterance through its figure."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Full-system Mermaid figure, control-plane versioning list, event-not-audio telemetry, live-path timeout bullet",
+      "anchors": [
+        "figure-full-system",
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-full-system (4815 px wide) is linked for full size in step 6; the next paragraph keeps every versioned control-plane item and the five telemetry events; the 3-second budget and timeout behaviour are step 6 item 7."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Fifteen-component table with failure modes and three boundaries to point at",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fifteen-row table reproduced with an explanation of fail-closed vs degrade, followed by the three boundaries (shared stores, privacy at redaction, action at approval)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-precompute-the-account-context-before-the-call-starts",
+      "teaching_item": "Why precompute; snapshot contents; Sales Copilot rules; triggers; inbound ten-second window; staleness and live allowlist",
+      "anchors": [
+        "dive-snapshot",
+        "figure-before-lane"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-snapshot keeps the tail-latency argument, the five snapshot contents, the three carried-over rules as a list, calendar/dialer triggers, the inbound assumption labelled as the source's, field ages and the allowlisted parallel timed fetch."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-stream-the-transcript-and-suggest-from-a-small-prompt",
+      "teaching_item": "Streaming vs total latency; VAD and partial/final segments; Silero and Deepgram Nova-3",
+      "anchors": [
+        "dive-live-lane"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-live-lane keeps the cram-sheet quote, the two jobs of the lane, only final segments triggering because partials change, and the reference project's Silero/Nova-3 choices, labelled as that project's."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-stream-the-transcript-and-suggest-from-a-small-prompt",
+      "teaching_item": "Trigger detector, small prompt contents, two-three bullets, silence on timeout",
+      "anchors": [
+        "dive-live-lane"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-live-lane names the qualifying question types, the cheap detector, the four prompt ingredients and what is excluded, small/mid model with two or three bullets, and the noise-or-contradiction reason for silence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-diarize-and-redact-before-anything-is-stored",
+      "teaching_item": "Diarization, redaction, PCI pause, raw audio store, retention schedule, consent",
+      "anchors": [
+        "dive-privacy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-privacy reproduces each mechanism in order and adds the one-party vs all-party consent law from the source references so the per-region consent rule has a concrete example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-summarise-and-extract-actions-after-the-call-asynchronousl",
+      "teaching_item": "Larger model once per call, fixed schema with spans, queue and retry, next call unaffected",
+      "anchors": [
+        "dive-post-call",
+        "figure-after-lane"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-post-call keeps the seconds-to-minutes argument, the drill quote, the five schema fields as a list, span citations for reviewer and evaluation, and queue/retry isolation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-propose-crm-updates-never-write-them-silently",
+      "teaching_item": "Propose-score-approve, evidence-based confidence, no day-one auto-apply, idempotent gateway, corrections log",
+      "anchors": [
+        "dive-crm-approval"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-crm-approval keeps the forecasting harm, high vs low evidence scoring and pre-fill rule, call-date auto-apply example, defines the idempotency key and links the corrections log to dive-evaluation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-degrade-on-everything-except-consent-redaction-and-approv",
+      "teaching_item": "Ten-row failure behaviour table incl. prompt injection",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 reproduces the table and explains the stale-snapshot, timed-out lookup and prompt-injection rows in prose after it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-evaluate-summaries-without-a-single-correct-answer",
+      "teaching_item": "Seven methods, worry table, precision/recall golden set, slicing, corrections, live metrics and accept rate",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-evaluation reproduces the worry-to-measure table and expands precision/recall with definitions; keeps 'accept rate is the product metric' and 'cost money and taught nothing'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-roll-out-from-post-call-summaries-to-live-suggestions",
+      "teaching_item": "Week-by-week rollout table with gates",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row table reproduced in step 8 after the reason for post-call first and the plan caveat."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute plan table",
+      "anchors": [
+        "practice-sixty-minutes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row table kept with the old section pointers stripped from cells and replaced by a paragraph linking each phase to the new walkthrough steps and dives."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Long two-minute spoken answer and the lines that carry the round",
+      "anchors": [
+        "rtca-two-minute",
+        "practice-sixty-minutes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The full spoken answer is the first paragraph of the rtca-two-minute reveal, labelled as a source spoken-answer example; all eight carrying lines are listed with their attributions."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Eight follow-ups with answers",
+      "anchors": [
+        "practice-follow-ups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of the eight follow-up rows is a native reveal rtca-followup-1 to 8 with the question as summary and the source answer as body; the 'Section 11' pointer became a link to dive-evaluation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Five weak answers and their repairs",
+      "anchors": [
+        "rtca-weak-answers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weak answers listed visibly in practice-follow-ups; all five repairs are in the rtca-weak-answers reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-answer-the-sub-3-second-pivot-in-ten-minutes",
+      "teaching_item": "Pivot prompt, ten-minute card, architecture line and recommendation",
+      "anchors": [
+        "practice-pivot",
+        "rtca-pivot-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-pivot quotes the drill prompt and asks for driver, lever and metric first; the rtca-pivot-answer reveal holds the card table, the architecture line and the 'separate real-time suggestions' recommendation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-answer-the-sub-3-second-pivot-in-ten-minutes",
+      "teaching_item": "Cold starts, sequential workflow, no parallel unsafe side effects, cancel on rep speech, four verbs",
+      "anchors": [
+        "dive-latency-levers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-latency-levers defines cold starts and their idle-capacity price, sequential design and the 'Do not parallelize unsafe side effects' limit, cancel-on-rep-speech with the some-providers billing caveat, and the measure/route/bound/cache-safely list."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row level table reproduced after the source's framing sentence on how cleanly the clocks are split and who owns consent, redaction and the record."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-key-takeaways",
+      "teaching_item": "Fourteen takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fourteen takeaways are kept as bullets in review-takeaways, each matching a mechanism taught earlier in the walkthrough or a dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-check-yourself",
+      "teaching_item": "Nine self-check questions and answers",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each question is a native reveal rtca-answer-1 to 9 in practice-prompt; answers 3 and 9 add the 'check' marking and the three-lane split already taught, without changing the source answer."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-references",
+      "teaching_item": "Seventeen fact-check references with notes and check date",
+      "anchors": [
+        "dive-references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-references lists all seventeen links with their source notes and the 27 September 2026 check date; the consent-law, PCI, OWASP and ROUGE references are also cited beside the claims in dive-privacy, dive-crm-approval and dive-evaluation."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: read all 44 captured sections of the real-time call assistant source and authored a teach-mode rewrite from scratch. The overview, main guide, deep dive and cheat sheet repeat the Full Design's mechanisms, so each mechanism is taught once in the place that fits (three-clock split in step 1, budget arithmetic with the explicit 2,000 ms sum in step 4, per-lane figures inside the snapshot, live-lane and post-call dives) and the shorter versions are mapped as consolidated. The brief uses the source's own Sara/Acme trace as the example and defines CRM, ASR, diarization, PII, VAD and p95 before use. Every substantive table (14 of 18; the old navigation table is consolidated, the main NFR table is merged into the fuller constraints table, and the follow-up table became eight reveals) and all 8 diagrams in both variants are kept beside their explanation. Old 'section N' pointers were removed from table cells and replaced with links to the new anchors. Three changed-constraint questions (unknown inbound caller, mid-call redaction outage, auto-applied stage) are labelled as authored additions; the consent-law example in the privacy dive comes from the source's own references. No RAG-case material was imported beyond the voice project's retrieval step the source itself describes."
+  },
+  "visual_review": {
+    "status": "reviewed",
+    "evidence": "Inspected desktop.png (1440) and phone.png (390): title, subtitle, five-section tabs, brief headings and body measure render cleanly; on phone the topic selector replaces the rail and the core-idea figure sits between the term definitions and its reading paragraph. Screenshotted all 8 placed source figures in the built page with disclosures open: core idea (snapshot -> consent/redaction pass? -> no transcript or suggestion / small fast live bullet -> summary and CRM proposal -> rep approves) matches the brief's reading paragraph; drill line's three columns match step 1; main architecture shows before, under-3-s and asynchronous after-call boxes, so its caption and step 6 lead were corrected to mention the after-call lane; during-lane, after-lane and before-lane box labels match their dive captions and traces; voice pipeline labels (Silero, Deepgram, Groq, MongoDB Atlas top 5 chunks, ElevenLabs) match dive-live-lane text; the 4815px full-system figure is legible only via its full-size link, which the caption and step 6 say."
+  }
+}

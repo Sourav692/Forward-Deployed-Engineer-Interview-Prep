@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "8ffe5000570b8a34562bada69e867f8ef296ac765fd70dd33b97c128e6e25c35",
+  "html_sha256": "4522e1d2a157edfe22857a159dfd82be15006275ddea4c5203498d94343ca3f5",
+  "config_sha256": "56ba760e54d05f1a9bc0a879cd432a4203c87f11de5daf7f6eec803a9a990965",
+  "source_url": "https://forwarddeployedprep.com/design/deep-research-agent",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 46,
+    "coverage_rows": 117,
+    "worked_answers": 25,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Re-review against all 46 captured sections. The previous version had 46 one-per-section rows with shared boilerplate evidence and had thinned or dropped: the Acme CEO trace (main-intro), the functional list, the non-functional target table and interview shortcut, the opening-move timing and 'is that the system?' quote, context rot and lost-in-the-middle, 'stop too early vs never stop', the outcome-vs-trajectory six-wasted-hops example, the what-to-test list, two of the supervisor build's four costs, the platform's four delta pieces, both two-minute answers, the eight carrying lines, the 60-second close, the four cost verbs, the references' supported claims, and 9 of 14 takeaways; it also reworded several check-yourself questions, rendered the 45-minute table's last cell as ', ', left the cost card with empty headers, and captioned every figure 'source figure N'. Rewrote into a 12-step walkthrough mirroring the full design's order, 9 deep dives (trust, evidence records, cost, grader, supervisor build, platform, three variants, references), 9 practice groups with 25 reveals, and 4 Quick review groups, giving 117 item-level rows. Defined terms before use (agent, sub-agent, ledger, reducer, last-write-wins, oracle, Little's Law, prefix caching, trifecta, exfiltration, control plane, trust zones, grade distribution), added worked examples (Acme trace, three-branch loss, $0.80 per-branch budget, image-URL exfiltration, 117\u2192120 arithmetic, 10/15/20-second parallel latency), recast the source author's first-person 'my own build' as attributed, and labelled additions (reserve-then-reconcile budget, follow-up applications, two changed-constraint drills). Source inconsistencies resolved in text (2026-11-16): section 4 figure lead-ins one figure off \u2192 each figure introduced by what its SVG draws, meta note removed; 'after 12 hops' discovery question vs eight-hop cap and 3-12-step plan \u2192 question set to eight hops (the cap the termination code enforces), steps and hops stated as separate counters; 'roughly $0.20' vs '$0.20 ceiling' \u2192 ceiling throughout, because the budget dict, failure ladder and state table all enforce it as a per-run stop (whether the business treats it as hard stays a discovery question); 'this enterprise case' vs consumer product \u2192 consumer product that holds private documents, so it still needs per-user ACLs and a release gate. The summary paragraph listing these in the references section is removed."
+    }
+  }
+}

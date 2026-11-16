@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "9e019d518f6e15ffa6ffd44c9a1268a35abb27dcfcc7b02bbf49275281ac1d53",
+  "html_sha256": "5248f3824a21df454d8a4df052e0110eda8606fc257e84c6abd086aa768b5df0",
+  "config_sha256": "4af4c336692f6fa01743f140e4545254cf6bcc84d2c2bc79ec276754f99fd8c8",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-chatbot-platform",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 48,
+    "coverage_rows": 107,
+    "worked_answers": 23,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Read all 48 captured sections of the chatbot platform source and rewrote them into the five-section shell. Tutorial parts 1-8 became eight walkthrough steps; the quadratic-history and unit-cost material, records/endpoints, the turn-handler code, three of the four failure drills with the pytest boundary tests, and the Item 17/18 coverage-notes gaps became five deep dives. The worksheet and model answer are interleaved in Practice so each worksheet prompt precedes its model-answer reveal; the four mock prompts had no source answers, so their reveals are assembled from the case and labelled as worked examples, as is the users-and-workflows answer. Repetition consolidated: the 60-second version, key takeaways and the answer-key architecture restate the walkthrough, so they map to existing passages rather than repeating. Added definitions (egress, live permissions, SSO, ACL, TTFT, DLP, works council, query-time resolvable, legal hold, SLO, p95, RPO, SSE, fail closed, game day) and arithmetic steps (57,600/hour, 40x41/2=820, 4.6M/320/6,400). Invented figures (board/on-call quotes, impact statement) keep the source's invented label; $22 keeps the beta-measurement caveat. Source inconsistencies resolved in text (2026-11-16): answer key's week 0-8 rollout vs the tutorial's weeks 1-23+ phases \u2192 the four-phase schedule (Alpha 1-6, Beta 7-14, GA 15-22, assistants 23+), because the phase table, the phases figure and the 'plain chat within six weeks' decision all use it; worksheet's 'one corpus' \u2192 'the first corpora', matching the Beta's two corpora."
+    }
+  }
+}

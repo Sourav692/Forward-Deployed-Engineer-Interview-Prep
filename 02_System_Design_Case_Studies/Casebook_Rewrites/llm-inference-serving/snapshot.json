@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "8bd02ff30e26497e4068b152e2b169fbb8dd31ed88b81774b85110a93411cbe6",
+  "html_sha256": "7392ab35a2463c996bad21d221451f6a688d4da7be5b172e0202331142d0e0ce",
+  "config_sha256": "280ba1c7af88cdfdd193577c308c4114723f646c358016fabaa8e1550bcac70e",
+  "source_url": "https://forwarddeployedprep.com/design/llm-inference-serving",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 49,
+    "coverage_rows": 70,
+    "worked_answers": 14,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: read all 49 captured sections of source.json against the earlier teach-mode draft paragraph by paragraph. The draft kept every source table but had dropped or flattened specific items: the mid-stream-failure discovery question, the weak/strong answer and spoken line, the A100 caveat, 'say both checks aloud', LLM-versus-code ownership, the three architecture boundaries, gateway input cap, perceived-versus-total streaming latency, the 990 idle steps, queue length as tie-breaker, the Little's Law queue bound, the 64-caller crash, 'latency = wait + queue + 200 ms', review delivery advice, the frozen-screen rule, the 45-minute table (misstated last slot), both verbatim two-minute answers, the 60-second close, reference claims and tokens-after-disconnect. All restored. Structural changes: added walkthrough step 5 (tokenise at the edge, stream and cancel) and step 9 (evaluation), split the junior review from latency diagnosis, gave the five figures specific captions from their actual SVG labels, explained each batching strategy separately with one traced pair, added worked 100K-row arithmetic, corrected Check-yourself answer 8 to the source, and added two labelled drills. The brief keeps a traced request and a related-prompts table; old navigation sections are consolidated, not shown. Uncaptured internal source notes are disclosed in References. Source-problem sweep (2026-11-16): no real source inconsistencies in this case; the only source-pointing aside (the source 'rounds' 214.3 to about 214) was reworded neutrally, keeping both 214 and the 215 strict ceiling."
+    }
+  }
+}

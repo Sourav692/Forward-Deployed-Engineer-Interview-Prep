@@ -1,0 +1,1637 @@
+{
+  "title": "Reliable Workflow Orchestration System",
+  "slug": "reliable-workflow-orchestration",
+  "subtitle": "Orchestrate a days-long approval, payment, email and three internal updates so each business effect lands exactly once, state stays visible and failed steps are compensated.",
+  "theme": "Additional System Designs",
+  "kind": "System design",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/reliable-workflow-orchestration",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-prompt",
+    "tutorial-v2": "walk-outcome",
+    "worksheet": "practice-prompt",
+    "answer-key": "practice-worked",
+    "tutorial-v2-table-of-contents": "brief-task",
+    "tutorial-v2-1-the-customer-problem-and-discovery": "walk-outcome",
+    "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints": "walk-discovery",
+    "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity": "walk-sizing",
+    "tutorial-v2-part-4-4-architecture-and-end-to-end-flow": "walk-architecture",
+    "tutorial-v2-part-5-5-data-model-apis-and-working-code": "dive-records",
+    "tutorial-v2-part-6-6-security-reliability-and-failure-handling": "walk-failures",
+    "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact": "walk-rollout",
+    "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice": "practice-interview",
+    "tutorial-v2-part-9-coverage-notes": "coverage-rubric",
+    "tutorial-v2-part-9-key-takeaways": "review-decisions",
+    "tutorial-v2-part-9-level-calibration": "level-calibration",
+    "tutorial-v2-part-9-sources-checked-27-sep-2026": "references",
+    "worksheet-1-interview-prompt": "practice-prompt",
+    "worksheet-2-clarify-the-customer-problem": "practice-prompt",
+    "worksheet-3-users-and-workflows": "answer-users",
+    "worksheet-4-requirements": "practice-prompt",
+    "worksheet-5-data-and-integration-map": "answer-data-map",
+    "worksheet-6-proposed-architecture": "practice-prompt",
+    "worksheet-7-evaluation-plan": "practice-prompt",
+    "worksheet-8-failure-modes": "answer-red-team",
+    "worksheet-9-rollout-plan": "practice-prompt",
+    "worksheet-10-weak-vs-strong-answer": "practice-drills",
+    "worksheet-11-candidate-scorecard": "self-scoring",
+    "answer-key-intro": "practice-worked",
+    "answer-key-strong-discovery-questions": "answer-discovery",
+    "answer-key-strong-functional-requirements": "answer-functional",
+    "answer-key-strong-non-functional-requirements": "answer-nonfunctional",
+    "answer-key-architecture-explanation": "answer-architecture",
+    "answer-key-data-model-integration-assumptions": "answer-data-model",
+    "answer-key-red-team-risks": "answer-red-team",
+    "answer-key-rollout-plan": "answer-rollout",
+    "answer-key-evaluation-plan": "answer-evaluation",
+    "answer-key-weak-answer": "answer-weak",
+    "answer-key-average-answer": "answer-average",
+    "answer-key-strong-answer": "answer-strong",
+    "answer-key-interviewer-scorecard": "self-scoring",
+    "answer-key-final-2-minute-spoken-answer": "answer-two-minute",
+    "o-123": "brief-example",
+    "1-the-customer-problem-and-discovery": "walk-outcome",
+    "from-feature-request-to-customer-outcome": "outcome-statement",
+    "stakeholder-map-and-jobs-to-be-done": "stakeholder-jobs",
+    "the-two-minute-opening-answer": "two-minute-opening",
+    "highest-leverage-discovery-questions": "discovery-questions",
+    "the-assumption-ledger": "assumption-ledger",
+    "turning-discovery-into-scope-risks-and-success": "discovery-outputs",
+    "stakeholder-map-in-practice": "stakeholder-jobs",
+    "the-interview-signal-hiring-teams-listen-for": "two-minute-opening",
+    "2-clarifying-questions-requirements-and-constraints": "walk-discovery",
+    "choosing-which-unknowns-to-pay-for": "discovery-questions",
+    "the-question-tree-for-discovery": "question-tree",
+    "from-discovery-to-requirements": "must-should-could",
+    "functional-vs-nonfunctional-requirements": "functional-nonfunctional",
+    "constraints-vs-preferences": "constraints-preferences",
+    "what-the-mvp-will-not-support": "mvp-non-goals",
+    "requirement-to-component-traceability": "traceability",
+    "the-assumption-discipline-an-fde-needs": "traceability",
+    "3-scale-estimates-slos-and-capacity": "walk-sizing",
+    "start-with-the-load-that-breaks-the-first-draft": "first-draft-load",
+    "working-assumptions-and-activity-rate": "activity-rate",
+    "separate-workflow-state-from-payloads": "state-vs-payload",
+    "estimating-event-history-storage": "history-storage",
+    "estimating-task-queue-throughput": "queue-throughput",
+    "sensitivity-at-10x-growth": "sensitivity-10x",
+    "latency-budgets-and-workflow-slos": "workflow-slos",
+    "retry-math-is-not-compensation": "retry-vs-compensation",
+    "which-estimate-should-drive-the-architecture": "stress-point",
+    "communicating-uncertainty-like-an-operator": "communicating-uncertainty",
+    "4-architecture-and-end-to-end-flow": "walk-architecture",
+    "system-boundary-and-customer-outcome": "system-boundary",
+    "component-map-control-plane-vs-data-plane": "component-map",
+    "top-down-architecture-and-trust-boundaries": "top-down-flow",
+    "state-ownership-and-consistency": "state-ownership",
+    "sequence-diagram-happy-path": "happy-path",
+    "failure-path-overlay-worker-crash-after-payment": "crash-overlay",
+    "end-to-end-flow-step-by-step": "consistency-points",
+    "synchronous-and-asynchronous-boundaries": "sync-async",
+    "queues-backpressure-caches-and-policy-placement": "queues-backpressure",
+    "why-this-decomposition-matters": "four-stories",
+    "5-data-model-apis-and-working-code": "dive-records",
+    "the-smallest-safe-slice-of-the-system": "smallest-safe-slice",
+    "core-durable-records": "core-records",
+    "api-contracts": "api-contracts",
+    "the-implementation-slice-that-proves-the-design": "saga-code",
+    "what-the-whiteboard-version-omits-on-purpose": "whiteboard-omissions",
+    "tests-that-make-the-design-believable": "source-tests",
+    "why-this-answer-sounds-credible-in-an-interview": "whiteboard-omissions",
+    "6-security-reliability-and-failure-handling": "walk-failures",
+    "the-uncomfortable-question-that-anchors-this-section": "uncomfortable-question",
+    "threat-model-before-failure-policy": "security-controls",
+    "failure-policies-are-design-decisions-not-afterthoughts": "failure-policies",
+    "failure-drill-worker-crashes-after-payment-succeeds": "drill-payment-crash",
+    "failure-drill-email-succeeds-but-crm-fails": "drill-email-crm",
+    "failure-drill-approval-waits-seven-days": "drill-approval-wait",
+    "failure-drill-definition-changes-while-instances-run": "drill-definition-change",
+    "failure-drill-external-api-times-out-indefinitely": "drill-api-timeout",
+    "evidence-the-interviewers-want-to-hear": "audit-evidence",
+    "interview-sized-code-sketch-no-double-charge-invariant": "no-double-charge-sketch",
+    "what-to-say-when-the-interviewer-pushes-on-trade-offs": "tradeoff-pushes",
+    "7-delivery-plan-observability-and-business-impact": "walk-rollout",
+    "start-with-one-workflow-not-the-whole-platform": "one-workflow",
+    "determinism-and-crash-recovery-as-the-first-gate": "first-gate",
+    "operator-visibility-before-broadening-scope": "operator-visibility",
+    "version-workflows-instead-of-mutating-them": "version-not-mutate",
+    "rollout-scorecard-six-metric-layers": "scorecard",
+    "phased-rollout-owners-exit-criteria-rollback-triggers": "phased-rollout",
+    "connect-the-dashboard-to-the-user-journey": "operator-visibility",
+    "core-product-vs-adapter-vs-configuration-vs-shared-service": "core-adapter-config",
+    "train-operators-before-the-first-wide-rollout": "operators-and-risks",
+    "the-risk-register-should-be-owned-not-implied": "operators-and-risks",
+    "8-interview-walkthrough-trade-offs-and-practice": "practice-interview",
+    "minute-zero-opening-lead-with-the-business-effect": "minute-zero",
+    "a-practical-50-minute-answer-plan": "fifty-minute-plan",
+    "keeping-the-conversation-at-the-right-depth": "fifty-minute-plan",
+    "trade-off-framing-to-defend": "dive-tradeoffs",
+    "follow-up-drills-and-strong-answers": "practice-drills",
+    "common-weak-answers-and-how-to-repair-them": "practice-drills",
+    "scoring-rubric-for-self-evaluation": "self-scoring",
+    "a-90-second-architecture-summary": "answer-ninety-second",
+    "practice-loop-solo-pair-implementation": "close-and-loop",
+    "coverage-notes": "coverage-rubric",
+    "my-perspective-on-the-gaps": "gap-cost",
+    "intro": "case-brief",
+    "tutorial-v2-part-2": "walkthrough",
+    "tutorial-v2-part-3": "walkthrough",
+    "tutorial-v2-part-4": "walkthrough",
+    "tutorial-v2-part-5": "walkthrough",
+    "tutorial-v2-part-6": "walkthrough",
+    "tutorial-v2-part-7": "walkthrough",
+    "tutorial-v2-part-8": "walkthrough",
+    "tutorial-v2-part-9": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Finish line, waits and authority",
+      "hint": "Which answers about done, reversibility, wait length and provider keys change the design?"
+    },
+    {
+      "id": "design",
+      "label": "Control plane, data plane and history",
+      "hint": "Trace order o-123 from start request to audit summary."
+    },
+    {
+      "id": "failures",
+      "label": "Crash after payment and the other drills",
+      "hint": "Detect, contain, recover and prevent for each failure mode."
+    },
+    {
+      "id": "delivery",
+      "label": "Gates, metrics and owners",
+      "hint": "What must be proven before a second workflow?"
+    }
+  ],
+  "rubric": [
+    "I defined exactly once as the business effect, not message delivery, and named payment as the irreversible step.",
+    "I made durable history the only owner of progress and explained intent-before, completion-after.",
+    "I gave each side effect its own idempotency key and a stored receipt.",
+    "I kept capped backoff with jitter separate from compensation such as a refund.",
+    "I modelled the seven-day approval as a durable timer and signal state.",
+    "I named fail-closed, degrade, queue and human paths and partitioned lanes by tenant and dependency.",
+    "I pinned running instances to their definition version.",
+    "I gated rollout on replay determinism and crash recovery before operator visibility and migration."
+  ],
+  "required_anchors": [
+    "crash-overlay",
+    "drill-payment-crash",
+    "dive-saga",
+    "no-double-charge-sketch",
+    "retry-vs-compensation",
+    "failure-policies",
+    "first-gate"
+  ],
+  "required_answer_reveals": [
+    "answer-discovery",
+    "answer-users",
+    "answer-functional",
+    "answer-nonfunctional",
+    "answer-data-map",
+    "answer-architecture",
+    "answer-data-model",
+    "answer-red-team",
+    "answer-rollout",
+    "answer-evaluation",
+    "answer-drill-payment-crash",
+    "answer-drill-versioning",
+    "answer-drill-idempotency-boundary",
+    "answer-drill-week-approval",
+    "answer-events-only",
+    "answer-pushes",
+    "answer-weak",
+    "answer-average",
+    "answer-strong",
+    "answer-ninety-second",
+    "answer-two-minute",
+    "answer-implementation-trace"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Overview: six-system process, four stakeholders, irreversible payment, control/data plane split",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 keep the sign-off/payment/email/three-systems ask, each stakeholder's want and the never-charge-twice constraint; the control/data plane, history ownership, per-effect keys and durable-timer points are taught in full in walkthrough step 5 and drill 3."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the history-driven loop figure",
+      "anchors": [
+        "brief-scenario",
+        "figure-core"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'durable history decides, workers carry out keyed steps' sentence sits directly before figure-core; both SVG variants placed and the prose walks the figure's six nodes in order, ending on the refund compensation."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates on payments, approvals, back-office automation",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 names the same three role families and the payments/approvals/back-office/long-running-process round types."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the goal; follow-ups on 10M sizing, keys, retry vs compensation, timers, tenant isolation, versioning",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 lists all six follow-up topics exactly, including tenant isolation, which the walkthrough covers through tenant-partitioned queues and dead-letter lanes in step 7."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: queues, retries, idempotency, at-least-once delivery",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task keeps the prerequisites and adds a plain definition of at-least-once delivery, which the source assumed."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading routine: tutorial, then worksheet, then model answer; mark parts read; reread level calibration",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old tab navigation replaced by the five-section reading order in brief-task paragraph 3; the 'answer before comparing' discipline moves to practice-prompt, and the level-calibration reread advice is kept."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old sections table: Tutorial (9 parts), Practice Worksheet, Model Answer, all mandatory",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three-tab table is obsolete navigation; brief-task paragraph 3 maps tutorial to walkthrough/deep dives and worksheet/model answer to Practice. No teaching content was in the table."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Link to the interactive external worksheet",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-prompt paragraph 2 states the original site's interactive worksheet exists and was not imported, and that this page's note fields save locally."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-table-of-contents",
+      "teaching_item": "Tutorial table of contents with 80+ subsection anchors",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; every listed subsection anchor is aliased in case.json to the h4 that now teaches it (for example #the-assumption-ledger to #assumption-ledger)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Feature-led versus outcome-led problem statement and what the outcome line demands",
+      "anchors": [
+        "outcome-statement"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Outcome-statement contrasts the two quoted framings, then traces each requirement the outcome line implies (keys, durable state, history, compensation, approval pauses, audit) and keeps 'a business transaction spread over days, not a stream of messages'."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Stakeholder jobs-to-be-done and what reliability means to each",
+      "anchors": [
+        "stakeholder-jobs"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four quoted jobs become a three-column table with each group's meaning of reliability; the 'no single group steers the design' rule closes the subsection."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Stakeholder map in practice: end user, on-call operator, security owner, executive sponsor",
+      "anchors": [
+        "stakeholder-jobs"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the stakeholder-jobs paragraph that grounds each role in the order example, keeping 'not the API', the post-payment crash on-call, override authority and 'never pieced back together from spreadsheets'."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Two-minute opening answer and why it works",
+      "anchors": [
+        "two-minute-opening"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted opening kept verbatim as a labelled spoken-answer example, followed by its four functions and the compress-under-time-pressure advice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Highest-leverage discovery questions in four groups and the stated-assumption example",
+      "anchors": [
+        "discovery-questions",
+        "question-tree"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All twelve questions under finish line, workflow shape, blast radius/ownership and trust/compliance are kept; the payment-chain assumption quote moves under the question tree."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Assumption ledger: four fields and two worked entries",
+      "anchors": [
+        "assumption-ledger"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fields defined in prose and both entries (provider keys; multi-day pause) rendered as a four-column table with impact, verification and owner; the interview pointer about honest discovery is folded into the closing paragraph."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Discovery outputs: scope, assumptions, risks, owners; business success measures and the small success test",
+      "anchors": [
+        "discovery-outputs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four outputs listed with source definitions; completed workflows, duplicate-prevention rate, compensation success rate, mean time to detect stuck cases and the three-part success test are kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-the-customer-problem-and-discovery",
+      "teaching_item": "Interview signal: specific problem, named people, success measure before architecture",
+      "anchors": [
+        "two-minute-opening"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of two-minute-opening keeps the panel signal, the naming of people and the 'draw only once you can say whose workflow is changing' rule."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Choosing which unknowns to pay for; guard the riskiest constraint first",
+      "anchors": [
+        "discovery-questions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of discovery-questions keeps partial answers from the interviewer and the riskiest-constraint rule about effects happening twice when steps fail, pause or reorder."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Question tree: six questions tied to the design choice each answer changes",
+      "anchors": [
+        "question-tree"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Arrows in the source become a question/decision table with all six rows, including the 10,000 live workflows versioning example; the payment-is-the-anchor statement follows it."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Must/should/could ranking with reasons for each must-have",
+      "anchors": [
+        "must-should-could"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Single table pairs each of the six musts with its source reason, plus the should (versioned definitions) and could (analytics, dashboards, user branching) items."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Functional versus nonfunctional requirements and four measurable restatements",
+      "anchors": [
+        "functional-nonfunctional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both requirement statements and all four measurable forms (process/region failure, duplicate payment guard, inspectable history, compatible evolution) kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Constraints versus preferences with four labelled examples and the mid-interview pointer",
+      "anchors": [
+        "constraints-preferences"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Payment, approval latency (conditional), versioning (conditional) and dashboard labels kept, with the advice to label a late nice-to-have before responding."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "MVP non-goals",
+      "anchors": [
+        "mvp-non-goals"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four non-goal bullets kept, including no exactly-once promise to every downstream system and bounded retention, plus the 'few hard problems well' close."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Requirement-to-component traceability table",
+      "anchors": [
+        "traceability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ten-row source table reproduced unchanged under a caption."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-2-clarifying-questions-requirements-and-constraints",
+      "teaching_item": "Assumption discipline statement and hand-off to SLOs",
+      "anchors": [
+        "traceability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted assumption statement kept as a spoken-answer example; SLO expanded on first use; next-step sentence leads into sizing."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "First-draft sketch fails on timing: idle days then synchronised spikes",
+      "anchors": [
+        "first-draft-load"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First-draft-load keeps the five-part sketch, the timing-not-just-volume weakness and the list of envelope quantities to estimate."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Working assumptions, 1,157 activities/s and the author's peak/headroom/growth multipliers",
+      "anchors": [
+        "activity-rate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Arithmetic 100,000,000/86,400 \u2248 1,157/s shown; the 3x-10x peak, at-least-2x headroom and 2x/10x growth runs are kept with the source's 'my own planning choices, not industry standards' qualification."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Separate workflow state from payloads: replay, retention and blast-radius reasons",
+      "anchors": [
+        "state-vs-payload"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "What state keeps, where payloads go and all three named costs are taught; 'the workflow points at the payload' closes the subsection."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Event-history storage estimate: 400 GB, 800 GB at 2 KB, doubling at 20M; hot vs cold path",
+      "anchors": [
+        "history-storage"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Product formula, attribution (10M from scenario, 40 events and 1 KB illustrative), exclusions (replication, indexing, compaction, backups), both sensitivities and the cold audit path are kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Task-queue throughput: enqueue/lease/retry load and partitioning against retry storms",
+      "anchors": [
+        "queue-throughput"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three throughput components and the priority/type/tenant split are kept; the duplicated retry-storm sentence from the SLO subsection is consolidated here."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Sensitivity table at 10x and the expected first bottlenecks",
+      "anchors": [
+        "sensitivity-10x"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two-row table reproduced; replay latency, queue hot spots, storage fan-out and cost before CPU, plus the 'say so if it needs a rewrite' advice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Six orchestration SLIs and objectives the customer can feel",
+      "anchors": [
+        "workflow-slos"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "SLI defined in plain words; all six indicators kept with the security SLI's 'toward zero by design, never impossible' caveat and the 80 ms/120 ms versus late-payment example."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Backoff formula, variables, cap trade-offs, and retry is not compensation",
+      "anchors": [
+        "retry-vs-compensation",
+        "dive-retry"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough keeps the formula, the email-retry versus validation-refund examples and the interview trap; dive-retry defines n/base/cap/jitter, adds a labelled illustrative 1-2-4-...-60 s schedule and keeps both cap trade-offs."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Which estimate drives the architecture, with the stress-point figure",
+      "anchors": [
+        "stress-point",
+        "figure-stress-point"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three demand pairs and the four stress-point investments are taught on both sides of figure-stress-point; labels in the SVG match the four investment sentences."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-3-scale-estimates-slos-and-capacity",
+      "teaching_item": "Communicating uncertainty with the 20%/80% example and decision-backed estimates",
+      "anchors": [
+        "communicating-uncertainty"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sample answer kept as a spoken example; the smallest-safe-design point and 'if a metric moves no decision it does not belong up front' test kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "System boundary: exactly once means no double charge or message and no unnoticed missing step",
+      "anchors": [
+        "system-boundary"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "System-boundary restates the outcome and the three-part meaning of exactly once while retries still happen."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Component map and control-plane/data-plane split",
+      "anchors": [
+        "component-map"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine component definitions become a table with a plane column; the closing paragraph explains why decisions scale apart from side effects with a payment-burst example."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Top-down flow and architecture figure",
+      "anchors": [
+        "top-down-flow",
+        "figure-topology"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Twelve source flow steps condensed to nine numbered steps without dropping an actor; figure-topology placed after them and its labels (registry, scheduler, timer, signal gateway, compensation, UI, queues, workers, history, external systems) match."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Three trust boundaries with separate auth, authorisation and logging",
+      "anchors": [
+        "trust-boundaries"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Public API, worker edge and human approval path kept with each one's risk and the warning against one generic service layer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "State ownership and the central consistency rule",
+      "anchors": [
+        "state-ownership"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Queues deliver, workers suggest, scheduler rebuilds from history, and 'once an event is accepted, recovery runs off the store's record' kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Happy-path sequence and figure",
+      "anchors": [
+        "happy-path",
+        "figure-happy-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Twelve source arrows kept as eleven numbered handoffs (wait and wake merged); sequence SVG labels including the transient-retry and terminal-compensation alt blocks match the list."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Failure-path overlay: worker crash after payment, with figure",
+      "anchors": [
+        "crash-overlay",
+        "figure-crash-overlay"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Event sequence traced with order o-123 and the pay:o-123 key on redelivery; overlay figure placed beside it; 'worker lost is not business action lost' and the history/receipt rule kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "End-to-end flow as eight numbered guarantees and three consistency points",
+      "anchors": [
+        "consistency-points"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight bolded terms and the three consistency points (durable before downstream, effect before success, audit last) kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Synchronous and asynchronous boundaries with both failure extremes",
+      "anchors": [
+        "sync-async"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Synchronous and asynchronous lists, the fast-API rationale and both all-sync/all-async failure outcomes kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Queues, backpressure, caches, policy placement and partition key",
+      "anchors": [
+        "queues-backpressure"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Backpressure defined in plain words; cache limits, policy placement in scheduler/gateway/override path and the same-partition rule for steps that must not race kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Why the decomposition matters: four stories for product and engineering audiences",
+      "anchors": [
+        "four-stories"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Data, identity, state and failure stories kept with the product-owner/engineering contrast."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Smallest safe slice: the state machine is the riskiest part",
+      "anchors": [
+        "smallest-safe-slice"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept with the three customer harms (double charge, lost approvals, frozen workflows)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Four core durable records with purpose, key, lifecycle, retention; ownership split",
+      "anchors": [
+        "core-records"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Records table carries all source fields; Timer retention marked 'not stated in the source'; added an o-123 trace through the four records; orchestrator-is-not-the-ledger rule kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Four API contracts with auth, idempotency, semantics, errors and the expired IETF draft caveat",
+      "anchors": [
+        "api-contracts"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four endpoints with their auth, idempotency, response and error codes (400, 401/403, 409, 422, 404, 403); draft expiry by Sep 2026 kept with a note to present 409/422 as a convention; duplicate-key behaviour kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Order saga code and its line-by-line explanation",
+      "anchors": [
+        "saga-code",
+        "saga-walkthrough"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code block reproduced byte-for-byte; every explanatory bullet kept, with 'protocol' glossed as an interface."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Saga flowchart figure and idempotency-key granularity pointer",
+      "anchors": [
+        "saga-walkthrough",
+        "figure-saga-flow"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-saga-flow sits after the walkthrough and its node labels (validate, wait 7 days, pay:, crm:, mail:, refund:, re-raise) match; added why one shared key would collide."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Whiteboard omissions: optimistic concurrency, versioning, idempotency everywhere, observability, LLM policy checks",
+      "anchors": [
+        "whiteboard-omissions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five omissions kept, including 'update where version = expected_version' and 'the model may propose; it must not quietly decide'; linked optimistic concurrency to the worksheet's two-workers failure mode."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Contract test and failure-injection test with replay",
+      "anchors": [
+        "source-tests"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Test code reproduced byte-for-byte; added a caveat that the client/orchestrator/fake_activities fixtures are undefined in the source; crash-and-resume equivalence and the history/receipt rule kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-5-data-model-apis-and-working-code",
+      "teaching_item": "Weak versus strong credibility answer",
+      "anchors": [
+        "whiteboard-omissions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of whiteboard-omissions keeps the 'add retries' weak answer and the five-part strong answer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Uncomfortable question: payment then worker death; what the layer protects",
+      "anchors": [
+        "uncomfortable-question"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Design-review scene, 'one fault teaches more than twelve happy-path questions', the four protected assets and 'best-effort script with a database' kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Four security controls: authorisation strengths, secrets out of history, narrow operator paths, audit of compensations",
+      "anchors": [
+        "security-controls"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four controls kept with signal types, opaque references and short-lived KMS-backed secrets (KMS expanded), the defence-in-depth list and the four audit fields."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Failure policy classes and blast-radius partitioning",
+      "anchors": [
+        "failure-policies"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five policy classes rendered as a table; dead-letter defined; partitioning by tenant/region/type/dependency and the cross-region spill rule kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Drill: worker crash after payment, with figure",
+      "anchors": [
+        "drill-payment-crash",
+        "figure-drill-payment-crash"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Detect/contain/recover/prevent kept; figure placed after the four lines and its decision on the recorded payment, with transient worker loss continuing and terminal failure refunding, matches the recover line; interview pointer folded into the following paragraph."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Drill: email succeeds but CRM fails, with figure",
+      "anchors": [
+        "drill-email-crm",
+        "figure-drill-email-crm"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Per-step tracking, repairable state, idempotent retry/dead-letter/manual reconciliation and 'workflow state authoritative, notifications not' kept beside the figure."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Drill: approval waits seven days, with figure",
+      "anchors": [
+        "drill-approval-wait",
+        "figure-drill-approval-wait"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "No-alarm detection, no endless polling, remind/escalate/expire and waiting as first-class state kept beside the figure."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Drill: definition changes while instances run, with figure",
+      "anchors": [
+        "drill-definition-change",
+        "figure-drill-definition-change"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Hash/version mismatch, pinned old instances, forward-compatible routing or audited migration, and stored version per instance kept beside the figure."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Drill: external API times out indefinitely, with figure",
+      "anchors": [
+        "drill-api-timeout",
+        "figure-drill-api-timeout"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four mechanisms kept with circuit breaker defined; detect/contain/recover/prevent and transient-versus-permanent policy kept beside the figure."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Audit evidence questions and observability counters/alerts",
+      "anchors": [
+        "audit-evidence"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five go-live evidence questions, tenant/workflow-ID searchability, retention, the four counters and the requested/completed/compensated drift alert kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "No-double-charge invariant code sketch and its limits",
+      "anchors": [
+        "no-double-charge-sketch"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code reproduced byte-for-byte with the attempted/completed lesson and production omissions; added an explicit note that the in-memory completed set and post-done crash point mean the sketch does not prove durability, and that a crash between intent and done needs the provider key."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-6-6-security-reliability-and-failure-handling",
+      "teaching_item": "Trade-off pushes and FDE accountability",
+      "anchors": [
+        "tradeoff-pushes",
+        "answer-pushes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Faster recovery, stronger correctness and multi-tenant pushes kept with their costs; also posed as a Practice reveal."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Start with one workflow and the three things to confirm",
+      "anchors": [
+        "one-workflow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Single approval-payment-email-internal slice, learning over breadth, three confirmations and MVP signal kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Determinism and crash recovery as the first gate",
+      "anchors": [
+        "first-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Replay-recorded-history and kill-workers tests, the 'won't promote until' line and the gate-order interview pointer kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Operator visibility and dashboard tied to the user journey",
+      "anchors": [
+        "operator-visibility"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three support questions, business-word states beside activity signals, and the left-to-right business-story dashboard (from the separate dashboard subsection) merged into one passage."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Version workflows instead of mutating them",
+      "anchors": [
+        "version-not-mutate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Days-long in-flight runs, old/new divergence and the three operating benefits kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Six-layer rollout scorecard with data source, owner and alert per metric",
+      "anchors": [
+        "scorecard"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every named metric rendered in one table with its source, owner and alert; adoption and business rows mark owner/alert as not named in the source; 'model quality' clarified as the orchestration model, not an AI model."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Phased rollout: four phases with owner, exit criteria, rollback trigger; figure; go/no-go questions",
+      "anchors": [
+        "phased-rollout",
+        "figure-rollout-phases"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-phase table keeps every owner, exit criterion and trigger (QA expanded); figure labels match phases and owners; three go/no-go questions kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Core product, adapters, configuration and shared services",
+      "anchors": [
+        "core-adapter-config"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four categories with their members and the reuse-without-losing-ownership caveat kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-7-7-delivery-plan-observability-and-business-impact",
+      "teaching_item": "Operator training and owned risk register; closing rollout story and measurable impact",
+      "anchors": [
+        "operators-and-risks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four runbook scenarios and scenario-based training kept; risk register rendered as a four-row table with owner, mitigation and trigger; six watched numbers and the impact statement close the step."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Minute-zero opening and the four things it earns",
+      "anchors": [
+        "minute-zero"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Model opening kept as a spoken example with its benefits."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "50-minute answer plan and figure",
+      "anchors": [
+        "fifty-minute-plan",
+        "figure-interview-plan"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight time slices rendered as a minutes/focus/coverage table with every source item; timeline figure labels match the slices."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Keeping depth on the fragile edges and assumption phrasings",
+      "anchors": [
+        "fifty-minute-plan"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three risk-to-depth rules and all three assumption quotes kept after the plan."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Four trade-offs: saga vs choreography, history vs debuggability, auto compensation vs review, code vs declarative",
+      "anchors": [
+        "dive-tradeoffs"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Orchestration and choreography taught in separate subsections, each tracing o-123's CRM failure; each pair keeps its verdict; the events-only interview pointer verdict kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Follow-up drills: payment crash, code change for running workflows, idempotency boundary, week-long approval",
+      "anchors": [
+        "practice-drills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each strong answer kept in full behind its own reveal (answer-drill-*), with SLA expanded."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Common weak answers and repairs",
+      "anchors": [
+        "practice-drills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six weak answers and repairs reproduced as a two-column table."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Scoring rubric for self-evaluation",
+      "anchors": [
+        "self-scoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven rubric questions and the strong-answer description kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "90-second architecture summary and its reusable parts",
+      "anchors": [
+        "close-and-loop"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summary kept verbatim in the answer-ninety-second reveal with the reusable-parts checklist."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-8-8-interview-walkthrough-trade-offs-and-practice",
+      "teaching_item": "Practice loop: solo, pair, implementation",
+      "anchors": [
+        "close-and-loop"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three exercises kept; added an authored worked trace (answer-implementation-trace) for the implementation exercise, labelled as authored."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-coverage-notes",
+      "teaching_item": "20-item rubric self-assessment: 16 full, 3 partial, 1 absent",
+      "anchors": [
+        "coverage-rubric"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All 20 items with phase and rating rendered as a table whose third column links to the anchor that now teaches each item, replacing the source's section numbers."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-coverage-notes",
+      "teaching_item": "Author's view: cost per workflow from 400 GB, $9 S3 / $32 gp3, repair-driven cost formula",
+      "anchors": [
+        "gap-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both prices with per-GB-month rates and check date, the formula and the 'we already have the inputs' line kept; labelled as the author's perspective."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-coverage-notes",
+      "teaching_item": "Author's view: buy the durable-execution runtime, build definitions, compensation policy, key boundaries and saga logic",
+      "anchors": [
+        "gap-build-buy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Default and the three build areas kept, with section references rewritten as links to failure-policies and dive-saga."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-coverage-notes",
+      "teaching_item": "Author's view: PCI DSS, SOX-style controls and GDPR mapped to existing records",
+      "anchors": [
+        "gap-governance"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three frameworks with acronyms expanded; added the source reference's caveat that transaction-capable tokens may stay in PCI scope."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-coverage-notes",
+      "teaching_item": "Author's view: responsible AI through the existing fail-closed and human-review lane",
+      "anchors": [
+        "gap-ai"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Misrouted-approval example and the untrusted-model-output rule kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-numbers"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every takeaway appears in Quick review: goal, payment risk, control/data split, history ownership, keys, retry vs compensation, timer state, failure classes, versioning, saga preference in review-decisions; sizing, 400 GB, 10x and gate order in review-numbers."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration table",
+      "anchors": [
+        "level-calibration"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Framing sentence and the three-row table with sounds-like and missing columns reproduced."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-9-sources-checked-27-sep-2026",
+      "teaching_item": "Eight sources checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight links and their notes kept, with the check date; added how the Stripe 24-hour pruning interacts with ActivityReceipt retention."
+      }
+    },
+    {
+      "source_id": "worksheet-1-interview-prompt",
+      "teaching_item": "Interview prompt with business-outcome meaning of exactly once",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt restated in brief-task and again at the top of practice-prompt, including 'exactly once refers to the business outcome'."
+      }
+    },
+    {
+      "source_id": "worksheet-2-clarify-the-customer-problem",
+      "teaching_item": "Five clarifying questions",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five questions kept as worksheet step 1."
+      }
+    },
+    {
+      "source_id": "worksheet-3-users-and-workflows",
+      "teaching_item": "Blank users/workflows table for four users",
+      "anchors": [
+        "practice-prompt",
+        "answer-users"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt kept as step 2; added an authored, labelled worked answer filling all five columns for the four users."
+      }
+    },
+    {
+      "source_id": "worksheet-4-requirements",
+      "teaching_item": "Requirements template with five non-functional prompts",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 lists latency, availability, cost, security/privacy and audit/compliance prompts."
+      }
+    },
+    {
+      "source_id": "worksheet-5-data-and-integration-map",
+      "teaching_item": "Blank data and integration map",
+      "anchors": [
+        "practice-prompt",
+        "answer-data-map"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt kept as step 4; added an authored, labelled worked map for payment, documents, email, CRM/internal systems and the history store."
+      }
+    },
+    {
+      "source_id": "worksheet-6-proposed-architecture",
+      "teaching_item": "Six architecture parts to fill in",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 lists all six parts: durable state and history, scheduling, timers and signals, workers, compensation, operator repair."
+      }
+    },
+    {
+      "source_id": "worksheet-7-evaluation-plan",
+      "teaching_item": "Four-row evaluation plan table",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four rows with good/bad thresholds, dataset and owner reproduced under step 6."
+      }
+    },
+    {
+      "source_id": "worksheet-8-failure-modes",
+      "teaching_item": "Six failure modes including two workers advancing one instance",
+      "anchors": [
+        "practice-prompt",
+        "answer-red-team"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six listed in step 7; the sixth is answered in answer-red-team and whiteboard-omissions via optimistic concurrency."
+      }
+    },
+    {
+      "source_id": "worksheet-9-rollout-plan",
+      "teaching_item": "Six rollout plan items",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps all six items, from single workflow and crash-recovery gate to publishing versions instead of editing live ones."
+      }
+    },
+    {
+      "source_id": "worksheet-10-weak-vs-strong-answer",
+      "teaching_item": "Weak and strong one-paragraph answers",
+      "anchors": [
+        "practice-drills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both quotes kept after the weak-answer repair table."
+      }
+    },
+    {
+      "source_id": "worksheet-11-candidate-scorecard",
+      "teaching_item": "Five-area 1/3/5 candidate scorecard",
+      "anchors": [
+        "self-scoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table reproduced with the empty score column dropped, since the page's local rubric records self-assessment."
+      }
+    },
+    {
+      "source_id": "answer-key-intro",
+      "teaching_item": "Model answer intro: compare after attempting",
+      "anchors": [
+        "practice-worked"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of practice-worked keeps the compare-after-attempting instruction and what the key models."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-discovery-questions",
+      "teaching_item": "Eight strong discovery questions",
+      "anchors": [
+        "answer-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight questions kept behind the answer-discovery reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-functional-requirements",
+      "teaching_item": "Six strong functional requirements",
+      "anchors": [
+        "answer-functional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six kept behind answer-functional."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-non-functional-requirements",
+      "teaching_item": "Six strong non-functional requirements",
+      "anchors": [
+        "answer-nonfunctional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency, availability (~1,200/s), security, compliance, reliability and cost kept behind answer-nonfunctional."
+      }
+    },
+    {
+      "source_id": "answer-key-architecture-explanation",
+      "teaching_item": "Eight-point architecture explanation and figure",
+      "anchors": [
+        "answer-architecture",
+        "figure-answer-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight points kept with the model-answer figure inside the reveal; its labels (start request, instance + history, scheduler, queue, worker, timer/signal, compensation, ops UI) match."
+      }
+    },
+    {
+      "source_id": "answer-key-data-model-integration-assumptions",
+      "teaching_item": "Data model and integration assumptions",
+      "anchors": [
+        "answer-data-model"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four records' fields, immutable events, receipt reuse, pinned version and payload_ref kept."
+      }
+    },
+    {
+      "source_id": "answer-key-red-team-risks",
+      "teaching_item": "Five red-team risks",
+      "anchors": [
+        "answer-red-team"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summary line and five risks kept; each now names its guard, and the worksheet's sixth mode is added."
+      }
+    },
+    {
+      "source_id": "answer-key-rollout-plan",
+      "teaching_item": "Week-by-week rollout plan",
+      "anchors": [
+        "answer-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Week 0-1 through after-pilot entries kept with the second-workflow admission criteria."
+      }
+    },
+    {
+      "source_id": "answer-key-evaluation-plan",
+      "teaching_item": "Six-metric evaluation plan with author-chosen thresholds",
+      "anchors": [
+        "answer-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table reproduced with the 'my own choices, not industry standards' caveat."
+      }
+    },
+    {
+      "source_id": "answer-key-weak-answer",
+      "teaching_item": "Weak answer and why",
+      "anchors": [
+        "answer-weak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Answer posed as the reveal question; the critique (wiring, no durable state, no exactly once, no compensation, double charge on retry) is the body."
+      }
+    },
+    {
+      "source_id": "answer-key-average-answer",
+      "teaching_item": "Average answer and why",
+      "anchors": [
+        "answer-average"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Answer posed in the summary; the three shortfalls (blurred retry/compensation, no pinned version, no safe operator fix) are the body."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-answer",
+      "teaching_item": "Strong answer",
+      "anchors": [
+        "answer-strong"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full text kept in the reveal, labelled as the source's first-person model answer."
+      }
+    },
+    {
+      "source_id": "answer-key-interviewer-scorecard",
+      "teaching_item": "Eight-area interviewer scorecard",
+      "anchors": [
+        "self-scoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row 1/3/5 table reproduced."
+      }
+    },
+    {
+      "source_id": "answer-key-final-2-minute-spoken-answer",
+      "teaching_item": "Final two-minute spoken answer",
+      "anchors": [
+        "answer-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Text kept verbatim in three paragraphs inside answer-two-minute."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: read all 46 captured sections (about 19,000 words) of the workflow-orchestration source and wrote the casebook from scratch. The brief opens on the six-system process and the irreversible payment, defines workflow, activity, side effect, business-level exactly once, idempotency key, compensation, saga and durable history before use, and adds an o-123 example taken from the source's own code and tests. Tutorial parts 1-4, 6 and 7 became walkthrough steps 1-8; part 5's records, code and tests, the retry formula, the four trade-offs and the coverage-notes gap essays moved to deep dives, with source section numbers replaced by links. Bullet-list source material was rewritten as connected prose, and list-shaped data (question tree, must/should/could, scorecard, phases, risk register, 50-minute plan) became tables. All three code blocks and all 14 figure pairs are kept beside their explanations; of the ten source tables, seven are reproduced, the two blank worksheet templates became prompts with authored worked answers, and the old sections table became reading guidance. Additions are labelled: an illustrative backoff schedule, the o-123 traces, two authored worksheet answers, an implementation trace, and caveats that the test fixtures are undefined and the no-double-charge sketch does not prove durability. Repeated sentences (the history/receipt rule, retry-storm partitioning, the outcome line) were consolidated where they repeat. No source item was omitted."
+  },
+  "visual_review": {
+    "status": "reviewed",
+    "evidence": "Desktop (1280) and phone (390) screenshots show the title, five-section nav, progress rail and the never-charge-twice brief with its definitions list, o-123 trace and the core-idea figure at phone width. All 14 placed source figures were screenshotted in the built page with disclosures open and read: core loop, stress-point decision, control/data-plane topology, happy-path sequence with retry and compensate alt blocks, crash-after-payment overlay, five drills (payment crash, email/CRM, seven-day approval, definition version, API timeout with circuit breaker), four-phase rollout with owners, saga flowchart with pay:/crm:/mail:/refund: keys, model-answer architecture and 50-minute timeline. Each sits directly after the prose it illustrates, and node and branch labels match the prose; the payment-crash caption was rewritten to match that figure's transient/terminal branches."
+  }
+}

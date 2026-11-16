@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "7a1874c02502227d7f79b0cbe6affc89d5dc9e612eab6a59b3a04dc943546138",
+  "html_sha256": "866e7ecaa590b3502ba6f8efb40bba50899a306e2d4e54fcdcada857805ea89c",
+  "config_sha256": "5f00315406248e13ac744ca9b0c741309cf2b6b1cb55ab9c345edf0207130f68",
+  "source_url": "https://forwarddeployedprep.com/design/scale-prototype-to-production",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 27,
+    "coverage_rows": 69,
+    "worked_answers": 20,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Re-review against all 27 captured sections, item by item, producing 69 coverage rows. The previous version was a thin paraphrase: it dropped the source-contribution table, the prompt and bank quotes, the weak/strong answer, admit-assemble-answer-learn, the two-minute spoken answer, the seven carrying lines, the four cost verbs, the runbook and adoption quotes, all nine adoption causes verbatim, and the cost-pivot framing. It also mis-captioned the tenfold figure, left the three architecture figures as 'source figure 1/2/3', showed ', ' where the sizing table had a dash, and had blank cost-card headers and broken abbr text. Restored all of these, added two walkthrough steps (eval rebuild, adoption) so section 9 and 12 are no longer split across deep dives, made the six follow-ups, the cost pivot and the two-minute answer into reveals, and rewrote the Quick review to cover all fifteen takeaways. Rechecked every sizing and cost product and resolved three source issues. The brief opens on the volunteer-to-employee gap, defines tail latency, token, tenant, gateway, 429 and cohort, and skips a separate example because step 6 traces one request. Source inconsistencies resolved in text (2026-11-16): caching row assumed every mid-tier request hits and ignored the write charge \u2192 write cost added (1.25x input, five-minute lifetime, a shared prefix stays warm, at most 288 writes a day, under $1.10), net saving about $193 a day so the $2,460/$74,000 row stands; component and owner tables had no adoption entry \u2192 Adoption row added to both (cohort waves, champions and metrics; product owner with the executive sponsor and champions), from the source's own rollout and change-management material; override-rate metric worded for agents while this assistant has read-only tools \u2192 defined as a reviewer editing, rejecting or correcting an answer before use, with the source's reading paraphrased for the assistant."
+    }
+  }
+}

@@ -1,0 +1,1784 @@
+## Case brief
+
+### Find the hop behind "slow and sometimes wrong" {#brief-complaint}
+
+Users of a customer-facing AI application say it is slow and sometimes wrong. The team has to trace each complaint to the step that caused it: a slow search, a model that ignored good evidence, a failing tool call or a queue that backed up. The difficulty is privacy. The evidence that explains a failure lives in the same requests that carry customer prompts, documents and identifiers, and the telemetry must not become a second copy of that data.
+
+A few terms carry the whole case, so we define them first.
+
+- **Telemetry** is the operational data a system emits about itself: timings, error codes, counts and outcome labels.
+- A **span** is one timed record of one step, such as "retrieval took 1.2 seconds and returned 3 documents". A **trace** is the set of spans for one request, linked together.
+- A **correlation ID** is one identifier attached to a request when it arrives and carried through every service, queue and integration it touches. It is what lets us join spans from different systems into one trace.
+- A **tenant** is one customer organisation on a shared platform. Acme and Globex are two tenants; neither may see the other's data.
+- **p95** and **p99** are the response times that 95% and 99% of requests beat. They describe the slow tail that averages hide.
+- RAG (retrieval-augmented generation) fetches relevant documents first and has the model answer only from them, so a wrong answer can start in the search step or in the model.
+
+The design gives every request a correlation ID and structured spans through retrieval, model and tools. Spans leave the request path asynchronously, are redacted before storage and are sampled so that errors and slow traces are kept. Authorised support staff see only their own tenant. Diagnosis then runs from the complaint down: the user's outcome first, then the slow or failing span, then the retrieved evidence compared with the answer.
+
+<figure class="source-diagram" id="figure-core-idea"><a href="source-assets/29d35c59454a9f17.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/29d35c59454a9f17.svg" alt="Flowchart: a user complaint leads to the correlated trace; if retrieved evidence is not good, fix retrieval upstream; if the answer does not match good evidence, fix the model or prompt; otherwise check tool calls and latency."></a><img class="diagram-dark" src="source-assets/c85451a89a3a8990.svg" alt="Dark variant: Flowchart: a user complaint leads to the correlated trace; if retrieved evidence is not good, fix retrieval upstream; if the answer does not match good evidence, fix the model or prompt; otherwise check tool calls and latency."><figcaption>Every request carries one correlation ID, and diagnosis walks down from what the user felt to the span that caused it. Open for full size.</figcaption></figure>
+
+The figure is the whole method in one path. The complaint selects a trace through its correlation ID. The first question is whether retrieval found good evidence; if not, the fault is upstream and changing the model will not help. If the evidence was good but the answer contradicts it, the model or the prompt is at fault. If both look right, the remaining suspects are tool calls and latency.
+
+### Follow one request: Acme's German refund flow {#brief-example}
+
+The source traces one request end to end. An Acme user asks the assistant about a refund in German.
+
+1. The request gets a correlation ID at authentication, together with its tenant, Acme.
+2. Each hop records its time and outcome: retrieval, model call and tool call. The raw prompt is not recorded by default.
+3. A classifier redacts sensitive values before anything is stored. "Retrieval 1.2s, 3 docs" is kept; a full social security number (SSN), the United States personal identity number, is not.
+4. When the user complains, support staff working for Acme can open Acme's traces only. A level-one (L1) support agent cannot open Globex tickets "to help debug".
+5. The trace distinguishes cases that look identical to the user: a slow first token versus a slow last sentence, and an empty retrieval versus a made-up answer versus a tool returning HTTP 500.
+6. Errors and outliers are always kept. Most successful, ordinary traffic is sampled, meaning only a fraction of it is stored.
+
+The loop is: trace the path, hide the secrets, find the hop. Throughout, telemetry must not stall the user.
+
+### What you need to design {#brief-task}
+
+This case covers one slice of a larger product: one correlation ID through the AI path, redacted spans and tenant-scoped debugging. It adds no product feature. Its dangerous constraint is that telemetry must never store raw prompts, documents or secrets, or let support read another tenant's data.
+
+By the end you should be able to explain the system at interview depth, starting from that constraint, and answer follow-up questions on redaction, sampling, root-cause method, failure policy, the two production incidents and rollout. The case is aimed at Forward Deployed, solutions and applied-AI engineering interviews, especially a production operations round that asks you to debug a live large language model (LLM) application or handle a latency or cost incident. It assumes comfort with distributed tracing, percentile latency, RAG pipelines and multi-tenant access control.
+
+The same traces answer several related interview prompts. Each reads the anchor's spans at a different depth.
+
+<p class="figure-caption">The anchor design and the related prompts it answers.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Related case</th>
+<th>Shared foundation</th>
+<th>What changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency spike</td>
+<td>Correlated stage spans</td>
+<td>Diagnose stacked retrieval, reranker, queue and provider delays.</td>
+</tr>
+<tr>
+<td>Cost spike</td>
+<td>Versioned request and token metadata</td>
+<td>Find prompt expansion, model-route change and unsafe cache-key regression.</td>
+</tr>
+<tr>
+<td>Latency questions</td>
+<td>Per-hop timing</td>
+<td>Separate application queueing from inference prefill and decode.</td>
+</tr>
+<tr>
+<td>Poor RAG quality</td>
+<td>Retrieval and answer evidence</td>
+<td>Separate retrieval, synthesis, prompt, output and user-experience faults.</td>
+</tr>
+<tr>
+<td>Cost/latency pivots</td>
+<td>Tenant/workflow attribution</td>
+<td>Apply measure → route → bound → cache safely.</td>
+</tr>
+</tbody>
+</table></div>
+
+Work through the Design walkthrough first: it is the answer you would give in the room. The Technical deep dives hold the mechanisms, both incidents in full and the neighbouring prompts. Practice asks you to rebuild the design from a blank page and rehearse every source question and pivot card. Quick review is the one-page recall sheet for the night before.
+
+## Design walkthrough
+
+### 1. Split the complaint into three problems {#walkthrough-split}
+
+The customer wants to connect a user-visible failure to a technical cause, quickly, safely and without drowning operators in noise. More logging does not achieve that. A vague complaint cannot be instrumented, so the first job is to make it measurable.
+
+"The AI is slow and sometimes wrong, and nobody knows why" is three problems in one sentence:
+
+- **Latency** asks whether the request is slow, and where in the pipeline the time goes.
+- **Correctness** asks whether the answer is wrong, and whether the fault is upstream in retrieval or downstream in the model or a tool.
+- **Diagnosability** asks whether support and engineering can explain a failure without exposing sensitive content.
+
+Each stakeholder wants a different signal. Support wants to triage a complaint without waiting on engineering. Engineering wants to know whether the fault is retrieval, the model or a tool integration. Security wants assurance that telemetry does not become a new exposure surface. The executive sponsor wants proof that quality improves from release to release, which a wall of green dashboards does not provide.
+
+Open the round with one sentence: connect user-visible failures to technical causes without violating privacy or drowning operators in telemetry. Then ask the first two questions below, state your assumptions aloud and invite the interviewer to redirect you.
+
+<p class="figure-caption">Six questions to ask the interviewer, in plain words, and what each answer decides.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Question to ask</th>
+<th>What it's really asking</th>
+<th>What you then decide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is slow: first token, full response or a specific workflow percentile?</td>
+<td>Is the user staring at a blank box, or waiting for the last sentence?</td>
+<td>SLO and which spans to time.</td>
+</tr>
+<tr>
+<td>What is wrong: empty retrieval, unsupported answer, tool failure or partial response?</td>
+<td>Empty search, made-up answer, tool 500, or a truncated reply?</td>
+<td>Outcome labels and quality checks.</td>
+</tr>
+<tr>
+<td>Which tenants and workflows are affected?</td>
+<td>Is only Acme's German refund flow slow, or everyone?</td>
+<td>Sampling and blast radius.</td>
+</tr>
+<tr>
+<td>What content is forbidden in telemetry by default?</td>
+<td>Can we store the full prompt, or only &quot;retrieval 1.2s, 3 docs&quot;?</td>
+<td>No-capture list and redaction.</td>
+</tr>
+<tr>
+<td>Who must diagnose incidents, and what may support see?</td>
+<td>Can L1 support open another tenant's raw tickets while debugging?</td>
+<td>Tenant-scoped views and access roles.</td>
+</tr>
+<tr>
+<td>What overhead, retention and sampling budget are acceptable?</td>
+<td>Can we afford 100% traces for 90 days, or 5% for 14?</td>
+<td>Collector and store size.</td>
+</tr>
+</tbody>
+</table></div>
+
+An SLO (service level objective) is the internal target the team commits to, such as "95% of answers in under 3 seconds". The full discovery set adds two questions to those six and states why each changes the design.
+
+<p class="figure-caption">The complete discovery set from the full design.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Why it changes the design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What counts as slow: which percentile, on which path, for which workflow?</td>
+<td>Sets the SLO the whole trace model is built to explain</td>
+</tr>
+<tr>
+<td>What counts as wrong: incorrect, empty, hallucinated, or a surfaced tool failure?</td>
+<td>Decides which outcome tags every request carries</td>
+</tr>
+<tr>
+<td>Which users and tenants are most affected?</td>
+<td>Decides where instrumentation starts</td>
+</tr>
+<tr>
+<td>What may be captured by default, and what is contractually off limits?</td>
+<td>Writes the no-capture list before anything else</td>
+</tr>
+<tr>
+<td>Who must diagnose a failure: support alone, or engineering every time?</td>
+<td>Decides whether a trace-linked support workflow is a requirement</td>
+</tr>
+<tr>
+<td>What telemetry overhead is acceptable?</td>
+<td>Makes instrumentation a budgeted constraint</td>
+</tr>
+<tr>
+<td>What retention window applies, and who may read traces under which role?</td>
+<td>Sets the store's retention and the access gateway</td>
+</tr>
+<tr>
+<td>What must the sponsor see to believe quality is improving?</td>
+<td>Decides the top panel of the dashboard</td>
+</tr>
+</tbody>
+</table></div>
+
+Notice that every answer lands on a concrete artefact: an SLO, an outcome tag, a no-capture list, a store size, the top dashboard panel. If an answer would not change anything you build, the question can wait.
+
+### 2. Decide what not to collect first {#walkthrough-no-capture}
+
+The unusual first design decision is the no-capture list. Full capture maximises forensic power, but it raises privacy exposure, access-control burden and storage cost at the same time. Data that is never collected cannot leak through the trace store, cannot overload a metrics backend and costs nothing to store.
+
+<p class="figure-caption">What must be observable by default, and what must not be captured by default.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Must be observable by default</th>
+<th>Must not be captured by default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request identity: a stable request ID and tenant context</td>
+<td>Full prompts</td>
+</tr>
+<tr>
+<td>Retrieval evidence: what was retrieved, and whether it was relevant</td>
+<td>Raw customer documents</td>
+</tr>
+<tr>
+<td>Model invocation metadata: model version, prompt template version, generation settings</td>
+<td>Secrets</td>
+</tr>
+<tr>
+<td>Tool call outcomes: status, latency, error class</td>
+<td>High-cardinality free-form labels: arbitrary user text, unbounded metadata keys</td>
+</tr>
+<tr>
+<td>Timing at each hop of the pipeline</td>
+<td></td>
+</tr>
+<tr>
+<td>User-visible outcome tags: success, partial answer, escalation</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+
+Cardinality is the number of distinct values a label can take. A label such as `region` has a handful; a label holding free user text has as many values as there are requests, and every distinct value becomes a new series a metrics backend must index. That is why free-form labels sit in the right-hand column with secrets.
+
+The left-hand column becomes a fixed span schema: correlation ID, tenant, span name, timing, model and prompt-template versions, retrieval references, tool outcome, error class and user-visible outcome. Retrieval references are document identifiers and query fingerprints, not document text.
+
+"Never capture anything" goes too far the other way. Capture enough structure to diagnose most incidents, redact by default, and record hashes or stable references instead of content. Then keep a narrow **break-glass** path for approved deep debugging: it can capture deeper evidence only with approval, strict access, a short timer on retention and an audit record of every use.
+
+Interviewers usually inject this as a hidden constraint mid-round: the customer will not allow raw prompts to be broadly retained. A design that started from "capture everything" has to restart. A design that started from the no-capture list only has to name its break-glass path.
+
+### 3. State requirements as testable constraints {#walkthrough-requirements}
+
+A requirement that cannot fail a test is a preference. "Observable" is a preference. "Support moves from a complaint to the request family without seeing raw content" is a constraint, and it shapes the architecture. A request family is the group of related requests behind one complaint: the same user, workflow and time window, found through correlation IDs and outcome tags rather than by reading prompts.
+
+Functional requirements say what the system does. Non-functional requirements say how well it does it and under which constraints. The functional core is the support workflow: a support agent moves from a user complaint to the exact request family and explains the failure without seeing raw sensitive content. Five more functional requirements make that possible.
+
+- Attach a stable correlation ID to every request and propagate trace context through authentication, tenant resolution, retrieval, model, tools, post-processing and queues, including across services and customer integrations.
+- Capture per-hop timing across authentication, tenant resolution, retrieval, model call, tool use, post-processing and delivery, with outcome tags.
+- Record retrieval evidence, model version, prompt template version, generation settings and tool outcomes as structured attributes.
+- Keep an aggregate global dashboard for platform health separate from tenant-scoped views for customer debugging.
+- Tag every request with a user-visible outcome, so complaints map to telemetry. Keep an access audit that does not depend on sampled debug traces.
+
+Each non-functional constraint is phrased so a test can fail it.
+
+<p class="figure-caption">Non-functional constraints stated so they can be tested.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Stated so it can be tested</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency</td>
+<td>Instrumentation must not become the outage; telemetry overhead is a budgeted constraint, measured with and without export</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>Telemetry export failure degrades diagnostics but never blocks the user request</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Full prompts, raw documents and secrets are never captured by default; sensitive fields are classified and hashed before storage; redaction pass rate is zero raw prompts in any sink</td>
+</tr>
+<tr>
+<td>Compliance</td>
+<td>Audit logs (who accessed what) stay separate from debugging traces (what failed where)</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>No single global sampling rule governs all error paths</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Volume scales with request rate, trace rate, retention window and sampling rate, so the first decision is what not to collect</td>
+</tr>
+<tr>
+<td>Diagnosability</td>
+<td>Trace coverage high enough that complaints map to traces; mean time to diagnose falling after the support workflow lands</td>
+</tr>
+</tbody>
+</table></div>
+
+The main guide states the same constraints more compactly, and adds two that are easy to forget: tenant isolation with bounded retention, and a stricter failure policy for protected-action evidence than for ordinary traces.
+
+<p class="figure-caption">Compact non-functional requirements, with the illustrative volume target.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Example target / constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Non-blocking</td>
+<td>Telemetry cannot stall the user request.</td>
+</tr>
+<tr>
+<td>Overhead</td>
+<td>Stay within an agreed budget.</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>No full prompts, raw documents, secrets, or unbounded free-form labels by default; redact before storage.</td>
+</tr>
+<tr>
+<td>Isolation</td>
+<td>Tenant isolation; bounded retention.</td>
+</tr>
+<tr>
+<td>Audit</td>
+<td>Protected-action evidence has a stricter failure policy than ordinary traces.</td>
+</tr>
+<tr>
+<td>Volume (illustrative)</td>
+<td>500 rps × ~6 spans ≈ 3,000 raw spans/s. Keep all errors/outliers (~2–5%) plus ~5% of normal traffic. ~200 B/redacted span × 30 days ⇒ ~110–155 GB (~270–390 GB at a more typical ~500 B/span). Classifier/export capacity matters more than disk.</td>
+</tr>
+</tbody>
+</table></div>
+
+Every requirement then needs an owner in the architecture. If you cannot point to the component that satisfies a requirement, the design has a gap.
+
+<p class="figure-caption">Each requirement and the component that owns it.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Primary component(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Complaint to request family, unaided</td>
+<td>Support and access gateway, tenant-scoped views, outcome tags</td>
+</tr>
+<tr>
+<td>Correlation across services and queues</td>
+<td>Trace collector, queue serialisation contract</td>
+</tr>
+<tr>
+<td>Per-hop timing</td>
+<td>Spans emitted at every hop into the collector</td>
+</tr>
+<tr>
+<td>Structured evidence without raw content</td>
+<td>Sensitivity classifier, keyed hash (HMAC)</td>
+</tr>
+<tr>
+<td>Global versus tenant views</td>
+<td>Two consumers of one store, with a permission boundary</td>
+</tr>
+<tr>
+<td>Overhead within budget</td>
+<td>Sampling policy, attribute caps, bounded retention</td>
+</tr>
+<tr>
+<td>Audit separate from debug</td>
+<td>Audit and redaction pipeline with its own write path</td>
+</tr>
+</tbody>
+</table></div>
+
+If the interviewer asks "What are the requirements?", the short spoken version from the source is:
+
+> "Functionally, one ID through every hop, timings and outcomes, tenant-scoped debug. Non-functionally, don't block the user, don't store the prompt, and still find why it was slow or wrong."
+
+### 4. Size the telemetry by collection policy {#walkthrough-sizing}
+
+Estimation here starts from collection policy, not from raw QPS (queries per second). Telemetry volume, storage and query load all scale with the sampling rate, the cardinality bounds and the retention window. Observability data is not free, and instrumentation that is not budgeted becomes the outage.
+
+The source chapter itself gives no numbers. A supplementary "gap note" from the V2 tutorial supplies a worked version. Say it aloud in the interview, because its conclusion surprises people.
+
+<p class="figure-caption">Worked sizing from the V2 gap note (supplementary, illustrative).</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Figure (V2 gap note, supplementary)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peak traffic</td>
+<td>500 requests/second</td>
+</tr>
+<tr>
+<td>Spans per request</td>
+<td>~6: auth, retrieval, model, tool, post-processing, plus the collector envelope</td>
+</tr>
+<tr>
+<td>Raw span rate</td>
+<td>~3,000 spans/second before sampling</td>
+</tr>
+<tr>
+<td>Tail-biased retention</td>
+<td>100% for error and latency-outlier traces, roughly 2-5% of volume</td>
+</tr>
+<tr>
+<td>Head sampling for the rest</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>Effect</td>
+<td>Raw trace volume cut by roughly 90%, failure population preserved</td>
+</tr>
+<tr>
+<td>Stored size</td>
+<td>~200 bytes/span after redaction, 30-day retention, about 110–155 GB (roughly 270–390 GB at a more typical ~500 bytes/span)</td>
+</tr>
+</tbody>
+</table></div>
+
+Here is the arithmetic behind the last two rows. If 2% of traffic is errors or outliers, we keep that 2% plus 5% of the remaining 98%, about 7% of spans. At 5% anomalies we keep about 10%. Seven to ten percent of 3,000 spans a second is roughly 210 to 300 spans a second, which is the "cut by roughly 90%". At 200 bytes a span, 210 spans a second for the 2,592,000 seconds in 30 days is about 109 GB, and 300 a second is about 156 GB. At 500 bytes a span the same range becomes about 270 to 390 GB. The typical 500-byte figure comes from Grafana Tempo's trace-ingestion documentation.
+
+The note's conclusion is that storage is not the constraint at this scale. Classifier CPU and the correctness of the redaction policy are. Every span passes through the classifier before storage, so the classifier sits on the observability path's critical line. Volume still depends on span size, the overlap between sampling classes and traffic shape, so treat these figures as an order of magnitude.
+
+Sampling is a deliberate control, and the two basic kinds behave differently.
+
+- **Head sampling** decides at the start of a request whether to keep its trace. It is simple and cheap, but it is blind to how the request ends: a 5% head sample drops 95% of the failures along with 95% of the successes.
+- **Tail sampling** decides after the request completes, so it can keep slow and failed traces. It needs more buffering, more infrastructure and careful policy, because every trace must be held until its outcome is known.
+
+The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first, then head-sample the ordinary remainder.
+
+<figure class="source-diagram" id="figure-sampling-decision"><a href="source-assets/5a13c6541449fb74.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/5a13c6541449fb74.svg" alt="Flowchart: an incoming request trace reaches a sampling decision; head sampling is cheap and simple but risks dropping a rare, expensive-to-reproduce failure so the only bad trace is lost; tail sampling keeps latency-heavy, error-heavy and suspicious traces through preferential retention of anomalous traces."></a><img class="diagram-dark" src="source-assets/c366796b41c5e996.svg" alt="Dark variant: Flowchart: an incoming request trace reaches a sampling decision; head sampling is cheap and simple but risks dropping a rare, expensive-to-reproduce failure so the only bad trace is lost; tail sampling keeps latency-heavy, error-heavy and suspicious traces through preferential retention of anomalous traces."><figcaption>Head sampling risks losing the only bad trace; tail sampling retains anomalous traces preferentially. Open for full size.</figcaption></figure>
+
+Follow the two branches. Down the head-sampling branch, a rare and expensive-to-reproduce failure is dropped with the same probability as a healthy request, so the only bad trace can be lost. Down the tail-sampling branch, the decision sees the outcome, so latency-heavy, error-heavy and suspicious traces are retained. The [sampling deep dive](#dive-sampling) adds the overrides that protect rare failures and the drill for when a trace is lost anyway.
+
+### 5. Draw the architecture end to end {#walkthrough-architecture}
+
+The design is tracing-first: structured spans, selective redaction and a stable correlation ID on every request from the edge inward. Two paths run side by side. The **request path** serves the user: it may use retrieval, an LLM and tools. The **observability path** describes those steps, but it cannot authorise, alter or stall them. A bounded asynchronous export separates the two, and nothing raw crosses the classifier boundary into the trace store.
+
+<figure class="source-diagram" id="figure-architecture"><a href="source-assets/9a5efaf9e464b62c.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/9a5efaf9e464b62c.svg" alt="Architecture: user request passes auth, tenant and correlation ID, retrieval, LLM or model call, tool use, post-process, and response with outcome. Spans flow to a bounded async collector, a sensitivity classifier (redact, keyed HMAC fingerprint, attribute caps), error- and slow-trace-biased sampling and a retention-bounded trace store, which feeds a global aggregate dashboard and a tenant-scoped support access gateway. A separate durable audit log records access."></a><img class="diagram-dark" src="source-assets/398dd2622f3f4b2a.svg" alt="Dark variant: Architecture: user request passes auth, tenant and correlation ID, retrieval, LLM or model call, tool use, post-process, and response with outcome. Spans flow to a bounded async collector, a sensitivity classifier (redact, keyed HMAC fingerprint, attribute caps), error- and slow-trace-biased sampling and a retention-bounded trace store, which feeds a global aggregate dashboard and a tenant-scoped support access gateway. A separate durable audit log records access."><figcaption>The request path above, and the observability path that describes it without being able to stall it. Open for full size.</figcaption></figure>
+
+Trace one request through the figure, step by step.
+
+1. Give each authorised request a correlation ID and tenant scope at the edge, and propagate both across services, queues and integrations.
+2. Time retrieval, model, tool and post-processing steps, attaching structured version, error and outcome metadata, while the request continues to the user.
+3. Export spans asynchronously through a bounded buffer. If export fails, serve the user anyway and alert on the diagnostic gap.
+4. Classify and redact sensitive fields before storage. Where correlation is needed, replace the value with an HMAC fingerprint made with a secret key, and cap attribute cardinality. HMAC (hash-based message authentication code) is explained in the [redaction deep dive](#dive-redaction).
+5. Bias retention towards error and slow traces, with exemplars and incident overrides so rare failures stay diagnosable. An exemplar is a trace kept deliberately as a concrete example of a metric, whatever the sampling rate.
+6. Store only bounded, retention-limited traces. Send platform-wide aggregates to the global dashboard, and enforce tenant and role access for support views.
+7. Write support access events to a separate, durable audit path, so trace sampling cannot erase the record of who viewed evidence.
+
+On a whiteboard the same design fits in four lines. Request: auth/tenant → retrieval → LLM → tools → response. Spans: async collector → classify/redact/HMAC → error-and-slow-biased sampling → bounded store → global aggregate and tenant-scoped support views. Access audit is separate. Telemetry export never blocks the user.
+
+The full design draws the same system twice more, once per path, with the trust boundaries visible.
+
+<figure class="source-diagram" id="figure-request-path"><a href="source-assets/d87032154e6b80b1.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/d87032154e6b80b1.svg" alt="Request path: authenticate and assign correlation ID, resolve tenant, retrieve, model call, tool use, post-process, response and actual outcome."></a><img class="diagram-dark" src="source-assets/18c14825561e1bd6.svg" alt="Dark variant: Request path: authenticate and assign correlation ID, resolve tenant, retrieve, model call, tool use, post-process, response and actual outcome."><figcaption>The request path with its trust boundaries: the correlation ID is assigned at authentication and the actual outcome is recorded at the end. Open for full size.</figcaption></figure>
+
+<figure class="source-diagram" id="figure-observability-path"><a href="source-assets/a4a2ef800bdf183d.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/a4a2ef800bdf183d.svg" alt="Observability path: per-stage spans and outcome tags enter an async bounded buffer and trace collector, then a classifier (classify sensitivity, keyed HMAC, cap cardinality), then tail-biased sampling with error overrides and exemplars, then a retention-bounded trace store feeding a global aggregate-only dashboard and a support access gateway with tenant-scoped view. A separate durable fail-closed access audit records who, when and why."></a><img class="diagram-dark" src="source-assets/4be687cd2b070f06.svg" alt="Dark variant: Observability path: per-stage spans and outcome tags enter an async bounded buffer and trace collector, then a classifier (classify sensitivity, keyed HMAC, cap cardinality), then tail-biased sampling with error overrides and exemplars, then a retention-bounded trace store feeding a global aggregate-only dashboard and a support access gateway with tenant-scoped view. A separate durable fail-closed access audit records who, when and why."><figcaption>The observability path: nothing raw crosses the classification boundary, and access audit has its own fail-closed write path. Open for full size.</figcaption></figure>
+
+Two properties hold across both drawings. Serving never waits for telemetry export, so buffer or export failure degrades observability without blocking the user. And no raw content crosses the classification boundary.
+
+The source's original diagram, kept verbatim, shows the same split with the two paths labelled.
+
+<figure class="source-diagram" id="figure-source-architecture"><a href="source-assets/54fc41849f48c317.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/54fc41849f48c317.svg" alt="Source diagram: the request path runs AuthN and tenant resolution, retrieval, model call, tool use, post-processing and response delivery. The observability path runs trace collector (structured spans and correlation ID), sensitivity classifier (hash or redact sensitive fields), trace store (sampled, bounded retention), then a global health dashboard (platform-wide) and tenant-scoped views (support and customer debugging)."></a><img class="diagram-dark" src="source-assets/5fd5ab6c5d7955f9.svg" alt="Dark variant: Source diagram: the request path runs AuthN and tenant resolution, retrieval, model call, tool use, post-processing and response delivery. The observability path runs trace collector (structured spans and correlation ID), sensitivity classifier (hash or redact sensitive fields), trace store (sampled, bounded retention), then a global health dashboard (platform-wide) and tenant-scoped views (support and customer debugging)."><figcaption>The source chapter&#x27;s original two-path diagram. Open for full size.</figcaption></figure>
+
+The component table names each part's job and, in the added right-hand column, how it fails. Reading the failure column is the quickest way to see why each boundary exists.
+
+<p class="figure-caption">Components, responsibilities and failure modes.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Primary responsibility</th>
+<th>Notes</th>
+<th>Fails how</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trace collector</td>
+<td>Attach correlation ID, propagate context, capture spans per hop</td>
+<td>Structured, not raw text by default</td>
+<td>Context lost at a queue; orphan spans</td>
+</tr>
+<tr>
+<td>Sensitivity classifier</td>
+<td>Classify and hash sensitive fields before they reach telemetry</td>
+<td>Runs before storage, not after</td>
+<td>A missed pattern writes PII into every downstream sink</td>
+</tr>
+<tr>
+<td>Trace store</td>
+<td>Durable, retention-bounded storage of exported traces</td>
+<td>Retention window is a cost and privacy control</td>
+<td>Unbounded retention turns it into a data lake of customer content</td>
+</tr>
+<tr>
+<td>Global dashboard</td>
+<td>Platform-wide health, release regressions</td>
+<td>Cross-tenant, aggregate only</td>
+<td>A tenant label on a global chart explodes cardinality</td>
+</tr>
+<tr>
+<td>Tenant-scoped views</td>
+<td>Customer-specific debugging, support triage</td>
+<td>Access scoped by role and tenant</td>
+<td>One misconfigured view spans every tenant</td>
+</tr>
+<tr>
+<td>Support and access gateway</td>
+<td>Role-based, tenant-scoped access to evidence</td>
+<td>Enforces least privilege</td>
+<td>&quot;Can read all traces&quot; becomes the default</td>
+</tr>
+<tr>
+<td>Audit and redaction pipeline</td>
+<td>Enforces retention and redaction on export</td>
+<td>Defence in depth: code, collector, review</td>
+<td>Combined with debug traces, it inherits their sampling and short retention</td>
+</tr>
+</tbody>
+</table></div>
+
+PII (personally identifiable information) is anything that identifies a person: name, email, phone or account number. Four questions organise the walk-through, and you should answer each one against the diagram:
+
+1. How does each request get a correlation ID? At authentication, before anything else runs.
+2. How does trace context flow across services and customer integrations? In headers between services, and in an explicit serialisation contract across queues.
+3. How does a support operator jump from an alert to the request family without seeing raw content? Through outcome tags, fingerprints and document references in a tenant-scoped view.
+4. How are global and tenant visibility separated? Two consumers of one store, with a permission boundary: aggregates only on the global side, tenant and role checks on the support side.
+
+### 6. Name the failure policy for every layer {#walkthrough-failure-policy}
+
+Every dependency needs an explicit answer to one question: what happens when it is gone? Five terms cover the possible answers.
+
+- **Fail open** continues with reduced visibility.
+- **Fail closed** refuses the action when integrity, privacy or authorisation would be compromised.
+- **Degrade** serves a reduced but safe experience.
+- **Queue** buffers the work with explicit bounds and retention.
+- **Human intervention** escalates when risk or ambiguity is too high for automation.
+
+<p class="figure-caption">The failure policy for each layer.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auth token missing</td>
+<td>Fail closed; do not infer identity; ask the caller to re-authenticate</td>
+</tr>
+<tr>
+<td>Telemetry export unavailable</td>
+<td>Degrade; continue serving, buffer a bounded summary, alert</td>
+</tr>
+<tr>
+<td>Retriever timeout</td>
+<td>Retry once with jitter; if still failing, degrade to a reduced-answer path or ask for refinement</td>
+</tr>
+<tr>
+<td>Model gateway rate limit</td>
+<td>Queue briefly if the SLA allows; otherwise fail gracefully with a specific retry message</td>
+</tr>
+<tr>
+<td>Audit sink unavailable</td>
+<td>Usually fail closed for the audited action, or require a human; silent loss of audit evidence is unacceptable</td>
+</tr>
+<tr>
+<td>Support lookup outside tenant scope</td>
+<td>Fail closed; no cross-tenant fallback</td>
+</tr>
+<tr>
+<td>Repeated downstream timeouts</td>
+<td>Trip a circuit breaker; serve a safe degraded response or queue if the workflow permits</td>
+</tr>
+<tr>
+<td>Evidence buffer full</td>
+<td>Dead-letter the overflow into a restricted quarantine queue with an incident marker, then alert a human</td>
+</tr>
+</tbody>
+</table></div>
+
+An SLA (service level agreement) is the promise made to the customer, usually with penalties, and is looser than the internal SLO. A circuit breaker stops calling a dependency after repeated failures so the system stops waiting on timeouts. A dead-letter queue holds messages that could not be processed so they are not silently lost.
+
+Say aloud why the rows differ. A user-facing answer can sometimes degrade; an audit trail usually cannot. A retriever timeout can be retried; a permission check cannot be guessed. In short: telemetry export may degrade, while missing auth, cross-tenant support lookup, raw-content redaction failure and required audit evidence fail closed.
+
+Then name the **blast radius**, the set of users a failure can reach, along four axes: tenant, region, workflow and dependency. The axes behave differently for different failures. A raw-prompt leak is usually tenant-scoped but workflow-wide. A trace break at a queue boundary can hit one integration path across many tenants. A model outage may be regional. A misconfigured support tool can span every tenant. Limiting blast radius along those axes is what lets one failure stay one incident. The [failure drills deep dive](#dive-failure-drills) works through four more named failures and the abuse case.
+
+### 7. Diagnose from the complaint down {#walkthrough-diagnosis}
+
+A dashboard built from component metrics shows rates without telling anyone whether the user's experience improved. So build it from one incident story, top down. The complaint is "the AI is slow and sometimes wrong."
+
+- The **top panel** shows the user outcome: latency percentile, first-token time, failure and partial-answer rate, incident volume and the affected tenant.
+- The **middle panel** shows likely causes: retrieval success, tool success, model error class and token cost. This is where request time is split into retrieval, rerank, model queue, provider, tools and delivery.
+- The **bottom panel** shows support mechanics: trace coverage, redaction rate, queue age for incidents and mean time to diagnose.
+
+Track completion, abandonment and support contacts alongside these technical signals. A system can get faster and still fail its users.
+
+For latency, compare first-token time with total time. A slow first token points at prompt size, prefill, retrieval or queueing before generation. A fast start that drags points at a long decode, the token-by-token generation phase. The [neighbouring prompts deep dive](#dive-neighbouring) explains why.
+
+For a wrong answer, compare the retrieved evidence with the final answer.
+
+<figure class="source-diagram" id="figure-bad-answer-triage"><a href="source-assets/b4aa2e2247e7ecf4.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/b4aa2e2247e7ecf4.svg" alt="Flowchart: bad answer reported; did retrieval return relevant evidence? If no, fault likely upstream in retrieval. If yes, does the answer contradict the evidence? If yes, fault likely model or prompt construction. Otherwise suspect tenant configuration, access control or integration state."></a><img class="diagram-dark" src="source-assets/6f55a31d5fb49025.svg" alt="Dark variant: Flowchart: bad answer reported; did retrieval return relevant evidence? If no, fault likely upstream in retrieval. If yes, does the answer contradict the evidence? If yes, fault likely model or prompt construction. Otherwise suspect tenant configuration, access control or integration state."><figcaption>First-cut triage for a wrong answer: compare the evidence with the answer before blaming the model. Open for full size.</figcaption></figure>
+
+- If retrieval is empty, stale or off-topic, the fault is upstream. A better model cannot answer from evidence it never received.
+- If retrieval looked good but the answer contradicts it, suspect the model or the prompt construction (synthesis).
+- If the bad answer appears for only one tenant, suspect that tenant's configuration, access control or integration state before blaming the shared model.
+
+This only works because of the signals kept in [step 2](#walkthrough-no-capture): request and tenant correlation IDs; retrieval query fingerprints and document identifiers, not raw text; model version, prompt template version and generation settings; tool call status, latency and error class; and outcome tags.
+
+Alert on customer harm or likely impending harm, not on telemetry volume. Good triggers are sustained latency above the SLO, elevated error rates, repeated empty retrievals, a spike in fallback responses and critical tool failures. A sudden rise in "wrong answer" feedback for one tenant or cohort is another.
+
+The design has to survive one more case: sampling dropped the only bad trace. Compare complaints with trace coverage, temporarily raise fidelity for the affected slice, reconstruct from gateway and dependency evidence, mark the gap, then add error-class overrides and always-on exemplars. A missing trace does not mean no failure. The [sampling deep dive](#dive-sampling) gives the full four-step drill.
+
+Two source incidents show the method at work, and each is told in full in the deep dives.
+
+- **Latency incident.** p95 reached 22.18 s against a 7 s target. Retrieval at 4.2 s, the reranker at 3.1 s, the gateway queue at 2.8 s and the provider at 9.36 s stacked up after a larger reranker and a model-route change. The response is to roll back the route, cap candidates, enable a light-reranker fallback and keep EU traffic near an EU endpoint, then load-test peak queue depth before repeating the experiment. See [the latency spike](#dive-latency-incident).
+- **Cost incident.** Requests rose only 7% while input tokens rose 351%, cache hit rate fell from 67% to 4%, and a larger prompt crossed an expensive model-routing threshold. The response is to roll back the template, restore compression and context caps, invalidate the flawed cache entries and version cost gates. The cache key also lost `role_scope`, so this was a permission incident as well as a budget incident. See [the cost spike](#dive-cost-incident).
+
+### 8. Roll out in four phases with named owners {#walkthrough-rollout}
+
+Observability fails socially before it fails technically. If no one owns a signal, no one owns the decision. So the rollout has names, gates and exit criteria, not only components.
+
+<p class="figure-caption">Four rollout phases, owners and exit criteria.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Owner</th>
+<th>Exit criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Define user-facing SLOs first</td>
+<td>Product and engineering, with the customer signing off</td>
+<td>Agreed latency targets, acceptable failures, support boundary, definition of a customer-visible incident. No agreement, no wider release</td>
+</tr>
+<tr>
+<td>2. Instrument one critical path</td>
+<td>The primary service team, with platform support</td>
+<td>One representative request traced end to end through auth, retrieval, model, tool and response assembly</td>
+</tr>
+<tr>
+<td>3. Add the trace-linked support workflow</td>
+<td>Support engineering or customer success, with on-call defined</td>
+<td>A support agent moves from a complaint to a trace without asking the user for raw prompts</td>
+</tr>
+<tr>
+<td>4. Add quality and cost signals with sampling</td>
+<td>The observability platform owner, with model and product owners setting thresholds</td>
+<td>Enough signal to detect regressions, sampling only what is needed</td>
+</tr>
+</tbody>
+</table></div>
+
+The answer key gives a weekly version. SLOs come in weeks 0-1 and a measurable "slow" and "wrong" in weeks 1-2. One instrumented path follows in weeks 2-3 and redaction scanning in weeks 3-4. The support workflow lands in week 5, then quality and cost signals in weeks 6-8.
+
+Eight metrics make up the scorecard. Each has a calculation, an owner and an alert condition, so nobody argues about what a number means during an incident.
+
+<p class="figure-caption">The eight-metric scorecard.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Calculation</th>
+<th>Owner</th>
+<th>Alert when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Availability SLO</td>
+<td>Successful requests / total, excluding agreed out-of-scope failures</td>
+<td>Application engineering with platform</td>
+<td>The burn rate threatens the SLO</td>
+</tr>
+<tr>
+<td>Latency SLO</td>
+<td>Latency at the agreed percentile, usually p95 or p99</td>
+<td>Application engineering</td>
+<td>Sustained breach, or a breach after a release or canary</td>
+</tr>
+<tr>
+<td>Retrieval and tool success</td>
+<td>Successes / attempts, by dependency and tenant</td>
+<td>The owning service team</td>
+<td>Below baseline, or a sudden shift in failure class</td>
+</tr>
+<tr>
+<td>Token cost</td>
+<td>Tokens per successful request, or cost per tenant per day</td>
+<td>Product operations or finance partner</td>
+<td>Consumption rises faster than traffic, or exceeds budget</td>
+</tr>
+<tr>
+<td>Quality-event rate</td>
+<td>Visible failures, escalations, reviewed bad outputs / sessions</td>
+<td>Product and ML engineering</td>
+<td>A meaningful rise after any release or config change</td>
+</tr>
+<tr>
+<td>Trace coverage</td>
+<td>Traced requests / expected requests on the critical path</td>
+<td>Observability platform</td>
+<td>Below the minimum needed for the top failure path</td>
+</tr>
+<tr>
+<td>Telemetry overhead</td>
+<td>Added latency, compute, storage, network versus baseline</td>
+<td>Platform and SRE</td>
+<td>Overhead materially raises latency or cost</td>
+</tr>
+<tr>
+<td>Mean time to diagnose</td>
+<td>First report or alert to a credible root-cause hypothesis</td>
+<td>On-call engineering and support operations</td>
+<td>Stops improving, or exceeds the response target</td>
+</tr>
+</tbody>
+</table></div>
+
+SRE (site reliability engineering) is the team and practice that keeps production running; ML is machine learning. The **go/no-go gate** is concrete: if trace coverage falls below the minimum or overhead moves latency, the release pauses. Rollback triggers are equally concrete: loss of trace propagation, a spike in quality-event rate, or an unsustainable cost slope.
+
+Decide what is core product, shared service, adapter or configuration. Per-customer sampling rates, retention windows and alert thresholds are configuration. Ticketing and alerting integrations are adapters. Collection, redaction, correlation propagation and the access gateway are a shared service. The request lifecycle, outcome tags and the minimal schema are core product. That split keeps customer edge cases out of the core.
+
+Launch readiness needs a canary on one tenant or slice and a fast rollback switch. Keep old and new trace schemas interoperable during migration. Train support on what a healthy trace looks like, and publish an operations guide with metric definitions, access rules and rollback steps. Have three artefacts ready before launch: an evidence policy, a response runbook and an access review.
+
+<p class="figure-caption">Risk register.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Owner</th>
+<th>Mitigation</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sampling drops the only bad trace</td>
+<td>Observability platform</td>
+<td>Bias sampling toward error paths and reported incidents</td>
+<td>Support cannot find evidence for an acknowledged failure</td>
+</tr>
+<tr>
+<td>Telemetry becomes the bottleneck</td>
+<td>Platform and SRE</td>
+<td>Cap attributes, bound storage, monitor overhead</td>
+<td>Latency or cost rises after instrumentation changes</td>
+</tr>
+<tr>
+<td>Support sees too much or too little</td>
+<td>Security and support engineering</td>
+<td>Role-based access, redaction, audit logging</td>
+<td>Sensitive content in support artefacts, or triage stalls</td>
+</tr>
+<tr>
+<td>Quality signals are noisy</td>
+<td>Product and ML engineering</td>
+<td>Separate objective service metrics from subjective labels</td>
+<td>Alerts fire on expected experimentation</td>
+</tr>
+<tr>
+<td>Adoption mistaken for success</td>
+<td>Product</td>
+<td>Track task completion and business outcome</td>
+<td>Usage rises while escalations and manual work stay flat</td>
+</tr>
+</tbody>
+</table></div>
+
+The measures that prove the rollout worked are mean time to diagnose, the privacy invariant (zero raw content in any sink), trace coverage, telemetry overhead, latency, retrieval and tool success, quality-event rate and token cost by workflow. Gate wider release on adequate trace coverage and tolerable overhead.
+
+## Technical deep dives
+
+### Redaction, keyed hashing and data boundaries {#dive-redaction}
+
+A classifier that runs after storage protects nothing, because the raw value has already been written and every system that reads the store has it. So classification happens before a value can reach a trace. A keyed hash then preserves correlation without retaining content.
+
+#### The data model
+
+The data model is small. A `Request` carries tenant ID, prompt and an optional user ID. An `ExportedTrace` carries only a bounded, structured attribute dictionary: correlation ID, tenant ID, prompt classification, query hash, spans and result status. It never carries raw prompt text by default. The prompt enters the system on the request side and stops at the classifier; only its classification and fingerprint cross.
+
+#### Why the hash must be keyed
+
+HMAC-SHA256 combines the value with a secret key before hashing. The same prompt with the same key always produces the same fingerprint, so the fingerprint can deduplicate and correlate repeated queries across the store. A plain unkeyed hash would do that too, but anyone could hash a list of common prompts and match the results, which is a dictionary attack. Without the secret key, nobody can brute-force common prompts back out of an HMAC. RFC 2104, section 3, makes the point that HMAC's security rests on the secret key, not on a salt.
+
+If the key leaks, attackers can run that dictionary attack, so the key lives in a vault and is rotated. A missing key raises an error. The code must never fall back silently to a plain unkeyed hash, because that fallback looks like success while removing the protection.
+
+#### Three executable contracts
+
+Three tests turn the design into contracts that fail when the code drifts.
+
+<p class="figure-caption">Three tests and what each proves.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idempotent trace ingestion: post the same trace twice</td>
+<td>The second post returns &quot;deduplicated&quot;, so a retry never double-counts</td>
+</tr>
+<tr>
+<td>Privacy invariant: a request containing person@example.com</td>
+<td>The address never appears in the exported JSON; the query hash is present; the classification is &quot;sensitive&quot;</td>
+</tr>
+<tr>
+<td>Failure injection: the retriever raises a timeout after acceptance</td>
+<td>The failure is still observable; the trace summary is written in a finally block with an outcome=&quot;partial_failure&quot; field</td>
+</tr>
+</tbody>
+</table></div>
+
+The last test guards the case's central failure drill: sampling and redaction must never hide a failure. Writing the summary in a `finally` block means it is emitted whether the request succeeds or throws.
+
+#### Schema, cardinality and queue boundaries
+
+Telemetry attributes are schema-validated at ingestion. Unknown high-cardinality fields are rejected or collapsed into a bounded "other" bucket. Ingestion is idempotent, so retries do not double-count.
+
+Queue serialisation contracts carry trace context, idempotency key and tenant scope explicitly. HTTP headers carry trace context between services automatically, but a message placed on a queue carries only what its schema includes. If correlation and tenant scope are not serialised into the message, the consumer starts a fresh trace and the spans after the handoff become orphan spans with no parent.
+
+#### Two paths: debug traces and access audit
+
+Debug traces and access audit have separate paths. The trace store is sampled and short-lived. The audit store records who viewed which trace, when and why, and has stricter durability. If audit lived in the trace store, it would inherit trace sampling and short retention, and an access event could be sampled away. Global dashboards aggregate across tenants; support views are tenant-scoped by role. Test the access gateway for leakage and audit every break-glass use.
+
+### Sampling toward failures and the missing-evidence drill {#dive-sampling}
+
+The case's signature phrase is "sampling drops the only bad trace." Uniform sampling keeps a fixed fraction of everything. When failures are rare, a fixed fraction of a rare thing is often zero. For example, at a 5% uniform rate a failure that happens three times in an hour has about an 86% chance of leaving no trace at all (0.95 cubed), an illustrative calculation rather than a source figure. Expect the interviewer to inject this mid-round and have the answer ready.
+
+Head sampling is cheap but cannot know a request's final outcome. Tail-biased retention costs more buffering but preserves slow and failed traces. The robust policy combines four mechanisms:
+
+- normal low-rate sampling for ordinary traffic;
+- error-class overrides, so every request with a given error class is kept;
+- always-on exemplars, a low-rate stream of kept traces for each path even when nothing looks wrong;
+- temporary tenant or route escalation during an incident, raising fidelity for just the affected slice.
+
+Monitor trace coverage against complaints and request errors. Never read a missing trace as proof of health.
+
+When a bad trace is lost anyway, walk the four-step drill.
+
+<p class="figure-caption">The &quot;sampling drops the only bad trace&quot; drill.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Sampling drops the only bad trace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detection</td>
+<td>Compare complaint intake, request errors and anomaly signals against sampled trace volume. Complaints rising while traces for that workflow fall is a blind spot, not a healthy system</td>
+</tr>
+<tr>
+<td>Containment</td>
+<td>Switch the affected tenant, route or error class to higher-fidelity sampling temporarily; preserve the raw event envelope in a protected quarantine store if policy allows</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>Reconstruct from neighbouring evidence: API gateway logs, model gateway errors, dependency spans, support tickets. Mark the missing trace explicitly in the incident record</td>
+</tr>
+<tr>
+<td>Prevention</td>
+<td>Never let one global sampling rule govern all error paths. Use error-class overrides, low-rate always-on exemplars and per-tenant incident escalation hooks</td>
+</tr>
+</tbody>
+</table></div>
+
+The first move under this injection is to contain impact, preserve evidence and make the failure legible, recording the uncertainty that reconstruction leaves. Defending the sampler or arguing about probability is the weak move.
+
+### Failure drills, the abuse case and chaos practice {#dive-failure-drills}
+
+The [failure policy](#walkthrough-failure-policy) says what each layer does when a dependency disappears. Four more named failures get the full drill: how you detect it, contain it, recover and prevent a repeat.
+
+<p class="figure-caption">Four named failures through detection, containment, recovery and prevention.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Detection</th>
+<th>Containment</th>
+<th>Recovery</th>
+<th>Prevention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenant ID has a high-cardinality bug</td>
+<td>Cardinality budgets and exporter rejections; a spike in unique tenant labels is itself an incident</td>
+<td>Strip or normalise untrusted attributes at ingestion; collapse unknowns into &quot;other&quot;</td>
+<td>Fix the mapper; backfill only the minimal aggregates for the review</td>
+<td>Schema-validate attributes; reject unknown high-cardinality fields before export</td>
+</tr>
+<tr>
+<td>Logs store a raw prompt</td>
+<td>Scanners and red-team tests search logs, traces and support transcripts for PII and secret formats</td>
+<td>Revoke sink access, rotate exposed credentials, quarantine the log set</td>
+<td>Delete or redact per retention policy and contract; notify owners</td>
+<td>Enforce redaction in code, in the collector and in review</td>
+</tr>
+<tr>
+<td>Trace context breaks at a queue</td>
+<td>A trace starts, then vanishes after async handoff; orphan spans; a spike in &quot;unknown root&quot; events</td>
+<td>Propagate a minimal correlation envelope through the queue</td>
+<td>Stitch spans by correlation ID and timestamp; mark the join as reconstructed</td>
+<td>Queue contracts carry trace context, idempotency key and tenant scope, and are tested</td>
+</tr>
+<tr>
+<td>Quality metric improves while adoption falls</td>
+<td>Pair technical metrics with completion rate, retries, abandonment, support contacts</td>
+<td>Treat it as a product problem, not a hotfix</td>
+<td>Product review, metric reset, possibly roll back the latest change</td>
+<td>Track task completion and business outcome, not usage volume alone</td>
+</tr>
+</tbody>
+</table></div>
+
+A raw-prompt export is a privacy incident, not a logging bug. Contain access to the sink, rotate exposed credentials if necessary, delete or redact according to the contract, and fix the exporter guardrail.
+
+The abuse case shows how that happens. A developer adds a raw prompt field to a debug span to speed up triage. It works once, then becomes the easiest way to move PII into every downstream system that reads traces. The fix has three layers: a redaction policy, an exporter guardrail that strips the field, and a test that fails whenever exported telemetry contains raw sensitive strings.
+
+The remaining operational rules are short. Breakers stop repeated downstream timeouts. A buffer overflow enters restricted quarantine with an incident marker. An audit sink failure blocks the audited action or requires a human. Retrieval may retry once, then return a clearly reduced answer; model limits may queue briefly or return a retry instruction.
+
+Inject sampler loss, queue-boundary breakage, redaction regressions and dependency timeouts in staging. Chaos practice proves the failure policy works before production forces the discovery.
+
+### The latency spike after a reranker and model-routing change {#dive-latency-incident}
+
+A slow pipeline is rarely one slow component. This incident is the proof: no single span explains it, and every small change looked safe on its own.
+
+#### Setting and symptom {#latency-setting-and-symptom}
+
+A B2B (business-to-business) SaaS support copilot runs inside a live support console. Agents expect answers in under 5 seconds because the customer is waiting in chat. The path is Support Console → RAG API → query rewrite → hybrid retriever → cross-encoder reranker → context compressor → LLM gateway → model provider → response evaluator → UI stream. A cross-encoder reranker reads the query and each candidate document together to re-score them; it is more accurate than the first-stage retriever and much slower per candidate. The target is a 7-second p95 with a 12-second hard timeout.
+
+On 2026-07-08, during peak European hours, agents saw the spinner for 18 to 35 seconds. Some answers arrived after the human agent had already replied. Handle time rose 21%. It was not an outage: success rate stayed acceptable, but p95 and p99 broke the SLO.
+
+#### Telemetry {#latency-telemetry}
+
+<p class="figure-caption">Latency incident telemetry.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p50 / p95 / p99 (eu-central-1, 5-minute window)</td>
+<td>5310 ms / 22180 ms / 34890 ms</td>
+</tr>
+<tr>
+<td>Timeout rate</td>
+<td>12.8% against a 1.1% baseline, over 1842 requests</td>
+</tr>
+<tr>
+<td>Retrieval p95</td>
+<td>4200 ms</td>
+</tr>
+<tr>
+<td>Reranker</td>
+<td>3100 ms; <code>cross_encoder_large_v4</code>; 80 candidates in, 12 out; batch size 1; GPU queue depth 29; light-reranker fallback off</td>
+</tr>
+<tr>
+<td>LLM gateway queue</td>
+<td>2800 ms; primary provider degraded; 1 retry, retry-after 750 ms</td>
+</tr>
+<tr>
+<td>Provider latency</td>
+<td>9360 ms, routed to us-east-1 from eu-central-1</td>
+</tr>
+<tr>
+<td>Context compression</td>
+<td>740 ms</td>
+</tr>
+<tr>
+<td>Tokens</td>
+<td>18500 in, 610 out</td>
+</tr>
+<tr>
+<td>First token / total</td>
+<td>14120 ms / 23840 ms against a 12000 ms timeout budget</td>
+</tr>
+</tbody>
+</table></div>
+
+Read the table from the top. The p50 of 5.3 s is close to normal, while p95 and p99 are far above it: the tail broke, not the median, which already hints at queueing. Adding the listed stage figures (4,200 + 3,100 + 2,800 + 9,360 + 740 ms) gives about 20.2 s before query rewrite, evaluation and streaming. Stage percentiles do not add exactly, so treat that as a budget check, but it shows the 22.18 s p95 is several moderate delays stacked rather than one broken service. The first token at 14.1 s is already past the 12 s budget, which settles one tempting fix in advance.
+
+#### What changed and why {#latency-what-changed-and-why}
+
+Two changes landed within 24 hours. The reranker moved from `cross_encoder_small_v2` to `cross_encoder_large_v4`. The router moved standard answers from a faster mid-tier model to a larger one after a quality experiment. The canary ran only in low-traffic hours and never tested peak GPU queue depth.
+
+The root cause is compounded latency. A larger candidate set, a slower reranker, a bigger context, gateway queueing and cross-region routing stacked up. The pipeline broke its budget because several "small" changes landed together.
+
+#### Debugging path {#latency-debugging-path}
+
+Decompose the trace into spans and compare each stage's p95 with its baseline. Check candidate count, context tokens, queue time, provider latency and regional routing. Compare canary with control and peak with off-peak. Check whether timeouts land before or after the first token. A 14-second first token means streaming cannot rescue the experience, because the user sees nothing until then.
+
+#### Fix {#latency-fix}
+
+Now: roll back the model route, cap reranker candidates at 30, and enable the light reranker when GPU queue depth exceeds 10. Also reduce max context tokens and route EU traffic to an EU-capable endpoint.
+
+Later: add a latency budget per stage and load-test gates for reranker queue depth. Enforce context caps per workflow and add circuit breakers for provider degradation. Quality experiments must pass latency and cost SLOs, not only answer quality.
+
+#### Abuse angle {#latency-abuse-angle}
+
+Latency becomes a safety risk when users abandon the assistant or bypass review. Broad queries that trigger large candidate sets and expensive reranking are a cheap denial-of-wallet or denial-of-service vector: an attacker spends little to make the system spend a lot.
+
+#### The answer to give {#latency-the-answer-to-give}
+
+Spoken answer example (source):
+
+> "I would start with span-level latency decomposition. The trace shows retrieval at 4.2s, reranker at 3.1s, LLM queue at 2.8s, and provider latency at 9.3s, with 18.5k input tokens. That means this is a pipeline-budget failure, not just one slow API. I would roll back the model route, cap reranker candidates, enforce context compression, add queue-depth fallback, and make future quality experiments pass p95 latency and timeout-rate gates."
+
+The weak answer is "increase the timeout and maybe use a faster model." It never reads a span.
+
+### The cost spike from a prompt-template and cache-key regression {#dive-cost-incident}
+
+Production generative AI systems fail economically as well as technically. This incident produced no quality complaint at all. The only symptom was a budget alert.
+
+#### Setting and symptom {#cost-setting-and-symptom}
+
+An executive dashboard copilot summarises revenue, pipeline, customer-risk notes and operational metrics. The path is UI → metrics API → CRM-note retrieval → prompt assembler → semantic cache → LLM gateway → cost attribution. CRM (customer relationship management) is the sales system of record. The cache key should include tenant, dashboard type, date range, normalised query and data snapshot ID. The router picks a mid-tier or a larger model by context size and sensitivity.
+
+On 2026-07-08 the daily budget alert fired at 14:20. The CFO (chief financial officer) asked why the assistant had consumed almost four days of budget before lunch: $912 against a $240 daily budget is 3.8 days.
+
+#### Telemetry {#cost-telemetry}
+
+<p class="figure-caption">Cost incident telemetry.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spend</td>
+<td>$240 daily budget; $912 actual; $1680 projected by end of day</td>
+</tr>
+<tr>
+<td>Deltas</td>
+<td>Cost +280% (3.8×); requests +7%; input tokens +351%</td>
+</tr>
+<tr>
+<td>Prompt template</td>
+<td><code>exec_summary_v6</code>; average context 4200 → 19000 tokens</td>
+</tr>
+<tr>
+<td>Context contents</td>
+<td><code>all_notes_90d</code> instead of <code>top_20_notes_30d</code>; 500 table rows instead of a cap of 80; compression disabled</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>Hit rate 4% against a 67% baseline; key v5 = <code>[tenant_id, query_text]</code>; missing date range, snapshot ID, role scope</td>
+</tr>
+<tr>
+<td>Routing</td>
+<td>GPT-4-class because <code>context_tokens&gt;12000</code>; 21384 tokens in, 1288 out; about 9× the per-request cost of before (the case's illustrative $2.74 against $0.31, not list prices)</td>
+</tr>
+</tbody>
+</table></div>
+
+The first two rows rule out the obvious story. Requests grew 7%, so users did not cause a 3.8× bill. Input tokens grew 351%, so the cost is in the shape of each request. The template row shows the context grew from 4,200 to 19,000 tokens; the routing row shows that growth pushed requests over the 12,000-token threshold into an expensive model; the cache row shows the system stopped reusing answers.
+
+#### What changed and why {#cost-what-changed-and-why}
+
+The `exec_summary_v6` upgrade added "more supporting context" after executives asked for richer explanations. The same release changed cache-key normalisation and dropped the date-range and snapshot fields. It also disabled compression while debugging a formatting issue.
+
+The root cause is three effects multiplying. The template expanded context. The larger context crossed the routing threshold into the expensive model. The cache-key regression collapsed the hit rate, so the system paid full price for every large prompt. Each effect alone would have been a moderate increase; together they compound.
+
+#### Debugging path {#cost-debugging-path}
+
+Start with cost per workflow, not global provider spend. Compare request count, input and output tokens, model route, cache hit rate and prompt version before and after the deploy. Sample traces to see what was assembled. Check whether the added context improved answers enough to justify its cost.
+
+#### The hidden correctness bug {#cost-the-hidden-correctness-bug}
+
+The key also lost `role_scope`. One user's executive summary could be served to another role whenever the query text matched. A cost incident turned out to be a permission incident too. This is why cache changes need a security review as well as a cost review: a cache key defines who may receive a stored answer.
+
+#### Fix {#cost-fix}
+
+Now: roll back `exec_summary_v6`, restore compression, cap CRM notes and table rows, and force the mid-tier model for routine summaries. Invalidate every cache entry written under `cache_key_version=v5`, because any of them might have been served across roles.
+
+Later: add cost regression tests to CI and enforce per-workflow token budgets. Require cost and latency approval for template upgrades, track hit rate by version, and route with budget awareness and graceful degradation.
+
+#### The answer to give {#cost-the-answer-to-give}
+
+Spoken answer example (source):
+
+> "The telemetry shows usage grew only 7%, but input tokens grew 351%, cache hit rate dropped to 4%, and requests started routing to a GPT-4-class model. I would roll back the prompt template, restore compression, cap context, fix the cache key, and add CI gates for token and cost regression. I would also audit cache safety because missing role_scope can create data exposure."
+
+The weak answer is "ask users to make shorter queries or switch to a cheaper model." It blames usage that grew only 7%.
+
+### Neighbouring prompts read from the same traces {#dive-neighbouring}
+
+The full design combines a group of interview prompts into one read. The anchor design comes first, then the two incidents, then three neighbouring prompts, then a card for every cost and latency pivot in the group.
+
+<p class="figure-caption">Which part of this casebook each prompt in the group draws on.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Case in the group</th>
+<th>What it contributes here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observability for a Customer-Facing AI Application (anchor)</td>
+<td>Discovery, the no-capture list, requirements, sizing, architecture, redaction, sampling, failure policy, triage, rollout and delivery (walkthrough steps 1 to 8, the redaction and sampling deep dives, and the fifty-minute plan in Practice)</td>
+</tr>
+<tr>
+<td>Incident: latency spike after a reranker and model-routing change</td>
+<td>The latency spike deep dive</td>
+</tr>
+<tr>
+<td>Incident: cost spike from a prompt-template and cache-key regression</td>
+<td>The cost spike deep dive</td>
+</tr>
+<tr>
+<td>OpenAI practice prompt: Latency Regression in an LLM Application</td>
+<td>This deep dive, and pivot card 15.3</td>
+</tr>
+<tr>
+<td>OpenAI practice prompt: RAG System with Poor Answer Quality</td>
+<td>Walkthrough step 7 and this deep dive</td>
+</tr>
+<tr>
+<td>Reported OpenAI prompt: diagnose high latency in an LLM inference pipeline</td>
+<td>This deep dive</td>
+</tr>
+<tr>
+<td>Playbook drill: LLM costs exploded after launch</td>
+<td>Pivot card 15.1</td>
+</tr>
+<tr>
+<td>Scenarios 1, 2, 6, 7, 10, 11, 12</td>
+<td>Pivot cards 15.2 to 15.8</td>
+</tr>
+<tr>
+<td>Rate limits throttling at peak, users abandon mid-stream</td>
+<td>Pivot cards 15.9 and 15.10</td>
+</tr>
+</tbody>
+</table></div>
+
+The sizing numbers in [step 4](#walkthrough-sizing) come from the V2 tutorial's "My Perspective on the Gaps" note, which is supplementary and not chapter content.
+
+#### Latency regression in an LLM application
+
+"An enterprise customer reports that responses have become slow." First clarify which latency: time to first token, time between tokens, total completion time or user-perceived latency. Then decompose across ten stages: client and network, authentication, middleware, retrieval, prompt construction, model prefill, token generation, tool calls, post-processing and streaming. Check input and output token counts and retrieval p95 and p99. Then check retry rates, rate-limit throttling and traffic patterns. Finish with model version, prompt changes, cache hit rates and regional routing. The latency incident is this prompt with real numbers.
+
+The follow-up is "it only happens at peak traffic." Peak-only latency points at queueing, not a slower model. Separate queue wait from service time. Queueing delay climbs steeply as utilisation nears 100%: for a simple single queue, the wait is about ρ/(1−ρ) times the service time at utilisation ρ, which is 4× at 80% and 9× at 90%. A rising p99 with a flat p50 usually means queueing. Add admission control and shed non-interactive work to batch. (The utilisation point comes from the source's additions file, section D; the multiples are simple single-queue arithmetic.) A synchronous evaluator or logger left on the hot path is a related trap: it can cancel the benefit of streaming.
+
+#### RAG with poor answer quality
+
+Separate seven failure classes: retrieval, context assembly, reasoning or synthesis, prompt or instruction, output format, evaluation and user experience. Measure each separately.
+
+- Retrieval: recall@k (how many relevant documents appear in the top k), precision@k (how many of the top k are relevant), and ranking metrics such as MRR (mean reciprocal rank) or nDCG (normalised discounted cumulative gain). MRR averages one divided by the rank of the first relevant result.
+- Context assembly: citation correctness and context sufficiency.
+- Generation: answer faithfulness, answer relevance and abstention quality.
+- The whole application: end-to-end task success.
+
+The [triage flowchart in step 7](#walkthrough-diagnosis) is the first cut; these metrics are the second.
+
+The follow-up is "would you fine-tune the model?" Classify the problem first. A knowledge problem is usually retrieval or data access. A behaviour problem is prompting, fine-tuning or structured output. A freshness problem is indexing and the data pipeline. A permission problem is access-control-aware retrieval. Fine-tuning mainly helps the behaviour problem; it is a poor fix for missing knowledge, stale indexing or unauthorised retrieval. Ovadia et al. (2023) found fine-tuning a weak way to add knowledge compared with retrieval.
+
+#### High latency in an LLM inference pipeline
+
+This is the layer below the application. Walk the full stack: tokenisation, network, batch size, KV cache and post-processing. Two facts carry the answer (from the source's additions file, section B).
+
+- **Prefill** processes the whole prompt in parallel and sets time to first token, so it scales with input tokens.
+- **Decode** generates one token at a time and sets tokens per second, so it scales with output tokens.
+
+A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length. In the latency incident, 18,500 input tokens against 610 output tokens is why the first token, not the tail of the answer, was the problem.
+
+- Batch size trades throughput for per-request latency. With continuous batching nothing waits for a batch to fill, but each decode step gets slower as more sequences share it.
+- The KV (key–value) cache holds attention state for tokens already processed, so the model does not recompute the prompt for every new token. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Kwon et al. (2023) and the vLLM tuning guide describe these limits.
+- Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not.
+
+The same stack walk anchors the LLM Inference Serving case, so prepare it once.
+
+### The cost and latency pivot pattern {#dive-pivot-pattern}
+
+Ten members of this prompt group are the same system asked a cost or latency question. Every strong answer runs through four verbs in order.
+
+1. **Measure.** Attribute cost and latency per stage, tenant, workflow, model and prompt version first. Segregate batch and evaluation spend from interactive traffic so they cannot hide inside it.
+2. **Route.** Match model and path to risk: send simple tasks to smaller models.
+3. **Bound.** Cap output length, context, top-k, retries, agent steps, timeouts and budgets.
+4. **Cache safely.** Cache only with tenant, permission scope and version in the key.
+
+Three recurring situations show the pattern applied. For peak HTTP 429 (rate-limit) errors, separate the provider's limits from your own gateway's, and shed non-interactive work. For abandoned streams, cancel generation and in-flight tools; this saves spend where the provider stops generating on cancel. Some hosted providers keep billing after a client cancels, while self-hosted engines such as vLLM's OpenAI-compatible server abort generation on disconnect. For a sudden cache miss, inspect normalisation, prompt prefix bytes, TTL (time to live, how long a cached item stays valid) and version before adding capacity.
+
+Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The Claude and OpenAI prompt-caching documentation both describe this exact-prefix behaviour.
+
+Each pivot gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse and the line to say. Every card shares the playbook's customer-communication sentence: "Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric." The ten cards are in [Practice](#practice-pivots), so you can attempt each before revealing it.
+
+### References {#references}
+
+Fact-check sources from the original case, checked 27 September 2026. Each supports the claim noted beside it.
+
+- [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/): typical span size (~500 bytes) behind the storage sizing.
+- [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104): HMAC security rests on a secret key, not a salt.
+- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices used to check the $2.74 figure.
+- [Ovadia et al. 2023, Fine-Tuning or Retrieval? (arXiv 2312.05934)](https://arxiv.org/abs/2312.05934): fine-tuning is a weak way to add knowledge compared with retrieval.
+- [Kwon et al. 2023, Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180): continuous batching and KV-cache limits.
+- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): batch size, preemption and chunked prefill trade-offs.
+- [GDPR (Regulation 2016/679), Recital 26](https://eur-lex.europa.eu/eli/reg/2016/679/oj): pseudonymised data is still personal data.
+- [EDPB Guidelines 01/2025 on Pseudonymisation](https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf): keyed hashes as pseudonymisation, not anonymisation.
+- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/): deletion requests reach linked fingerprints.
+- [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): exact prefix match; timestamps, unsorted JSON, tool changes and model swaps break the cache.
+- [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching): exact prefix match and minimum cacheable length.
+- [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do): cancelling a stream stops billing only on some providers.
+- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/): self-hosted engines abort generation on client disconnect.
+
+## Practice
+
+### Attempt the design from a blank page {#practice-start}
+
+Close the walkthrough and design observability for a customer-facing AI application whose users say it is "slow and sometimes wrong". Telemetry must never store raw prompts, documents or secrets, and support may see only its own tenant. Start from the questions you would ask, write the no-capture list, draw both paths, and explain how a support agent gets from a complaint to the failing hop. Write your answer in the worksheet fields below before opening any worked answer in the next sections.
+
+The original site links a separate "Observability for a Customer-Facing AI Application" worksheet at forwarddeployedprep.com. That worksheet was not captured or imported here; the local fields below are this casebook's own.
+
+### Check yourself {#practice-check}
+
+These twelve questions are the source's own self-check. Answer each aloud before opening it.
+
+<details class="answer-reveal" id="answer-check-three-problems"><summary>What are the three problems inside &quot;slow and sometimes wrong&quot;?</summary><div class="detail-body">
+<p>Latency (where in the pipeline the time goes), correctness (whether the fault is in retrieval or generation), and diagnosability (whether support can explain it without exposing content or drowning in telemetry).</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-never-captured"><summary>Name the four things never captured by default.</summary><div class="detail-body">
+<p>Full prompts, raw customer documents, secrets, and high-cardinality free-form labels such as arbitrary user text or unbounded metadata keys.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-classify-first"><summary>Why must the sensitivity classifier run before storage?</summary><div class="detail-body">
+<p>Once a raw value is written, every system that reads the store has it. Classification after storage protects nothing.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-keyed-hash"><summary>Why use a keyed hash (HMAC) rather than a plain hash?</summary><div class="detail-body">
+<p>It keeps correlation and deduplication while resisting brute-force reversal of common prompts, as long as the secret key stays secret. A missing key must raise an error rather than fall back to an unkeyed hash.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-dropped-trace"><summary>Walk the &quot;sampling drops the only bad trace&quot; drill.</summary><div class="detail-body">
+<p>Detect by comparing complaints with sampled trace volume. Contain by raising fidelity for the affected slice. Recover from neighbouring evidence (gateway logs, model gateway errors, dependency spans, tickets) and mark the gap. Prevent with error-class overrides, exemplars and escalation hooks.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-fail-closed"><summary>When does a failure fail closed rather than degrade?</summary><div class="detail-body">
+<p>When integrity, privacy or authorisation would be compromised: a missing auth token, an unavailable audit sink, a lookup outside tenant scope.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-retrieval-vs-model"><summary>How do you tell a retrieval fault from a model fault?</summary><div class="detail-body">
+<p>Compare retrieved evidence with the answer. Empty, stale or off-topic evidence points upstream. Good evidence contradicted by the answer points at the model or prompt. A one-tenant failure points at configuration, access or integration state.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-latency-stack"><summary>In the latency incident, which spans stacked up, and what was the process failure?</summary><div class="detail-body">
+<p>Retrieval 4200 ms, reranker 3100 ms, gateway queue 2800 ms and provider 9360 ms. The process failure was a canary that ran only off-peak and never tested peak GPU queue depth.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-cost-security"><summary>In the cost incident, why was the cost spike also a security incident?</summary><div class="detail-body">
+<p>The v5 cache key dropped <code>role_scope</code>, so one role's summary could be served to another whenever the query text matched.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-prefill-decode"><summary>For the inference-latency prompt, why do input and output tokens hurt in different places?</summary><div class="detail-body">
+<p>Prefill processes the prompt in parallel and sets time to first token, so input tokens hurt the first token. Decode generates one token at a time and sets total time, so output tokens hurt the tail.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-go-no-go"><summary>What does the go/no-go gate check?</summary><div class="detail-body">
+<p>Trace coverage above the minimum for the top failure path, and telemetry overhead not moving latency.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-check-four-verbs"><summary>Give the four verbs and the line for the costs-exploded drill.</summary><div class="detail-body">
+<p>Measure, route, bound, cache safely. For the drill: contain, attribute, then diagnose, keeping low-cost safe paths online; budget guardrails must exist before launch.</p>
+</div></details>
+
+#### A changed constraint (authored addition)
+
+<details class="answer-reveal" id="answer-new-full-retention"><summary>The customer asks for 100% of traces kept for 90 days. How do you respond?</summary><div class="detail-body">
+<p>This question is an authored addition, not from the source. Start with the arithmetic using the case's illustrative figures: 3,000 spans a second × 500 bytes × 7,776,000 seconds in 90 days is about 11.7 TB, roughly thirty to forty times the 270 to 390 GB that 30 days of tail-biased retention needs at the same span size. Storage may still be affordable, but every span passes through the classifier, so classifier CPU and the privacy exposure of a long-lived store grow with it. Ask what the 90 days is for. If it is audit, the separate audit log already keeps access events durably. If it is incident forensics, tail-biased retention with error overrides keeps the failure population, and a longer window can apply to those traces only. Retention should follow the customer's data-processing agreement in any case.</p>
+</div></details>
+
+### Deliver it in fifty minutes {#practice-delivery}
+
+Spend time in proportion to risk, not diagram size. The pacing below is the source chapter's own.
+
+<p class="figure-caption">A fifty-minute plan.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Minutes</th>
+<th>Move</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–5</td>
+<td>Frame the outcome; ask what counts as slow and wrong, and who is most affected</td>
+</tr>
+<tr>
+<td>5–12</td>
+<td>Walk the critical path; show that &quot;slow and sometimes wrong&quot; is a set of failure modes</td>
+</tr>
+<tr>
+<td>12–18</td>
+<td>State the capture and no-capture lists: the first trade-off</td>
+</tr>
+<tr>
+<td>18–26</td>
+<td>Propose the tracing-first architecture and the two views</td>
+</tr>
+<tr>
+<td>26–32</td>
+<td>Size by collection policy; say why &quot;what will we not collect?&quot; comes first</td>
+</tr>
+<tr>
+<td>32–38</td>
+<td>Security and failure modes, each tied to a mitigation</td>
+</tr>
+<tr>
+<td>38–44</td>
+<td>Staged rollout, alert triggers, owners, the support workflow</td>
+</tr>
+<tr>
+<td>44–50</td>
+<td>Executive summary; name the riskiest assumption and the first rollout gate</td>
+</tr>
+</tbody>
+</table></div>
+
+Most of the fifty minutes go to the no-capture list, the dropped-trace drill and the support test. Defend four trade-offs.
+
+- Full capture against privacy and cost: capture structure, and keep a break-glass path.
+- Head against tail sampling: prefer tail retention for slow and failed traces.
+- Raw prompts against hashed metadata: store template ID, field presence, sanitised entity markers and fingerprints.
+- Global dashboard against tenant views: build both, with a permission boundary.
+
+Repair the common weak answers on the spot.
+
+- "Log everything and sort it out later" becomes a tiered capture strategy with named privacy and cost consequences.
+- "Use tracing" becomes what is traced, how context propagates and which layer each span isolates.
+- "Sample 10 percent" becomes a question about the failure distribution.
+- "Put it on one dashboard" becomes global health plus tenant-scoped debugging.
+- "If the answer is wrong, the model is wrong" becomes a walk through auth, retrieval, prompt construction, tools and integrations.
+
+#### Spoken answers to rehearse
+
+Executive summary for the last six minutes, spoken answer example (source):
+
+> "My design goal is to connect user-visible failures to technical causes without collecting more sensitive data than we need. I would instrument the full request path with correlation IDs, structured spans, and bounded metadata across authentication, retrieval, model calls, and tools. I would store raw prompts and customer content only through a narrow, audited escalation path, because the default should be privacy-preserving and cost-aware. For debugging, I would rely on template IDs, document references, timing, error classes, and outcome labels so support can separate auth, retrieval, model, and integration problems. I'd use a global operational view plus tenant-scoped views for authorised support, and I'd prefer selective retention for slow or anomalous traces over blind random sampling so we do not lose the one bad trace. The riskiest trade-off is observability depth versus privacy and cost, and my first production rollout gate would be proving that the system can consistently identify the root cause of real customer incidents without exposing unnecessary content or overwhelming the team."
+
+Two-minute answer, spoken answer example (source):
+
+> "I would first define what slow and wrong mean for this customer and write the no-capture list. Every request gets a correlation ID and structured spans through retrieval, model and tools, but full prompts and raw documents stay out of telemetry by default. Spans export asynchronously through redaction and bounded sampling into a retention-limited store. Global dashboards show aggregate health; authorised support gets tenant-scoped evidence, with a separate audit trail. I diagnose from the complaint down: user outcome, then the slow or failing span, then retrieval evidence versus final answer. I retain error and slow traces preferentially so the rare incident is still visible, and I prove the instrumentation itself does not hurt latency or privacy before expanding."
+
+Sixty-second close, spoken answer example (source):
+
+> "Correlate every request, collect structured evidence without raw content, retain anomalies preferentially, and let support trace a complaint to a cause within its tenant. Prove both privacy and low overhead before widening rollout."
+
+#### Gap follow-ups (V2 gap note, supplementary)
+
+<details class="answer-reveal" id="answer-gap-build-buy"><summary>Would you build or buy the tracing stack?</summary><div class="detail-body">
+<p>Buy the span plumbing and build the redaction and classification boundary. What counts as sensitive for this tenant is business logic that no vendor can own.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-gap-regulation"><summary>A user files a deletion request under GDPR. Do hashed prompts make that trivial?</summary><div class="detail-body">
+<p>No. Hashed prompts make a deletion request smaller, not trivial. A keyed hash tied to a user is still personal data under GDPR (the EU's General Data Protection Regulation): Recital 26 treats pseudonymised data as personal data, and the EDPB's 2025 guidelines treat keyed hashes as pseudonymisation rather than anonymisation. So delete or unlink those fingerprints too, along with quarantine and break-glass records, as Article 17 requires. The retention window should follow the customer's data-processing agreement.</p>
+</div></details>
+
+#### Level calibration
+
+Every level traces the request; the level shows in what the answer refuses to collect and who may read what is left.
+
+<p class="figure-caption">How the same answer sounds at senior, staff and principal level.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Sounds like</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Senior</td>
+<td>One correlation ID through auth, retrieval, model and tools, spans exported asynchronously so telemetry never blocks the user, and a classifier that redacts before storage. Diagnoses from the complaint down, splitting the latency incident into retrieval, reranker, queue and provider time.</td>
+<td>Who may see which tenant's traces, and what happens when sampling drops the only bad trace.</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>Adds access and ownership: tenant-scoped support views, a separate durable audit log, error-class overrides and exemplars, and a four-phase rollout with named owners and a go/no-go on trace coverage and overhead. Reads the missing <code>role_scope</code> in the cost incident as a permission incident, not only a cost one.</td>
+<td>What is shared service versus per-customer configuration, and how retention and deletion requests follow each customer's agreement.</td>
+</tr>
+<tr>
+<td>Principal</td>
+<td>Splits the system into core product, shared service, adapters and configuration, so per-customer sampling, retention and thresholds stay out of the core. Buys the span plumbing but builds the redaction boundary, because what counts as sensitive is business logic, and makes cost and latency gates on prompt and route changes a rule for every team.</td>
+<td>The real failure distribution, overhead budget and retention window, which need the customer's traffic and data-processing agreement to set.</td>
+</tr>
+</tbody>
+</table></div>
+
+### Answer every cost and latency pivot with a card {#practice-pivots}
+
+Each card below is a source pivot. Before revealing it, name the dominant driver, the cheapest lever, the metric that proves it, the move you would refuse and your sixty-second line, using the [measure, route, bound, cache safely pattern](#dive-pivot-pattern). Every answer ends with the shared communication sentence: acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric.
+
+<details class="answer-reveal" id="answer-card-costs-exploded"><summary>Card 15.1: LLM costs exploded after launch.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Unknown until attributed: usually retries, agent loops, batch or eval jobs, or an integration loop</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Spend circuit breaker first; attribute by tenant and feature; cap output; pause batch and eval; downgrade premium routing; tenant quotas; then root cause</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Cost per minute; tokens per request; model distribution; retry count; agent steps; tenant usage</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Kill the whole feature without diagnosis</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>Contain, attribute, then diagnose. Keep low-cost safe paths online while disabling runaway paths. Budget guardrails must exist before launch.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-cost-5x"><summary>Card 15.2: LLM cost increased 5× after rollout.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Request shape: longer prompts, new RAG context, agent loops, eval jobs, retries, output verbosity, a provider price-tier change</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Cap max output length, pause expensive batch and eval jobs, route simple tasks to a smaller model, cap agent steps</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Cost and tokens per request; requests by feature; retry count; model distribution; output tokens; eval and batch spend</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Swap the model before breaking spend down by tenant, feature, model and prompt version</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>The increase likely comes from request shape rather than user count alone. I would isolate token growth, retries, agent steps, and batch jobs before changing the model.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-latency-2-to-20"><summary>Card 15.3: Latency jumped from 2 seconds to 20 seconds.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>A new reranker, larger context, a provider incident, cold starts, a tool timeout, or synchronous logging</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Roll back the prompt or reranker change, disable the optional tool, reduce top-k, activate the fallback provider</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>P95 and P99; first-token; retrieval, rerank, model and tool latency; timeout and retry rate</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Guess, or raise the timeout</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>I would not guess. I would use traces to see whether the 18-second increase is retrieval, model, tool calls, or infrastructure.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-exec-demo"><summary>Card 15.4: Executive demo is too slow.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Unwarmed services, live external dependencies, an over-large prompt, no streaming, a poor network</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Warm services, pre-index documents, stream output, use a stable demo dataset, shorten the answer</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>First-token latency; retrieval and model latency; tool calls; cold-start count</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Present demo numbers as production claims</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>For an executive demo, I would reduce live uncertainty while staying honest about production architecture and limitations.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-too-expensive"><summary>Card 15.5: Customer complains the AI is too expensive.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Premium-model overuse, verbose answers, no quotas, heavy batch jobs, low-value workflows</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Route simple tasks to a cheaper model, add quotas, trim prompts, cache safe repeated results</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Cost by feature; active users; cost per outcome; model distribution; tokens per request</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Defend the bill generically</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>I would not defend the bill generically. I would show cost by workflow and propose concrete reductions that preserve value.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-prompt-tokens"><summary>Card 15.6: Prompt update increased token usage.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Verbose instructions, duplicated rules, added few-shot examples, longer default output</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Roll back or trim the prompt; reduce examples; enforce an output max</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Input and output tokens by prompt version; parse errors; retry count</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Ship a prompt change without a cost-impact report</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>Prompt changes are production changes. I would version them and compare token usage and latency before rollout.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-provider-unstable"><summary>Card 15.7: Model provider latency became unstable.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>A provider incident, regional queueing, rate limiting, a network issue, with no deploy of ours</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Activate the fallback model or provider, reduce concurrency, degrade optional features</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Provider latency by model and region; fallback rate; error codes; queue time</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Wait blindly for the provider to recover</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>I would isolate provider latency from our own pipeline and use routing/fallback rules rather than waiting blindly.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-cache-drop"><summary>Card 15.8: Cache hit rate dropped suddenly.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>A new prompt version invalidated the cache, a short TTL, changed normalisation, document churn</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Roll back the key change, adjust TTL, normalise queries, pre-warm a safe cache</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Hit rate by cache type; invalidations; TTL; key cardinality; traffic mix</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Scale capacity before inspecting the key</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>A cache hit drop is usually a keying, versioning, traffic, or invalidation issue; I would inspect those before scaling.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two facts sharpen this card (source additions file, section A1). Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The cost incident adds the other half: cache changes need a security review too, because a key missing <code>role_scope</code> serves one role's answer to another.</p>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-rate-limits"><summary>Card 15.9: Rate limits are throttling us at peak.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Provider 429s mixed with limits from the team's own gateway</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Separate the two sources; retry with jitter plus a fallback model or region; shed non-interactive traffic to batch</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>429s by source; fallback rate; queue depth; goodput at peak</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Retry into the same wall</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>Separate provider 429s from our own limits first. Short term, jitter, fall back and shed batch traffic. Long term, capacity commitments, tenant-aware quotas, and queue non-urgent work.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+<details class="answer-reveal" id="answer-card-abandon-stream"><summary>Card 15.10: Streaming works but users abandon mid-answer.</summary><div class="detail-body">
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominant driver</td>
+<td>Tokens generated after the user has left, plus in-flight tool calls nobody will read</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Cancel the stream and any in-flight tool calls on abandon</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Abandonment against first-token time and answer length; tokens generated after abandon</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Treat cancellation as a UX nicety only</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>Measure abandonment against first-token time and answer length, and cancel the stream and in-flight tool calls on abandon. Where the provider stops generating on cancel, that stops us paying for tokens nobody read.</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+
+## Quick review
+
+### Recall the path, the rules and the incidents {#review}
+
+**Ask first.** What is slow? What is wrong? Which tenants? What content is forbidden to collect? Who may diagnose? What overhead and retention are acceptable?
+
+**Whiteboard path.** Request: auth/tenant → retrieval → LLM → tools → response. Spans: async collector → classify/redact/HMAC → error-and-slow-biased sampling → bounded store → global aggregate and tenant-scoped support views. Access audit is separate. Telemetry export never blocks the user.
+
+**Four rules.**
+
+1. No full prompts, raw documents, secrets or unbounded labels by default.
+2. Redact before storage; a missing HMAC key is an error.
+3. Keep rare failures with error overrides, exemplars and incident sampling.
+4. Missing auth, cross-tenant lookup and required audit evidence fail closed.
+
+**Numbers and incidents.** Illustrative sizing: 500 requests/s × six spans ≈ 3,000 raw spans/s; keep errors and slow traces plus about 5% of normal traffic; about 110–155 GB for 30 days at 200 bytes a span. The classifier, not disk, is the constraint. Latency incident: p95 22.18 s against 7 s from stacked retrieval (4.2 s), reranker (3.1 s), queue (2.8 s) and provider (9.36 s) delays; canary never tested peak. Cost incident: traffic +7%, input tokens +351%, cache 67% → 4%, routing threshold crossed; missing `role_scope` also risked leakage.
+
+**Diagnosis.** Start at the user outcome, then stage spans. Empty or stale retrieval → upstream. Good evidence contradicted by the answer → model or prompt. One tenant → configuration, access or integration. First-token versus total time separates prompt and prefill from a long decode. A missing trace is not proof of health.
+
+**Rollout.** SLOs, one critical path, the support workflow, then quality and cost signals with sampling. Go/no-go on trace coverage and overhead; roll back on lost propagation, a quality-event spike or an unsustainable cost slope.
+
+**Pivots.** Measure, route, bound, cache safely. Contain, attribute, then diagnose.
+
+**Key takeaways.**
+
+- "Slow and sometimes wrong" is three problems (latency, correctness and diagnosability), each made measurable before any design.
+- The first design decision is the no-capture list: full prompts, raw documents, secrets and unbounded labels stay out by default.
+- Requirements are stated so a test can fail them, with the support workflow as the functional core and overhead as a budget.
+- Telemetry cost is set by collection policy; the worked sizing shows storage is small and the classifier is the real constraint.
+- The architecture is tracing-first, with the observability path unable to block the request path and nothing raw crossing the trust boundary.
+- Classification and keyed hashing happen before storage, and three tests pin idempotency, privacy and failure visibility.
+- Sampling is tail-biased with error overrides and exemplars, because uniform sampling drops the only bad trace.
+- Every layer has a named failure policy, and audit evidence fails closed where user answers can degrade.
+- The dashboard is built top down from the complaint, and wrong answers are triaged by comparing evidence with output.
+- The latency incident was compounded latency from several small changes, found only by comparing each span with its baseline.
+- The cost incident was prompt growth, a routing threshold and a broken cache key multiplying, and it hid a permission leak.
+- Three practice prompts are the same traces read at different depths: the stage decomposition, the seven RAG failure classes and the inference stack.
+- Rollout runs in four phases with named owners, an eight-metric scorecard, explicit go/no-go gates and a risk register.
+- The fifty minutes go to the no-capture list, the dropped-trace drill and the support test.
+- Every cost and latency pivot is answered with a card built from measure, route, bound and cache safely.
+
+**Sixty-second close.** "Correlate every request, collect structured evidence without raw content, retain anomalies preferentially, and let support trace a complaint to a cause within its tenant. Prove both privacy and low overhead before widening rollout."

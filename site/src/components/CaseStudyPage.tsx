@@ -4,6 +4,9 @@ import { documentsOf, hasChapters, scenarioHref, type CaseDocument, type CaseStu
 import { learningResourceJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { CaseStudyView } from '@/components/CaseStudyView'
+import { CasebookReader } from '@/components/CasebookReader'
+import { getCasebookRewrite } from '@/lib/casebook-content'
+import { CASEBOOK_MODULE } from '@/lib/scenario'
 import { Breadcrumbs, type Crumb } from '@/components/learn/Breadcrumbs'
 import { BeforeYouStart, Fact, WhereNext } from '@/components/PageIntro'
 import { PageHead } from '@/components/editorial/PageHead'
@@ -28,6 +31,7 @@ export async function CaseStudyPage({
   crumbs: Crumb[]
   partOf: { name: string; path: string }
 }) {
+  const rewrite = study.ref.moduleId === CASEBOOK_MODULE ? await getCasebookRewrite(study.ref.slug) : null
   const meta = familyMeta(study.ref.trackId)
   const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
   // The Introduction is the case's landing page, not one of its documents.
@@ -35,7 +39,7 @@ export async function CaseStudyPage({
   const minutes = documents.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
-    <div className="pb-20 pt-8">
+    <div className={rewrite ? "casebook-rewrite-page pb-20 pt-8" : "pb-20 pt-8"}>
       <JsonLd
         data={learningResourceJsonLd({
           name: study.title,
@@ -49,30 +53,33 @@ export async function CaseStudyPage({
       <Breadcrumbs items={crumbs} />
 
       <PageHead
-        tag={study.ref.trackTitle}
+        tag={rewrite ? undefined : study.ref.trackTitle}
+        standfirst={rewrite?.subtitle}
         title={study.title}
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
           { term: 'Level', value: itemLevel(`${study.ref.trackId}/${study.ref.slug}`, meta.difficulty) },
-          ...(SHOW_STUDY_TIME
+          ...(rewrite ? [{ term: 'Sections', value: '5' }] : SHOW_STUDY_TIME
             ? [{ term: 'Reading time', value: documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min` }]
             : documents.length > 1
               ? [{ term: 'Documents', value: String(documents.length) }]
               : []),
         ]}
-        updated={study.ref.updated}
+        updated={rewrite?.updated ?? study.ref.updated}
         twins={twins}
         report={{ title: study.title, path: scenarioHref(study.ref) }}
       >
         {/* A chapters case says all of this on its Introduction page instead. */}
-        {!hasChapters(study) && (
+        {!rewrite && !hasChapters(study) && (
           <BeforeYouStart meta={meta}>
             <ReadingOrder study={study} documents={documents} />
           </BeforeYouStart>
         )}
       </PageHead>
 
-      <CaseStudyView study={study} />
+      {rewrite ? <>
+        <CasebookReader payload={rewrite} progressId={`${study.ref.trackId}/${study.ref.slug}`} legacyTabs={study.docs.map(doc => doc.tab)} />
+      </> : <CaseStudyView study={study} />}
 
       <WhereNext reviews={related.reviews} counterpart={related.counterpart} next={null} />
     </div>

@@ -1,0 +1,812 @@
+{
+  "title": "Document Review Copilot",
+  "slug": "document-review-copilot",
+  "subtitle": "Turn versioned rules and evidence into a verified draft for a named human reviewer.",
+  "theme": "Knowledge and Retrieval",
+  "kind": "System design",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/document-review-copilot",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "main-intro": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "deep-dive-intro": "brief-task",
+    "full-pack-intro": "brief-task",
+    "main-1-questions-to-ask-the-interviewer": "walk-discovery",
+    "full-pack-1-frame-the-copilot-as-a-drafter-never-a-decider": "walk-discovery",
+    "main-2-requirements-functional-non-functional": "walk-requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "main-3-architecture": "walk-architecture",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "walk-architecture",
+    "full-pack-part-2-5-make-the-extraction-schema-the-seam": "walk-schema",
+    "deep-dive-1-one-spine-three-schemas": "dive-schemas",
+    "full-pack-part-2-3-map-the-three-personas-onto-one-spine": "dive-schemas",
+    "deep-dive-2-ingestion-permission-and-version-seams": "dive-parser",
+    "full-pack-part-2-6-refuse-to-index-what-the-parser-dropped": "dive-parser",
+    "deep-dive-3-models-verification-and-decisions": "dive-citations",
+    "full-pack-part-2-7-cite-the-span-that-supported-the-claim-then-verify-it": "dive-citations",
+    "main-4-controls-worth-defending": "walk-security",
+    "main-5-failure-and-cost-playbook": "dive-failures",
+    "full-pack-part-2-8-handle-sensitive-data-as-a-boundary-not-a-setting": "dive-failures",
+    "full-pack-part-3-9-degrade-on-everything-except-the-decision": "dive-failures",
+    "main-6-evaluation-and-rollout": "walk-evaluation",
+    "full-pack-part-3-10-gate-the-release-on-extraction-citation-and-escalation": "walk-evaluation",
+    "deep-dive-4-incident-drill-right-answer-wrong-clause": "dive-incident-citation",
+    "deep-dive-5-incident-drill-critical-pdf-table-never-indexed": "dive-incident-parser",
+    "full-pack-part-3-14-debug-the-incidents-on-this-design": "dive-incident-parser",
+    "deep-dive-6-release-rollout-and-cost-detail": "dive-cost",
+    "full-pack-part-3-13-answer-the-cost-pivot-in-ten-minutes": "dive-cost",
+    "full-pack-part-3-11-roll-out-in-shadow-then-one-category-at-a-time": "walk-rollout",
+    "main-7-interview-answer-to-rehearse": "practice-pivots",
+    "full-pack-part-3-12-survive-the-red-team-round": "practice-pivots",
+    "full-pack-part-4-15-deliver-it-in-sixty-minutes": "practice-pivots",
+    "full-pack-part-4-level-calibration": "practice-pivots",
+    "full-pack-part-4-check-yourself": "practice-checks",
+    "cheat-sheet-intro": "review-decisions",
+    "cheat-sheet-one-sentence": "review-decisions",
+    "cheat-sheet-ask-first": "review-decisions",
+    "cheat-sheet-flow": "review-decisions",
+    "cheat-sheet-six-rules": "review-decisions",
+    "cheat-sheet-source-examples": "review-decisions",
+    "full-pack-part-4-key-takeaways": "review-decisions",
+    "cheat-sheet-two-incidents": "review-tests",
+    "cheat-sheet-cost-and-rollout": "review-tests",
+    "full-pack-part-4-references": "dive-references",
+    "brief-reading": "brief-task",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "discovery",
+      "label": "Scope, users and assumptions",
+      "hint": "Which answers change your design?"
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture and trust boundaries",
+      "hint": "Trace one case and each failure gate."
+    },
+    {
+      "id": "tradeoffs",
+      "label": "Decisions and alternatives",
+      "hint": "Explain what you chose and when you would revisit it."
+    },
+    {
+      "id": "validation",
+      "label": "Evaluation, rollout and ownership",
+      "hint": "Name the evidence required before expansion."
+    }
+  ],
+  "rubric": [
+    "I kept the final decision with a named professional.",
+    "I carried source spans and versions in the extraction schema.",
+    "I blocked missing critical pages/tables and selected effective rules.",
+    "I separated extraction, grounding, citation and escalation tests.",
+    "I bounded sensitive data, model cost and staged rollout."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Overview",
+      "anchors": [
+        "brief-scenario",
+        "brief-example",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "The core idea",
+      "anchors": [
+        "brief-scenario",
+        "brief-example",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-scenario",
+        "brief-example",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Who it is for",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "What it assumes",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "How to use it",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "The sections",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced."
+      }
+    },
+    {
+      "source_id": "main-1-questions-to-ask-the-interviewer",
+      "teaching_item": "1. Questions to ask the interviewer",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Discovery starts with workflow/decision owner, volume and risk, source authority, rule dates, data handling and escalation. Both stakeholder/discovery tables preserve details."
+      }
+    },
+    {
+      "source_id": "full-pack-1-frame-the-copilot-as-a-drafter-never-a-decider",
+      "teaching_item": "1. Frame the Copilot as a Drafter, Never a Decider",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Discovery starts with workflow/decision owner, volume and risk, source authority, rule dates, data handling and escalation. Both stakeholder/discovery tables preserve details."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "2. Requirements: Functional + Non-Functional",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Must/Should/non-goals, testable latency, rule/evidence/draft/gap/audit components and human approval remain. Packet timing is identified as a source expectation rather than a prototype benchmark."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "2. State Requirements as Testable Constraints",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Must/Should/non-goals, testable latency, rule/evidence/draft/gap/audit components and human approval remain. Packet timing is identified as a source expectation rather than a prototype benchmark."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "3. Architecture",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The shared extraction/comparison/risk/draft/verify/review path and versioned control plane retain all four architecture figures and the component responsibility/failure table; the audit row's failure posture now reads 'preparation continues, gap logged; approval waits for a durable audit record', matching the immutable-audit requirement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Ingestion and extraction path",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The shared extraction/comparison/risk/draft/verify/review path and versioned control plane retain all four architecture figures and the component responsibility/failure table; the audit row's failure posture now reads 'preparation continues, gap logged; approval waits for a durable audit record', matching the immutable-audit requirement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Draft verification and human approval path",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The shared extraction/comparison/risk/draft/verify/review path and versioned control plane retain all four architecture figures and the component responsibility/failure table; the audit row's failure posture now reads 'preparation continues, gap logged; approval waits for a durable audit record', matching the immutable-audit requirement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Versioned control plane and component failures",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The shared extraction/comparison/risk/draft/verify/review path and versioned control plane retain all four architecture figures and the component responsibility/failure table; the audit row's failure posture now reads 'preparation continues, gap logged; approval waits for a durable audit record', matching the immutable-audit requirement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-make-the-extraction-schema-the-seam",
+      "teaching_item": "5. Make the Extraction Schema the Seam",
+      "anchors": [
+        "walk-schema"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Typed fields carry value, source span/page/version and uncertainty; clinical, compliance and contract field examples show why summaries cannot establish required evidence."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-one-spine-three-schemas",
+      "teaching_item": "1. One spine, three schemas",
+      "anchors": [
+        "dive-schemas"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of three workflows is explained independently with records, rules, outputs and approvers before the comparison. The source map preserves FHIR/portal/GRC/communications/CLM/claims/e-sign freshness and permission differences; claims expansion remains governed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-the-three-personas-onto-one-spine",
+      "teaching_item": "Prior-authorisation records and approver",
+      "anchors": [
+        "dive-schemas"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of three workflows is explained independently with records, rules, outputs and approvers before the comparison. The source map preserves FHIR/portal/GRC/communications/CLM/claims/e-sign freshness and permission differences; claims expansion remains governed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-the-three-personas-onto-one-spine",
+      "teaching_item": "Compliance rules, findings and supervision",
+      "anchors": [
+        "dive-schemas"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of three workflows is explained independently with records, rules, outputs and approvers before the comparison. The source map preserves FHIR/portal/GRC/communications/CLM/claims/e-sign freshness and permission differences; claims expansion remains governed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-the-three-personas-onto-one-spine",
+      "teaching_item": "Contract clauses, playbook and counsel",
+      "anchors": [
+        "dive-schemas"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of three workflows is explained independently with records, rules, outputs and approvers before the comparison. The source map preserves FHIR/portal/GRC/communications/CLM/claims/e-sign freshness and permission differences; claims expansion remains governed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-the-three-personas-onto-one-spine",
+      "teaching_item": "Source ownership, freshness and permission contracts",
+      "anchors": [
+        "dive-schemas"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of three workflows is explained independently with records, rules, outputs and approvers before the comparison. The source map preserves FHIR/portal/GRC/communications/CLM/claims/e-sign freshness and permission differences; claims expansion remains governed."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-ingestion-permission-and-version-seams",
+      "teaching_item": "2. Ingestion, permission, and version seams",
+      "anchors": [
+        "dive-parser"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Layout/page/table coverage, row/header integrity, OCR fallback, hard high-risk gates and parser regression releases remain. Effective-date selection uses case attributes rather than latest publication and conflicts remain unresolved for the professional."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-refuse-to-index-what-the-parser-dropped",
+      "teaching_item": "6. Refuse to Index What the Parser Dropped",
+      "anchors": [
+        "dive-parser"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Layout/page/table coverage, row/header integrity, OCR fallback, hard high-risk gates and parser regression releases remain. Effective-date selection uses case attributes rather than latest publication and conflicts remain unresolved for the professional."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-models-verification-and-decisions",
+      "teaching_item": "3. Models, verification, and decisions",
+      "anchors": [
+        "dive-citations"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Small extraction, deterministic comparison and selective strong drafting remain distinct. Exact supporting spans, current access/version and human transitions are explicit. The audit-availability rule is stated as fact: preparation may continue audit-pending, final approval waits for a durable audit record."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-cite-the-span-that-supported-the-claim-then-verify-it",
+      "teaching_item": "7. Cite the Span That Supported the Claim, Then Verify It",
+      "anchors": [
+        "dive-citations"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Small extraction, deterministic comparison and selective strong drafting remain distinct. Exact supporting spans, current access/version and human transitions are explicit. The audit-availability rule is stated as fact: preparation may continue audit-pending, final approval waits for a durable audit record."
+      }
+    },
+    {
+      "source_id": "main-4-controls-worth-defending",
+      "teaching_item": "4. Controls worth defending",
+      "anchors": [
+        "walk-security"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sensitive-data scope, exact evidence and material approval are enforced boundaries rather than prompts or disclaimers; identity/provider/log handling is explained with failure implications."
+      }
+    },
+    {
+      "source_id": "main-5-failure-and-cost-playbook",
+      "teaching_item": "5. Failure and cost playbook",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source failures retain missing/stale rules, absent evidence, wrong patient, injection, provider/index outages and approval closure. Governance controls include retention/residency/vendor restrictions and minimal audit rather than raw PHI dumps."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-handle-sensitive-data-as-a-boundary-not-a-setting",
+      "teaching_item": "8. Handle Sensitive Data as a Boundary, Not a Setting",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source failures retain missing/stale rules, absent evidence, wrong patient, injection, provider/index outages and approval closure. Governance controls include retention/residency/vendor restrictions and minimal audit rather than raw PHI dumps."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-degrade-on-everything-except-the-decision",
+      "teaching_item": "9. Degrade on Everything Except the Decision",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source failures retain missing/stale rules, absent evidence, wrong patient, injection, provider/index outages and approval closure. Governance controls include retention/residency/vendor restrictions and minimal audit rather than raw PHI dumps."
+      }
+    },
+    {
+      "source_id": "main-6-evaluation-and-rollout",
+      "teaching_item": "6. Evaluation and rollout",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Extraction, groundedness, citation and escalation are evaluated independently with original illustrative good/bad bars, datasets and owners; business outcomes and override interpretation remain separate."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-extraction-citation-and-escalation",
+      "teaching_item": "10. Gate the Release on Extraction, Citation and Escalation",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Extraction, groundedness, citation and escalation are evaluated independently with original illustrative good/bad bars, datasets and owners; business outcomes and override interpretation remain separate."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-incident-drill-right-answer-wrong-clause",
+      "teaching_item": "4. Incident drill: right answer, wrong clause",
+      "anchors": [
+        "dive-incident-citation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The July source incident retains Clause 8.2 versus 12.4, scores 0.91/0.38, rank seven, reranker 0.74/0.68, false span match, trace/version keys, rollback and separate gates."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-incident-drill-critical-pdf-table-never-indexed",
+      "teaching_item": "5. Incident drill: critical PDF table never indexed",
+      "anchors": [
+        "dive-incident-parser"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The July parser incident retains 48 pages, 17/9 tables, 52.9% coverage, missing pages 31\u201333, layout 0.61, false fallback, completeness 0.46, versions/trace keys and reprocess/block/prevent steps. The paired citation incident is also fully taught."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-debug-the-incidents-on-this-design",
+      "teaching_item": "Correct answer with an incorrect clause",
+      "anchors": [
+        "dive-incident-parser"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The July parser incident retains 48 pages, 17/9 tables, 52.9% coverage, missing pages 31\u201333, layout 0.61, false fallback, completeness 0.46, versions/trace keys and reprocess/block/prevent steps. The paired citation incident is also fully taught."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-debug-the-incidents-on-this-design",
+      "teaching_item": "Dropped table, coverage telemetry and parser rollback",
+      "anchors": [
+        "dive-incident-parser"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The July parser incident retains 48 pages, 17/9 tables, 52.9% coverage, missing pages 31\u201333, layout 0.61, false fallback, completeness 0.46, versions/trace keys and reprocess/block/prevent steps. The paired citation incident is also fully taught."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-release-rollout-and-cost-detail",
+      "teaching_item": "6. Release, rollout, and cost detail",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Long-token cost, deduplication, small-model extraction, flagged-only expensive drafting, bulk screening/sampling, flagged-fraction growth and cost per true issue are retained. Material verification stays synchronous despite latency pressure."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "13. Answer the Cost Pivot in Ten Minutes",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Long-token cost, deduplication, small-model extraction, flagged-only expensive drafting, bulk screening/sampling, flagged-fraction growth and cost per true issue are retained. Material verification stays synchronous despite latency pressure."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-in-shadow-then-one-category-at-a-time",
+      "teaching_item": "11. Roll Out in Shadow, Then One Category at a Time",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All stages from owners/offline to expert historical evaluation, shadow work, read-only pilot and one category retain week gates, approvals and rollback for versioned changes."
+      }
+    },
+    {
+      "source_id": "main-7-interview-answer-to-rehearse",
+      "teaching_item": "7. Interview answer to rehearse",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The spoken answer is labelled hypothetical. All ten adversarial cases, bounded sprint/pressure responses, follow-ups, 60-minute timing and level calibration remain with worked reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-survive-the-red-team-round",
+      "teaching_item": "12. Survive the Red-Team Round",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The spoken answer is labelled hypothetical. All ten adversarial cases, bounded sprint/pressure responses, follow-ups, 60-minute timing and level calibration remain with worked reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-15-deliver-it-in-sixty-minutes",
+      "teaching_item": "15. Deliver It in Sixty Minutes",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The spoken answer is labelled hypothetical. All ten adversarial cases, bounded sprint/pressure responses, follow-ups, 60-minute timing and level calibration remain with worked reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-level-calibration",
+      "teaching_item": "Level calibration",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The spoken answer is labelled hypothetical. All ten adversarial cases, bounded sprint/pressure responses, follow-ups, 60-minute timing and level calibration remain with worked reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-check-yourself",
+      "teaching_item": "Check Yourself",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All nine source checks have native worked answers covering citations, independent scores, absent indexed tables, coverage gates, selective models, missing therapy, date-based rules, disclaimer limits and cost."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One sentence",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask first",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-flow",
+      "teaching_item": "Flow",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-six-rules",
+      "teaching_item": "Six rules",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-source-examples",
+      "teaching_item": "Source examples",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-key-takeaways",
+      "teaching_item": "Key Takeaways",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cheat-sheet and takeaway repetition is consolidated into the shared path and six recall rules after full explanations; domain differences are retained in the schema dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-two-incidents",
+      "teaching_item": "Two incidents",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both incident failure signatures, cost routing and staged rollout are recalled without replacing their complete teaching explanations."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-cost-and-rollout",
+      "teaching_item": "Cost and rollout",
+      "anchors": [
+        "review-tests"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both incident failure signatures, cost routing and staged rollout are recalled without replacing their complete teaching explanations."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-references",
+      "teaching_item": "References",
+      "anchors": [
+        "dive-references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Original primary-reference links retain source-date context; regulatory examples are not presented as a current compliance determination."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced. Per-item coverage preserves the source mechanisms, numbers and qualifications. Source inconsistencies resolved in text (2026-11-16): component table let the case be served when audit storage is down, while the requirements demand an immutable audit for final decisions \u2192 preparation may continue audit-pending, but final approval or external transition waits for a durable audit record, because the requirements, the approval workflow's fail-closed posture and the stakeholder table all require the audit for decisions; the table's audit-row cell is the one retained-table edit, and the 'source tension / design clarification' paragraph now states the rule plainly."
+  },
+  "required_answer_reveals": [
+    "document-answer-1",
+    "document-answer-2",
+    "document-answer-3",
+    "document-answer-4",
+    "document-answer-5",
+    "document-answer-6",
+    "document-answer-7",
+    "document-answer-8",
+    "document-answer-9",
+    "document-redteam-answer",
+    "document-spoken-answer"
+  ],
+  "visual_review": {
+    "status": "reviewed",
+    "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 5 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
+    "opening_decision": "Three brief topics explain unfamiliar healthcare terms and the missing-therapy example, followed by the task. Learning guidance is merged into the task; the old brief-reading fragment aliases to brief-task."
+  },
+  "source_refresh_review": {
+    "date": "2026-11-16",
+    "status": "unchanged",
+    "sections": 50,
+    "evidence": "See source-refresh.json: fresh live capture compared by source-section text_sha256 and image sha256, with no content or diagram changes."
+  }
+}

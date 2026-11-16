@@ -81,71 +81,41 @@ test('learn flow: module → lesson → mark read persists → module progress',
   await expect(page.getByText(/^1 of \d+ read$/).first()).toBeVisible()
 })
 
-// CT-01: G01 opens on its Introduction, with a sidebar of documents and their parts. Part
-// ids stay in the hash and in saved progress, so old links and read state still work.
-async function caseContents(page: Page) {
-  const toggle = page.getByRole('button', { name: /^Contents/ })
-  if (await toggle.isVisible()) await toggle.click()
-  return page.getByRole('navigation', { name: 'Case contents' })
-}
-
-test('case chapters: G01 introduction, sidebar parts, old links and progress', async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.setItem('fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant', JSON.stringify(['main', 'main-part-2']))
-  })
+// The design cases are casebook rewrites with one five-section reader. Old tab ids stay
+// valid as hash aliases, and read progress still keys on theme/slug.
+test('casebook reader: five sections, old links and progress', async ({ page }) => {
+  const key = 'fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant'
   await page.goto(CASE_STUDY)
   await hydrated(page)
-  await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
-  await expect(page.getByRole('cell', { name: 'Optional' })).toBeVisible()
+  const sections = page.getByRole('navigation', { name: 'Casebook sections' })
+  await expect(sections.getByRole('link')).toHaveCount(5)
+  await expect(page.locator('#case-brief')).toBeVisible()
+  await expect(page.locator('.casebook-reader .panel:not([hidden])')).toHaveCount(1)
   await expect(page.getByText(/databricks/i)).toHaveCount(0)
   await expect(page.getByText(/\bG01\b/)).toHaveCount(0)
-  // Full Design is optional, so its parts stay folded until it is open.
-  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 1', includeHidden: true })).toHaveCount(0)
 
-  await page.goto(`${CASE_STUDY}#full-pack-part-3`)
-  await hydrated(page)
-  await expect(page.getByRole('region', { name: 'Full Design' })).toBeVisible()
-  // Checked without opening the phone menu, which would cover the buttons below.
-  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 3', includeHidden: true })).toHaveAttribute('aria-current', 'page')
-  await page.getByRole('button', { name: 'Next: Part 4 →' }).click()
-  await expect(page).toHaveURL(/#full-pack-part-4$/)
-
-  const nav = await caseContents(page)
-  await expect(nav.getByRole('button', { name: 'Full Design, part 4' })).toHaveAttribute('aria-current', 'page')
-  await expect(nav.getByText(/^1 of 4 read$/)).toBeVisible()
-  await nav.getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
-  await expect(page).toHaveURL(/#main$/)
-  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toBeVisible()
-
-  // Arrow keys move between parts.
-  await page.keyboard.press('ArrowRight')
-  await expect(page).toHaveURL(/#main-part-2$/)
-  await page.keyboard.press('ArrowLeft')
-  await expect(page).toHaveURL(/#main$/)
-
-  // Scrolling to the end of a part marks it read, and says so.
+  // An old tab id opens the section that now holds its content.
   await page.goto(`${CASE_STUDY}#deep-dive`)
   await hydrated(page)
-  await expect(page.getByRole('region', { name: 'Technical Deep Dive' })).toBeVisible()
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-  await expect(page.getByRole('button', { name: 'Technical Deep Dive marked as read' })).toBeVisible()
-  await expect(page.getByText('Marked when you reached the end. Select the button to undo.')).toBeVisible()
+  await expect(page.locator('#deep-dives')).toBeVisible()
+  await expect(page.locator('#case-brief')).toBeHidden()
 
-  // A later visit without a hash offers to resume the last part open.
-  await page.goto(CASE_STUDY)
+  // Marking a section read is reversible and saved under the old progress key.
+  await page.goto(`${CASE_STUDY}#walkthrough`)
   await hydrated(page)
-  await expect(page.getByText('You were reading Technical Deep Dive.')).toBeVisible()
-  await page.getByRole('button', { name: 'Continue →' }).click()
-  await expect(page).toHaveURL(/#deep-dive$/)
+  const mark = page.getByRole('button', { name: 'Mark walkthrough as read' })
+  await mark.click()
+  await expect(page.locator('#walkthrough [data-mark-read]').first()).toHaveAttribute('aria-pressed', 'true')
+  await expect.poll(async () => (await fdStorage(page))[key]).toContain('main')
+  await page.locator('#walkthrough [data-mark-read]').first().click()
+  await expect(page.locator('#walkthrough [data-mark-read]').first()).toHaveAttribute('aria-pressed', 'false')
 })
 
-// Every scenario-pack case with an Introduction page gets the same layout as G01.
-test('case chapters: another case opens on its introduction with the sidebar', async ({ page }) => {
+test('casebook reader: another case opens on its case brief', async ({ page }) => {
   await page.goto('/design/customer-support-automation')
   await hydrated(page)
-  await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
-  const nav = await caseContents(page)
-  await expect(nav.getByRole('button', { name: 'Interview Guide, part 2' })).toBeAttached()
+  await expect(page.locator('#case-brief')).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Casebook sections' }).getByRole('link')).toHaveCount(5)
   await expect(page.getByText(/\bG\d{2}\b/)).toHaveCount(0)
 })
 
@@ -468,8 +438,8 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
-  await (await caseContents(page)).getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
-  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.locator('.casebook-reader #case-brief')).toBeVisible()
+  expect((await fdStorage(page))['fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant']).toContain('main')
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
   await page.goto('/learn/ai-systems-design/scenario-library')
   await expect(page).toHaveURL('/design')
@@ -583,7 +553,7 @@ test('casebook filters: count, filter, survive a reload and clear', async ({ pag
 for (const width of [1280, 390]) {
   test(`diagrams fit their column at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    for (const path of ['/design/decomposition-classics-67-68-69', '/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface']) {
+    for (const path of ['/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface']) {
       await page.goto(path)
       const figures = page.locator('.mermaid-figure:visible')
       // Diagrams draw as they near the viewport (hidden tabs wait for their tab). Bring each
@@ -603,6 +573,16 @@ for (const width of [1280, 390]) {
         expect(drawnWidth).toBeLessThanOrEqual(column + 1)
       }
     }
+    // Casebook source figures scale to their column in every section.
+    for (const panel of ['case-brief', 'walkthrough', 'deep-dives']) {
+      await page.goto(`/design/decomposition-classics-67-68-69#${panel}`)
+      await hydrated(page)
+      const sizes = await page.$$eval('.casebook-reader .source-diagram img', (images) => images
+        .filter((el) => el.getClientRects().length > 0)
+        .map((el) => [el.getBoundingClientRect().width, el.closest('figure')!.clientWidth]))
+      for (const [drawn, column] of sizes) expect(drawn).toBeLessThanOrEqual(column + 1)
+    }
+    await page.goto('/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface')
     if (width === 390) {
       const open = page.getByRole('button', { name: 'Open full size' }).first()
       await open.click()
@@ -619,15 +599,15 @@ for (const width of [1280, 390]) {
 // ENH-24b, PR-20: the served HTML holds each diagram as an image with a text alternative,
 // before any JavaScript runs.
 test('diagrams are in the served HTML', async ({ request }) => {
-  const html = await (await request.get('/design/decomposition-classics-67-68-69')).text()
+  const html = await (await request.get('/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface')).text()
   expect(html).not.toContain('Drawing diagram')
   expect(html.match(/<img[^>]*src="\/diagrams\/[0-9a-f]+-light\.svg"[^>]*>/g)?.length).toBeGreaterThan(0)
   expect(html).toMatch(/<img[^>]*alt="Diagram: [^"]+"/)
-  // Every tab's diagrams, not only the first tab's: the air-gapped case keeps its
-  // diagrams on tutorial tabs that are hidden on load.
-  const tabbed = await (await request.get('/design/air-gapped-ai-system')).text()
-  expect(tabbed).not.toContain('h-40 rounded-lg border border-dashed')
-  expect(new Set(tabbed.match(/\/diagrams\/[0-9a-f]+-light\.svg/g)).size).toBeGreaterThanOrEqual(8)
+  // Casebook figures in every section, not only the open one, are in the served HTML
+  // with a text alternative.
+  const casebook = await (await request.get('/design/air-gapped-ai-system')).text()
+  expect(casebook.match(/class="source-diagram"/g)?.length).toBeGreaterThanOrEqual(8)
+  expect(casebook).toMatch(/<img[^>]*class="diagram-light"[^>]*alt="[^"]+"|<img[^>]*alt="[^"]+"[^>]*class="diagram-light"/)
 })
 
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an

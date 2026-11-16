@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 330" role="img" aria-label="Reconstruction of the first draft: a rate limiter hanging off the load balancer with no exit, five agents fanning out, then one shared cache, one retrieval stage, one LLM step and one tool-calling stage in sequence, ending in a reply with no named merge. Numbered markers show the five faults.">
+<rect width="1080" height="330" fill="#ffffff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#343943"/></marker></defs>
+<g font-family="sans-serif" fill="#1d2129">
+<text x="20" y="28" font-size="16" font-weight="bold">The first draft, redrawn from the source's description (illustrative, not an original figure)</text>
+<g fill="none" stroke="#343943" stroke-width="1.5">
+<rect x="20" y="60" width="150" height="50" rx="4"/>
+<rect x="230" y="60" width="150" height="50" rx="4"/>
+<rect x="440" y="60" width="180" height="50" rx="4"/>
+<rect x="20" y="170" width="150" height="50" rx="4" stroke-dasharray="5 4"/>
+<rect x="20" y="250" width="150" height="50" rx="4"/>
+<rect x="230" y="250" width="150" height="50" rx="4"/>
+<rect x="440" y="250" width="150" height="50" rx="4"/>
+<rect x="650" y="250" width="190" height="50" rx="4"/>
+<rect x="900" y="250" width="160" height="50" rx="4"/>
+</g>
+<g font-size="14" text-anchor="middle">
+<text x="95" y="90">Load balancer</text>
+<text x="305" y="90">API gateway</text>
+<text x="530" y="83">Supervisor fans out</text>
+<text x="530" y="101" font-size="12">all five agents</text>
+<text x="95" y="200">Rate limiter</text>
+<text x="95" y="280">Shared cache</text>
+<text x="305" y="280">One retrieval stage</text>
+<text x="515" y="280">One LLM step</text>
+<text x="745" y="273">One tool-calling stage</text>
+<text x="745" y="291" font-size="12">+ one MCP registry</text>
+<text x="980" y="273">Reply</text>
+<text x="980" y="291" font-size="12">no named merge</text>
+</g>
+<g fill="none" stroke="#343943" stroke-width="1.5">
+<path d="M170 85H226" marker-end="url(#a)"/>
+<path d="M380 85H436" marker-end="url(#a)"/>
+<path d="M95 110V166"/>
+<path d="M620 85H700V140H200V236H95V246" marker-end="url(#a)"/>
+<path d="M170 275H226" marker-end="url(#a)"/>
+<path d="M380 275H436" marker-end="url(#a)"/>
+<path d="M590 275H646" marker-end="url(#a)"/>
+<path d="M840 275H896" marker-end="url(#a)"/>
+</g>
+<text x="210" y="200" font-size="12" fill="#970d63">no line leaves it</text>
+<g font-size="13" font-weight="bold" fill="#ffffff">
+<circle cx="20" cy="172" r="11" fill="#970d63"/><text x="20" y="177" text-anchor="middle">1</text>
+<circle cx="20" cy="252" r="11" fill="#970d63"/><text x="20" y="257" text-anchor="middle">2</text>
+<circle cx="230" cy="252" r="11" fill="#970d63"/><text x="230" y="257" text-anchor="middle">3</text>
+<circle cx="440" cy="252" r="11" fill="#970d63"/><text x="440" y="257" text-anchor="middle">4</text>
+<circle cx="650" cy="252" r="11" fill="#970d63"/><text x="650" y="257" text-anchor="middle">4</text>
+<circle cx="900" cy="252" r="11" fill="#970d63"/><text x="900" y="257" text-anchor="middle">5</text>
+</g>
+<text x="720" y="132" font-size="12" fill="#3b434b">every request takes every stage, in this order</text>
+</g>
+</svg>

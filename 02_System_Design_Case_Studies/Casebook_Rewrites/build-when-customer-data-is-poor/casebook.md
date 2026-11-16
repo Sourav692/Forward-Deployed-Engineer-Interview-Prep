@@ -1,0 +1,969 @@
+## Case brief
+### A customer wants AI this quarter, and its data is poor {#brief-scenario}
+
+The interview prompt, verbatim from the source's question bank, is short: "The customer wants an AI solution, but its data is incomplete, inconsistent, and poorly documented." In practice that means missing fields, labels that disagree with each other, duplicate records and gaps in history. The customer still wants value this quarter.
+
+Two answers are tempting, and both are wrong. One is to pick a model anyway and hope it copes. The other is to refuse until somebody cleans the data. The constraint that rules out both is simple: **the data can only prove what it contains.** A model cannot be more reliable than the evidence it reads, and a refusal leaves the customer with nothing while the data stays as it is.
+
+Poor data changes what gets built first. It is not a reason to refuse the work. "Not yet" is the right answer only when a measured defect blocks every route to value. The answer this casebook teaches has four moves: split "poor" into eight failure types, each with its own measurement and remedy; score readiness in one week; build a data-repair pipeline with a small decision layer on top; and ship each data fix as a phase of value. The core idea fits in one line: measure what is wrong with the data first, then build what it can already support.
+
+<figure class="source-diagram" id="figure-1-0"><a href="source-assets/97d95599e01e2438.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/97d95599e01e2438.svg" alt="Customer data feeds 'Measure eight failure types', then a 'One-week readiness score' that splits two ways. 'Build or narrow' leads to ingestion quality gates, a small decision layer and a review queue that grows labels, with an arrow from the review queue back to the gates. 'Not yet' leads to 'Fix the data at its source'."></a><img class="diagram-dark" src="source-assets/96b3a5f1caac9ed7.svg" alt="Dark variant: Customer data feeds 'Measure eight failure types', then a 'One-week readiness score' that splits two ways. 'Build or narrow' leads to ingestion quality gates, a small decision layer and a review queue that grows labels, with an arrow from the review queue back to the gates. 'Not yet' leads to 'Fix the data at its source'."><figcaption>The whole method in one flow: measure the eight failure types and score readiness in a week. "Build or narrow" leads to quality gates, a small decision layer and a review queue that grows labels; "not yet" leads to fixing the data at its source. Open for full size.</figcaption></figure>
+
+Read the diagram left to right. Measurement comes before any design choice, and the readiness score is the fork. Only the "build or narrow" branch reaches a model, and even there the model is one small box between quality gates and a review queue whose corrections feed back into the gates. The "not yet" branch is not a dead end: it becomes a data project that fixes the data at its source, the same repair that later stops defects arriving again next month.
+
+A few terms recur throughout. A **label** is the recorded right answer for a record, such as the correct failure code for a warranty claim. A **subject-matter expert (SME)** is the person at the customer who knows the domain well enough to say whether an answer is right. **Quarantine** means setting a bad record aside with the reason it failed, where people can still query it, instead of deleting it or filling in a guess. **Cohen's kappa (κ)** measures how often two people agree beyond what chance alone would produce; step 4 works through it.
+
+### Follow one warranty claim through the problem {#brief-example}
+
+The source's worked example is a manufacturer of industrial pumps that handles about 12,000 warranty claims a month. An adjuster reads each claim and decides to approve it, reject it or request more information, and sends suspected design defects to engineering. Each claim takes about 11 minutes. Every number in this example is a source assumption, not a measured customer result.
+
+Here is one illustrative claim, built from the defects the source reports. It arrives in the ERP (enterprise resource planning) system of a company the manufacturer acquired. Its failure code is "OTHER". The serial number field is empty. The invoice and photos are scans, and the serial number is only visible on the scanned invoice. The same claim was also entered in the parent company's ERP, under a different claim number and a different failure-code list.
+
+A model given this record as-is would see a placeholder code, no serial number and two apparently separate claims. It would produce a fluent recommendation from broken inputs. The design this casebook builds handles the claim differently. A quality gate flags the empty serial number as missing rather than guessing one. Extraction reads the serial number from the scan, with a confidence score. Normalisation maps both ERPs' codes to one agreed list and links the duplicate. If any field's confidence is low, an adjuster checks that field, and the correction is saved as a trusted label. Only then does the system draft a recommendation that cites the fields it used. In the first release, a person still makes every decision.
+
+### What you need to design {#brief-task}
+
+Your task is to decide whether this customer's data can support a measurable improvement in one specific decision, and then design the first build it can support. You need to show how you would measure the data, what you would build anyway, how you would evaluate when the labels themselves are suspect, how you would tell the customer, and how the work ships in phases.
+
+The case is written for engineers preparing for Forward Deployed, solutions or applied-AI engineering interviews, especially a customer-scenario or problem-decomposition round where the data is messy, sparse or untrusted. It assumes comfort with data pipelines, labelling and model evaluation. It builds on two other cases, Scoping to Deployed Agent (delivery gates and intake refusal) and Evaluation and Release Gating (the release gate), and links to them rather than repeating them.
+
+After working through it you should be able to explain the approach end to end at interview depth, from measuring data defects to a phased build, and answer follow-ups on readiness scoring, what to build anyway, ingestion gates, growing labels, building an eval set early, telling the customer their data is poor and the cost pivot.
+
+Before you read step 3, list the ways the warranty data could be poor and how you would measure each. Rehearse the 45-minute plan in Practice aloud with a timer. Return to the level calibration in Practice and the Quick review the night before an interview.
+
+The source notes its own limits. Its question bank gives this prompt one statement, eleven talking points and one closing line, and, unlike most questions in the bank, no block of likely follow-ups; the follow-ups in Practice were written for this case. The original page was organised as one mandatory Interview Guide in three parts. Here that material is spread across the five sections below.
+
+## Design walkthrough
+### 1. Refuse to start with the model {#walk-model-last}
+
+The source lists what a strong answer to this prompt discusses: data-quality profiling, ownership, missingness, duplicates and schema inconsistencies, then label quality, freshness and data contracts, and finally human-in-the-loop correction, narrowing the initial use case, and whether AI is the right solution at all. It also gives the sentence to land on early:
+
+> "I would not begin with model selection. I would first determine whether the available data can support a measurable workflow improvement."
+
+Say that sentence in the first three minutes. The reasoning behind it is that a better model mostly produces more fluent answers from the same broken records. If the serial number is missing, a stronger model writes a more convincing recommendation without it. The interviewer is testing whether that instinct arrives before the architecture does.
+
+The question bank's list of mistakes applies with extra force here. Mistake one is "Starting with 'I would use RAG (retrieval-augmented generation) and agents'", which names a technique before anyone knows what the data can support. Mistake five is "Discussing model accuracy without defining evaluation". Poor data makes both worse, because the labels that would define accuracy are themselves suspect.
+
+### 2. Ask the questions that decide whether data matters {#walk-discovery}
+
+Not every data problem blocks every use case. The clarifying questions find out which defects touch the decision the customer wants improved; the rest of the data can stay poor for now. Each question below changes something specific in the design.
+
+<p class="figure-caption">Questions that connect data defects to the intended workflow.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>What changes with the answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Which decision or task should improve, and who makes it today?</td>
+<td>Which fields matter; the rest of the data can stay poor</td>
+</tr>
+<tr>
+<td>What does "poor" mean to the person saying it? Missing, wrong, or unfindable?</td>
+<td>Whether the fix is collection, correction, or integration</td>
+</tr>
+<tr>
+<td>Who owns each source, and who can fix it upstream?</td>
+<td>Whether defects get repaired at source or patched downstream forever</td>
+</tr>
+<tr>
+<td>Is there any trusted outcome record: approvals, refunds, audits?</td>
+<td>Whether historical labels exist at all, and how far to trust them</td>
+</tr>
+<tr>
+<td>How is the task done today without AI, and how long does it take?</td>
+<td>The human baseline, which is the bar the system must beat</td>
+</tr>
+<tr>
+<td>Which errors are tolerable, and which need a human?</td>
+<td>Where confidence thresholds and review queues sit</td>
+</tr>
+<tr>
+<td>What data may leave which boundary?</td>
+<td>Whether scanned documents can go to a hosted model</td>
+</tr>
+<tr>
+<td>Is a rules or reporting fix enough?</td>
+<td>Whether AI is the right solution at all</td>
+</tr>
+</tbody></table></div>
+
+The last question comes from the source's own list, and it is the one candidates skip. Some "AI projects" are a missing dropdown on an entry form. If adjusters type free text because the form has no failure-code list, fixing the form beats building a model to guess what the dropdown would have said. Saying so in an interview signals judgement. It is not a failure to sell.
+
+The question bank's reusable opening fits this case: clarify the outcome, user, workflow, constraints and success measure, then state your assumptions. This case adds one promise to it: "and I will measure the data before I trust it."
+
+### 3. Split "poor" into eight failure types you can measure {#walk-profile}
+
+"The data is bad" is not actionable, because nobody can fix "bad". Eight distinct failure types hide inside it. Each has a different measurement you can take in week one, blocks different work and needs a different remedy, so naming the type tells you what to do next.
+
+<p class="figure-caption">Eight failure types, measurements, blocked work and remedies.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Failure type</th>
+<th>Symptom</th>
+<th>Measure in week 1</th>
+<th>What it blocks</th>
+<th>Remedy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Missing</td>
+<td>Empty or placeholder fields ("N/A", "OTHER", 0)</td>
+<td>Null and placeholder rate per field, per source</td>
+<td>Any feature or answer that needs the field</td>
+<td>Extract from free text or attachments; make the field required at entry</td>
+</tr>
+<tr>
+<td>Wrong</td>
+<td>Values present but false</td>
+<td>Error rate on a 100-record sample checked by an <abbr title="subject-matter expert: The person at the customer who actually knows the domain, the one who can tell you if an answer is right.">SME</abbr></td>
+<td>Trusting any single field without corroboration</td>
+<td>Cross-check against a second source; flag, do not silently fix</td>
+</tr>
+<tr>
+<td>Inconsistent labels</td>
+<td>Same case, different label across teams or years</td>
+<td>Agreement between two SMEs relabelling the same sample</td>
+<td>Supervised training; historical labels as ground truth</td>
+<td>Adjudicated relabel of a stratified sample; a written label guide</td>
+</tr>
+<tr>
+<td>Stale</td>
+<td>Correct once, not now</td>
+<td>Age of last update against how fast the fact changes</td>
+<td>Any answer about current state</td>
+<td>Freshness per source; a staleness flag shown to users</td>
+</tr>
+<tr>
+<td>Siloed or unjoinable</td>
+<td>No shared key across systems</td>
+<td>Join success rate on a sample</td>
+<td>Any view spanning two systems</td>
+<td>Entity resolution with a reviewed match table</td>
+</tr>
+<tr>
+<td>Unstructured or scanned</td>
+<td>The fact is in a PDF, photo or email</td>
+<td>Share of records whose key fact is only in an attachment</td>
+<td>Rules and reports; cheap retrieval</td>
+<td>Extraction to a schema, with confidence and review</td>
+</tr>
+<tr>
+<td>Biased or unrepresentative</td>
+<td>History covers some segments, not others</td>
+<td>Record counts by segment and period against current traffic</td>
+<td>Any claim of accuracy outside the covered segments</td>
+<td>Stratified sampling; explicit out-of-scope segments</td>
+</tr>
+<tr>
+<td>Access-restricted</td>
+<td>Data exists, but the project cannot use it</td>
+<td>Sources with access granted versus requested</td>
+<td>Everything downstream of that source</td>
+<td>Escalate by day 3; design around the gap</td>
+</tr>
+</tbody></table></div>
+
+Read the table by row. For the warranty claim in the brief, the "OTHER" failure code is a missing value in disguise (a placeholder), the empty serial number is plainly missing, the scanned invoice is unstructured, and the claim that appears in both ERPs is a siloed-and-unjoinable problem. One record can carry four failure types, and each needs its own fix.
+
+The source's author singles out two rows as the ones that fool teams most often. The first is **inconsistent labels, which are worse than missing labels.** A missing label is visibly missing, so nobody trains on it. An inconsistent one looks like ground truth. It gets trained on, and then the evaluation, which uses the same labels, scores the model's copied errors as correct.
+
+A routing case reported in the source shows the damage. A fine-tuned model scored 94% accuracy offline, against 81% for a prompted baseline, then reached only about 78% in production. One of three compounding causes was that its labels came from a previous version of the same system's routing decisions. The model learned the old system's errors, and evaluation marked them right. After deduplication, a split by time and a relabel adjudicated by people, the honest offline number came out near 83%, and production matched it within two points. These figures are source-reported; this casebook did not measure them.
+
+The second row is **access restriction, which is a data-quality problem in disguise.** The delivery framework in the Scoping to Deployed Agent case treats data access as its own risk with a mechanism attached: "Start day 1, escalate day 3". Data nobody on the project can read has quality zero, whatever it contains.
+
+### 4. Score readiness in one week {#walk-readiness}
+
+A readiness assessment turns "poor" into numbers the customer can argue with, and it produces the decision memo that justifies what gets built. One week is enough if the scope is one decision, such as the adjuster's approve, reject or request-more-information call, not the whole data estate.
+
+<p class="figure-caption">Readiness-week activities and outputs.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Activity</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Confirm access; inventory sources, owners and refresh schedules</td>
+<td>Source map with an owner per source</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Profile every field the decision needs: nulls, placeholders, distinct values, duplicates, schema drift</td>
+<td>Profile report per source</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pull a stratified sample of about 200 records; two SMEs label 100 independently</td>
+<td>Measured label agreement</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Test joins across systems; check freshness; count records by segment and period</td>
+<td>Join rate, staleness, coverage by segment</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Score the card; write the decision memo</td>
+<td>Build, narrow, or not yet</td>
+</tr>
+</tbody></table></div>
+
+Day 3 is the most important day. Two SMEs relabel the same sample independently, so you measure label consistency directly instead of asking someone whether the labels are good. People who own a dataset usually believe it is fine; their agreement rate is evidence, and their opinion is not.
+
+Use **Cohen's kappa** rather than raw agreement. Kappa is agreement corrected for the agreement two random labellers would reach by chance: κ = (observed agreement − chance agreement) ÷ (1 − chance agreement). Raw agreement overstates quality when one label dominates, because two people who both mostly say the majority answer agree often without either being careful. An illustrative example, not from the source: two adjusters each approve 90 of 100 claims and agree on 90 of them. Chance agreement with those rates is 0.9 × 0.9 + 0.1 × 0.1 = 0.82, so κ = (0.90 − 0.82) ÷ (1 − 0.82) ≈ 0.44. Ninety per cent raw agreement is, here, a weak result.
+
+The source sets the agreement floor for an LLM (large language model) judge at κ ≥ 0.60, and its author applies the same floor to a pair of human labellers. The scorecard below scores only the dimensions the target decision depends on.
+
+<p class="figure-caption">Illustrative green, amber and red readiness bands.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Green</th>
+<th>Amber</th>
+<th>Red</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Coverage of required fields</td>
+<td>≥ 90% populated</td>
+<td>60-90%</td>
+<td>&lt; 60%</td>
+</tr>
+<tr>
+<td>Correctness on SME spot check</td>
+<td>≤ 5% wrong</td>
+<td>5-15%</td>
+<td>&gt; 15%</td>
+</tr>
+<tr>
+<td>Label agreement (κ)</td>
+<td>≥ 0.75</td>
+<td>0.60-0.75</td>
+<td>&lt; 0.60</td>
+</tr>
+<tr>
+<td>Freshness versus rate of change</td>
+<td>Within tolerance</td>
+<td>Lagging, flaggable</td>
+<td>Unknown or unbounded</td>
+</tr>
+<tr>
+<td>Join rate across needed sources</td>
+<td>≥ 95%</td>
+<td>80-95%</td>
+<td>&lt; 80%</td>
+</tr>
+<tr>
+<td>Access to needed sources</td>
+<td>All live and verified</td>
+<td>Requested, in progress</td>
+<td>Refused or no owner</td>
+</tr>
+<tr>
+<td>Segment coverage versus current traffic</td>
+<td>All in-scope segments present</td>
+<td>Gaps named and excludable</td>
+<td>Main segment missing</td>
+</tr>
+<tr>
+<td>Ownership and documentation</td>
+<td>Named owner, known meaning</td>
+<td>Owner known, meaning inferred</td>
+<td>Nobody can say what a field means</td>
+</tr>
+</tbody></table></div>
+
+The thresholds are assumptions to adjust for each domain. The decision rule is not. A red on a dimension the chosen design depends on means redesign or wait. A red on a dimension the design can route around means narrow the scope and say so in writing.
+
+The Scoping to Deployed Agent framework already has a slot for this week. It allocates days 3 and 4 of delivery to data readiness, and its gate is `data_access_granted`, signed by the customer's SME. The scorecard raises the evidence behind that signature. Access being live is necessary, but access to data that scores red is not readiness.
+
+### 5. Decide what to build anyway, or say not yet {#walk-choice}
+
+Poor data rules out some designs and barely affects others. The rule is to pick a design whose weakest input is one the data can already supply. The table lists designs that tolerate poor data, why, and what each still needs.
+
+<p class="figure-caption">Design choices, why they tolerate defects and their remaining prerequisites.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Design that tolerates poor data</th>
+<th>Why it tolerates it</th>
+<th>What it still needs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Retrieval over a curated subset</td>
+<td>Uses only documents someone vouched for; ignores the rest</td>
+<td>An owner who curates, and a freshness flag</td>
+</tr>
+<tr>
+<td>LLM-assisted extraction and normalisation, with review</td>
+<td>Turns scanned or free-text records into structured fields; review catches errors</td>
+<td>A schema, confidence scores, reviewer time</td>
+</tr>
+<tr>
+<td>Rules plus an <abbr title="large language model: The model that reads text and writes text, GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.">LLM</abbr></td>
+<td>Rules handle the clean, high-volume cases; the model handles the messy tail</td>
+<td>Rules owned by the business, not the model</td>
+</tr>
+<tr>
+<td>Human-in-the-loop labelling loop</td>
+<td>Every reviewed item becomes a trusted label</td>
+<td>Reviewers whose corrections are captured, not typed around</td>
+</tr>
+<tr>
+<td>Weak supervision</td>
+<td>Several cheap, noisy labelling rules vote; the votes become a training signal</td>
+<td>A small trusted set to measure the rules against</td>
+</tr>
+<tr>
+<td>Synthetic data</td>
+<td>Covers rare cases the history lacks</td>
+<td>Real data to validate against; never the only evaluation</td>
+</tr>
+</tbody></table></div>
+
+Two rows need more explanation than the table gives.
+
+**Weak supervision** replaces hand-labelling every record with several cheap labelling rules, for example a keyword match, a lookup table and a model's guess. Each rule is unreliable on its own. Their votes are combined, weighted by each rule's estimated accuracy, into a label that is usable at scale. Tools such as Snorkel estimate those weights from where the rules agree and disagree, without needing ground truth; a small trusted sample then checks the result. Deep dive [Grow labels from the review queue](#dive-labels) applies it to the warranty failure codes.
+
+**Synthetic data** carries the sharpest caveat. One rule from the source's evaluation material applies directly: "a small, real eval beats a synthetic one for customer-specific evaluation." Synthetic examples can fill gaps in coverage, such as a failure mode that has never occurred. They cannot tell anyone how the system performs on this customer's real records.
+
+Say **"not yet"** only when three things line up: the target decision depends on a field that scores red, no design can route around it, and no human process exists that could generate the missing truth. The honest answer is then a data project with a date, not an AI project with a hope. The Scoping to Deployed Agent intake rule says the same thing about unmeasurable goals: "Refuse to start. A two-week clock against an unmeasurable goal is worse than no clock."
+
+### 6. Turn the warranty defects into testable requirements {#walk-requirements}
+
+The worked example makes the method concrete. The scenario is invented by the source, and every number in steps 6 to 9 and in the evaluation deep dive is an assumption. The pump manufacturer's adjusters process about 12,000 claims a month at about 11 minutes each. The customer wants AI to cut that time and to catch defect patterns earlier. This is what week 1 found:
+
+<p class="figure-caption">The warranty data as found in week 1 (source assumptions).</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Defect found</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Two <abbr title="enterprise resource planning: The system that runs finance, orders and inventory, SAP is the usual example.">ERP</abbr> systems, merged after an acquisition</td>
+<td>Different failure-code lists; no shared claim key; 14% of claims appear in both</td>
+</tr>
+<tr>
+<td>Failure code field</td>
+<td>38% of claims coded "OTHER"</td>
+</tr>
+<tr>
+<td>Serial number field</td>
+<td>Missing on 27% of claims</td>
+</tr>
+<tr>
+<td>Attachments</td>
+<td>55% of invoices and photos are scanned, with the key facts only there</td>
+</tr>
+<tr>
+<td>Decisions</td>
+<td>Outcome recorded; the reason for the outcome is not</td>
+</tr>
+<tr>
+<td>Relabel of 100 claims by two adjusters</td>
+<td>κ = 0.52 on failure code; κ = 0.81 on approve or reject</td>
+</tr>
+</tbody></table></div>
+
+The last row decides the design. Adjusters agree on outcomes (κ = 0.81, green), so the approve or reject outcome is a usable label. They disagree on failure codes (κ = 0.52, red against the 0.60 floor), so historical failure codes are not ground truth. Any design that trains on historical failure codes would learn the disagreement. That one measurement moves failure codes from "training label" to "field the project must repair".
+
+The functional requirements follow from the defects. Each has a test, so "done" is something you can check rather than argue about.
+
+<p class="figure-caption">Functional requirements and corresponding tests.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FR1</td>
+<td>Extract serial number, part, failure description and invoice amount from each claim and its attachments</td>
+<td>Field-level precision and recall on the adjudicated set</td>
+</tr>
+<tr>
+<td>FR2</td>
+<td>Normalise failure descriptions to one agreed code list, with a confidence</td>
+<td>Agreement with adjudicated codes, reported with κ</td>
+</tr>
+<tr>
+<td>FR3</td>
+<td>Link duplicate claims across the two ERPs</td>
+<td>Match precision on a reviewed pair set</td>
+</tr>
+<tr>
+<td>FR4</td>
+<td>Draft a recommendation with the evidence behind it</td>
+<td>Adjuster agreement rate; every draft cites the fields it used</td>
+</tr>
+<tr>
+<td>FR5</td>
+<td>Route low-confidence fields and all rejections to an adjuster</td>
+<td>No claim auto-decided in phase 1</td>
+</tr>
+<tr>
+<td>FR6</td>
+<td>Capture every adjuster correction as a label</td>
+<td>Corrections appear in the label store within one day</td>
+</tr>
+</tbody></table></div>
+
+The non-functional requirements (NFRs) say how well the system must work, with the reason for each threshold.
+
+<p class="figure-caption">Non-functional requirements and thresholds.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th><abbr title="non-functional requirement: How well the system must work, speed, safety, uptime, cost, as opposed to what it does.">NFR</abbr></th>
+<th>Threshold</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Latency</td>
+<td>Draft ready within 5 minutes of claim arrival</td>
+<td>Adjusters work a queue, not a chat</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>12,000 claims a month, peaks of 1,500 a day</td>
+<td>Month-end surges</td>
+</tr>
+<tr>
+<td>Data boundary</td>
+<td>Scanned documents stay in the customer's cloud region</td>
+<td>Invoices carry customer names and prices</td>
+</tr>
+<tr>
+<td>Auditability</td>
+<td>Every draft stores inputs, model version, confidence and reviewer action</td>
+<td>Warranty decisions get disputed</td>
+</tr>
+<tr>
+<td>Quality floor</td>
+<td>No field shown as fact below its confidence threshold</td>
+<td>A confident wrong serial number is worse than a blank</td>
+</tr>
+</tbody></table></div>
+
+The quality floor is the NFR most specific to poor data. A confident wrong serial number sends a claim to the wrong product history, which is worse than a blank that a person notices and fills in.
+
+The success metrics are equally concrete. Adjuster minutes per claim fall from 11 to 6. The share of "OTHER" codes on new claims falls from 38% to under 10%. Defect clusters reach engineering's queue within two weeks of the first claim, against a current lag of about a quarter. These are targets to test, not promised results.
+
+### 7. Draw the architecture as a repair pipeline with a small decision layer {#walk-architecture}
+
+The architecture is a data-repair pipeline with a small decision layer on top, and you should draw it that way round. Most of the value in phase 1 comes from the repair half, not from the model. The two flowcharts below run top to bottom, so the repair stages come first and the decision layer follows them.
+
+The first diagram shows the path one claim takes.
+
+<figure class="source-diagram" id="figure-14-0"><a href="source-assets/b933851f010be9a3.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/b933851f010be9a3.svg" alt="ERP-A, ERP-B and scans are ingested with hash, source and arrival, then validated for schema, required fields, placeholders and freshness. Rejects go to quarantine with a reason; clean or flagged records go to extraction of schema and confidence from scans or text, then normalisation of codes, units and entities. A decision asks whether confidence meets the field threshold: yes leads to draft fields and evidence, no leads to adjuster review and correction. The adjuster decides, results go to an adjudicated label store, which feeds time-stratified gold-set growth, per-field threshold tuning and defect clusters for engineering."></a><img class="diagram-dark" src="source-assets/44fee8cd31813a6c.svg" alt="Dark variant: ERP-A, ERP-B and scans are ingested with hash, source and arrival, then validated; rejects go to quarantine with a reason, the rest are extracted, normalised and routed by field confidence to a draft or to adjuster review, ending in an adjudicated label store that feeds gold-set growth, threshold tuning and defect clusters."><figcaption>One claim's path: ingest with a content hash, validate, quarantine or pass, extract with confidence, normalise, route by per-field confidence, and record the adjuster's decision in the label store that feeds the gold set, thresholds and defect clusters. Open for full size.</figcaption></figure>
+
+Trace the brief's claim through it. Ingest records which ERP it came from and when, and hashes its content. Validation finds the "OTHER" code and the empty serial number. The record is flagged rather than rejected, because extraction may recover the serial from the scan; a record failing the schema outright would go to quarantine with its reason. Extraction reads the serial number from the invoice scan with, say, 0.72 confidence (an illustrative value). Normalisation maps the description to the agreed code list and links the twin claim in the other ERP. At the confidence check, the serial number falls below its field threshold, so that one field goes to an adjuster. The adjuster corrects it in the tool, decides the claim, and both the field correction and the decision land in the label store.
+
+The second diagram adds the evaluation gate and separates the three inputs.
+
+<figure class="source-diagram" id="figure-14-1"><a href="source-assets/b667b08a24fd9725.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/b667b08a24fd9725.svg" alt="ERP-A claims, ERP-B claims and scanned invoices and photos enter ingest with content hash, source and arrival time. Quality gates check schema, required fields, placeholders and freshness: fails go to quarantine with reason, passes or flagged records go to extraction to schema with confidence, then normalisation of code list, units and entity match across ERPs. If field confidence is above threshold the system drafts a recommendation with cited evidence; if not, the field goes to the review queue for an adjuster. The adjuster decides, and the result enters the adjudicated label store, which feeds gold-set growth (stratified, split by time), threshold tuning per field and defect clustering to engineering. Gold-set growth feeds an evaluation gate before any threshold change."></a><img class="diagram-dark" src="source-assets/bf1ffbd0c1c8502a.svg" alt="Dark variant: three claim sources enter ingest, quality gates and quarantine, extraction and normalisation, a field-confidence branch to a cited draft or the adjuster review queue, then the adjudicated label store feeding gold-set growth (which feeds an evaluation gate before any threshold change), per-field threshold tuning and defect clustering."><figcaption>The full component view: three inputs, quality gates with quarantine, extraction and cross-ERP normalisation, a confidence branch to a cited draft or the review queue, and a label store feeding per-field thresholds, defect clustering and gold-set growth, which in turn feeds the evaluation gate that guards any threshold change. Open for full size.</figcaption></figure>
+
+Read the components in dependency order. Each row says what the component does and what goes wrong without it, which is the argument for building it.
+
+<p class="figure-caption">Component responsibilities in dependency order.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Job</th>
+<th>What goes wrong without it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ingest with content hash</td>
+<td>Records source and arrival; skips unchanged records</td>
+<td>Re-extraction cost on every sync; duplicates look new</td>
+</tr>
+<tr>
+<td>Quality gates</td>
+<td>Reject or flag records that fail schema, required fields or placeholder checks</td>
+<td>"OTHER" and "N/A" flow downstream as real values</td>
+</tr>
+<tr>
+<td>Quarantine with reason</td>
+<td>Keeps rejected records queryable, with why</td>
+<td>Bad records vanish; nobody fixes the source</td>
+</tr>
+<tr>
+<td>Extraction</td>
+<td>Pulls fields from scans and free text into a schema, with per-field confidence</td>
+<td>Half the facts stay locked in attachments</td>
+</tr>
+<tr>
+<td>Normalisation</td>
+<td>Maps descriptions to one code list; matches claims across ERPs</td>
+<td>Two code lists and 14% duplicates survive the merge</td>
+</tr>
+<tr>
+<td>Confidence router</td>
+<td>Sends only uncertain fields to people</td>
+<td>Reviewers check everything, or nothing</td>
+</tr>
+<tr>
+<td>Draft with evidence</td>
+<td>Recommendation that cites the fields it used</td>
+<td>An adjuster cannot tell why the draft says reject</td>
+</tr>
+<tr>
+<td>Review queue</td>
+<td>Adjusters fix fields in the tool, not around it</td>
+<td>Corrections happen in email and are lost</td>
+</tr>
+<tr>
+<td>Label store</td>
+<td>Every adjudicated field and decision, with reviewer and time</td>
+<td>The system never gets better data than it started with</td>
+</tr>
+<tr>
+<td>Gold set growth</td>
+<td>Stratified, time-split sample of the label store</td>
+<td>The eval set drifts toward whatever was easy</td>
+</tr>
+<tr>
+<td>Threshold tuning</td>
+<td>Per-field confidence thresholds set from measured precision</td>
+<td>One global threshold, wrong for every field</td>
+</tr>
+<tr>
+<td>Defect clustering</td>
+<td>Groups normalised failures by part and period</td>
+<td>The early-warning value never reaches engineering</td>
+</tr>
+<tr>
+<td>Evaluation gate</td>
+<td>Blocks threshold or prompt changes that regress on the gold set</td>
+<td>A tuning change quietly lowers precision</td>
+</tr>
+<tr>
+<td>Data contract with source owners</td>
+<td>Agreed required fields and code list at entry</td>
+<td>The same defects arrive again next month</td>
+</tr>
+</tbody></table></div>
+
+Notice how little of the table is the model. Extraction and drafting use one, and everything else is plumbing, review and measurement. The label store is the component the rest depend on: it feeds the gold set, the thresholds and the defect clusters, and it is the only way the system ever gets better data than it started with.
+
+### 8. Put quality gates at ingestion, not after the model {#walk-gates}
+
+A defect caught at ingestion costs one rejected or flagged record. The same defect caught after the model costs a wrong recommendation, an adjuster's time to spot and undo it, and some of the customer's trust. So the gates sit before extraction, not in an output guardrail at the end.
+
+The enterprise RAG design's ingestion pipeline (Enterprise Knowledge Assistant) states the rule in one line: "An unmappable document is quarantined, not defaulted to internal." Defaulting is how a hidden defect gets indexed and then served as fact. The same rule applies to a warranty claim. A claim with a placeholder serial number is flagged as missing; it is never assigned a guessed value.
+
+That pipeline also records a `last_synced_at` time for each source and every rejected document with its reason, and keeps both queryable after the job exits rather than only printing them to a log. That is the quarantine box in step 7. A log line disappears; a queryable quarantine table becomes evidence.
+
+Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, the hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so the hash saves cost as well as stopping duplicates from looking like new records.
+
+Repairing at the pipeline treats the symptom; repairing at source treats the cause. The FDE (Forward Deployed Engineer) cross-team case in the source resolved this conflict with data contracts. Software teams wanted speed, while data and AI teams needed stable, high-quality data, and "Data contracts turned an ownership argument into an interface agreement." In this design, the contract makes serial number required at entry and fixes one failure-code list across both ERPs. The quarantine report becomes the evidence that the contract is needed: it shows the source owner exactly how many records their form produced that the pipeline could not use.
+
+### 9. Tell the customer their data is poor {#walk-customer}
+
+The hardest part of this case is a conversation, not a component. Nobody enjoys hearing that their data is poor, and the person told is often the person responsible for it.
+
+Lead with measurements, not adjectives. "Your data is messy" invites a defence. "38% of claims are coded OTHER, and on the failure code your adjusters reach only about half of the agreement possible beyond chance (κ = 0.52)" invites a plan. Say it that way: κ = 0.52 does not mean they agree half the time. The scorecard exists partly to make this conversation factual.
+
+Frame phase 0 as value, not as delay. The readiness week already produces things the customer can use: where the claim backlog is duplicated across the two ERPs, a measured estimate of how much adjuster time goes on hunting for facts in scans, and an agreed code list the business needed anyway. A data contract that stops "OTHER" at entry improves every report the customer runs, with or without AI.
+
+Offer a narrow first win alongside the repair. Extracting serial numbers and invoice amounts from scans is useful on day one and needs no historical labels, so it shortens every claim while the failure-code work matures. The customer then sees progress on the same dashboard where the data problems are tracked.
+
+Name what will not be promised. In the worked example, the first release makes no automatic decisions and gives no defect prediction for product lines with under two quarters of history. Written non-goals protect the relationship when the pressure to overpromise arrives.
+
+### 10. Phase the work so data fixes ship as value {#walk-rollout}
+
+The phases follow the readiness scores, not a generic timeline. Each phase exits on a measured condition, in the spirit of the Scoping to Deployed Agent gates, so moving forward is a check, not a calendar date.
+
+<p class="figure-caption">Illustrative phases, durations and exit conditions.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Weeks</th>
+<th>Ships</th>
+<th>Exit condition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0 Readiness</td>
+<td>1</td>
+<td>Scorecard, decision memo, quarantine report, draft data contract</td>
+<td>Customer signs the scope and the non-goals</td>
+</tr>
+<tr>
+<td>1 Extract</td>
+<td>2-5</td>
+<td>Field extraction from scans with confidence; review queue; label store</td>
+<td>Field precision ≥ 95% above threshold on the seed set</td>
+</tr>
+<tr>
+<td>2 Normalise</td>
+<td>6-9</td>
+<td>Unified code list, cross-ERP matching, weak-supervision labels</td>
+<td>κ between the system and adjudicated codes ≥ 0.70</td>
+</tr>
+<tr>
+<td>3 Draft</td>
+<td>10-13</td>
+<td>Recommendation drafts with evidence, in shadow mode</td>
+<td>Adjuster agreement ≥ 85%; minutes per claim measurably down</td>
+</tr>
+<tr>
+<td>4 Assist</td>
+<td>14+</td>
+<td>Drafts shown live; defect clusters to engineering</td>
+<td>The success metrics from step 6 are trending to target</td>
+</tr>
+</tbody></table></div>
+
+Read the exit conditions as a ladder of trust. Phase 1 must show extraction is precise before anything uses its output. Phase 2 must show the system's codes agree with adjudicated codes at κ ≥ 0.70, where two adjusters reached only 0.52 with each other. Phase 3 must show the drafts agree with adjusters before any adjuster sees one live.
+
+**Shadow mode** in phase 3 means what it means in the delivery framework: the system runs on real traffic and records what it would recommend, but takes no action, while people compare its output with their own decisions. Its first real action is never also the first time nobody is watching.
+
+The data contract runs in parallel with every phase. Its effect shows up as a falling quarantine rate and a falling "OTHER" rate on new claims, both tracked on the same dashboard as model quality. Watching them together stops an apparent model improvement from hiding a deterioration upstream.
+
+## Technical deep dives
+### Grow labels from the review queue {#dive-labels}
+
+Poor labels are a starting condition, not a permanent one. The review queue turns adjuster time into trusted labels, but only if it is designed that way from day one. Three rules make a correction usable as a label:
+
+1. **The correction happens in the tool, on the field, with the original value kept.** A reviewer who fixes a claim directly in the ERP leaves no trace the system can learn from.
+2. **Each correction records who made it and when.** Labels from a reviewer with low agreement can then be weighted down.
+3. **Disagreements go to adjudication, not to whoever clicked last.** Adjudication means a designated expert, or a defined process, settles the conflict and records why.
+
+General dataset hygiene applies unchanged. Deduplicate first, because, in the source's words, "100,000 raw traces might be a few thousand distinct problems"; ten copies of one easy claim make a dataset look ten times larger and easier than it is. Split held-out cases by time and by user, never at random, so near-identical records cannot sit on both sides of the split. Route low-agreement, high-impact cases to human adjudication.
+
+Watch for the trap in automatic labels. An outcome such as "user didn't complain" is not the same as "correct". For claims, "approved and not disputed" is a weak label, not a gold one: a wrongly approved claim the customer was happy with will never be disputed.
+
+Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote on each claim's code: a keyword map from description to code, the part's historically most common failure, and the extraction model's own guess. Each rule's votes are scored against the adjudicated sample to estimate its accuracy. Where the rules agree with high confidence, the combined label is used for training. Where they disagree, the claim goes to the review queue. The disagreement itself tells the system where people are needed, so expert time goes to the claims that are actually ambiguous.
+
+Synthetic claims fill one gap only: rare failure modes the history lacks, such as a new pump model with no claims yet. They are tagged as synthetic in the label store and excluded from any headline metric.
+
+### Build the eval set before the labels are clean {#dive-evaluation}
+
+An evaluation set cannot wait for clean labels, because clean labels are what the project produces. Build a small, trusted set first and grow it from the label store.
+
+The source gives three ways to seed one. The first mines support tickets or an existing FAQ for real questions with known answers. The second is to "ask 3-4 of their power users for 10 questions each". The third combines sampling production traffic, expert labelling, weak supervision and carefully used synthetic examples, and adds measuring grader agreement and human review of difficult cases. For claims, the seed is already in hand: the 100 claims relabelled in week 1, adjudicated where the two adjusters disagreed.
+
+**Size the set honestly.** The source's rule of thumb for comparing two success rates is n ≈ 15.7 × p(1−p) ÷ δ² cases per arm, where p is the success rate and δ is the difference you want to detect. The constant 15.7 comes from the usual 5% false-alarm rate and 80% chance of detecting a real difference. Work it through:
+
+- At p = 0.8, detecting a 5-point gain (δ = 0.05) needs 15.7 × 0.16 ÷ 0.0025 ≈ 1,000 cases per arm.
+- Turn it round for a 200-case suite: δ ≈ √(15.7 × 0.16 ÷ 200) ≈ 0.11, so it cannot reliably detect anything smaller than about 11 points.
+- The same arithmetic for the 100-claim seed (this casebook's calculation, not the source's) gives about 16 points.
+
+So a 100-claim seed set gates only large changes. Say so out loud. Detect smaller changes through paired evaluation, where both versions run on the same cases so case-to-case variation cancels out, or through production metrics.
+
+**Stratify the set and report each stratum.** The source's general list of strata is intent, tenant size, data recency and difficulty. For claims it becomes ERP source, product line, attachment type and period. Aggregate accuracy hides a collapse on scanned claims from the acquired ERP, which is exactly where the data is worst.
+
+**Include the "insufficient data" case at a realistic rate.** A system never shown a claim that should be returned for more information learns to always decide. The source makes the same point about refusal and escalation cases in general.
+
+**Watch the labels in the eval set as closely as the system under test.** The first war story from the enterprise RAG golden set is a label defect, not a system defect. A document was reported as leaked to an account manager who was in fact permitted to read it; it was merely irrelevant. The fix split the label into two fields, one that gates the release (forbidden access) and one that is only tracked (relevance), plus a test that stops the labels drifting again. The lesson carries over to claims: a false alarm from a bad label costs as much trust as a real failure.
+
+**Ship the set with a datasheet**: collection window, filters, deduplication method, split strategy, label source and known biases. By one estimate in the source, an hour of documentation saves weeks of debugging six months later, because without it nobody can tell whether a quality change came from the model, a different sample or an altered label guide.
+
+### Name the failure modes before the interviewer does {#dive-failures}
+
+Most failures in this case come from trusting data or labels more than the week-1 numbers justify. Each row below names the failure, where it becomes visible and the part of the design that defends against it.
+
+<p class="figure-caption">Failure modes and observable signals.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>How it shows up</th>
+<th>Defence in the design</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Training on inconsistent historical labels</td>
+<td>High offline accuracy, lower production accuracy</td>
+<td>Adjudicated relabel; the 94% → ~78% routing case as the warning</td>
+</tr>
+<tr>
+<td>Random train and test split on repeated records</td>
+<td>Offline numbers inflated by near-twins</td>
+<td>Deduplicate; split by time and user</td>
+</tr>
+<tr>
+<td>Defaulting a missing value</td>
+<td>A guessed serial number presented as fact</td>
+<td>Quarantine or flag; never default</td>
+</tr>
+<tr>
+<td>Review done outside the tool</td>
+<td>Corrections lost; labels never improve</td>
+<td>Corrections only through the review queue</td>
+</tr>
+<tr>
+<td>Automation bias in reviewers</td>
+<td>Adjusters accept drafts they should question</td>
+<td>Track agreement on seeded known-wrong drafts</td>
+</tr>
+<tr>
+<td>Segment collapse</td>
+<td>Good average, bad on scanned claims from one <abbr title="enterprise resource planning: The system that runs finance, orders and inventory, SAP is the usual example.">ERP</abbr></td>
+<td>Per-stratum reporting in the gate</td>
+</tr>
+<tr>
+<td>Schema drift at source</td>
+<td>A new form version breaks extraction silently</td>
+<td>Quality gates on schema; quarantine spikes alert</td>
+</tr>
+<tr>
+<td>Synthetic data inflating metrics</td>
+<td>Headline accuracy rises with no production change</td>
+<td>Synthetic cases tagged and excluded from headline metrics</td>
+</tr>
+<tr>
+<td>Upstream never fixed</td>
+<td>The pipeline patches the same defects forever</td>
+<td>Data contract with a named owner and a quarantine report</td>
+</tr>
+<tr>
+<td>Scope creep into auto-decisions</td>
+<td>Pressure to approve claims without review</td>
+<td>Written non-goal; approval only after the phase 3 gate</td>
+</tr>
+</tbody></table></div>
+
+Two rows need a note. **Automation bias** is the tendency of reviewers to accept a machine's draft they should question, especially when it is usually right. The defence seeds the queue with known-wrong drafts and tracks how often adjusters catch them; a falling catch rate means review has become rubber-stamping. **Schema drift** is a source changing its format, such as a new claim-form version that moves the serial number; without a schema gate it breaks extraction silently, and with one it shows up as a spike in quarantine.
+
+### Answer the cost pivot {#dive-cost}
+
+The cost pivot is the interviewer's question "what does all this review and relabelling cost, and how do you stop it growing?" The source has no playbook drill for this case, so its cost card is a self-drill.
+
+<p class="figure-caption">Cost pivot and the evidence needed to control review work.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card item</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dominant driver</td>
+<td>Human time: <abbr title="subject-matter expert: The person at the customer who actually knows the domain, the one who can tell you if an answer is right.">SME</abbr> relabelling and adjuster review; then extraction calls on scanned pages</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Route only low-confidence fields to review; hash content so unchanged scans are never re-extracted; label a stratified sample, not the backlog</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Cost per correctly processed claim, including reviewer minutes; review rate per field; re-extraction rate</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Label the entire history before shipping anything, or send every page to the largest model</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>The expensive resource here is expert time, not tokens. Spend it only where confidence is low, turn every minute of it into a reusable label, and never pay twice to extract the same page.</td>
+</tr>
+</tbody></table></div>
+
+The four verbs from the source's cost playbook apply in order:
+
+1. **Measure** cost per correctly processed claim, including reviewer minutes. Token cost alone misses the dominant driver.
+2. **Route** easy fields to a cheap extractor and uncertain ones to people.
+3. **Bound** the review queue with per-field thresholds tuned from measured precision.
+4. **Cache** safely by content hash, so a re-sync never re-extracts an unchanged scan.
+
+The source's author expects review cost to fall on its own as labels accumulate, because thresholds can then be set from measured precision rather than caution. Treat that as a prediction to verify on the dashboard, not a guarantee. It is the economic argument for building the label store in phase 1 rather than later: every reviewed field makes the next threshold better informed.
+
+### Sources and provenance {#dive-sources}
+
+This casebook adapts a constructed interview answer. The warranty scenario, scorecard thresholds, phase timings and gates are explicit assumptions from the source; the routing case and the golden-set war story are source-reported incidents. The kappa example, the illustrative extraction confidence and the 100-claim sample-size figure were added here and are labelled where they appear.
+
+Related cases, for cross-reference rather than repetition:
+
+- [Scoping to Deployed Agent](https://forwarddeployedprep.com/design/scoping-to-deployed-agent#full-pack): delivery gates, the `data_access_granted` gate and intake refusal.
+- [Evaluation and Release Gating](https://forwarddeployedprep.com/design/evaluation-and-release-gating#full-pack): the release gate.
+- [Enterprise Knowledge Assistant](https://forwarddeployedprep.com/design/enterprise-knowledge-assistant#full-pack): messy enterprise documents, quarantine and permission normalisation.
+- [NL Over Governed Data](https://forwarddeployedprep.com/design/nl-over-governed-data#full-pack): governed metric definitions.
+- [Decomposition Classics](https://forwarddeployedprep.com/design/decomposition-classics-67-68-69): the bank-fraud case built on inconsistent labels.
+
+Fact-check sources, checked by the source on 27 September 2026:
+
+- [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160): labelling functions vote, and their accuracies are estimated without ground truth.
+- [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104): kappa as agreement corrected for chance.
+
+## Practice
+### Attempt the design {#practice-prompt}
+
+Take the prompt cold: "The customer wants an AI solution, but its data is incomplete, inconsistent, and poorly documented." Use the pump-warranty scenario. Before opening anything else, write down your opening sentence, the clarifying questions that change the design, the failure types you would measure in week one and how, and the condition under which you would say "not yet". Then sketch the pipeline, state what a 100-claim seed set can and cannot detect, and write the two sentences you would use to tell the customer.
+
+Use the worksheet prompts and the rubric to score your attempt before you open the worked answers below.
+
+### Rehearse the forty-five minutes {#practice-delivery}
+
+The round rewards spending the first third on diagnosis. A candidate who draws the pipeline at minute three has skipped the part being tested.
+
+<p class="figure-caption">Forty-five-minute interview allocation.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Minutes</th>
+<th>Move</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-3</td>
+<td>Restate; say the source's closing line about not starting with model selection</td>
+</tr>
+<tr>
+<td>3-10</td>
+<td>Clarifying questions from section 2; pick the decision to improve</td>
+</tr>
+<tr>
+<td>10-17</td>
+<td>Split "poor" into failure types; describe the readiness week and the scorecard</td>
+</tr>
+<tr>
+<td>17-22</td>
+<td>Decide what to build anyway; name the "not yet" condition</td>
+</tr>
+<tr>
+<td>22-32</td>
+<td>Draw the pipeline: quality gates, extraction, normalisation, review queue, label store</td>
+</tr>
+<tr>
+<td>32-38</td>
+<td>Evaluation with poor labels: seed set, κ, sample size, strata, time split</td>
+</tr>
+<tr>
+<td>38-42</td>
+<td>The customer conversation and the phased plan</td>
+</tr>
+<tr>
+<td>42-45</td>
+<td>Failure modes; what would change the plan</td>
+</tr>
+</tbody></table></div>
+
+The source's two-minute spoken answer follows. It is a spoken-answer example, so it uses the first person; practise it until it sounds like your own words.
+
+<details class="answer-reveal" id="poor-data-spoken-answer"><summary>Give the two-minute spoken answer.</summary><div class="detail-body"><p>"I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and, most important, two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."</p></div></details>
+
+### Answer the likely follow-ups {#practice-followups}
+
+These four follow-ups and their answers come from the source's delivery plan.
+
+<details class="answer-reveal" id="poor-data-followup-no-time"><summary>"The customer says there's no time for a readiness week."</summary><div class="detail-body"><p>Then scope it to two days on one decision. Skipping it does not save the time; it means discovering the same facts in production, more expensively, after the customer has seen wrong recommendations.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-followup-experts-disagree"><summary>"What if the experts themselves disagree?"</summary><div class="detail-body"><p>Their disagreement is a finding, not an obstacle. Write a label guide, adjudicate the disputed cases, and measure κ again. A task humans cannot agree on cannot have an accuracy target, because there is no agreed answer to be accurate against.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-followup-large-model"><summary>"Can't a large model just handle messy data?"</summary><div class="detail-body"><p>It can read messy text well, which is why extraction from scans works. It cannot recover a fact that is missing or wrong, such as a serial number nobody recorded. It also cannot be evaluated against labels nobody trusts, so even if it were right you could not show it.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-followup-getting-better"><summary>"How do you know the data is getting better?"</summary><div class="detail-body"><p>Track the quarantine rate, the placeholder rate on new records and κ against adjudicated labels, on the same dashboard as model quality. Falling quarantine and placeholder rates show the data contract working at source; rising κ shows the label loop working.</p></div></details>
+
+### Drill the cost pivot {#practice-cost}
+
+<details class="answer-reveal" id="poor-data-cost-pivot"><summary>"What does all this review and relabelling cost, and how do you stop it growing?" Give the sixty-second answer.</summary><div class="detail-body"><p>The expensive resource here is expert time, not tokens. Spend it only where confidence is low, turn every minute of it into a reusable label, and never pay twice to extract the same page. Concretely: measure cost per correctly processed claim including reviewer minutes; route only low-confidence fields to review; hash content so unchanged scans are never re-extracted; and label a stratified sample, not the whole backlog. Do not label the entire history before shipping anything, and do not send every page to the largest model.</p></div></details>
+
+### Calibrate to the level {#practice-levels}
+
+The levels split on how far past the model the answer reaches: into the data, into the label loop, or into the customer's own source systems. The "Missing" column is what separates each level from the next one up.
+
+<p class="figure-caption">Senior, Staff and Principal scope.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Sounds like</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Senior</td>
+<td>Refuses to start with model selection, runs the one-week readiness scorecard, and reads κ = 0.52 on failure codes as noise and κ = 0.81 on outcomes as a usable label. Builds quality gates that quarantine rather than default, extraction with per-field confidence, and a review queue for low-confidence fields.</td>
+<td>How adjuster corrections become trusted labels, and what a 100-claim seed set can and cannot detect.</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>Runs the review queue as a label factory: corrections made in the tool, reviewer and time recorded, disagreements adjudicated, weak supervision on the failure-code field. Sizes the eval honestly, reports it per ERP source and attachment type, splits by time, and exits each phase on a measured condition with shadow mode before live drafts.</td>
+<td>Fixing the defects at source, and telling the customer with measurements rather than adjectives.</td>
+</tr>
+<tr>
+<td>Principal</td>
+<td>Pushes a data contract onto both ERPs so serial number is required and one code list exists at entry, using the quarantine report as the evidence. Frames phase 0 as value the customer keeps without AI, writes the non-goals down, and says "not yet" when a red field blocks every route.</td>
+<td>Whether the source owners will sign the contract, and the real scorecard thresholds, which only this customer's week-1 numbers can set.</td>
+</tr>
+</tbody></table></div>
+
+### Check yourself {#practice-checks}
+
+These thirteen questions and answers are the source's own self-check.
+
+<details class="answer-reveal" id="poor-data-check-1"><summary>What sentence should open the answer?</summary><div class="detail-body"><p>"I would not begin with model selection. I would first determine whether the available data can support a measurable workflow improvement."</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-2"><summary>Why ask whether a rules or form fix is enough?</summary><div class="detail-body"><p>Because some data problems are an entry-form defect, and fixing the form beats building a model to guess the missing value.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-3"><summary>Why are inconsistent labels worse than missing ones?</summary><div class="detail-body"><p>Missing labels look missing. Inconsistent labels look like ground truth, get trained on, and make evaluation score the model's copied errors as correct.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-4"><summary>What happens on day 3 of the readiness week, and why use kappa?</summary><div class="detail-body"><p>Two SMEs relabel the same sample independently. Kappa corrects their agreement for chance, so a dominant class cannot flatter it. The floor is 0.60.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-5"><summary>When is "not yet" the right answer?</summary><div class="detail-body"><p>When the decision depends on a red field, no design routes around it, and no human process can generate the missing truth.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-6"><summary>In the warranty example, why are outcomes usable as labels but failure codes are not?</summary><div class="detail-body"><p>Adjusters agree on outcomes at κ = 0.81 and on failure codes at only κ = 0.52, below the 0.60 floor.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-7"><summary>Where do quality gates sit, and what do they do with a bad record?</summary><div class="detail-body"><p>At ingestion, before extraction. They quarantine the record with a reason and never default a value.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-8"><summary>What makes a review correction usable as a label?</summary><div class="detail-body"><p>It is made in the tool, on the field, with the original value kept; the reviewer and time are recorded; and disagreements are adjudicated rather than settled by the last click.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-9"><summary>What can a 200-case eval set detect at p = 0.8?</summary><div class="detail-body"><p>Nothing reliably smaller than about 11 points. A 5-point gain needs about 1,000 cases per arm.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-10"><summary>Why split the eval set by time rather than at random?</summary><div class="detail-body"><p>Random splits put near-identical records on both sides and inflate every number.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-11"><summary>How should the customer hear that their data is poor?</summary><div class="detail-body"><p>As measurements with a plan, with phase 0 framed as value they can use without AI.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-12"><summary>What must be true before the system shows live drafts?</summary><div class="detail-body"><p>Adjuster agreement in shadow mode clears the phase-3 bar (at least 85%), and minutes per claim are measurably down.</p></div></details>
+
+<details class="answer-reveal" id="poor-data-check-13"><summary>What is the sixty-second cost answer?</summary><div class="detail-body"><p>Expert time is the expensive resource: spend it only on low-confidence fields, turn every minute into a label, and never re-extract an unchanged page.</p></div></details>
+
+## Quick review
+### Decisions to recall {#review-decisions}
+
+- Start by testing whether the data can support a measurable improvement, not by picking a model.
+- Clarifying questions find which data defects touch the decision being improved, and whether a rules or form fix is enough.
+- "Poor" splits into eight failure types, each with its own week-one measurement and remedy. Inconsistent labels are the most dangerous because they look like ground truth.
+- A one-week readiness assessment produces a scorecard and a build, narrow or not-yet decision. Day 3's two-SME relabel, scored with kappa, is the key measurement.
+- Some designs tolerate poor data. Say "not yet" only when a red field blocks every route and no human process can supply the truth.
+- The worked warranty example turns measured defects into testable requirements.
+- The architecture is a data-repair pipeline with a small decision layer on top.
+- Quality gates at ingestion quarantine bad records instead of defaulting them, and data contracts fix defects at source.
+- The review queue is a label factory, with corrections in the tool, deduplication, time splits and adjudication.
+- The eval set starts small and trusted, is sized honestly and is reported per stratum.
+- Tell the customer with measurements, and frame phase 0 as value.
+- Phases exit on measured conditions, with shadow mode before any live decision.
+- Most failure modes come from trusting data or labels more than the numbers justify.
+- The forty-five minutes front-load diagnosis, and the spoken answer ends on shadow mode.
+- The dominant cost is expert time, so spend it only where confidence is low and keep every correction.
+
+### Numbers to recall {#review-numbers}
+
+All warranty figures are source assumptions for the worked example.
+
+- **Scenario:** 12,000 claims a month, peaks of 1,500 a day, 11 adjuster minutes per claim.
+- **Week-1 defects:** 14% of claims in both ERPs, 38% coded "OTHER", 27% missing serial number, 55% of invoices and photos scanned.
+- **Agreement:** κ = 0.81 on outcomes (usable label), κ = 0.52 on failure codes (not ground truth); floor 0.60, green from 0.75.
+- **Targets:** 11 to 6 minutes per claim, "OTHER" under 10% on new claims, defect clusters to engineering within two weeks instead of about a quarter.
+- **Gates:** field precision ≥ 95% (phase 1), system-versus-adjudicated κ ≥ 0.70 (phase 2), adjuster agreement ≥ 85% in shadow (phase 3).
+- **Sample size at p = 0.8:** about 1,000 cases per arm for a 5-point gain; 200 cases detect only about 11 points.
+- **Routing warning:** 94% offline against an 81% baseline, about 78% in production; about 83% after dedup, time split and adjudicated relabel.

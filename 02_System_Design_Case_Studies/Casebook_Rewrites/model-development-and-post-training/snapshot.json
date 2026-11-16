@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "a3575fac813425e31d48897fd56d512175df9bb229db8ef38bccebc4ed2b21b2",
+  "html_sha256": "20cff01885d011c9f38e003896a00478b9837f63d19ef539d4bab54debb88247",
+  "config_sha256": "ee672fa968ff1cc8c7e1c905de79e7e0ef3e61a486254d50d3efa984a6d24baa",
+  "source_url": "https://forwarddeployedprep.com/design/model-development-and-post-training",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 44,
+    "coverage_rows": 77,
+    "worked_answers": 22,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: read all 44 captured sections of the maths-model source and built a 77-row item inventory before drafting. The source states most mechanisms three times (Interview Guide, Deep Dive, Full Design) at different depths; each was merged once at its fullest version: the two clarifying-question tables into step 1, the main requirements block and full-pack section 2 into step 2, deep dive 3 and full-pack 9 into the compute deep dive, deep dive 4 split into evaluation, harm and phone deep dives with full-pack 10 and 11. The brief opens on the 94%/78% leakage story because it is the case's dangerous constraint, defines thirteen training terms the source used undefined (rollout, verifier, drift penalty, pass@1, decontamination, KV cache, etc.), and adds a labelled illustrative pencils word-problem trace that is reused in steps 7 and the eval deep dive. Every source table is kept row for row; all five diagram pairs (10 hashed SVGs) sit beside the step that explains them. All 12 Check Yourself items, 6 follow-ups, the compute pivot and the 3 mid-round constraint changes are worked-answer reveals (22). Removed one unsupported addition during review (a claim that majority vote usually scores higher). Old navigation (sections table, how-to-use, cheat-sheet links) is consolidated, not reproduced."
+    }
+  }
+}

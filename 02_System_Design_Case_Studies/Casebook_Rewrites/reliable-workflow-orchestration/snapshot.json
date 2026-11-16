@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "7436368213037e55a23ded86bc0892632a0564cd2685f01b596481958aa5ea9a",
+  "html_sha256": "962ef8ecfceb720d2c910eec4842dd8200cd1a495dc3885058554945bc544dbe",
+  "config_sha256": "a1f6ba7d8a794a82a25fa590e2398583b86b3395842a5df03a243c4d489384a8",
+  "source_url": "https://forwarddeployedprep.com/design/reliable-workflow-orchestration",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 46,
+    "coverage_rows": 115,
+    "worked_answers": 22,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: read all 46 captured sections (about 19,000 words) of the workflow-orchestration source and wrote the casebook from scratch. The brief opens on the six-system process and the irreversible payment, defines workflow, activity, side effect, business-level exactly once, idempotency key, compensation, saga and durable history before use, and adds an o-123 example taken from the source's own code and tests. Tutorial parts 1-4, 6 and 7 became walkthrough steps 1-8; part 5's records, code and tests, the retry formula, the four trade-offs and the coverage-notes gap essays moved to deep dives, with source section numbers replaced by links. Bullet-list source material was rewritten as connected prose, and list-shaped data (question tree, must/should/could, scorecard, phases, risk register, 50-minute plan) became tables. All three code blocks and all 14 figure pairs are kept beside their explanations; of the ten source tables, seven are reproduced, the two blank worksheet templates became prompts with authored worked answers, and the old sections table became reading guidance. Additions are labelled: an illustrative backoff schedule, the o-123 traces, two authored worksheet answers, an implementation trace, and caveats that the test fixtures are undefined and the no-double-charge sketch does not prove durability. Repeated sentences (the history/receipt rule, retry-storm partitioning, the outcome line) were consolidated where they repeat. No source item was omitted."
+    }
+  }
+}

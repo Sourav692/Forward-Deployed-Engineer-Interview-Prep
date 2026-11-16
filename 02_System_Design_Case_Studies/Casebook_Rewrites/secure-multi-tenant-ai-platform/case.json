@@ -1,0 +1,1491 @@
+{
+  "title": "Secure Multi-Tenant AI Platform",
+  "slug": "secure-multi-tenant-ai-platform",
+  "subtitle": "Serve 500 tenants on one shared AI platform while making a cross-tenant read, cache hit or model-context leak impossible rather than unlikely.",
+  "theme": "AI Platforms and Scale",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-prompt",
+    "main-intro": "brief-example",
+    "main-1-questions-to-ask-the-interviewer": "walk-discovery",
+    "main-2-requirements-functional-non-functional": "walk-requirements",
+    "main-3-architecture": "walk-architecture",
+    "main-4-the-seven-isolation-layers": "walk-isolation",
+    "main-5-fairness-regions-and-failures": "walk-fairness",
+    "main-6-evaluation-rollout-and-interview-close": "walk-evaluation",
+    "deep-dive-intro": "dive-context",
+    "deep-dive-1-immutable-tenant-context-and-authority": "dive-context",
+    "deep-dive-2-isolation-that-survives-a-missed-check": "dive-row-security",
+    "deep-dive-3-admission-fairness-and-unit-economics": "dive-fairness",
+    "deep-dive-4-region-outage-and-offboarding-contracts": "dive-offboarding",
+    "deep-dive-5-cross-tenant-retrieval-incident-trace-first-diagnosis": "dive-leak",
+    "deep-dive-6-release-evidence-and-operations": "walk-evaluation",
+    "cheat-sheet-intro": "review-flow",
+    "cheat-sheet-one-sentence": "review-flow",
+    "cheat-sheet-ask-first": "review-flow",
+    "cheat-sheet-flow": "review-flow",
+    "cheat-sheet-seven-layers": "review-layers",
+    "cheat-sheet-numbers-and-trade-off": "review-layers",
+    "cheat-sheet-failures": "review-failures",
+    "cheat-sheet-leak-drill": "review-failures",
+    "cheat-sheet-release-and-close": "review-release",
+    "full-pack-intro": "brief-task",
+    "full-pack-1-separate-the-feature-from-the-business-result": "walk-outcome",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "full-pack-3-size-for-the-load-shape-not-the-average": "walk-sizing",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "walk-architecture",
+    "full-pack-part-2-5-derive-tenant-context-once-and-make-it-immutable": "walk-context",
+    "full-pack-part-2-6-enforce-isolation-at-seven-layers-that-do-not-trust-each-o": "walk-isolation",
+    "full-pack-part-2-7-meter-before-the-call-and-share-fairly": "walk-fairness",
+    "full-pack-part-3-8-route-by-region-and-keep-policy-central": "walk-regions",
+    "full-pack-part-3-9-fail-closed-on-security-degrade-on-capacity": "walk-failures",
+    "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite": "walk-evaluation",
+    "full-pack-part-3-11-roll-out-internal-tenants-first-and-the-dedicated-tier-la": "walk-rollout",
+    "full-pack-part-4-12-deliver-it-in-fifty-minutes": "practice-delivery",
+    "full-pack-part-4-13-answer-the-cost-pivot-in-ten-minutes": "practice-cost-pivot",
+    "full-pack-part-5-14-debug-the-cross-tenant-leak": "dive-leak",
+    "full-pack-part-5-level-calibration": "practice-levels",
+    "full-pack-part-5-key-takeaways": "review-release",
+    "full-pack-part-5-check-yourself": "practice-prompt",
+    "full-pack-part-5-references": "references",
+    "full-pack-part-1": "walk-outcome",
+    "full-pack-part-2": "walk-architecture",
+    "full-pack-part-3": "walk-regions",
+    "full-pack-part-4": "practice-delivery",
+    "full-pack-part-5": "dive-leak",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Outcome, stakeholders and discovery",
+      "hint": "Which answers change residency, tiering or budgets?"
+    },
+    {
+      "id": "context",
+      "label": "Tenant context and the seven layers",
+      "hint": "Where does the tenant come from, and what refuses an unscoped request at each layer?"
+    },
+    {
+      "id": "capacity",
+      "label": "Quotas, fairness, regions and cost",
+      "hint": "Separate rate limits from fair queuing and justify the dedicated threshold."
+    },
+    {
+      "id": "failure",
+      "label": "Failures, release gate and rollout",
+      "hint": "What fails closed, what degrades, and what evidence promotes a phase?"
+    }
+  ],
+  "rubric": [
+    "Derived tenant context from verified identity once and refused request-body or client-header tenant IDs.",
+    "Named all seven layers and showed the store refusing an unscoped read, including the RLS owner/superuser/BYPASSRLS caveat.",
+    "Checked quota and budget before inference and explained why a fair queue differs from a rate limit.",
+    "Justified the dedicated tier with the cost equation and measurable thresholds, not customer size.",
+    "Kept residency and retention covering logs, backups and derived indexes, and offboarding with a verified inventory.",
+    "Separated fail-closed security defects from capacity degradation and walked detect, refuse, contain, recover, prevent.",
+    "Diagnosed the Acme/Globex leak trace-first as an isolation failure with rollback, cache purge and a non-bypassable predicate.",
+    "Gated release on an adversarial suite with zero confirmed incidents and rolled out internal, shared, then dedicated with owners."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Shared platform for many tenants; isolation across row, cache, log and prompt; tenant ID on a row is insufficient",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraphs define tenant, keep the Acme/Globex row-cache-log-prompt leak list and the 'tenant_id column does not deliver it' caveat, then restate the seven layers, pre-call metering, fair queues, region rules for logs and backups, and proven offboarding."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Shared default with a dedicated tier for residency, risk or performance; anchor of related variants",
+      "anchors": [
+        "brief-scenario",
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last brief-scenario paragraph keeps 'shared is the default, dedicated by policy not size'; brief-task says this is the anchor case whose variants reuse tenant context and request path."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the six-node core diagram (both variants)",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-core-idea holds 7ee6abc4/8568300 light and dark; the lead-in names each node (verify, freeze, quota decision, scoped retrieval, degrade that tenant, model call and audit) and the caption matches the rendered labels."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Audience sentence in brief-task names the same three roles and the shared-platform / tenant-isolation round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on identity, layers, quotas, regions, offboarding, leak, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task states the task as no cross-tenant read, write, cache hit or model-context leak; each follow-up area has its own walkthrough step (6-12) and Practice follow-ups, so the objective list became the reading plan instead of a separate list."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed knowledge: SSO, RLS, caching, retrieval, cloud basics",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Assumption sentence kept, with the note that each concept is defined where used (SSO in the Maya example, RLS in step 7, KMS, SCIM, RPO/RTO inline)."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading order and read-marking instructions",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete three-mandatory-section order replaced by the five-section reading guidance (walkthrough in order, deep dives for follow-ups, Practice before answers, Quick review the night before), which keeps the 'return the night before' advice."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Table of old sections (Interview Guide, Deep Dive, Quick Review, Full Design)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old navigation table not reproduced; its content routes are mapped by aliases and the Full Design parts are distributed into walkthrough steps 1-12, deep dives and Practice per format.md (no sixth track)."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "External worksheet link",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task and practice-prompt state the source worksheet is not connected; the local worksheet and blank-page prompt replace it with the same 'produce the design from a blank page' purpose."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Maya end-to-end walkthrough: SSO, quotas and region, scoped retrieval/cache/model, noisy Globex, pre-call metering, offboarding",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six numbered steps in brief-example follow Maya through each source point, adding plain definitions of SSO and IdP and why each step matters (Frankfurt-only covers logs and backups)."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Slogan 'verify once, enforce everywhere, meter and isolate'; arbitrary tenant plugins excluded; goal statement",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bold slogan kept after the Maya steps with the plugin exclusion, now explained (tenant code would run inside the boundary); goal sentence restated in brief-task."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Variant table: 500 tenants, per-customer budgets, unusually active tenant, cross-tenant retrieval incident",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row variant table kept verbatim in brief-task with caption, followed by where each variant is taught (walkthrough, cost pivot, high-usage reveal, leak dive)."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Glossary: SSO, ACL",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "SSO defined in Maya step 1; ACL defined at first use in the leak deep dive."
+      }
+    },
+    {
+      "source_id": "main-1-questions-to-ask-the-interviewer",
+      "teaching_item": "Seven discovery questions with 'what it is really asking' and 'what you decide'",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the full design's question list into one eight-row table that keeps all seven questions, every 'really asking' example ($10k overnight, 20x traffic, German tenant logs, banks' own cluster, proof B's docs never entered A's context) and both decision columns."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements list (seven items) and functional vs non-functional framing",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 opens with the functional/non-functional definition and a seven-item list that merges the main guide's seven requirements (stamp context, scope data/cache/queues/retrieval/inference, export and deletion) with the full design's six in value order."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "NFR table: security, fairness, observability, audit, illustrative scale (500/50k/200 QPS/20x/0.4), latency shape 2 s vs 15 s",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Constraint table adds Observability and Audit rows and folds security fail-closed, fairness and 2 s/15 s latency shape into existing rows; the scale numbers and 0.4 mean are taught in step 4."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Unit economics line, first-release exclusions, approved models only, interview shortcut quote, QPS/SLO glossary",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost row keeps the equation and 'share when safe'; exclusion list adds 'tenants choose from approved models, cannot supply code'; the requirements shortcut quote closes step 3; SLO and p95 defined before the table."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Architecture figure (control plane + regional data plane, both variants)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-platform holds 373ac426/feacc211; the lead-in names the six control-plane boxes and caption names the fail-closed and over-limit branches visible in the render."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Eight-step architecture walk incl. ignoring body tenant, chunk-tenant check, typed output",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered eight steps follow Maya's request; step 2 adds the fail-closed branch from the figure and step 6 notes the 'no retrieval needed' edge, both visible in the diagram."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Agent role: hosts RAG assistants and bounded agents; plans are proposals; LLM/RAG glossary",
+      "anchors": [
+        "walk-architecture",
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Agent-role paragraph after the eight steps keeps every inherited surface (prompt, retrieval, tool, cache, output, trace) and adds 'model output cannot establish identity'; LLM and RAG defined in brief-task."
+      }
+    },
+    {
+      "source_id": "main-4-the-seven-isolation-layers",
+      "teaching_item": "Seven-layer enforced-rule table including RLS bypass caveat",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the full design's 'what must be true' table into one three-column table so each layer shows both statements; the owner/superuser/BYPASSRLS/FORCE caveat stays in the Row rule."
+      }
+    },
+    {
+      "source_id": "main-4-the-seven-isolation-layers",
+      "teaching_item": "Shared default, namespace option, dedicated reserve; least privilege; blast radius by tenant/region/workflow/dependency",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Tenancy-level table and the least-privilege and blast-radius paragraph in step 7 carry these; dive-tiers traces Acme through each tier."
+      }
+    },
+    {
+      "source_id": "main-5-fairness-regions-and-failures",
+      "teaching_item": "Rate limiting vs fair queuing; token/concurrency/burst quotas; WFQ; reserved capacity; usage diagnosis; not autoscaling alone",
+      "anchors": [
+        "walk-fairness"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 explains the two mechanisms separately, lists the diagnosis segments (key, user, feature, time, model route, tokens, batch, agent steps) and adds why autoscaling alone fails; dive-fairness traces them numerically."
+      }
+    },
+    {
+      "source_id": "main-5-fairness-regions-and-failures",
+      "teaching_item": "Central policy, regional enforcement; logs/backups/indexes follow placement; control-plane outage continuation rule",
+      "anchors": [
+        "walk-regions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 keeps the 'continue only with sufficient local verified policy and keys, block sensitive changes, queue where safe, reconcile' rule and the artifact list."
+      }
+    },
+    {
+      "source_id": "main-5-fairness-regions-and-failures",
+      "teaching_item": "Five-row failure table and export/delete inventory; 'database delete alone is not offboarding'",
+      "anchors": [
+        "walk-failures",
+        "walk-regions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure rows merged into the eight-row step-10 table (key/policy unavailable kept as its own row); inventory sentence and the database-delete caveat in step 9."
+      }
+    },
+    {
+      "source_id": "main-6-evaluation-rollout-and-interview-close",
+      "teaching_item": "Release gate suite contents, zero target, per-tenant metrics",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 opening lists the same seven attack types (wrong-tenant reads, stale cache, replayed tokens, malformed filters, namespace collisions, missing predicates, vector retrieval), the zero target and the metrics."
+      }
+    },
+    {
+      "source_id": "main-6-evaluation-rollout-and-interview-close",
+      "teaching_item": "Rollout order; canary, rollback, runbooks, support training, audited admin actions",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 phase table and the rollout list add 'audited admin actions and operator runbooks are part of delivery'."
+      }
+    },
+    {
+      "source_id": "main-6-evaluation-rollout-and-interview-close",
+      "teaching_item": "Five-line spoken close",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as the 'interview guide's shorter close' quotation in Practice after the delivery close."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep dive framing note",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only note; its role (technical backup for follow-ups) is the reading guidance for Technical deep dives in brief-task."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-immutable-tenant-context-and-authority",
+      "teaching_item": "Token validation, directory mapping, group drift alerts, JIT minimum role, untrusted body and client headers, propagation targets",
+      "anchors": [
+        "dive-context",
+        "walk-context"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-context first two paragraphs keep every point and define 'immutable' operationally (a service cannot rewrite the tenant); step 6 covers the three identity problems."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-immutable-tenant-context-and-authority",
+      "teaching_item": "Data model: Tenant, Membership, UsageLedger, AuditEvent; idempotency keys; optimistic concurrency; typed output",
+      "anchors": [
+        "dive-context"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Field table names each record's owned boundary; the following paragraph explains what idempotency keys and optimistic concurrency each prevent (duplicate writes from retries, lost updates)."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-isolation-that-survives-a-missed-check",
+      "teaching_item": "RLS bound to session with non-owner role; no predicate returns no data; partitioning only behind per-tenant credentials",
+      "anchors": [
+        "dive-row-security"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-row-security traces a forgotten WHERE clause through an RLS policy (returns Acme rows, or none if unset), explains the owner-default trap and why partitioning alone is not isolation."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-isolation-that-survives-a-missed-check",
+      "teaching_item": "Object, cache key (tenant+permission signature+source/policy version), queue/DLQ envelopes, log omission, vector ingest/query/final check, tenant keys",
+      "anchors": [
+        "dive-row-security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of dive-row-security lists each layer's rule with the same cache-key composition; key consequences moved to dive-keys."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-isolation-that-survives-a-missed-check",
+      "teaching_item": "Three tenancy tiers and escalation on residency, latency, contention, policy rather than size; EKA pre-filter/post-check extends to non-retrieval paths",
+      "anchors": [
+        "dive-tiers",
+        "walk-isolation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-tiers explains each tier separately with an authored diagram and an Acme trace, then the documented-threshold rule; EKA cross-reference kept in step 7 and dive-row-security."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-admission-fairness-and-unit-economics",
+      "teaching_item": "500/50k/200 QPS/20x; 0.4 mean cannot size peak concurrency, retries, failover, long tail; 10x 5,000/2,000 with cache churn and more partitions",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 keeps all numbers and the 'one bigger inference pool will not cover it' line after the growth table."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-admission-fairness-and-unit-economics",
+      "teaching_item": "Cost equation, attribution, pre-inference budgets, token bucket, WFQ, reserved lanes, tight vs loose quotas",
+      "anchors": [
+        "dive-fairness",
+        "dive-economics"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-fairness defines the token bucket (B, r) and WFQ, then an illustrative 400-vs-4 request trace (10 s FCFS vs 0.2 s WFQ, labelled invented); dive-economics adds an illustrative $120/$300/$9,000 worked cost."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-admission-fairness-and-unit-economics",
+      "teaching_item": "High-usage tenant segmentation and classification (adoption, loop, abuse, missing quota)",
+      "anchors": [
+        "dive-fairness"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of dive-fairness keeps the eight segment dimensions and the four classifications with their responses."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-region-outage-and-offboarding-contracts",
+      "teaching_item": "Residency scope incl. prompts/outputs/traces/derived indexes; retention on tenant record; outage safe reads; RPO/RTO before replication",
+      "anchors": [
+        "dive-offboarding"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two dive-offboarding paragraphs list data, prompts, outputs, traces, logs, backups and derived indexes under residency, retention on the tenant record, safe reads from local policy during outage, and RPO/RTO before replication."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-region-outage-and-offboarding-contracts",
+      "teaching_item": "Inventory-based export/delete, verified job with exceptions, honest backup erasure",
+      "anchors": [
+        "dive-offboarding"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph adds the ICO 'beyond use' and GDPR Art 17 references from the source's list and how per-tenant key destruction covers backups."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-cross-tenant-retrieval-incident-trace-first-diagnosis",
+      "teaching_item": "Acme answer citing Globex addendum; v3 filter omitted tenant equality; ACL skipped by connector flag; evaluator after serve; 15% canary",
+      "anchors": [
+        "dive-leak"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-leak reads the four log lines in trace order and names the exact fields (filter_expression vs expected, doc_tenant_ids, acl_check=skipped, response_served=true) before giving the root cause and 15% rollout."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-cross-tenant-retrieval-incident-trace-first-diagnosis",
+      "teaching_item": "Trace path, v3 mismatch search vs v2 controls, containment, prevention metric, 'confidentiality not hallucination'",
+      "anchors": [
+        "practice-leak",
+        "dive-leak"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "leak-response reveal carries detect/contain/prevent including cross_tenant_retrieval_count; dive-leak closes on confidentiality vs hallucination with the reason enforcement sits outside the prompt."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-release-evidence-and-operations",
+      "teaching_item": "Negative suite contents; one failure halts; evidence retained; separately tracked metrics",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 suite list, metrics table and the evidence bullet list cover each item."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-release-evidence-and-operations",
+      "teaching_item": "Rollout order, rollback by tenant and region without contamination, ownership split incl. SRE",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 12 rollback bullet says 'by tenant and region'; ownership paragraph names platform, security, SRE, product and support with the same duties; SRE defined in step 11."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation note",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only pointer to the other tracks; its job is taken by Quick review being the recall page that links back to the walkthrough anchors."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One-sentence rule",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bold first sentence of review-flow keeps derive once from verified identity, enforce independently everywhere, meter before LLM inference."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first list",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Ask first' paragraph in review-flow lists all eight prompts: data classes, residency for logs/backups, shared vs dedicated, skew and SLO, federation and keys, budgets, deletion, audit evidence."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-flow",
+      "teaching_item": "Flow arrow chain and agent role",
+      "anchors": [
+        "review-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Flow paragraph keeps the ten-stage chain and the agent-role sentence."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-seven-layers",
+      "teaching_item": "Seven layers, RLS role caveat, vector three points, cache key",
+      "anchors": [
+        "review-layers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First review-layers paragraph, with key/crypto-shred recall added."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-and-trade-off",
+      "teaching_item": "Illustrative sizing, equation, tier escalation",
+      "anchors": [
+        "review-layers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second review-layers paragraph keeps the numbers and the shared \u2192 namespace \u2192 dedicated chain, adding the 10x figures."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failures",
+      "teaching_item": "Failure trigger/default table",
+      "anchors": [
+        "review-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table in review-failures keeps the five rows and adds the queue-metadata row from the main guide."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-leak-drill",
+      "teaching_item": "Leak drill summary",
+      "anchors": [
+        "review-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Leak-drill paragraph keeps cause, containment, prevention and the 'not hallucination' line."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-release-and-close",
+      "teaching_item": "Release gate, rollout order, zero target, closing line",
+      "anchors": [
+        "review-release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-release first paragraph plus the control/data plane sentence in review-flow."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Framing: affordable yet missing predicate impossible; dangerous unscoped query; group composition table; EKA ownership of two-layer mechanics",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task keeps the 'impossible rather than unlikely' framing, the unscoped query/cache/queue/export danger, a prose version of the four-case contribution table and the EKA ownership note."
+      }
+    },
+    {
+      "source_id": "full-pack-1-separate-the-feature-from-the-business-result",
+      "teaching_item": "Feature vs business result; Kubernetes-first signal; opening quote",
+      "anchors": [
+        "walk-outcome"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 first two paragraphs, with FDE defined, and the opening quote as a labelled spoken-answer example."
+      }
+    },
+    {
+      "source_id": "full-pack-1-separate-the-feature-from-the-business-result",
+      "teaching_item": "Four-stakeholder table",
+      "anchors": [
+        "walk-outcome"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-stakeholder table (end user, tenant admin, platform operator, auditor) kept verbatim with a caption, introduced as four definitions of success."
+      }
+    },
+    {
+      "source_id": "full-pack-1-separate-the-feature-from-the-business-result",
+      "teaching_item": "Discovery question table (eight questions, six fit 45 minutes)",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the step-2 table; the 'about six questions in forty-five minutes' rule opens step 2 and the 'which failure is most expensive' row is kept."
+      }
+    },
+    {
+      "source_id": "full-pack-1-separate-the-feature-from-the-business-result",
+      "teaching_item": "Weak/average/strong answer tiers",
+      "anchors": [
+        "walk-outcome"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bullets rewritten as three connected paragraphs, each naming what that answer lacks (row label as whole stack; origin of context, layer agreement, graduation rule)."
+      }
+    },
+    {
+      "source_id": "full-pack-1-separate-the-feature-from-the-business-result",
+      "teaching_item": "Assumptions under silence and the silence line",
+      "anchors": [
+        "walk-outcome"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last step-1 paragraph keeps the four assumptions (own IdP, residency covers inference logs, premium pays for dedicated, models approved) and the interviewer-silence quote."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Four buckets; value-ordered functional list; MoSCoW; dedicated justification",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the buckets, the trap, value ordering, must/should/could split and the dedicated-path justification sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Six MVP exclusions",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six exclusions (plugins, active-active writes, custom runtimes, model swapping, manual onboarding, ad hoc shared secrets) listed with the trust-surface/support-burden reason."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraint table and requirement-to-component table with the 'say it aloud' rule",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both tables kept; constraint table gains the main guide's observability and audit rows; the no-component/no-requirement rule precedes the second table."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-for-the-load-shape-not-the-average",
+      "teaching_item": "Load shape vs average; peak concurrency after retries; headroom list; four quota types; tight/loose trade-off",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 rewrites the bullets as explanation of why 0.4 QPS misleads and lists the four quotas each with its purpose."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-for-the-load-shape-not-the-average",
+      "teaching_item": "Workflow-anchored SLO list and support-agent example",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six SLO kinds (availability, latency, freshness, quality, security indicators, cost) kept with the support-agent interaction-loop example."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-for-the-load-shape-not-the-average",
+      "teaching_item": "Equation (code), term meanings, 10x table, RPO/RTO, missing-predicate drill, spoken quote",
+      "anchors": [
+        "walk-sizing",
+        "dive-economics"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code block, term definitions, growth table, RPO/RTO definitions, the 'design without that test is incomplete' line and the quote all in step 4; dive-economics adds an illustrative calculation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Control vs data plane split; dedicated move as config change",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First step-5 paragraph defines control plane (decides, slower, privileged, audited) and data plane (enforces) and keeps the dedicated move as a config change."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four original figures (control-plane chain, request path, full flow, compressed answer key), both variants",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-control-plane (fc09/3dad), figure-request-path (c9d8/98aa), figure-full-flow (87d6/e1c0) and figure-compressed (3d2f/98a6) each follow a paragraph naming the boxes visible in the render; 'draw the compressed one first if time is short' kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Control-plane contents incl. SCIM; data-plane scope surfaces; fair queues; monitoring list",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the request-path figure, with SCIM defined including the 'next push, not instantly' caveat."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Ten-row component table; sync/async boundary; systems of record; caches never authority; queue context; MVP list",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table verbatim with fail-posture explanation; three-boundaries and MVP paragraphs keep each claim; MVP defined."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-derive-tenant-context-once-and-make-it-immutable",
+      "teaching_item": "Verified identity vs client fields; ten-step dependency order with reasons; happy-path narration",
+      "anchors": [
+        "walk-context"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps the order list and rewrites the narration bullets as one paragraph tying each step to its customer reason (subsidiaries, explainable authorisation, location promise)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-derive-tenant-context-once-and-make-it-immutable",
+      "teaching_item": "Sequence diagram (both variants) and 'missing predicate must be obvious'",
+      "anchors": [
+        "walk-context"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-sequence (c0ae/2604) with a lead-in tracing Allow, placement, Admit, and the failure branch (query without tenant key, reject, failed-access audit, denied), matching the rendered messages."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-derive-tenant-context-once-and-make-it-immutable",
+      "teaching_item": "Token validation, customer-owned Okta/Entra group mapping drift, JIT provisioning",
+      "anchors": [
+        "walk-context"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-bullet list at the end of step 6: signature/issuer/expiry/audience validation, Okta/Entra group mapping that drifts on rename, JIT provisioning at minimum role."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-enforce-isolation-at-seven-layers-that-do-not-trust-each-o",
+      "teaching_item": "Why one row label fails; seven-layer 'what must be true' table",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step-7 opening paragraph keeps where a row label is omitted (app code, ad hoc queries, jobs, admin tools) and what it never covers; the merged three-column layer table carries the seven what-must-be-true statements."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-enforce-isolation-at-seven-layers-that-do-not-trust-each-o",
+      "teaching_item": "Store refuses unscoped rows; RLS conditions; partitions behind credentials; predicate compiled into vector filter and cache key; EKA two-layer pattern; layer 1/layer 2 invariant",
+      "anchors": [
+        "walk-isolation",
+        "dive-row-security"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraphs keep each claim; dive-row-security traces the mechanism with a forgotten WHERE clause."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-enforce-isolation-at-seven-layers-that-do-not-trust-each-o",
+      "teaching_item": "Tenancy level table, honest default with two follow-ups",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table verbatim plus the database-enforces and named-escalation follow-ups."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-enforce-isolation-at-seven-layers-that-do-not-trust-each-o",
+      "teaching_item": "Per-tenant keys, platform-wide key contrast, KMS master key; least privilege; blast radius; negative tests; spoken quote",
+      "anchors": [
+        "walk-isolation",
+        "dive-keys"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 key paragraph defines crypto-shredding and KMS; dive-keys explains envelope encryption and traces three events; quote kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-meter-before-the-call-and-share-fairly",
+      "teaching_item": "Quota before inference/storage/fan-out; bill vs control; ledger; alerts before limit",
+      "anchors": [
+        "walk-fairness"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First step-8 paragraph keeps quota before inference, storage growth or fan-out, the bill-not-control line, contractual budgets, the usage ledger and alerts before the limit."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-meter-before-the-call-and-share-fairly",
+      "teaching_item": "Rate limit vs fair queue; WFQ; token bucket on top",
+      "anchors": [
+        "walk-fairness"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second step-8 paragraph separates the rate-limit question from the ordering question; dive-fairness adds the illustrative Globex-400 vs Acme-4 trace showing the small tenant waiting without having exceeded any limit."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-meter-before-the-call-and-share-fairly",
+      "teaching_item": "Two-step noisy-neighbour containment; dedicated triggers and measurable thresholds",
+      "anchors": [
+        "walk-fairness"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Containment and dedicated paragraphs keep all triggers and the 'avoid big customers' rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-route-by-region-and-keep-policy-central",
+      "teaching_item": "Central vs regional control plane trade-off; scheduler; artifacts follow residency; retention in data model",
+      "anchors": [
+        "walk-regions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two step-9 paragraphs keep the central-vs-regional trade-off (consistency vs latency/residency; locality vs duplication and drift), scheduler placement, artifacts following residency and retention in the data model."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-route-by-region-and-keep-policy-central",
+      "teaching_item": "Control-plane outage: monitor separately, serve verified-safe ops, fail closed/queue/reroute, never stale for irreversible, recover, prevent",
+      "anchors": [
+        "walk-regions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third and fourth step-9 paragraphs carry separate monitoring, verified-safe serving, fail closed/queue/reroute, no stale state for irreversible actions, recover by reconciling, prevent by stale-tolerance and failover rehearsal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-route-by-region-and-keep-policy-central",
+      "teaching_item": "Cross-region export/delete; backups by retention not surgical erasure",
+      "anchors": [
+        "walk-regions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-9 paragraph keeps the store inventory, export package with ownership and time bounds, verified deletion with exceptions, and backups by retention window, linked to dive-offboarding."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-security-degrade-on-capacity",
+      "teaching_item": "Pattern sentence and seven-row scenario table",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 pattern paragraph defines fail closed vs degrade; table merges the full design's seven rows with the main guide's key/policy-unavailable row."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-security-degrade-on-capacity",
+      "teaching_item": "Missing-predicate drill (detect, refuse, contain, recover, prevent) and figure (both variants)",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-missing-predicate (9510/169c) beside a paragraph walking each box in order, including in-flight retries failing closed and idempotency replay checks."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-fail-closed-on-security-degrade-on-capacity",
+      "teaching_item": "Cache drill; production failure behaviour list; honest automatic vs human; 10x",
+      "anchors": [
+        "walk-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cache paragraph, six-item behaviour list and the 10x close in step 10."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite",
+      "teaching_item": "Suite goal; six-metric table with thresholds, datasets, owners",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 intro keeps the fails-safely-and-visibly goal and one-failure halt; the six-metric table (incidents, pass rate, p95, quota rejections, cost, failover) is verbatim with owners."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite",
+      "teaching_item": "Separate metric layers; slow-processing telemetry chain",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the metric table keeps the four separate metric layers and the 'document processing feels slow' telemetry chain from arrival to regional routing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite",
+      "teaching_item": "Interview-sized pytest isolation test and what it omits",
+      "anchors": [
+        "dive-release-test"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code kept byte-for-byte; added trace explaining tenant-in-key addressing, sequential IDs and why 404 not 403."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite",
+      "teaching_item": "Pre-launch evidence list; operational question; absence of policy fails open",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six evidence bullets (access logs, negative tests, role reviews, namespace checks, key rotation, runbooks) and the 'absence of a policy fails open' closing paragraph of step 11."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-an-adversarial-isolation-suite",
+      "teaching_item": "Four ownership boundaries data model; idempotency and optimistic concurrency; typed output",
+      "anchors": [
+        "dive-context"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same content as deep-dive-1 data model, taught once in the dive-context table and paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-internal-tenants-first-and-the-dedicated-tier-la",
+      "teaching_item": "Done means adoption; four-phase table; rollout figure (both variants)",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table verbatim; figure-rollout (e320/ce3d) introduced by its three gates G1-G3 as rendered."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-internal-tenants-first-and-the-dedicated-tier-la",
+      "teaching_item": "Week-by-week plan",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weeks 0-8 paragraph keeps each week band (stakeholders, internal tenants, suite, hold, week-5 shared tenants, 6-8 validation) and the dedicated tier on thresholds after the pilot."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-internal-tenants-first-and-the-dedicated-tier-la",
+      "teaching_item": "Canary, rollback, migration, training, documentation, ownership; config/adapters/shared services/core",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step-12 rollout list (canary, rollback, migration, training, documentation), the five-owner paragraph and the configuration/adapters/shared services/core paragraph with the one-off-projects warning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-internal-tenants-first-and-the-dedicated-tier-la",
+      "teaching_item": "Risk register table and three failure conditions",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Risk register (missing predicate, cache bleed, misrouted traffic) verbatim and the three 'not succeeded' conditions on cost, operability and provable boundaries."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Time-in-proportion-to-risk and fifty-minute table",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row minutes table kept in practice-delivery; source section numbers rewritten to walkthrough step numbers rather than dropped."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Minute-zero exchange and cheapest-shared probe",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Exchange described; the probe is the followup-cheapest-shared reveal with its answer."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Ninety-second summary, two-minute answer, delivery close",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ninety-second summary, two-minute answer and delivery close kept as three labelled spoken-answer blockquotes with the source wording intact."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Four trade-off pairs table",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four trade-off pairs (shared vs per-tenant DB, namespace vs cluster, central vs regional control, pooled vs reserved inference) kept verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Seven follow-ups with answers",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six follow-ups are answer reveals (row-tag, export-delete, noisy-neighbour, dedicated, prove-deletion, what-breaks); the cheapest-shared one is the earlier reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Weak-answer repairs",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six weak phrases (tenant_id on every query, isolate everything, centralise, autoscale, database delete, rare neighbours) with their repairs as a two-column table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Ten lines that carry the round",
+      "anchors": [
+        "review-release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ten numbered lines kept verbatim in review-release as source quotations."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-fifty-minutes",
+      "teaching_item": "Practise three ways",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final practice-delivery paragraph keeps the ten-minute cut, pair mock interruptions and one enforcement point with tests."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Budget pivot and eight-row drill card; sixty-second line",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row cost card (ask, driver, weak, strong, path, trade-off, metrics, recommendation) kept with added Element/Answer headers; the sixty-second meter-before-the-call line kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "High-usage tenant scenario: causes, segments, now/later, quote",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "pivot-high-usage reveal keeps causes, segments, metrics, now/later steps and the quote."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Four verbs and six moves",
+      "anchors": [
+        "practice-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph naming measure, route, bound, cache safely and the six delivery moves."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-debug-the-cross-tenant-leak",
+      "teaching_item": "Incident setup: copilot, shared collection metadata fields, intended invariant, the question and wrong answer",
+      "anchors": [
+        "dive-leak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two dive-leak paragraphs keep the support copilot, the shared collection with six metadata fields, the request/document tenant and per-chunk ACL invariant, and the 2026-07-08 premium-onboarding question citing Globex."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-debug-the-cross-tenant-leak",
+      "teaching_item": "Telemetry log block",
+      "anchors": [
+        "dive-leak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-entry log block kept byte-for-byte, followed by a reading of each entry along trace_id trc_7f91c2."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-debug-the-cross-tenant-leak",
+      "teaching_item": "Detect, contain, root cause, prevent; enforcement outside LLM",
+      "anchors": [
+        "practice-leak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "leak-response reveal keeps each stage verbatim in substance, including no UI reproduction and v2 control cohort."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-debug-the-cross-tenant-leak",
+      "teaching_item": "Spoken answer and seven-criterion scoring table",
+      "anchors": [
+        "practice-leak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-line spoken answer inside leak-response; seven-criterion strong/weak scoring table directly after the reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Senior/Staff/Principal calibration",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Senior/Staff/Principal table verbatim with the framing sentence that levels separate on independent boundaries and who proves them."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fourteen takeaways",
+      "anchors": [
+        "review-flow",
+        "review-layers",
+        "review-failures",
+        "review-release"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each takeaway is recalled in Quick review: outcome framing and adoption close (review-release), testable requirements (walkthrough step 3), load shape and equation (review-layers), control/data plane (review-flow), immutable context, seven layers and tiers, pre-call quotas vs fairness, central policy/regional enforcement, fail-closed pattern, release gate, rollout, fifty-minute plan (practice-delivery), cost pivot and leak drill (review-failures)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Nine check-yourself questions with answers",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine answer reveals check-1 to check-9 keep each question and its full source answer, from row-tag insufficiency to the sixty-second cost answer."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Eleven fact-check references with claims, checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eleven links with their claim notes and the check date; HHS/OCC limits also used in dive-tiers, ICO/GDPR in dive-offboarding, RFC 2697 and Demers in dive-fairness, OWASP LLM08 in dive-leak."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Built the inventory from all 50 captured sections of the 2026-11-15 capture and split them into 112 teaching items. The four source tracks repeat the same material (seven layers appear in main-4, deep-dive-2, cheat-sheet and full-pack-6; failures in main-5, cheat-sheet and full-pack-9), so each mechanism is taught once in the walkthrough and recalled in Quick review: the two discovery tables and two seven-layer tables were merged column-wise rather than dropped, and the main guide's failure rows (key/policy unavailable, queue metadata) were added to the full design's table. Expanded where the source only asserted: an RLS trace with a forgotten WHERE clause, a token-bucket/WFQ trace with invented 400-vs-4 request numbers, an illustrative cost calculation, envelope-encryption events, the pytest invariant trace and a line-by-line reading of the leak log, all labelled illustrative where numbers are new. Added one authored tier diagram because the three tiers have different topologies and the source had none. Brief opens on Acme/Globex and Maya rather than a generic intro; old navigation, worksheet and reading instructions became reading guidance. All 18 SVGs, the log block and pytest code are byte-identical; nine check-yourself, seven follow-ups, the high-usage pivot and the leak drill are native reveals."
+  },
+  "required_answer_reveals": [
+    "check-1",
+    "check-2",
+    "check-3",
+    "check-4",
+    "check-5",
+    "check-6",
+    "check-7",
+    "check-8",
+    "check-9",
+    "followup-cheapest-shared",
+    "followup-row-tag",
+    "followup-export-delete",
+    "followup-noisy-neighbour",
+    "followup-dedicated",
+    "followup-prove-deletion",
+    "followup-what-breaks",
+    "pivot-high-usage",
+    "leak-response"
+  ]
+}

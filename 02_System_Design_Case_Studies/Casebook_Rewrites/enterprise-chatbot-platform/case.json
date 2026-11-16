@@ -1,0 +1,1450 @@
+{
+  "title": "Enterprise Chatbot Platform",
+  "slug": "enterprise-chatbot-platform",
+  "subtitle": "Design an internal ChatGPT that 40,000 employees choose over consumer tools, with every turn re-authorised, permission-filtered and audited.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-chatbot-platform",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-prompt",
+    "tutorial-v2-intro": "walkthrough-framing",
+    "tutorial-v2-table-of-contents": "walkthrough-framing",
+    "tutorial-v2-0-the-60-second-version": "walkthrough-framing",
+    "tutorial-v2-1-customer-problem-and-discovery": "walkthrough-framing",
+    "tutorial-v2-2-requirements-and-constraints": "walkthrough-requirements",
+    "tutorial-v2-part-2-3-scale-slos-and-capacity": "walkthrough-sizing",
+    "tutorial-v2-part-2-4-architecture-and-end-to-end-flow": "walkthrough-architecture",
+    "tutorial-v2-part-3-5-data-model-apis-and-code": "dive-data-model",
+    "tutorial-v2-part-3-6-security-reliability-failure-handling": "walkthrough-failures",
+    "tutorial-v2-part-4-7-delivery-observability-business-impact": "walkthrough-delivery",
+    "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs": "walkthrough-tradeoffs",
+    "tutorial-v2-part-5-coverage-notes": "dive-governance-gaps",
+    "tutorial-v2-part-5-key-takeaways": "review-recall",
+    "tutorial-v2-part-5-level-calibration": "practice-pacing",
+    "tutorial-v2-part-5-sources-checked-27-sep-2026": "references",
+    "worksheet-1-interview-prompt": "practice-prompt",
+    "worksheet-2-clarify-the-customer-problem": "practice-prompt",
+    "worksheet-3-users-and-workflows": "practice-prompt",
+    "worksheet-4-requirements": "practice-prompt",
+    "worksheet-5-data-and-integration-map": "practice-prompt",
+    "worksheet-6-proposed-architecture": "practice-prompt",
+    "worksheet-7-evaluation-plan": "practice-prompt",
+    "worksheet-8-failure-modes": "practice-prompt",
+    "worksheet-9-rollout-plan": "practice-prompt",
+    "worksheet-10-weak-vs-strong-answer": "practice-answer-levels",
+    "worksheet-11-candidate-scorecard": "practice-pacing",
+    "answer-key-intro": "practice-prompt",
+    "answer-key-strong-discovery-questions": "answer-discovery",
+    "answer-key-strong-functional-requirements": "answer-functional",
+    "answer-key-strong-non-functional-requirements": "answer-nonfunctional",
+    "answer-key-architecture-explanation": "answer-architecture-explained",
+    "answer-key-data-model-integration-assumptions": "answer-data-map",
+    "answer-key-red-team-risks": "answer-red-team",
+    "answer-key-rollout-plan": "answer-rollout",
+    "answer-key-evaluation-plan": "answer-evaluation",
+    "answer-key-weak-answer": "answer-weak",
+    "answer-key-average-answer": "answer-average",
+    "answer-key-strong-answer": "answer-strong",
+    "answer-key-interviewer-scorecard": "practice-pacing",
+    "answer-key-final-2-minute-spoken-answer": "answer-spoken",
+    "intro": "case-brief",
+    "tutorial-v2": "walkthrough",
+    "tutorial-v2-part-2": "walkthrough",
+    "tutorial-v2-part-3": "walkthrough",
+    "tutorial-v2-part-4": "walkthrough",
+    "tutorial-v2-part-5": "walkthrough",
+    "worksheet": "walkthrough",
+    "answer-key": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "framing",
+      "label": "Result, bars and discovery",
+      "hint": "Name the egress result, both bars, and the questions that change the build."
+    },
+    {
+      "id": "sizing",
+      "label": "Sizing and cost",
+      "hint": "Derive turns, open streams and tokens per minute; say what binds first."
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture and permissions",
+      "hint": "Order the turn by dependency and show where scope intersection and fail-closed checks run."
+    },
+    {
+      "id": "failures",
+      "label": "Failure drills",
+      "hint": "Walk the laundromat, injection, stale revocation and provider outage through detect, contain, recover, prevent."
+    },
+    {
+      "id": "delivery",
+      "label": "Rollout and metrics",
+      "hint": "Give phases, measured gates and the metrics each audience reads."
+    }
+  ],
+  "rubric": [
+    "Frames the goal as displacing consumer-AI egress, with governance and adoption held together.",
+    "Raises build versus buy before being asked and defends a hybrid.",
+    "Sizes on 800 concurrent streams via Little's Law and names provider TPM as the binding limit.",
+    "Re-authorises every turn and derives retrieval permissions from the asking human.",
+    "States effective assistant scope as assistant scope intersected with viewer permissions.",
+    "Treats index ACLs as a pre-filter and drops chunks whose live ACL cannot be resolved.",
+    "Scans streamed output with overlapping windows and finalises, meters and audits every turn path.",
+    "Rolls out one risk class per phase on measured gates, reading block rate with false-positive rate."
+  ],
+  "required_answer_reveals": [
+    "answer-discovery",
+    "answer-users",
+    "answer-functional",
+    "answer-nonfunctional",
+    "answer-data-map",
+    "answer-architecture-explained",
+    "answer-evaluation",
+    "answer-red-team",
+    "answer-rollout",
+    "answer-weak",
+    "answer-average",
+    "answer-strong",
+    "answer-repairs",
+    "followup-injection",
+    "followup-ediscovery",
+    "followup-provider-down",
+    "followup-cost",
+    "followup-working",
+    "mock-why-build",
+    "mock-finance-assistant",
+    "mock-provider-two-hours",
+    "mock-show-no-one-saw",
+    "answer-spoken"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "40,000-employee 'own ChatGPT' request driven by 6,400 staff in the egress report; result owed is governed displacement",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraphs keep 40,000 employees, the 6,400 egress figure and 'the chatbot is only the vehicle'; egress is now defined as data leaving the network and counted by proxy logs."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Two bars (governance vs adoption) and the context assembler as the design centre",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Governance/adoption paragraph defines 'live permissions' and keeps the free-tool-on-the-phone comparison; the assembler paragraph defines what it decides and lists re-authorise, live-permission filtering, secret scanning and per-turn audit."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Every turn checked against live permissions before context, audited afterwards; source figure 1",
+      "anchors": [
+        "brief-scenario",
+        "figure-core-idea"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figure 1 (both variants, hashed) sits under the scenario with a following paragraph that reads the seven boxes left to right as one message."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates facing an 'own ChatGPT' round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design' names the same three roles and the internal assistant / enterprise copilot / own ChatGPT round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: end-to-end explanation from the two bars; follow-ups on build vs buy, streams and quotas, permission-aware retrieval, output scanning, injection, failover",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of the task section lists every follow-up topic from the source objective."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: RAG, streaming LLM responses, SSO and role-based permissions (LLM glossary)",
+      "anchors": [
+        "brief-task",
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Task section states the three prerequisites with RAG and LLM expanded; the terms paragraph in the scenario defines SSO, ACL, TTFT, DLP and custom assistant before use."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: tutorial, worksheet without looking back, compare with model answer, reread calibration before interview",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final task paragraph keeps the read-attempt-compare order and the night-before calibration advice; mark-as-read progress mechanics are now the reader's own toggles, so the old instruction is not repeated."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old three-part navigation (Tutorial, Practice Worksheet, Model Answer) and its mandatory labels",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three old tracks are redistributed: tutorial into walkthrough and deep dives, worksheet and model answer interleaved as prompts and reveals in Practice; no separate track remains."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Interactive worksheet link on the source site",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice opening states that the source linked an interactive worksheet that was not imported and points readers to the local note fields."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-intro",
+      "teaching_item": "Empty tutorial introduction container",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The source section has no text; it is mapped to the first walkthrough step that begins the tutorial content."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-table-of-contents",
+      "teaching_item": "Tutorial table of contents for parts 0-8 and coverage notes",
+      "anchors": [
+        "walkthrough-framing",
+        "dive-context-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every listed subsection was checked off against the new walkthrough steps and deep-dive groups; the ToC itself is replaced by the five-section navigation."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-0-the-60-second-version",
+      "teaching_item": "60-second version: prompt, egress driver, result owed, free competitor, two bars, assembler centre, egress metric, name both bars first",
+      "anchors": [
+        "walkthrough-framing",
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 opening keeps the weak-opening contrast, the three unusual facts (free competitor, baseline in proxy logs, assembler centre), the single egress metric and the 'name both bars in the first breath' pointer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "The room: CIO, General Counsel, Internal Comms (400 one-time users), platform lead, AI lead",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Who is in the room' list keeps all five voices and their concerns verbatim in substance, followed by feature vs business result."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "Stakeholder table and jobs-to-be-done (finding is where engineering goes)",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row stakeholder table kept intact; the following paragraph keeps summarise/draft/explain/find and explains what 'finding' means here."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "Six discovery questions and the build-vs-buy interview pointer",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 numbered list keeps all six questions, adds a plain definition of a works council, and keeps the advice to raise question 6 before the interviewer does."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "Assumption ledger (zero-retention API for internal-confidential, SSO only, three corpora, owned yet discoverable conversations)",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'State the assumptions aloud' list keeps all four assumptions, including the restricted-data exclusion and the intranet/HR policy/engineering wiki corpora."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "Testable outcome: 80% egress cut in two quarters with 50% weekly active; why lockdown and ungoverned launch both fail",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'A testable outcome' explains why each extreme fails the target and keeps the rare-baseline point."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-1-customer-problem-and-discovery",
+      "teaching_item": "Two-minute opening script",
+      "anchors": [
+        "framing-opening"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as a labelled spoken-example disclosure in step 1 with the complete source wording."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "The trap: scope of the copied product; four buckets; exclusions read as strength",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 opening keeps the product's seven capability areas, the four buckets and the exclusions advice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Deep-dive questions table (sourcing, ACL resolvability, retention, publishing, identity/works council, build vs buy)",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row table kept in step 2, followed by definitions of query-time resolvable, eDiscovery and legal hold that the table relies on."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Functional must/should/could requirements",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Must list keeps all six items; should and could lines keep assistants and marketplace/memory/images/voice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Four safety goals as measurable behaviour, including shared conversations and cached answers",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Safety goals stated as behaviour' keeps chunk/title/snippet/citation/cached answer, the enforced egress list, tamper-revealing audit and per-user spend ceiling."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Five MVP exclusions with reasons",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'What the MVP leaves out' lists writes, fine-tuning, voice/images/code, outside access and memory, each with the source reason."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Question tree figure and its four branches",
+      "anchors": [
+        "figure-question-tree",
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 2 (both variants) placed under 'Walk the question tree aloud' with the four branch bullets matching its labels."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "Traceability table requirement -> owner -> enforcement point",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row table kept; added paragraph explains why retrieval is enforced at both query time and citation render, for shared conversations."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-2-requirements-and-constraints",
+      "teaching_item": "When the interviewer won't answer: default, reason, cost of being wrong, invite correction",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step 2 paragraph keeps the four-part move and the zero-retention commercial API example quote."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Load shape and working numbers: 12,000 DAU, 8x6 turns, 576,000/day, 16/s, 2.5x peak 40/s; average, peak, growth, skew",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 opening and 'From employees to turns a second' show each multiplication, including the 57,600/hour intermediate step."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Little's Law: 800 concurrent streams vs ~2 open REST calls; heartbeats against 60 s idle timeouts; rolling restarts",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The number that sizes the system' keeps 40x50 ms vs 40x20 s, the equation, the four things it sizes, nginx/ALB 60 s defaults, heartbeats, draining, and the interview pointer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Quadratic history: t*n(n+1)/2, turn 40 ~40x and ~820 turns total; sliding window, summarisation, prompt caching; context order is day-one",
+      "anchors": [
+        "dive-context-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Deep dive 'Why resending history grows quadratically' works the 40x41/2=820 arithmetic and adds that front-trimming loses the system prompt."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Quotas as control surfaces and the too-tight / too-loose tension",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five quota bullets kept with their behaviours; the tension paragraph ties back to the two bars."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "SLOs: TTFT 700 ms vs 4 s spinner, p95<1.0 s p99<2.0 s, completion rate, quality signals, zero-tolerance permission filter, cost, per-task targets",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Service level objectives' defines SLO and p95 and keeps every indicator, including HTTP 200 hiding failed streams and drafting vs policy lookup targets."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Capacity worked backward: 96,000 tokens/s, 5.8M/min, provider TPM/RPM binds first; options and headroom list",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Tokens, and the limit that binds first' expands TPM/RPM and keeps the three quota options and five headroom reasons."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Unit economics C_user equation, term meanings, $22 vs $30 Copilot list price, capability forced the build",
+      "anchors": [
+        "dive-context-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The per-user cost equation' gives the equation in plain text, explains all four terms and keeps the spoken quote, adding the source calibration caveat that $22 needs beta measurement."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Sensitivity table (now vs full adoption) and route-across-deployments early",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with all eight rows and the 'none is measured' caveat; following paragraph rederives 4.6M, 320/s and 6,400 streams."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-3-scale-slos-and-capacity",
+      "teaching_item": "Recovery bar: upstream outage, tested failover, labelled degrade, shed work, preserve typed message, RPO per store",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Decide the recovery bar' keeps all five responses and defines RPO before giving ~0 for conversations and hours for the index."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Coherence rule and one path into the prompt",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 opens with the rule as a blockquote plus a sentence on how it checks later boxes."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Dependency order (nine steps) and why this order",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Order components by what each depends on' keeps all nine steps and the four 'X comes first because' reasons."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Component responsibilities table with trust boundary and plane",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fifteen-row table kept; intro sentence defines data plane vs control plane."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Happy path trace with recovery step",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine-step numbered trace kept, including the mid-stream recovery step."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Architecture with failure overlay figure and three overlays",
+      "anchors": [
+        "figure-architecture",
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 3 (both variants) followed by the three overlay bullets: audited block, drop chunk on ACL failure, labelled smaller model."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "Sequence diagram with Failure A (output scanner trips) and Failure B (provider degraded)",
+      "anchors": [
+        "figure-sequence",
+        "walkthrough-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 4 had no caption text; the surrounding paragraphs now narrate its happy path and both failure branches using the SVG's own message labels."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "State ownership and consistency (client no authority, conversation service owns messages, registry owns delegation, audit on action path, index vs permission consistency)",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Who owns which state' bullets plus the consistency paragraph and its senior-signal note."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-2-4-architecture-and-end-to-end-flow",
+      "teaching_item": "MVP vs evolution ordered by value, triggers not dates; five differentiators",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'MVP first, then evolve by trigger' keeps MVP contents, the five-step value order and the second-provider trigger quote; the five differentiators are a numbered list."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Five records with the decision each field carries, framing line, partial status",
+      "anchors": [
+        "dive-data-model"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Five records' keeps every field list and explanation (retention_class, legal_hold, parent_id tree, data_scopes bound, scan_status, append-only audit) plus the ownership framing and four-value status."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Four endpoints and streaming contract: idempotency key, typed events, error codes 403/409/422/413/429/503, done-event SLI",
+      "anchors": [
+        "dive-data-model"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Four endpoints' and 'The streaming endpoint's contract' keep each endpoint, define SSE, list all six event types and every error code, and tie 409/422 to the IETF draft."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Turn handler: riskiest component, eight steps, flowchart figure and full source code",
+      "anchors": [
+        "dive-turn-handler",
+        "figure-turn-handler"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 8 and the complete handle_turn code block (unchanged, including comments) sit in the turn-handler deep dive with the condensed-sketch caveat."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Lines that carry the design (authorize, assembler.build(principal), admit after assembly, classification routing, SCAN_OVERLAP, finally)",
+      "anchors": [
+        "dive-turn-handler"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of the six lines is explained; SCAN_OVERLAP now spells out 256/64 and the overlap-at-least-pattern-length rule from the answer key."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Idempotency, versioning, concurrency in three places",
+      "anchors": [
+        "dive-data-model"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three bullets keep turns/retries, concurrent admin publishes and versioned retention policy with their reasons."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Failures the whiteboard omits: client drop, scanning attachment, over-budget context, audit write failure",
+      "anchors": [
+        "dive-turn-handler"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four bullets kept; client-drop bullet adds the answer key's caveat that some providers ignore cancellation."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-5-data-model-apis-and-code",
+      "teaching_item": "Two weighted tests: permission-filter contract test incl. shared conversation; mid-stream failure at token 300 of 600",
+      "anchors": [
+        "dive-turn-handler"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Two tests with disproportionate weight' keeps both tests and every assertion (retryable error, message kept, failed status, usage, no double billing)."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Unusual threat model and the GC / works council / infra review questions",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 opening keeps the insider-without-malice framing and all three quoted questions, noting the third is unique to this product."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Isolation layers table, fail-closed principle",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-row table kept with a definition of fail closed before it and the 'a layer that fails open is a leak' principle after."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Failure table (eight failures, blast radius to recovery)",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row table kept; added paragraph draws out silent truncation and the deliberate no-backfill audit trade."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Permission laundromat walkthrough and figure",
+      "anchors": [
+        "walkthrough-failures",
+        "figure-laundromat"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 5 plus setup, naive author/service-account resolution, correct intersection with 'nothing found', added controls and why author testing never reveals it; 'laundromat' explained."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Hidden instructions in uploaded document walkthrough and figure",
+      "anchors": [
+        "dive-failure-drills",
+        "figure-injection"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 9 with the white 6pt PDF line; defines indirect injection and canaries, keeps why system-prompt rewording fails, no authority, no write tools, permission backstop and the spoken line."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Stale revocation walkthrough and figure (15-min cache, 20-hour index snapshot)",
+      "anchors": [
+        "dive-failure-drills",
+        "figure-revocation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 10 with the Legal-to-Operations setup, the true cause, live-check fix, short TTL, pushed invalidation, cache purge plus audit query, and nightly drift job as a security metric."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Provider bad day walkthrough and figure",
+      "anchors": [
+        "dive-failure-drills",
+        "figure-provider"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 11 with the bad path (10-minute flight to consumer tool), circuit breaker explained, shed work, capped jittered retries, audited route changes, game day and the labelled-answer judgement."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Three boundary tests (code) and which ones set a design apart",
+      "anchors": [
+        "dive-failure-drills"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Complete pytest code kept unchanged; added paragraph explains what each of the three tests asserts, including withheld_citation_count and empty effective_scopes."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-3-6-security-reliability-failure-handling",
+      "teaching_item": "Three artifacts before GA: evidence pack, discovery runbook, over-sharing runbook",
+      "anchors": [
+        "dive-failure-drills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three bullets keep every component (DPA expanded), the rehearse-before-go-live point and the audit-dependent third runbook step."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Hazard: demo excitement vs untested permission model",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 opening keeps the two-week demo and all-40,000 pressure before live ACLs."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Four phases table with measured gates, author-chosen caveat, one risk class per phase, phases figure",
+      "anchors": [
+        "walkthrough-delivery",
+        "figure-phases"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with the 'not an industry norm' caveat; source figure 6 follows; added definition of a game day."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Metrics table and block/false-positive pair",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Thirteen-row metrics table kept; the pair paragraph keeps the timid-tool and handsome-dashboard reasoning."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Three audiences from one telemetry (invented figures) and the on-call-only warning",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Board, department head and on-call quotes kept with the source's 'invented to show the format' label and FDE expanded."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Configuration vs adapter vs shared service vs core; four-step connector interface",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four bullets keep every listed item and the act-as-caller, list, check live, fetch interface."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Risk register with works-council row",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row register kept with L and I explained; works-council note kept."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Business impact statement format and structure; ROI caution",
+      "anchors": [
+        "walkthrough-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Statement kept as a blockquote labelled invented numbers; structure sentence and ROI warning follow."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-7-delivery-observability-business-impact",
+      "teaching_item": "Rollout and metric layers figure",
+      "anchors": [
+        "walkthrough-delivery",
+        "figure-rollout-layers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 7 closes step 7 with a sentence saying each gate reads from a named metric layer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Two failure modes (feature list, lockdown) and the fix",
+      "anchors": [
+        "walkthrough-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 opening keeps both failure modes and the 'say both bars and return to them' fix."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Five balanced trade-offs including 400 ms = 40% of TTFT budget and the DLP quote",
+      "anchors": [
+        "walkthrough-tradeoffs",
+        "dive-context-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five bold-led paragraphs keep both sides and the verdict for each; the 400 ms figure is also used in the context-cost dive."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "50-minute plan figure and table",
+      "anchors": [
+        "practice-pacing",
+        "figure-fifty-minute-plan"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source figure 12 and the eight-row timing table sit in Practice pacing."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Five follow-ups, compressed",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each follow-up is a native answer reveal (followup-injection, -ediscovery, -provider-down, -cost, -working) with the full spoken answer."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Weak answers -> repairs table",
+      "anchors": [
+        "answer-repairs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six weak/repair pairs kept as a table inside the answer-repairs reveal."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Rubric (seven dimensions strong vs weak)",
+      "anchors": [
+        "practice-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as the interview rubric table under 'Scorecards and rubric'."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "90-second architecture summary and one-sentence close",
+      "anchors": [
+        "walkthrough-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summary kept verbatim as a blockquote; one-sentence close follows and recurs in Quick review."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Worksheet cover table and four mock prompts",
+      "anchors": [
+        "practice-pacing",
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row cover table kept in pacing; the four mock prompts each get a reveal with an answer assembled from the case and labelled as a worked example."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-4-8-interview-walkthrough-and-trade-offs",
+      "teaching_item": "Practice plan: solo, pair, ~40-line implementation",
+      "anchors": [
+        "practice-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three practice-mode bullets kept with the half-was-product-description and 40-line details."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-coverage-notes",
+      "teaching_item": "20-item rubric review: 18 covered, Item 19 the only revised verdict",
+      "anchors": [
+        "dive-governance-gaps"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of the governance dive names every fully covered item in one sentence, keeps the Item 19 revision and its three supporting reasons, and flags Items 17 and 18."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-coverage-notes",
+      "teaching_item": "Item 17 regulation gap: employee monitoring, works councils, FINRA/SEC, map to existing fields, sub-processor data-flow map, interview advice",
+      "anchors": [
+        "dive-governance-gaps"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Item 17 subsection keeps the three rule types (now with BetrVG s.87(1) no. 6, WOR art. 27, FINRA 3110, SEC 17a-4 from the source references), retention_class/legal_hold/admin-read audit evidence, router residency, the missing sub-processor map and the claim-no-depth advice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-coverage-notes",
+      "teaching_item": "Item 18 bias, language and accessibility gap",
+      "anchors": [
+        "dive-governance-gaps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Item 18 subsection keeps Ask Finance/career-advice bias, eval-set slicing by department and locale, English-only contract tests and DLP scanners, typed events for assistive tech, QA gap, and the drift-back-to-shadow-AI argument."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-recall"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each takeaway was ticked against Quick review: result and two bars, 80%/50% egress target, hybrid build, 800 streams, 5.8M TPM, quadratic history, per-turn auth, intersection, pre-filter ACLs, 256/64 scan, done-event SLI, audit failure fails turn, injection made worthless, labelled failover, four gated phases with block/FP pair."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-level-calibration",
+      "teaching_item": "Level calibration table (Senior, Staff, Principal)",
+      "anchors": [
+        "practice-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept under 'Level calibration' with the framing sentence and the night-before reread advice."
+      }
+    },
+    {
+      "source_id": "tutorial-v2-part-5-sources-checked-27-sep-2026",
+      "teaching_item": "Eleven dated references",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "References group lists all eleven links with the claim each supports and the 27 Sep 2026 check date; claims also appear beside their use (60 s timeouts, IETF codes, caching, TPM, $30 seat, works-council and FINRA/SEC rules)."
+      }
+    },
+    {
+      "source_id": "worksheet-1-interview-prompt",
+      "teaching_item": "Interview prompt: FDE builds platform for 40,000; 6,400 already paste data",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bold 'The prompt' paragraph opens Practice with the same figures."
+      }
+    },
+    {
+      "source_id": "worksheet-2-clarify-the-customer-problem",
+      "teaching_item": "Five clarifying questions",
+      "anchors": [
+        "practice-prompt",
+        "answer-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five questions listed before the answer-discovery reveal, which adds the answer key's eight questions."
+      }
+    },
+    {
+      "source_id": "worksheet-3-users-and-workflows",
+      "teaching_item": "Users and workflows blank table (four users, five columns)",
+      "anchors": [
+        "practice-prompt",
+        "answer-users"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt names the four users and five columns; the answer-users reveal fills them from the stakeholder table and is labelled as a worked example, not source text."
+      }
+    },
+    {
+      "source_id": "worksheet-4-requirements",
+      "teaching_item": "Requirements prompt: functional plus latency, availability, cost, security/privacy, audit/compliance",
+      "anchors": [
+        "practice-prompt",
+        "answer-functional",
+        "answer-nonfunctional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt lists the five non-functional headings; two reveals give the answer key's functional and non-functional requirements."
+      }
+    },
+    {
+      "source_id": "worksheet-5-data-and-integration-map",
+      "teaching_item": "Data and integration map blank table",
+      "anchors": [
+        "practice-prompt",
+        "answer-data-map"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt names the six columns; answer-data-map reveal carries the answer key's records and adds the three assumed corpora and connector contract from the walkthrough."
+      }
+    },
+    {
+      "source_id": "worksheet-6-proposed-architecture",
+      "teaching_item": "Architecture prompt with six parts to cover",
+      "anchors": [
+        "practice-prompt",
+        "answer-architecture-explained"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt lists session/identity, assembler, retrieval ACLs, policy/DLP, router and audit; answer-architecture reveal follows."
+      }
+    },
+    {
+      "source_id": "worksheet-7-evaluation-plan",
+      "teaching_item": "Evaluation plan table with four filled rows",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row worksheet table kept with thresholds, datasets and owners before the evaluation reveal."
+      }
+    },
+    {
+      "source_id": "worksheet-8-failure-modes",
+      "teaching_item": "Six failure modes to analyse",
+      "anchors": [
+        "practice-prompt",
+        "answer-red-team"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six failure modes listed in the prompt paragraph; answer-red-team reveal answers each."
+      }
+    },
+    {
+      "source_id": "worksheet-9-rollout-plan",
+      "teaching_item": "Six-step rollout outline",
+      "anchors": [
+        "practice-prompt",
+        "answer-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Outline kept in the rollout prompt, with 'one corpus' made 'the first corpora' to match the Beta phase's two corpora; answer-rollout reveal follows."
+      }
+    },
+    {
+      "source_id": "worksheet-10-weak-vs-strong-answer",
+      "teaching_item": "Weak vs strong opening contrast",
+      "anchors": [
+        "practice-answer-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both quotes kept at the start of 'Compare weak, average and strong answers'."
+      }
+    },
+    {
+      "source_id": "worksheet-11-candidate-scorecard",
+      "teaching_item": "Candidate scorecard 1/3/5",
+      "anchors": [
+        "practice-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-area candidate scorecard table kept under 'Scorecards and rubric' (empty score column dropped; notes fields replace it)."
+      }
+    },
+    {
+      "source_id": "answer-key-intro",
+      "teaching_item": "Answer key purpose: use after attempting the worksheet",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The Practice opening instructs readers to answer each part before opening its reveal, which carries the same use-after-attempt guidance."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-discovery-questions",
+      "teaching_item": "Eight strong discovery questions incl. measured egress baseline and free-tool TTFT",
+      "anchors": [
+        "answer-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight questions kept; closing note explains why the two extra questions set baseline and adoption bar."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-functional-requirements",
+      "teaching_item": "Six strong functional requirements",
+      "anchors": [
+        "answer-functional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six bullets kept in the answer-functional reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-non-functional-requirements",
+      "teaching_item": "Strong non-functional requirements (latency, availability, security, compliance, reliability, cost)",
+      "anchors": [
+        "answer-nonfunctional"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six bullets kept; the availability bullet adds the 16/s intermediate figure from the sizing step."
+      }
+    },
+    {
+      "source_id": "answer-key-architecture-explanation",
+      "teaching_item": "Architecture explanation (eight points incl. overlap >= longest pattern and cancellation caveat)",
+      "anchors": [
+        "answer-architecture-explained"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight bullets kept in the answer-architecture reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-data-model-integration-assumptions",
+      "teaching_item": "Data model assumptions (records, tree, four statuses, named retention, scan_status)",
+      "anchors": [
+        "answer-data-map"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five bullets kept in the answer-data-map reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-red-team-risks",
+      "teaching_item": "Red-team risks list and five elaborations",
+      "anchors": [
+        "answer-red-team"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Risk list and each elaboration kept; the runaway-script response is added from the failure table so all six worksheet failure modes are answered."
+      }
+    },
+    {
+      "source_id": "answer-key-rollout-plan",
+      "teaching_item": "Week-by-week rollout plan (weeks 0-8, then expand on egress/WAU/audit)",
+      "anchors": [
+        "answer-rollout"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven steps kept in order (baseline, chat, grounding, violation gate, attachments, assistants, expand on egress/WAU/audit). The answer key's compressed week 0-8 timing conflicted with the four-phase plan, its table and figure, so each step now carries the phase weeks (Alpha 1-6, Beta 7-14, GA 15-22, assistants 23+); the reconciling meta-note is removed."
+      }
+    },
+    {
+      "source_id": "answer-key-evaluation-plan",
+      "teaching_item": "Evaluation plan table with author-chosen thresholds caveat",
+      "anchors": [
+        "answer-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row table and 'be ready to justify' caveat kept inside the answer-evaluation reveal."
+      }
+    },
+    {
+      "source_id": "answer-key-weak-answer",
+      "teaching_item": "Weak answer and why it falls short",
+      "anchors": [
+        "answer-weak"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quote and the two shortcomings (no egress reason, no permission filtering) kept in answer-weak."
+      }
+    },
+    {
+      "source_id": "answer-key-average-answer",
+      "teaching_item": "Average answer and its gaps",
+      "anchors": [
+        "answer-average"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quote and three gaps (session-only auth, no intersection rule, adoption treated as optional) kept in answer-average."
+      }
+    },
+    {
+      "source_id": "answer-key-strong-answer",
+      "teaching_item": "Strong answer",
+      "anchors": [
+        "answer-strong"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full strong answer kept in answer-strong."
+      }
+    },
+    {
+      "source_id": "answer-key-interviewer-scorecard",
+      "teaching_item": "Interviewer scorecard (eight areas)",
+      "anchors": [
+        "practice-pacing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row table kept under 'Scorecards and rubric'."
+      }
+    },
+    {
+      "source_id": "answer-key-final-2-minute-spoken-answer",
+      "teaching_item": "Final two-minute spoken answer",
+      "anchors": [
+        "answer-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Complete answer kept in the answer-spoken reveal, split into two paragraphs at the architecture turn."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Read all 48 captured sections of the chatbot platform source and rewrote them into the five-section shell. Tutorial parts 1-8 became eight walkthrough steps; the quadratic-history and unit-cost material, records/endpoints, the turn-handler code, three of the four failure drills with the pytest boundary tests, and the Item 17/18 coverage-notes gaps became five deep dives. The worksheet and model answer are interleaved in Practice so each worksheet prompt precedes its model-answer reveal; the four mock prompts had no source answers, so their reveals are assembled from the case and labelled as worked examples, as is the users-and-workflows answer. Repetition consolidated: the 60-second version, key takeaways and the answer-key architecture restate the walkthrough, so they map to existing passages rather than repeating. Added definitions (egress, live permissions, SSO, ACL, TTFT, DLP, works council, query-time resolvable, legal hold, SLO, p95, RPO, SSE, fail closed, game day) and arithmetic steps (57,600/hour, 40x41/2=820, 4.6M/320/6,400). Invented figures (board/on-call quotes, impact statement) keep the source's invented label; $22 keeps the beta-measurement caveat. Source inconsistencies resolved in text (2026-11-16): answer key's week 0-8 rollout vs the tutorial's weeks 1-23+ phases \u2192 the four-phase schedule (Alpha 1-6, Beta 7-14, GA 15-22, assistants 23+), because the phase table, the phases figure and the 'plain chat within six weeks' decision all use it; worksheet's 'one corpus' \u2192 'the first corpora', matching the Beta's two corpora."
+  }
+}

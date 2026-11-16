@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "6f543241c5119f310a0e1af427416154120d38cebcf65930f411096f7353baa7",
+  "html_sha256": "42c5c679952fe4e83a633120e43e538f79dc8f000dacdd479302d04d7a391282",
+  "config_sha256": "eb0b8c17662b854e012588c0432865f636424ec614aa7e67c203d138a5fa506f",
+  "source_url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 43,
+    "coverage_rows": 76,
+    "worked_answers": 24,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Read all 43 captured sections against the draft. The source repeated the same design four times (interview guide, deep dive, cheat sheet, full design); the walkthrough follows the full design's order (questions, requirements, sizing, architecture, ingestion, gate, residency, reliability, audit, evaluation, trade-offs) and folds the interview-guide and deep-dive versions into the matching step or into a deep dive only where they add mechanism (three timestamps, idempotency key per resolution version, model inputs as regional data, operating metrics). All 16 SVGs are placed as eight light/dark pairs beside the prose that reads them. Added teaching material is labelled illustrative: the $320 Frankfurt parcel, the 0.99-confidence customs trace through both gate orderings, the 3,000-row batch diff and the S:resolution-v1/v2 key trace. The brief opens on the stalled shipment and defines exception, webhook, batch drop, EDI, idempotency key and circuit breaker before use; no approval role was invented beyond the source's ops agents. All 11 Check Yourself questions, 10 follow-ups, the architecture prompt, the two-minute answer and the cost pivot are worked-answer reveals. Source section numbers in moved tables were rewritten to step names. Open items kept explicit: the confidence threshold and shadow agreement target are unspecified in the source."
+    }
+  }
+}
