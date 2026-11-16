@@ -1,0 +1,10 @@
+{
+ "status": "reviewed",
+ "passed": true,
+ "evidence": "Desktop (1440) opens on the five-section bar and the brief's 'Let an agent prepare work without granting it authority' heading with the progress rail; phone (390) shows the topic selector, the full brief including the core-loop figure and the four-row related-cases table, which scrolls inside its wrapper. All 11 original diagram pairs decode in figures-0/3/6/9 sheets and their labels match the rewritten captions: core loop with Allow/Needs approval/Block branches; whiteboard with task state and kill switch; decision half with 'Validate schema before policy' and three verdict branches; execution half with 'Return existing receipt'; control/data plane; sequence with [low risk]/[high risk, approval required] alt; injection replay with normal vs injected input; risk tiers Low to Critical; five rollout phases; four integration layers; 50-minute timeline whose last two labels differ from the prose, as the caption notes. Each sits beside the prose that explains it.",
+ "limits": [
+  "The light variants of the injection-replay and risk-tier source SVGs draw dark-red boxes ('Policy decision point blocks scope change', 'Blocked entirely') with low-contrast text; this is in the original asset and was not edited.",
+  "The whiteboard and plane diagrams are tall and small at column width; full-size links are provided.",
+  "Dark theme and screen-reader output were not tested."
+ ]
+}

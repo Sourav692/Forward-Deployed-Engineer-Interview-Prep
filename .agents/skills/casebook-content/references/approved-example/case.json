@@ -1,0 +1,757 @@
+{
+  "title": "Enterprise Knowledge Assistant",
+  "slug": "enterprise-knowledge-assistant",
+  "subtitle": "Design cited answers that respect every user’s access.",
+  "theme": "Knowledge and retrieval",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "updated": "Source updated 4 Nov 2026",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
+  "mode": "faithful",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "intros": {
+    "case-brief": "The complete case, organised for learning, practice, and revision.",
+    "walkthrough": "The complete interview reasoning, with worked Full Design chapters inside the relevant steps.",
+    "deep-dives": "All original technical chapters, grouped by decision, with the detailed production mechanisms and references.",
+    "practice": "Attempt the design, then use the original questions, interview stories, pivots, and incident drills.",
+    "quick-review": "The full original Quick Review and Key Takeaways, grouped for recall."
+  },
+  "custom_scripts": [
+    "reference-demo.js"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Overview",
+      "anchors": [
+        "intro-overview"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "The core idea",
+      "anchors": [
+        "intro-the-core-idea"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Who it is for",
+      "anchors": [
+        "intro-who-it-is-for"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives",
+      "anchors": [
+        "intro-objectives"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "What it assumes",
+      "anchors": [
+        "intro-what-it-assumes"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "How to use it",
+      "anchors": [
+        "intro-how-to-use-it"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "The sections",
+      "anchors": [
+        "intro-the-sections"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Practise it",
+      "anchors": [
+        "intro-practise-it"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "main-intro"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-the-anchor-case-study",
+      "teaching_item": "The anchor case study",
+      "anchors": [
+        "main-the-anchor-case-study"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-0-the-mental-model",
+      "teaching_item": "0. The mental model",
+      "anchors": [
+        "main-0-the-mental-model"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-1-how-i-would-open",
+      "teaching_item": "1. How I would open",
+      "anchors": [
+        "main-1-how-i-would-open"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "2. Requirements: Functional + Non-Functional",
+      "anchors": [
+        "main-2-requirements-functional-non-functional"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "3. Architecture",
+      "anchors": [
+        "main-3-architecture"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-4-ingestion-normalise-permissions-first",
+      "teaching_item": "4. Ingestion: normalise permissions first",
+      "anchors": [
+        "main-4-ingestion-normalise-permissions-first"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-5-freshness-and-deletion",
+      "teaching_item": "5. Freshness and deletion",
+      "anchors": [
+        "main-5-freshness-and-deletion"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-6-authorisation-two-layers",
+      "teaching_item": "6. Authorisation: two layers",
+      "anchors": [
+        "main-6-authorisation-two-layers"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-7-abac",
+      "teaching_item": "7. ABAC",
+      "anchors": [
+        "main-part-2-7-abac"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-8-retrieval",
+      "teaching_item": "8. Retrieval",
+      "anchors": [
+        "main-part-2-8-retrieval"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-9-reranking-and-context",
+      "teaching_item": "9. Reranking and context",
+      "anchors": [
+        "main-part-2-9-reranking-and-context"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-10-generation-citations-and-abstention",
+      "teaching_item": "10. Generation, citations and abstention",
+      "anchors": [
+        "main-part-2-10-generation-citations-and-abstention"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-11-prompt-injection",
+      "teaching_item": "11. Prompt injection",
+      "anchors": [
+        "main-part-2-11-prompt-injection"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-12-evaluation",
+      "teaching_item": "12. Evaluation",
+      "anchors": [
+        "main-part-2-12-evaluation"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-13-persona-based-testing",
+      "teaching_item": "13. Persona-based testing",
+      "anchors": [
+        "main-part-2-13-persona-based-testing"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-14-observability-and-audit",
+      "teaching_item": "14. Observability and audit",
+      "anchors": [
+        "main-part-2-14-observability-and-audit"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-15-scale-and-latency",
+      "teaching_item": "15. Scale and latency",
+      "anchors": [
+        "main-part-2-15-scale-and-latency"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-16-scalability-latency-cost-production-design",
+      "teaching_item": "16. Scalability, latency & cost: production design",
+      "anchors": [
+        "main-part-2-16-scalability-latency-cost-production-design"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-17-safe-caching",
+      "teaching_item": "17. Safe caching",
+      "anchors": [
+        "main-part-2-17-safe-caching"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-18-multi-tenancy",
+      "teaching_item": "18. Multi-tenancy",
+      "anchors": [
+        "main-part-2-18-multi-tenancy"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-19-failure-playbook",
+      "teaching_item": "19. Failure playbook",
+      "anchors": [
+        "main-part-2-19-failure-playbook"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-20-cost-optimisation",
+      "teaching_item": "20. Cost optimisation",
+      "anchors": [
+        "main-part-2-20-cost-optimisation"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-21-100-ms-pivot",
+      "teaching_item": "21. 100 ms pivot",
+      "anchors": [
+        "main-part-2-21-100-ms-pivot"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-22-interview-story",
+      "teaching_item": "22. Interview story",
+      "anchors": [
+        "main-part-2-22-interview-story"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-23-interview-trigger-answer",
+      "teaching_item": "23. Interview trigger → answer",
+      "anchors": [
+        "main-part-2-23-interview-trigger-answer"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "main-part-2-24-60-minute-delivery",
+      "teaching_item": "24. 60-minute delivery",
+      "anchors": [
+        "main-part-2-24-60-minute-delivery"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "deep-dive-intro"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-1-acl-normalisation",
+      "teaching_item": "1. ACL normalisation",
+      "anchors": [
+        "deep-dive-1-acl-normalisation"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-2-two-authorisation-layers",
+      "teaching_item": "2. Two authorisation layers",
+      "anchors": [
+        "deep-dive-2-two-authorisation-layers"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-3-abac",
+      "teaching_item": "3. ABAC",
+      "anchors": [
+        "deep-dive-3-abac"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-4-source-specific-risks",
+      "teaching_item": "4. Source-specific risks",
+      "anchors": [
+        "deep-dive-4-source-specific-risks"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-5-ingestion-correctness",
+      "teaching_item": "5. Ingestion correctness",
+      "anchors": [
+        "deep-dive-5-ingestion-correctness"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-6-freshness-vs-authorisation",
+      "teaching_item": "6. Freshness vs authorisation",
+      "anchors": [
+        "deep-dive-6-freshness-vs-authorisation"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-7-retrieval-details",
+      "teaching_item": "7. Retrieval details",
+      "anchors": [
+        "deep-dive-7-retrieval-details"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-8-reranking",
+      "teaching_item": "8. Reranking",
+      "anchors": [
+        "deep-dive-8-reranking"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-9-evidence-selection",
+      "teaching_item": "9. Evidence selection",
+      "anchors": [
+        "deep-dive-9-evidence-selection"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-10-citation-verification",
+      "teaching_item": "10. Citation verification",
+      "anchors": [
+        "deep-dive-10-citation-verification"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-11-abstention",
+      "teaching_item": "11. Abstention",
+      "anchors": [
+        "deep-dive-11-abstention"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-12-prompt-injection-and-tools",
+      "teaching_item": "12. Prompt injection and tools",
+      "anchors": [
+        "deep-dive-12-prompt-injection-and-tools"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-13-evaluation-dataset",
+      "teaching_item": "13. Evaluation dataset",
+      "anchors": [
+        "deep-dive-13-evaluation-dataset"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-14-leak-suite",
+      "teaching_item": "14. Leak suite",
+      "anchors": [
+        "deep-dive-14-leak-suite"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-15-observability",
+      "teaching_item": "15. Observability",
+      "anchors": [
+        "deep-dive-15-observability"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-16-scale-reasoning",
+      "teaching_item": "16. Scale reasoning",
+      "anchors": [
+        "deep-dive-16-scale-reasoning"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-17-cache-safety",
+      "teaching_item": "17. Cache safety",
+      "anchors": [
+        "deep-dive-17-cache-safety"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-18-100-ms-design",
+      "teaching_item": "18. 100 ms design",
+      "anchors": [
+        "deep-dive-18-100-ms-design"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-19-cost-design",
+      "teaching_item": "19. Cost design",
+      "anchors": [
+        "deep-dive-19-cost-design"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-20-failure-playbook",
+      "teaching_item": "20. Failure playbook",
+      "anchors": [
+        "deep-dive-20-failure-playbook"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "deep-dive-21-project-story-lessons",
+      "teaching_item": "21. Project-story lessons",
+      "anchors": [
+        "deep-dive-21-project-story-lessons"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-problem",
+      "teaching_item": "Problem",
+      "anchors": [
+        "cheat-sheet-problem"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-core-architecture",
+      "teaching_item": "Core architecture",
+      "anchors": [
+        "cheat-sheet-core-architecture"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "cheat-sheet-five-rules"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-pre-filter-vs-post-check",
+      "teaching_item": "Pre-filter vs post-check",
+      "anchors": [
+        "cheat-sheet-pre-filter-vs-post-check"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-retrieval",
+      "teaching_item": "Retrieval",
+      "anchors": [
+        "cheat-sheet-retrieval"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-freshness",
+      "teaching_item": "Freshness",
+      "anchors": [
+        "cheat-sheet-freshness"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-rag-quality",
+      "teaching_item": "RAG quality",
+      "anchors": [
+        "cheat-sheet-rag-quality"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-security-tests",
+      "teaching_item": "Security tests",
+      "anchors": [
+        "cheat-sheet-security-tests"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-scale-numbers",
+      "teaching_item": "Scale numbers",
+      "anchors": [
+        "cheat-sheet-scale-numbers"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-cost-latency",
+      "teaching_item": "Cost / latency",
+      "anchors": [
+        "cheat-sheet-cost-latency"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-failure-playbook",
+      "teaching_item": "Failure playbook",
+      "anchors": [
+        "cheat-sheet-failure-playbook"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-project-story",
+      "teaching_item": "Project story",
+      "anchors": [
+        "cheat-sheet-project-story"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-interview-triggers",
+      "teaching_item": "Interview triggers",
+      "anchors": [
+        "cheat-sheet-interview-triggers"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One sentence",
+      "anchors": [
+        "cheat-sheet-one-sentence"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Introduction",
+      "anchors": [
+        "full-pack-intro"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-1-name-permission-fidelity-as-the-constraint-before-drawing-",
+      "teaching_item": "1. Name Permission Fidelity as the Constraint Before Drawing Anything",
+      "anchors": [
+        "full-pack-1-name-permission-fidelity-as-the-constraint-before-drawing-"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "2. State Requirements as Testable Constraints",
+      "anchors": [
+        "full-pack-2-state-requirements-as-testable-constraints"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-3-size-on-peak-qps-and-permission-refresh",
+      "teaching_item": "3. Size on Peak QPS and Permission Refresh",
+      "anchors": [
+        "full-pack-3-size-on-peak-qps-and-permission-refresh"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-4-map-every-source-with-its-permission-model",
+      "teaching_item": "4. Map Every Source With Its Permission Model",
+      "anchors": [
+        "full-pack-part-2-4-map-every-source-with-its-permission-model"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "5. Draw the Architecture End to End",
+      "anchors": [
+        "full-pack-part-2-5-draw-the-architecture-end-to-end"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-6-normalise-permissions-at-ingestion-and-refuse-what-has-non",
+      "teaching_item": "6. Normalise Permissions at Ingestion and Refuse What Has None",
+      "anchors": [
+        "full-pack-part-2-6-normalise-permissions-at-ingestion-and-refuse-what-has-non"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-7-enforce-before-the-model-sees-anything",
+      "teaching_item": "7. Enforce Before the Model Sees Anything",
+      "anchors": [
+        "full-pack-part-2-7-enforce-before-the-model-sees-anything"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement",
+      "teaching_item": "8. Retrieve Hybrid, Fuse by Rank, Rerank After Enforcement",
+      "anchors": [
+        "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-on-everything-except-authorisation",
+      "teaching_item": "9. Degrade on Everything Except Authorisation",
+      "anchors": [
+        "full-pack-part-2-9-degrade-on-everything-except-authorisation"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score",
+      "teaching_item": "10. Gate the Release on a Leak Count, Not a Score",
+      "anchors": [
+        "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-one-corpus-at-a-time",
+      "teaching_item": "11. Roll Out One Corpus at a Time",
+      "anchors": [
+        "full-pack-part-3-11-roll-out-one-corpus-at-a-time"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-3-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "12. Deliver It in Sixty Minutes",
+      "anchors": [
+        "full-pack-part-3-12-deliver-it-in-sixty-minutes"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "teaching_item": "13. Tell It as Something Built",
+      "anchors": [
+        "full-pack-part-4-13-tell-it-as-something-built"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "14. Answer the Cost Pivot in Ten Minutes",
+      "anchors": [
+        "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-15-debug-the-incidents-on-this-design",
+      "teaching_item": "15. Debug the Incidents on This Design",
+      "anchors": [
+        "full-pack-part-5-15-debug-the-incidents-on-this-design"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Level calibration",
+      "anchors": [
+        "full-pack-part-5-level-calibration"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Key Takeaways",
+      "anchors": [
+        "full-pack-part-5-key-takeaways"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Check Yourself",
+      "anchors": [
+        "full-pack-part-5-check-yourself"
+      ],
+      "status": "preserved"
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "References",
+      "anchors": [
+        "full-pack-part-5-references"
+      ],
+      "status": "preserved"
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Existing user-approved complete prototype; all 91 source sections, code blocks, glossary definitions, and original diagram assets compared before packaging."
+  }
+}

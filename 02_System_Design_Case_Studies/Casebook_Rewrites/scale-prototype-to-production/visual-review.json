@@ -1,0 +1,10 @@
+{
+ "status": "reviewed",
+ "passed": true,
+ "evidence": "Desktop (1440) shows the five-section tabs, the new brief heading 'A pilot that worked for a hundred volunteers' and the progress rail; phone (390) shows the brief, the terms paragraph, the tenfold figure, the source-contribution table in a horizontal scroll wrapper and the topic selector, with no page overflow. Read all four light SVGs in the contact sheets: cd00da58 shows 100 -> 1,000 identity breaks -> 10,000 capacity breaks -> 100,000 fairness and ownership break, matching the new caption (the old caption described cohorts and gates, which the SVG does not show); 24677b0b is the vertical answer path from SSE client through gateway, orchestrator, retrieval/tools/cache, router, primary vs warm fallback and labelled degraded answer, output checks and stream; 235c22bf is the async queue/workers/batch API column beside sources/parse/chunk and embed/index with ACL metadata; 8bc2c6a2 is the four-plane view (control plane, gateway, answer path, async lane) with pass/block/hit/miss labels. Each caption and alt text now names those labels and each figure sits in step 6 or the brief beside its explanation.",
+ "limits": [
+  "The four-plane SVG (2628 px wide) renders small at column width; its labels are legible only via the 'Open for full size' link.",
+  "Dark variants are preserved and hashed but the reader is light-themed, so they were not inspected in a dark render.",
+  "No screen-reader test was run."
+ ]
+}

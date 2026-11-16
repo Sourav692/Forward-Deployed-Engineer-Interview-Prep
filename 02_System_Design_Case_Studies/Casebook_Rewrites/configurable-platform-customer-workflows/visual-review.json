@@ -1,0 +1,10 @@
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "Desktop 1280 opening shows the five-tab nav, case title, subtitle and the 'Ten customers, one workflow product' brief with progress rail; phone 390 shows the topic selector, full brief with terms defined, the core-idea figure, the numbered acme trace (save, validate, test, publish v17, expose, observe) and task section with no horizontal overflow. Screenshotted all 13 placed figures with disclosures open: every light SVG decoded (naturalWidth 168-2308) and sits under its explaining paragraph. Checked labels against prose: architecture shows editor branching to harness and validator, both '2) publish immutable version' into the registry, '3) release target', '4) gated exposure', '5) external calls' as narrated; idempotency sequence shows dep-555, key deploy-2024-11-18-001, configVersion 17 then 18 and 422 exactly as in the walkthrough; loop overlay lanes (Admin UI, validator, harness, registry, flag service, runtime, support) and notes match the step 5 narration. 2026-11-16 source-fix pass: the paragraph after figure-publish-order now describes the version-keeping registry; the figure still ends in registry.putImmutable returning ok:true with configId and version, so it matches.",
+  "limits": [
+    "The 2308-px failure-overlay and 1735-px rollout figures render small at column width and on phone; text is legible only via the 'Open for full size' link.",
+    "Dark-variant SVGs were hash-checked and present but not visually inspected; no dark theme exists in the reader.",
+    "No screen-reader testing."
+  ]
+}

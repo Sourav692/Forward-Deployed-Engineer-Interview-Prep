@@ -1,0 +1,10 @@
+{
+ "status": "reviewed",
+ "passed": true,
+ "evidence": "Desktop (1280) and phone (390) screenshots show the five-section shell, the brief's term list (SME, Sponsor, FDA as Forward Deployed Architect, golden set, shadow mode, accelerator library) and the core-idea figure rendering at phone width. Each of the seven original light SVGs was screenshotted in place in the built page and read: core idea (No -> do not start the clock; sponsor Yes/No branches) under the clock paragraph; two-planes figure with control plane and runtime linked by evaluates/shadows/controls rollout, beside the seven-step list; signer pipeline (security reviewer, SME x2, FDA x2, sponsor, day-3 auto-escalate branch) matching the prose sequence; delivery framework with the refusal branch and separate Engagement state feeding library, day-3 check, event log and metrics; compressed strip; agent rollout figure with webhook, top-3 decision, shadow vs limited-production branches and telemetry, matching the ticket trace; agent assets figure with support_triage_prompt, Grounded? and Custom escalation policy labels as described.",
+ "limits": [
+  "The compressed pipeline strip (3581px wide) and agent-assets figure (2658px wide) are legible only through the full-size link at column width; the source drew them that way.",
+  "Dark diagram variants were hash-checked by the validator but not visually inspected; the prototype is light-themed.",
+  "No screen-reader test was run."
+ ]
+}

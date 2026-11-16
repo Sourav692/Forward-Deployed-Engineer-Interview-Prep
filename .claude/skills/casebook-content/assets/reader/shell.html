@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html data-case-slug="@@SLUG@@" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="@@SUBTITLE@@" name="description"/>
+<title>@@TITLE@@ | Forward Deployed</title>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="reader.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="masthead">
+<div class="container masthead-inner">
+<a class="wordmark" href="https://forwarddeployedprep.com/">Forward Deployed<span>Engineering interview prep</span></a>
+<nav aria-label="Site navigation" class="site-nav">
+<a href="https://forwarddeployedprep.com/learn">Learn</a>
+<a aria-current="page" href="https://forwarddeployedprep.com/design">Casebook</a>
+<a href="https://forwarddeployedprep.com/practice">Practice</a>
+</nav>
+<span class="prototype-label">Local prototype</span>
+</div>
+</header>
+<div class="container">
+<div class="breadcrumb"><a href="https://forwarddeployedprep.com/design">Casebook</a><span aria-hidden="true">/</span><span>@@THEME@@</span></div>
+<div class="case-heading">
+<div><h1>@@TITLE@@</h1><p class="case-subtitle">@@SUBTITLE@@</p></div>
+<a class="source-link" href="@@SOURCE_URL@@" rel="noreferrer" target="_blank">View original case</a>
+</div>
+<div class="case-meta"><span class="tag">@@LEVEL@@</span><span>@@KIND@@</span><span>@@AUTHOR@@</span><span>@@UPDATED@@</span></div>
+<nav aria-label="Casebook sections" class="section-nav">
+<a data-panel-link="case-brief" href="#case-brief"><span class="section-number">1</span>Case brief</a>
+<a data-panel-link="walkthrough" href="#walkthrough"><span class="section-number">2</span>Design walkthrough</a>
+<a data-panel-link="deep-dives" href="#deep-dives"><span class="section-number">3</span>Technical deep dives</a>
+<a data-panel-link="practice" href="#practice"><span class="section-number">4</span>Practice</a>
+<a data-panel-link="quick-review" href="#quick-review"><span class="section-number">5</span>Quick review</a>
+</nav>
+<div class="reading-layout">
+<aside aria-label="Reading navigation" class="contents-rail">
+<div class="rail-sticky">
+<p class="rail-heading">In this section</p>
+<nav aria-label="On this page" id="section-contents"></nav>
+<div class="rail-note"><p>One case, three ways in.</p><p>Learn the design, test your reasoning, or revise before an interview.</p></div>
+<a class="rail-review" href="#quick-review">Open quick review</a>
+</div>
+</aside>
+<main id="content" tabindex="-1">
+<section class="panel" data-title="Case brief" id="case-brief"><div class="section-heading"><h2>Case brief</h2><p>@@INTRO-case-brief@@</p></div>@@BODY-case-brief@@<div class="section-end"><p>Next: build the answer in interview order.</p><a class="btn primary" href="#walkthrough">Start the walkthrough</a></div></section>
+<section class="panel" data-title="Design walkthrough" id="walkthrough"><div class="section-heading"><h2>Design walkthrough</h2><p>@@INTRO-walkthrough@@</p></div>@@BODY-walkthrough@@<div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="walkthrough" type="button">Mark walkthrough as read</button><a class="btn primary" href="#practice">Try the case yourself</a></div></section>
+<section class="panel" data-title="Technical deep dives" id="deep-dives"><div class="section-heading"><h2>Technical deep dives</h2><p>@@INTRO-deep-dives@@</p></div>@@BODY-deep-dives@@<div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="deep-dives" type="button">Mark deep dives as read</button><a class="btn primary" href="#practice">Apply the decisions</a></div></section>
+<section class="panel" data-title="Practice" id="practice"><div class="section-heading"><h2>Practice</h2><p>@@INTRO-practice@@</p></div>@@BODY-practice@@<div class="section-end"><p>Return to the decisions you could not explain.</p><a class="btn primary" href="#quick-review">Review the essentials</a></div></section>
+<section class="panel" data-title="Quick review" id="quick-review"><div class="section-heading review-heading"><div><h2>Quick review</h2><p>@@INTRO-quick-review@@</p></div><button class="btn secondary" id="print-review" type="button">Print review</button></div>@@BODY-quick-review@@<div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="quick-review" type="button">Mark quick review as read</button><a class="btn primary" href="#practice">Test your recall</a></div></section>
+</main>
+<aside aria-label="Your case progress" class="progress-rail">
+<div class="rail-sticky">
+<h2>Your progress</h2>
+<p class="progress-label" id="read-progress">0 of 3 reading sections</p>
+<progress aria-label="Reading sections completed" id="reading-progress" max="3" value="0">0 of 3</progress>
+<ul class="progress-list"><li><span>Walkthrough</span><span data-read-state="walkthrough">Unread</span></li><li><span>Deep dives</span><span data-read-state="deep-dives">Unread</span></li><li><span>Quick review</span><span data-read-state="quick-review">Unread</span></li></ul>
+<div class="practice-progress"><span>Practice</span><strong id="practice-state">Not attempted</strong></div>
+<p class="progress-help">Reading and practice are tracked separately. Both stay on this device.</p>
+<a class="practice-link" href="#practice">Attempt the case</a>
+<p class="storage-status" id="storage-status" role="status"></p>
+<noscript><p>Progress and saved notes need JavaScript. All reading sections remain available below.</p></noscript>
+</div>
+</aside>
+</div>
+<footer class="page-footer"><span>Forward Deployed</span><p>Offline casebook. <a href="@@SOURCE_URL@@">Source case</a>.</p></footer>
+</div>
+</body>
+</html>
+

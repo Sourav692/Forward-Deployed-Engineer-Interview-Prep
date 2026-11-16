@@ -1,0 +1,9 @@
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "Independent agent reviewed all ten SVG variants and desktop/mobile/print. Root additionally inspected fresh approved-shell desktop and phone plus five unique full-size figure renders: overview, input, metered model recovery, output checks and full topology. Root corrected zero-cost and unconditional availability wording. All 27 source aliases pass; six-width browser and Hallmark zero-failure results hold.",
+  "limits": [
+    "Wide source diagrams retain full-size local SVG links for reading labels; source variants remain bundled.",
+    "Machine checks verify structure and state behaviour; source-to-output explanation review is recorded in case.json."
+  ]
+}

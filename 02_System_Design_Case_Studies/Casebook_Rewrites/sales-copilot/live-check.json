@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "url": "https://forwarddeployedprep.com/design/sales-copilot",
+  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
+  "checked_at": "2026-11-16T02:53:50.699Z",
+  "checks": {
+    "responsive": {
+      "widths": [
+        320,
+        390,
+        834,
+        1280,
+        1440,
+        1920
+      ],
+      "panels": 5,
+      "expanded_disclosures": true
+    },
+    "aliases": 68,
+    "images": 12,
+    "interactions": {
+      "notes_restored": true,
+      "markdown_export": true,
+      "separate_practice": true,
+      "reversible_reading": true,
+      "keyboard_answers": 13
+    },
+    "theme_and_print": true,
+    "storage_denied_and_no_script": true
+  },
+  "errors": []
+}
