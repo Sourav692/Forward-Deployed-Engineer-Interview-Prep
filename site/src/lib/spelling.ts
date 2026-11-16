@@ -16,6 +16,9 @@ export const SPELLING_ALLOWED: [RegExp, string][] = [
   [/\bParallelization\b/g, "Anthropic's name for a workflow pattern"],
   [/\bauthorizer\b/g, "SQLite's name for its access-control callback"],
   [/\b(?:items|justify|place-items|self|text)-center\b/g, 'Tailwind utility class'],
+  [/\b401 Unauthorized\b/g, 'HTTP status reason phrase'],
+  [/\bOWASP authorization cheat sheet\b/gi, 'title of an OWASP cheat sheet'],
+  [/"Do not parallelize unsafe side effects"/g, 'quoted from the case source'],
 ]
 
 /** The American words in `text`, skipping allowed names and paths or identifiers (`a_b`, `a/b`). */
