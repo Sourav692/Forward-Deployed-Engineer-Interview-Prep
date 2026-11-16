@@ -4,8 +4,7 @@ Every case study, customer story and FDE scenario in this repository, grouped by
 
 How to read the paths:
 
-- **Scenario packs (G01–G20)** each have four files in the same folder: the unchanged source (`Gxx_<Name>.md`), the interview guide (`_Main.md`), a deep dive (`_Deep_Dive.md`) and a cheat sheet (`_Cheat_Sheet.md`). The table points at the interview guide.
-- **Long-form tutorials** exist in `Version_1/` (prose) and `Version_2/` (bullet cram format, `_v2.md`). The table points at Version 2.
+- **Casebooks** are the 33 worked designs shown at forwarddeployedprep.com/design, one folder per case under `02_SD/Casebook_Rewrites/`; the table points at each `casebook.md`.
 - **Worksheets** have a matching answer key in the sibling `answer_keys/` folder (`<name>_answer_key.md`).
 - **Decomposition prompts** (last section) live in one question bank file. `08_Company_Specific_Prep/OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md` mirrors the same 23 prompts.
 
@@ -15,8 +14,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G01 Enterprise Knowledge Assistant | Permission-aware RAG over enterprise documents, where retrieval must respect each user's access rights. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/1_Interview_Guide/G01_Interview_Guide.md` |
-| Enterprise Knowledge Assistant with RAG (Ch 1) | Long-form walkthrough of designing a RAG assistant from ingestion to evaluation. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-1-enterprise-knowledge-assistant-rag-tutorial_v2.md` |
+| Enterprise Knowledge Assistant | Permission-aware RAG over enterprise documents, where retrieval must respect each user's access rights. | Casebook (five sections) | `02_SD/Casebook_Rewrites/enterprise-knowledge-assistant/casebook.md` |
 | Enterprise Knowledge Assistant with RAG | Fill-in system design worksheet for the RAG assistant case. | Worksheet + key | `03_PW/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md` |
 | Internal Knowledge Assistant for Enterprise Support | Customer-discovery worksheet: scope a support team's internal knowledge assistant. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/01_internal_knowledge_assistant.md` |
 | Internal Knowledge Assistant (full mock) | Full timed mock interview on the internal knowledge assistant. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/01_internal_knowledge_assistant_full_mock.md` |
@@ -28,15 +26,13 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 | Whiteboard: Enterprise RAG on Databricks | The same access-controlled RAG design, mapped onto Databricks services. | Whiteboard script | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md` |
 | Access-Controlled Enterprise RAG | Lesson version of the access-controlled RAG whiteboard. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md` |
 | Access-Controlled RAG on Databricks | Lesson version of the Databricks RAG whiteboard. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md` |
-| Enterprise Chatbot Platform, "Our Own ChatGPT" (Ch 21) | An internal ChatGPT-style platform for a whole company: models, data, guardrails, cost. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-21-enterprise-chatbot-platform-tutorial-condensed_v2.md` (copy: `02_SD/Standalone_Designs/26_Enterprise_Chatbot_Platform/3_Tutorial/26_Tutorial.md`) |
 | Enterprise Chatbot Platform | Fill-in worksheet for the internal chatbot platform. | Worksheet + key | `03_PW/System_Design_Worksheets/21_enterprise_chatbot_platform.md` |
 
 ## 2. Customer support and service
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G02 Customer Support Automation | Support automation as a routed decision pipeline: deflect, assist or escalate each ticket. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/1_Interview_Guide/G02_Interview_Guide.md` |
-| AI Customer-Support Automation (Ch 4) | Long-form design of an AI system that resolves support tickets end to end. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-4-ai-customer-support-automation-tutorial_v2.md` |
+| Customer Support Automation | Support automation as a routed decision pipeline: deflect, assist or escalate each ticket. | Casebook (five sections) | `02_SD/Casebook_Rewrites/customer-support-automation/casebook.md` |
 | AI Customer-Support Automation | Fill-in worksheet for the support automation case. | Worksheet + key | `03_PW/System_Design_Worksheets/04_ai_customer_support_automation.md` |
 | Case 2: Customer Support AI Assistant | Support assistant that answers from knowledge, takes actions and asks for approval. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/02_Customer_Support_Assistant.md` |
 | Customer Support AI Assistant Design | Course version of the customer support assistant. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/6. Customer Support AI Assistant Design.md` |
@@ -47,34 +43,31 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 | Agentic Support Workflow (full mock) | Full timed mock on a support workflow where agents take actions. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/02_agentic_support_workflow_full_mock.md` |
 | Agentic Support Workflow (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/02_agentic_support_workflow_mock.md` |
 | ServiceNow Ticket Automation Agent | Discovery worksheet: an agent that triages and updates ServiceNow tickets. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/09_service_now_ticket_agent.md` |
-| G16 Real-Time Call Assistant | Live assistant for sales and service calls under tight streaming latency. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/1_Interview_Guide/G16_Interview_Guide.md` |
+| Real-Time Call Assistant | Live assistant for sales and service calls under tight streaming latency. | Casebook (five sections) | `02_SD/Casebook_Rewrites/real-time-call-assistant/casebook.md` |
 
 ## 3. Agents, tools and workflow automation
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G03 Tool-Using Agent with Safety Controls | An agent that calls real tools, with permissions, approvals and blast-radius limits. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/1_Interview_Guide/G03_Interview_Guide.md` |
-| Tool-Using AI Agent with Safety Controls (Ch 11) | Long-form design of the safe tool-using agent. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-11-tool-using-ai-agent-with-safety-controls-tutorial_v2.md` |
+| Tool-Using Agent with Safety Controls | An agent that calls real tools, with permissions, approvals and blast-radius limits. | Casebook (five sections) | `02_SD/Casebook_Rewrites/tool-using-agent-with-safety-controls/casebook.md` |
 | Tool-Using AI Agent with Safety Controls | Fill-in worksheet for the safe tool-using agent. | Worksheet + key | `03_PW/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md` |
-| G15 Agent Platform for Non-Technical Users | A platform where business users build agents without breaking production systems. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/1_Interview_Guide/G15_Interview_Guide.md` |
+| Agent Platform for Non-Technical Users | A platform where business users build agents without breaking production systems. | Casebook (five sections) | `02_SD/Casebook_Rewrites/agent-platform-for-non-technical-users/casebook.md` |
 | Whiteboard: Agent Platform for Non-Technical Users | Spoken whiteboard script for the non-technical agent platform. | Whiteboard script | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` |
 | Safe Workflow Automation for Non-Technical Users | Lesson version of the agent platform whiteboard. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md` |
-| Reliable Workflow Orchestration System (Ch 13) | Durable multi-step workflows with retries, idempotency and recovery. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-13-reliable-workflow-orchestration-system-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/23_Reliable_Workflow_Orchestration/3_Tutorial/23_Tutorial.md`) |
 | Reliable Workflow Orchestration System | Fill-in worksheet for workflow orchestration. | Worksheet + key | `03_PW/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md` |
-| Configurable Platform for Customer-Specific Workflows (Ch 17) | One platform that each customer configures into its own workflow without forking code. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-17-configurable-platform-customer-specific-workflows-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/3_Tutorial/25_Tutorial.md`) |
 | Configurable Platform for Customer-Specific Workflows | Fill-in worksheet for the configurable platform. | Worksheet + key | `03_PW/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md` |
-| G11 Deep Research Agent | A consumer-scale agent that plans, searches and writes long research reports. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/1_Interview_Guide/G11_Interview_Guide.md` |
+| Deep Research Agent | A consumer-scale agent that plans, searches and writes long research reports. | Casebook (five sections) | `02_SD/Casebook_Rewrites/deep-research-agent/casebook.md` |
 | Case Study: Research Platform | A deployed multi-agent research-report system on AWS, walked layer by layer. | Handbook case study | `01_CT/FDE_Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md` |
 | Case Study: Supervisor to Deep Agent | A governed data assistant for a life insurer, told as its evolution from monolith to supervisor to deep agent. | Handbook case study | `01_CT/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md` |
-| Self-Adapting Agent | An agent that changes its own behaviour for new tasks, and how to stop each change becoming an unreviewed regression. | Standalone design | `02_SD/Standalone_Designs/80_Self_Adapting_Agent/1_Interview_Guide/80_Interview_Guide.md` (template: `02_SD/Standalone_Designs/80_Self_Adapting_Agent/2_Answer_Template/80_Answer_Template.md`) |
-| Personal Assistant with Memory | An assistant that remembers enough to feel personal and forgets enough to stay fast and private. | Standalone design | `02_SD/Standalone_Designs/98_Personal_Assistant_With_Memory/1_Interview_Guide/98_Interview_Guide.md` |
-| Worked Example: The Travel Agent | Multi-region agentic travel assistant; a reviewer corrects five structural mistakes in its reference diagram. | Worked example | `02_SD/Standalone_Designs/14_Travel_Agent_Worked_Example/1_Worked_Example/14_Worked_Example.md` (source: `02_SD/Standalone_Designs/14_Travel_Agent_Worked_Example/2_12_Part_Framework/14_12_Part_Framework.md`; handbook copy: `01_CT/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md`) |
+| Self-Adapting Agent | An agent that changes its own behaviour for new tasks, and how to stop each change becoming an unreviewed regression. | Casebook (five sections) | `02_SD/Casebook_Rewrites/self-adapting-agent/casebook.md` (template: `02_SD/Standalone_Designs/80_Self_Adapting_Agent/2_Answer_Template/80_Answer_Template.md`) |
+| Personal Assistant with Memory | An assistant that remembers enough to feel personal and forgets enough to stay fast and private. | Casebook (five sections) | `02_SD/Casebook_Rewrites/personal-assistant-with-memory/casebook.md` |
+| Worked Example: The Travel Agent | Multi-region agentic travel assistant; a reviewer corrects five structural mistakes in its reference diagram. | Casebook (five sections) | `02_SD/Casebook_Rewrites/travel-agent-worked-example/casebook.md` (source: `02_SD/Standalone_Designs/14_Travel_Agent_Worked_Example/2_12_Part_Framework/14_12_Part_Framework.md`; handbook copy: `01_CT/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md`) |
 
 ## 4. Coding assistants
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G09 Enterprise Coding Assistant | Code completion and chat over a large codebase within a 300 ms budget. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/1_Interview_Guide/G09_Interview_Guide.md` |
+| Enterprise Coding Assistant | Code completion and chat over a large codebase within a 300 ms budget. | Casebook (five sections) | `02_SD/Casebook_Rewrites/enterprise-coding-assistant/casebook.md` |
 | Case 3: AI-Powered Coding Assistant | Casebook design of an IDE coding assistant. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md` |
 | AI Powered Coding Assistant Design | Course version of the coding assistant. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/7. AI Powered Coding Assistant Design.md` |
 | Coding Assistant: Context Engineering Under 300 ms | Lesson version of Case 3, focused on picking context fast. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md` |
@@ -83,31 +76,29 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G06 Natural Language over Governed Data | Let business users ask questions of governed data without bypassing its controls. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/1_Interview_Guide/G06_Interview_Guide.md` |
-| Natural-Language-to-SQL Analytics Assistant (Ch 3) | Long-form design of a text-to-SQL assistant with validation and safe execution. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-3-natural-language-to-sql-analytics-assistant-tutorial_v2.md` |
+| Natural Language over Governed Data | Let business users ask questions of governed data without bypassing its controls. | Casebook (five sections) | `02_SD/Casebook_Rewrites/nl-over-governed-data/casebook.md` |
 | Natural-Language-to-SQL Analytics Assistant | Fill-in worksheet for the text-to-SQL case. | Worksheet + key | `03_PW/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md` |
 | Retail Demand Forecast Explanation Assistant | Discovery worksheet: explain demand forecasts to retail planners in plain language. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/08_retail_demand_explainer.md` |
 | Executive Dashboard Copilot | Discovery worksheet: a copilot that answers executives' questions about their dashboards. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/10_executive_dashboard_copilot.md` |
-| G10 High-Volume Batch Pipeline | Batch inference and document pipelines processing millions of items cheaply and reliably. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/1_Interview_Guide/G10_Interview_Guide.md` |
-| High-Volume Batch Inference System (Ch 10) | Long-form design of the batch inference system. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
+| High-Volume Batch Pipeline | Batch inference and document pipelines processing millions of items cheaply and reliably. | Casebook (five sections) | `02_SD/Casebook_Rewrites/high-volume-batch-pipeline/casebook.md` |
 | High-Volume Batch Inference System | Fill-in worksheet for batch inference. | Worksheet + key | `03_PW/System_Design_Worksheets/10_high_volume_batch_inference_system.md` |
 
 ## 6. Industry and domain copilots
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G05 Sales Copilot | A copilot that preps account executives with account research and next steps. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G05_Sales_Copilot/1_Interview_Guide/G05_Interview_Guide.md` |
+| Sales Copilot | A copilot that preps account executives with account research and next steps. | Casebook (five sections) | `02_SD/Casebook_Rewrites/sales-copilot/casebook.md` |
 | Sales Copilot for Account Executives | Discovery worksheet for the sales copilot. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/02_sales_copilot.md` |
-| G08 Document Review Copilot | Document review where an LLM drafts findings and a policy check gates them. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/1_Interview_Guide/G08_Interview_Guide.md` |
+| Document Review Copilot | Document review where an LLM drafts findings and a policy check gates them. | Casebook (five sections) | `02_SD/Casebook_Rewrites/document-review-copilot/casebook.md` |
 | Financial Compliance Document Reviewer | Discovery worksheet: review financial documents for compliance issues. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/03_financial_compliance_reviewer.md` |
 | Financial Compliance + Red Team (full mock) | Full timed mock on the compliance reviewer, including adversarial testing. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/03_financial_red_team_full_mock.md` |
 | Financial Compliance + Red Team (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/03_financial_red_team_mock.md` |
 | Healthcare Prior Authorization Assistant | Discovery worksheet: speed up insurance prior-authorization requests in healthcare. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/04_healthcare_prior_auth_assistant.md` |
 | Legal Contract Review Copilot | Discovery worksheet: a copilot that flags risky clauses for lawyers. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/05_legal_contract_copilot.md` |
-| Case 4: AI-Powered Recruiting Platform | Screen, rank and schedule candidates while recruiters keep the final decision. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md` (copy: `02_SD/Standalone_Designs/04_Recruiting_Platform/1_Interview_Casebook/04_Interview_Casebook.md`) |
-| AI Powered Recruiting Platform Design | Long reference design of the recruiting platform. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/8. AI Powered Recruiting Platform Design.md` (long form: `02_SD/Standalone_Designs/04_Recruiting_Platform/2_Reference_Design/04_Reference_Design.md`) |
+| Case 4: AI-Powered Recruiting Platform | Screen, rank and schedule candidates while recruiters keep the final decision. | Casebook (five sections) | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md` (copy: `02_SD/Casebook_Rewrites/recruiting-platform/casebook.md`) |
+| AI Powered Recruiting Platform Design | Long reference design of the recruiting platform. | Casebook (five sections) | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/8. AI Powered Recruiting Platform Design.md` (long form: `02_SD/Casebook_Rewrites/recruiting-platform/casebook.md`) |
 | Recruiting Platform: Explainable Ranking, Human Decisions | Lesson version of Case 4. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md` |
-| G17 Logistics Exception Handling | An agent that handles shipment exceptions and reroutes deliveries. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/1_Interview_Guide/G17_Interview_Guide.md` |
+| Logistics Exception Handling | An agent that handles shipment exceptions and reroutes deliveries. | Casebook (five sections) | `02_SD/Casebook_Rewrites/logistics-exception-handling/casebook.md` |
 | Case 5: AI Logistics Exception-Handling Assistant | Casebook design of the logistics assistant, framed as the FDE round. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md` |
 | AI Logistics Exception-Handling Assistant Design | Course version of the logistics assistant. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/AI Logistics Exception-Handling Assistant Design.md` |
 | Mock: AI Exception-Handling Assistant | Mock interview transcript on the logistics case. | Mock interview | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/Mock - AI Exception-Handling Assistant.md` |
@@ -117,42 +108,38 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G07 Secure Multi-Tenant AI Platform | A shared AI platform where tenants' data, prompts and costs stay isolated. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/1_Interview_Guide/G07_Interview_Guide.md` |
-| Secure Multi-Tenant AI Platform (Ch 2) | Long-form design of the multi-tenant platform. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-2-secure-multi-tenant-ai-platform-tutorial_v2.md` |
+| Secure Multi-Tenant AI Platform | A shared AI platform where tenants' data, prompts and costs stay isolated. | Casebook (five sections) | `02_SD/Casebook_Rewrites/secure-multi-tenant-ai-platform/casebook.md` |
 | Secure Multi-Tenant AI Platform | Fill-in worksheet for the multi-tenant platform. | Worksheet + key | `03_PW/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md` |
-| AI System for an Air-Gapped Environment (Ch 7) | Run an AI system with no internet: local models, offline updates, strict audit. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/19_Air_Gapped_AI_System/3_Tutorial/19_Tutorial.md`) |
 | AI System for an Air-Gapped Environment | Fill-in worksheet for the air-gapped case. | Worksheet + key | `03_PW/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md` |
-| G18 Consumer-Scale Chat Service | ChatGPT-shaped chat for 100M daily users: streaming, history, admission and GPU cost. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/1_Interview_Guide/G18_Interview_Guide.md` |
-| G19 Model Development and Post-Training | Build a maths-solving model from data through SFT, post-training and evaluation. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/1_Interview_Guide/G19_Interview_Guide.md` |
-| G20 LLM Inference Serving | Serve LLMs with batching, routing and failover across GPU fleets. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/1_Interview_Guide/G20_Interview_Guide.md` |
-| Production LLM Gateway Under Real Constraints | A gateway where safety checks and fallback hops share a three-second budget. | Standalone design | `02_SD/Standalone_Designs/100_Production_LLM_Gateway/1_Interview_Guide/100_Interview_Guide.md` |
+| Consumer-Scale Chat Service | ChatGPT-shaped chat for 100M daily users: streaming, history, admission and GPU cost. | Casebook (five sections) | `02_SD/Casebook_Rewrites/consumer-scale-chat-service/casebook.md` |
+| Model Development and Post-Training | Build a maths-solving model from data through SFT, post-training and evaluation. | Casebook (five sections) | `02_SD/Casebook_Rewrites/model-development-and-post-training/casebook.md` |
+| LLM Inference Serving | Serve LLMs with batching, routing and failover across GPU fleets. | Casebook (five sections) | `02_SD/Casebook_Rewrites/llm-inference-serving/casebook.md` |
+| Production LLM Gateway Under Real Constraints | A gateway where safety checks and fallback hops share a three-second budget. | Casebook (five sections) | `02_SD/Casebook_Rewrites/production-llm-gateway/casebook.md` |
 
 ## 8. Operations, evaluation and observability
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G04 SRE Incident Response Agent | An agent that helps an SRE team triage and respond to incidents safely. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/1_Interview_Guide/G04_Interview_Guide.md` |
+| SRE Incident Response Agent | An agent that helps an SRE team triage and respond to incidents safely. | Casebook (five sections) | `02_SD/Casebook_Rewrites/sre-incident-response-agent/casebook.md` |
 | SRE Incident Triage Agent | Discovery worksheet for the SRE triage agent. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/06_sre_triage_agent.md` |
 | SRE Triage Agent (full mock) | Full timed mock on the SRE triage agent. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/04_sre_triage_full_mock.md` |
 | SRE Triage Agent (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/04_sre_triage_mock.md` |
-| G13 Evaluation and Release Gating | Evaluation and release gates for thirty AI applications sharing one platform. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/1_Interview_Guide/G13_Interview_Guide.md` |
-| LLM Evaluation and Release-Gating Platform (Ch 9) | Long-form design of the evaluation and release-gating platform. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md` |
+| Evaluation and Release Gating | Evaluation and release gates for thirty AI applications sharing one platform. | Casebook (five sections) | `02_SD/Casebook_Rewrites/evaluation-and-release-gating/casebook.md` |
 | LLM Evaluation and Release-Gating Platform | Fill-in worksheet for release gating. | Worksheet + key | `03_PW/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md` |
-| G14 Observability and Production Diagnosis | Trace, measure and diagnose a customer-facing AI app when quality drops. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/1_Interview_Guide/G14_Interview_Guide.md` |
-| Observability for a Customer-Facing AI Application (Ch 15) | Long-form design of observability for a production AI app. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md` |
+| Observability and Production Diagnosis | Trace, measure and diagnose a customer-facing AI app when quality drops. | Casebook (five sections) | `02_SD/Casebook_Rewrites/observability-and-production-diagnosis/casebook.md` |
 | Observability for a Customer-Facing AI Application | Fill-in worksheet for observability. | Worksheet + key | `03_PW/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` |
 
 ## 9. FDE delivery, scoping and strategy
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G12 Scoping to Deployed Agent | Take a scoping document to a deployed agent in two weeks. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/1_Interview_Guide/G12_Interview_Guide.md` |
+| Scoping to Deployed Agent | Take a scoping document to a deployed agent in two weeks. | Casebook (five sections) | `02_SD/Casebook_Rewrites/scoping-to-deployed-agent/casebook.md` |
 | Whiteboard: Scoping Doc to Deployed Agent in Two Weeks | Spoken whiteboard script for the two-week delivery. | Whiteboard script | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` (also: `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`) |
 | Delivering an Agent in Two Weeks with Enforced Gates | Lesson version of the two-week delivery, with role-gated stage gates. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md` |
-| Prioritise AI Use Cases for a Large Enterprise | Pick the use case that survives the data, the regulator and the users, not the one that impresses. | Standalone design | `02_SD/Standalone_Designs/60_Prioritize_AI_Use_Cases/1_Interview_Guide/60_Interview_Guide.md` |
-| Scale a Prototype to Production | Turn a prototype loved by 100 users into a system that serves 100,000. | Standalone design | `02_SD/Standalone_Designs/61_Scale_Prototype_To_Production/1_Interview_Guide/61_Interview_Guide.md` |
-| Build When the Customer's Data Is Poor | Deliver value this quarter when the customer's data cannot yet support the ask. | Standalone design | `02_SD/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/1_Interview_Guide/62_Interview_Guide.md` |
-| Decomposition Classics: 911, Bank Fraud, Medication Errors | Three open-ended mission problems decomposed before choosing any model. | Standalone design | `02_SD/Standalone_Designs/Decomposition_Classics_67_68_69/1_Interview_Guide/Decomposition_Classics_67_68_69_Interview_Guide.md` |
+| Prioritise AI Use Cases for a Large Enterprise | Pick the use case that survives the data, the regulator and the users, not the one that impresses. | Casebook (five sections) | `02_SD/Casebook_Rewrites/prioritize-ai-use-cases/casebook.md` |
+| Scale a Prototype to Production | Turn a prototype loved by 100 users into a system that serves 100,000. | Casebook (five sections) | `02_SD/Casebook_Rewrites/scale-prototype-to-production/casebook.md` |
+| Build When the Customer's Data Is Poor | Deliver value this quarter when the customer's data cannot yet support the ask. | Casebook (five sections) | `02_SD/Casebook_Rewrites/build-when-customer-data-is-poor/casebook.md` |
+| Decomposition Classics: 911, Bank Fraud, Medication Errors | Three open-ended mission problems decomposed before choosing any model. | Casebook (five sections) | `02_SD/Casebook_Rewrites/decomposition-classics-67-68-69/casebook.md` |
 
 ## 10. Customer and build stories (behavioural deep dives)
 

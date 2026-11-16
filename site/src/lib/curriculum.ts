@@ -3671,7 +3671,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g13-evaluation-and-release-gating',
     title: 'Evaluation and Release Gating',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/evaluation-and-release-gating/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -3793,7 +3793,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g07-secure-multi-tenant-ai-platform',
     title: 'Secure Multi-Tenant AI Platform',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -3891,7 +3891,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g14-observability-and-production-diagnosis',
     title: 'Observability and Production Diagnosis',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4111,7 +4111,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'scale-prototype-to-production',
     title: 'Scale a Prototype from 100 to 100,000 Users',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/scale-prototype-to-production/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4119,7 +4119,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g18-consumer-scale-chat-service',
     title: 'Consumer-Scale Chat Service',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/consumer-scale-chat-service/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4127,7 +4127,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g10-high-volume-batch-pipeline',
     title: 'High-Volume Batch Inference Pipeline',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4281,7 +4281,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g19-model-development-and-post-training',
     title: 'Model Development and Post-Training',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/model-development-and-post-training/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4289,7 +4289,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g20-llm-inference-serving',
     title: 'LLM Inference Serving',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/llm-inference-serving/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4673,7 +4673,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g01-enterprise-knowledge-assistant',
     title: 'Enterprise Knowledge Assistant',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4681,7 +4681,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g02-customer-support-automation',
     title: 'Customer Support Automation',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4689,7 +4689,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g03-tool-using-agent-with-safety-controls',
     title: 'Tool-Using Agent with Safety Controls',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4697,7 +4697,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g04-sre-incident-response-agent',
     title: 'SRE Incident Response Agent',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4705,7 +4705,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g05-sales-copilot',
     title: 'Sales Copilot',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4713,7 +4713,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g06-nl-over-governed-data',
     title: 'Natural Language over Governed Data',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4721,7 +4721,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g08-document-review-copilot',
     title: 'Document Review Copilot',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4729,7 +4729,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g09-enterprise-coding-assistant',
     title: 'Enterprise Coding Assistant',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4737,7 +4737,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g11-deep-research-agent',
     title: 'Deep Research Agent',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4745,7 +4745,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g12-scoping-to-deployed-agent',
     title: 'Scoping to Deployed Agent',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/scoping-to-deployed-agent/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4753,7 +4753,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g15-agent-platform-for-non-technical-users',
     title: 'Agent Platform for Non-Technical Users',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/agent-platform-for-non-technical-users/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4761,7 +4761,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g16-real-time-call-assistant',
     title: 'Real-Time Call Assistant',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4769,7 +4769,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'g17-logistics-exception-handling',
     title: 'Logistics Exception Handling',
-    source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4777,7 +4777,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'standalone-designs-recruiting-platform',
     title: 'AI-Powered Recruiting Platform',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/recruiting-platform/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4785,7 +4785,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'production-llm-gateway',
     title: 'Production LLM Gateway',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/production-llm-gateway/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4793,7 +4793,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'travel-agent-worked-example',
     title: 'Travel Agent: the 12-Part Framework Worked Through',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/travel-agent-worked-example/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4801,7 +4801,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'air-gapped-ai-system',
     title: 'AI System for an Air-Gapped Environment',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/air-gapped-ai-system/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4809,7 +4809,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'reliable-workflow-orchestration',
     title: 'Reliable Workflow Orchestration System',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/reliable-workflow-orchestration/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4817,7 +4817,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'configurable-platform-customer-workflows',
     title: 'Configurable Platform for Customer-Specific Workflows',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/configurable-platform-customer-workflows/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4825,7 +4825,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'enterprise-chatbot-platform',
     title: 'Enterprise Chatbot Platform',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-chatbot-platform/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4833,7 +4833,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'prioritize-ai-use-cases',
     title: 'Prioritise AI Use Cases for a Large Enterprise',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/prioritize-ai-use-cases/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4841,7 +4841,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'build-when-customer-data-is-poor',
     title: 'Build When the Customer’s Data Is Poor',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/build-when-customer-data-is-poor/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4849,7 +4849,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'self-adapting-agent',
     title: 'Agent That Adapts to New Tasks',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/self-adapting-agent/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4857,7 +4857,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'personal-assistant-with-memory',
     title: 'Personal Assistant That Remembers You',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/personal-assistant-with-memory/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',
@@ -4865,7 +4865,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'decomposition-classics-67-68-69',
     title: 'Decomposition Classics: 911, Bank Fraud, Medication Errors',
-    source: '02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/',
+    source: '02_System_Design_Case_Studies/Casebook_Rewrites/decomposition-classics-67-68-69/',
     home: 'scenario-library',
     kind: 'live',
     publish: 'own',

@@ -101,8 +101,6 @@ export type SiteCounts = {
   /** Casebook designs outside the scenario packs. */
   standaloneDesigns: number
   judgementCases: number
-  /** Designs that read at three depths (they have a Technical Deep Dive tab). */
-  layeredDesigns: number
   reviews: number
   /** Interview rounds with a page, all rounds, and the mock interviews. */
   liveRounds: number
@@ -136,7 +134,6 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
     designs: count(LIVE.casebook),
     standaloneDesigns: inTrack(LIVE.casebook, 'standalone-designs'),
     judgementCases: inTrack(LIVE.casebook, 'judgement-and-decomposition'),
-    layeredDesigns: scenarios.filter((s) => s.moduleId === LIVE.casebook && s.tabs?.some((t) => t.id === 'deep-dive')).length,
     reviews: REVIEWS.length,
     liveRounds: liveRounds().length,
     rounds: INTERVIEW_ROUNDS.length,

@@ -3,13 +3,15 @@
  * copies, and the RAG & Agents Engineering theory pages the import vendors. The site names
  * no vendor platform (owner decision, 2 November 2026), so a line that names Databricks or
  * one of its products gets a rule here, worded vendor-neutrally. The root markdown and the
- * course keep their wording. Case pages have their own rules in case-site-edits.mjs.
+ * course keep their wording.
  *
  * Keys are repository paths. Each rule is [from, to], with `from` a string (every occurrence
  * is replaced) or a RegExp; a rule that matches nothing fails, so a source edit cannot leave
  * a dead rule behind. After the rules, any surviving `CUT` term fails too.
  */
-import { CUT } from './case-site-edits.mjs'
+
+/** Vendor platform names the site never shows. */
+export const CUT = /databricks|unity catalog|delta sync|genie|lakebase|lakeview|unity gateway|agent bricks|\bDBUs?\b/i
 
 const COURSE = '01_Concept_Tutorials/RAG_Agents_Engineering'
 const BEHAVIOURAL = '04_Behavioral_and_Leadership/fde_competencies'

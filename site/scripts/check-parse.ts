@@ -46,7 +46,7 @@ import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
 import { checkExplorerSnapshots } from './explorers.mjs'
 import { checkCasebookRewrites } from './check-casebook-rewrites.mjs'
-import { CUT } from './case-site-edits.mjs'
+import { CUT } from './site-text-edits.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -214,7 +214,8 @@ async function checkReading(mod: {
 
 for (const mod of manifest.modules) {
   if (mod.kind === 'reading') {
-    await checkReading(mod)
+    // The casebook (module 15) is a checked reader snapshot: check-casebook-rewrites.mjs covers it.
+    if (mod.id !== CASEBOOK_MODULE) await checkReading(mod)
     continue
   }
   for (const track of mod.tracks) {
@@ -428,7 +429,7 @@ async function checkDocument(label: string, raw: string, allowPlaceholders: bool
   if (!allowPlaceholders && PLACEHOLDER.test(raw)) {
     failures.push(`${label}: unresolved placeholder (${raw.match(PLACEHOLDER)![0]}) on a public page`)
   }
-  // The site names no vendor platform; site-text-edits.mjs and case-site-edits.mjs reword it.
+  // The site names no vendor platform; site-text-edits.mjs rewords it.
   if (CUT.test(raw)) failures.push(`${label}: names a vendor platform (${raw.match(CUT)![0]}) on a public page`)
   for (const [, href] of raw.matchAll(/\]\((\/[^)\s]*)\)/g)) {
     linksChecked++
@@ -454,6 +455,7 @@ for (const m of CURRICULUM_MODULES) {
 
 
 for (const mod of manifest.modules) {
+  if (mod.id === CASEBOOK_MODULE) continue
   for (const track of mod.tracks) {
     const personal = Boolean(FAMILY_META[track.id]?.personalisation)
     for (const s of track.scenarios) {
@@ -675,6 +677,7 @@ const acronymPages = new Map<string, Set<string>>()
 const lowerWords = new Set<string>()
 const scanFiles: string[] = []
 for (const mod of manifest.modules) {
+  if (mod.id === CASEBOOK_MODULE) continue
   for (const track of mod.tracks) {
     for (const s of track.scenarios) {
       const base = join(CONTENT, 'modules', mod.id, track.id)

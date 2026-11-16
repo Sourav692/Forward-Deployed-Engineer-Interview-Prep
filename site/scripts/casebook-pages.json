@@ -1,0 +1,1195 @@
+[
+  {
+    "id": "knowledge-retrieval",
+    "scenarios": [
+      {
+        "slug": "enterprise-knowledge-assistant",
+        "order": 1,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "main-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "nl-over-governed-data",
+        "order": 6,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "document-review-copilot",
+        "order": 8,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "deep-research-agent",
+        "order": 11,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "agents-that-act",
+    "scenarios": [
+      {
+        "slug": "customer-support-automation",
+        "order": 2,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "main-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "tool-using-agent-with-safety-controls",
+        "order": 3,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "sre-incident-response-agent",
+        "order": 4,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "sales-copilot",
+        "order": 5,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "enterprise-coding-assistant",
+        "order": 9,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "real-time-call-assistant",
+        "order": 16,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "logistics-exception-handling",
+        "order": 17,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "platforms-and-scale",
+    "scenarios": [
+      {
+        "slug": "secure-multi-tenant-ai-platform",
+        "order": 7,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "high-volume-batch-pipeline",
+        "order": 10,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "agent-platform-for-non-technical-users",
+        "order": 15,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          }
+        ]
+      },
+      {
+        "slug": "consumer-scale-chat-service",
+        "order": 18,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      },
+      {
+        "slug": "llm-inference-serving",
+        "order": 20,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "delivery-evaluation-operations",
+    "scenarios": [
+      {
+        "slug": "scoping-to-deployed-agent",
+        "order": 12,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      },
+      {
+        "slug": "evaluation-and-release-gating",
+        "order": 13,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      },
+      {
+        "slug": "observability-and-production-diagnosis",
+        "order": 14,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          },
+          {
+            "id": "full-pack-part-4",
+            "label": "Full Design 4"
+          },
+          {
+            "id": "full-pack-part-5",
+            "label": "Full Design 5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "model-development",
+    "scenarios": [
+      {
+        "slug": "model-development-and-post-training",
+        "order": 19,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "main",
+            "label": "Interview Guide"
+          },
+          {
+            "id": "deep-dive",
+            "label": "Technical Deep Dive"
+          },
+          {
+            "id": "cheat-sheet",
+            "label": "Quick Review"
+          },
+          {
+            "id": "full-pack",
+            "label": "Full Design 1"
+          },
+          {
+            "id": "full-pack-part-2",
+            "label": "Full Design 2"
+          },
+          {
+            "id": "full-pack-part-3",
+            "label": "Full Design 3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "standalone-designs",
+    "scenarios": [
+      {
+        "slug": "recruiting-platform",
+        "order": 4,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "casebook",
+            "label": "Interview Casebook"
+          },
+          {
+            "id": "full-design",
+            "label": "Reference Design"
+          }
+        ]
+      },
+      {
+        "slug": "travel-agent-worked-example",
+        "order": 14,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "worked-example",
+            "label": "Worked Example"
+          },
+          {
+            "id": "framework-overview",
+            "label": "12-Part Framework"
+          }
+        ]
+      },
+      {
+        "slug": "air-gapped-ai-system",
+        "order": 19,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "tutorial-v2",
+            "label": "Tutorial 1"
+          },
+          {
+            "id": "tutorial-v2-part-2",
+            "label": "Tutorial 2"
+          },
+          {
+            "id": "tutorial-v2-part-3",
+            "label": "Tutorial 3"
+          },
+          {
+            "id": "tutorial-v2-part-4",
+            "label": "Tutorial 4"
+          },
+          {
+            "id": "tutorial-v2-part-5",
+            "label": "Tutorial 5"
+          },
+          {
+            "id": "tutorial-v2-part-6",
+            "label": "Tutorial 6"
+          },
+          {
+            "id": "tutorial-v2-part-7",
+            "label": "Tutorial 7"
+          },
+          {
+            "id": "tutorial-v2-part-8",
+            "label": "Tutorial 8"
+          },
+          {
+            "id": "worksheet",
+            "label": "Practice Worksheet"
+          },
+          {
+            "id": "answer-key",
+            "label": "Model Answer"
+          }
+        ]
+      },
+      {
+        "slug": "reliable-workflow-orchestration",
+        "order": 23,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "tutorial-v2",
+            "label": "Tutorial 1"
+          },
+          {
+            "id": "tutorial-v2-part-2",
+            "label": "Tutorial 2"
+          },
+          {
+            "id": "tutorial-v2-part-3",
+            "label": "Tutorial 3"
+          },
+          {
+            "id": "tutorial-v2-part-4",
+            "label": "Tutorial 4"
+          },
+          {
+            "id": "tutorial-v2-part-5",
+            "label": "Tutorial 5"
+          },
+          {
+            "id": "tutorial-v2-part-6",
+            "label": "Tutorial 6"
+          },
+          {
+            "id": "tutorial-v2-part-7",
+            "label": "Tutorial 7"
+          },
+          {
+            "id": "tutorial-v2-part-8",
+            "label": "Tutorial 8"
+          },
+          {
+            "id": "tutorial-v2-part-9",
+            "label": "Tutorial 9"
+          },
+          {
+            "id": "worksheet",
+            "label": "Practice Worksheet"
+          },
+          {
+            "id": "answer-key",
+            "label": "Model Answer"
+          }
+        ]
+      },
+      {
+        "slug": "configurable-platform-customer-workflows",
+        "order": 25,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "tutorial-v2",
+            "label": "Tutorial 1"
+          },
+          {
+            "id": "tutorial-v2-part-2",
+            "label": "Tutorial 2"
+          },
+          {
+            "id": "tutorial-v2-part-3",
+            "label": "Tutorial 3"
+          },
+          {
+            "id": "tutorial-v2-part-4",
+            "label": "Tutorial 4"
+          },
+          {
+            "id": "tutorial-v2-part-5",
+            "label": "Tutorial 5"
+          },
+          {
+            "id": "tutorial-v2-part-6",
+            "label": "Tutorial 6"
+          },
+          {
+            "id": "tutorial-v2-part-7",
+            "label": "Tutorial 7"
+          },
+          {
+            "id": "worksheet",
+            "label": "Practice Worksheet"
+          },
+          {
+            "id": "answer-key",
+            "label": "Model Answer"
+          }
+        ]
+      },
+      {
+        "slug": "enterprise-chatbot-platform",
+        "order": 26,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "tutorial-v2",
+            "label": "Tutorial 1"
+          },
+          {
+            "id": "tutorial-v2-part-2",
+            "label": "Tutorial 2"
+          },
+          {
+            "id": "tutorial-v2-part-3",
+            "label": "Tutorial 3"
+          },
+          {
+            "id": "tutorial-v2-part-4",
+            "label": "Tutorial 4"
+          },
+          {
+            "id": "tutorial-v2-part-5",
+            "label": "Tutorial 5"
+          },
+          {
+            "id": "worksheet",
+            "label": "Practice Worksheet"
+          },
+          {
+            "id": "answer-key",
+            "label": "Model Answer"
+          }
+        ]
+      },
+      {
+        "slug": "self-adapting-agent",
+        "order": 80,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          },
+          {
+            "id": "interview-template",
+            "label": "Answer Template"
+          }
+        ]
+      },
+      {
+        "slug": "personal-assistant-with-memory",
+        "order": 98,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          }
+        ]
+      },
+      {
+        "slug": "production-llm-gateway",
+        "order": 100,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          },
+          {
+            "id": "guide-part-4",
+            "label": "Interview Guide 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "judgement-and-decomposition",
+    "scenarios": [
+      {
+        "slug": "prioritize-ai-use-cases",
+        "order": 60,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          }
+        ]
+      },
+      {
+        "slug": "scale-prototype-to-production",
+        "order": 61,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          }
+        ]
+      },
+      {
+        "slug": "build-when-customer-data-is-poor",
+        "order": 62,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          }
+        ]
+      },
+      {
+        "slug": "decomposition-classics-67-68-69",
+        "order": 67,
+        "tabs": [
+          {
+            "id": "intro",
+            "label": "Introduction"
+          },
+          {
+            "id": "guide",
+            "label": "Interview Guide 1"
+          },
+          {
+            "id": "guide-part-2",
+            "label": "Interview Guide 2"
+          },
+          {
+            "id": "guide-part-3",
+            "label": "Interview Guide 3"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -45,8 +45,8 @@ export default async function DesignPage() {
         </div>
         <div className="cb-hero-side">
           <p>
-            {counts.layeredDesigns} of them read at three depths: the answer you would say in the interview, the
-            technical deep dive behind it, and a quick review for the night before.
+            Each one reads in five sections: the case brief, a design walkthrough you could say in the interview,
+            the technical deep dives behind it, practice with worked answers, and a quick review for the night before.
           </p>
           <div className="mt-6">
             <ModuleProgress scenarios={scenarios} plain />

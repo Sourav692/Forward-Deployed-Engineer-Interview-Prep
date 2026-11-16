@@ -1,6 +1,6 @@
 # System Design Worksheets and Answer Keys
 
-Twelve practice scenarios, each in two files. The **worksheet** is the part you fill in: sections 3–6 are left blank on purpose, and the other sections give you the frame to check your answer against. The **answer key** sets out what a strong FDE answer covers. Do the worksheet first, then compare. The long-form design guides for these scenarios are in `../../02_System_Design_Case_Studies/Standalone_Designs/`.
+Twelve practice scenarios, each in two files. The **worksheet** is the part you fill in: sections 3–6 are left blank on purpose, and the other sections give you the frame to check your answer against. The **answer key** sets out what a strong FDE answer covers. Do the worksheet first, then compare. The worked designs for these scenarios are the casebooks in `../../02_System_Design_Case_Studies/Casebook_Rewrites/`.
 
 | No. | Scenario | Worksheet | Answer key |
 |---|---|---|---|

@@ -8,7 +8,8 @@ import { parseReading, readingText, toPlainText, type ReadingDocument } from './
 import { ANSWER_KEY_MAP, CLOSING_SECTION_KEY } from './mapping'
 import { expandAcronyms } from './acronyms'
 import { GLOSSARY, glossaryAnchor } from './glossary'
-import { qualifiedTitle, scenarioHref } from './scenario'
+import { CASEBOOK_MODULE, qualifiedTitle, scenarioHref } from './scenario'
+import { casebookSections, getCasebookRewrite } from './casebook-content'
 import {
   FAMILY_META,
   RELATED_CASE,
@@ -332,6 +333,14 @@ export const getCaseStudy = cache(
     const index = siblings.findIndex((s) => s.trackId === trackId && s.slug === slug)
     if (index === -1 || !siblings[index].reading) return null
     const ref = siblings[index]
+    const prev = index > 0 ? siblings[index - 1] : null
+    const next = index < siblings.length - 1 ? siblings[index + 1] : null
+
+    // The casebook renders its reader snapshot; it has no tab documents.
+    if (moduleId === CASEBOOK_MODULE) {
+      const rewrite = await getCasebookRewrite(slug)
+      return { ref, title: ref.title, docs: [], sources: null, subtitle: rewrite?.subtitle, prev, next }
+    }
 
     const base = join(CONTENT_DIR, 'modules', moduleId, trackId, slug)
     const docs = await Promise.all(
@@ -352,8 +361,8 @@ export const getCaseStudy = cache(
       title: ref.title,
       docs,
       sources: findSources(docs),
-      prev: index > 0 ? siblings[index - 1] : null,
-      next: index < siblings.length - 1 ? siblings[index + 1] : null,
+      prev,
+      next,
     }
   },
 )
@@ -372,6 +381,19 @@ export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntr
   const reference: SearchEntry[] = []
 
   for (const ref of all) {
+    if (ref.moduleId === CASEBOOK_MODULE) {
+      const rewrite = await getCasebookRewrite(ref.slug)
+      for (const section of rewrite ? casebookSections(rewrite.html) : []) {
+        design.push({
+          title: qualifiedTitle(ref),
+          section: section.title,
+          kind: section.panel,
+          href: `${scenarioHref(ref)}#${section.id}`,
+          text: section.text.slice(0, SEARCH_TEXT_CAP),
+        })
+      }
+      continue
+    }
     if (ref.reading) {
       const study = await getCaseStudy(ref.moduleId, ref.trackId, ref.slug)
       if (!study) continue

@@ -126,9 +126,10 @@ export function scenarioHref(ref: {
 }
 
 /**
- * One tab of a reading page. Tabs vary per page — the grouped case studies have four,
- * a standalone case can have one to five — so the list comes from the manifest, written
- * by `scripts/case-studies.mjs`, which also writes one `<id>.md` per tab.
+ * One tab of a reading page, from the manifest. For the casebook (module 15) these are the
+ * retired tab ids frozen in `scripts/casebook-pages.json`: they key saved read state and old
+ * `#tab` links, which the reader maps onto its five sections. Other reading modules write
+ * one `<id>.md` per tab.
  */
 export type ReadingTab = { id: string; label: string }
 
@@ -138,6 +139,8 @@ export type CaseStudy = {
   docs: { tab: string; label: string; purpose: string; minutes: number; doc: ReadingDocument }[]
   /** The section holding the case's references, so every tab can link to it. */
   sources: { tab: string; label: string; anchor: string; title: string } | null
+  /** The casebook's one-line summary (module 15 only; its docs are empty). */
+  subtitle?: string
   prev: ScenarioRef | null
   next: ScenarioRef | null
 }
@@ -155,10 +158,9 @@ export type CaseDocument = {
 }
 
 /**
- * A case with an Introduction page (`site/case-pages/<slug>/introduction.md`, synced as
- * its first tab) uses the chapters layout: a sidebar of documents with their parts as
- * chapters. A case without one keeps one tab per part. See "Case pages on the site" in
- * CLAUDE.md.
+ * A reading page with an Introduction tab uses the chapters layout: a sidebar of documents
+ * with their parts as chapters. A page without one keeps one tab per part. The casebook
+ * (module 15) renders its five-section reader instead.
  */
 export const hasChapters = (study: CaseStudy) => study.docs[0]?.tab === 'intro'
 

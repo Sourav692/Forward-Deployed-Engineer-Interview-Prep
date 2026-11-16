@@ -5093,8 +5093,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 58,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/evaluation-and-release-gating/",
+      "estMinutes": 71,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -5104,8 +5104,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/",
-      "estMinutes": 74,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/",
+      "estMinutes": 89,
       "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
@@ -5115,8 +5115,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
-      "estMinutes": 63,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/",
+      "estMinutes": 74,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -5126,8 +5126,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/",
-      "estMinutes": 34,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/scale-prototype-to-production/",
+      "estMinutes": 54,
       "href": "/design/scale-prototype-to-production"
     },
     {
@@ -5137,8 +5137,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 43,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/consumer-scale-chat-service/",
+      "estMinutes": 49,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -5148,8 +5148,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
-      "estMinutes": 60,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/",
+      "estMinutes": 76,
       "href": "/design/high-volume-batch-pipeline"
     },
     {
@@ -5159,8 +5159,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 44,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/model-development-and-post-training/",
+      "estMinutes": 56,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -5170,8 +5170,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/",
-      "estMinutes": 48,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/llm-inference-serving/",
+      "estMinutes": 51,
       "href": "/design/llm-inference-serving"
     },
     {
@@ -5441,8 +5441,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 73,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/",
+      "estMinutes": 43,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -5452,8 +5452,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 87,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/",
+      "estMinutes": 76,
       "href": "/design/customer-support-automation"
     },
     {
@@ -5463,8 +5463,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/",
-      "estMinutes": 75,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/",
+      "estMinutes": 71,
       "href": "/design/tool-using-agent-with-safety-controls"
     },
     {
@@ -5474,8 +5474,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/",
-      "estMinutes": 63,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/",
+      "estMinutes": 70,
       "href": "/design/sre-incident-response-agent"
     },
     {
@@ -5485,8 +5485,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
-      "estMinutes": 65,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/",
+      "estMinutes": 68,
       "href": "/design/sales-copilot"
     },
     {
@@ -5496,8 +5496,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
-      "estMinutes": 72,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/",
+      "estMinutes": 86,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -5507,8 +5507,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/",
-      "estMinutes": 62,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/",
+      "estMinutes": 43,
       "href": "/design/document-review-copilot"
     },
     {
@@ -5518,8 +5518,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/",
-      "estMinutes": 55,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/",
+      "estMinutes": 57,
       "href": "/design/enterprise-coding-assistant"
     },
     {
@@ -5529,8 +5529,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/",
-      "estMinutes": 46,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/",
+      "estMinutes": 67,
       "href": "/design/deep-research-agent"
     },
     {
@@ -5540,8 +5540,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 47,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/scoping-to-deployed-agent/",
+      "estMinutes": 62,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -5551,8 +5551,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/",
-      "estMinutes": 53,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/agent-platform-for-non-technical-users/",
+      "estMinutes": 59,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -5562,8 +5562,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 50,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/",
+      "estMinutes": 58,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -5573,8 +5573,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/",
-      "estMinutes": 46,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/",
+      "estMinutes": 60,
       "href": "/design/logistics-exception-handling"
     },
     {
@@ -5584,8 +5584,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/",
-      "estMinutes": 24,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/recruiting-platform/",
+      "estMinutes": 35,
       "href": "/design/recruiting-platform"
     },
     {
@@ -5595,8 +5595,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
-      "estMinutes": 36,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/production-llm-gateway/",
+      "estMinutes": 39,
       "href": "/design/production-llm-gateway"
     },
     {
@@ -5606,8 +5606,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/",
-      "estMinutes": 21,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/travel-agent-worked-example/",
+      "estMinutes": 40,
       "href": "/design/travel-agent-worked-example"
     },
     {
@@ -5617,8 +5617,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 97,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/air-gapped-ai-system/",
+      "estMinutes": 96,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -5628,7 +5628,7 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/reliable-workflow-orchestration/",
       "estMinutes": 105,
       "href": "/design/reliable-workflow-orchestration"
     },
@@ -5639,8 +5639,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 91,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/configurable-platform-customer-workflows/",
+      "estMinutes": 108,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -5650,8 +5650,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 75,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-chatbot-platform/",
+      "estMinutes": 91,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -5661,8 +5661,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/",
-      "estMinutes": 34,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/prioritize-ai-use-cases/",
+      "estMinutes": 63,
       "href": "/design/prioritize-ai-use-cases"
     },
     {
@@ -5672,8 +5672,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/",
-      "estMinutes": 35,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/build-when-customer-data-is-poor/",
+      "estMinutes": 50,
       "href": "/design/build-when-customer-data-is-poor"
     },
     {
@@ -5683,8 +5683,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
-      "estMinutes": 48,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/self-adapting-agent/",
+      "estMinutes": 69,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -5694,8 +5694,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 32,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/personal-assistant-with-memory/",
+      "estMinutes": 54,
       "href": "/design/personal-assistant-with-memory"
     },
     {
@@ -5705,8 +5705,8 @@
       "module": "scenario-library",
       "kind": "live",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 35,
+      "source": "02_System_Design_Case_Studies/Casebook_Rewrites/decomposition-classics-67-68-69/",
+      "estMinutes": 51,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {

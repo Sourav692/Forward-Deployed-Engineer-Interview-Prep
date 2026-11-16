@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { readFile, readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
+import { CUT } from './site-text-edits.mjs'
 
 const digest = value => createHash('sha256').update(value).digest('hex')
 const panels = ['case-brief', 'walkthrough', 'deep-dives', 'practice', 'quick-review']
@@ -28,6 +29,9 @@ export async function checkCasebookRewrites(repoRoot, siteDir, { expected = 33 }
     for (const panel of panels) requireThat(ids.includes(panel), `${slug}: missing ${panel}`)
     requireThat((html.match(/class="panel\b/g) ?? []).length === 5, `${slug}: expected exactly five reading panels`)
     requireThat(!/<main\b/i.test(html), `${slug}: nested main landmark`)
+    // The site names no vendor platform (CUT), and case codes like G01 stay internal.
+    const text = html.replace(/<[^>]+>/g, ' ')
+    requireThat(!CUT.test(text) && !/\bG\d{2}\b/.test(text), `${slug}: vendor name or internal case code in reader text: ${text.match(CUT)?.[0] ?? text.match(/\bG\d{2}\b/)?.[0]}`)
     for (const [from, to] of Object.entries(payload.config.aliases)) {
       requireThat(ids.includes(to), `${slug}#${from}: alias target ${to} missing`)
       aliases++

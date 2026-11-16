@@ -18,7 +18,6 @@ import { execFileSync } from 'node:child_process'
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { syncCaseStudies } from './case-studies.mjs'
 import { syncCasebookRewrites } from './casebook-rewrites.mjs'
 import { siteText } from './site-text-edits.mjs'
 import { renderDiagrams } from './render-diagrams.mjs'
@@ -294,8 +293,8 @@ async function main() {
   )
   sourceUrls.set(join(BEHAVIOURAL_ROOT, STORY_BANK.source), STORY_BANK.href)
 
-  // Reading module: the G01–G20 interview guides, one page per group with tabs.
-  modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR, sourceUrls }))
+  // Reading module: the five-section casebooks at /design, from Casebook_Rewrites.
+  modules.push(await syncCasebookRewrites({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, sourceUrls }))
 
   // Company-oriented material: packs tailored to a specific interview loop.
   if (COMPANY_PREP_PUBLISHED) {
@@ -333,8 +332,6 @@ async function main() {
   } finally {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
   }
-
-  await syncCasebookRewrites({ repoRoot: REPO_ROOT, siteDir: SITE_DIR })
 
   const manifest = {
     generatedAt: new Date().toISOString(),

@@ -342,7 +342,7 @@ export const storyGroupOf = (title: string) => STORY_GROUPS.find((g) => g.prefix
 /**
  * Every tab a reading page can have. `id` is the stored, linked identifier and never
  * changes; `label` is what the reader sees; `purpose` is the one line shown at the top
- * of the tab. The source file names in `scripts/case-studies.mjs` point at these ids.
+ * of the tab. The casebook keeps its retired ids in `scripts/casebook-pages.json`.
  */
 export const TABS: Record<string, { label: string; purpose: string; short?: string }> = {
   'company-guide': {
