@@ -676,10 +676,12 @@ const acronymPages = new Map<string, Set<string>>()
 // is emphasis, not an acronym.
 const lowerWords = new Set<string>()
 const scanFiles: string[] = []
+const CASEBOOKS = resolve(SITE_ROOT, '..', '02_System_Design_Case_Studies', 'Casebook_Rewrites')
 for (const mod of manifest.modules) {
-  if (mod.id === CASEBOOK_MODULE) continue
   for (const track of mod.tracks) {
     for (const s of track.scenarios) {
+      // A casebook is one page, scanned from its authored Markdown.
+      if (mod.id === CASEBOOK_MODULE) { scanFiles.push(join(CASEBOOKS, s.slug, 'casebook.md')); continue }
       const base = join(CONTENT, 'modules', mod.id, track.id)
       if (mod.kind === 'reading') for (const t of s.tabs ?? []) scanFiles.push(join(base, s.slug, `${t.id}.md`))
       else scanFiles.push(join(base, 'worksheets', `${s.slug}.md`), join(base, 'answer-keys', `${s.slug}.md`))
@@ -735,9 +737,11 @@ const proseOf = (markdown: string): string =>
   const hits: { area: string; file: string; word: string }[] = []
   for (const file of new Set(scanFiles)) {
     const raw = await readFile(file, 'utf8').catch(() => '')
+    const casebook = file.startsWith(CASEBOOKS + sep)
     const rel = relative(CONTENT, file).split(sep)
-    const area = rel[0] === 'behavioural' ? 'behavioural' : rel.slice(0, 2).join('/')
-    for (const word of americanWords(proseOf(raw))) hits.push({ area, file: relative(CONTENT, file), word })
+    const area = casebook ? 'casebooks' : rel[0] === 'behavioural' ? 'behavioural' : rel.slice(0, 2).join('/')
+    const shown = casebook ? relative(resolve(SITE_ROOT, '..'), file) : relative(CONTENT, file)
+    for (const word of americanWords(proseOf(raw))) hits.push({ area, file: shown, word })
   }
   const copyFiles = async (dir: string): Promise<string[]> => {
     const out: string[] = []
