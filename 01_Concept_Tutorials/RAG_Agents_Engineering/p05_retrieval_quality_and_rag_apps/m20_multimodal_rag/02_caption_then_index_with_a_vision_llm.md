@@ -161,6 +161,7 @@ The code for this lesson is in these notebooks. Colab runs one in your browser: 
 | Notebook | GitHub | Colab |
 |---|---|---|
 | Multimodal RAG with captioning | [Open on GitHub](https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m20_multimodal_rag/mandatory/notebook/02a_multimodal_rag_with_captioning.ipynb) | [Open in Colab](https://colab.research.google.com/github/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m20_multimodal_rag/mandatory/notebook/02a_multimodal_rag_with_captioning.ipynb) |
+| Document parsing with mistral ocr (optional) | [Open on GitHub](https://github.com/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m20_multimodal_rag/optional/notebook/02b_document_parsing_with_mistral_ocr.ipynb) | [Open in Colab](https://colab.research.google.com/github/Sourav692/rag-agents-engineering/blob/main/p05_retrieval_quality_and_rag_apps/m20_multimodal_rag/optional/notebook/02b_document_parsing_with_mistral_ocr.ipynb) |
 
 ## Key Takeaways
 

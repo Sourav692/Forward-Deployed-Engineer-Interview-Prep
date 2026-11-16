@@ -1882,7 +1882,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_retrieval_quality_and_rag_apps/m20_multimodal_rag/02_caption_then_index_with_a_vision_llm.md",
       "estMinutes": 11,
       "href": "/learn/retrieval-quality-engineering/multimodal-rag/caption-then-index-with-a-vision-llm",
-      "updated": "2026-11-14"
+      "updated": "2026-11-16"
     },
     {
       "slug": "page-image-retrieval-with-colpali",
@@ -3622,7 +3622,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_knowledge_graphs_and_graph_rag/m42_hierarchical_memory_rag/02_memorag_global_memory_and_clue_guided_retrieval.md",
       "estMinutes": 10,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/memorag-global-memory-and-clue-guided-retrieval",
-      "updated": "2026-11-14"
+      "updated": "2026-11-16"
     },
     {
       "slug": "lightrag-low-level-and-high-level-graph-retrieval",
