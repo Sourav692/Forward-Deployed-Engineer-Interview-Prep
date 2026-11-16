@@ -1,0 +1,769 @@
+{
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
+  "fetched_at": "2026-11-14T19:41:50.323394+00:00",
+  "source_html_sha256": "ea078bc2b7fd0edc444d313d6a714b4ec73ba397c8db18024121ddfd2c023966",
+  "counts": {
+    "source_sections": 91,
+    "imported_sections": 91,
+    "words": 13013,
+    "tables": 35,
+    "code_blocks": 14,
+    "diagrams": 10,
+    "diagram_assets": 20,
+    "glossary_definitions": 67,
+    "sections_with_exact_text_match": 91
+  },
+  "scope": "All 91 case-content sections; excludes site chrome and old read/navigation controls. Original reading instructions are retained in a labelled disclosure.",
+  "assets": {
+    "/diagrams/06dc73e1d02314-light.svg": "assets/diagrams/06dc73e1d02314-light.svg",
+    "/diagrams/06dc73e1d02314-dark.svg": "assets/diagrams/06dc73e1d02314-dark.svg",
+    "/diagrams/063a04ffa52c18-light.svg": "assets/diagrams/063a04ffa52c18-light.svg",
+    "/diagrams/063a04ffa52c18-dark.svg": "assets/diagrams/063a04ffa52c18-dark.svg",
+    "/diagrams/1516613bfcc347-light.svg": "assets/diagrams/1516613bfcc347-light.svg",
+    "/diagrams/1516613bfcc347-dark.svg": "assets/diagrams/1516613bfcc347-dark.svg",
+    "/diagrams/0cc9925fbd0324-light.svg": "assets/diagrams/0cc9925fbd0324-light.svg",
+    "/diagrams/0cc9925fbd0324-dark.svg": "assets/diagrams/0cc9925fbd0324-dark.svg",
+    "/diagrams/084ba873b215c8-light.svg": "assets/diagrams/084ba873b215c8-light.svg",
+    "/diagrams/084ba873b215c8-dark.svg": "assets/diagrams/084ba873b215c8-dark.svg",
+    "/diagrams/0b480bed6956bf-light.svg": "assets/diagrams/0b480bed6956bf-light.svg",
+    "/diagrams/0b480bed6956bf-dark.svg": "assets/diagrams/0b480bed6956bf-dark.svg",
+    "/diagrams/1c00a3d6c449f2-light.svg": "assets/diagrams/1c00a3d6c449f2-light.svg",
+    "/diagrams/1c00a3d6c449f2-dark.svg": "assets/diagrams/1c00a3d6c449f2-dark.svg",
+    "/diagrams/12aa4200971ae1-light.svg": "assets/diagrams/12aa4200971ae1-light.svg",
+    "/diagrams/12aa4200971ae1-dark.svg": "assets/diagrams/12aa4200971ae1-dark.svg",
+    "/diagrams/071339203c62c8-light.svg": "assets/diagrams/071339203c62c8-light.svg",
+    "/diagrams/071339203c62c8-dark.svg": "assets/diagrams/071339203c62c8-dark.svg",
+    "/diagrams/04ec19061f9b11-light.svg": "assets/diagrams/04ec19061f9b11-light.svg",
+    "/diagrams/04ec19061f9b11-dark.svg": "assets/diagrams/04ec19061f9b11-dark.svg"
+  },
+  "sections": [
+    {
+      "source_id": "intro-overview",
+      "source_title": "Overview",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-scenario",
+      "text_sha256": "dce188aece32f96c199ce13dd4ea100230ced97ad6d48e41a2f402d1e4a18fa8",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "source_title": "The core idea",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-task",
+      "text_sha256": "cf84a9fd135aa315cf1e878c43f60cd4fc6a0287aec6c4047198917a7607e537",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "source_title": "Who it is for",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-audience",
+      "text_sha256": "92928ea39e01fc3def8022da7f125cd66e22a3bf759b1471261e3c140e32ec8c",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-objectives",
+      "source_title": "Objectives",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-audience",
+      "text_sha256": "697b23dd7579214f9f7390c1b4877bd943ab949750a7fdddf126068e085b7707",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "source_title": "What it assumes",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-audience",
+      "text_sha256": "a8390b496ee2174fcb1741fff5fc656b62472139f89b44ed0a1176763235b5f1",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "source_title": "How to use it",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-reading-notes",
+      "text_sha256": "681d27a45754df6fe81cdaab93d31bdff563e02b9f4b5ea92704856462ae746d",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-the-sections",
+      "source_title": "The sections",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-reading-notes",
+      "text_sha256": "7a5077be4f2ff77bc908d4ea3c3ddd07d8431c87160caa050c38046c5df68b58",
+      "text_preserved": true
+    },
+    {
+      "source_id": "intro-practise-it",
+      "source_title": "Practise it",
+      "destination_panel": "practice",
+      "destination_group": "practice-worksheet",
+      "text_sha256": "17a75dc0369cbecec91b322694fc978d1da5c82dbca97d2b335bcb4b9a53fae5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-intro",
+      "source_title": "Introduction",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-scenario",
+      "text_sha256": "cef8d26f3f4806638ff92b017950392531989f0801f059a10f936ff4db49b763",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-the-anchor-case-study",
+      "source_title": "The anchor case study",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-related",
+      "text_sha256": "ef29dc649f73673f9b030b89ef834bf91697823d04e4ba2b1d8a9306d3c24f99",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-0-the-mental-model",
+      "source_title": "0. The mental model",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-discovery",
+      "text_sha256": "463ba8d4e6c71b693137ffb71077a64b848a3c0d728efedee22de9d5642af5ba",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-1-how-i-would-open",
+      "source_title": "1. How I would open",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-discovery",
+      "text_sha256": "88b6c8795f9f002c811d23381f7c749fa0ca018498071f42e14323f091fe9aa9",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "source_title": "2. Requirements: Functional + Non-Functional",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-requirements",
+      "text_sha256": "e3f172584c0db37136bbd4cb08c88d38e88943774bec2fe54f2344fdd66383b1",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-3-architecture",
+      "source_title": "3. Architecture",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-architecture",
+      "text_sha256": "b1281f04f82e8a78dc955a5a0b12601e6655ab748fafdcb5a82235e350332446",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-4-ingestion-normalise-permissions-first",
+      "source_title": "4. Ingestion: normalise permissions first",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "0cd363fae8b827133bb18cc059e3f62a023fa60bdc283ac5ae337f662cd63bdd",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-5-freshness-and-deletion",
+      "source_title": "5. Freshness and deletion",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "f90be6eaebc4a39a492cbad86212c4c500c057af5abdcde5045b302cf7db3084",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-6-authorisation-two-layers",
+      "source_title": "6. Authorisation: two layers",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "082dddf30e8048e2877555add75cc031111beb101c5cc654afc0bcdd8e0febe5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-7-abac",
+      "source_title": "7. ABAC",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "69f04181f3a78a190b4ab925cad90dcb2025d18c8670ee0fef8321e05f343acc",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-8-retrieval",
+      "source_title": "8. Retrieval",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "8fea4501ab1313af69e7ab23ac83c6f09020a676bbd3a51de67efdc0e079a24f",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-9-reranking-and-context",
+      "source_title": "9. Reranking and context",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "ca25a2d1eb56b965507ea2b033403a37d10dafb03b9712bd05613021b385d0e3",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-10-generation-citations-and-abstention",
+      "source_title": "10. Generation, citations and abstention",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "87a485466f9606ee1ebd89cfcb3f120d0ef7528a3a91eeeda9074880abdcab65",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-11-prompt-injection",
+      "source_title": "11. Prompt injection",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "8f0d169bf1722cda1a50cfc7d073333304511b5d29a6e8daca9dc13f0039b981",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-12-evaluation",
+      "source_title": "12. Evaluation",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-evaluation",
+      "text_sha256": "5d4ec84994b0f0146f9df3a4b1948df46788d8debc2953b244d70fd206198a31",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-13-persona-based-testing",
+      "source_title": "13. Persona-based testing",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-evaluation",
+      "text_sha256": "9ee5d870ae165e8b0a2a7e16a9341a67b82f0bb4220f905ed5c31dee9ad0653a",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-14-observability-and-audit",
+      "source_title": "14. Observability and audit",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-evaluation",
+      "text_sha256": "70e4a3fd8e3d6f9e4ab79eccf9549aff56b21247d369a0587def2c78f6454681",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-15-scale-and-latency",
+      "source_title": "15. Scale and latency",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-sizing",
+      "text_sha256": "28f24a879d308c981272930a7cd2bf0ab34dd82cd543af91b3367916a5ea620d",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-16-scalability-latency-cost-production-design",
+      "source_title": "16. Scalability, latency & cost: production design",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "c7019b41b072836ec501e092dd567e66e344c964b345eff9d7c61a61d3daf9b5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-17-safe-caching",
+      "source_title": "17. Safe caching",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "29514866960f0c2b762b7c23214cc165f0cd7ea569b3ba0a5c5c0a664755fb00",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-18-multi-tenancy",
+      "source_title": "18. Multi-tenancy",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-decisions",
+      "text_sha256": "423100e99583058696bd478c9bd4f173739b86c7680786d960fd58e2a433ccc6",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-19-failure-playbook",
+      "source_title": "19. Failure playbook",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-failures",
+      "text_sha256": "c19ed0c6758e290e13ff6671ad3e5b9df6d974d529961c1deb7b6f315ab80573",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-20-cost-optimisation",
+      "source_title": "20. Cost optimisation",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "0d36b2149a31556e1e6c109345e9c866a33bf7d5b54b9985689d2932f7d5c1b7",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-21-100-ms-pivot",
+      "source_title": "21. 100 ms pivot",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "0a767cda6ef17ff161f298d4054381017b6b870a357a0daeca6626152c9af91e",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-22-interview-story",
+      "source_title": "22. Interview story",
+      "destination_panel": "practice",
+      "destination_group": "practice-story",
+      "text_sha256": "af25f3696ca02f8daf987fb6e9f77fb326db29331ed5aa04b871d868178b07e5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-23-interview-trigger-answer",
+      "source_title": "23. Interview trigger → answer",
+      "destination_panel": "practice",
+      "destination_group": "practice-triggers",
+      "text_sha256": "1e175fea04a2e29809548cb39c924c71fec2766dc1bf5ee218d2ff008552ab9a",
+      "text_preserved": true
+    },
+    {
+      "source_id": "main-part-2-24-60-minute-delivery",
+      "source_title": "24. 60-minute delivery",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-rollout",
+      "text_sha256": "dc0a74be65505a8c7526fff9cd1ebf29bb64e28d9f8c98cf0f0d890dc237dcdd",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "source_title": "Introduction",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-introduction",
+      "text_sha256": "1cc5219a2388f97da79e6cebe07738dd535a9b2d448df6a92d38e286469bef9d",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-1-acl-normalisation",
+      "source_title": "1. ACL normalisation",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-permissions",
+      "text_sha256": "d38be4701f69d66faa71d3aef706151a9615d3cc37944ef768f0fb358f1a8745",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-2-two-authorisation-layers",
+      "source_title": "2. Two authorisation layers",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-permissions",
+      "text_sha256": "be2d7ab2a7c6401b4646854789c82ef16192eafa4d7e88030b345ca7a2dafc0c",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-3-abac",
+      "source_title": "3. ABAC",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-permissions",
+      "text_sha256": "17f68e209e4a5815e1e640cb01860349733f1123e991a0a6a57528ee95e9fc3f",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-4-source-specific-risks",
+      "source_title": "4. Source-specific risks",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-ingestion",
+      "text_sha256": "67bf00ddf1ebc9cb000cd0213de4eef3d0b48cb8c1048a36f23fad18c643117c",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-5-ingestion-correctness",
+      "source_title": "5. Ingestion correctness",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-ingestion",
+      "text_sha256": "c724debd9fbbbc69c4d936a9f1a525e38ab9f7a8e261dfc7eba5b6532549e3c3",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-6-freshness-vs-authorisation",
+      "source_title": "6. Freshness vs authorisation",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-ingestion",
+      "text_sha256": "65aaa79322efd99329c5bb40c50ef81595685567d20739db94ea49451b59fd90",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-7-retrieval-details",
+      "source_title": "7. Retrieval details",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-retrieval",
+      "text_sha256": "39eb2f399ab0cd88e0d12df36f5d550ffdec1e9396cf7a3665e3f0e02a208643",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-8-reranking",
+      "source_title": "8. Reranking",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-retrieval",
+      "text_sha256": "8af58752a411be8495c1758bc61e896e0d5a9e3f71e32bc4771e0e57af41a486",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-9-evidence-selection",
+      "source_title": "9. Evidence selection",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-retrieval",
+      "text_sha256": "8e22daa3ee1d2f8ecf76698276a51d6603a2817479f3699ebe3f8c44136a8487",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-10-citation-verification",
+      "source_title": "10. Citation verification",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-generation",
+      "text_sha256": "4178c7701d04fce4e9b2eaa0284eedbf9222d5a7971ee2930a2b7b0657da3c4f",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-11-abstention",
+      "source_title": "11. Abstention",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-generation",
+      "text_sha256": "9e4f8371d8c6058e995a9d24ff9f1aaf1ffa9c390acfe2a3ce34a715189ae08e",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-12-prompt-injection-and-tools",
+      "source_title": "12. Prompt injection and tools",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-generation",
+      "text_sha256": "0b3d8c9161757080dd682998c91a198c374733971593f1a45938e7297f6f3bc5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-13-evaluation-dataset",
+      "source_title": "13. Evaluation dataset",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-evaluation",
+      "text_sha256": "e9de8bef5369bd616e68c06561220501a128ce9e9d1f4d41e284135331f8861e",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-14-leak-suite",
+      "source_title": "14. Leak suite",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-evaluation",
+      "text_sha256": "673ca77c66ba0cf708d48307191808cdc9d14d429ba3d32a00c9aa9234e58b49",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-15-observability",
+      "source_title": "15. Observability",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-evaluation",
+      "text_sha256": "558ed0cb9a7d844ece6fd911a5bc87d567e0715a72c9de26857e70575e0814d9",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-16-scale-reasoning",
+      "source_title": "16. Scale reasoning",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "f125254f41d7953fd193efecf8cf8571029b1d0d2f79635381524ffaee0e1e2e",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-17-cache-safety",
+      "source_title": "17. Cache safety",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "74e791c123ed9615c196b8bdc0e68283b0688770f78a94264a3c682ec0b8889f",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-18-100-ms-design",
+      "source_title": "18. 100 ms design",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "8e3477ab1ef651077b2c19286260ded0488ad5c393ee259367470524364c963b",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-19-cost-design",
+      "source_title": "19. Cost design",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-scale",
+      "text_sha256": "c1e3ac0a8982cb089685ff69209107a83a852b5632204336536ae02bbb7037cb",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-20-failure-playbook",
+      "source_title": "20. Failure playbook",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-evaluation",
+      "text_sha256": "d30daf513bdfc6af024e0abbaf2e7f1f6b0116a4393ee44ff9f7f5c1829a7d46",
+      "text_preserved": true
+    },
+    {
+      "source_id": "deep-dive-21-project-story-lessons",
+      "source_title": "21. Project-story lessons",
+      "destination_panel": "practice",
+      "destination_group": "practice-story",
+      "text_sha256": "5efee2e7e831c6b989884b41f485503b5e14efb266c27f1628293ee1e362d28b",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-problem",
+      "source_title": "Problem",
+      "destination_panel": "quick-review",
+      "destination_group": "review-architecture",
+      "text_sha256": "9cbb029ea50ca362925611b5b087a2024bf4169c4fcfde085b068f1509c592aa",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-core-architecture",
+      "source_title": "Core architecture",
+      "destination_panel": "quick-review",
+      "destination_group": "review-architecture",
+      "text_sha256": "2ea968209827e08ed7f683a5c0405559d93095f663f9ffe349da65752ddc32c9",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "source_title": "Five rules",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "9e18d56ab1b82bf02e79d6e814d0b2b1de8b0c52aa4ecec3373ed88aa378d65c",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-pre-filter-vs-post-check",
+      "source_title": "Pre-filter vs post-check",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "fc6d84996cdc3ced49c1a89eab922fca82ae9dcaf1356ff18f727f99a3f3df30",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-retrieval",
+      "source_title": "Retrieval",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "c3dae65d252338bcc76810c27e441e31ad7650e3cc7902d2811e9f217cb251da",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-freshness",
+      "source_title": "Freshness",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "a710fcbac4f6b2da3fbe4c2e81b3d0257dfd0cbf8c27b395c698d390ae8c4aab",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-rag-quality",
+      "source_title": "RAG quality",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "a9e86312a419d42170afe49c3916a840a42ade74d48000b826f36b409ef896d6",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-security-tests",
+      "source_title": "Security tests",
+      "destination_panel": "quick-review",
+      "destination_group": "review-decisions",
+      "text_sha256": "a295b04be5ad9d987d4a8453b7ccd305e20f1d5ec1d10f64a2086e5fc2bec94e",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-scale-numbers",
+      "source_title": "Scale numbers",
+      "destination_panel": "quick-review",
+      "destination_group": "review-failures",
+      "text_sha256": "d90d717328928c3f7ce3256494044ee40a5ff87d466faccb2bec7e1c9b0d00d9",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-cost-latency",
+      "source_title": "Cost / latency",
+      "destination_panel": "quick-review",
+      "destination_group": "review-failures",
+      "text_sha256": "72c838318784f6601709dc04ac0f5317a9afab02af108b0123b7b5218cf481ef",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-failure-playbook",
+      "source_title": "Failure playbook",
+      "destination_panel": "quick-review",
+      "destination_group": "review-failures",
+      "text_sha256": "46ba0cceba439a05e9e382d70c1ea35c286932087160f325dca4bfc126664419",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-project-story",
+      "source_title": "Project story",
+      "destination_panel": "quick-review",
+      "destination_group": "review-close",
+      "text_sha256": "b00038479060521c11159fc58060f553f5d616b9382b10b50e5d68911c1ed837",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-interview-triggers",
+      "source_title": "Interview triggers",
+      "destination_panel": "quick-review",
+      "destination_group": "review-close",
+      "text_sha256": "daa3762eb3710def9c8213dfd535dc224482a43ba1a38c18a0b2cf31c9f1a741",
+      "text_preserved": true
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "source_title": "One sentence",
+      "destination_panel": "quick-review",
+      "destination_group": "review-close",
+      "text_sha256": "850dfab43e97505e50624b18a32a9f72a3bcbaa111dace2cdd0f86e823536b8b",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-intro",
+      "source_title": "Introduction",
+      "destination_panel": "case-brief",
+      "destination_group": "brief-related",
+      "text_sha256": "e68f3de6d2ca1251391885b16edea09d607513d673bdbd40f350a8baf2dda2d5",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-1-name-permission-fidelity-as-the-constraint-before-drawing-",
+      "source_title": "1. Name Permission Fidelity as the Constraint Before Drawing Anything",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-discovery",
+      "text_sha256": "a1f62acc6c0b34fd54be5396ba574554339588cd4d1029ed7db5ffb1d2e394a9",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "source_title": "2. State Requirements as Testable Constraints",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-requirements",
+      "text_sha256": "b31e4e4127990fff57c0e9058fde622e453b68fc77ca00c5a1f1ba12426d35eb",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-3-size-on-peak-qps-and-permission-refresh",
+      "source_title": "3. Size on Peak QPS and Permission Refresh",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-sizing",
+      "text_sha256": "4835bc2b288302c4075adf04038d9ce8db8376a77f53851f4727a68f243326ac",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-4-map-every-source-with-its-permission-model",
+      "source_title": "4. Map Every Source With Its Permission Model",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-ingestion",
+      "text_sha256": "eb3a000dede29abdf7b6914c9330c693890e4ece19668c779dfa14930ae7c5f2",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "source_title": "5. Draw the Architecture End to End",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-architecture",
+      "text_sha256": "29d111f17cd17a8d5c24e36be9ab1588f847aafcdc4584c259196d5b55c25deb",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-6-normalise-permissions-at-ingestion-and-refuse-what-has-non",
+      "source_title": "6. Normalise Permissions at Ingestion and Refuse What Has None",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-ingestion",
+      "text_sha256": "10a5eb57fedc93fcffc08236d881d00b4b554de6231348343e07a8fe5961b809",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-7-enforce-before-the-model-sees-anything",
+      "source_title": "7. Enforce Before the Model Sees Anything",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-permissions",
+      "text_sha256": "6272adfd919c3acfb2eba6b71b0d8fa67ff498e581ed92608bb0e8acc6ba37c0",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-8-retrieve-hybrid-fuse-by-rank-rerank-after-enforcement",
+      "source_title": "8. Retrieve Hybrid, Fuse by Rank, Rerank After Enforcement",
+      "destination_panel": "deep-dives",
+      "destination_group": "dive-retrieval",
+      "text_sha256": "f3154535cb3057a30f7f7ee992c2ec81eaedd82baa9317b44337b9af73b0c3dc",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-on-everything-except-authorisation",
+      "source_title": "9. Degrade on Everything Except Authorisation",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-failures",
+      "text_sha256": "6859f70228e2080370cb500efd71530f216a6208c18c792ea7b2eece0a05b875",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-3-10-gate-the-release-on-a-leak-count-not-a-score",
+      "source_title": "10. Gate the Release on a Leak Count, Not a Score",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-evaluation",
+      "text_sha256": "413636c261bcf46ee0b0abb0b0d810803a9d410b410ece65e892f6708da6d8fa",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-3-11-roll-out-one-corpus-at-a-time",
+      "source_title": "11. Roll Out One Corpus at a Time",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-rollout",
+      "text_sha256": "9299d368e49b3be07b8d227afb1b73e20034a5b61d1a1d0e3fe5dfce8d6bf9d0",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-3-12-deliver-it-in-sixty-minutes",
+      "source_title": "12. Deliver It in Sixty Minutes",
+      "destination_panel": "walkthrough",
+      "destination_group": "walkthrough-rollout",
+      "text_sha256": "f825dcfa44ac5957e5a876566242521ab54061283779e20ef559e74442164876",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-4-13-tell-it-as-something-built",
+      "source_title": "13. Tell It as Something Built",
+      "destination_panel": "practice",
+      "destination_group": "practice-story",
+      "text_sha256": "b13fbe928795934fb316d557f26a6fcad2611592fef86c93b28bdda4ad387a92",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "source_title": "14. Answer the Cost Pivot in Ten Minutes",
+      "destination_panel": "practice",
+      "destination_group": "practice-pivots",
+      "text_sha256": "c0b86e43d5d8e2fa3f7b67fbfd7de2d5a8f936da87b15e5f7a71a06839965a03",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-15-debug-the-incidents-on-this-design",
+      "source_title": "15. Debug the Incidents on This Design",
+      "destination_panel": "practice",
+      "destination_group": "practice-incidents",
+      "text_sha256": "ac5e11aace3092e6635447cd93361269d6c86f686ce24e85882d7282565b7f3d",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "source_title": "Level calibration",
+      "destination_panel": "practice",
+      "destination_group": "practice-calibration",
+      "text_sha256": "238645cfac92fa77032eeaeeb22e6a0faa671a9b3ad94cf08ca5dafc9be15aae",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "source_title": "Key Takeaways",
+      "destination_panel": "quick-review",
+      "destination_group": "review-takeaways",
+      "text_sha256": "8f00304d8175fa749d5da0932fac3701f99a09c1b396eff3b408b9b68196eb7c",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "source_title": "Check Yourself",
+      "destination_panel": "practice",
+      "destination_group": "practice-self-check",
+      "text_sha256": "53ecf88e7ba4a7364449f4c8b8f7242530fc88ec1f4a493f5ae1fdbe64f93686",
+      "text_preserved": true
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "source_title": "References",
+      "destination_panel": "deep-dives",
+      "destination_group": "source-references",
+      "text_sha256": "70b72a2ea5fa0e69c29325434bdf6b6673659b76dd3f290f3678c0af202fbb7f",
+      "text_preserved": true
+    }
+  ]
+}

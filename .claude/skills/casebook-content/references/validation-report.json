@@ -1,0 +1,126 @@
+{
+  "checked_at": "2026-11-15T15:27:28.827402+00:00",
+  "skill_frontmatter": "quick_validate.py passed",
+  "reference": {
+    "source_sections": 91,
+    "tables": 35,
+    "code_blocks": 14,
+    "diagrams": 10,
+    "glossary_definitions": 67,
+    "content_validation_passed": true,
+    "browser": {
+      "passed": true,
+      "widths": [
+        320,
+        390,
+        834,
+        1280,
+        1440,
+        1920
+      ],
+      "checks": [
+        "Five primary sections and progressive enhancement",
+        "Keyboard navigation and native disclosure activation",
+        "30 responsive section checks with all disclosures expanded",
+        "91 retained source fragments and containing disclosures",
+        "All image payloads decode offline",
+        "Persistent and reversible reading progress",
+        "9 worked-answer reveals accessible by keyboard",
+        "Notes, attempt validation, independent practice status, and rubric persistence",
+        "Case-specific Markdown export",
+        "Quick review print layout",
+        "All five sections readable without JavaScript",
+        "Unavailable-storage fallback"
+      ],
+      "errors": []
+    },
+    "comparison": {
+      "desktop_width": 1440,
+      "phone_width": 390,
+      "source_text_equal": true,
+      "measured_layout_differences": [],
+      "pixel_diff_tested": false
+    }
+  },
+  "negative_checks": [
+    {
+      "test": "changed verbatim source claim",
+      "rejected": true,
+      "errors": [
+        "Source text changed: intro-overview"
+      ]
+    },
+    {
+      "test": "removed source diagram",
+      "rejected": true,
+      "errors": [
+        "Original diagram missing: assets/diagrams/06dc73e1d02314-light.svg"
+      ]
+    },
+    {
+      "test": "removed primary reading section",
+      "rejected": true,
+      "errors": [
+        "Five-section order changed",
+        "Missing coverage anchor: cheat-sheet-problem",
+        "Missing or duplicated verbatim passage: cheat-sheet-problem"
+      ]
+    },
+    {
+      "test": "independent capture matches all 91 original text hashes",
+      "passed": true
+    }
+  ],
+  "batch": {
+    "catalog_count": 33,
+    "empty_batch_did_not_claim_completion": true,
+    "existing_blocked_fetch_gap_preserved": true
+  },
+  "independent_transfer": {
+    "source_url": "https://forwarddeployedprep.com/design/prioritize-ai-use-cases",
+    "source_sections": 27,
+    "original_diagram_assets": 6,
+    "browser": {
+      "passed": true,
+      "widths": [
+        320,
+        390,
+        834,
+        1280,
+        1440,
+        1920
+      ],
+      "checks": [
+        "Five primary sections and progressive enhancement",
+        "Keyboard navigation and native disclosure activation",
+        "30 responsive section checks with all disclosures expanded",
+        "23 retained source fragments and containing disclosures",
+        "All image payloads decode offline",
+        "Persistent and reversible reading progress",
+        "13 worked-answer reveals accessible by keyboard",
+        "Notes, attempt validation, independent practice status, and rubric persistence",
+        "Case-specific Markdown export",
+        "Quick review print layout",
+        "All five sections readable without JavaScript",
+        "Unavailable-storage fallback"
+      ],
+      "errors": []
+    },
+    "status": "partial editorial pilot",
+    "whole_case_voice_review": "pending; complete-case validator correctly rejects editorial completion",
+    "representative_section": "teaching-example.md",
+    "representative_comparison": "teaching-example-coverage.json",
+    "observed_findings": [
+      "Initial draft retained 61 of 68 source paragraphs; complete source coverage did not establish a finished teach-mode rewrite.",
+      "Initial coverage records used stock review evidence; strengthened guidance now requires the actual mechanism and output passage.",
+      "Inherited verbatim copy exemptions were removed from generic assets and now apply only in faithful mode.",
+      "Mechanical cross-reference grammar was corrected in the pilot; editorial guidance now requires rereading the whole sentence.",
+      "Worked-answer disclosures are now validated and exercised separately from the self-assessment rubric."
+    ]
+  },
+  "limits": [
+    "Source review evidence records an editorial judgment; it does not prove semantic equivalence.",
+    "The independent pilot is not a completed teach-mode casebook and is not counted among 33 completed cases.",
+    "No live-site deployment or 33-case authoring batch was performed."
+  ]
+}

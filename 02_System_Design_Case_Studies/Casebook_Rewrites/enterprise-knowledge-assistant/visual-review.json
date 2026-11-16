@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-16",
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 10 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
+  "opening_decision": "Two brief topics use Priya\u2019s question as the running example; related variants remain in a native optional disclosure. No redundant example, glossary or learning-goal subsection added.",
+  "limits": [
+    "Original wide source diagrams shrink in the reading column; each has a local full-size SVG link.",
+    "Hallmark straight-quote Finish warnings in retained source tables remain; current sweep has zero failures and zero Reflex findings."
+  ]
+}

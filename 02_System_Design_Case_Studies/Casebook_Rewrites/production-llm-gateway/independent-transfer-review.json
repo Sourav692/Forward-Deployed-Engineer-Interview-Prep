@@ -1,0 +1,58 @@
+{
+  "status": "complete isolated teach-mode transfer; unpublished",
+  "artifacts": {
+    "markdown": "/tmp/casebook-transfer-gateway/casebook.md",
+    "metadata": "/tmp/casebook-transfer-gateway/case.json",
+    "coverage": "/tmp/casebook-transfer-gateway/coverage.json",
+    "html": "/tmp/casebook-transfer-gateway/bundle/index.html",
+    "structural": "/tmp/casebook-transfer-gateway/bundle/content-check.json",
+    "browser": "/tmp/casebook-transfer-gateway/browser-check.json",
+    "fragments": "/tmp/casebook-transfer-gateway/fragment-check.json",
+    "hallmark": "/tmp/casebook-transfer-gateway/hallmark-sweep.txt",
+    "tracker_before_fix": "/tmp/casebook-transfer-gateway/tracker-pre-fix.json",
+    "tracker_after_fix": "/tmp/casebook-transfer-gateway/tracker-post-fixtures/results.json"
+  },
+  "source_review": {
+    "sections": 27,
+    "coverage_items": 44,
+    "original_source_tables": 16,
+    "output_tables": 14,
+    "table_disposition": "Fourteen substantive original tables retained with obsolete numbered navigation replaced by topic names and rubric verbatim label removed after pointer editing. Two navigation/provenance tables consolidated into Case brief prose. No substantive numerical or mechanism table omitted.",
+    "original_assets": 10,
+    "asset_hashes_verified": true,
+    "worked_source_self_checks": 13,
+    "arithmetic": "Exact simple-turn subtotal $6.615 versus captured rounded $6.61 explicitly explained. Exact daily total $245.265. Model/rates historical and all assumptions qualified.",
+    "source_discrepancy": "Failure section says four but lists five; all five retained and discrepancy stated.",
+    "authored_additions": "Illustrative account-number trace, validation/rollout synthesis, atomic reservation and p95-estimate caveats explicitly framed as teaching additions."
+  },
+  "visual_review": {
+    "passed": true,
+    "actual_inspection": [
+      "approved-reference.png",
+      "desktop.png",
+      "phone.png",
+      "architecture-desktop.png",
+      "architecture-mobile.png",
+      "all figure-screens/0.png through 9.png",
+      "Hallmark 1920 screenshot",
+      "print-0.png"
+    ],
+    "findings": "Approved reading shell retained, desktop measure stays capped, mobile typography and section selector readable, no section overflow at six tested widths. All five unique diagrams and both variants inspected. Wide overview and full topology need magnification on mobile: every diagram/caption now links to its full-size local SVG. One-page Quick review PDF is complete with final cost-per-resolved-conversation sentence visible.",
+    "limitations": "No screen reader, actual phone device or dark-interface test. Dark source SVG variants are preserved assets on a light interface, not a dark-mode claim."
+  },
+  "checks": {
+    "structural": "passed",
+    "browser": "passed at 320,390,834,1280,1440,1920",
+    "fragments": "27 old source aliases individually opened with visible target and containing panel; generic suite reports 0 because it scans retained imported-source DOM, so custom check is material",
+    "offline": "all local images/fonts decode; network assets denied in browser suite",
+    "hallmark": "rendered sweep 0 FAIL, 2 WARN. Repeated $500 is purposeful between teaching, rehearsal and recall. Straight quotes preserve Markdown convention; no fabricated metrics.",
+    "tracker": "Pre-fix 18 fixture checks recorded evidence reuse loophole. Post-fix 19 checks pass, fresh evidence required, URL/deployment mismatch rejected, deployment change clears old pass/evidence/report/time. Fixture reports are synthetic state tests, not published-case evidence."
+  },
+  "remaining_gaps": [],
+  "not_performed": [
+    "publishing",
+    "git changes",
+    "canonical tracker edits",
+    "live URL verification"
+  ]
+}

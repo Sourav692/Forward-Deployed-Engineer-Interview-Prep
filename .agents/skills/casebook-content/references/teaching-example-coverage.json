@@ -1,0 +1,86 @@
+[
+  {
+    "source_id": "guide-3-turn-thirty-one-liners-into-comparable-cards",
+    "teaching_item": "Eleven comparable card fields",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The eleven-row card table retains the user/workflow, metric/baseline, volume, authority, data access, integration, evaluation, risk, dependencies, owner/SME and kill-criteria fields. Each row now explains the evidence and consequence in complete sentences."
+    }
+  },
+  {
+    "source_id": "guide-3-turn-thirty-one-liners-into-comparable-cards",
+    "teaching_item": "Thirty cards, assumed interview duration and checkable completion",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The paragraph after the card table preserves thirty cards and about one week of interviews, explicitly labels the duration as an assumption, and defines completion by checkable fields rather than elapsed time."
+    }
+  },
+  {
+    "source_id": "guide-4-apply-gates-before-scoring-anything",
+    "teaching_item": "Non-compensable gates before a weighted score",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The paragraph introducing the four gates explains how a large expected saving can offset a risk score numerically while leaving the actual decision unacceptable. Gates prevent that compensation before ranking."
+    }
+  },
+  {
+    "source_id": "guide-4-apply-gates-before-scoring-anything",
+    "teaching_item": "Outcome and named owner/SME gates",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The first two gate rows preserve returning an unmeasurable card to its sponsor, withholding scoring, naming the outcome owner and labelling expert, and the source detail that three of six delivery gates need SME input."
+    }
+  },
+  {
+    "source_id": "guide-4-apply-gates-before-scoring-anything",
+    "teaching_item": "Permissible decision and recovery",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The third gate row and denial-letter trace preserve the restriction on an unreviewed adverse customer decision and distinguish reshaping for adjuster approval from rejecting the proposal. The source connection to item #1 remains explicit."
+    }
+  },
+  {
+    "source_id": "guide-4-apply-gates-before-scoring-anything",
+    "teaching_item": "Right-tool alternatives and cost qualification",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The fourth gate row and separate alternatives paragraph retain rules, existing statistical models and purchase as distinct routes. The low-value workflow cost risk remains qualified because the source provides no frequency measurement."
+    }
+  },
+  {
+    "source_id": "guide-4-apply-gates-before-scoring-anything",
+    "teaching_item": "Undefined outcomes cannot be repaired by a clock",
+    "anchors": [
+      "walkthrough-gates"
+    ],
+    "status": "expanded",
+    "review": {
+      "status": "reviewed",
+      "evidence": "The final paragraph preserves the source warning about a two-week deadline against an unmeasurable outcome and its requirement for SME input. It connects the hold to missing evidence and an owner rather than a calendar-only gate."
+    }
+  }
+]

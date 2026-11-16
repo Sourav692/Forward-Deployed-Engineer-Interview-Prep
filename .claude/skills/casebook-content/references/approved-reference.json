@@ -1,0 +1,7 @@
+{
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
+  "approved_format": "five-section full-content prototype",
+  "html": "approved-example/index.html",
+  "sha256": "c4208e06ff635a913e3e7b1c0c03d2d5cbe0eeb44c2dab0016075d2605ea1ef0",
+  "coverage": "approved-example/source/coverage.json"
+}

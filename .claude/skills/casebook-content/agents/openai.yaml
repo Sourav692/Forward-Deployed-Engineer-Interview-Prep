@@ -1,0 +1,4 @@
+interface:
+  display_name: "Casebook Content"
+  short_description: "Complete casebooks in the approved five-section format"
+  default_prompt: "Use $casebook-content to adapt this casebook into the approved five-section format with complete source coverage and the course-content teaching style."

@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "url": "https://forwarddeployedprep.com/design/model-development-and-post-training",
+  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
+  "checked_at": "2026-11-16T02:51:47.787Z",
+  "checks": {
+    "responsive": {
+      "widths": [
+        320,
+        390,
+        834,
+        1280,
+        1440,
+        1920
+      ],
+      "panels": 5,
+      "expanded_disclosures": true
+    },
+    "aliases": 51,
+    "images": 10,
+    "interactions": {
+      "notes_restored": true,
+      "markdown_export": true,
+      "separate_practice": true,
+      "reversible_reading": true,
+      "keyboard_answers": 23
+    },
+    "theme_and_print": true,
+    "storage_denied_and_no_script": true
+  },
+  "errors": []
+}

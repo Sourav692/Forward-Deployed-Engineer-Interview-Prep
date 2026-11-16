@@ -1,0 +1,11 @@
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "Screenshotted all 15 placed figures (light variants) from the built page with every panel and disclosure open and read each PNG. All decode and render: core idea (5 nodes, Yes/No branches), must-have pipeline (ambiguous? branch to clarifying question), interview architecture (wide; control plane above question path ending in append-only query run), request path (RLS/CLS, mismatch vs consistent), background lane (crawler and replay queues), component view (systems of record, async lane, refresh loop), summary check, rollout (four phases with exit labels and rollback gate), drills 1-4 each directly under its own drill subsection, compact failure flow, insurer three stages and supervisor. Captions were rewritten after this check to name nodes the first pass missed (interview figure's execution half, component systems of record, rollout exit criteria, fan-out 'within expectation' path) and to flag the supervisor figure's nine boxes and unconditional clarify box. Desktop and phone screenshots show the brief opening with the five-section nav. 2026-11-16: after the source-inconsistency prose fixes, re-checked the two changed captions against their SVG labels: fig-rollout still names the four drawn phases and now says the diagram folds the executive release into the shadow-to-expansion step; fig-insurer-supervisor's caption matches its boxes (routing drawn as a box, clarify drawn on every path, which the adjacent text explains).",
+  "limits": [
+    "Dark variants checked by hash and presence only, not rendered.",
+    "Source SVGs fill fail-closed boxes dark red with dark red text (schema drift, summary check, fan-out, scan drills); low contrast is in the original asset and was not altered.",
+    "The interview-size architecture figure is very wide and its labels are small inline; it relies on the 'Open for full size' link.",
+    "No screen-reader testing."
+  ]
+}

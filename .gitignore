@@ -37,3 +37,6 @@ fdehandbook_learn/
 
 # Local mapping of fdehandbook.com courses against the site
 /FDE_Handbook/
+
+# Casebook offline bundles and check reports (built from 02_System_Design_Case_Studies/Casebook_Rewrites)
+/.casebook-build/
