@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "871fd79a3ada1e80a3465d7fde6b0ceae96b8c2d5174598532ee608b087b7494",
+  "html_sha256": "7fa9b553e56d60a0344e2209476e94dde25ae54003df11c5d21ee7aa30e095d2",
+  "config_sha256": "0da1fd07d69eddcb55cea6d0ffdac1f67e5adcf53473409c9fd07d79f7c50f2f",
+  "source_url": "https://forwarddeployedprep.com/design/air-gapped-ai-system",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 46,
+    "coverage_rows": 110,
+    "worked_answers": 16,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Compared all 46 captured sections of the 15 Nov 2026 air-gapped capture against the earlier draft paragraph by paragraph. The draft had compressed the source heavily: it dropped the blast-radius section, the five-bucket failure taxonomy, the six technical-health metrics with calculations and alert rules, the risk register mitigations and triggers, the go/no-go gates and rollback triggers, the core-product standardisation category, the six weak-answer repairs, the answer-key evaluation table, the worksheet candidate scorecard, the 50-minute block contents, the piece-by-piece verifier walkthrough and the third SignatureError test, and it gave the three section-4 figures one shared caption. Those are restored in the walkthrough (new step 8 for metrics and ownership), deep dives and Practice; the six architecture-changing questions now say what each answer changes, and the question-tree, happy-path and failure-overlay figures each sit beside their own explanation. Practice grew from six to sixteen reveals covering every worksheet section, the four follow-ups, the mandatory drill, the 477 challenge, the dashboard question, weak/average/strong answers and the spoken summaries; the implementation-exercise answer is labelled authored. Added caveats are labelled: HMAC is symmetric, VerifiedManifest is only shallowly frozen, ValidationError is unused and both sketches do not prove transitive closure. No RAG-specific material from the reference case was transplanted. Source inconsistencies resolved in text (2026-11-16): sketch 2's comment 'Validate the closure of the bundle' over a loop that only hashes listed artifacts \u2192 comment now reads 'Verify every listed artifact is present and unaltered', and the prose says closure needs its own preflight; the 10x ceiling 'about 4,760' \u2192 stated as 400,000 / 84 = 4,761.9, rounded up to 4,762 replicas, without commentary on the source's rounding."
+    }
+  }
+}

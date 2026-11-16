@@ -1,0 +1,1299 @@
+{
+  "title": "High-Volume Batch Inference Pipeline",
+  "slug": "high-volume-batch-pipeline",
+  "subtitle": "Classify 100 million records before 6 a.m., make every retry harmless, and agree in advance what ships when the run falls behind.",
+  "theme": "AI Platforms and Scale",
+  "kind": "System design",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "figure-core-idea",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-prompt",
+    "main-intro": "brief-example",
+    "main-the-case-in-one-sentence": "walkthrough-framing",
+    "main-questions-to-ask-the-interviewer": "walkthrough-discovery",
+    "main-requirements-functional-non-functional": "walkthrough-requirements",
+    "main-architecture": "walkthrough-architecture",
+    "main-decisions-failures-and-trade-offs": "walkthrough-4am",
+    "main-evaluation-and-rollout": "walkthrough-evaluation",
+    "main-two-minute-interview-answer": "practice-spoken",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-contract-before-machinery": "dive-contract",
+    "deep-dive-2-capacity-arithmetic-and-cost": "walkthrough-sizing",
+    "deep-dive-3-state-and-replay": "dive-worker-loop",
+    "deep-dive-4-security-and-operations": "dive-security",
+    "deep-dive-5-variants-and-trade-offs": "dive-documents",
+    "deep-dive-6-evidence-to-collect": "walkthrough-evaluation",
+    "cheat-sheet-intro": "review-path",
+    "cheat-sheet-open-with-the-contract": "review-path",
+    "cheat-sheet-whiteboard-path": "review-path",
+    "cheat-sheet-numbers": "review-numbers",
+    "cheat-sheet-failure-answer": "review-anchors",
+    "cheat-sheet-five-anchors": "review-anchors",
+    "full-pack-intro": "brief-task",
+    "full-pack-1-restate-the-throughput-prompt-as-a-recovery-problem": "walkthrough-framing",
+    "full-pack-2-ask-the-partial-result-question-first": "walkthrough-discovery",
+    "full-pack-3-state-requirements-as-testable-constraints": "walkthrough-requirements",
+    "full-pack-part-2-4-size-from-the-deadline-and-the-tail": "walkthrough-sizing",
+    "full-pack-part-2-5-draw-the-architecture-end-to-end": "walkthrough-architecture",
+    "full-pack-part-2-6-make-duplicate-work-harmless": "walkthrough-duplicates",
+    "full-pack-part-2-7-scope-workers-to-immutable-snapshots": "dive-security",
+    "full-pack-part-3-8-decide-the-failure-policy-before-the-run": "walkthrough-failures",
+    "full-pack-part-3-9-answer-the-4-a-m-question-before-it-is-asked": "walkthrough-4am",
+    "full-pack-part-3-10-defend-four-trade-offs-with-a-verdict-first": "walkthrough-tradeoffs",
+    "full-pack-part-3-11-measure-deadline-duplicates-and-stragglers": "walkthrough-evaluation",
+    "full-pack-part-3-12-roll-out-through-a-load-test-ladder": "walkthrough-rollout",
+    "full-pack-part-4-13-extend-the-anchor-to-the-bank-document-platform": "dive-documents",
+    "full-pack-part-4-14-deliver-it-in-fifty-minutes": "practice-delivery",
+    "full-pack-part-5-15-answer-the-cost-pivots-in-ten-minutes": "dive-cost",
+    "full-pack-part-5-level-calibration": "practice-levels",
+    "full-pack-part-5-key-takeaways": "review-takeaways",
+    "full-pack-part-5-check-yourself": "practice-check",
+    "full-pack-part-5-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "required_anchors": [
+    "brief-scenario",
+    "walkthrough-duplicates",
+    "walkthrough-4am",
+    "dive-worker-loop",
+    "dive-cost",
+    "references"
+  ],
+  "required_figures": [
+    {
+      "id": "figure-core-idea",
+      "path": "source-assets/5a223daf13056ff6.svg",
+      "sha256": "5a223daf13056ff6178ced3807fa6c4b08636538a223a971ebc02f8d3e29ca82"
+    },
+    {
+      "id": "figure-architecture",
+      "path": "source-assets/c379554cc40beaa8.svg",
+      "sha256": "c379554cc40beaa817d5ba4baae1793938b66a7275fd1a0e29ce35fa638af50d"
+    },
+    {
+      "id": "figure-planes",
+      "path": "source-assets/3a31d2fc91217878.svg",
+      "sha256": "3a31d2fc912178782d0e1b5ffa5e47dbf98d1802d3870be956dab5db15a68a3b"
+    },
+    {
+      "id": "figure-control-plane",
+      "path": "source-assets/c2d4e02c0c10dcd7.svg",
+      "sha256": "c2d4e02c0c10dcd7af59ab5cb664fef20a2c1fcfdd9adafb99c3e12972d0d185"
+    },
+    {
+      "id": "figure-data-plane",
+      "path": "source-assets/4a9375e8c75a6fed.svg",
+      "sha256": "4a9375e8c75a6fedd734f070d76dbda8891386b125a0891c425a469841144794"
+    },
+    {
+      "id": "figure-happy-path",
+      "path": "source-assets/0f891b434b2e8616.svg",
+      "sha256": "0f891b434b2e86168a3c30ecb226652c93ed6f5fcae0709ab0f9199db393d267"
+    },
+    {
+      "id": "figure-worker-loop",
+      "path": "source-assets/bd18240a11108be3.svg",
+      "sha256": "bd18240a11108be3e212b1d92f8ff2d0af52581166b635c46c776b7644d6d5a2"
+    },
+    {
+      "id": "figure-4am",
+      "path": "source-assets/05b5e82869f02e6f.svg",
+      "sha256": "05b5e82869f02e6f0a2cd064d443e91a5f81d661e6bee9b3921cedd587ca4632"
+    },
+    {
+      "id": "figure-pdf-pivot",
+      "path": "source-assets/625128cb5604c8e5.svg",
+      "sha256": "625128cb5604c8e5d787fd969ff955605b9a624eec2b06b5ba439e147017871e"
+    }
+  ],
+  "required_answer_reveals": [
+    "answer-restatement",
+    "answer-first-question",
+    "answer-planning-rate",
+    "answer-headroom-growth",
+    "answer-backpressure",
+    "answer-result-key",
+    "answer-checkpoint",
+    "answer-policy-triggers",
+    "answer-console",
+    "answer-bank",
+    "answer-pdf-line",
+    "answer-embedding-diagnosis",
+    "answer-followup-4am",
+    "answer-followup-rebalance",
+    "answer-followup-pay-twice",
+    "answer-followup-partial",
+    "answer-followup-model-version",
+    "answer-followup-cost-ceiling",
+    "answer-followup-batch-api",
+    "answer-followup-format",
+    "answer-drill-crash-timing",
+    "answer-drill-quota-cut"
+  ],
+  "practice_prompts": [
+    {
+      "id": "contract",
+      "label": "Contract and discovery",
+      "hint": "Restate the target, ask the partial-result question and name who owns each decision."
+    },
+    {
+      "id": "sizing",
+      "label": "Sizing from the deadline",
+      "hint": "Derive records/s with headroom, tokens per run and the quota that really limits you."
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture and replay",
+      "hint": "Draw both planes, then explain why a crash after the sink write cannot create a duplicate."
+    },
+    {
+      "id": "recovery",
+      "label": "Failure policy and 4 a.m.",
+      "hint": "Classify failures, find the bottleneck and name the pre-agreed contingency and its owner."
+    },
+    {
+      "id": "rollout",
+      "label": "Evaluation and rollout",
+      "hint": "Pick the scorecard metrics and the gates from benchmark to 10% load."
+    }
+  ],
+  "rubric": [
+    "Restates the prompt as a replayable, cost-controlled batch by deadline and asks the partial-result question before drawing.",
+    "Derives about 4,630 records/s, 5,320 with 15% headroom, and 27B tokens per run, and sizes from the tail rather than the mean.",
+    "Keys results on job_id, record_id and model_version and explains why model_version is in the key.",
+    "Orders the worker as sink write, then checkpoint, then lease acknowledgement, and traces a crash between write and checkpoint.",
+    "Places backpressure and the cost ceiling in the rate-limit coordinator so a quota cut slows leases instead of causing a retry storm.",
+    "Classifies failures as fail closed, degrade, queue or human intervention, and separates transient retries from quarantine.",
+    "Answers the 45%-at-4-a.m. case by finding the bottleneck first and using only a contingency mode agreed with a named owner.",
+    "Gates rollout on a representative token benchmark, 1% and 10% load tests and a rehearsed crash after the sink write."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Scenario: 100M records overnight, publish by 6 a.m., six-hour window; recovery (crashes, throttling, malformed output, 4 a.m. lag) is the hard part; partial-or-hold decided in advance",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two paragraphs of brief-scenario keep the catalogue team, 100M, 6 a.m., six-hour window and the four failure sources, and add who reads the labels (morning operations, from the stakeholder table) so the stakes are concrete."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: snapshot of input plus model/prompt/schema versions, leased partitions, shared rate coordinator, typed validation, idempotency key on job+record+model version, checkpoint after write, retry vs quarantine, live ETA and publish policy",
+      "anchors": [
+        "brief-scenario",
+        "walkthrough-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each mechanism in the overview sentence became a plain definition in the brief-scenario term list (snapshot, partition, lease, idempotency key, checkpoint, quarantine, ETA), then is traced in walkthrough step 5's eight-step partition walk."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Bank document variant adds OCR, schema-constrained extraction, human review and reprocessing by model version; glossary ETA and OCR",
+      "anchors": [
+        "brief-scenario",
+        "dive-documents"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of brief-scenario names the bank variant and expands OCR with the source glossary gloss (where pipelines quietly lose accuracy); ETA is expanded in the term list. Full variant lives in dive-documents."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its five-node diagram (freeze, leased workers classify, validate and write once, on time?, publish all / apply agreed policy), both variants",
+      "anchors": [
+        "figure-core-idea",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-core-idea places both original SVGs (5a223daf light, 1fa18c19 dark) in brief-scenario; the caption repeats the node labels and the following paragraph keeps the source sentence and explains the On time? diamond as a pre-signed rule."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates, especially batch inference or document-processing rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of brief-task keeps the three roles and the batch/document-processing round, and expands FDE using the source glossary definition from section 12."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint (deadline met or handled by policy, no duplicates or silent partial dataset); field follow-ups on capacity, idempotency, retry/quarantine, 4 a.m. runbook, cost, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of brief-task restates the dangerous constraint in full and lists all six follow-up areas in source order."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: queues and worker pools, idempotent writes, rate limits, calling a model through an API",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prerequisite sentence in brief-task keeps all four; the source's pointer to related reviews at the foot of each section is dropped because that navigation does not exist in this format."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions: three mandatory sections in order, mark-as-read, optional Full Design, Quick Review the night before",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Replaced by the reading-guidance paragraph at the end of brief-task (walkthrough in order, deep dives for follow-ups, practice before reopening, quick review the night before); mark-as-read is provided by the reader shell's toggles."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table: Interview Guide, Technical Deep Dive, Quick Review mandatory; five-part Full Design optional",
+      "anchors": [
+        "brief-task",
+        "walkthrough-framing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four old tracks are merged: Interview Guide and Full Design parts 1-12 became walkthrough steps 1-11, Deep Dive and Full Design 13/15 became the deep dives, part 14 and 5 became Practice, Quick Review became Quick review. No sixth Full Design track remains."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Blank-page worksheet exercise after reading",
+      "anchors": [
+        "practice-prompt"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-prompt sets the blank-page task with the six things to cover and states the source's separate worksheet is not imported; the local worksheet is labelled a prototype addition."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Tuesday 6 a.m. trace: ops creates job, versions freeze (no silent prompt tweaks), partition and queue, leases, model labels, typed validation, 429 retries, garbage JSON quarantined, write once then checkpoint, 4 a.m. behind, owner publishes 90% or holds",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example keeps the six-beat narrative as a numbered list with every source beat, then adds an authored, labelled-illustrative table following record r-1042 through the same states, including the 429 and a crash replay."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope: whole path snapshot \u2192 partition \u2192 infer \u2192 validate \u2192 checkpoint \u2192 publish or hold; no chat agent picks the next task; interactive Q&A out of scope",
+      "anchors": [
+        "brief-example",
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example opens with the no-chat-agent statement, gives the arrow path verbatim and closes with interactive Q&A out of scope and the named owner's narrow role; step 5 explains why no autonomous agent is needed."
+      }
+    },
+    {
+      "source_id": "main-the-case-in-one-sentence",
+      "teaching_item": "Case in one sentence and the first design choice: partial results or all-or-nothing",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph beginning 'In one sentence, the case is' in walkthrough step 1 keeps the four clauses and the partial-or-all-or-nothing first choice."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Seven interviewer questions with what each really asks (90% of scores, 200 vs 8k-token tail, rerun Tuesday, 2k RPM and EU residency, 429 vs bad JSON, 4 a.m. fallback authority, incremental vs whole ordered file) and the decision each drives; RPM glossary",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First table in walkthrough step 2 reproduces all seven rows and three columns with the concrete examples intact; RPM is defined in the sentence introducing the table with the source note that providers cap requests and tokens separately."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional list: create/inspect/pause/replay, freeze config, partition, validate typed output, write once, retry or quarantine, reconcile and publish by policy",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of step 3 lists all seven functional items in plain prose before the F1-F8 table."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Non-functional targets: deadline, bounded cost and provider calls, tenant isolation and auth, durable checkpoints with opaque queue IDs, observable ETA and ownership; illustrative throughput 4,630/5,320 rec/s, 27B tokens, 5% retries, 10x 53,200",
+      "anchors": [
+        "walkthrough-requirements",
+        "walkthrough-sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the step 3 NFR table: Reliability and Operability rows are the guide's, Security and Cost rows combine both sources; the illustrative throughput numbers are derived in step 4 with the 'replace token assumptions with the customer's distribution' caveat kept."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut answer to 'What are the requirements?'",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 3 quotes the shortcut answer word for word."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Model classifies; deterministic orchestration owns partitioning, deadlines, retries, publication; no autonomous agent; LLM glossary",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of step 5 keeps the division of labour, expands LLM, and adds why no agent is needed (the next task is always the next manifest partition)."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Eight-step architecture walk and its diagram (scheduler/job API through ETA forecast + operations console), both variants",
+      "anchors": [
+        "figure-architecture",
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-architecture (c379554c/ff77c6b0) sits directly above the numbered list that follows one partition through all eight source steps, including the (job_id, record_id, model_version) upsert and checkpoint-then-ack rule."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-trade-offs",
+      "teaching_item": "4 a.m. with 45% done: forecast should alert earlier; diagnose compute, hot partitions, quota, sink; concurrency only with headroom; split deterministically; approved fallback or partial only by policy; stop leases, preserve checkpoints, page owner; never silently publish partial",
+      "anchors": [
+        "walkthrough-4am"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps every lever and the never-silently-publish rule, and adds an illustrative calculation (assuming a midnight start) showing 7,640 rec/s needed vs 3,125 observed and 5,320 planned."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-trade-offs",
+      "teaching_item": "Exactly-once effect vs physical exactly-once execution: leases + idempotent sink + checkpoint-after-write give one logical result per key",
+      "anchors": [
+        "walkthrough-duplicates"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of step 6 states the exactly-once-effect claim and the warning against claiming physical exactly-once; the authored crash-point table shows the effect at four crash moments."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-trade-offs",
+      "teaching_item": "Scale, latency and cost: shard immutable manifest, autoscale to measured rec/s, batch within output size and tail latency, global rate control; track tokens/record, retry spend, cost/million, queue age, forecast",
+      "anchors": [
+        "walkthrough-tradeoffs",
+        "dive-capacity"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sharding/autoscaling/batching/global-rate-control sentence follows the trade-off table in step 9; the tracking list closes dive-capacity."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-trade-offs",
+      "teaching_item": "Cost pivots (hash and skip unchanged PDFs, incremental indexing) must not weaken correctness; document variant adds validation, OCR, schema checks, confidence rules, human review, lineage, versioned reprocessing; format drift first-class risk",
+      "anchors": [
+        "dive-cost",
+        "dive-documents"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost's first paragraph keeps the must-not-weaken-correctness condition; dive-documents' stage table carries every added stage and its closing four-part answer treats format drift as a data-quality incident."
+      }
+    },
+    {
+      "source_id": "main-evaluation-and-rollout",
+      "teaching_item": "Metrics: completion before deadline, predicted vs actual ETA, throughput, skew, duplicate-key conflicts, retry/quarantine, typed validity, quota errors, cost per million",
+      "anchors": [
+        "walkthrough-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The scorecard table plus the following 'Around those headline metrics' paragraph in step 10 together list every metric named in the guide."
+      }
+    },
+    {
+      "source_id": "main-evaluation-and-rollout",
+      "teaching_item": "Tests and rollout: representative token sizes, crash after sink write before ack, ramp to 1% and 10%, exercise quota and sink failures, contingency owner and missed-deadline decision before launch",
+      "anchors": [
+        "walkthrough-evaluation",
+        "walkthrough-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Crash-after-write-before-ack test is the last paragraph of step 10; the ramp is the step 11 ladder table; 'assign the contingency owner and write down the missed-deadline decision' follows that table."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer from the interview guide",
+      "anchors": [
+        "practice-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted in full inside the 'Two-minute answer, from the interview guide' disclosure in practice-spoken, labelled as a first-person script."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Old navigation note pointing to Main guide and Cheat Sheet",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only; replaced by the reading-guidance paragraph in brief-task. No teaching content lost."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-contract-before-machinery",
+      "teaching_item": "Output contract first: complete-only or partial, permanently bad records, fallback models, change approval are product decisions a queue cannot make; store policy with job",
+      "anchors": [
+        "dive-contract"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of dive-contract lists the four customer decisions and the store-with-job rule so operators cannot improvise."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-contract-before-machinery",
+      "teaching_item": "Idempotent job creation; create/status/pause/replay-failures with authorisation; ETags for operator actions; job pins snapshot, manifest, versions, deadline, publication rule; lineage for one result and the whole run",
+      "anchors": [
+        "dive-contract"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph and the API table in dive-contract carry each item; the closing paragraph adds what an ETag is and the two-operators-pressing-pause example."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-capacity-arithmetic-and-cost",
+      "teaching_item": "4,630/5,320/53,200 arithmetic; 270 tokens \u2192 27B per run, checked as 100M \u00d7 270 not tokens/s \u00d7 one hour; include retries, long tail, output variance",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 derives 21,600 s, 4,630 and 5,320 explicitly, gives the 10x table, and keeps the 'check it as records times tokens, not tokens/s times an hour' warning and the retries/tail/variance list."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-capacity-arithmetic-and-cost",
+      "teaching_item": "Provider tokens/s quota as the real ceiling while CPUs idle; plan with p50/p95 tokens, latency, batch efficiency, throttling, sink throughput, hot partitions; ETA = remaining / effective throughput adjusted for stragglers; average-rate graph hides failure",
+      "anchors": [
+        "walkthrough-sizing",
+        "dive-capacity"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph on quota ceilings keeps the measured-distribution list; dive-capacity opens with the ETA formula and adds a 5:55 hot-partition example showing how an average hides a miss, citing MapReduce."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-state-and-replay",
+      "teaching_item": "Immutable snapshot; deterministic bounded partition IDs; ID-only queue messages; lease expiry makes crashed work visible; unique key turns reprocessing into upsert",
+      "anchors": [
+        "dive-worker-loop",
+        "walkthrough-duplicates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of dive-worker-loop keeps each mechanism; the key-as-upsert point is in step 6."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-state-and-replay",
+      "teaching_item": "Commit output before checkpoint, checkpoint before ack; replay safe but may pay another model call, track replay cost",
+      "anchors": [
+        "walkthrough-duplicates"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 states the three-part order, then the authored crash-point table shows each crash position and its cost, ending with 'Track replay cost as its own number'."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-state-and-replay",
+      "teaching_item": "Transient (throttling, network, temporary sink outage) with backoff, jitter, capped retries; validation failures and invalid records quarantined with reason and lineage; reconciliation compares manifest, unique results and quarantine; publish only when counts and policy agree",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of step 7 defines transient vs permanent with jitter explained; the reconciliation paragraph near the end of step 7 keeps the three counts and the counts-and-policy publish condition."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-security-and-operations",
+      "teaching_item": "Encryption, tenant isolation, scoped snapshots and credentials, no full payloads in queues or logs, record operator actions and model version changes",
+      "anchors": [
+        "dive-security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third and fourth paragraphs of dive-security carry each control, merged with section 7's opaque-identifier rule."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-security-and-operations",
+      "teaching_item": "Per-tenant coordinator prevents starvation; global controls protect provider quota; circuit breaking keeps durable pending work",
+      "anchors": [
+        "dive-security",
+        "walkthrough-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rate-control paragraph in dive-security keeps both layers and the circuit-breaker behaviour; step 7 defines circuit breaker in plain words."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-security-and-operations",
+      "teaching_item": "4 a.m. operations: required throughput, limiting stage, add workers only with provider and sink capacity, deterministic straggler split, fallback changes semantics so approved and versioned, stop leasing and report exact incomplete count, partial publication is a pre-set business rule",
+      "anchors": [
+        "walkthrough-4am"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 computes the required throughput, lists the four bottlenecks and four levers with the fallback-semantics and deterministic-ID conditions, and the stop-leasing paragraph keeps 'the exact incomplete count'."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-variants-and-trade-offs",
+      "teaching_item": "Bank variant: file validation, OCR/multimodal, classification, schema extraction, confidence, human review; lineage to source pages; reprocessing by model version",
+      "anchors": [
+        "dive-documents"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-documents stage table and the page-lineage sentence after it carry each item."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-variants-and-trade-offs",
+      "teaching_item": "Nightly PDF: hash dedupe, changed only, cheaper batch model with stronger-model audits; embedding spike: incremental indexing first; shortcuts must not hide permanent failures or erase provenance",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost first paragraph keeps the hide-failures/erase-provenance condition; the two cards carry the PDF and embedding levers."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-evidence-to-collect",
+      "teaching_item": "Evidence list: throughput, tokens/s, throttles, lease retries, oldest queued partition, predicted completion, unique committed, quarantine reasons, sink p95, cost per million, replay spend",
+      "anchors": [
+        "walkthrough-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every item appears in the scorecard table or the 'Around those headline metrics' paragraph of step 10."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-evidence-to-collect",
+      "teaching_item": "Rollout on representative distribution then 1%, 10%, higher; inject crash after write, quota exhaustion, sink outage; a clean demo run does not prove recovery",
+      "anchors": [
+        "walkthrough-evaluation",
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of step 10 keeps the three injected failures and the clean-demo sentence; step 11's ladder carries the load stages."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Old navigation links (Main, Deep Dive, Unchanged source)",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; the Quick review section replaces the cheat-sheet card."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-open-with-the-contract",
+      "teaching_item": "Opening question about 6 a.m. and partial results, then token distribution, quotas, permanent errors, fallback approval, replay/version",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of review-path keeps the quoted question and the five follow-on topics, plus the restatement."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path arrow chain; model classifies, orchestration owns workflow; checkpoint only after sink write",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of review-path keeps the full arrow chain and both rules."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers",
+      "teaching_item": "4,630/5,320, 27B tokens at 270/record before retries, 53,200 at 10x, confirm against measured distributions",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-numbers keeps each figure and adds the 250/20 token split, 1.43M tokens/s, and the 5% retry and free-429 cost notes taught in step 4."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-answer",
+      "teaching_item": "4 a.m. failure answer in one breath",
+      "anchors": [
+        "review-anchors"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of review-anchors keeps forecast, four inspections, headroom condition, approved fallback or labelled partial by policy, preserve checkpoints and page owner."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-anchors",
+      "teaching_item": "Five anchors (snapshot, unique key, retry vs quarantine, ETA/oldest partition/throttles/cost/reconciliation, document variant) and the 60-second close",
+      "anchors": [
+        "review-anchors"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered five-anchor list and the quoted sixty-second close in review-anchors."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Opening framing (finish 100M without paying twice or losing replay; the 4 a.m. decision is the hard part) and the four-prompt group table",
+      "anchors": [
+        "brief-task",
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task's group table keeps all four members and what each contributes, re-pointed to the new destinations; the 4 a.m. framing opens brief-scenario."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-throughput-prompt-as-a-recovery-problem",
+      "teaching_item": "Three stakeholder voices; verbatim restatement used as an interviewer checkpoint; technology-neutral opening; weak vs corrected opening",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 keeps the three quoted voices, bolds the restatement, quotes the technology-neutral opening and both weak and corrected lines."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-throughput-prompt-as-a-recovery-problem",
+      "teaching_item": "Stakeholder table (5 roles \u00d7 workflow, pain, gives, owns) and the decision-division paragraph; SLA glossary",
+      "anchors": [
+        "walkthrough-framing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Stakeholder table in step 1 has all five rows and columns; the following paragraph keeps the three 'does not decide' statements and expands SLA with the source gloss."
+      }
+    },
+    {
+      "source_id": "full-pack-2-ask-the-partial-result-question-first",
+      "teaching_item": "Gap is the test; partial question first; late-but-correct vs silent drop/duplicate; sets retry, checkpoint cadence, last-10% spend; eleven-row design-axis table",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 opening paragraphs keep the argument; the second table reproduces all eleven question/axis rows."
+      }
+    },
+    {
+      "source_id": "full-pack-2-ask-the-partial-result-question-first",
+      "teaching_item": "Stated-assumption script and the three assumption risks (dependent records, strict-completion tenant, batch API semantics)",
+      "anchors": [
+        "walkthrough-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted assumption script and the following paragraph naming each risk and how it breaks the design."
+      }
+    },
+    {
+      "source_id": "full-pack-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Feature vs constraint vs mechanism; F1-F8 functional table",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of step 3 and the F1-F8 table, all eight rows."
+      }
+    },
+    {
+      "source_id": "full-pack-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable NFR table with RPS formula, stragglers definition, correctness, quality, freshness, security, compliance, cost (5% retries, storms double)",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 NFR table merges these eight rows with the guide's targets; the formula is introduced with h defined, and the straggler and retry-storm qualifications are kept in their rows."
+      }
+    },
+    {
+      "source_id": "full-pack-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Must/should/could ladder; MVP fence (five exclusions) and why; requirement-to-design traceability table; MVP glossary",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ladder paragraph, MVP paragraph with all five exclusions and the expanded MVP gloss, and the ten-row traceability table in step 3."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-size-from-the-deadline-and-the-tail",
+      "teaching_item": "Naive first pass; live derivation 21,600 s \u2192 4,630 \u2192 5,320; scenario table; 10x as fragility test; headroom vs growth; tokens 250+20=270 drive partitioning; spoken uncertainty",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 covers each in order, with the two-row scenario table and the uncertainty quote verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-size-from-the-deadline-and-the-tail",
+      "teaching_item": "Supplementary V2 cost formula: ~1.43M tokens/s, 27B tokens, price per million \u2192 per run \u2192 \u00f7100 per million records; retries re-spend, 429 free; headroom and stragglers as cost; ceiling in coordinator",
+      "anchors": [
+        "dive-capacity",
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-capacity keeps the source's 'supplementary, not chapter content' attribution, lays the formula out as a step table, and adds a labelled illustrative $0.10/M-token price giving $2,700 per run, $27 per million records and $135 for 5% retries."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Layer truths (planner/queue/sink); control plane vs data plane and why drawn apart; planes diagram",
+      "anchors": [
+        "walkthrough-architecture",
+        "figure-planes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraphs on layer truths and planes, then figure-planes (3a31d2fc/40c57c47) whose caption lists both planes' boxes."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Trust-boundary notes and the control-plane and data-plane detail diagrams (opaque lease IDs, coordinator owns grant/delay and backpressure, model may time out, 429 or return invalid output)",
+      "anchors": [
+        "figure-control-plane",
+        "figure-data-plane"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-control-plane (c2d4e02c/014998f7) and figure-data-plane (4a9375e8/b16280a8) each follow the paragraph carrying their source note."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Nine-component table with responsibility, state owned and failure mode (closed vs degrades)",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table in step 5, all nine rows, with an added one-line definition of closed versus degrades."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Seven-step happy path and its diagram; balanced by processing cost not row count",
+      "anchors": [
+        "figure-happy-path",
+        "walkthrough-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-happy-path (0f891b43/b41aac05) above the seven steps; step 5 teaches the sink write first, then the checkpoint (the source's step 5 wording had checkpoint first, against its own write-then-checkpoint rule; resolved 2026-11-16, status kept since all seven steps are kept), with one neutral sentence that the figure labels step 5 by its checkpoint alone."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Three trust boundaries; MVP components vs later items; speak in obligations",
+      "anchors": [
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of step 5."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-duplicate-work-harmless",
+      "teaching_item": "Crashed worker redoes work; upsert makes it harmless; three records table (BatchJob, Partition, InferenceResult) with keys and lifecycles; input_snapshot as ownership boundary; why not just record_id",
+      "anchors": [
+        "walkthrough-duplicates",
+        "dive-contract"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 carries the harmless-duplicate argument and the why-not-record_id answer; dive-contract has the three-record table with every field and lifecycle state and the input_snapshot paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-duplicate-work-harmless",
+      "teaching_item": "Four-endpoint API contract table (idempotent create, same-key-different-payload conflict, not-found hiding, ETag pause, privileged replay-failures)",
+      "anchors": [
+        "dive-contract"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "API table in dive-contract, all four endpoints; the paragraph after it ties the conflict and 404 rules to the IETF, Stripe, RFC 9110 and OWASP references."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-duplicate-work-harmless",
+      "teaching_item": "Idempotency at every write boundary (create, lease renewal, result write, pause/replay); versioning keeps old and new results distinguishable",
+      "anchors": [
+        "walkthrough-duplicates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-bullet list and the versioning paragraph at the end of step 6."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-duplicate-work-harmless",
+      "teaching_item": "Worker loop and its diagram: lease, read once, batches of 64, limiter before call, typed validation, upsert, checkpoint after write, complete after all batches; TransientError vs ValidationError branches",
+      "anchors": [
+        "figure-worker-loop",
+        "dive-worker-loop"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-worker-loop (bd18240a/efe0c86d) then a seven-step walk naming each call in the diagram; added that upsert key=record_id is the full triple with job and model fixed, and why a second malformed answer is surfaced rather than retried."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-make-duplicate-work-harmless",
+      "teaching_item": "Contract test and crash-after-upsert test (distinct record_id equals row count); named omissions",
+      "anchors": [
+        "dive-worker-loop"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of dive-worker-loop, with all eight omissions listed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-scope-workers-to-immutable-snapshots",
+      "teaching_item": "Snapshot as main control; three jobs (retry ambiguity, replayable evidence, blast radius per tenant); opaque queue metadata; encrypted least-privilege stores; checkpoint state sensitive; record model/code/schema/deployment versions",
+      "anchors": [
+        "dive-security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First four paragraphs of dive-security keep each control and the 'why does today differ from yesterday' use case."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-scope-workers-to-immutable-snapshots",
+      "teaching_item": "Supplementary compliance answer: purpose limitation and minimisation, HIPAA audit controls, SEC 17a-4 / SOX, SOC 2 voluntary; processing-basis field; necessary not sufficient; HIPAA, SEC, SOX glossary",
+      "anchors": [
+        "dive-security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bulleted framework list in dive-security, attributed to the V2 author as supplementary, with each acronym expanded and linked to the source references, followed by the processing-basis field and necessary-not-sufficient sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-decide-the-failure-policy-before-the-run",
+      "teaching_item": "Failure policy definition; four-policy table with triggers; memorise one trigger per row",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 opening, the four-row policy table and the classify-on-the-spot advice."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-decide-the-failure-policy-before-the-run",
+      "teaching_item": "Five drills \u00d7 detect, contain, recover, prevent; never push harder; ownership statement",
+      "anchors": [
+        "walkthrough-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row drill table in step 7 with all four columns, then the never-push-harder paragraph and the quoted ownership statement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-answer-the-4-a-m-question-before-it-is-asked",
+      "teaching_item": "Console's three questions; find bottleneck, smallest intervention; temporary vs persistent throttling; 4 a.m. diagram",
+      "anchors": [
+        "walkthrough-4am",
+        "figure-4am"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps the three questions and the lever order; figure-4am (05b5e828/ecbd663a) follows the throttling paragraph and the sentence after it explains that both branches preserve state."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-answer-the-4-a-m-question-before-it-is-asked",
+      "teaching_item": "Five contingency modes agreed before launch by product owner and operations lead; partial-acceptance regimes and mixed vintages; rebalance hot partition; avoid paying twice",
+      "anchors": [
+        "walkthrough-4am"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-item contingency list, the partial-results paragraph (mixed vintages defined), and the final paragraph on rebalancing and ambiguous timeouts in step 8."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-defend-four-trade-offs-with-a-verdict-first",
+      "teaching_item": "Verdict first, no slogans; four trade-off verdicts; riskiest assumption (even backlog, stable runtime) and the agree-don't-defend reply",
+      "anchors": [
+        "walkthrough-tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 table with all four verdicts and the quoted skew reply."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-measure-deadline-duplicates-and-stragglers",
+      "teaching_item": "'The job finished' proves little; seven-metric scorecard with proof, calculation, threshold, owner",
+      "anchors": [
+        "walkthrough-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 opening and the seven-row, five-column scorecard."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-measure-deadline-duplicates-and-stragglers",
+      "teaching_item": "Top-down dashboard (headline, levers, correctness) and audiences; four evaluation layers; ML glossary",
+      "anchors": [
+        "walkthrough-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dashboard paragraph and four-layer paragraph in step 10; ML platform appears as a scorecard owner."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-roll-out-through-a-load-test-ladder",
+      "teaching_item": "Seven-stage ladder with gates and owners; benchmark first; FDE glossary",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 ladder table, all seven stages, and the paragraph on why the benchmark comes first; FDE defined in brief-task."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-roll-out-through-a-load-test-ladder",
+      "teaching_item": "Risk register; blunt go/no-go; canary, rollback, migration, training, support, docs; configuration / adapters / common service / core product split",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row risk register, go/no-go paragraph, launch-plan paragraph and reusable-value paragraph close step 11."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-extend-the-anchor-to-the-bank-document-platform",
+      "teaching_item": "Bank prompt, decomposition, discussion topics; stage-to-anchor mapping table",
+      "anchors": [
+        "dive-documents"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First three paragraphs and the eight-row mapping table in dive-documents."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-extend-the-anchor-to-the-bank-document-platform",
+      "teaching_item": "Batch vs online per workflow; new-format follow-up as detect, contain, recover, prevent",
+      "anchors": [
+        "dive-documents"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of dive-documents, with the four parts bolded; added the Textract per-page pricing reference to explain page-band partitioning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Opening judgement question and script; fifty-minute timeline; running out of time scores weak",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-delivery quotes the opening, keeps the eight-phase table with old section numbers re-pointed to walkthrough steps, and the scoring warning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Two-minute answer-key script and ninety-second V2 summary",
+      "anchors": [
+        "practice-spoken"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both quoted in full in separate labelled disclosures in practice-spoken; source em dashes kept as quotation."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Three answer tiers (weak, average, strong) and eight round-carrying lines",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Tier paragraph and the eight quoted lines in practice-delivery."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Eight follow-ups with answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each follow-up is its own answer-reveal in practice-followups (answer-followup-4am through answer-followup-format); two authored drills after them are labelled as authored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-15-answer-the-cost-pivots-in-ten-minutes",
+      "teaching_item": "PDF card: discovery questions, five-row card, strong answer pipeline and diagram, throughput-vs-latency trade-off; SLA glossary",
+      "anchors": [
+        "dive-cost",
+        "figure-pdf-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost PDF paragraph, the five-row card table, then figure-pdf-pivot (625128cb/3f125065) with a sentence on the reuse-last-summary branch."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-15-answer-the-cost-pivots-in-ten-minutes",
+      "teaching_item": "Embedding card: causes, five-row card, changed vs embedded comparison, indexing budget, model version in cache key; links to anchor; four verbs measure, route, bound, cache safely",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Embedding paragraph, card table, diagnosis paragraph, anchor-link paragraph and four-verb paragraph close dive-cost."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Levels separate on 4 a.m. ownership and replay reach; senior/staff/principal sounds-like and missing",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-levels keeps the framing sentence and the three-row table verbatim in its cells."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-takeaways lists all fifteen in source order with light grammatical edits."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Twelve self-check questions with answers",
+      "anchors": [
+        "practice-check"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All twelve source questions are answer-reveals in practice-check (answer-restatement through answer-embedding-diagnosis) with the source answers intact; four carry a one-line authored extension after the source answer."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Twelve fact-check references (checked 27 Sep 2026) with what each supports; HIPAA glossary",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "references section lists all twelve links with their claims; each is also cited beside its claim in dive-contract, dive-capacity, dive-security or dive-documents."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Read all 49 captured sections of the batch pipeline source (intro, interview guide, six deep-dive topics, cheat sheet and the five-part full design) and mapped each to the new structure in 90 item-level rows. The guide and full design repeated the sizing, architecture and 4 a.m. material; these were consolidated into eleven walkthrough steps that keep both versions' distinct details (the guide's 2k RPM, EU residency and 8k-token examples alongside the full design's eleven-axis table; the guide's Reliability and Operability targets merged into the full design's testable NFR table). Added teaching: a term list in the brief, an illustrative r-1042 record trace, a crash-point table for the write-checkpoint-ack order, an illustrative 4 a.m. rate calculation (7,640 rec/s needed vs 3,125 observed, assuming a midnight start) and a labelled illustrative cost price. Kept the source's attribution of the cost formula and compliance frameworks to a supplementary V2 author. The original worksheet was not part of the capture and is not imported; the local worksheet is labelled as an addition. Source inconsistencies resolved in text (2026-11-16): the happy-path step 5 text listed checkpoint before the sink write, against the source's own write-then-checkpoint rule (data-plane figure, flow steps, tests, sixty-second close) \u2192 step 5 now teaches write first, then checkpoint, and the meta note was replaced by one neutral sentence saying the hashed figure labels step 5 by its checkpoint alone."
+  }
+}

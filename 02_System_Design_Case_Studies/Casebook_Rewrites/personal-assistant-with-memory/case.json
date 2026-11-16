@@ -1,0 +1,754 @@
+{
+  "title": "Personal Assistant That Remembers You",
+  "slug": "personal-assistant-with-memory",
+  "subtitle": "Design a memory layer that recalls each user's preferences and past tasks within 300 ms, keeps users apart and forgets on request.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/personal-assistant-with-memory",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief-scopes",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "guide-intro": "brief-task",
+    "guide-1-clarify-what-remembers-you-means-before-choosing-a-store": "discovery",
+    "guide-2-state-requirements-as-testable-constraints": "requirements",
+    "guide-3-size-the-memory-before-the-model": "sizing",
+    "guide-4-draw-the-architecture-end-to-end": "architecture",
+    "guide-5-separate-four-scopes-and-give-each-its-own-key": "scopes",
+    "guide-6-bound-what-the-model-sees-on-every-turn": "context",
+    "guide-part-2-7-write-facts-in-place-and-events-by-appending": "writes",
+    "guide-part-2-8-prune-episodes-into-a-digest-not-into-nothing": "pruning",
+    "guide-part-2-9-search-with-an-index-not-a-scan": "search",
+    "guide-part-2-10-spend-the-300-ms-budget-deliberately": "latency",
+    "guide-part-2-11-take-user-id-from-auth-never-from-the-model": "privacy",
+    "guide-part-2-12-measure-recall-not-fluency": "evaluation",
+    "guide-part-2-13-name-the-failure-modes-before-they-do": "failures",
+    "guide-part-2-14-score-yourself-against-the-rubric": "interview",
+    "guide-part-3-15-deliver-it-in-forty-five-minutes": "practice-start",
+    "guide-part-3-level-calibration": "interview",
+    "guide-part-3-16-answer-the-cost-pivot-in-ten-minutes": "cost",
+    "guide-part-3-check-yourself": "practice-checks",
+    "guide-part-3-references": "references",
+    "guide-part-3-key-takeaways": "review",
+    "intro": "case-brief",
+    "guide": "walkthrough",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Promises and constraints",
+      "hint": "Name the four promises, the 300 ms question and what must never be stored."
+    },
+    {
+      "id": "design",
+      "label": "Scopes, keys and the turn",
+      "hint": "Give each scope its key, write rule and lifetime, then trace one turn through read, reply and write."
+    },
+    {
+      "id": "failures",
+      "label": "Bounds, isolation and failures",
+      "hint": "Bound prompt and storage separately, say where user_id comes from, and name how the design breaks."
+    },
+    {
+      "id": "evaluation",
+      "label": "Proof and cost",
+      "hint": "Describe the recall harness and answer the cost pivot."
+    }
+  ],
+  "rubric": [
+    "Separates thread-scoped memory from user-scoped long-term memory and names the key for each scope.",
+    "Gives semantic facts stable keys with one prior version and episodes fresh keys with a cap and digest.",
+    "Names an embedding index filtered by user for episodes, and key reads for facts.",
+    "Shows the read path fits in 300 ms p95 in parallel and moves every write after the reply.",
+    "Takes user_id from auth only and makes forget and account deletion reach every store, index and cache.",
+    "Says what is not persisted and how a contradicting preference is handled.",
+    "Proves recall with planted facts across turns and conversations, plus false-memory and cross-user tests."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Weeks-long memory, 300 ms read budget, privacy; bigger context window does not solve it",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-3 keep the weeks-later recall examples, the 300 ms p95 limit (p95 now defined), the flat-prompt, isolation and delete-everywhere requirements, and explain why a context window is rebuilt per turn and cannot remember anyone."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Four scopes, parallel reads, bounded prompt, queued writes, identity from auth",
+      "anchors": [
+        "brief-scopes"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Four scopes, one turn' defines thread, session, semantic and episodic memory with their keys, defines checkpointer, TTL and namespace, and states that user_id comes from the authenticated session."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the one-turn flow diagram",
+      "anchors": [
+        "brief-scopes",
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Core-idea sentence kept as the rule after figure-1-0; the figure's six labels (user turn, resolve from auth, read four scopes in parallel, assemble bounded prompt, reply, write from queue) are restated in its caption and alt text."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of 'What you need to design' names the same audience and the assistant/copilot/agent round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Learning objectives",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same paragraph lists the objectives: end-to-end explanation from the four scopes and keys, plus follow-ups on read budget, write rules, pruning, index search, isolation, recall measurement and cost."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites, LLM definition",
+      "anchors": [
+        "brief-task",
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prerequisites (context windows, key-value stores, vector search, latency budgeting) kept in brief-task; LLM is expanded at first use in the brief instead of a glossary tooltip."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old part-by-part reading and read-toggle instructions dropped as navigation; the useful advice (score against the rubric, rehearse the 45-minute plan with a timer, reread level calibration and takeaways the night before) is kept and pointed at Practice and Quick review."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, 3 parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old one-row navigation table replaced by the five-section shell; its topic list is covered by the brief-task task statement."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Four scopes not one database; scope has key, write rule, failure",
+      "anchors": [
+        "brief-scopes"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scopes defines a scope as a kind of memory with its own key, write rule, lifetime and way of going wrong."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Source provenance table, shortness of the source, sizing as assumptions, verbatim prompt",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Verbatim prompt kept as a blockquote; four-row provenance table kept with section numbers rewritten to this casebook's anchors; 'about 25 lines, no diagram, no sizing and no cost' and 'figures are assumptions' kept. The earlier draft had dropped the verbatim prompt; it is restored."
+      }
+    },
+    {
+      "source_id": "guide-1-clarify-what-remembers-you-means-before-choosing-a-store",
+      "teaching_item": "Four promises and six clarifying questions",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 keeps the four promises, the six-row question table unchanged, and the rule to answer the 300 ms question yourself: reads on the critical path, writes after the reply. Adds that checkpointing the turn stays durable while promotion is deferred."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint; F1-F6",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 keeps the 'remembers preferences' vs 'recalls a preference stated 30 days ago' contrast, explains why the second is testable, and keeps F1-F6 unchanged."
+      }
+    },
+    {
+      "source_id": "guide-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Seven non-functional constraints with source markers; requirement owners",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both tables kept with the (source)/(source take-home) markers; the lead-in now says which four come from the source. Added paragraph explains how F5 makes memory a product surface and how 'within seconds' freshness permits queued writes."
+      }
+    },
+    {
+      "source_id": "guide-3-size-the-memory-before-the-model",
+      "teaching_item": "Sizing table and arithmetic",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All ten rows kept (the scrubbed '\u2014' cell now reads 'Starting assumption'); the chain is walked in prose (30M/86,400 \u2248 350, 3\u00d7 peak, 2,100 reads, 100M episodes \u00d7 4 KB \u2248 400 GB, 2 folds/day \u2248 2M calls \u2248 7%), with a caveat that 400 GB excludes index, metadata and replicas."
+      }
+    },
+    {
+      "source_id": "guide-3-size-the-memory-before-the-model",
+      "teaching_item": "Three conclusions: cap bounds index, latency depends on index, summary threshold is cost lever",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three conclusions are kept as a bold-led list with the 5M/day growth and ~2,100 reads/s figures attached."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Organising rule and the whole-system request-path diagram",
+      "anchors": [
+        "architecture",
+        "figure-11-0"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 opens with resolve, read, assemble, reply, then write. figure-11-0 (source asset 09d4..., labelled 'the whole system' in the source) has a new caption and a paragraph that walks client, gateway, identity, five parallel reads, context builder, tools, streamed reply, checkpoint and enqueue. The previous draft captioned all three figures identically."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Async write-path diagram",
+      "anchors": [
+        "architecture",
+        "figure-11-1"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-11-1 (2620...) caption and the following paragraph trace memory writer with one prior version, episode writer append-embed-index, summariser at ~15 turns, pruner at 100 and digest, and deletion across every store and index, matching the diagram labels."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Control-plane bullets and the three-lane second drawing",
+      "anchors": [
+        "architecture",
+        "figure-11-2"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both bullets (version policy, caps, threshold, TTL, extraction prompts, residency, eval gates; monitor without memory text) kept as a paragraph with the reason each is versioned. figure-11-2 (ea76...) is placed after it, as in the source, with a caption naming the control plane, request path under 300 ms and async write lane."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Fourteen-component table with failure behaviour",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged. New paragraph groups the 'fails how' column into fail-closed (gateway, identity, deletion), degrade, and retry; keeps the source's 're-extracted next turn' recovery and adds the caveat that it depends on the user speaking again."
+      }
+    },
+    {
+      "source_id": "guide-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three boundaries: isolation, latency, write",
+      "anchors": [
+        "architecture",
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Missing from the earlier draft; now a three-item list in step 4 (identity service, parallel fan-out, queue) with the source reasons, and repeated in Quick review."
+      }
+    },
+    {
+      "source_id": "guide-5-separate-four-scopes-and-give-each-its-own-key",
+      "teaching_item": "thread_id vs user_id; four-scope table",
+      "anchors": [
+        "scopes"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps 'which conversation' vs 'which person', both failure directions, and the six-column table unchanged; adds a paragraph reading each write/read rule as a pair, using the ~50 facts and 100 episodes from sizing."
+      }
+    },
+    {
+      "source_id": "guide-5-separate-four-scopes-and-give-each-its-own-key",
+      "teaching_item": "Short-term is scope not lifetime; 30-day retention case study",
+      "anchors": [
+        "scopes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored the 'short-term describes scope, not lifetime' point (the draft lacked it), tied it to F6, and kept the case study's 30-day retention and its two reasons, labelled as that deployment's choice."
+      }
+    },
+    {
+      "source_id": "guide-5-separate-four-scopes-and-give-each-its-own-key",
+      "teaching_item": "Procedural memory, approval gate, self-approval gotcha; enterprise knowledge out of memory",
+      "anchors": [
+        "scopes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Procedural memory paragraph keeps 'out of scope unless asked', human approval and the tool-argument self-approval gotcha. Enterprise paragraph restores the source's contrast (mildly wrong personalisation vs wrong answer, different cadences)."
+      }
+    },
+    {
+      "source_id": "guide-6-bound-what-the-model-sees-on-every-turn",
+      "teaching_item": "Linear growth of replay; three-option table; summarisation plus window",
+      "anchors": [
+        "context"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps the ~15-turn threshold, the table unchanged and the choice of summarisation with recent raw turns; adds a labelled illustrative turn-40 example of flat prompt size."
+      }
+    },
+    {
+      "source_id": "guide-6-bound-what-the-model-sees-on-every-turn",
+      "teaching_item": "Summariser drop failure; semantic store as safety net; two gotchas",
+      "anchors": [
+        "context"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Volunteered failure mode, preferred_name safety-net example, trimmed-prompt/untrimmed-checkpoint and summary-reset-without-merge-rule gotchas all kept as separate paragraphs."
+      }
+    },
+    {
+      "source_id": "guide-6-bound-what-the-model-sees-on-every-turn",
+      "teaching_item": "Fixed prompt order and prefix cache",
+      "anchors": [
+        "context"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-part order kept verbatim; prefix cache now defined, and the cost section's 'user scope in every cache key' rule is linked here."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-write-facts-in-place-and-events-by-appending",
+      "teaching_item": "Stable keys for facts, fresh keys for events",
+      "anchors": [
+        "writes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 opens with the source rule pair and the call-me-Sam example, and explains how random keys produce duplicate facts."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-write-facts-in-place-and-events-by-appending",
+      "teaching_item": "Conflict handling with one prior version, timestamp and source turn",
+      "anchors": [
+        "writes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Overwrite with one version back, 'you told me X last month, now Y', timestamp and source turn kept; mention-or-ask on contradiction drawn from the failure table and follow-up."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-write-facts-in-place-and-events-by-appending",
+      "teaching_item": "What is not persisted; window-seat example",
+      "anchors": [
+        "writes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Raw tool outputs and one-off details stay episodic until restated; both window-seat sentences kept."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-write-facts-in-place-and-events-by-appending",
+      "teaching_item": "Rule vs model-driven writer, MemGPT, extractor behind policy on the queue",
+      "anchors": [
+        "writes"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored the MemGPT self-editing comparison and 'run the extractor on the write queue, never on the reply path' (both absent from the draft); links the policy filter to step 1's barred categories. Task-identity and user-turn-only additions are labelled as this casebook's."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-prune-episodes-into-a-digest-not-into-nothing",
+      "teaching_item": "100-episode cap, rolling digest, background pruner",
+      "anchors": [
+        "pruning"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pruning deep dive keeps 'because nothing else will', the 100 cap, the four-Lisbon-trips digest example and the background pruner on the write path; adds that the digest is approximate and that a lagging pruner raises the alert from the component table."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-prune-episodes-into-a-digest-not-into-nothing",
+      "teaching_item": "Session TTL, sliding expiry, LangGraph sweep gotcha (checked Sep 2026)",
+      "anchors": [
+        "pruning"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sweep-not-read-check behaviour, SqliteStore, default PostgresStore, omit_expired and InMemoryStore-has-no-TTL kept with the September 2026 date and the sweeper/age-check fix; adds a recheck-on-deploy note."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-search-with-an-index-not-a-scan",
+      "teaching_item": "Index vs scan; 1,000+ items; demos that skip the index (10 vs 10,000)",
+      "anchors": [
+        "search"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Search deep dive keeps 5 vs 500, the embedding index on both namespaces at 1,000+ items under 300 ms, and restores the paragraph on simple demos (10 vs 10,000 memories) that the draft dropped."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-search-with-an-index-not-a-scan",
+      "teaching_item": "Four search shapes; fetch ~50 facts by key; graph memory not by default",
+      "anchors": [
+        "search"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; following paragraph explains the ~50-facts fetch, the mandatory user_id filter, why the allergy question needs exact lookup and when graph memory earns its cost. Replaced the draft's confusing sentence about rubric namespaces."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-spend-the-300-ms-budget-deliberately",
+      "teaching_item": "Memory as a dependency; latency budget table",
+      "anchors": [
+        "latency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency deep dive restores 'budget memory like any other dependency'; table unchanged; new paragraph explains why the total is the longest chain (5+40+60+10) with key and checkpoint reads finishing inside the embed+search branch, plus the caveat that summed p95s are a plan, not a measurement."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-spend-the-300-ms-budget-deliberately",
+      "teaching_item": "Why writes leave the critical path; cross-conversation freshness; timeouts and logged misses",
+      "anchors": [
+        "latency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Checkpoint-already-has-it argument, cross-conversation-only freshness and 'answer without it and log the miss' kept; queue-age monitoring added."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-take-user-id-from-auth-never-from-the-model",
+      "teaching_item": "user_id from server-side session; debugging both namespace bugs; channel identity",
+      "anchors": [
+        "privacy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Identity deep dive keeps 'anything the model can set, a prompt can set', audit namespace derivation first, thread_id-as-namespace collapse, and channel resolution at the identity layer."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-take-user-id-from-auth-never-from-the-model",
+      "teaching_item": "Governance table",
+      "anchors": [
+        "privacy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row table unchanged; follow-up paragraph explains why the settings page queries rows rather than a model summary and why sharding by user makes residency follow. Deletion-marker safeguard labelled as an addition."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-measure-recall-not-fluency",
+      "teaching_item": "Fluent invention worse than asking; take-home harness; cross-thread extension",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 restores 'a fluent answer that invents a preference is worse than one that asks again' and 'few worked examples... building it is the strong move'; harness and thread A/B week-later extension kept."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-measure-recall-not-fluency",
+      "teaching_item": "Eight-metric table and gating rule",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; added paragraph maps each metric to the mechanism it tests and defines recall@k; gate on extraction prompt, threshold and cap kept."
+      }
+    },
+    {
+      "source_id": "guide-part-2-13-name-the-failure-modes-before-they-do",
+      "teaching_item": "Ten failure modes",
+      "anchors": [
+        "failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged. The draft's paragraph that merely restated each row was replaced with one that says where each failure becomes observable (stored state, latency by tenure, cross-user tests, answer-level evals, source-turn provenance)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-14-score-yourself-against-the-rubric",
+      "teaching_item": "Eight verbatim rubric lines mapped to sections",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rubric table kept verbatim (em dash restored in the conflicts line after an earlier scrub broke it); 'Answered in' now links to this casebook's anchors."
+      }
+    },
+    {
+      "source_id": "guide-part-2-14-score-yourself-against-the-rubric",
+      "teaching_item": "Seven-point strong answer",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-row table kept with ~15 turns, 100, 1,000+ and 300 ms intact."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-deliver-it-in-forty-five-minutes",
+      "teaching_item": "45-minute plan",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-phase plan restored as a table (draft had compressed it to one sentence) with links to the relevant steps; 'model choice is a sentence' kept."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The draft replaced the source's spoken answer with a shorter paraphrase; the full source text is restored in a labelled disclosure."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Seven lines that carry the round",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Missing from the draft; all seven lines restored with the source's (source) markers."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Eight skeptical-staff-engineer follow-ups",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Moved from a table into eight worked-answer reveals (answer-13 to answer-20). Each opens with the source answer verbatim (the draft had reworded the one-table answer) and adds a short explanation tied to the casebook."
+      }
+    },
+    {
+      "source_id": "guide-part-3-16-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost-drill card",
+      "anchors": [
+        "cost",
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row card unchanged in the cost deep dive, and rehearsed as the pivot reveal answer-21."
+      }
+    },
+    {
+      "source_id": "guide-part-3-16-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Hidden-context cost driver, FDE line, four verbs",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored the paragraph on teams ignoring system prompt and hidden history, the FDE non-engineer line and the measure/route/bound/cache sequence (all absent from the draft), with a closing recall check."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Lead sentence and three-row table kept unchanged."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Sixteen takeaways",
+      "anchors": [
+        "review",
+        "review-numbers",
+        "review-close"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review's three groups carry every takeaway: promises and read budget, testable requirements, cap and summary cost, the one-diagram flow, four scopes, summary plus recent turns, write rules, cap and sweeper, key vs index reads, 115 ms, auth identity and governance, recall vs fluency, failure list, eight-line rubric and 45 minutes, and the cost line."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Twelve self-check questions with answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All twelve kept as reveals answer-1 to answer-12; each body starts with the source answer text (the draft had rewritten several) and adds one short explanation from the casebook."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Four fact-check references dated 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four links kept with the source's one-line finding for each (refresh_on_read, get not filtering, explicit sweeper, MemGPT function calls) and the check date."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 28 captured sections against the earlier draft paragraph by paragraph. The draft had dropped the verbatim prompt, the three architecture boundaries, 'short-term is scope not lifetime', MemGPT and extractor-on-queue, the 10-vs-10,000 demo point, 'budget memory like any dependency', the hidden-context cost paragraph, FDE line and four verbs, the seven round-carrying lines and the source's two-minute answer (replaced by a paraphrase); all are restored. It gave all three section-4 diagrams one identical caption; each now has a caption and walkthrough matching its labels, with the 'whole system' pair before the control-plane bullets and the three-lane drawing after, as in the source. Check-yourself answers were reworded and follow-ups were a table: all 12 checks and 8 follow-ups are now reveals that start from the source answer, plus the cost pivot and one labelled authored drill (22 total). Restating paragraphs under the failure table and in the brief were replaced with explanation (latency longest-chain arithmetic, where each failure is observable, sizing chain). A scrubbed em dash had left a ', ' table cell and broken the verbatim rubric line; both fixed. Authored additions (illustrative trace, deletion marker, task identity, 400 GB overhead caveat) are labelled."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-10",
+    "answer-11",
+    "answer-12",
+    "answer-13",
+    "answer-14",
+    "answer-15",
+    "answer-16",
+    "answer-17",
+    "answer-18",
+    "answer-19",
+    "answer-20",
+    "answer-21",
+    "answer-22"
+  ]
+}

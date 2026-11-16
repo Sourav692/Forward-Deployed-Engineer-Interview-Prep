@@ -1,0 +1,937 @@
+{
+  "title": "Enterprise Coding Assistant",
+  "slug": "enterprise-coding-assistant",
+  "subtitle": "Complete private-repository code with bounded context, scoped caches, task routing and validated output.",
+  "theme": "Agents and Copilots in Real Workflows",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief",
+    "intro-the-sections": "brief",
+    "main-intro": "brief-example",
+    "deep-dive-intro": "brief",
+    "cheat-sheet-intro": "brief",
+    "cheat-sheet-one-sentence": "review",
+    "full-pack-intro": "brief",
+    "main-1-questions-to-ask-the-interviewer": "discovery",
+    "cheat-sheet-ask-first": "discovery",
+    "full-pack-1-set-the-latency-budget-before-drawing-anything": "discovery",
+    "main-2-requirements-functional-non-functional": "requirements",
+    "cheat-sheet-numbers": "requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "deep-dive-1-context-and-index-design": "index",
+    "full-pack-3-map-the-context-signals-and-who-may-see-them": "index",
+    "main-3-architecture": "architecture",
+    "cheat-sheet-flow": "architecture",
+    "full-pack-4-draw-the-architecture-end-to-end": "architecture",
+    "main-4-context-cache-and-model-routing": "context",
+    "full-pack-part-2-5-funnel-the-context-never-send-the-repository": "context",
+    "deep-dive-2-cache-correctness-and-invalidation": "cache",
+    "full-pack-part-2-6-cache-first-retrieve-on-a-miss": "cache",
+    "deep-dive-3-task-routing-llm-role-and-validation": "routing",
+    "full-pack-part-2-7-route-by-task-not-by-default": "routing",
+    "full-pack-part-2-8-validate-every-suggestion-before-it-reaches-the-editor": "routing",
+    "deep-dive-4-budget-arithmetic-and-scale": "latency",
+    "full-pack-part-2-9-decompose-the-300-ms-and-say-the-arithmetic-aloud": "latency",
+    "deep-dive-5-security-and-telemetry": "security",
+    "cheat-sheet-five-rules": "review-rules",
+    "full-pack-part-2-10-keep-source-code-out-of-everything-it-does-not-need": "security",
+    "main-5-failure-scale-and-cost": "failure",
+    "cheat-sheet-failure-card": "failure",
+    "full-pack-part-2-11-degrade-on-everything-except-access": "failure",
+    "main-6-evaluation-and-rollout": "evaluation",
+    "deep-dive-6-evaluation-failures-and-rollout": "evaluation",
+    "cheat-sheet-evaluation-and-rollout": "evaluation",
+    "full-pack-part-3-12-gate-the-release-on-acceptance-and-safety-not-fluency": "evaluation",
+    "full-pack-part-3-13-roll-out-one-repository-at-a-time": "evaluation",
+    "deep-dive-7-cost-pivot": "pivot",
+    "full-pack-part-4-15-answer-the-latency-pivot-in-ten-minutes": "pivot",
+    "main-7-interview-answer-to-rehearse": "interview",
+    "full-pack-part-3-14-deliver-it-in-sixty-minutes": "interview",
+    "full-pack-part-4-level-calibration": "interview",
+    "full-pack-part-4-check-yourself": "practice-start",
+    "full-pack-part-4-references": "references",
+    "full-pack-part-4-key-takeaways": "review",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "constraints",
+      "label": "Constraints and discovery",
+      "hint": "Which answers set the 300 ms budget, the context scope and the privacy boundary?"
+    },
+    {
+      "id": "keystroke",
+      "label": "Trace a keystroke",
+      "hint": "Follow a cache hit and a miss from extension to editor, naming each permission check."
+    },
+    {
+      "id": "failure",
+      "label": "Failures and the cost pivot",
+      "hint": "Which failures go silent, which fail closed, and what do you measure when the bill rises?"
+    },
+    {
+      "id": "release",
+      "label": "Evaluation and rollout",
+      "hint": "What proves productivity and zero leaks before you add the next repository?"
+    }
+  ],
+  "rubric": [
+    "States the 300 ms p95 and the private-repository boundary before drawing components.",
+    "Places the permission-scoped completion cache before embedding, retrieval and the model, and still validates hits.",
+    "Narrows context through a funnel and keys retrieval to code-host ACLs checked at indexing and again at retrieval.",
+    "Routes by declared IDE task: small model for inline completion, larger model on an isolated slow lane.",
+    "Validates syntax, APIs against the symbol index, secrets, licence and unsafe patterns, and stays silent when validation is unavailable.",
+    "Adds 10 + 40 + 200 + 50, notes there is no headroom and separates first token from full completion.",
+    "Proves value with acceptance slices plus a matched-control productivity comparison, and gates release on zero leaks.",
+    "Answers the cost pivot by measuring input and output tokens before changing models."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Two opposing constraints (300 ms before next keystroke; private repository permissions), the funnel-cache-validate-silence design and the enterprise variant",
+      "anchors": [
+        "brief",
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 define IDE, ghost text, p95, code host and ACL before stating both constraints and 'a suggestion built from a repo the developer cannot clone is a leak'; brief-task carries the enterprise variant (incremental indexing, ACLs, licensing, productivity proof) and the separate explain/refactor lane."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea 'tiny permitted context, suggest fast, validate or stay silent' and its decision figure",
+      "anchors": [
+        "brief",
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The one-line rule is quoted in brief paragraph 3 directly before figure-1-0 (both SVG variants); the caption and following paragraph explain the 'show nothing' branch, which the draft had only captioned generically as 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates for low-latency or private-code rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of brief-task names the same audience and round types; old standalone heading folded into prose."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on index, cache, routing, validation, latency, security, evaluation, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 lists the same eight follow-up areas and the 'start from the dangerous constraint' objective; the draft had dropped objectives entirely."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed background: retrieval/embeddings/code indexing, caching, LLM serving, latency budgets, cloud basics",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same prerequisite list in brief-task paragraph 3, with LLM expanded on first use."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (three mandatory sections, mark-as-read, optional Full Design)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation; replaced by the five-section shell. No teaching content beyond reading order, which the new sections supersede; aliased to the brief."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Deep Dive, Quick Review, optional Full Design)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only. Its per-section content summaries are all realised as walkthrough steps, deep dives and Quick review; Full Design material is distributed rather than kept as a sixth track."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Intern Alex keystroke trace: identity, tiny context, ACL-scoped cache/retrieval, recheck, ~200 ms small model, gate, timeout silence, explain on slow path, accept logging without source, no training without contract",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New brief-example section turns the source's terse Alex trace into six numbered steps plus the explain-this and training-consent paragraph. The draft had omitted Alex entirely; every step (including the pre-model recheck and the ~200 ms figure) is now present."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope statement: one slice (fast inline complete plus slower explain/test), not 'send the monorepo'; design funnel and budget first",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 1 states the slice, 'design the context funnel and the latency budget first' and both prohibitions (whole repo, cross-boundary snippet)."
+      }
+    },
+    {
+      "source_id": "main-1-questions-to-ask-the-interviewer",
+      "teaching_item": "Seven discovery questions with 'what it's really asking' and the decision each changes (incl. AWS key, 10 a.m. keystroke storm)",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The full seven-row table was missing from the draft and is restored in walkthrough step 1, introduced by the 'everything is a way of spending 300 ms' lead."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first recall list (p95, IDEs, whole-repo, ACL, on-prem, consent, validation, peak load, productivity)",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Ask first' paragraph lists all nine items."
+      }
+    },
+    {
+      "source_id": "full-pack-1-set-the-latency-budget-before-drawing-anything",
+      "teaching_item": "Original Copilot-style prompt and enterprise narrowing",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 2 lists the six capabilities and five mechanisms the prompt names, then the enterprise narrowing."
+      }
+    },
+    {
+      "source_id": "full-pack-1-set-the-latency-budget-before-drawing-anything",
+      "teaching_item": "Five answered discovery questions table and their implications",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second table in step 1 kept verbatim; the following paragraph explains what three IDEs, 'whole repo within reason' and on-prem each force."
+      }
+    },
+    {
+      "source_id": "full-pack-1-set-the-latency-budget-before-drawing-anything",
+      "teaching_item": "Weak answer (one big-model call) vs strong retrieval-augmented, context-engineered answer and the two-minute framing quote",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 closing paragraphs give the three failures of the weak answer, the five-part strong answer and the quoted opening line."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Six functional requirements, UX-on-miss and fail-closed security constraints, interview shortcut",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 defines functional vs non-functional, lists the six behaviours as bullets, adds a paragraph for the UX-on-miss and fail-closed rows that the full-pack table lacks, and closes with the quoted shortcut answer. The draft had dropped the functional list and the shortcut."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "'A requirement that cannot fail a test is a preference', MoSCoW must/should split, personalisation later",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 opens with the preference-vs-constraint line, defines MoSCoW in plain words, lists the five must-haves and all eight should-haves."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraint table and requirement-to-component ownership table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both source tables kept verbatim in step 2 with captions; a following paragraph separates first token, full completion and validated display and states plainly that nothing is shown before validation passes (buffer or validate incrementally), resolving the stream-before-validate tension."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers",
+      "teaching_item": "Numbers card: p95 300 ms, 10/40/200/50 sums to the limit, first token <100 ms example, cost per thousand",
+      "anchors": [
+        "review",
+        "latency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Numbers' paragraph reproduces each figure with the headroom qualification; step 7 carries the arithmetic in full."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-context-and-index-design",
+      "teaching_item": "Signals each cost tokens and carry a permission; symbol/file/dependency chunks; incremental on push; delete stale helpers; two-layer ACL; vector search is not an existence check; cross-repo needs access to every snippet",
+      "anchors": [
+        "index"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3: signal table followed by a paragraph on where risk concentrates; an illustrative token-window example for symbol chunking; the two-layer rule paragraph; and a final paragraph on the symbol index doing existence checks that vector search cannot."
+      }
+    },
+    {
+      "source_id": "full-pack-3-map-the-context-signals-and-who-may-see-them",
+      "teaching_item": "Context signal/cost/permission table, practice-prompt indexing additions, re-index on push not schedule, link to EKA two-layer rule",
+      "anchors": [
+        "index"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Signal table verbatim in step 3; 'deleted this morning' example and Enterprise Knowledge Assistant cross-reference retained in prose."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Eight-step architecture, neither model decides access, agent-role boundary (Tool-Using Agent case controls)",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 restores the eight steps as a numbered list (missing in the draft), states that neither model decides access or unsafe display, and keeps the acting-agent paragraph with allowlisted tools, scoped credentials, write approval and audit."
+      }
+    },
+    {
+      "source_id": "main-3-architecture",
+      "teaching_item": "Compact three-lane architecture diagram",
+      "anchors": [
+        "architecture",
+        "figure-10-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-10-0 (both variants) sits after the eight steps; alt text and caption now name the lanes, safe-hit and miss branches read from the SVG rather than 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-flow",
+      "teaching_item": "Flow recall: on push, on keystroke, explicit tasks, agent role",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review third paragraph recalls the push and keystroke flows, the slow lane and the acting-agent boundary."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Organising rule, load-bearing exact cache, valid hit skips to validation, measure hit rate",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of step 4 states all four bullets in prose."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Source's verbatim diagram and its different cache rejoin at the prompt builder",
+      "anchors": [
+        "figure-35-0",
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-35-0 kept unedited; its caption states that in the design a valid hit skips the model and goes to output validation, while this drawing routes a hit back to the prompt builder. The separate correction paragraph is removed."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Planes-and-lanes drawings: indexing, hot path, slow path; control-plane versioning and observability bullets",
+      "anchors": [
+        "figure-35-1",
+        "figure-35-2",
+        "figure-35-3",
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three lane figures each get a specific caption. The hot-path SVG draws its hit edge 'reuse validated completion' straight to the editor; the separate paragraph flagging this is removed and the hot-path caption now says in one sentence that validation also runs on the cache-hit path. Control-plane and observability bullets follow as prose."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Second full-flow drawing (control plane above three lanes, observability)",
+      "anchors": [
+        "figure-35-4",
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-35-4 with a caption listing its control-plane items and 'events not source'."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Fourteen-component table and three boundaries (shared funnel/index only, trust boundary at retrieval, code crosses network once)",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table verbatim with a lead pointing at the 'fails how' column; the three boundaries are a separate paragraph after it."
+      }
+    },
+    {
+      "source_id": "main-4-context-cache-and-model-routing",
+      "teaching_item": "Funnel order, local signals beat history, code-aware chunks, symbol map checks API existence, cache before embedding, task type from user action",
+      "anchors": [
+        "context",
+        "cache",
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Split by topic: funnel and high-value signals in step 5, symbol-map existence check in step 3, cache placement and prefix/embedding caches in the cache deep dive, 'task type from user action, refactor never ahead of keystrokes' in step 6."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-funnel-the-context-never-send-the-repository",
+      "teaching_item": "calculate_total keystroke walk, compute_gst semantic example, five named concepts, distraction cost, first-token monitoring",
+      "anchors": [
+        "context",
+        "figure-36-0"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 places figure-36-0 (caption names the millions-of-tokens start and each exclusion), walks the keystroke over three paragraphs including accept/partial/reject/alternatives, lists the five concepts as bullets, and keeps 'bill rises with flat traffic' and the frozen-UI reason."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-cache-correctness-and-invalidation",
+      "teaching_item": "Cache before embedding; exact vs semantic false equivalence; key fields; ACL change invalidates; still validated; prefix/embedding caches; false-hit budget; cross-scope hit is an incident",
+      "anchors": [
+        "cache"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cache deep dive explains exact and semantic matching separately before comparing, gives a labelled illustrative near-identical completion, lists every key field, and adds 'disable and purge' from the failure card."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-cache-first-retrieve-on-a-miss",
+      "teaching_item": "What gets cached (boilerplate, algorithms, popular APIs), prefix cache re-tokenises only the tail, semantic invalidation neighbourhood problem, quoted line",
+      "anchors": [
+        "cache"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "These three items were missing from the draft and are restored in the cache deep dive paragraphs 1, 4 and 6; the source quote closes the section."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-task-routing-llm-role-and-validation",
+      "teaching_item": "Router reads IDE task type; hot-path speedups; LLM proposes, validator decides; slow-path static analysis; retrieved comments are data; acting-agent boundary",
+      "anchors": [
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 paragraphs on routing and validation carry each item; hot-path speedups are listed once in step 7's levers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-route-by-task-not-by-default",
+      "teaching_item": "Routing and context collection are the same trade; task-to-model table; trade-off table",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both tables verbatim in step 6, with the 'same kind of trade' lead and a concrete keystroke-vs-menu-action example of declared task type."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-validate-every-suggestion-before-it-reaches-the-editor",
+      "teaching_item": "Validation steps, hallucinated APIs vs symbol index, three practice-prompt checks, 'ignore previous instructions' injection example, tool-free residual risk, destination allowlist",
+      "anchors": [
+        "routing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 restores the exact injection comment (absent in the draft), the memorised-secret caveat (lowers risk, cannot promise never, per Huang et al.) and the destination allowlist; the sandboxing of generated tests is labelled as our addition."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-budget-arithmetic-and-scale",
+      "teaching_item": "10+40+200+50 leaves no p95 margin; SLO; first token vs full; suppress late; stateless/sharded/async/autoscale; slow refactors cannot consume the queue; index binds first, measure shard p95 and churn",
+      "anchors": [
+        "latency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 shows the sum, defines SLO, adds a labelled illustrative trim, and ends with the 10x prediction framed as something to measure."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-decompose-the-300-ms-and-say-the-arithmetic-aloud",
+      "teaching_item": "Budget table, streaming fixes perceived latency only, eight levers, scaling to millions (CDN, multi-region, batching)",
+      "anchors": [
+        "latency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Budget table verbatim; all eight levers as a bullet list; scaling paragraph keeps CDN, batching and the 10 a.m. burst. A labelled note adds data-residency limits on multi-region."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-security-and-telemetry",
+      "teaching_item": "Code flow host-index-prompt-editor; mask and rescan; encryption; private deployment; consent; telemetry fields; hashes not code; diagnose drift without a second code store",
+      "anchors": [
+        "security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security deep dive paragraphs 1-2 and the telemetry paragraphs carry each item; the hash caution is labelled as ours."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-keep-source-code-out-of-everything-it-does-not-need",
+      "teaching_item": "'Judged on how little moves', six controls incl. audit logs, hash to match repeated complaints, telemetry out of breach scope, IP/licensing concern",
+      "anchors": [
+        "security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six controls as bullets; the complaint-matching hash, breach-scope argument and licensing concern each have their own sentence."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Five rules' numbered list restates all five."
+      }
+    },
+    {
+      "source_id": "main-5-failure-scale-and-cost",
+      "teaching_item": "Failure table responses, 10x partitioning/autoscale/rate limits, trace list, trim before upgrading model, streaming caveat",
+      "anchors": [
+        "failure",
+        "latency"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure responses merged into the deep-dive table; trace list and 'trim context and cap length before a stronger model' close the failure deep dive; scale items and the streaming caveat live in step 7."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-card",
+      "teaching_item": "Failure card incl. 'cache crosses scope: incident, disable and purge'",
+      "anchors": [
+        "review-rules",
+        "cache"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review failure card recalls all six lines; 'disable and purge' (dropped in the draft) is also in the cache deep dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-degrade-on-everything-except-access",
+      "teaching_item": "Degrade to silence on availability, fail closed on permission; eight-row failure table; index breaks first at 10x",
+      "anchors": [
+        "failure"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure deep dive leads with the wrong-vs-breach reasoning, keeps the table verbatim, traces the vector-DB-down and stale-mirror rows, and adds a labelled qualification that ACL changes need invalidation independent of pushes. The 10x paragraph is in step 7."
+      }
+    },
+    {
+      "source_id": "main-6-evaluation-and-rollout",
+      "teaching_item": "Acceptance slices, matched control, zero-leak gates, first token <100 ms example, nightly regression for repointed alias, six-stage rollout sequence, no training without consent",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 covers each; the six-stage sequence from cache/local-context to more repositories is spelled out in the rollout paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-evaluation-failures-and-rollout",
+      "teaching_item": "Evaluation ladder, slices, permission-different developers, zero-leak gate separate, deleted completion cost, failure responses, rollout gates",
+      "anchors": [
+        "evaluation",
+        "failure"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ladder and gates in step 8; failure responses consolidated into the failure deep dive table."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-evaluation-and-rollout",
+      "teaching_item": "Evaluation and rollout recall with memory line",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Evaluation and rollout' paragraph and closing memory line."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-gate-the-release-on-acceptance-and-safety-not-fluency",
+      "teaching_item": "Acceptance as product metric; metrics table with owners; productivity comparison with power in advance; LLM variance; four-rung ladder with gpt-4o alias example",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Metrics table verbatim; ladder as a numbered list keeping the gpt-4o alias example, with a note that model names are dated examples."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-roll-out-one-repository-at-a-time",
+      "teaching_item": "Week-one shape (one repo, three access levels, leak test) and week-by-week gate table",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rollout table verbatim after the week-one paragraph; a closing paragraph explains why silent mode matters."
+      }
+    },
+    {
+      "source_id": "main-7-interview-answer-to-rehearse",
+      "teaching_item": "Rehearsed interview answer and memory line",
+      "anchors": [
+        "interview",
+        "answer-two-minute"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Its index-on-push, early cache and rollout points are summarised in the third paragraph of the answer-two-minute reveal, with the memory line quoted."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute plan table",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with phases remapped to this casebook's step names instead of old section numbers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Three-sentence close and two-minute spoken answer",
+      "anchors": [
+        "answer-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both quoted in full inside the answer-two-minute reveal, labelled as the source's spoken example. The draft had replaced them with a shorter paraphrase."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Eight lines that carry the round",
+      "anchors": [
+        "answer-lines"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight lines in the answer-lines reveal; absent in the draft."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Nine follow-ups with answers",
+      "anchors": [
+        "interview",
+        "followup-leak",
+        "followup-latency",
+        "followup-personalise",
+        "followup-insecure",
+        "answer-1",
+        "answer-2",
+        "answer-4",
+        "answer-6",
+        "answer-8"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four unique follow-ups became their own reveals with full source answers; the five that duplicate Check Yourself questions were merged into answers 1, 2, 4, 6 and 8, whose question text now uses the follow-up wording. The interview section states this mapping."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Six weak-answer repairs",
+      "anchors": [
+        "answer-weak-repairs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each of the six repairs listed in the answer-weak-repairs reveal; the draft had compressed them into one sentence."
+      }
+    },
+    {
+      "source_id": "deep-dive-7-cost-pivot",
+      "teaching_item": "Input/output token drivers and remedies; global downgrade is the wrong response",
+      "anchors": [
+        "pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pivot deep dive paragraphs 2-3 and the final paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-15-answer-the-latency-pivot-in-ten-minutes",
+      "teaching_item": "Pivot card, cursor-line undercount, requests-not-tokens, too-low cap, four verbs",
+      "anchors": [
+        "pivot",
+        "answer-pivot-drill"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Card table now has real column headers (the draft's were empty); the four verbs are a numbered list; a new answer-pivot-drill reveal rehearses the whole answer in order."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-level-calibration",
+      "teaching_item": "Senior/Staff/Principal calibration and what waits for discovery",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Calibration table verbatim with the source's lead sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review",
+        "review-rules"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review covers them across 'flow and numbers', five rules, failure card, evaluation and the 'takeaways to recall' paragraph; each takeaway is taught in full in the walkthrough or deep dives first."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-check-yourself",
+      "teaching_item": "Nine self-check questions with answers",
+      "anchors": [
+        "practice-start",
+        "answer-1",
+        "answer-2",
+        "answer-3",
+        "answer-4",
+        "answer-5",
+        "answer-6",
+        "answer-7",
+        "answer-8",
+        "answer-9"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All nine are native answer reveals in source order; answers keep the source content and add the validated-hit, first-token and measure-the-prediction qualifications."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-references",
+      "teaching_item": "Eight references with fact-check date and per-reference claim; mean-vs-p95 provenance",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each link now carries the claim it supports (the draft listed bare links); the 27 Sep 2026 date and the sub-200 ms mean vs 300 ms p95 note lead the list."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Context-engineering-before-model framing, group composition table",
+      "anchors": [
+        "brief-task",
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The framing closes brief-task; the group table is in the references deep dive with section numbers explained as source numbering."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep-dive intro (backs the spoken answer with sections 3-13)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; the mechanisms it introduces are in the deep dives."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet intro",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; replaced by Quick review."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One-sentence summary",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The source's one-sentence summary opens Quick review almost word for word, with LLM already expanded earlier."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 Nov 2026: re-read all 51 captured sections against the earlier teach-mode draft section by section. The draft had omitted the intern Alex keystroke trace, the seven-question discovery table, the six functional requirements and interview shortcut, the eight-step architecture list, the 'what gets cached' and semantic-invalidation points, the 'ignore previous instructions' injection example, the two-minute answer, three-sentence close, eight carry lines and six weak-answer repairs; all are restored. Telegraphic draft prose was rewritten into full sentences with terms (ghost text, ACL, p95, MoSCoW, SLO, CDN) defined on first use. Figure captions and alt text were rewritten from each SVG's actual labels; inspecting the hot-path lane showed its cache hit bypasses validation. Follow-ups that duplicated Check Yourself were merged into those answers and the rest became reveals; added illustrative values and our own cautions are labelled. Coverage now has 64 rows with section-specific evidence. Source inconsistencies resolved in text (2026-11-16): hot-path figure's cache hit going straight to the editor vs the text's hit-to-validation rule \u2192 validation on every path, because the text, the compact and wide figures and the Check Yourself answer all route hits through validation; the figure stays unedited and its caption says in one neutral sentence what it leaves out. Original vertical figure's hit rejoining the prompt builder \u2192 caption states the design (hit skips the model, goes to validation); correction meta-paragraph removed. Stream-before-validate tension \u2192 nothing shown before validation passes (buffer or incremental validation); the 'our note, not the source's' label removed."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "followup-leak",
+    "followup-latency",
+    "followup-personalise",
+    "followup-insecure",
+    "answer-two-minute",
+    "answer-lines",
+    "answer-weak-repairs",
+    "answer-pivot-drill"
+  ]
+}

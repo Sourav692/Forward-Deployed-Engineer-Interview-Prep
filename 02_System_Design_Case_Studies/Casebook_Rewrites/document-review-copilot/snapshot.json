@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "d7932c329fd05cfbd22c809951e1b7b7c7def0c518d98a3831beafacad5b71a2",
+  "html_sha256": "ced6f951576abc7b5161938755f7fed917802bd119f100ef7508c0abe7405042",
+  "config_sha256": "4071c9edeabdd8f64b3eb43094e237d194e89eca890890508066f3b8baa3bbf6",
+  "source_url": "https://forwarddeployedprep.com/design/document-review-copilot",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 50,
+    "coverage_rows": 56,
+    "worked_answers": 11,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced. Per-item coverage preserves the source mechanisms, numbers and qualifications. Source inconsistencies resolved in text (2026-11-16): component table let the case be served when audit storage is down, while the requirements demand an immutable audit for final decisions \u2192 preparation may continue audit-pending, but final approval or external transition waits for a durable audit record, because the requirements, the approval workflow's fail-closed posture and the stakeholder table all require the audit for decisions; the table's audit-row cell is the one retained-table edit, and the 'source tension / design clarification' paragraph now states the rule plainly."
+    }
+  }
+}

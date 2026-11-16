@@ -1,0 +1,1230 @@
+{
+  "title": "Evaluation and Release Gating",
+  "slug": "evaluation-and-release-gating",
+  "subtitle": "Design one shared gate that passes, blocks or holds prompt and model changes for 30 AI applications, without letting a strong average hide a failing critical slice.",
+  "theme": "Delivery, Evaluation, and Operations",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "gate-brief",
+    "intro-the-core-idea": "brief-example",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-start",
+    "main-intro": "brief-example",
+    "main-the-case-in-one-sentence": "restate",
+    "main-questions-to-ask-the-interviewer": "discovery",
+    "main-requirements-functional-non-functional": "requirements",
+    "main-architecture": "architecture",
+    "main-gate-logic-and-the-failure-to-remember": "gate-logic",
+    "main-grader-trust-cost-and-rollout": "grader",
+    "main-two-minute-interview-answer": "delivery",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-decision-contract-and-stakeholders": "restate",
+    "deep-dive-2-data-model-and-load": "dive-records",
+    "deep-dive-3-evaluation-design": "gate-logic",
+    "deep-dive-4-incident-aggregate-success-slice-failure": "dive-incident",
+    "deep-dive-5-trust-boundary-and-failure-policy": "dive-trust-boundary",
+    "deep-dive-6-rollout-and-economics": "rollout",
+    "cheat-sheet-intro": "review-path",
+    "cheat-sheet-ask-first": "review-path",
+    "cheat-sheet-whiteboard-path": "review-path",
+    "cheat-sheet-numbers": "review-path",
+    "cheat-sheet-gate-rules": "review-rules",
+    "cheat-sheet-incident-to-cite": "review-rules",
+    "cheat-sheet-cost-close": "review-rules",
+    "full-pack-intro": "gate-brief",
+    "full-pack-1-restate-the-ask-as-a-release-decision": "restate",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "full-pack-3-size-the-gate-against-the-release-window": "sizing",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "architecture",
+    "full-pack-part-2-5-pin-every-input-and-compare-against-a-baseline": "baseline",
+    "full-pack-part-2-6-decide-on-four-dimensions-and-fail-closed": "dive-decision-code",
+    "full-pack-part-2-7-calibrate-the-grader-before-letting-it-gate": "grader",
+    "full-pack-part-3-8-gate-on-slices-not-on-the-aggregate": "slices",
+    "full-pack-part-3-9-walk-through-the-regression-the-suite-missed": "dive-incident",
+    "full-pack-part-3-10-answer-the-two-neighbouring-prompts-with-the-same-gate": "dive-upgrade-regression",
+    "full-pack-part-3-11-fail-closed-on-evidence-degrade-on-dashboards": "failure-policy",
+    "full-pack-part-4-12-roll-out-one-application-and-earn-trust": "rollout",
+    "full-pack-part-4-13-deliver-it-in-fifty-minutes": "delivery",
+    "full-pack-part-5-14-cut-the-eval-bill-without-blinding-the-gate": "dive-cost",
+    "full-pack-part-5-level-calibration": "practice-level",
+    "full-pack-part-5-key-takeaways": "review-takeaways",
+    "full-pack-part-5-check-yourself": "practice-start",
+    "full-pack-part-5-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Restate the ask and discovery",
+      "hint": "Turn the dashboard request into a release decision, name the four stakeholders and the questions that change the design."
+    },
+    {
+      "id": "design",
+      "label": "Sizing and architecture",
+      "hint": "Size against the release window and trace one candidate through the control and data planes."
+    },
+    {
+      "id": "decision",
+      "label": "Gate logic, slices and graders",
+      "hint": "State the four checks, block versus hold, slice minimums and how the grader earns trust."
+    },
+    {
+      "id": "delivery",
+      "label": "Incident, rollout and cost",
+      "hint": "Explain how the gate catches the sales-copilot regression, how it rolls out, and how you cut the eval bill."
+    }
+  ],
+  "rubric": [
+    "Restates the ask as a pass/block/hold decision with an owner, threshold and record, not a dashboard.",
+    "Sizes 3M executions and 6-15M calls a day against a six-hour window, not the daily average.",
+    "Separates the control plane from the sandboxed data plane and reads only validated results.",
+    "Compares \u0394 against a pinned baseline on four separate dimensions, judging quality on a lower bound and safety on a floor.",
+    "Distinguishes missing evidence (block) from thin evidence (hold) and never passes by default.",
+    "Requires each critical slice to pass with a minimum size, citing the 96.7% / 83.3% sales-copilot incident.",
+    "Calibrates the versioned LLM grader against humans and keeps it advisory until agreement holds.",
+    "Cuts eval cost by tiering and judge routing without thinning critical slices."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "30 apps, pass/block/hold decision, trust problem",
+      "anchors": [
+        "gate-brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Case brief opening restates the 30-application prompt/model churn, names pass/block/hold, and explains why a dashboard does not decide; LLM gloss becomes the LLM grader definition in the term list."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "96.7%/120 aggregate hiding 83.3% six-case slice; same gate answers two neighbouring prompts",
+      "anchors": [
+        "gate-brief",
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of #gate-brief keeps 96.7% of 120, six regulated-claim cases at 83.3% and 1.2%->8.7%; #brief-task names the 'model got worse' and 'no evaluation strategy' prompts as uses of the same gate."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Grader scores, policy and people decide; core gate figure",
+      "anchors": [
+        "brief-example",
+        "figure-core-gate"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Core-idea figure (bcc5/3030 pair) placed in #brief-example with caption naming evidence-complete and slices-within-limits branches; following paragraph explains why the evidence check runs before slice comparison. 'Grader scores, policy decides' sentence restated in #brief-task."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE/solutions/applied-AI interview rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of #brief-task names forward deployed, solutions and applied-AI candidates facing an evaluation-platform or release-process round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: dangerous constraint plus follow-up topics",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#brief-task first paragraph states the dangerous constraint (strong aggregate must not release a change failing a critical slice or safety floor); third paragraph lists the six follow-up areas: load sizing, grader calibration, slice coverage, failure policy, rollout, evaluation cost."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: golden sets, rubrics, LLM-as-judge, confidence bounds, CI",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#brief-task prerequisite sentence keeps all four assumed skills and defines CI inline; the source's 'related reviews' pointer is navigation and is replaced by definitions in the term list."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old three-mandatory-section reading order",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old read-toggle instructions dropped as navigation; the final #brief-task paragraph replaces them with what each of the five new sections holds and labels numbers as planning assumptions."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Deep Dive, Quick Review, Full Design)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four-row navigation table is not reproduced; its content descriptions are redistributed (Full Design parts become walkthrough steps 1-12 and deep dives) and summarised in the closing #brief-task paragraph. No sixth Full Design track remains."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Blank-page worksheet",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#practice-start links the source worksheet URL, states it was not captured or imported, and points to the local worksheet that replaces it."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Refund-bot prompt change traced end to end",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six numbered steps in #brief-example follow the refund-bot release: frozen artifacts, sandboxed suite, deterministic checks plus calibrated grader on four dimensions, groundedness -2% threshold set in advance, hold to risk owner not random engineer, prod miss becomes golden case. Loop 'pin, evaluate, decide, learn' and 'no shipping on vibes' kept."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope: one shared gate for ~30 apps; auto-tuning out of scope",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of #brief-task states auto-tuning and broad tenant data sharing are out of scope; tenant is defined there."
+      }
+    },
+    {
+      "source_id": "main-the-case-in-one-sentence",
+      "teaching_item": "One-sentence case statement",
+      "anchors": [
+        "restate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraph after the restatement table gives the one-sentence statement with pinned baseline and four evidence dimensions; 'dashboard does not own the decision' carried in the step's opening."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six interviewer questions with intent and decision",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source table reused unchanged in #discovery with a caption; the following paragraph defines PII and SSN and spells out the redaction, retention and tenant-access consequence of the SSN example."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements list",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of #requirements keeps all eight functional items (pin artifacts, versioned suites, deterministic and model checks, baseline compare, slice and four-dimension gating, human routing, decision records, production sampling)."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "NFR table incl. 20 min p95 and illustrative scale row",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Interview-guide NFR table reused unchanged in #requirements, introduced as compact targets; p95 defined in the step's first paragraph. 'No universal rubric' and 'v1 no auto-tune or tenant sharing' appear in the exclusions paragraph."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut answer",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of #requirements quotes the shortcut answer (pin, run vs live baseline, pass/block/hold; ~20 min, reproducible, fail closed, humans own overrides)."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Grader scores vs policy/humans control; sandbox and validated-only reads",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of #architecture states the principle before the figure; the trust-boundary bullet later explains why the decision side reads only validated results."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Architecture diagram and six-step walkthrough",
+      "anchors": [
+        "figure-gate-architecture",
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "d975/b3f3 figure placed with a caption naming registry, scheduler, sandbox runner, grader, result store and three outcomes; the six numbered steps beneath it keep artifact pinning, quotas and egress limits, whole-workflow execution, immutable hashed results, slice-aware deltas, and redacted production signals."
+      }
+    },
+    {
+      "source_id": "main-gate-logic-and-the-failure-to-remember",
+      "teaching_item": "Four-dimension gate with lower bound, safety floor, envelopes, block/hold",
+      "anchors": [
+        "gate-logic"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#gate-logic bullets cover confidence-aware lower bound, independent safety floor, latency/cost envelopes and per-slice passing; missing-blocks/thin-holds pair gets its own bulleted contrast."
+      }
+    },
+    {
+      "source_id": "main-gate-logic-and-the-failure-to-remember",
+      "teaching_item": "Nondeterminism: repeated trials and outcome equivalence",
+      "anchors": [
+        "gate-logic",
+        "slices"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of #gate-logic defines nondeterministic output and outcome equivalence; #slices expands to seeded repeated trials and distribution comparison."
+      }
+    },
+    {
+      "source_id": "main-gate-logic-and-the-failure-to-remember",
+      "teaching_item": "Sales-copilot incident summary and fixes incl. versioned policy mode",
+      "anchors": [
+        "slices",
+        "dive-incident"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the full incident: #slices closing paragraph gives the numbers; #dive-incident keeps rollback, restore blocking, review affected drafts, claim-level cases for security status, ROI and customer-logo permission, and policy mode as a gated artifact."
+      }
+    },
+    {
+      "source_id": "main-grader-trust-cost-and-rollout",
+      "teaching_item": "Grader verbosity bias, calibration, advisory until trusted",
+      "anchors": [
+        "grader"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#grader covers verbosity-over-correctness, versioned model and rubric, concise-correct vs verbose-wrong calibration, disagreement review and advisory-first trust levels."
+      }
+    },
+    {
+      "source_id": "main-grader-trust-cost-and-rollout",
+      "teaching_item": "Holdouts, incident cases, minimum slice coverage; online feedback discovery",
+      "anchors": [
+        "slices"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#slices covers hidden holdouts, adversarial variants, incident cases in the golden set, minimum slice size, and online feedback becoming cases only after redaction and labelling."
+      }
+    },
+    {
+      "source_id": "main-grader-trust-cost-and-rollout",
+      "teaching_item": "Cost tiers, cheap/strong judge routing, unchanged-pair cache, gate metrics",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-cost keeps smoke/regression/deep-audit tiers, cheap-then-strong judge/human escalation, unchanged-pair cache, 'do not sample away critical slices', and the six measures (cost per release, decision time, agreement, escape, flaky, override rate)."
+      }
+    },
+    {
+      "source_id": "main-grader-trust-cost-and-rollout",
+      "teaching_item": "Rollout order, failure policy and rollback triggers",
+      "anchors": [
+        "rollout",
+        "failure-policy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#rollout keeps one-app advisory start, calibration, latency/cost gates and shared schema expansion plus rollback triggers; #failure-policy keeps grader timeout/evidence store blocking and dashboard degradation with a durable record."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted verbatim in #delivery and labelled as a spoken first-person example."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Navigation note pointing to unchanged source",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pure navigation between old tabs; replaced by the five-section reading guidance in #brief-task. No teaching content lost."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-decision-contract-and-stakeholders",
+      "teaching_item": "Stakeholder questions and pass/block/hold/override contract",
+      "anchors": [
+        "restate"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#restate turns the contract into a defined list: pass needs named policy, pinned baseline and complete validated run; block on failed limit or unavailable evidence; hold on thin/disputed; override only by authorised owner with reason. Platform supplies lineage (defined) while apps own rubrics and thresholds."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-data-model-and-load",
+      "teaching_item": "Immutable records, hashes, versions, idempotent writes, superseding records",
+      "anchors": [
+        "dive-records"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-records paragraph after the records table keeps artifact hashes over five artifact types, case/rubric versions preventing silent drift, result fields (grader version, trace ref, score, deterministic outcomes, tenant scope), idempotent writes, conditional updates and supersede-not-mutate."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-data-model-and-load",
+      "teaching_item": "Load arithmetic, worker range, tiers/quotas, cache immutable fixtures only",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#sizing keeps 3M executions, 6-15M calls, 278-694 calls/s, 112-278 rough pre-headroom workers at 2.5 calls/s, tiers, quotas, elastic pool, and the stochastic-judgement cache warning."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-evaluation-design",
+      "teaching_item": "Baseline deltas, bootstrapped lower bound, separate floors, per-slice gates",
+      "anchors": [
+        "gate-logic",
+        "dive-lower-bound"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#gate-logic states the four checks; new #dive-lower-bound explains the bootstrap with the source's 2,000 samples and an illustrative +0.004 delta whose lower bound passes or fails depending on rubric noise (labelled illustrative; percentile not given by source)."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-evaluation-design",
+      "teaching_item": "Golden-set contents, judge as release logic, holdouts, online feedback as leads",
+      "anchors": [
+        "slices",
+        "grader"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Golden-set list in #slices includes representative flows, hard cases, incidents, policy-sensitive, retrieval misses, malformed tool calls and convincing-but-wrong; #grader covers pinned judge version and rubric hash and concise-correct vs verbose-wrong audits."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-incident-aggregate-success-slice-failure",
+      "teaching_item": "Incident facts, cause, containment and prevention",
+      "anchors": [
+        "dive-incident"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-incident carries model route change plus block-to-warn-only, 96.7%/120, six cases at 83.3%, 1.2%->8.7%, security-certification and internal-pilot ROI claims, 'model is creative' rejected, containment and prevention (claim-level cases, minimum slice size, zero critical failures, gated policy-mode artifact)."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-incident-aggregate-success-slice-failure",
+      "teaching_item": "Neighbouring prompts as retroactive gate and gate built from scratch",
+      "anchors": [
+        "dive-neighbours"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-neighbours opening and two h4 subsections keep 'replay fixed set, segment, compare retrieval/prompt/schema, human review, pin or roll back' and 'built from scratch with representative data and human labels'."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-trust-boundary-and-failure-policy",
+      "teaching_item": "Injection aimed at grader, runner isolation, tenant separation, redaction, leakage",
+      "anchors": [
+        "dive-trust-boundary"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-trust-boundary defines prompt injection, gives the grader-steering example, and keeps isolation (secrets, timeout, egress), sanitising, pinning, suspicious-trace storage, tenant and reviewer separation, redact-or-synthesise, and keeping gate suites away from prompts and indexes."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-trust-boundary-and-failure-policy",
+      "teaching_item": "Failure policy: timeout/outage block, small sample holds, dashboards lag, dead-letter, logging",
+      "anchors": [
+        "failure-policy",
+        "dive-trust-boundary"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#failure-policy table plus paragraph covers block/hold/degrade and dead-letter with circuit breaker defined; logging of policy edits, grader versions, redactions, retries and overrides closes #dive-trust-boundary."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-rollout-and-economics",
+      "teaching_item": "Rollout phases, tracked metrics, severe escape becomes case",
+      "anchors": [
+        "rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#rollout phase table and metric table carry coverage, escape, agreement, decision time, cost/run, flaky and override tracking; final paragraph adds that a severe escape becomes a new incident case."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-rollout-and-economics",
+      "teaching_item": "Eval bill economics; human review dominates marginal cost",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-cost states the eval bill can rival production inference (tied to 6-15M calls/day), keeps tiering and judge routing, and the human-review-dominates point explaining why better calibration cuts spend."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Navigation links",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Tab links only; replaced by the Quick review section's own headings."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Six first questions",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Ask first' line in #review-path lists all six: critical apps/slices, window, label/rubric owner, sensitive traces, block vs hold, override authority."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard arrow path",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Whiteboard path' in #review-path reproduces the arrow chain and the 'graders score; policy and humans decide' line."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers",
+      "teaching_item": "Recall numbers",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Numbers' in #review-path keeps 3M/day, 6-15M calls, 278-694 calls/s, adds the 112-278 worker range and the 10x shift already taught in #sizing."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-gate-rules",
+      "teaching_item": "Gate rules",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Gate rules' paragraph in #review-rules keeps the seven pinned versions, four-dimension baseline comparison, independent safety floor and slices, block/hold rule and calibrate-before-hard-gate."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-incident-to-cite",
+      "teaching_item": "Incident recall line",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Incident to cite' in #review-rules keeps 96.7%/120, six at 83.3%, 8.7% vs 1.2%, warn-only, and the three fixes plus versioned policy mode."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-cost-close",
+      "teaching_item": "Cost close and 60-second close",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Cost close' and 'Sixty-second close' in #review-rules preserve the four cost moves, the do-not-thin rule and the quoted close."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Strict-versus-bypassed tension; dashboard vs decision",
+      "anchors": [
+        "gate-brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of #gate-brief states the tension that a strict gate can be routed around and the dashboard-versus-decision distinction."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Case-group map: anchor, incident, two prompts, cost pivot, self-drill",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Group table not reproduced; #brief-task names the anchor gate, the sales-copilot incident, both OpenAI-style prompts and the eval-bill pivot as variations, each with its own destination (#dive-incident, #dive-neighbours, #dive-cost)."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-ask-as-a-release-decision",
+      "teaching_item": "Restatement: scores vs can-ship; weak/strong table",
+      "anchors": [
+        "restate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#restate opens with the customer's sentence and the score-vs-ship distinction; weak/strong restatement table reused unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-ask-as-a-release-decision",
+      "teaching_item": "Four stakeholders table",
+      "anchors": [
+        "restate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Stakeholder table reused in #restate with the 'impressive and unusable' consequence of blurring them."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-ask-as-a-release-decision",
+      "teaching_item": "Six-question tree, two answer-key questions, riskiest-assumption default, quote",
+      "anchors": [
+        "discovery",
+        "restate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-question table reused in #discovery; following paragraphs keep 'what counts as a release' and override recording, their consequences (immutable records, RBAC, tenancy), and the false-pass-worse-than-false-block default. Framing quote closes #restate."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint; MoSCoW must/should/exclusions",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#requirements defines p95 and MoSCoW, numbers the six must-haves with their reasons, lists the three should-haves and the six exclusions."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraints table and requirement-to-component table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both source tables reused unchanged in #requirements with captions; 'requirement without owner means incomplete design' stated before the second."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-the-gate-against-the-release-window",
+      "teaching_item": "Workload arithmetic and window table",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#sizing bullets keep 600 evals, 3M executions, 2-3 minimum / 3-5 realistic calls, 6-15M calls; window table reused; 400 ms assumption and headroom caveat kept with the division shown."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-the-gate-against-the-release-window",
+      "teaching_item": "Peak vs average, quotas, 10x table, bottleneck shift, caching rule",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#sizing keeps survive-the-day vs survive-the-window, admission control and quotas, the 10x table (6,000 / 30M), evaluator concurrency now vs storage/retention/review at 10x, and the cache list plus quoted line."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Control plane / data plane split and three figures",
+      "anchors": [
+        "architecture",
+        "figure-planes-lanes",
+        "figure-online-sampling",
+        "figure-control-data-planes"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All three source figure pairs (27e1/7e32, ce22/41ad, 38bb/b953) placed in #architecture in source order with captions matching their labels; the two annotation bullets (artifact contents, bounded runner, overrides as policy inputs) kept between them."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Component/state/failure table and three boundaries",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine-row component table reused; fail-closed defined before it; strongly consistent registry, eventually consistent warehouse with validated-only gate reads, and runner as trust boundary kept as bullets."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Ten-step happy path, per-stage questions, MVP vs later",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ten numbered steps traced with the refund-bot change; five stage questions kept; MVP defined and its seven components plus five deferred capabilities listed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-pin-every-input-and-compare-against-a-baseline",
+      "teaching_item": "Delta formula, noisy small gains, four-step derivation",
+      "anchors": [
+        "baseline"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#baseline gives the formula, metric options, the two-tenths-of-a-point caution and the numbered derivation; adds an illustrative groundedness 0.91->0.89 example that hands off to the lower-bound check."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-pin-every-input-and-compare-against-a-baseline",
+      "teaching_item": "Records table, ownership split, retention, API, idempotency, contract versions, ETag 412",
+      "anchors": [
+        "dive-records"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-records reuses the records table, keeps EvalCase/EvalRun/EvalResult ownership and decision-outlives-trace retention, lists the four endpoints, and traces run_123 vs run_124, policy v7 vs v8, and If-Match/412 with ETag defined and RFC 9110 cited."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-decide-on-four-dimensions-and-fail-closed",
+      "teaching_item": "Decision function code and line-by-line reading",
+      "anchors": [
+        "dive-decision-code",
+        "gate-logic"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source code block preserved exactly in #dive-decision-code; following paragraph explains ValidationError on 'high', discarded baseline parse, relative quality vs absolute envelopes, and the checks map. #gate-logic motivates four separate dimensions."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-decide-on-four-dimensions-and-fail-closed",
+      "teaching_item": "policy-7 values and invariant test",
+      "anchors": [
+        "dive-decision-code"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "policy-7 values (0.01, 0.95, 250, 0.20) and the test code preserved; paragraph walks 0.95 vs 0.90 quality and 0.97 vs 0.995 floor to a refused release. Notes that evidence and slice checks wrap this function."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-decide-on-four-dimensions-and-fail-closed",
+      "teaching_item": "Missing blocks, thin holds, never pass by default",
+      "anchors": [
+        "gate-logic"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#gate-logic contrast bullets plus 'Neither ever becomes a pass by default.'"
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-calibrate-the-grader-before-letting-it-gate",
+      "teaching_item": "Verbosity failure and four-move drill table",
+      "anchors": [
+        "grader"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#grader explains why a verbose-wrong grader looks healthy, cites Zheng et al. verbosity bias, and reuses the detect/contain/recover/prevent table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-calibrate-the-grader-before-letting-it-gate",
+      "teaching_item": "Representative validation, drift, trust levels, trade-off table",
+      "anchors": [
+        "grader"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#grader keeps decision-relevant agreement, reading disagreements (rubric gaps vs task ambiguity), periodic re-scoring for drift, advisory-to-automatic trust levels, and the four-pair trade-off table with the reuse-the-shape advice."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-gate-on-slices-not-on-the-aggregate",
+      "teaching_item": "Slice gating, golden set contents, obvious-examples warning",
+      "anchors": [
+        "slices"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#slices states per-slice passing, lists the five golden-set categories including quiet failures, and explains why obvious examples create false confidence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-gate-on-slices-not-on-the-aggregate",
+      "teaching_item": "Distributions, stratification, online feedback quote, stale suite, overfit defences",
+      "anchors": [
+        "slices"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#slices keeps seeded repeated trials, outcome equivalence, stratification, the tutorial quote on discovery channels, stale-suite signs and response, and holdout/adversarial/no-exposure defences."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-walk-through-the-regression-the-suite-missed",
+      "teaching_item": "Scenario, claims, workflow, 120/6 cases, signals table",
+      "anchors": [
+        "dive-incident"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-incident keeps the CRM-to-monitor workflow, SOC 2 and 34% claims with their approval status, 120/6 case counts and the six-signal table; adds derived arithmetic (116 of 120, five of six) explaining why one failure barely moved the aggregate."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-walk-through-the-regression-the-suite-missed",
+      "teaching_item": "Timeline, root cause, debugging steps, fix table",
+      "anchors": [
+        "dive-incident"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "2026-07-08 09:00 route change llm_standard_v2->llm_premium_v3 and warn-only switch, eval-failure root cause, debug sequence and immediate/long-term fix table all present."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-walk-through-the-regression-the-suite-missed",
+      "teaching_item": "Business risk, three catch points, weak/strong answers",
+      "anchors": [
+        "dive-incident"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Legal/trust/compliance exposure and malicious-rep scenario kept; three numbered catch points (slice threshold, below-minimum hold, gated policy mode); weak answer and quoted strong answer preserved."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-answer-the-two-neighbouring-prompts-with-the-same-gate",
+      "teaching_item": "Upgrade-regression plan and mapping onto anchor",
+      "anchors": [
+        "dive-upgrade-regression"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-upgrade-regression states the plan as nine steps and lists all nine (the source's 'eleven steps' label did not match its nine listed actions; resolved 2026-11-16 to match the items, status kept 'preserved' since every step is kept), then maps them to registry, baseline delta, slices, grader calibration and online sampling; the permanent fix (upgrades become gated candidates) closes the passage."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-answer-the-two-neighbouring-prompts-with-the-same-gate",
+      "teaching_item": "Seven benchmark-vs-customer explanations table",
+      "anchors": [
+        "dive-upgrade-regression"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Explanation-to-gate-weakness table reused unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-answer-the-two-neighbouring-prompts-with-the-same-gate",
+      "teaching_item": "Evaluation strategy fourteen items, model vs application quality, no-label answer",
+      "anchors": [
+        "dive-eval-strategy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-eval-strategy lists all fourteen items (grouped seven and seven), defines CI/CD, quotes 'Model quality is not the same as application quality', and keeps the six no-label tactics with weak supervision defined, mapped to the rollout order."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-fail-closed-on-evidence-degrade-on-dashboards",
+      "teaching_item": "Failure-condition table, timeouts, retries, circuit breaker, escalation",
+      "anchors": [
+        "failure-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row condition table reused in #failure-policy; circuit breaker and dead-letter defined; asymmetry between delayed metrics and unavailable evidence store explained."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-fail-closed-on-evidence-degrade-on-dashboards",
+      "teaching_item": "Four threat controls, adversarial inputs, smallest-scope containment",
+      "anchors": [
+        "dive-trust-boundary"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-trust-boundary keeps tenant separation incl. reviewers, redaction at ingestion, grader versioning, leakage prevention, sanitise/isolate/log/keep-copy, and one tenant/app/region/dependency containment."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-fail-closed-on-evidence-degrade-on-dashboards",
+      "teaching_item": "PII and small-sample detect/contain/prevent table; pre-launch audit questions",
+      "anchors": [
+        "dive-trust-boundary"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two-row threat table reused; the six pre-launch audit answers (policy changer, grader version, tenant/app, redactions, dependencies, retries) kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-roll-out-one-application-and-earn-trust",
+      "teaching_item": "Phase table and week calendar",
+      "anchors": [
+        "rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-phase table reused; weeks 0-1 through 6-8 listed; widen-only-while-metrics-hold and retire non-discriminating suites kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-roll-out-one-application-and-earn-trust",
+      "teaching_item": "Shared schema, rubrics as configuration, adapters",
+      "anchors": [
+        "rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#rollout keeps the schema fields, support-bot vs coding-assistant rubric example, adapters vs shared orchestration/scoring/audit."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-roll-out-one-application-and-earn-trust",
+      "teaching_item": "Gate metrics table, launch review example, rollback triggers",
+      "anchors": [
+        "rollout"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-metric table reused with thresholds labelled illustrative; QA and flaky case defined; launch review numbers (97%, 1 in 20, 89%, 14 min, $18, 1.5%, 4 of 5 plus canary) kept with an added reading against thresholds; four rollback triggers kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-deliver-it-in-fifty-minutes",
+      "teaching_item": "Fifty-minute plan and heterogeneous-apps opening",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Minute table rebuilt with links to the new steps instead of old section numbers; depth-budget rule and the not-homogeneous opening with shared spine plus app rubrics kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-deliver-it-in-fifty-minutes",
+      "teaching_item": "Long two-minute answer and eight lines",
+      "anchors": [
+        "delivery-long-answer",
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Answer-key two-minute answer preserved in a #delivery-long-answer disclosure; eight round-carrying lines listed in #delivery."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-13-deliver-it-in-fifty-minutes",
+      "teaching_item": "Nine follow-ups with answers and five weak-answer traps",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each follow-up became its own answer reveal in #practice-followups with the source answer (regulation and fairness keep their gap-note attribution); five traps in followup-weak-traps reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-cut-the-eval-bill-without-blinding-the-gate",
+      "teaching_item": "Eval-bill pivot, eighth cost driver, four moves, self-drill card",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-cost keeps judge-as-inference, the eighth-driver framing, four numbered moves, and the self-drill card rebuilt with a 'Card field / Answer' header in place of the source's blank header row."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-cut-the-eval-bill-without-blinding-the-gate",
+      "teaching_item": "Never thin critical slices; human review cost; cache keying; four verbs",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-cost keeps regulated slice running in full, human review as most expensive unit cost, cache keyed on prompt version, model version and case, and measure/route/bound/cache."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Senior/Staff/Principal calibration table",
+      "anchors": [
+        "practice-level"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Level table reused unchanged in #practice-level with guidance to compare a blank-page answer against it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fourteen takeaways listed in #review-takeaways with only grammatical smoothing; each maps to a walkthrough step or deep dive taught in full earlier."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Check Yourself questions and answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All ten source Check Yourself questions kept as answer reveals check-dashboard through check-eval-bill in #practice-start, answers unchanged apart from expanding UX to 'user experience' and numbering the summaries."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Fact-check references",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#references lists RFC 9110 (source URL), Zheng et al. 2023, AICPA SOC 2, GDPR Art. 17 and the internal V2 chapter 9 gap note with the 27 Sep 2026 check date; each claim also links here from its deep dive."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Built the inventory from all 49 captured sections, splitting the dense Full Design parts (sections 1-14) into 86 teaching items. Interview Guide, Deep Dive, Cheat Sheet and Full Design repeat the gate four times; I consolidated them so each mechanism is taught once in walkthrough steps 1-12 or a deep dive, then recalled in Quick review, and checked each repeat for a distinct number or caveat before merging (e.g. the deep-dive 'pre-headroom' qualifier and the 'severe escape becomes incident case' rule only appear once in the source and were kept). Added plain definitions (candidate, baseline, slice, p95, MoSCoW, fail closed, ETag, circuit breaker, weak supervision), a refund-bot trace and an illustrative bootstrap lower-bound explanation, labelled as such; the old minute plan's section numbers were rewritten as links. The upgrade plan is taught as nine steps. The source worksheet page was not captured and is linked rather than imported. Source inconsistencies resolved in text (2026-11-16): the upgrade-regression plan was labelled 'eleven steps' but lists nine actions \u2192 the casebook says 'nine steps' and lists the nine, because no other source section supplies two more steps."
+  },
+  "required_figures": [
+    {
+      "id": "figure-core-gate",
+      "path": "source-assets/bcc5e2784fa7b225.svg",
+      "sha256": "bcc5e2784fa7b225662a98a124041d54f82cfa2f41de964fd523d621265fb595"
+    },
+    {
+      "id": "figure-gate-architecture",
+      "path": "source-assets/d97543ed4cfa764f.svg",
+      "sha256": "d97543ed4cfa764f1e87cf39b2f0d3efdaf03f83c4f5f6196243138add7ddd40"
+    },
+    {
+      "id": "figure-planes-lanes",
+      "path": "source-assets/27e17a5b5a917e11.svg",
+      "sha256": "27e17a5b5a917e11c6684d649b14e3ec07559513c2270b29a2ce37790b7ae2f5"
+    },
+    {
+      "id": "figure-online-sampling",
+      "path": "source-assets/ce22bb4f9a94ee3b.svg",
+      "sha256": "ce22bb4f9a94ee3bc26f47b453d366257c81ddf317a0ba019f6cc6ce2ce6c7ae"
+    },
+    {
+      "id": "figure-control-data-planes",
+      "path": "source-assets/38bb6ed81abef6ed.svg",
+      "sha256": "38bb6ed81abef6ed01e3e8bdcced2d1647cd0e0aabddd0bdc7327fd4f3a6adef"
+    }
+  ],
+  "required_answer_reveals": [
+    "check-dashboard",
+    "check-sizing",
+    "check-planes",
+    "check-missing-thin",
+    "check-lower-bound",
+    "check-verbosity",
+    "check-incident",
+    "check-benchmark",
+    "check-no-labels",
+    "check-eval-bill",
+    "followup-grader-reliable",
+    "followup-golden-set",
+    "followup-nondeterminism",
+    "followup-online-offline",
+    "followup-full-suite",
+    "followup-universal-rubric",
+    "followup-blocking-good",
+    "followup-regulation",
+    "followup-fairness",
+    "followup-weak-traps",
+    "drill-grader-timeouts",
+    "drill-warn-only",
+    "drill-two-hour-window"
+  ],
+  "required_anchors": [
+    "dive-incident",
+    "dive-decision-code",
+    "dive-lower-bound",
+    "gate-logic",
+    "slices"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "e0678b0c457219780238637d2739ea5c50b3cfd88703e72311c6987be4a26f38",
+  "html_sha256": "375e1150e3844d76d1670f40719268396794c5aa296a8957f0d38a3fabd56ce5",
+  "config_sha256": "0b0c936f50d9b21792961dad17ff7b299e65ff7f910ab2b2ec3dc69078005683",
+  "source_url": "https://forwarddeployedprep.com/design/travel-agent-worked-example",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 29,
+    "coverage_rows": 43,
+    "worked_answers": 16,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Compared all 29 captured sections (7 intro, 14 Worked Example, 8 12-Part Framework) item by item with the previous casebook, which was 21 KB against 31 KB of source text and had compressed the five faults into two paragraphs. Restored: a heading per fault (rate limiter, cache, retrieval, shared turn, synthesiser) with the source's reasoning, the 'short-circuiting' term, the ten-step ordered data flow, the architecture legend, the audience, objectives and assumptions, 'Microservices' in the maintainability row, each reference's supporting claim, cache hit rate and reply write-back in the takeaways, and the interview lens as five questions with reveals. Fixed: the level paragraph that claimed Staff answers own cacheability (the table says no such thing); the checkpoint answer that invented principle names (now says the principles document is not in the case and only short-circuiting is named); the reconstruction figure, which omitted the dead-end rate limiter. The two source tracks repeat components, NFRs, trade-offs and the airport table, so each is merged into one table or deep dive with the framework-only wording kept. The brief now expands AMER/EMEA/APJ, defines agent loop, supervisor, synthesiser and semantic cache, and traces an illustrative Frankfurt-to-Singapore request through both drawings, since the source has no sample query. Cacheability rules, timeout handling, the agent-admission rule and the MCP authorisation caveat are labelled as this casebook's reasoning; follow-up drills are labelled as added. Source inconsistencies resolved in text (2026-11-16): worked example says 'a careful review found five' faults while the 12-Part Framework says an architecture review found four and an independent blueprint added the fifth \u2192 the framework's more specific account is used throughout (brief: 'two independent reviews found five'; walk-original states review-four plus blueprint-fifth as fact), since it is compatible with the worked example's total of five and names who found the synthesiser fault."
+    }
+  }
+}

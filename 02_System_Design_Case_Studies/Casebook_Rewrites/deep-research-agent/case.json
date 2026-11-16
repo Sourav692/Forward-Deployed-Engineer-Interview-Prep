@@ -1,0 +1,1580 @@
+{
+  "title": "Deep Research Agent",
+  "slug": "deep-research-agent",
+  "subtitle": "Design a read-only research agent over the public web and a user's private documents that cites every claim, shows its gaps instead of faking certainty, and never lets the web side reach private data.",
+  "theme": "Knowledge and Retrieval",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/deep-research-agent",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-example",
+    "main-the-case-in-one-sentence": "brief-task",
+    "main-questions-to-ask-the-interviewer": "walk-discovery",
+    "main-requirements-functional-non-functional": "walk-requirements",
+    "main-architecture": "walk-architecture",
+    "main-key-choices-and-failure-modes": "walk-multi-agent",
+    "main-evaluation-rollout-and-variants": "walk-evaluation",
+    "main-two-minute-interview-answer": "practice-spoken",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-permission-and-trust-topology": "dive-trust",
+    "deep-dive-2-agent-state-and-reducers": "dive-state",
+    "deep-dive-3-latency-and-cost-budget": "dive-cost",
+    "deep-dive-4-quality-checks-and-evaluation": "dive-quality",
+    "deep-dive-5-variants": "dive-variants",
+    "cheat-sheet-intro": "review-decisions",
+    "cheat-sheet-ask-first": "review-decisions",
+    "cheat-sheet-whiteboard-path": "review-decisions",
+    "cheat-sheet-numbers-and-limits": "review-numbers",
+    "cheat-sheet-fail-safely": "review-failures",
+    "cheat-sheet-evaluate": "review-failures",
+    "full-pack-intro": "brief-task",
+    "full-pack-1-restate-the-problem-and-name-the-oracle-first": "walk-oracle",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "full-pack-3-carry-state-that-cannot-lose-a-branch": "walk-state",
+    "full-pack-4-draw-the-architecture-end-to-end": "walk-architecture",
+    "full-pack-5-isolate-sub-agents-so-the-parent-stays-small": "walk-isolation",
+    "full-pack-6-say-the-arithmetic-aloud": "walk-arithmetic",
+    "full-pack-7-volunteer-the-trifecta-analysis-before-anyone-asks": "walk-trifecta",
+    "full-pack-8-bound-the-loop-in-both-directions": "walk-bounds",
+    "full-pack-part-2-9-degrade-every-branch-to-a-gap-never-to-silence": "walk-gaps",
+    "full-pack-part-2-10-measure-it-and-name-the-metric-that-would-prove-it-wrong": "walk-evaluation",
+    "full-pack-part-2-11-read-the-deployed-research-platform-as-proof": "dive-platform",
+    "full-pack-part-2-12-build-the-supervisor-and-workers-version": "dive-supervisor",
+    "full-pack-part-2-13-deliver-it-in-forty-five-minutes": "practice-delivery",
+    "full-pack-part-3-14-answer-the-cost-per-report-pivot-in-ten-minutes": "practice-cost-pivot",
+    "full-pack-part-3-level-calibration": "practice-levels",
+    "full-pack-part-3-key-takeaways": "review-closing",
+    "full-pack-part-3-check-yourself": "practice-checks",
+    "full-pack-part-3-references": "dive-sources",
+    "walk-verification": "walk-gaps",
+    "dive-failures": "walk-gaps",
+    "practice-pivots": "practice-delivery",
+    "figure-1-0": "fig-core-idea",
+    "figure-11-0": "fig-main-architecture",
+    "figure-31-0": "fig-flow-linear",
+    "figure-31-1": "fig-flow-branches",
+    "figure-31-2": "fig-planes-zones",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Oracle, eight numbers and discovery",
+      "hint": "Restate in one sentence, name the citation oracle, and ask about private scope, failed tools, completion and the $0.20 cap."
+    },
+    {
+      "id": "state",
+      "label": "State, trust zones and architecture",
+      "hint": "Trace the Acme question through the reducer, schema boundary, ledger, grader, verifier and egress firewall."
+    },
+    {
+      "id": "numbers",
+      "label": "Arithmetic and cost levers",
+      "hint": "Derive 28, 100, 120 and 170 aloud, then bring a naive seven-step run under $0.20."
+    },
+    {
+      "id": "failures",
+      "label": "Bounds, gaps and the falsifying metric",
+      "hint": "Bound the loop four ways, walk the failure ladder with EMPTY vs UNAVAILABLE, and name the grade distribution."
+    }
+  ],
+  "rubric": [
+    "Names the oracle (every claim cited to a source a reviewer would accept) and says read-only means no approval subsystem, on purpose.",
+    "Gives web sub-agents zero document scope and puts user identity in retrieval and cache keys, not only the prompt.",
+    "Merges evidence with an accumulating reducer and sums the budget across branches, explaining the last-write-wins loss.",
+    "Derives ~28/min, ~100/min peak, ~120 in flight and ~170 slots, and says Little's Law needs the mean, not p95.",
+    "Explains that the rendered answer is an exfiltration channel and puts an egress firewall on rendering as well as tools.",
+    "Bounds the loop with a done flag, hop cap, no-progress signature and per-run budget, each returning partial results with a reason.",
+    "Types EMPTY apart from UNAVAILABLE and degrades a failed branch to a named gap instead of silence or a guess.",
+    "Evaluates trajectory as well as outcome and names the grade distribution after correction as the falsifying metric.",
+    "Justifies multi-agent by parallelism, permissions or context, and answers the cost pivot with measure, route, bound, cache safely."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Consumer research agent: web plus user documents, cited brief, 100K users/40K runs/p95 90 s/first signal 3 s/$0.20",
+      "anchors": [
+        "brief-scenario",
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scenario paragraph 1 keeps the consumer product, web-plus-documents search and cited brief with 100,000 users and 40,000 runs; brief-task's one-sentence paragraph carries p95 90 s, first signal 3 s and $0.20. Previous version had these numbers but no plain description of the user; added definitions of agent, sub-agent, run, evidence ledger and gap."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Hard constraint: honesty under failure and no private leak through the web branch or rendered answer",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scenario paragraph 2 states both hard parts: timeouts and thin evidence must show as incomplete, and private documents must not leak through the web side or the rendered answer. The rendered-answer leak path was absent from the previous brief."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: bounded read-only multi-agent workflow, planner, separate web and user-scoped workers, typed ledger with append reducer, capped replan, verifier, egress sanitizer, hop/time/spend caps, failed branch as named gap",
+      "anchors": [
+        "brief-scenario",
+        "walk-architecture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scenario paragraph 4 defines bounded (hop, time, spend caps, hop defined) and read-only; each named component is then taught in walk-architecture's eight-step list and the component table. Kept the 'failed branch becomes a named gap' wording in the core-idea paragraph."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its loop diagram (plan, search apart, append, enough coverage?)",
+      "anchors": [
+        "fig-core-idea",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The sentence 'Every run plans, searches in isolation, then either cites the evidence or shows the hole, and stops within its caps' follows fig-core-idea (31ce light / 2622 dark). Caption rewritten from the old generic 'source figure 1' to name every node and the No/Yes branches, checked against the SVG text labels and a rendered thumbnail."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates; multi-agent research or untrusted-web-content rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 3 names the same audience and both round types. The previous version said only 'engineers designing retrieval and agent workflows'."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: end-to-end design from the dangerous constraint; follow-ups on state/reducers, isolation, caps, latency/cost, evaluation, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 restates the dangerous constraint (visible gap, private isolation) and lists all six follow-up areas. Previously missing."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed background: LLM agents and tool calling, retrieval with citations, prompt injection; LLM glossary definition",
+      "anchors": [
+        "brief-task",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 3 lists the three assumptions and defines prompt injection inline; LLM is expanded at first use in brief-scenario with the source glossary text in the abbr title (em dash replaced by 'such as'). The old abbr titles rendered ' ,  GPT' from a bad dash replacement; fixed."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: read guide, deep dive, quick review in order; full design for numbers and sources; quick review the night before",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old mark-as-read navigation dropped as obsolete; brief-task's last paragraph says where the interview answer, mechanisms, practice and night-before card now live in the five-section shell."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old four-section navigation table (Interview Guide, Technical Deep Dive, Quick Review, optional Full Design in 3 parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The table describes the old site's tabs; there is no sixth Full Design track now. Its Full Design topics (branch-safe state, isolation, trifecta, loop bounds, supervisor build, cost pivot, sources) are distributed to walk-state, walk-isolation, walk-trifecta, walk-bounds, dive-supervisor, practice-cost-pivot and dive-sources."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Acme CEO worked trace: auth, budgets lock, first signal, planner split web vs Drive, no Drive tokens on web, Wikipedia timeout = couldn't check, ledger, grader hop, synthesiser from ledger, verifier and sanitizer, visible gaps",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-example is a new numbered eight-stage trace of 'Who is Acme's CEO, with sources?' carrying every beat of the source's terse trace; the user-visible output line and the Drive board memo are labelled as part of the trace example. The previous version dropped this example entirely."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope: bounded read-only research with citations, cannot email or buy; plan, search in isolation, cite or show the hole, stop",
+      "anchors": [
+        "brief-scenario",
+        "brief-example"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-scenario paragraph 4 ('cannot send email, buy anything') and the line after the trace ('Nothing in that trace touches an external action') keep the scope cut."
+      }
+    },
+    {
+      "source_id": "main-the-case-in-one-sentence",
+      "teaching_item": "One-sentence case incl. 3-12 steps/run and incomplete-not-fabricated rule",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 1 is the one-sentence case with every number including 3 to 12 steps; the cost is stated as a $0.20-a-run ceiling, matching the constraint table; p95 defined in plain words; 'a failed branch returns an answer marked incomplete' kept."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Old deep-dive navigation note",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only sentence ('read with the unchanged source'); replaced by the five-section reading guidance in brief-task."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Old cheat-sheet navigation links",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only links (Main, Deep Dive, source); no teaching content. The cheat sheet itself is the Quick review."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Framing: extra search rounds trade grounding against latency/cost; web pages are the attack surface; unbounded fan-out and over-reaching pages are the two failures",
+      "anchors": [
+        "brief-scenario",
+        "walk-bounds",
+        "walk-trifecta"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The trade-off is taught in walk-bounds (stop early vs never stop, budget burn) and walk-trifecta (pages as attack surface); brief-scenario names both hard parts."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Group map: anchor (sections 1-10, 13), deployed AWS platform (section 11), supervisor-and-workers mock (sections 3, 8, 12), self-drill (14)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 4 names the three related designs and what each contributes; the old section numbers are replaced by the steps and dives that now carry them. Previously only a one-line mention in dive-sources."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six discovery questions with plain meaning and decision (citation, public vs user-scoped, unavailable vs nothing, completion, links/images, $0.20 cap)",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full three-column table kept in walk-discovery with an intro sentence. The completion row's 'after 12 hops' is corrected to 'after eight hops' so it matches the supervisor's hop cap in step 9; the paragraph after the table defines EMPTY and UNAVAILABLE and states that the plan's 3 to 12 steps are a separate counter."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first card: valid citation, private documents, partial-answer rule, $0.20 hard?, failed tools",
+      "anchors": [
+        "walk-discovery",
+        "review-decisions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five questions appear at the end of walk-discovery and again at the top of review-decisions."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements list (auth/rate-limit through stream status and gaps)",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-requirements 'What the system must do' is the eight-item ordered list, all eight source items. The previous version had no functional list; it only paraphrased the must-haves."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Non-functional table: latency, cost, security, bounds, audit, autonomy, scale (illustrative) incl. 30K-token naive plan",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored the seven-row example-target table, including the illustrative scale row with 28/84/100/120/170 and the ~30k-token naive plan. The cost cell 'Roughly $0.20/run' is corrected to '$0.20/run ceiling' to match the constraint table, the per-run budget dict and the failure ladder."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional vs non-functional framing and the interview shortcut answer",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The framing sentence opens walk-requirements and the source's shortcut answer ('Functionally, plan bounded research...no invented certainty') closes the owner subsection. Both were missing."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Model tiers: reasoning tier for planner/synthesiser, smaller models for narrow agents; deterministic hop/budget/no-progress rules; web never inherits private access",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-architecture paragraph 2 keeps all three points and defines 'deterministic' as plain code, not a model."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Eight-step architecture walk from auth to egress sanitizer",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The numbered eight-step list after fig-main-architecture keeps every step, including 'typed findings and citations, not instructions' and 'repeated delegation without new evidence stops'. The previous version had compressed this into one paragraph."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Main architecture diagram",
+      "anchors": [
+        "fig-main-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-main-architecture (7695 light / e435 dark) sits before the eight steps; caption now names each box and the 'thin, budget remains' loop to the planner, checked against the SVG labels. Old caption was 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "main-key-choices-and-failure-modes",
+      "teaching_item": "Isolation is the hard boundary: untrusted pages, no private credentials for web agent, prompt cannot enforce, rendered answer as egress, no cross-user private caches",
+      "anchors": [
+        "walk-trifecta",
+        "dive-trust"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-trust paragraph 1 adds why prompt text cannot enforce scope (the reader is the attacked model); paragraph 2 gives a worked cache-key leak; walk-trifecta covers the rendered-answer path with a concrete image-URL example."
+      }
+    },
+    {
+      "source_id": "main-key-choices-and-failure-modes",
+      "teaching_item": "Parallel merge must be correct: last-write-wins drops findings, LangGraph InvalidUpdateError, typed list with append reducer, provenance, dedupe, sum budgets",
+      "anchors": [
+        "walk-state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-state defines reducer and last-write-wins, gives a three-branch example of the loss and traces the Acme run through the state; budget summed across branches gets a $0.80 worked example."
+      }
+    },
+    {
+      "source_id": "main-key-choices-and-failure-modes",
+      "teaching_item": "Bound every run: hop cap (eight as example), money/tool limits, no-progress, EMPTY vs failed source, partial answer naming the missing section",
+      "anchors": [
+        "walk-bounds",
+        "walk-gaps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-bounds gives eight as the source's example cap and the budget ceiling; walk-gaps ends with 'on a cap or an outage, provide a partial answer with the missing section named'."
+      }
+    },
+    {
+      "source_id": "main-key-choices-and-failure-modes",
+      "teaching_item": "Cost and latency levers list; parallelism only when independent and provider limits permit",
+      "anchors": [
+        "walk-multi-agent"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-multi-agent paragraph 2 keeps the full list (isolate, tier models, cap rounds, dedupe searches, separate public/private caches, measure by branch/hop/synthesis tokens) and the provider-limit caveat."
+      }
+    },
+    {
+      "source_id": "main-evaluation-rollout-and-variants",
+      "teaching_item": "Score outcome and trajectory; metric/what-it-catches table",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The seven-row table is kept in walk-evaluation with outcome and trajectory defined just above it."
+      }
+    },
+    {
+      "source_id": "main-evaluation-rollout-and-variants",
+      "teaching_item": "What to test: poisoned pages, missing documents, conflicting sources, EMPTY, UNAVAILABLE; audit ledger and sanitizer",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the owner table lists all five test cases and the ledger/sanitizer audit, with the reason (a clean answer on a ledger holding a cross-user finding). The test list was missing before."
+      }
+    },
+    {
+      "source_id": "main-evaluation-rollout-and-variants",
+      "teaching_item": "Related AWS platform note: author's own build; no per-user ACL or release gate; 'this enterprise case' wording",
+      "anchors": [
+        "dive-platform"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-platform attributes the build to the source author instead of reader-facing 'my own build'; its last paragraph states plainly that the anchor is a consumer product that holds private user documents and so needs per-user ACLs and a release gate (the source's 'this enterprise case' wording is not carried over)."
+      }
+    },
+    {
+      "source_id": "main-evaluation-rollout-and-variants",
+      "teaching_item": "When to use multiple agents: parallelism, distinct permissions, context isolation; deterministic workflow when predictable",
+      "anchors": [
+        "walk-multi-agent",
+        "dive-variants"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-multi-agent paragraph 1 and dive-variants' deterministic-workflow paragraph carry it."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Short two-minute interview answer",
+      "anchors": [
+        "spoken-main"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveal spoken-main in practice-spoken quotes the full answer as interview speech; the stray capital 'A claim verifier' mid-sentence is normalised. Missing from the previous version, which had wrongly mapped it to the cost dive."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-permission-and-trust-topology",
+      "teaching_item": "Different tool credentials; public branch never gets document scope even if a page asks; retrieved text is evidence",
+      "anchors": [
+        "dive-trust"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-trust paragraphs 1-2 keep each point and add why the credential's absence, not a prompt, is the control."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-permission-and-trust-topology",
+      "teaching_item": "Private branch scoped to one user and current rights; identity in retrieval and cache keys",
+      "anchors": [
+        "dive-trust"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-trust paragraph 2 keeps it with a worked example of a question-only cache key serving user A's memo to user B."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-permission-and-trust-topology",
+      "teaching_item": "Rendered answer leak via Markdown images or links with secret query parameters; normalise findings, verify citations, sanitize at egress",
+      "anchors": [
+        "dive-trust",
+        "walk-trifecta"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-trust paragraph 4 keeps the three controls and adds validating citation targets against ledger locators; walk-trifecta gives the image-URL exfiltration example."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-permission-and-trust-topology",
+      "teaching_item": "Test injection in pages and uploaded documents; zero cross-user leak outranks average quality",
+      "anchors": [
+        "dive-trust"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final dive-trust paragraph keeps both, with an illustrative five-point-gain-plus-one-leak example labelled by context."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-agent-state-and-reducers",
+      "teaching_item": "Run state fields; append with provenance/dedupe; budget aggregates",
+      "anchors": [
+        "dive-state",
+        "walk-state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-state paragraph 1 lists every field; walk-state's table gives each field's job."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-agent-state-and-reducers",
+      "teaching_item": "Evidence record fields: URL/doc ID, access scope, timestamp, span/locator, claim relevance",
+      "anchors": [
+        "dive-state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-state lists the five fields and adds a worked Acme leadership-page record plus the rule to bind scope to what the tool layer used (marked as an implementation consequence)."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-agent-state-and-reducers",
+      "teaching_item": "3-12 planned steps vs hard cap and no-progress; EMPTY vs UNAVAILABLE never proof of falsehood",
+      "anchors": [
+        "dive-state",
+        "walk-bounds"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-state's last paragraph keeps all three; walk-bounds explains that planned steps, hops and replans are separate counters."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-latency-and-cost-budget",
+      "teaching_item": "Capacity numbers with validation caveat (p95 not a mean for Little's Law)",
+      "anchors": [
+        "dive-cost",
+        "walk-arithmetic"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-cost paragraph 1 and walk-arithmetic both keep 28/84-100/120/170 and the p95-is-not-a-mean caveat."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-latency-and-cost-budget",
+      "teaching_item": "First signal is useful status or partial evidence, not a fake answer",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-cost paragraph 2 keeps it with an example streamed-plan status line."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-latency-and-cost-budget",
+      "teaching_item": "Context isolation; small vs reasoning models; prefix caching vs public/private topic caches; track synthesis tokens, cost per branch, searches, replans",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-cost paragraphs 3-5 keep each item and separate prefix caching from answer caching with the public-vs-Drive CEO example and a freshness caveat."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-quality-checks-and-evaluation",
+      "teaching_item": "Grader checks sub-question coverage and agreement; score alone not a release decision",
+      "anchors": [
+        "dive-quality"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-quality paragraph 1, with the reason (the grader is a model that can be consistently wrong)."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-quality-checks-and-evaluation",
+      "teaching_item": "Human-labelled claim support incl. conflicting, stale, tool-failure, adversarial cases",
+      "anchors": [
+        "dive-quality"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-quality paragraph 2 keeps human-labelled evaluation and all four hard cases (conflicting sources, stale pages, tool failures, adversarial instructions), with why a set without them measures only easy runs."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-quality-checks-and-evaluation",
+      "teaching_item": "Correct a misleading grader, then inspect distribution; post-fix drop may be better measurement",
+      "anchors": [
+        "dive-quality"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-quality paragraph 3 adds an illustrative miscalibrated grader (three citations scored as covered)."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-quality-checks-and-evaluation",
+      "teaching_item": "Trajectory vs outcome metric lists; track both",
+      "anchors": [
+        "dive-quality",
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-quality's last paragraph keeps both lists and the closing reason."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-variants",
+      "teaching_item": "AWS variant infrastructure list and its two gaps; supervisor-worker variant; deterministic workflow",
+      "anchors": [
+        "dive-variants"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-variants teaches the three variants separately, traces the Acme question through each, and gives the condition each fits. Previously folded into the platform paragraph without a comparison."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path arrow chain; separate credentials; append not last-write-wins",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-decisions keeps the arrow chain verbatim and both rules. The previous Quick review paraphrased it into prose."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-and-limits",
+      "teaching_item": "Numbers and limits card",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-numbers bullets 1-5 keep every figure and the hard caps; the platform thresholds were added for recall."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-fail-safely",
+      "teaching_item": "EMPTY \u2260 UNAVAILABLE; state the gap; strip image/markup fetches and unapproved links; private caches user-scoped",
+      "anchors": [
+        "review-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-failures paragraph 1 keeps EMPTY \u2260 UNAVAILABLE, state the gap, strip image/markup fetches and unapproved links, and user-scoped private caches, plus the no-silent-verifier-downgrade row from the ladder."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-evaluate",
+      "teaching_item": "Evaluate list, test poisoned pages and missing tools, 60-second close quote",
+      "anchors": [
+        "review-failures",
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-failures paragraph 2 keeps the metric list and tests; the 60-second close is quoted at the end of review-closing and in walk-multi-agent. The close was missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-problem-and-name-the-oracle-first",
+      "teaching_item": "First eight minutes; 20 min unfinished, 2 min generic; rehearse with a clock",
+      "anchors": [
+        "walk-oracle"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-oracle paragraph 1 keeps 'the first eight minutes buy every later answer', the twenty-minute and two-minute failure cases and rehearsing against a clock. Previously absent."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-problem-and-name-the-oracle-first",
+      "teaching_item": "Three opening moves: one-sentence restatement, eight numbers, oracle and scope cut",
+      "anchors": [
+        "walk-oracle"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-oracle paragraph 2 defines each of the eight numbers and the oracle in plain words before using them."
+      }
+    },
+    {
+      "source_id": "full-pack-1-restate-the-problem-and-name-the-oracle-first",
+      "teaching_item": "Prompt statement and the 'is that the system?' close with the quoted sentence",
+      "anchors": [
+        "walk-oracle"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-oracle paragraphs 3-4 and the block quote keep the prompt and the exact closing sentence; the source's first-person expectation is attributed to the source author."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "A requirement that cannot fail a test is a preference; oracle shapes architecture",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-requirements paragraph 1, with the well-researched vs every-claim-cited example."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Five must-haves and four should-haves",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the functional list names all five must-haves and four should-haves; 'dependency-aware' defined."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Read-only as a deliberate requirement; say it aloud",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of 'What the system must do', plus a clarification that read-only does not remove access or disclosure control."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Eight-constraint testable table incl. recovery from the mock",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The eight-row 'stated so it can be tested' table in walk-requirements is intact, with the recovery row's mock-design attribution; the $0.20 ceiling now agrees with the requirements table, so no wording note follows it."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Requirement-to-component ownership table",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Give every requirement an owner' keeps the seven-row table and defines reasoning tier and tier routing below it."
+      }
+    },
+    {
+      "source_id": "full-pack-3-carry-state-that-cannot-lose-a-branch",
+      "teaching_item": "State as contract; fan-out data-loss defect; LangGraph error vs silent hand-rolled loss",
+      "anchors": [
+        "walk-state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-state paragraphs 1-2 name the defect, define reducer and last-write-wins, and give a three-branch example."
+      }
+    },
+    {
+      "source_id": "full-pack-3-carry-state-that-cannot-lose-a-branch",
+      "teaching_item": "Seven state groups with the field/why table",
+      "anchors": [
+        "walk-state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; 'non-evictable' explained; budget-per-run vs per-branch given a $0.80 worked example."
+      }
+    },
+    {
+      "source_id": "full-pack-3-carry-state-that-cannot-lose-a-branch",
+      "teaching_item": "Mock's one-line rule (any multi-writer key needs an accumulating reducer) and scalar summary warning; synthesise once at end",
+      "anchors": [
+        "walk-state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-state paragraph 3 keeps the rule, the scalar warning and 'synthesise once, at the end'."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Privilege separation first, then cost; typed findings only; everything after schema boundary user-scoped",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-architecture paragraph 1 keeps privilege separation first then cost, web sub-agents with no user-document scope, typed findings only and user scope after the schema boundary."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Linear flow diagram",
+      "anchors": [
+        "fig-flow-linear"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-flow-linear (9c12 light / 0c2d dark) kept with a caption naming each node; old caption was 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Branching flow diagram (cache hit, web vs private questions, thin replan within cap, render-time egress firewall)",
+      "anchors": [
+        "fig-flow-branches"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-flow-branches (daa7 light / 5bd6 dark) kept with its own intro sentence and node-level caption."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Planes and trust zones diagram; control plane vs data plane",
+      "anchors": [
+        "fig-planes-zones"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "fig-planes-zones (557f light / 837d dark) kept; control plane, data plane, untrusted zone and user-scoped zone defined before it. The three figures are introduced in the order they appear, each by what it draws; the source's misplaced lead-in sentences are not carried over."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three plane notes: version the control-plane settings, strip images/links outside allowlist, link sub-agent traces and record spend by branch",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three labelled bullets after the planes figure keep every listed control-plane setting."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Twelve-component table with responsibility and failure mode",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; added the reading key (closed vs degrades) and the pattern paragraph after it."
+      }
+    },
+    {
+      "source_id": "full-pack-5-isolate-sub-agents-so-the-parent-stays-small",
+      "teaching_item": "Isolation as largest cost lever: raw pages resent; hundreds not thousands of tokens",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-isolation paragraph 1, with why (each call billed for its whole input)."
+      }
+    },
+    {
+      "source_id": "full-pack-5-isolate-sub-agents-so-the-parent-stays-small",
+      "teaching_item": "Context rot and lost-in-the-middle; three observations beat twelve",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-isolation paragraph 2 defines context rot and keeps the three-vs-twelve example. Missing in the previous version."
+      }
+    },
+    {
+      "source_id": "full-pack-5-isolate-sub-agents-so-the-parent-stays-small",
+      "teaching_item": "When to isolate vs share context",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-isolation paragraph 3 keeps both rules: isolate when intermediates are not needed downstream (research, verification, extraction), share only when steps reason across intermediates."
+      }
+    },
+    {
+      "source_id": "full-pack-5-isolate-sub-agents-so-the-parent-stays-small",
+      "teaching_item": "Limits: sub-agents bill own tokens; auditability lost unless traces stored and linked",
+      "anchors": [
+        "walk-isolation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-isolation paragraph 4 keeps both limits and ties the first to the Anthropic reference's finding."
+      }
+    },
+    {
+      "source_id": "full-pack-5-isolate-sub-agents-so-the-parent-stays-small",
+      "teaching_item": "Isolation is also the security boundary",
+      "anchors": [
+        "walk-isolation",
+        "walk-trifecta"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-isolation's last paragraph; the source's 'Section 7 builds on this' is rewritten as a pointer to step 8."
+      }
+    },
+    {
+      "source_id": "full-pack-6-say-the-arithmetic-aloud",
+      "teaching_item": "Derive numbers aloud; arithmetic table",
+      "anchors": [
+        "walk-arithmetic"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-arithmetic keeps the five-row arithmetic table intact (mean, peak, in flight, provision, naive cost) and opens with 'the derivation is what gets scored'."
+      }
+    },
+    {
+      "source_id": "full-pack-6-say-the-arithmetic-aloud",
+      "teaching_item": "Little's Law definition and naming it; 116.7 \u2248 120",
+      "anchors": [
+        "walk-arithmetic"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-arithmetic defines Little's Law, works 100 \u00d7 70 \u00f7 60 \u2248 117 \u2192 120 and 120 \u00f7 0.70 \u2248 170, and keeps the mean-not-p95 caveat."
+      }
+    },
+    {
+      "source_id": "full-pack-6-say-the-arithmetic-aloud",
+      "teaching_item": "Naive seven-step cost and three levers (isolation, prefix caching, tier routing)",
+      "anchors": [
+        "walk-arithmetic"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three labelled lever bullets keep the source wording; added that the source cites pricing without working the dollars, so the per-token figure is to be computed with current prices."
+      }
+    },
+    {
+      "source_id": "full-pack-6-say-the-arithmetic-aloud",
+      "teaching_item": "At 10x provider quota binds first; quota, arithmetic, lever, cost",
+      "anchors": [
+        "walk-arithmetic"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-arithmetic's last paragraph defines provider quota and keeps the order; attributed as the source's expectation."
+      }
+    },
+    {
+      "source_id": "full-pack-7-volunteer-the-trifecta-analysis-before-anyone-asks",
+      "teaching_item": "Lethal trifecta definition and the web-page attack",
+      "anchors": [
+        "walk-trifecta"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-trifecta paragraph 1 keeps the three capabilities and the example of a web page telling the agent to send a user's documents out."
+      }
+    },
+    {
+      "source_id": "full-pack-7-volunteer-the-trifecta-analysis-before-anyone-asks",
+      "teaching_item": "Rendered answer as channel: Markdown image exfiltration",
+      "anchors": [
+        "walk-trifecta"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-trifecta paragraph 2 defines exfiltration and adds a worked image-URL example."
+      }
+    },
+    {
+      "source_id": "full-pack-7-volunteer-the-trifecta-analysis-before-anyone-asks",
+      "teaching_item": "Egress firewall, zero document scope, 'privilege separation, in those words'",
+      "anchors": [
+        "walk-trifecta"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-trifecta paragraph 3 keeps the instruction to name it in those words; it was missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-7-volunteer-the-trifecta-analysis-before-anyone-asks",
+      "teaching_item": "Prompt defences are rate-reducers; boundary is gateway, scope separation, egress on tool and rendering paths",
+      "anchors": [
+        "walk-trifecta"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-trifecta's last paragraph keeps prompt defences as rate-reducers and the boundary as gateway, scope separation and egress on both paths."
+      }
+    },
+    {
+      "source_id": "full-pack-8-bound-the-loop-in-both-directions",
+      "teaching_item": "Stop too early vs never stop",
+      "anchors": [
+        "walk-bounds"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-bounds paragraph 1 keeps stopping early (abandons solvable work) vs never stopping (burns budget on unsolvable work). Missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-8-bound-the-loop-in-both-directions",
+      "teaching_item": "Three defences and the route() code",
+      "anchors": [
+        "walk-bounds"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code block kept byte-for-byte; added a plain line-by-line reading of the function and that the sketch is routing only."
+      }
+    },
+    {
+      "source_id": "full-pack-8-bound-the-loop-in-both-directions",
+      "teaching_item": "Why the no-progress signature: hop two vs hop eight; canonical reject/retry failure; specific feedback",
+      "anchors": [
+        "walk-bounds"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-bounds paragraph after the code reading keeps all three points."
+      }
+    },
+    {
+      "source_id": "full-pack-8-bound-the-loop-in-both-directions",
+      "teaching_item": "Ceilings return partial results; budget dict as fourth ceiling at $0.20",
+      "anchors": [
+        "walk-bounds"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept; the reserve-then-reconcile rule for parallel spend is explicitly labelled as this rewrite's addition."
+      }
+    },
+    {
+      "source_id": "full-pack-8-bound-the-loop-in-both-directions",
+      "teaching_item": "Deployed platform uses the same shape (Critic loops under agent_max_iterations)",
+      "anchors": [
+        "walk-bounds"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-bounds' last paragraph keeps the deployed platform's Critic looping back to Search under agent_max_iterations, ended by YES or an exhausted budget."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-every-branch-to-a-gap-never-to-silence",
+      "teaching_item": "Honest gaps: nine findings and a gap note",
+      "anchors": [
+        "walk-gaps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-gaps paragraph 1 keeps 'only as honest as its gaps' and the ten-workers, one-fails, nine-findings-and-a-gap-note example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-every-branch-to-a-gap-never-to-silence",
+      "teaching_item": "'What breaks first?' shape: symptom, mechanism, metric, fix; quoted example",
+      "anchors": [
+        "walk-gaps"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Block quote in walk-gaps keeps the source's four-part answer verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-degrade-every-branch-to-a-gap-never-to-silence",
+      "teaching_item": "Eight-row failure ladder",
+      "anchors": [
+        "walk-gaps"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; paragraph after it explains the two easy-to-miss rows (no silent verifier downgrade; injection stays data)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-measure-it-and-name-the-metric-that-would-prove-it-wrong",
+      "teaching_item": "Falsifiable design; grade distribution as falsifying metric; corpus is the constraint",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-evaluation paragraph 1 defines grade distribution and adds that more agents will not fix missing evidence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-measure-it-and-name-the-metric-that-would-prove-it-wrong",
+      "teaching_item": "Outcome vs trajectory; six wasted hops",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-evaluation paragraph 2 keeps the six-wasted-hops example, missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-measure-it-and-name-the-metric-that-would-prove-it-wrong",
+      "teaching_item": "Owner-question metric table",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The seven-row owner-question table in walk-evaluation is intact, including the grade distribution marked as the falsifying metric and the zero cross-user tests."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-measure-it-and-name-the-metric-that-would-prove-it-wrong",
+      "teaching_item": "Debug from the trace keyed by run ID; log routing reasoning; find first divergent hop",
+      "anchors": [
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-evaluation paragraph before the rollout subsection keeps the run-ID trace, the four per-hop fields, routing reasoning as the highest-value log and finding the first divergent hop."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-read-the-deployed-research-platform-as-proof",
+      "teaching_item": "Platform purpose and nine-layer table with all quoted details",
+      "anchors": [
+        "dive-platform"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine-row table kept with every number (401, 10/60 s, 0.85, 0.88, 0.50-0.88, 5 facts, 4 turns, 384 dims, Monday 02:00 UTC, 7 days); glossary abbrs fixed. The previous version also paraphrased the table into three duplicate paragraphs; those were removed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-read-the-deployed-research-platform-as-proof",
+      "teaching_item": "Dependency status notes: TensorZero archived, Groq model retired, GPT-4o offered",
+      "anchors": [
+        "dive-platform",
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table gives each status with its date from the references."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-read-the-deployed-research-platform-as-proof",
+      "teaching_item": "Four pieces of the delta: gateway, two-sided guardrails, pgvector durable cache, PyRIT on the real path",
+      "anchors": [
+        "dive-platform"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four labelled bullets keep each reason, including 'harmful output from a benign prompt' and 'raw user input'; PyRIT bullet adds the limit to attacks it tried."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-read-the-deployed-research-platform-as-proof",
+      "teaching_item": "Layer 3 is a pipeline closer to single-agent multi-step; Critic and bounded retry earn the split",
+      "anchors": [
+        "dive-platform"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of dive-platform's 'What its agent layer is' keeps layer 3 as a pipeline with a loop and gate, one shared context and tool set, and the Critic plus bounded retry earning the split."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-read-the-deployed-research-platform-as-proof",
+      "teaching_item": "What it lacks: per-user access control (one key, shared cache) and deterministic release gate",
+      "anchors": [
+        "dive-platform"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of the same subsection, citing app/auth.py and app/cache.py."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-build-the-supervisor-and-workers-version",
+      "teaching_item": "Mock prompt, supervisor plans N, workers in parallel, operator.add, hop cap and model-call budget; hardcode predictable decomposition",
+      "anchors": [
+        "dive-supervisor"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-supervisor paragraphs 1-2; operator.add explained; added a predictable-plan example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-build-the-supervisor-and-workers-version",
+      "teaching_item": "Parallel vs sequential trade-off",
+      "anchors": [
+        "dive-supervisor"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Parallel or sequential' adds a worked 10/15/20-second latency example and a dependent-search example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-build-the-supervisor-and-workers-version",
+      "teaching_item": "Three valid reasons for multi-agent",
+      "anchors": [
+        "dive-supervisor",
+        "walk-multi-agent"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Why multi-agent at all' in dive-supervisor and walk-multi-agent keep the three reasons, that this design has all three, and 'otherwise one agent with more tools'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-build-the-supervisor-and-workers-version",
+      "teaching_item": "Four costs: call per hop, history summary, Literal routing, shared upstream retrieval",
+      "anchors": [
+        "dive-supervisor"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list of four. The previous version dropped the call-per-hop and full-history costs."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Time is the binding constraint; 45-minute phase table",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; the 'Sections' column is translated to the walkthrough steps that now teach each phase. Fixed the last row, which the previous version rendered as ', ' instead of the source's em dash (now 'None')."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Consistent depth first, then offer depth; why going deep unprompted fails",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-delivery paragraph after the table keeps the quoted depth offer and why unprompted depth runs out of time before failures and measurement."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Follow-up bank: eight probes with strong-answer shapes",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each probe is now an answer reveal with the source's shape and a case-specific application; additions are labelled after the list."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Recovery moves: behind on time, redirects, wrong number, unfamiliar domain; running out of time silently fails",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-delivery keeps all four recovery moves as bullets and the closing 'what fails a round is running out of time without saying so'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Full two-minute spoken answer",
+      "anchors": [
+        "spoken-full"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveal spoken-full quotes the whole answer in four paragraphs. Missing from the previous version."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Eight lines that carry the round",
+      "anchors": [
+        "spoken-lines"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveal spoken-lines lists all eight verbatim. Missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-per-report-pivot-in-ten-minutes",
+      "teaching_item": "Self-drill card table",
+      "anchors": [
+        "cost-pivot-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table inside the cost-pivot-answer reveal; header row now has real labels instead of the previous empty header cells."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-per-report-pivot-in-ten-minutes",
+      "teaching_item": "Each lever maps to the design (hop cap/budget, ledger, isolation, smart lookup 0.85/0.88)",
+      "anchors": [
+        "cost-pivot-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table, with section numbers rewritten to walkthrough steps."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-per-report-pivot-in-ten-minutes",
+      "teaching_item": "Mock accounting: split by agent and hop; collapse relay agents; route hard steps; ship every cut with an eval number",
+      "anchors": [
+        "cost-pivot-answer",
+        "dive-supervisor"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of the cost-pivot-answer reveal keeps the mock's accounting order: split by agent and hop, collapse relay agents, route only hard steps, ship every cut with an eval number."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-per-report-pivot-in-ten-minutes",
+      "teaching_item": "Four verbs: measure, route, bound, cache safely",
+      "anchors": [
+        "cost-pivot-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of the reveal names the four verbs in order. Missing before. A freshness/ownership qualification on 'never research the same topic twice' is added as a separate sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Level calibration table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-levels keeps the four-row Mid/Senior/Staff/Principal table intact, including the Principal row's gateway, platform rules and corpus-investment points."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review-closing lists all fourteen. The previous Quick review compressed them into two paragraphs and dropped several (45-minute script, deployed platform proof, supervisor caveat)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Eleven self-check questions with answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveals research-check-1 to -11 keep the source's question wording (the previous version had reworded several, e.g. dropping 'single largest cost lever' and 'which one makes an approval subsystem unnecessary') and its answers, with short clarifications."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "Nineteen references with what each supports, fact-check date 27 Sep 2026",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-sources keeps every link and carries each reference's supported claim and the fact-check date, which the previous bare link list dropped."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review against all 46 captured sections. The previous version had 46 one-per-section rows with shared boilerplate evidence and had thinned or dropped: the Acme CEO trace (main-intro), the functional list, the non-functional target table and interview shortcut, the opening-move timing and 'is that the system?' quote, context rot and lost-in-the-middle, 'stop too early vs never stop', the outcome-vs-trajectory six-wasted-hops example, the what-to-test list, two of the supervisor build's four costs, the platform's four delta pieces, both two-minute answers, the eight carrying lines, the 60-second close, the four cost verbs, the references' supported claims, and 9 of 14 takeaways; it also reworded several check-yourself questions, rendered the 45-minute table's last cell as ', ', left the cost card with empty headers, and captioned every figure 'source figure N'. Rewrote into a 12-step walkthrough mirroring the full design's order, 9 deep dives (trust, evidence records, cost, grader, supervisor build, platform, three variants, references), 9 practice groups with 25 reveals, and 4 Quick review groups, giving 117 item-level rows. Defined terms before use (agent, sub-agent, ledger, reducer, last-write-wins, oracle, Little's Law, prefix caching, trifecta, exfiltration, control plane, trust zones, grade distribution), added worked examples (Acme trace, three-branch loss, $0.80 per-branch budget, image-URL exfiltration, 117\u2192120 arithmetic, 10/15/20-second parallel latency), recast the source author's first-person 'my own build' as attributed, and labelled additions (reserve-then-reconcile budget, follow-up applications, two changed-constraint drills). Source inconsistencies resolved in text (2026-11-16): section 4 figure lead-ins one figure off \u2192 each figure introduced by what its SVG draws, meta note removed; 'after 12 hops' discovery question vs eight-hop cap and 3-12-step plan \u2192 question set to eight hops (the cap the termination code enforces), steps and hops stated as separate counters; 'roughly $0.20' vs '$0.20 ceiling' \u2192 ceiling throughout, because the budget dict, failure ladder and state table all enforce it as a per-run stop (whether the business treats it as hard stays a discovery question); 'this enterprise case' vs consumer product \u2192 consumer product that holds private documents, so it still needs per-user ACLs and a release gate. The summary paragraph listing these in the references section is removed."
+  },
+  "required_answer_reveals": [
+    "research-check-1",
+    "research-check-2",
+    "research-check-3",
+    "research-check-4",
+    "research-check-5",
+    "research-check-6",
+    "research-check-7",
+    "research-check-8",
+    "research-check-9",
+    "research-check-10",
+    "research-check-11",
+    "followup-scale",
+    "followup-breaks",
+    "followup-works",
+    "followup-model-worse",
+    "followup-cost",
+    "followup-boundary",
+    "followup-two-week",
+    "followup-bad-actor",
+    "cost-pivot-answer",
+    "constraint-hard-cap",
+    "constraint-email",
+    "spoken-main",
+    "spoken-full",
+    "spoken-lines"
+  ],
+  "required_anchors": [
+    "brief-example",
+    "walk-oracle",
+    "walk-state",
+    "walk-trifecta",
+    "walk-bounds",
+    "walk-gaps",
+    "walk-evaluation",
+    "dive-platform",
+    "practice-cost-pivot",
+    "review-closing"
+  ]
+}

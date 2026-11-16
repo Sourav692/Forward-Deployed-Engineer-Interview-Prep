@@ -1,0 +1,1703 @@
+{
+  "title": "Customer Support Automation",
+  "slug": "customer-support-automation",
+  "subtitle": "Design support that answers, requests approval and hands off with evidence, while keeping account actions controlled.",
+  "theme": "Agents and Copilots in Real Workflows",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/customer-support-automation",
+  "updated": "Teaching rewrite, re-reviewed 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "support-brief",
+    "intro-the-core-idea": "support-brief",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "support-brief",
+    "intro-practise-it": "practice-start",
+    "main-intro": "support-brief",
+    "deep-dive-intro": "support-brief",
+    "cheat-sheet-intro": "support-brief",
+    "cheat-sheet-one-sentence": "support-brief",
+    "full-pack-intro": "brief-related",
+    "main-1-open-with-the-risk": "discovery",
+    "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline": "discovery",
+    "main-2-requirements-functional-non-functional": "requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "cheat-sheet-requirements-to-recall": "requirements",
+    "deep-dive-1-source-authority-and-freshness": "authority",
+    "full-pack-part-2-3-map-every-source-and-its-authority": "authority",
+    "main-3-architecture-you-can-draw": "architecture",
+    "deep-dive-3-control-plane-data-plane-and-trust-boundaries": "architecture",
+    "cheat-sheet-say-the-flow": "architecture",
+    "full-pack-part-2-4-draw-the-architecture-end-to-end": "architecture",
+    "main-part-2-4-decide-what-can-happen": "action-policy",
+    "deep-dive-4-routing-planning-memory-and-model-choice": "action-policy",
+    "cheat-sheet-action-table": "action-policy",
+    "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model": "action-policy",
+    "main-part-2-5-make-actions-and-handoffs-reliable": "recovery",
+    "main-part-2-6-failure-playbook": "recovery",
+    "deep-dive-6-failure-decisions-and-incident-drills": "recovery",
+    "cheat-sheet-handoff-payload": "recovery",
+    "cheat-sheet-failures-to-rehearse": "recovery",
+    "full-pack-part-2-7-hand-off-with-full-context": "recovery",
+    "full-pack-part-3-8-degrade-into-a-safe-handoff": "recovery",
+    "main-part-2-7-scale-latency-and-cost": "sizing",
+    "deep-dive-5-risk-tiered-budgets-and-sizing": "sizing",
+    "cheat-sheet-cost-answer": "sizing",
+    "main-part-2-8-evaluation-and-release": "release",
+    "main-part-2-9-roll-out-by-intent-and-tool-class": "release",
+    "deep-dive-7-evaluation-release-gate-and-operations": "release",
+    "cheat-sheet-release-and-rollout": "release",
+    "full-pack-part-3-9-gate-the-release-on-safe-automation-not-deflection": "release",
+    "full-pack-part-3-10-roll-out-agent-assist-first-one-tool-class-at-a-time": "release",
+    "full-pack-part-2-5-verify-identity-before-any-account-tool": "security",
+    "deep-dive-2-state-model-and-apis": "state",
+    "main-part-2-10-variants-and-implementation-hooks": "variants",
+    "deep-dive-8-two-important-variants": "variants",
+    "cheat-sheet-variants": "variants",
+    "full-pack-part-3-11-handle-the-tenant-and-itsm-variants": "variants",
+    "deep-dive-9-implementation-details-from-the-six-source-mocks": "implementations",
+    "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks": "implementations",
+    "deep-dive-source-trace": "references",
+    "full-pack-part-5-references": "references",
+    "full-pack-part-5-check-yourself": "practice-start",
+    "main-part-2-11-interview-delivery": "delivery",
+    "deep-dive-10-interview-probes-to-rehearse": "interview",
+    "cheat-sheet-interview-triggers": "interview",
+    "full-pack-part-4-12-deliver-it-in-sixty-minutes": "delivery",
+    "full-pack-part-5-level-calibration": "delivery",
+    "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes": "drill-cost-pivot",
+    "cheat-sheet-five-rules": "review",
+    "full-pack-part-5-key-takeaways": "review",
+    "cost-pivot": "drill-cost-pivot",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "main-part-2": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Discovery and scope fence",
+      "hint": "Which six areas do you ask about, which assumptions are safe, and what stays out of the first release?"
+    },
+    {
+      "id": "design",
+      "label": "Trace the double charge",
+      "hint": "Follow the message through identity, routing, live billing, proposal, gateway and outcome. Who decides the refund?"
+    },
+    {
+      "id": "failures",
+      "label": "Billing timeout and timed-out refund",
+      "hint": "What blocks, what is pending, what the handoff carries, and when a retry is safe."
+    },
+    {
+      "id": "evaluation",
+      "label": "Gate, rollout and cost",
+      "hint": "Which metrics veto a deflection win, what the go/no-go checklist holds, and how you answer the cost pivot."
+    }
+  ],
+  "rubric": [
+    "Separates action authority (the deterministic gateway) from model confidence, and names the five gateway checks.",
+    "Fetches billing, orders and identity live before an account action and stamps the policy version.",
+    "Treats a timed-out refund as unknown, reconciles against the ledger and says the backend must honour the idempotency key.",
+    "Specifies the handoff fields, the stop reason and risk-prioritised queueing.",
+    "Sizes calls by workflow (4.2M model, 2.2M-2.4M retrieval) and judges value with NetValue, not deflection.",
+    "Launches agent-assist first, then reversible intents and one tool class at a time with a kill switch and named owners.",
+    "Asks '80 percent of what?' and expands only where safe automation and repeat contact hold."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Double-charge difficulty: verify, live billing, refund policy, no duplicate refund, clean handoff; routed decision pipeline; every write idempotent",
+      "anchors": [
+        "support-brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two paragraphs of the brief carry the double-charge quote and all five checks (the 'avoid a duplicate refund' check was missing before and is restored). Third paragraph defines routed decision pipeline, deterministic gateway and idempotent write in plain words."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Anchor case: multi-tenant, ticket automation and large-scale assistants reuse the pipeline and change the dominant boundary",
+      "anchors": [
+        "brief-related"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New 'The anchor for related support cases' subsection; previously absent. Its table names each related case, what it changes and where this casebook teaches it."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the six-node core-idea figure",
+      "anchors": [
+        "support-brief",
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The figure caption now quotes the core-idea sentence and the paragraph before it traces verify, fetch, draft, gate and the yes/no exits that the SVG labels show. Both light and dark variants kept."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates; support agent that acts on accounts",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design and what it assumes' names the same audience and round. The previous version mapped this item but never stated it."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objective: explain end to end from the dangerous constraint; answer follow-ups on eight named areas",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of brief-task states the dangerous constraint verbatim in meaning and lists identity, source authority, action safety, handoff, failure modes, evaluation, rollout and cost."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: retrieval, LLM agents and tool calling, idempotent APIs, basic cloud",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task second paragraph lists the four prerequisites and expands LLM once. Previously missing."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (mandatory sections, read toggles, Full Design optional)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation; the five-section shell replaces it. Its only substantive point, that numbers are planning assumptions, is in brief-task's closing sentence. No sixth Full Design track created."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Technical Deep Dive, Quick Review, Full Design)",
+      "anchors": [
+        "support-brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation table only. Its four tracks are redistributed into walkthrough, deep dives, practice and quick review; the alias keeps the fragment working."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Blank-page worksheet practice",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-start opens with the blank-page reproduction exercise, labelled as authored guidance, before the nine source self-checks."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Support-process framing, the double-charge trace verify \u2192 facts \u2192 draft \u2192 gate \u2192 outcome, lawsuits and negotiation stay human",
+      "anchors": [
+        "support-brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1 and 4 plus the figure carry the trace; the 'Lawsuit threats and open negotiation stay human' sentence closes the scope paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Model and agent roles: rules or small model route, LLM drafts, bounded planner for multi-system, gateway and approver authorise",
+      "anchors": [
+        "architecture",
+        "action-policy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Architecture step 3 and 4 and the 'Route models by risk' subsection teach the same role split; the gateway as authoriser is step 5."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Old cheat-sheet pointer to other tracks",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation sentence only; the quick review itself replaces it."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-one-sentence",
+      "teaching_item": "One-sentence summary",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review opens with the sentence: routed decision pipeline; the model suggests, the gateway decides, uncertain or risky work reaches a human with context."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Framing: resolve routine tickets fast without unauthorised actions or promises; model is input, never authority; group contribution table",
+      "anchors": [
+        "support-brief",
+        "brief-related"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 3 carries 'the gateway decides even when the model is confident'. The group-contribution table is merged with the main guide's related-case table in brief-related, which adds the 10,000-daily-user cost-drill row and the OpenAI-style prompt row missing before."
+      }
+    },
+    {
+      "source_id": "main-1-open-with-the-risk",
+      "teaching_item": "Opening statement: outcome first, which requests answer/approve/hand off, then boundaries",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 quotes the full-pack opening ('optimise for the outcome first...') as a labelled spoken example and states the answer/approve/stop reframe in prose."
+      }
+    },
+    {
+      "source_id": "main-1-open-with-the-risk",
+      "teaching_item": "Eight discovery questions with 'what it's really asking' and 'what you then decide'",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Discovery table keeps all eight rows and the main guide's 'really asking' column; the decision column now merges the full-pack's sharper outcomes (handoff p95, first-release scope fence, non-goals list, PII)."
+      }
+    },
+    {
+      "source_id": "main-1-open-with-the-risk",
+      "teaching_item": "If no numbers, state assumptions; keep money-moving and account-changing actions gated",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final sentences of the paragraph after the discovery table."
+      }
+    },
+    {
+      "source_id": "main-1-open-with-the-risk",
+      "teaching_item": "Related-case table (1M/day assistant, multi-tenant, ServiceNow, agentic workflow mocks, framework implementations)",
+      "anchors": [
+        "brief-related"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five rows appear in the brief-related table with the same 'what changes' text. Previously dropped entirely."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Reframe: act, ask or stop; naive vs real double-charge design; degrade into handoff when billing is down or policy fails",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraphs 1 and 3: naive design, the four earlier steps, and the billing-down and confident-but-failed-policy cases."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Three answer tiers: weak, average, strong with their specific omissions",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Three answer tiers' list. The previous version had one compressed sentence; the average tier's three omissions (approval actions, timed-out executed refund, confidence as grounds) are now explicit."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Six discovery areas named unprompted",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First sentence under 'Questions that move the risk boundaries' lists all six areas. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Interviewers answer half on purpose; safe defaults (text model, dominant language plus fallback, scalable not over-engineered); four dangerous assumptions; protect highest-risk constraint",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the discovery table gives all three safe defaults and all four dangerous assumptions (identity always verified, any request automatable, model answer inherently safe, CRM always truth). The previous version kept only the language and identity examples."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Stakeholder table: customer, support agent, support ops lead, security/legal/privacy with failure noticed, what they get, approval role",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'People and the failure each notices first' table restores all four rows and five columns; the previous version reduced it to one sentence in the brief."
+      }
+    },
+    {
+      "source_id": "full-pack-1-reframe-the-chatbot-as-a-routed-decision-pipeline",
+      "teaching_item": "Scope fence before the first box; five first-release exclusions",
+      "anchors": [
+        "discovery",
+        "support-brief"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief scope paragraph lists all five exclusions; step 1 closes with why the fence comes first (design expands until risk dominates)."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements: normalise intake, classify, verify identity, retrieve live facts, gate, escalate with context, audit",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list of eight functional requirements merges the main guide's seven with the full pack's 'draft or send by confidence and risk'; 'normalise intake' and 'verify identity' were missing before."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut spoken requirements answer",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of step 2 quotes the shortcut. Previously missing."
+      }
+    },
+    {
+      "source_id": "main-2-requirements-functional-non-functional",
+      "teaching_item": "First-release exclusions as a requirement row; reconcile side effects before retry",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Constraint table gains a 'First release' row and the reliability row now includes 'reconciled before retry'."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Constraint vs preference with refund-threshold and console examples",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 first paragraph, both examples kept."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Risk-tiered NFR table (latency, availability, security, compliance, reliability, cost) and SLO/p95 definition",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Constraint table keeps every cell; the paragraph before it defines p95 and SLO and notes the 15 s tier is handoff packaging, not an automated decision."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Requirement-to-component ownership table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Nine-row ownership table unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Sizing: 2M/month, 100 QPS, 20 languages; 67k/day; spikes; 100 QPS rules out single-threaded control plane; 20 languages rule out English-only",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 first paragraph. The single-threaded and English-only implications were missing before and are restored."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Call arithmetic 2.8M + 1.2M + 0.2M = 4.2M; retrieval 1.4M + 0.8M + up to 0.2M = 2.2M-2.4M; retrieval drives freshness, cache, isolation",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 bullet list shows each product; the retrieval sum is now shown term by term (previously only the total). Rechecked: 2.8 + 1.2 + 0.2 = 4.2."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Over a thousand agents at 1,500 tickets/agent/month; 30-50% deflection as delayed hiring, not half the team",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph on staffing; 2M / 1,500 is about 1,333, consistent with 'well over a thousand'."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "NetValue as most reusable move; wrong resolution expected to outweigh model bill; ten-seconds-saved-with-recontact is not a win; 10x revisits partitioning",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 closing two paragraphs; the 'outweigh the model bill' expectation and the ten-second example were missing and are attributed to the source."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-requirements-to-recall",
+      "teaching_item": "Requirements recall line",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Numbers' paragraph recalls load, call counts, 3/8/15 s tiers and NetValue; functional duties are recalled in the flow line."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-source-authority-and-freshness",
+      "teaching_item": "Query-time rule and cache boundary per source: identity verified at session and action boundary, assertion is not authorisation; order summaries guide search only; ticketing never an instruction source",
+      "anchors": [
+        "authority"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The step 3 authority table merges the deep dive's 'query-time rule' and 'cache boundary' columns into the full pack's table: identity row now says 'and again at the account-action boundary' and 'an identity assertion is not an authorisation'; orders row adds 'current-status promise' and 'never override'."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-source-authority-and-freshness",
+      "teaching_item": "Stale shipping makes an answer wrong; stale ledger or assurance makes an action harmful",
+      "anchors": [
+        "authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the authority table opens with this distinction. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-every-source-and-its-authority",
+      "teaching_item": "Automation layer owns workflow and evidence, never customer truth; locked account beats any cache; six-source table",
+      "anchors": [
+        "authority"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 opening paragraph and table; all six sources and six columns kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-every-source-and-its-authority",
+      "teaching_item": "Case, ProposedAction, Handoff records; lifecycle; kept hot; args_hash; Case.version",
+      "anchors": [
+        "state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "State deep dive paragraphs 1 and 2. 'Kept hot while the support window is open' restored. The Case signature includes version, which the source's own optimistic-concurrency text relies on (Case.version); the signature is corrected without comment."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-3-map-every-source-and-its-authority",
+      "teaching_item": "msg_9f1c duplicate drill with the case_123 response body and dedup logging; small API with versioned schemas",
+      "anchors": [
+        "state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "State deep dive shows the exact JSON response body (previously omitted) and the 'logs that the duplicate was deduplicated' step; the four endpoints and separate versioning of schemas and contracts are in paragraph 3."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-state-model-and-apis",
+      "teaching_item": "Records, lifecycle, optimistic concurrency, four endpoints, tenant-scoped validated idempotent writes, msg_9f1c and refund-timeout drills, 409/422, queue ordering",
+      "anchors": [
+        "state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "State deep dive paragraphs 1 to 5 carry every element of this section; the refund-timeout drill sentence ('an unknown outcome, not permission to repeat the payment call') follows the duplicate-message example."
+      }
+    },
+    {
+      "source_id": "main-3-architecture-you-can-draw",
+      "teaching_item": "Seven-step whiteboard architecture; failed verification gives generic help or handoff; direct path vs bounded planner",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 numbered list follows the source's seven steps in order, with the double-charge proposal traced through steps 1 to 6 afterwards."
+      }
+    },
+    {
+      "source_id": "main-3-architecture-you-can-draw",
+      "teaching_item": "Three boundaries: identity, authorisation, sync/async",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-bullet list after figure-11-0, including 'everything to its left may suggest, nothing to its left may act' from the full pack."
+      }
+    },
+    {
+      "source_id": "main-3-architecture-you-can-draw",
+      "teaching_item": "Whiteboard figure with control plane over the decision path",
+      "anchors": [
+        "figure-11-0"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The previous caption was generic. The new paragraph before figure-11-0 describes its actual branches (verification fails, single lookup with no draft or gate, multi-system planner, four gate outcomes, audit), checked against the SVG labels."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-say-the-flow",
+      "teaching_item": "Say-the-flow arrow sequence and role split",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Flow' paragraph reproduces the arrow sequence and the rules/LLM/planner/gateway roles."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-control-plane-data-plane-and-trust-boundaries",
+      "teaching_item": "Control-plane contents and data-plane stages",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Planes paragraph in step 4 lists every data-plane stage and every control-plane item, including routing weights and low-risk intent list."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-control-plane-data-plane-and-trust-boundaries",
+      "teaching_item": "Narrow boundaries: untrusted text, identity, gateway checks incl. account/tenant scope, tool service, interrupt at the risky tool",
+      "anchors": [
+        "architecture",
+        "security",
+        "action-policy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Untrusted text and tool service are the first two seams in the security deep dive; tenant scope is in architecture step 5; the risky-tool interrupt opens 'Human approval at the risky tool'."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-control-plane-data-plane-and-trust-boundaries",
+      "teaching_item": "Blast radius by tenant, region, workflow, dependency; refund incident must not disable FAQ; language outage must not erase ticketing or audit",
+      "anchors": [
+        "security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-bullet blast-radius list in the security deep dive, each with its example."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Two planes; author's view that most escalation failures are control decisions too late or in the wrong place",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Planes paragraph in step 4; the escalation-failure view is stated as the source author's opinion. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Ten-component responsibility/owns/fails table read in dependency order",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table unchanged, introduced with the dependency-order reason."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Async actions report submission separately from completion; record solved/reopened/corrected/overridden",
+      "anchors": [
+        "architecture",
+        "state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Architecture step 7 and the sync/async bullet; the state deep dive's last paragraph repeats the submitted-until-complete rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Queue partitioning by conversation/customer/account; cache policy, language detection, summaries; never identity, money, account status, authorisation",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after figure-48-2 keeps the ordering-key reason and both cache lists (cacheable and never-cache)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Ingress-to-decision diagram",
+      "anchors": [
+        "figure-48-0"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before figure-48-0 now describes the canonical envelope, identity failure exit, direct authorised read-only tool, calibrated three-way split and prioritised queue, matching the SVG labels; the previous caption only said 'source figure 1'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Execution-tail diagram",
+      "anchors": [
+        "figure-48-1"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before figure-48-1 traces permitted or approved proposal, scoped execution, systems of record, confirm outcome, quality store."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Plane-by-plane lanes diagram",
+      "anchors": [
+        "figure-48-2"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before figure-48-2 names the five lanes and their sync/async labels and the three labelled decision exits shown in the SVG."
+      }
+    },
+    {
+      "source_id": "main-part-2-4-decide-what-can-happen",
+      "teaching_item": "Request-to-path table (public FAQ, order status, money changes, legal/safety/unclear, timeout after action)",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 'Request types and the path each one takes' table restores all five rows; previously not present as a table."
+      }
+    },
+    {
+      "source_id": "main-part-2-4-decide-what-can-happen",
+      "teaching_item": "Planner only for multi-system; track my order direct; three memory layers with different freshness and privacy",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Direct paths, planners and capabilities' subsection."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-routing-planning-memory-and-model-choice",
+      "teaching_item": "Five risk tags; RAG, tools, memory as selectable capabilities",
+      "anchors": [
+        "architecture",
+        "action-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Tags in architecture step 3; capabilities paragraph in step 5 with the refund-policy versus refund-my-order examples."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-routing-planning-memory-and-model-choice",
+      "teaching_item": "Model choice: rules, small models, stronger reasoning after filtering; do not globally shrink or inflate context; inspect failed examples",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New 'Route models by risk' subsection. The previous version taught model routing only inside a practice table."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-action-table",
+      "teaching_item": "Six-row action table",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Default action for each case type' table, all six rows."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model",
+      "teaching_item": "Gateway's five deterministic questions incl. data accessible to this agent tier; calibrator's three outcomes",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraph 2 asks all five questions (agent-tier question was missing) and spells out the three calibrator outcomes."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model",
+      "teaching_item": "Approval workflow: AI validates first; goal that most requests never reach a human, measured not assumed; five review categories",
+      "anchors": [
+        "action-policy",
+        "figure-50-0"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Human approval at the risky tool' subsection. Corrected a meaning drift: the previous text said approvals do not 'disappear', whereas the source's point is that most requests should not need one and the queue volume must be measured. Figure-50-0 is now introduced by its yes/no branches."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model",
+      "teaching_item": "Damaged-laptop planner example coordinating six systems and merging results",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Planner paragraph keeps the quote and the six coordinated call types."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model",
+      "teaching_item": "Memory table with examples column",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Memory table now has the full pack's Example column (same-order referent; language, channel, purchases; docs, policies, FAQs, troubleshooting) alongside the deep dive's failure column."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-let-a-deterministic-gateway-decide-never-the-model",
+      "teaching_item": "Route models by risk: FAQ small model, refund investigation large reasoning model; global downgrade harms the few; levers",
+      "anchors": [
+        "action-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Route models by risk' subsection lists the four levers."
+      }
+    },
+    {
+      "source_id": "main-part-2-5-make-actions-and-handoffs-reliable",
+      "teaching_item": "Versioned Case, immutable ProposedAction, Handoff; idempotency key at every write; args_hash; duplicate message returns existing case",
+      "anchors": [
+        "state"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "State deep dive paragraphs 1 to 4 teach these with the msg_9f1c example."
+      }
+    },
+    {
+      "source_id": "main-part-2-5-make-actions-and-handoffs-reliable",
+      "teaching_item": "Handoff contents; prioritise by risk and impact; transcript alone repeats work and hides the failed control",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The handoff' subsection of step 6; the 'hides which control failed' point was missing before."
+      }
+    },
+    {
+      "source_id": "main-part-2-6-failure-playbook",
+      "teaching_item": "Seven failure behaviours incl. model endpoint, language, wrong policy answer; bounded jittered retries; timeouts never convert blocked to allowed",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Dependency outages have fixed behaviours' bullets plus the closing sentence 'A timeout never converts a blocked action into an allowed one', previously missing."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-failure-decisions-and-incident-drills",
+      "teaching_item": "Seven-row failure/decision/recovery-evidence table",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second table in step 6, introduced as the recovery-evidence table for the same six policies, with the order-status situation listed as its two cases (malformed lookup, unavailable tool), which is why it has seven rows."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-failure-decisions-and-incident-drills",
+      "teaching_item": "Wrong-policy and timeout drills; never unmarked stale answer; workflow-level explanation of handoff",
+      "anchors": [
+        "recovery",
+        "drill-wrong-policy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Covered by the timed-out refund subsection, the detect/contain/recover/prevent paragraph and the drill-wrong-policy answer."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-handoff-payload",
+      "teaching_item": "Handoff payload line",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'State' paragraph lists the full payload."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failures-to-rehearse",
+      "teaching_item": "Four failures to rehearse",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Failures to rehearse' paragraph has all four, including the model or language route outage line missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-hand-off-with-full-context",
+      "teaching_item": "Thin handoff is operational leakage; workflow-level explainability; queue on the automation/operations boundary; backpressure in three places",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The handoff' subsection: leakage framing and the queue placement were missing before; the three backpressure points moved here from the security dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Six-row Situation/Default policy/Why decision table",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as 'The six-row decision table' with the Why column. The previous coverage claimed this table was present, but only the seven-row evidence table was."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Billing-timeout replay step by step; boundaries made visible",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Replay the billing timeout' subsection walks every hop from message to quality store; previously one paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Detect/contain/recover/prevent for wrong policy and timed-out refund; backend must honour keys; 'bound it, record it, stop it, learn from it'",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The timed-out refund' subsection and the paragraph after it carry all four stages for the policy drill and the backend-honours-keys caveat; the security quotation is attributed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Three questions on a wrong policy answer",
+      "anchors": [
+        "security",
+        "drill-wrong-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of the security deep dive and the drill-wrong-policy reveal."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Fixed outage behaviours; stale account state handling; language never guesses",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Dependency outages' bullets including the stale-account-state bullet with its three options and the dangerous case."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-8-degrade-into-a-safe-handoff",
+      "teaching_item": "Seven scale moves for 1M-10M conversations/day; regional and active-active",
+      "anchors": [
+        "scale"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Scaling deep dive now numbers the source's seven moves, including enterprise identity propagation and model routing by task."
+      }
+    },
+    {
+      "source_id": "main-part-2-7-scale-latency-and-cost",
+      "teaching_item": "Pressure/design-response table (burst, latency, freshness, cost, 10M growth)",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 table restores all five rows; previously these were only scattered sentences."
+      }
+    },
+    {
+      "source_id": "main-part-2-7-scale-latency-and-cost",
+      "teaching_item": "1M/day belongs to the consumer scenario; numbers are interview assumptions",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraph 1 keeps the 1M/day figure attached to the consumer scenario; paragraph 3 labels all sizing as interview assumptions."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-risk-tiered-budgets-and-sizing",
+      "teaching_item": "Risk tiers, 67k/day, 4.2M calls, retrieval range, 10x moves, semantic FAQ cache keyed by tenant/permission/version, NetValue with retrieval/ops",
+      "anchors": [
+        "sizing",
+        "scale"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 and the scaling deep dive (move 3 holds the cache key and exclusions)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-cost-answer",
+      "teaching_item": "Cost answer sequence",
+      "anchors": [
+        "review",
+        "drill-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Cost' paragraph and the four verbs in the cost-pivot drill."
+      }
+    },
+    {
+      "source_id": "main-part-2-8-evaluation-and-release",
+      "teaching_item": "Safe automation definition; four views; segment by intent/language/group; falling handle time with rising recontact is rework",
+      "anchors": [
+        "release"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 first paragraph and the cross-layer paragraph; the rework signal was missing before."
+      }
+    },
+    {
+      "source_id": "deep-dive-7-evaluation-release-gate-and-operations",
+      "teaching_item": "Four-layer signal table; veto by incorrect resolution, recontact or CSAT; owners incl. frontline managers; config vs adapters vs shared services",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-layer table, cross-layer paragraph (veto sentence), gate owner paragraph and the delivery subsection."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-gate-the-release-on-safe-automation-not-deflection",
+      "teaching_item": "Seven-metric table with calculation, source, owner, alert",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Metric table in step 8 keeps all seven metrics with calculation, source, owner and alert cells unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-gate-the-release-on-safe-automation-not-deflection",
+      "teaching_item": "Three cross-layer readings (cost vs recontact, safe automation vs CSAT, handling time vs FCR)",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cross-layer paragraph in step 8. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-9-gate-the-release-on-safe-automation-not-deflection",
+      "teaching_item": "Five-item go/no-go checklist; any missing item delays; five named owners",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The go/no-go gate' subsection; 'any missing item delays the launch' restored."
+      }
+    },
+    {
+      "source_id": "main-part-2-9-roll-out-by-intent-and-tool-class",
+      "teaching_item": "Rollout stages; shipping ETA among first intents; 80% of what",
+      "anchors": [
+        "release",
+        "followup-autonomy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rollout table week 3-4 row adds shipping ETA; the 80% question is in answer-7 and followup-autonomy."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-roll-out-agent-assist-first-one-tool-class-at-a-time",
+      "teaching_item": "Week-by-week rollout table; each tool its own gate; warranty drift example; canaries tiny, visible, reversible",
+      "anchors": [
+        "release"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rollout table and paragraph after it; the canary rationale (one bad answer multiplies across similar tickets) was missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-roll-out-agent-assist-first-one-tool-class-at-a-time",
+      "teaching_item": "Risk register with owner, mitigation and trigger for three risks",
+      "anchors": [
+        "release"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Risk register table restores mitigations and triggers (grounding plus mandatory escalation / spike in incorrect resolutions; freshness checks / tool-vs-CRM mismatch; intent tuning / rising overrides). The previous version kept only owners."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-roll-out-agent-assist-first-one-tool-class-at-a-time",
+      "teaching_item": "Training and documentation are delivery; operable without a developer; config/adapters/shared services/core; MVP and later items",
+      "anchors": [
+        "release"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Deliver something the team can operate' subsection lists every configuration item, adapter, shared service, the four core pieces, the eight MVP components and six later items; 'without a developer in the room' restored."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-release-and-rollout",
+      "teaching_item": "Release gate, metrics and rollout sequence recall",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Release' paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-verify-identity-before-any-account-tool",
+      "teaching_item": "'Sounds right' is not authentication; workflows that require verified identity; assurance checked on every action; pre-auth generic mode",
+      "anchors": [
+        "security"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Security deep dive paragraph 1."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-verify-identity-before-any-account-tool",
+      "teaching_item": "Four-seam security chain incl. least-privilege order-status example and six audit fields",
+      "anchors": [
+        "security"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered four-seam list; the least-privilege example and 'security is a chain' framing were missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-verify-identity-before-any-account-tool",
+      "teaching_item": "Layered blast radius with tenant, region, workflow, dependency examples; any one control can fail",
+      "anchors": [
+        "security"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Blast-radius list now includes the region example (queue outage must not corrupt global audit log) and the tenant example, both missing before."
+      }
+    },
+    {
+      "source_id": "main-part-2-10-variants-and-implementation-hooks",
+      "teaching_item": "Tenant identity through retrieval, tools, cache, logs; zero ACL violations; ITSM via ITIL; multilingual default path; framework hooks",
+      "anchors": [
+        "variants",
+        "implementations"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Variants deep dive and the multilingual triage paragraph (default arm, unknown language never dropped)."
+      }
+    },
+    {
+      "source_id": "deep-dive-8-two-important-variants",
+      "teaching_item": "Tenant and ITSM risks and record names",
+      "anchors": [
+        "variants"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the full-signature version in the variants deep dive."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-variants",
+      "teaching_item": "Variant recall incl. complex-agent planner rule",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Variants' paragraph has all three."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-handle-the-tenant-and-itsm-variants",
+      "teaching_item": "Tenant flow, predicate borrowed from Secure Multi-Tenant AI Platform anchor, three tenant records, red-team targets, zero-violation metric",
+      "anchors": [
+        "variants"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Multi-tenant SaaS support' subsection now describes the tenant-specific flow and the borrowed anchor, both missing before."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-handle-the-tenant-and-itsm-variants",
+      "teaching_item": "ITSM flow and five full record signatures; risks; ITIL change record proposed not executed",
+      "anchors": [
+        "variants"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "ITSM subsection lists Ticket, Asset, KBArticle, AssignmentRule and WorkflowAction with every field; the previous version paraphrased them without fields."
+      }
+    },
+    {
+      "source_id": "deep-dive-9-implementation-details-from-the-six-source-mocks",
+      "teaching_item": "Six mocks as example implementations with scenario-local thresholds",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Implementation deep dive intro states they are examples and local; each mock has its own paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Multilingual triage: framework label, default arm, 200/300/1500/500 ms = 2.5 s, bounded retries, classifier fallback provider",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First mock paragraph; 'fallback provider' and the never-hard-fail reason restored. Sum rechecked: 0.2 + 0.3 + 1.5 + 0.5 = 2.5 s."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Human-gated agent: {category, risk_level}, interrupt in the tool, Postgres checkpoint by ticket, ticket_id + action_type key, concurrent fan-out cancelling together, 3 iterations, low confidence to review",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second mock paragraph, every detail kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Agentic RAG: two indexes with BM25, cheap router, 20 per source, rerank to 5 when close, 400 ms with timely-source fallback, cited sources and abstention, weekly recall@k",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third mock paragraph (agentic RAG) keeps every number: 20 per source, rerank to 5, 400 ms, weekly recall@k."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Growing KB search: 5,000 articles, 50/day, 1.5 s p95, alpha per source and why, CRAG over Self-RAG and why, cross-encoder over LLM judge, incremental append, fallback rate",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fourth mock paragraph restores both reasons (token-heavy tickets vs semantic wiki; coverage gaps vs hallucination) that the previous version dropped."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Travel booking: three named specialists, pure-logic refund, $200 interrupt, booking+request idempotency, checkpointer vs memory read once, 15 steps and cost ceiling, retries on booking API not LLM, baggage FAQ as workflow",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fifth mock paragraph names booking_lookup, policy_qa and change_or_cancel, and restores 'not to LLM calls' and 'read once at thread start'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-13-add-the-implementation-detail-from-the-study-guide-mocks",
+      "teaching_item": "Parent-document: 400/2,000 chars as LangChain examples, shared Postgres, HNSW when exact scans eat budget, idempotent daily 20-article job, p95 under 2 s budget breakdown, generous search note, k 3-4 with abstention",
+      "anchors": [
+        "implementations"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sixth mock paragraph. The previous version dropped the p95 under 2 s target and the 'generous; HNSW often a few ms' note; both restored."
+      }
+    },
+    {
+      "source_id": "main-part-2-11-interview-delivery",
+      "teaching_item": "Coarse hour split 10/15/15/10/10",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Delivery section paragraph 1 now gives one plan: the full design's minute table, which ends at minute 50 and keeps ten minutes for interruptions, summarised in coarse blocks recomputed from that table (10/12/15/8/5 + 10 buffer = 60). The interview guide's coarse 10/15/15/10/10 allocation is replaced because it disagrees with the detailed table."
+      }
+    },
+    {
+      "source_id": "main-part-2-11-interview-delivery",
+      "teaching_item": "Interview-guide 90-second answer",
+      "anchors": [
+        "script-ninety-second"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of the 90-second script disclosure, verbatim. Previously replaced by an authored paraphrase."
+      }
+    },
+    {
+      "source_id": "main-part-2-11-interview-delivery",
+      "teaching_item": "Seven-row trigger table and final mental model",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review trigger table merges these seven rows with the cheat sheet's four; the mental model closes the quick review."
+      }
+    },
+    {
+      "source_id": "deep-dive-10-interview-probes-to-rehearse",
+      "teaching_item": "Six probes incl. prompt injection in a ticket and launch next Monday; 60-minute emphasis; scripts as examples",
+      "anchors": [
+        "interview",
+        "delivery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each probe is a follow-up reveal (followup-injection adds 'tools and retrieval enforce scope'); delivery section says to use scripts as examples and stay conversational."
+      }
+    },
+    {
+      "source_id": "deep-dive-source-trace",
+      "teaching_item": "Pointer to the source for comparison table, scripts, check-yourself and references",
+      "anchors": [
+        "references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Those items are now present in this casebook (scripts, nine checks, annotated references), so the pointer is unnecessary; alias kept."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-interview-triggers",
+      "teaching_item": "Four triggers and the close line",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review trigger table and closing sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Minute-by-minute plan",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Delivery table; section numbers rewritten as walkthrough step references."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Full-design 90-second summary, two-minute answer and concise close",
+      "anchors": [
+        "script-ninety-second",
+        "script-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Verbatim in the two script disclosures. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Eight lines that carry the round",
+      "anchors": [
+        "script-lines"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-item list in the script-lines disclosure. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Nine follow-ups with answers",
+      "anchors": [
+        "interview"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Converted from an always-visible table into nine answer reveals so readers attempt them first. Monday answer restores 'below a small threshold' (the previous version changed it to 'narrow agreed scope') and explains what it means."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Four trade-offs with verdicts",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Four trade-offs with a verdict' list. Previously compressed into one closing paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Six weak answers and repairs",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weak-answer table under the follow-ups keeps all six weak answers and their repairs unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "OpenAI-style decomposition (eight components) and its six trade-offs",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the trade-offs. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-12-deliver-it-in-sixty-minutes",
+      "teaching_item": "Marketplace scenario: wrong order refunded twice, stale shipping reply, end-to-end ask, thirty-second executive answer",
+      "anchors": [
+        "drill-marketplace"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New drill-marketplace reveal with the source answer plus a mapping of each pilot failure to the controls. Previously missing."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost pivot table, sixty-second line, four verbs, six moves, trap to name",
+      "anchors": [
+        "drill-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "drill-cost-pivot reveal holds the eight-row table and all three lists; moved behind a reveal so it can be attempted first."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration",
+      "anchors": [
+        "delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Level table unchanged, with the 'right to act' framing sentence before it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each takeaway is taught in the walkthrough or a dive; the quick review recalls them as flow, five rules, action table, numbers, failures, release, variants and cost. The takeaway's 'six-row table' matches the six policies; step 6 explains that the evidence table lists one of them as two rows."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered five-rule list in the quick review. Previously not listed."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Nine check-yourself questions with answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "answer-1 to answer-9 now use the source's full question wording and answers; the previous answers had dropped details such as 'automated by default', 'retrieval plus a second pass', 'must not route through a planner' and 'return success'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Nine references with what each supports, checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each link now carries the claim it supports, as in the source; the Intercom figure stays labelled vendor-reported context."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review against all 63 captured sections. The previous Complete version mapped one row per section with shared boilerplate evidence, and several of those rows claimed content the page did not contain. Restored or corrected: the full-pack six-row Situation/Default/Why decision table (previously claimed but absent); the stakeholder table; the related-case anchor table; the four dangerous assumptions and three safe defaults; the request-to-path table; the pressure/design-response table; the risk register's mitigations and triggers (only owners survived); the three cross-layer metric readings; the canary and operability rationale; full ITSM record signatures; the parent-document p95 under 2 s target and the CRAG-over-Self-RAG and per-source alpha reasons; the case_123 JSON body; both 90-second scripts, the two-minute answer, the concise close, the eight lines, the four trade-offs, the OpenAI decomposition and the marketplace scenario. Fixed meaning drift in two places: the approval-queue sentence (source says most requests should never reach a human, measured) and the Monday pilot ('approval-required refunds below a small threshold', which the previous text had changed). The nine follow-ups and the cost pivot moved from visible tables into answer reveals so they can be attempted first; check-yourself answers now carry the source's full wording. Source inconsistencies resolved in text (2026-11-16): two different 60-minute allocations \u2192 one plan, the full design's minute table (content to minute 50, ten minutes for interruptions), with coarse blocks recomputed from it as 10/12/15/8/5, because it is the only allocation tied to the walkthrough steps; Case signature omitting version \u2192 version included, because the write contract uses Case.version for optimistic concurrency; six versus seven decision-table rows \u2192 six policies, with the evidence table explained as listing order status as two cases. Meta-commentary about the source removed. Arithmetic rechecked (4.2M calls, 2.2M-2.4M retrievals, 67k/day, 2.5 s triage budget). The brief now opens on the double charge, defines routed decision pipeline, gateway and idempotency, and adds audience and prerequisites, because the source's who/objectives/assumes were mapped but not stated before."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "followup-autonomy",
+    "followup-confident-wrong",
+    "followup-duplicate-refund",
+    "followup-why-escalated",
+    "followup-first-intent",
+    "followup-injection",
+    "followup-latency",
+    "followup-strongest-model",
+    "followup-monday",
+    "drill-marketplace",
+    "drill-wrong-policy",
+    "drill-cost-pivot"
+  ]
+}

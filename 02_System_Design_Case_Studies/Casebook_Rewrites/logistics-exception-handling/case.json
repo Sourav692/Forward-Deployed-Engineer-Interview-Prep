@@ -1,0 +1,1065 @@
+{
+  "title": "Logistics Exception Handling",
+  "slug": "logistics-exception-handling",
+  "subtitle": "Design an assistant that detects shipment exceptions, drafts resolutions and lets only a narrow, audited set run automatically, with customs always going to a human.",
+  "theme": "Agents and Copilots in Real Workflows",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-example",
+    "main-anchor-and-related-case": "discovery",
+    "main-questions-to-ask-the-interviewer": "discovery",
+    "main-requirements-functional-non-functional": "requirements",
+    "main-architecture": "architecture",
+    "main-decisions-failures-and-evaluation": "reliability",
+    "main-two-minute-interview-answer": "interview",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-event-rate-exception-rate-and-feed-freshness": "dive-throughput",
+    "deep-dive-2-gate-identity-and-execution": "dive-gate-execution",
+    "deep-dive-3-residency-and-stakeholder-surface": "dive-residency",
+    "deep-dive-4-evaluation-and-rollout": "dive-operating",
+    "cheat-sheet-intro": "review",
+    "cheat-sheet-ask-first": "review",
+    "cheat-sheet-whiteboard-path": "review",
+    "cheat-sheet-numbers-and-rules": "review",
+    "cheat-sheet-failure-and-proof": "review",
+    "full-pack-intro": "brief",
+    "full-pack-1-ask-the-four-questions-that-decide-the-design": "discovery",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "full-pack-3-size-by-event-throughput-not-by-users": "sizing",
+    "full-pack-4-draw-the-architecture-end-to-end": "architecture",
+    "full-pack-5-unify-streaming-and-batch-after-ingestion-not-before": "ingestion",
+    "full-pack-part-2-6-put-customs-first-in-the-policy-gate": "policy-gate",
+    "full-pack-part-2-7-share-the-logic-isolate-the-data-by-region": "residency",
+    "full-pack-part-2-8-make-every-action-safe-to-retry-and-every-carrier-safe-to-": "reliability",
+    "full-pack-part-2-9-audit-every-decision-and-explain-every-draft": "audit",
+    "full-pack-part-2-10-evaluate-it-before-anyone-asks": "evaluation",
+    "full-pack-part-2-11-map-the-stakeholder-surface-for-the-rerouting-variant": "dive-rerouting",
+    "full-pack-part-2-12-weigh-the-trade-offs-out-loud": "tradeoffs",
+    "full-pack-part-3-13-deliver-it-in-sixty-minutes": "interview",
+    "full-pack-part-3-14-answer-the-cost-pivot-in-ten-minutes": "cost-pivot",
+    "full-pack-part-3-level-calibration": "interview",
+    "full-pack-part-3-key-takeaways": "review-takeaways",
+    "full-pack-part-3-check-yourself": "practice-start",
+    "full-pack-part-3-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Discovery and constraints",
+      "hint": "Ask the questions about feeds, approvers, the auto boundary and residency, and say which box each answer moves."
+    },
+    {
+      "id": "design",
+      "label": "Trace a missed scan",
+      "hint": "Follow one webhook and one batch event through detection, the agent, the gate and execution or the queue."
+    },
+    {
+      "id": "failures",
+      "label": "Failures and safe execution",
+      "hint": "Explain timeouts, flaky carriers, a missing field and an audit outage, and what the system does for each."
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation and rollout",
+      "hint": "Name the release gates, the three rollout stages and how you measure a reroute."
+    }
+  ],
+  "rubric": [
+    "Places customs first in a gate that is separate from the agent and takes the exception type from detection.",
+    "Sizes by event throughput and keeps the model behind cheap detection.",
+    "Converges webhook and batch feeds after ingestion and surfaces batch lateness with split time-to-detect.",
+    "Uses an idempotency key tied to shipment and resolution version, a circuit breaker with a human fallback, and no action without an audit row.",
+    "Keeps EU data in EU data planes, enforced at the application layer as well as storage, and attributes the rule to the customer rather than GDPR.",
+    "Raises evaluation unprompted: replay, shadow, staged auto-resolve, zero customs auto-resolves as a release gate and a holdout for reroutes."
+  ],
+  "required_answer_reveals": [
+    "answer-architecture-prompt",
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-10",
+    "answer-11",
+    "followup-1",
+    "followup-2",
+    "followup-3",
+    "followup-4",
+    "followup-5",
+    "followup-6",
+    "followup-7",
+    "followup-8",
+    "followup-9",
+    "followup-10",
+    "answer-two-minute",
+    "answer-cost-pivot"
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Read all 43 captured sections against the draft. The source repeated the same design four times (interview guide, deep dive, cheat sheet, full design); the walkthrough follows the full design's order (questions, requirements, sizing, architecture, ingestion, gate, residency, reliability, audit, evaluation, trade-offs) and folds the interview-guide and deep-dive versions into the matching step or into a deep dive only where they add mechanism (three timestamps, idempotency key per resolution version, model inputs as regional data, operating metrics). All 16 SVGs are placed as eight light/dark pairs beside the prose that reads them. Added teaching material is labelled illustrative: the $320 Frankfurt parcel, the 0.99-confidence customs trace through both gate orderings, the 3,000-row batch diff and the S:resolution-v1/v2 key trace. The brief opens on the stalled shipment and defines exception, webhook, batch drop, EDI, idempotency key and circuit breaker before use; no approval role was invented beyond the source's ops agents. All 11 Check Yourself questions, 10 follow-ups, the architecture prompt, the two-minute answer and the cost pivot are worked-answer reveals. Source section numbers in moved tables were rewritten to step names. Open items kept explicit: the confidence threshold and shadow agreement target are unspecified in the source."
+  },
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Problem framing: shipments that should have moved (customs holds, missed scans, weather), ~150 ops agents deciding what to tell customer or carrier",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 1 defines 'exception' in plain words, names the three exception types and the ~150 ops agents; paragraph 2 lists the three draft outputs (next scan, customer message, proposed carrier call)."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Hard constraints: customs/regulatory always human, no carrier action twice or without an audit row, EU data stays in EU",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 3 states all three rules and adds why a duplicate rebooking matters; the EU rule is attributed to the customer as in the source."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: webhooks and batch into one normalised stream per region, cheap detection, agent draft, customs-first gate, narrow auto path with idempotency key and circuit breaker, ops queue, regional audit; rerouting variant reuses pattern without loosening the gate",
+      "anchors": [
+        "brief",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summary is taught through the core-idea figure walkthrough and terms paragraph in #brief; the rerouting reuse (SAP source and target, weather signal, 500 managers, gate not looser) is the last paragraph of #brief-task."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "'The agent proposes and the gate decides, and customs never reaches the automatic path' with the core-idea diagram pair",
+      "anchors": [
+        "brief",
+        "figure-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sentence kept verbatim in #brief; both light and dark SVGs placed in figure-core-idea, followed by a left-to-right reading of each box (feeds, detect, draft, gate, run-once-and-audit or ops queue)."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates facing an event-driven agent under a policy gate",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of #brief-task carries the audience sentence with the 'event-driven agent that takes real actions under a policy gate' wording."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on ingestion/sizing, gate, idempotent execution, residency, evaluation, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of #brief-task restates both objectives as the task, listing all six follow-up areas."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: event streaming and batch ingestion, LLM agents with tool calls, idempotent writes; LLM glossary definition",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prerequisites sentence in #brief-task with the LLM abbr carrying the source glossary definition (dash replaced by a comma). The old 'related reviews at the foot of each section' pointer referred to source navigation and is not reproduced."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (three mandatory sections, mark parts read, Full Design optional, revisit Quick Review)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only guidance; the five-section shell replaces it and the reader's progress rail provides read marking. Quick review remains the night-before recall page. Alias routes the old fragment to #brief-task."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Technical Deep Dive, Quick Review, Full Design 3 parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Describes the source's four tracks; their content is redistributed: interview guide into walkthrough steps 1-11, deep dive into Technical deep dives, cheat sheet into Quick review, Full Design across steps and practice. No sixth Full Design track kept."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Definition of exception handling and 'customs is not a chatbot decision'; scope slice (watch, detect, draft or narrow auto-resolve; humans own customs)",
+      "anchors": [
+        "brief",
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#brief defines an exception and frames human ownership of customs; #brief-example opens with the slice and the source's trace."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Missed scan in Frankfurt trace: event, detect plus value/route/freeze rules, gate (weather playbook may auto-message, customs queues human), draft not silent write, run once with audit row, SAP/weather variants don't loosen gate; 'just ping the carrier' stays out",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#brief-example numbered list keeps all six steps and the excluded 'ping the carrier for every blip' design; an added paragraph, labelled illustrative ($320 parcel), traces both the auto path and the customs counter-case through the gate."
+      }
+    },
+    {
+      "source_id": "main-anchor-and-related-case",
+      "teaching_item": "Anchor vs rerouting case table: shared foundation and what changes (150 agents, value/confidence, EU residency vs SAP, weather, 500 managers)",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table reproduced row for row in step 1 with an introducing caption; framed as 'place this case beside its sibling'."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Five questions with design consequences (feed freshness, who acts and cases per shift, auto vs human, value/confidence rules, regions); SLA glossary",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First table in step 1 keeps all five Ask/Consequence pairs; SLA abbr carries the source definition."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements list: ingest webhooks and CSV/EDI, normalise/dedupe, detect, propose with signals and confidence, enforce customs-first/value/confidence, auto-execute idempotently, approve/edit/reject, audit, carriers as adapters",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 paragraph 2 restates every item as connected prose, ending with 'a new carrier is an adapter, not a rewrite of the core'."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Non-functional table: safety, residency (customer rule vs GDPR), reliability, freshness, latency/cost, security, illustrative load figures (60%/200 events/s/40% 2-6h/150/40/30-50/17.3M vs 4,500-7,500)",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Non-functional table kept with all seven rows and every figure; GDPR abbr carries the source definition; 'illustrative' label retained on the load row."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut quotation for 'What are the requirements?'",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 2 quotes the shortcut verbatim as source wording."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Agent drafts, separate deterministic gate decides; shared versioned logic into US/EU/APAC data planes; EU records and audit never replicate out; regional architecture diagram pair",
+      "anchors": [
+        "architecture",
+        "figure-regional-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph after the first figure states the draft/decide split and regional deployment; 53b954db/c51bbd31 placed as figure-regional-flow with a caption naming the 'yes or unknown' and 'no or missing' branches."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Seven-step architecture walk (validate/dedupe and diff, queue and rules/classifier with routine scans updating state, agent without write APIs, customs-first from detection type, under $500 and threshold else regional queue, scoped credentials + idempotency key + circuit breaker, regional audit)",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered seven-step list in step 4 keeps each step's mechanism and qualifier, including 'batch detection lag visible' and 'flaky or non-idempotent carrier falls back to human'."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-evaluation",
+      "teaching_item": "Failure rules: customs invariant not threshold, missing field to human, unavailable audit blocks action, non-idempotent legacy carrier human-only (timeout double booking), circuit breaker instead of retry storm",
+      "anchors": [
+        "reliability",
+        "dive-gate-execution"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of step 8 lists the invariant, missing-field and audit-down rules; the timeout/double-booking mechanism is traced step by step in #dive-gate-execution."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-evaluation",
+      "teaching_item": "Two feed clocks: polling cannot speed a 2-6 h file; separate p50/p95 time-to-detect; lateness on draft; queue depth and approval age as separate SLOs (SLOs glossary)",
+      "anchors": [
+        "ingestion",
+        "reliability"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 final paragraphs explain the two clocks with p95 defined and why an average misleads; step 8 carries queue depth and approval age as separate SLOs with the SLO abbr definition."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-evaluation",
+      "teaching_item": "Release evidence and rollout: replay for recall/precision per type, adversarial customs zero, calibration at/above threshold, duplicate execution, EU-to-US denial, audit completeness; offline, shadow, one region/carrier known-route missed scans; matched holdout for rerouting",
+      "anchors": [
+        "evaluation",
+        "dive-operating"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 table, definitions of recall/precision/calibration, three-stage rollout and holdout paragraph carry each item; audit completeness is added to the release-gate sentence; fault and residency tests repeated in #dive-operating."
+      }
+    },
+    {
+      "source_id": "main-decisions-failures-and-evaluation",
+      "teaching_item": "Cost and latency: model behind detection, template missed-scan rebooks, cap steps/calls/retries, stronger model only for hard human-read drafts, cost scales with exceptions; weather burst prioritise by value and deadline, scale stateless detection, approval queue may be bottleneck",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-cost bullet list carries each lever and the latency paragraph explains why backlog prioritisation, not a faster model, is the storm answer."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Main guide's shorter two-minute answer (questions first, ends with outcome, delay and reversal rates)",
+      "anchors": [
+        "interview",
+        "answer-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted verbatim as the second paragraph inside the answer-two-minute reveal, labelled as the main guide's shorter version."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Navigation note pointing to Main guide and Cheat Sheet",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Source navigation only; the five-section structure replaces it. Alias routes the old fragment to the task paragraph."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-event-rate-exception-rate-and-feed-freshness",
+      "teaching_item": "200 events/s is not 200 decisions/s; 17.3M upper bound; 4,500-7,500 cases; inference tracks disruptions; 40 concurrent sizes review UX and queue SLA not ingestion; batch 2-6 h delay irreducible",
+      "anchors": [
+        "dive-throughput",
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-throughput paragraphs 1-3 restate each figure, explain the 24-hour upper-bound assumption and why the 40 concurrent agents size the queue rather than the model tier."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-event-rate-exception-rate-and-feed-freshness",
+      "teaching_item": "Ingest mechanics: webhook validates and dedupes carrier retries; file ingest parses and diffs; shared regional schema; stamp source, ingest, detection times; regional queue for bursts; monitor oldest-event age and recall, not only depth",
+      "anchors": [
+        "dive-throughput"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bullet list and two closing paragraphs of #dive-throughput; the three timestamps are defined and their differences interpreted, and an example contrasts a deep draining queue with a shallow stale one."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-gate-identity-and-execution",
+      "teaching_item": "Input ownership: detection supplies type, agent supplies action/confidence/reasons and holds no carrier-write credentials; customs first then <$500 calibrated high confidence; missing type/value/confidence/policy version to human; keep policy version, test forced-high-confidence customs each release",
+      "anchors": [
+        "dive-gate-execution",
+        "policy-gate"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First two paragraphs of #dive-gate-execution carry each rule and explain why storing the policy version matters to an auditor; step 6 adds the missing-policy-version rule to the fail-closed bullet."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-gate-identity-and-execution",
+      "teaching_item": "Idempotency key tied to shipment and resolution version; timed-out rebook may have succeeded; non-idempotent APIs human-only; limited retries and circuit breaker; audit drafts, edits/rejects and results; audit down means no action",
+      "anchors": [
+        "dive-gate-execution"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-step illustrative trace (key S:resolution-v1, lost response, retry, edit creates v2) shows why the key includes the resolution version; closing paragraphs keep human-only fallback, retry limits, breaker and the audit-down rule."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-residency-and-stakeholder-surface",
+      "teaching_item": "Control plane (prompts, model routes, policy, UI) vs regional data planes (event stores, model inputs, audit); customer rule vs GDPR; application session enforcement; aggregate cross-region reporting",
+      "anchors": [
+        "dive-residency",
+        "residency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-residency explains why model inputs are regional data, why GDPR transfers would be an option if the customer relaxed the rule, the two enforcement points and an aggregate-dashboard example."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-residency-and-stakeholder-surface",
+      "teaching_item": "Rerouting: SAP authoritative and possible write target, weather predictive with freshness, 500 managers distributed approvers; differences in adapters; walking skeleton with mocked agent; weather loss falls back to scan detection and draft states missing signal",
+      "anchors": [
+        "dive-rerouting"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the mapping table and steps 5-6 of the six-step list in #dive-rerouting carry each item, including 'before broad integration work'."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-evaluation-and-rollout",
+      "teaching_item": "Replay for recall and false alarms; calibrate; approve-unedited/edited/reject; outcome vs revised ETA days later; executor crash/replay; every region-to-region denial; matched holdouts (ETA glossary)",
+      "anchors": [
+        "dive-operating",
+        "evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-operating paragraphs 2-3 interpret each human signal and the two fault tests; ETA abbr in the step 10 table carries the glossary definition."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-evaluation-and-rollout",
+      "teaching_item": "Rollout stages, release gates (customs zero, recall not worse, residency, audit complete), monitoring metrics (cost/resolved exception, model calls/exception, time-to-draft by feed, queue age, reversal rate), fluency never compensates for gate failure",
+      "anchors": [
+        "evaluation",
+        "dive-operating"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 three-stage list and release-gate paragraph (with audit completeness and the fluency sentence); #dive-operating lists the five monitored numbers and defines reversal rate."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat sheet navigation line",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; the Quick review section is the recall card. Alias routes to #review."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Five recall questions (freshness/rate, approver, auto-resolvable, value/confidence, residency)",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Ask first' paragraph of #review keeps all five questions."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path and 'agent proposes; gate decides; type from detection'",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Whiteboard path' paragraph of #review lists the eight hops in order and both rules."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-and-rules",
+      "teaching_item": "Numbers and rules: 200/s, 2-6 h, 150/40, auto rule, missing field to human, EU customer rule not GDPR, batch lateness visible",
+      "anchors": [
+        "review"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Numbers and rules' paragraph of #review keeps every value and adds the derived 17.3M and 4,500-7,500 figures from step 3 for recall."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-and-proof",
+      "teaching_item": "Failure and proof list and the 60-second close quotation",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Failure and proof' paragraph keeps idempotency, breaker, no unaudited action, legacy human-only, three-stage rollout, zero customs invariant, recall and holdout; 'Sixty-second close' quotes the source line verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Framing: act fast enough to unstick a shipment but never on the customs class; low-scale high-stakes not a traffic problem; reuses deny-first gate and tenancy ladder by name",
+      "anchors": [
+        "brief",
+        "references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#brief paragraph 3 ('users are few and the stakes are high') carries the framing; #references names the reused cases (Tool-Using Agent with Safety Controls, Secure Multi-Tenant AI Platform)."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Group table: anchor FDE round, OpenAI rerouting prompt, self-drill, with contributions; FDE glossary",
+      "anchors": [
+        "references"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept in #references with its three rows; section numbers rewritten as the casebook's step and topic names so each contribution still points to a real destination. FDE abbr appears in step 1."
+      }
+    },
+    {
+      "source_id": "full-pack-1-ask-the-four-questions-that-decide-the-design",
+      "teaching_item": "FDE round in interview order; prompt text (embedded FDE, mid-size customer, detects customs/missed scans/weather, auto-resolve or draft, multi-carrier mixed feeds)",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraphs 1-2 explain the round format and restate the prompt in full."
+      }
+    },
+    {
+      "source_id": "full-pack-1-ask-the-four-questions-that-decide-the-design",
+      "teaching_item": "Four-question answer table with implications, including GDPR caveat; 'each answer moved a box'; source auto-resolve example (known-route missed-scan rebook)",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second table in step 1 keeps every answer and implication verbatim in meaning; the following paragraph maps each answer to its box and notes the known-route rebook becomes the first rollout cohort."
+      }
+    },
+    {
+      "source_id": "full-pack-1-ask-the-four-questions-that-decide-the-design",
+      "teaching_item": "Mock session ended on the architecture prompt; section 4 is its model answer",
+      "anchors": [
+        "discovery",
+        "practice-start",
+        "answer-architecture-prompt"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prompt quoted at the end of step 1 and again in #practice-start, where answer-architecture-prompt gives a full worked trace drawn from step 4."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "'A requirement that cannot fail a test is a preference'; Must/Should functional table with acceptance conditions",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Principle restated in step 2 paragraph 3; eight-row functional table kept with section reference updated to 'step 10'."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Quality table in testable form (residency, reliability, latency, auditability, cost, extensibility); customs rule held as invariant, not tuned",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row quality table kept; closing paragraph states the invariant holds even for a model that is wrong and confident."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-by-event-throughput-not-by-users",
+      "teaching_item": "Throughput not users; five-row sizing table with consequences; gap between rows is the design; model behind detection scales with disruptions",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the table and every consequence, adds that the 17.3M figure assumes a 24-hour peak and that the gap is three orders of magnitude, then contrasts the two model placements."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Verbatim source end-to-end diagram pair (60% real-time / 40% batch through gate and audit)",
+      "anchors": [
+        "figure-end-to-end"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "073a18338b/697a808b placed first in step 4 with a caption stating two paths join one stream and the gate splits auto from human."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Planes and trust boundaries diagram pair and control/data plane diagram pair with three rules (version same assets per region, nothing before policy, regional stores)",
+      "anchors": [
+        "figure-trust-boundaries",
+        "figure-planes",
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "c560cabd/f0a1748b and 2ce414c1/e09966db placed with captions; the three bullets keep the full versioned-asset list (prompts, tools, routing, customs rule, $500, confidence threshold, UI, adapters, evaluation gates, releases)."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Mermaid flow diagram pair with gate ordering",
+      "anchors": [
+        "figure-gate-ordering"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "d83e868a/233f5dfe placed with caption pointing to customs-before-value ordering, open-circuit return and audit on every branch."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Twelve-component table (responsibility, fails how) and the three things to point at",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with all twelve rows; intro explains closed/degrades/alerts; the 'point at three things' paragraph closes step 4 and links them to steps 5-7."
+      }
+    },
+    {
+      "source_id": "full-pack-5-unify-streaming-and-batch-after-ingestion-not-before",
+      "teaching_item": "Polling batch carriers buys nothing; converge after ingestion; webhook immediate and low-latency detection; batch on 2-6 h schedule with per-shipment diff; same schema; detection path-agnostic",
+      "anchors": [
+        "ingestion"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps each point and adds an illustrative 3,000-row file where only 50 changed shipments enter the stream."
+      }
+    },
+    {
+      "source_id": "full-pack-5-unify-streaming-and-batch-after-ingestion-not-before",
+      "teaching_item": "Batch exceptions late by design: surface lag, tag detection lag on draft; channel-adapter link to Agent Platform for Non-Technical Users",
+      "anchors": [
+        "ingestion"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 final paragraphs keep the lag tagging and the channel-adapter reference."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-put-customs-first-in-the-policy-gate",
+      "teaching_item": "Gate as own component, testable and auditable; source gate diagram pair; type from detection, unknown type to Human Approval Queue",
+      "anchors": [
+        "policy-gate",
+        "figure-policy-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "e358fc53/2839315f placed in step 6 with a caption on the short-circuit; paragraph after it carries the detection-type and unknown-type rules."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-put-customs-first-in-the-policy-gate",
+      "teaching_item": "Customs short-circuits; 'a confidence score cannot outvote a rule it is never compared with'; wrong ordering lets a high-confidence model auto-resolve customs; deny-rules-first analogy",
+      "anchors": [
+        "policy-gate"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 adds an illustrative 0.99-confidence customs trace through both orderings to show the failure, and keeps the Tool-Using Agent with Safety Controls analogy."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-put-customs-first-in-the-policy-gate",
+      "teaching_item": "Three trust details: type from detection (mislabel as weather), fail closed on missing field, policy under version control so threshold change is a release",
+      "anchors": [
+        "policy-gate"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three bold-led bullets at the end of step 6 keep each detail and add the missing-policy-version case from the deep dive."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-share-the-logic-isolate-the-data-by-region",
+      "teaching_item": "Customer rule stricter than GDPR; shared control plane vs regional data plane (event store, any vector store, audit) never replicating; diagram pair",
+      "anchors": [
+        "residency",
+        "figure-regional-data"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraphs 1-2 and 2421d7aa/9de89837 figure with caption 'EU store and its audit never leave the EU'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-share-the-logic-isolate-the-data-by-region",
+      "teaching_item": "Same UI and policy everywhere; execution, storage, model calls, telemetry, support access partitioned; name the pattern; tenancy ladder analogy; application-layer residency; reporting cost with aggregated metrics",
+      "anchors": [
+        "residency"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 keeps each item and explains how a two-region service could join data if only storage were isolated."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-make-every-action-safe-to-retry-and-every-carrier-safe-to-",
+      "teaching_item": "Two reliability failures (stuck shipment, double action); stateless detection/resolution behind queue; weather burst smooths into backlog",
+      "anchors": [
+        "reliability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 1-2 carry both failures and the queue-in-front rationale, adding why statelessness allows scale-out."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-make-every-action-safe-to-retry-and-every-carrier-safe-to-",
+      "teaching_item": "Idempotency key per auto action (timeout ambiguity), legacy carriers human-only; circuit breakers degrade to human",
+      "anchors": [
+        "reliability",
+        "dive-gate-execution"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 3-4 keep the timeout ambiguity, the legacy cost and the breaker rule, linking to the deep-dive trace."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-make-every-action-safe-to-retry-and-every-carrier-safe-to-",
+      "teaching_item": "Split time-to-detect by feed; SLAs on approval queue at 40 concurrent agents; alert on depth not only latency (SLAs glossary)",
+      "anchors": [
+        "reliability"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two bold-led bullets in step 8 (Lateness, Human capacity) keep both mechanisms; SLAs abbr carries the source definition."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-audit-every-decision-and-explain-every-draft",
+      "teaching_item": "Audit log as first-class immutable store of every verdict and agent action with confidence and reasoning; least-privilege rebook/reschedule scopes; regional access control",
+      "anchors": [
+        "audit"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 paragraphs 1-3 keep each item and add that 'cannot log, does not run' makes the log complete by construction."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-audit-every-decision-and-explain-every-draft",
+      "teaching_item": "Explainability at approval: signals and confidence; black-box approval under time pressure; review is a control only when visible",
+      "anchors": [
+        "audit"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 9 keeps all three sentences and adds what the Frankfurt draft would show (missing scan, last location, route history, detection lag)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-evaluate-it-before-anyone-asks",
+      "teaching_item": "Rerouting prompt demands evaluation; source bank names hand-waved evaluation as second failure mode; nine-row evaluator table",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 opening keeps the quoted prompt ending and bank claim as attributed; table keeps all nine rows; recall, precision and calibration are defined in plain words after it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-evaluate-it-before-anyone-asks",
+      "teaching_item": "Three-stage rollout (offline replay builds golden set, shadow with agreement target agreed with ops lead, staged one region/carrier known-route missed scans); holdout for reroutes on delay hours and cost; release suite, fluency not on list",
+      "anchors": [
+        "evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered three-stage list and following paragraphs in step 10 keep each stage's purpose and exit condition, the holdout metrics and the release-gate list."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-map-the-stakeholder-surface-for-the-rerouting-variant",
+      "teaching_item": "Rerouting prompt quotation, three things it tests, five-row noun mapping table",
+      "anchors": [
+        "dive-rerouting"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#dive-rerouting opening quotes the prompt and the bank's three tests; mapping table kept with section reference updated to 'step 7'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-map-the-stakeholder-surface-for-the-rerouting-variant",
+      "teaching_item": "Six-step framework (mission, stakeholders and metrics, inputs, risk-sequenced workstreams, walking skeleton, adapt live) and the SAP/Salesforce/Postgres data-unification probe",
+      "anchors": [
+        "dive-rerouting"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered six-step list keeps each step's content; the probe paragraph adds why live queries to three systems of record are risky (three freshness clocks, permission models, failure modes)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-weigh-the-trade-offs-out-loud",
+      "teaching_item": "Five-row trade-off table and the one-non-negotiable summary",
+      "anchors": [
+        "tradeoffs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 11 keeps all five decisions with advantage and cost, and the source's closing summary sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute plan table and time-allocation guidance",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#interview opening and seven-row table with section numbers rewritten as step numbers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Two-minute spoken answer and the eight lines that carry the round",
+      "anchors": [
+        "interview",
+        "answer-two-minute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Spoken answer quoted in full inside answer-two-minute reveal; the eight lines listed verbatim after it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Ten follow-up questions with answers (Tier 2 probes)",
+      "anchors": [
+        "follow-ups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each follow-up is its own reveal, followup-1 to followup-10, with the source answer as the worked answer; the legacy-carrier statement is phrased as a question."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Repairs for common weak answers (model decides, customs as low confidence, global with EU flag, average time-to-detect, we'll monitor it); GDPR and HITL glossary",
+      "anchors": [
+        "follow-ups",
+        "dive-operating"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-item repair list at the end of #follow-ups; HITL abbr defined in #dive-operating where audit-driven HITL thresholds are taught."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost pivot card (dominant driver, cheapest lever, proving metric, do-not, 60-second line); LLM glossary",
+      "anchors": [
+        "cost-pivot",
+        "answer-cost-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row card kept inside the answer-cost-pivot reveal, after an authored prompt to answer first; mechanism also taught in #dive-cost."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Storm latency (batch slow by design; real-time latency is detection + drafting + queue; prioritise by value and deadline, scale detection) and four verbs Measure, Route, Bound, Cache safely keyed on event version",
+      "anchors": [
+        "answer-cost-pivot",
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two paragraphs after the card in answer-cost-pivot keep the latency reasoning and all four verbs with the event-version cache key; #dive-cost repeats the cache-key rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Level calibration table (Senior, Staff, Principal: sounds like and missing)",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row table kept in #interview with the framing sentence that the level shows in where the customs rule lives and how far the answer reaches."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fourteen bullets kept in #review-takeaways; each points to a step already taught in full."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Eleven self-check questions with answers; DAU glossary",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each question is a reveal, answer-1 to answer-11, with the source answer; answers 8-10 add audit completeness, holdout metrics and SAP as target from the walkthrough. DAU abbr appears in the step 1 answer table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "European Commission data-transfer reference (checked 27 Sep 2026) supporting the customer-rule vs GDPR distinction",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "#references keeps the link, the check date and its stated implication, plus a note that volumes are planning answers and the threshold and agreement target remain open."
+      }
+    }
+  ]
+}

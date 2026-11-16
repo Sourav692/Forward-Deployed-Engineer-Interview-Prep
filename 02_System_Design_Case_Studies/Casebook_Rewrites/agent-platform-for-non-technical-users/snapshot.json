@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "c0e2f45087c2ae65119647e884e048a8f96e9a51b212b97c277fe31eeeb32fd3",
+  "html_sha256": "fe28a6d201dd9978d36fb8a50df9afc7e1f23c214ef2be06af2c89ca623e218a",
+  "config_sha256": "db6aa9f6d624141843cf4946ec01d6549adca1ea75af751613871fb41238eaab",
+  "source_url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 47,
+    "coverage_rows": 62,
+    "worked_answers": 14,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: re-read all 47 captured sections against the earlier draft section by section. The draft covered the guardrail and gap tables but had dropped or paraphrased away the main questions table's concrete restatements, the non-functional table, the interview shortcut, the nine nouns, u_author_wrong_hat, the 1-apply/1-apply result, the RAG false-alarm link, the $5-vs-$50 note, the three-layer weak/strong argument, the bridge to other cases, the sixty-minute timing table, the six carrying lines and the source two-minute answer (replaced by an authored one); all are restored. The $500 anchor is now its own walkthrough step, the brief defines tenant, canonical event, declarative spec, guardrail and idempotency before use, and each of the eight source figures has a caption and lead naming its actual nodes instead of 'source figure N'. Added reasoning not in the source (effect-before-checkpoint window, args_hash implying fresh authority, event-to-run dedup) is labelled 'Beyond the source'. Broken ', ' allow-row cell fixed; old section-number references rewritten as links. Three source follow-ups (shadow trial, mid-flight stop, cost pivot) added as worked answers 12-14. No RAG specifics transplanted."
+    }
+  }
+}

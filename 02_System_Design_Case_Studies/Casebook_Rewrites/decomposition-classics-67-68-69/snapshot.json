@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "c8d4f2745411d67af25380f02ec9e9d757518463265d395d9ba85e1ef8f6afdd",
+  "html_sha256": "849fb6ee46f2f58cc4a480847304b1395d6b7045d8682d5c81831e255ce545d3",
+  "config_sha256": "8bf8796ec8a2cb857c50bb819befcb4ee7bf9eb029222b88b9d0c936ff56362e",
+  "source_url": "https://forwarddeployedprep.com/design/decomposition-classics-67-68-69",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 23,
+    "coverage_rows": 78,
+    "worked_answers": 22,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Re-review on 16 Nov 2026: read all 23 captured sections (dumped to text) against the previous casebook item by item. The previous version kept every source table but thinned the teaching prose badly: the three verbatim prompts table was missing; section 1's narration scoring and second quote, the GPS curveball quote, the universal opener, the input-map 'owner' rationale, the riskiest-unknown sentence for fraud, customers' declined cards, the medication stakeholder list, the 'is AI the right solution' line, the cost-card drivers and the level-calibration framing were absent; the six probes and three two-minute openers were squeezed into two paragraphs; the Quick review dropped most takeaways. It also had wrong captions: in all three deep dives the component table was captioned as failure modes and the failure table as trade-offs, and all six case diagrams had generic 'source figure 1/2' alt text. I rebuilt casebook.md around the existing tables: brief now opens with the prompt table, assumption callout and term definitions, then what the round scores; walkthrough gains a separate sequencing step; each deep dive follows the source's 5.1-5.9 order under h4 headings with figures beside their component tables and prose traces read from the SVG labels; Practice has 22 worked reveals (12 checks, 6 probes, 3 openers, cost); Quick review carries all 11 takeaways. First-person source opinions ('In my experience', 'I'd argue') are attributed to the source. Unsourced additions from the previous rewrite (an 'equity claim' line, softened check answers) were replaced with source wording. Source oddity kept and explained: the cost table had blank headers in the source; given Question/Answer."
+    }
+  }
+}

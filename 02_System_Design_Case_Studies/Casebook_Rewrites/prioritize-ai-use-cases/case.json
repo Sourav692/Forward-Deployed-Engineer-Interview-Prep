@@ -1,0 +1,872 @@
+{
+  "title": "Prioritise AI Use Cases for a Large Enterprise",
+  "slug": "prioritize-ai-use-cases",
+  "subtitle": "Choose a defensible enterprise AI portfolio with gates, adoption-adjusted value and evidence-based waves.",
+  "theme": "Product Judgement and Problem Decomposition",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/prioritize-ai-use-cases",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "fig-core-idea",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "guide-intro": "brief-task",
+    "guide-1-refuse-to-pick-the-most-impressive-demo": "walk-frame",
+    "guide-2-ask-what-prioritise-decides": "walk-discovery",
+    "guide-3-turn-thirty-one-liners-into-comparable-cards": "walk-cards",
+    "guide-4-apply-gates-before-scoring-anything": "walk-gates",
+    "guide-5-score-seven-dimensions-with-stated-weights": "walk-score",
+    "guide-6-estimate-value-from-volume-not-from-enthusiasm": "walk-value",
+    "guide-7-stress-test-the-weighted-sum-where-it-breaks": "walk-stress",
+    "guide-part-2-8-score-the-worked-portfolio": "walk-portfolio",
+    "guide-part-2-9-fund-the-platform-the-top-items-share": "walk-platform",
+    "guide-part-2-10-sequence-the-portfolio-in-waves": "walk-waves",
+    "guide-part-2-11-set-kill-criteria-before-the-pilot-starts": "walk-gating",
+    "guide-part-2-12-say-no-to-the-executive-s-pet-project-without-losing-the-": "dive-executive",
+    "guide-part-2-13-anticipate-the-failure-modes": "dive-failures",
+    "guide-part-3-14-deliver-it-in-forty-five-minutes": "practice-pivots",
+    "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes": "practice-cost",
+    "guide-part-3-level-calibration": "practice-levels",
+    "guide-part-3-key-takeaways": "review-decisions",
+    "guide-part-3-check-yourself": "practice-checks",
+    "guide-part-3-references": "dive-sources",
+    "intro": "case-brief",
+    "guide": "walkthrough",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "decision",
+      "label": "What 'prioritise' decides",
+      "hint": "Pilot or portfolio, sponsor, budget, risk appetite, past attempts, build or buy; state the insurer assumptions."
+    },
+    {
+      "id": "method",
+      "label": "Cards, gates and weights",
+      "hint": "The card fields, the four gates and their dispositions, seven weights with a reason each."
+    },
+    {
+      "id": "numbers",
+      "label": "Value and the stress test",
+      "hint": "Rebuild #7's $1.9M; name the five ways the sum breaks and which items are decided."
+    },
+    {
+      "id": "plan",
+      "label": "Platform, waves and kill criteria",
+      "hint": "Enablers funded with wave 1, what each wave proves, who signs each stage."
+    },
+    {
+      "id": "executive",
+      "label": "The pet project and the cost pivot",
+      "hint": "Four evidence-gated steps to #29; cost per use case to production."
+    }
+  ],
+  "rubric": [
+    "I refused to pick the most impressive demo and said why its production cost is hidden.",
+    "I asked whether the decision is one pilot or a funded portfolio, and stated assumptions when unanswered.",
+    "I turned ideas into one card and applied the four gates before any score.",
+    "I stated seven weights aloud with reasons, and estimated value as volume \u00d7 saving \u00d7 unit cost \u00d7 adoption with run cost subtracted.",
+    "I named compensation, dependencies, double counting, false precision and monoculture, and said only items stable under reweighting are decided.",
+    "I funded the gateway, evaluation harness, ingestion and retrieval with wave 1 rather than ranking them as use cases.",
+    "I sequenced waves by what each proves and wrote kill criteria with signers before the pilot.",
+    "I turned the executive's favourite into a destination with evidence gates instead of a refusal.",
+    "I named people time as the dominant cost and cost per use case to production as the metric."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Thirty one-liners, the executive's impressive-demo favourite and the 'nothing drawn until the list is cut' constraint",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-2 keep the thirty enthusiastic one-liners, the favourite that fails on data, regulator and users, the hard constraint that nothing is drawn before the cut, and the two tests (ranking holds under weight change; a fatal flaw cannot be bought back). Previously this constraint was reduced to one clause."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Method outline: same card, gates, seven weighted dimensions, stress test, funded waves with kill criteria, platform only as shared enabler, insurer runs throughout",
+      "anchors": [
+        "brief-scenario",
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the core-idea figure walks the funnel; brief-example then traces #7 through card, gates, value, score and wave with source numbers (1.2M calls, $1.9M, 4.10, months 2-4). The example section is new: the old brief had no trace."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its funnel diagram (b496 light / 03472 dark)",
+      "anchors": [
+        "brief-scenario",
+        "fig-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The sentence 'cut the list with gates before you score it, and fund the shared platform with the first wave' is now stated verbatim (it was missing). Alt text and caption name every node of the SVG: thirty ideas, same card, gates (outcome, owner, permitted, right tool), Fail to Not ready, Pass to seven weighted dimensions, stress-test, waves with kill criteria."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates, case/decomposition rounds and AI-roadmap customer conversations",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 repeats the audience including the customer-roadmap conversation, which the old brief had dropped."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: end-to-end method plus follow-ups on value, stress test, platform, kill criteria, pet project, cost pivot",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 lists all six follow-up areas; the old version had no objectives sentence."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumes no deep background; helps to know data quality, evaluation, regulation, adoption",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 states both halves. The old brief instead claimed the reader should be comfortable with baselines and delivery gates, which contradicted the source; corrected."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: score ideas before section 8, rehearse 45 minutes aloud with a timer, revisit calibration and takeaways the night before",
+      "anchors": [
+        "brief-task",
+        "practice-score-drill"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task last paragraph links each instruction to its new location (scoring drill before walk-portfolio, practice-pivots, practice-levels, review-decisions). The 'mark each part read' progress note is served by the reader's own toggles. Added three scoring drills so the 'score a few yourself' instruction has something to do."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Original navigation: one mandatory Interview Guide in three parts",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "One sentence in brief-task notes the original single three-part guide and that this casebook spreads it over five sections; the guide's topic list is the walkthrough itself."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Provenance: prompt supplies ten criteria, six properties, one follow-up and answer; no worked answer; insurer and numbers are assumptions",
+      "anchors": [
+        "brief-task",
+        "brief-example"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 2 names exactly what the prompt supplies and that the worked answer is built from delivery, cost and decomposition material; brief-example paragraph 1 says the insurer, thirty use cases and every number are assumptions."
+      }
+    },
+    {
+      "source_id": "guide-1-refuse-to-pick-the-most-impressive-demo",
+      "teaching_item": "Verbatim prompt, ten criteria and the verbatim 'explicitly avoid selecting the most impressive demo' instruction",
+      "anchors": [
+        "brief-task",
+        "walk-frame"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The prompt is quoted verbatim in brief-task and practice-prompt; walk-frame paragraph 1 lists all ten criteria and quotes the instruction. The old version paraphrased the criteria and omitted both quotations."
+      }
+    },
+    {
+      "source_id": "guide-1-refuse-to-pick-the-most-impressive-demo",
+      "teaching_item": "Six properties of a good first pick, verbatim",
+      "anchors": [
+        "walk-frame"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-frame keeps the six as a verbatim bullet list; the old version merged them into a sentence."
+      }
+    },
+    {
+      "source_id": "guide-1-refuse-to-pick-the-most-impressive-demo",
+      "teaching_item": "Why the demo is a trap: hides traffic shape, tail latency, usage expansion, governance cost",
+      "anchors": [
+        "walk-frame"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-frame paragraph 3 keeps all four hidden costs, defines tail latency, and adds the consequence that the demo looks cheapest where it is most expensive."
+      }
+    },
+    {
+      "source_id": "guide-1-refuse-to-pick-the-most-impressive-demo",
+      "teaching_item": "Spoken framing: 'I won't pick a winner from the list...' and the first-two-minutes advice",
+      "anchors": [
+        "walk-frame"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-frame last paragraph carries the full spoken line, attributed to the source, including 'lay platform that makes the next three cheaper'. It was absent before. The em dash in the quote became a comma."
+      }
+    },
+    {
+      "source_id": "guide-2-ask-what-prioritise-decides",
+      "teaching_item": "Six discovery questions and what each answer changes (table)",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The six-row table is kept unchanged. Prose after it explains the pilot-versus-portfolio split and the regulator row (governance expectation and EU right to contest an automated decision)."
+      }
+    },
+    {
+      "source_id": "guide-2-ask-what-prioritise-decides",
+      "teaching_item": "Stated assumptions when the interviewer declines: P&C insurer, two years, ~8 engineers, value inside two quarters",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-discovery last paragraph states all four and why to say them aloud; they were previously only in the brief."
+      }
+    },
+    {
+      "source_id": "guide-3-turn-thirty-one-liners-into-comparable-cards",
+      "teaching_item": "Card as the comparable object; unfillable card is a finding (11-field table)",
+      "anchors": [
+        "walk-cards"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-cards keeps the 11-row card table and the 'Use AI for fraud' versus 'summarise call notes' example. Added a filled card for #7 with non-source fields marked illustrative."
+      }
+    },
+    {
+      "source_id": "guide-3-turn-thirty-one-liners-into-comparable-cards",
+      "teaching_item": "Card fields derive from ten criteria, six properties and delivery intake rules; a week of interviews; stage done when checkable",
+      "anchors": [
+        "walk-cards"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-cards paragraphs after the table restore the derivation of fields (previously missing), keep the week-not-a-month estimate as the source's assumption, and the checkable-stage rule with a card-specific example."
+      }
+    },
+    {
+      "source_id": "guide-4-apply-gates-before-scoring-anything",
+      "teaching_item": "Why gates precede scoring, with the 'two-week clock' quotation",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-gates paragraphs 1-2 explain compensation with a concrete example and restore the verbatim delivery-framework quotation that the old version omitted."
+      }
+    },
+    {
+      "source_id": "guide-4-apply-gates-before-scoring-anything",
+      "teaching_item": "Four gates table with distinct dispositions; three of six delivery gates need an SME",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; the paragraph after it walks each disposition (back to sponsor, stop, reshape, route to rules/model team/procurement) and the SME count."
+      }
+    },
+    {
+      "source_id": "guide-4-apply-gates-before-scoring-anything",
+      "teaching_item": "Fourth gate is the one candidates forget; low-value workflows cause runaway bills; not every item needs an LLM",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-gates last paragraph restores this, attributing the 'in my experience' claim to the source author, with keyword routing and a bought coding assistant as examples."
+      }
+    },
+    {
+      "source_id": "guide-5-score-seven-dimensions-with-stated-weights",
+      "teaching_item": "Ten criteria collapse into seven: adoption as value multiplier, integration into feasibility, pain as evidence; 1-5 with risk inverted",
+      "anchors": [
+        "walk-score"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-score paragraph 1 keeps every mapping and adds where reusability and evaluation difficulty went."
+      }
+    },
+    {
+      "source_id": "guide-5-score-seven-dimensions-with-stated-weights",
+      "teaching_item": "Seven-dimension table with weights 25/15/15/10/15/10/10 and 5/1 anchors",
+      "anchors": [
+        "walk-score"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; rows checked against source."
+      }
+    },
+    {
+      "source_id": "guide-5-score-seven-dimensions-with-stated-weights",
+      "teaching_item": "Weights are stated opinion; reasons for value, data and risk, and evaluability weights",
+      "anchors": [
+        "walk-score"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The three source reasons are now a list in walk-score (all three were missing before). Added a flagged source gap: only the 5 and 1 anchors are defined, so bands 2-4 must be stated, with #7's $1.9M scored 4 as the example."
+      }
+    },
+    {
+      "source_id": "guide-6-estimate-value-from-volume-not-from-enthusiasm",
+      "teaching_item": "Value formula and the #7 worked estimate (1.2M x 3 x $0.75 x 70% = ~$1.9M)",
+      "anchors": [
+        "walk-value"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-value shows each multiplication step to $1,890,000; rechecked arithmetic."
+      }
+    },
+    {
+      "source_id": "guide-6-estimate-value-from-volume-not-from-enthusiasm",
+      "teaching_item": "Gap to the sponsor's $5M slide: adoption factor and minutes saved versus minutes that lower cost",
+      "anchors": [
+        "walk-value"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-value quantifies the adoption share ($810,000) and explains why saved minutes only become money when paid hours fall. The old version only said the slide lacked a mechanism."
+      }
+    },
+    {
+      "source_id": "guide-6-estimate-value-from-volume-not-from-enthusiasm",
+      "teaching_item": "Three honesty rules: hard versus soft savings, discount by measured adoption, subtract run cost; keep dollars beside the band",
+      "anchors": [
+        "walk-value"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list in walk-value keeps all three with the source's examples and the 'does the value justify the spend' question, then the band-plus-dollar rule."
+      }
+    },
+    {
+      "source_id": "guide-7-stress-test-the-weighted-sum-where-it-breaks",
+      "teaching_item": "Compensation and the floor of 3 for Now",
+      "anchors": [
+        "walk-stress",
+        "dive-scoring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stress first paragraph; dive-scoring 'Check the arithmetic and the floor' applies it to #12 (three 3s, enters Now) and #20 (value 2, held back)."
+      }
+    },
+    {
+      "source_id": "guide-7-stress-test-the-weighted-sum-where-it-breaks",
+      "teaching_item": "Dependencies: enablers starve when ranked with use cases, so they get their own bucket",
+      "anchors": [
+        "walk-stress",
+        "dive-scoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stress second paragraph; dive-scoring 'Why the bucket rules run in order' shows #28 would be Now by score but is caught as an enabler."
+      }
+    },
+    {
+      "source_id": "guide-7-stress-test-the-weighted-sum-where-it-breaks",
+      "teaching_item": "Double counting of feasibility, data and time; check by dropping one",
+      "anchors": [
+        "walk-stress",
+        "dive-scoring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stress third paragraph; dive-scoring shows every item with feasibility 2 or less also scores 1-2 on time to value in the insurer table."
+      }
+    },
+    {
+      "source_id": "guide-7-stress-test-the-weighted-sum-where-it-breaks",
+      "teaching_item": "False precision: 3.85 vs 3.75; rerun under two or three weightings",
+      "anchors": [
+        "walk-stress",
+        "dive-scoring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stress fourth paragraph; dive-scoring notes seven items sit between 3.75 and 3.95 and that the source names but does not publish its alternative weightings."
+      }
+    },
+    {
+      "source_id": "guide-7-stress-test-the-weighted-sum-where-it-breaks",
+      "teaching_item": "Portfolio balance: five summarisation tools; keep a strategic learning slot",
+      "anchors": [
+        "walk-stress",
+        "dive-scoring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-stress last paragraph; dive-scoring 'Portfolio balance' shows the Now bucket mixes summarisation, extraction and retrieval."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-score-the-worked-portfolio",
+      "teaching_item": "Thirty-item scored table with V/F/D/E/R/T/P, scores and buckets",
+      "anchors": [
+        "walk-portfolio"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full table unchanged. Every score recomputed with the stated weights; all thirty match. walk-portfolio shows the #7 computation and dive-scoring the #29 one."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-score-the-worked-portfolio",
+      "teaching_item": "Ordered bucket rules and totals (5/7/10/3/2/3)",
+      "anchors": [
+        "walk-portfolio",
+        "dive-scoring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Rules are now a numbered list with totals. The source rules do not name the bucket for scores under 2.6; resolved in text as rule 6 (under 2.6 is No), consistent with #24 at 2.05 marked No. dive-scoring explains why the order matters using #28, #21 and #4."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-score-the-worked-portfolio",
+      "teaching_item": "#20 held by the floor; #4 reshaped into #1; #14 right-tool with US rate filing",
+      "anchors": [
+        "walk-portfolio"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bold paragraphs in walk-portfolio. Restored the specific fact that most US states require P&C rates to be filed with the regulator, which the old version had softened to 'flags rate-filing governance'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-score-the-worked-portfolio",
+      "teaching_item": "Highest-value items (#3, #29, #30) all Later; the follow-up in table form",
+      "anchors": [
+        "walk-portfolio"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-portfolio third bold paragraph keeps all three, the data/risk/evaluability reasons and the link to the executive deep dive."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-score-the-worked-portfolio",
+      "teaching_item": "Sensitivity: #7, #1, #6 decided; #12 drops when speed dominates (submission packs take a quarter); #13 swaps with #2 under value-heavy; the spoken split statement",
+      "anchors": [
+        "walk-portfolio",
+        "dive-scoring"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last walk-portfolio paragraph restores the 'takes a quarter to prove' reason and the quoted split statement, both missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-fund-the-platform-the-top-items-share",
+      "teaching_item": "Platform as the architecture; library-versus-scratch governing question",
+      "anchors": [
+        "walk-platform"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-platform paragraph 1. This step is now its own heading; it was merged into the waves step before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-fund-the-platform-the-top-items-share",
+      "teaching_item": "Platform hub diagram (57fead light / 41f7d dark)",
+      "anchors": [
+        "walk-platform",
+        "fig-platform-hub"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Inspected the SVG edges: #7, #1, #6/#13, Later #3/#29, core systems and portfolio office point to gateway #28, which points to #26, #27, eval/release gates and cost/adoption tracing. Prose before the figure and its alt text describe exactly that; the old caption was a generic 'shared enablers connect' line."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-fund-the-platform-the-top-items-share",
+      "teaching_item": "Platform layers diagram (f4982 light / c6696 dark)",
+      "anchors": [
+        "walk-platform",
+        "fig-platform-layers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Inspected edges: all use cases to gateway, #1 and #12 to ingestion, #6/#13 to retrieval, gateway to eval harness and observability, both to portfolio office. Prose and alt text now name these links."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-fund-the-platform-the-top-items-share",
+      "teaching_item": "Gateway controls, ingestion inputs, retrieval scope (figure explanation text)",
+      "anchors": [
+        "walk-platform"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the figures restores the identity/routing/quotas/guardrails/audit/cost list, claims/submissions/loss runs and policy/guidelines/HR, which were missing. Defined loss runs."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-fund-the-platform-the-top-items-share",
+      "teaching_item": "Enabler table and cross-references to Production LLM Gateway and Evaluation and Release Gating",
+      "anchors": [
+        "walk-platform",
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six-row table unchanged; both related-case links placed beside the claim."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-sequence-the-portfolio-in-waves",
+      "teaching_item": "Wave table 0-4 with dates, contents and proofs",
+      "anchors": [
+        "walk-waves"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; paragraph after it traces reuse wave to wave."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-sequence-the-portfolio-in-waves",
+      "teaching_item": "Wave 1 is low-risk high-volume, earns credibility, must not make a headline; two-phase delivery",
+      "anchors": [
+        "walk-waves"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored (missing before) with a contrast between a checked call summary and an autonomous settlement."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-set-kill-criteria-before-the-pilot-starts",
+      "teaching_item": "Why kill criteria first: portfolio only grows; stopping becomes political",
+      "anchors": [
+        "walk-gating"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-gating paragraph 1 restores both sentences, which the old version had dropped."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-set-kill-criteria-before-the-pilot-starts",
+      "teaching_item": "Stage table with exits, signers, kill conditions; no seniority override",
+      "anchors": [
+        "walk-gating"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; 'no seniority override' explained in plain terms."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-set-kill-criteria-before-the-pilot-starts",
+      "teaching_item": "Delivery gate names; week-4 retention as 'none' not zero; accelerator reuse rate as platform health metric",
+      "anchors": [
+        "walk-gating"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bullets in walk-gating keep the four gate names, the 'none, never a fake zero' rule and the reuse-rate metric (the last was missing)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-set-kill-criteria-before-the-pilot-starts",
+      "teaching_item": "Quarterly re-score; enabler-unblocked Later items move up without lobbying; Scoping to Deployed Agent",
+      "anchors": [
+        "walk-gating"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last walk-gating paragraph keeps all three with the link."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-say-no-to-the-executive-s-pet-project-without-losing-the-",
+      "teaching_item": "#29 as the favourite; verbatim follow-up and the seven-item expected answer",
+      "anchors": [
+        "dive-executive"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-executive quotes the follow-up verbatim and keeps the seven-item list with shadow mode defined; previously the list appeared only compressed inside a follow-up table cell."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-say-no-to-the-executive-s-pet-project-without-losing-the-",
+      "teaching_item": "'No loses the sponsor; not yet keeps them'; four-step route table",
+      "anchors": [
+        "dive-executive"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; a new paragraph walks each step's evidence and defines leakage, and notes the earlier steps keep their value if the route stops."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-say-no-to-the-executive-s-pet-project-without-losing-the-",
+      "teaching_item": "Outcome-language script to the executive and the cost-conversation rule; destination not first stop",
+      "anchors": [
+        "dive-executive"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The source's executive script promised settlement recommendations 'in four months', which conflicts with its own wave plan (#1 months 4-8, #2 months 8-14, #29 decision support months 14-24). Resolved in text: the script is kept as a blockquote with wave-plan dates (claims summaries within eight months, settlement recommendations from month fourteen) and introduced as a spoken version rather than a verbatim quote."
+      }
+    },
+    {
+      "source_id": "guide-part-2-13-anticipate-the-failure-modes",
+      "teaching_item": "Eight failure modes with look, signal and mitigation",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; the paragraph after it ties each mitigation back to the step that supplies it and defines score theatre and zombie pilots, replacing a one-line summary."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Standard opening and the 45-minute plan table",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged with the opening sentence; added how the worked-example slice (#14, #4, #29 plus Now items) covers every rule."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored in full as the spoken-two-minute reveal, attributed to the source. The old page only described what such an answer 'can explain'."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Seven likely follow-ups with one-breath answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Converted from a table to seven answer reveals; each keeps the source answer verbatim and adds one reason (e.g., #8's risk of 2 for the CEO chatbot)."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost pivot card: driver, cheapest lever, metric, do-not, 60-second line",
+      "anchors": [
+        "practice-cost",
+        "dive-cost",
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Card table inside the cost-pivot-answer reveal with header labels added; dive-cost explains the driver and levers and labels the token estimate as an expectation; the 60-second line closes the Quick review."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Four cost verbs one level up and the customer cost-complaint rule",
+      "anchors": [
+        "dive-cost",
+        "practice-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All four verbs (measure, route, bound, cache safely as component reuse) and the complaint rule are now explicit; 'cache safely' and the complaint rule were missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Senior, Staff, Principal 'sounds like' and 'missing' table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged under its own heading with the split sentence; the Principal 'missing' item is restated as the method's real limit."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-numbers"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-decisions lists fourteen numbered points; the insurer-specific takeaway (#7, #1, #6 stable; highest-value items in Later) moved to the review-numbers table and closing answer. The old Quick review compressed all fifteen into two paragraphs."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Thirteen self-check questions and answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All thirteen questions now use the source wording (several were paraphrased) and each answer leads with the source answer before added reasoning; IDs portfolio-check-1..13 kept."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Six related packs with their purpose",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each related case is listed with the purpose the source gives it (the old list had bare links)."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Four fact-check sources with claims and the 27 Sep 2026 check date",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each fact-check link keeps the source's summary of what it supports and points to where the claim is used (discovery, permissible-decision gate, #14)."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 27 captured sections of the insurer prioritisation case against the previous casebook item by item and split them into 61 coverage rows. The previous version kept every table and figure but had thinned the prose: it dropped the verbatim prompt, the 'avoid the most impressive demo' quote, the six first-pick properties as a list, the source's spoken framing, the 'two-week clock' quote, the reasons for the weights, the gap explanation for the $5M slide, the figure-explanation text for the platform (gateway controls, ingestion inputs, retrieval scope), wave 1's 'no headline' rationale, the 'portfolio only grows' kill-criteria rationale, the accelerator reuse rate, the executive script, the two-minute spoken answer, 'cache safely' and the cost-complaint rule; it also contradicted the source's 'no deep background' assumption and softened the US rate-filing fact. All restored. Recomputed all thirty weighted scores (all match) and the $1,890,000 estimate. The brief now opens on the thirty-idea problem, defines card, gate, enabler, wave, kill criteria and SME, and traces #7 through the method because the vocabulary is otherwise unfamiliar. Added, and labelled as added: a filled #7 card, three scoring drills, three changed-constraint exercises, and a numbers table in Quick review. Source inconsistencies resolved in text (2026-11-16): bucket rules never placed a score under 2.6 \u2192 added rule 6 'a score under 2.6 is No', matching #24 (2.05, No) and the bucket totals; executive script's 'in four months' for settlement recommendations \u2192 dates from the source's own wave plan (claims summaries within eight months, #29 recommendations in shadow from month fourteen), since the wave table and #29 route are the consistent majority."
+  },
+  "required_answer_reveals": [
+    "portfolio-check-1",
+    "portfolio-check-2",
+    "portfolio-check-3",
+    "portfolio-check-4",
+    "portfolio-check-5",
+    "portfolio-check-6",
+    "portfolio-check-7",
+    "portfolio-check-8",
+    "portfolio-check-9",
+    "portfolio-check-10",
+    "portfolio-check-11",
+    "portfolio-check-12",
+    "portfolio-check-13",
+    "drill-score-9",
+    "drill-score-16",
+    "drill-score-8",
+    "followup-riskiest",
+    "followup-ceo-chatbot",
+    "followup-value-right",
+    "followup-tie",
+    "followup-shadow-ai",
+    "followup-priorities-change",
+    "followup-no-data",
+    "spoken-two-minute",
+    "cost-pivot-answer",
+    "constraint-one-pilot",
+    "constraint-risk-heavy",
+    "constraint-half-team"
+  ]
+}

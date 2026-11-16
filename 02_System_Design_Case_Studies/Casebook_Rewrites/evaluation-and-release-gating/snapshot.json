@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "0e94ab745f0bd8e247b757df3a2fc880879620847efef669e04066cc547e7076",
+  "html_sha256": "b76e5610ef40ce679b6628de778f98c875e0cdd400299397a7d9ad08faa5212f",
+  "config_sha256": "925a8efb0927a7aa014f243a979f464075055c9a318426635ce326e90ca82f67",
+  "source_url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 49,
+    "coverage_rows": 87,
+    "worked_answers": 23,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Built the inventory from all 49 captured sections, splitting the dense Full Design parts (sections 1-14) into 86 teaching items. Interview Guide, Deep Dive, Cheat Sheet and Full Design repeat the gate four times; I consolidated them so each mechanism is taught once in walkthrough steps 1-12 or a deep dive, then recalled in Quick review, and checked each repeat for a distinct number or caveat before merging (e.g. the deep-dive 'pre-headroom' qualifier and the 'severe escape becomes incident case' rule only appear once in the source and were kept). Added plain definitions (candidate, baseline, slice, p95, MoSCoW, fail closed, ETag, circuit breaker, weak supervision), a refund-bot trace and an illustrative bootstrap lower-bound explanation, labelled as such; the old minute plan's section numbers were rewritten as links. The upgrade plan is taught as nine steps. The source worksheet page was not captured and is linked rather than imported. Source inconsistencies resolved in text (2026-11-16): the upgrade-regression plan was labelled 'eleven steps' but lists nine actions \u2192 the casebook says 'nine steps' and lists the nine, because no other source section supplies two more steps."
+    }
+  }
+}

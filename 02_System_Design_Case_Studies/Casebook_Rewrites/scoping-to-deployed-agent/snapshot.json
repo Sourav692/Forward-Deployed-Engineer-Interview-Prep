@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "c406f1f9a82882186b4face3e72bb108d7c612066760e9e719220ae1b90aa600",
+  "html_sha256": "0b9a50533cf74b831842567b18836ceed4d97b0ed2952c7be45d0e0ee601f5aa",
+  "config_sha256": "9c2a5ecb959048e450f7681ffc87cc5b2e6738c58a322205071636186a009df2",
+  "source_url": "https://forwarddeployedprep.com/design/scoping-to-deployed-agent",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 48,
+    "coverage_rows": 58,
+    "worked_answers": 16,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Read all 48 captured sections (Interview Guide, Deep Dive, Cheat Sheet and the three-part Full Design) and wrote the casebook from scratch. The opening keeps a term list because SME, FDA, gate, golden set, shadow mode and accelerator library are all used before they could be explained inline, and follows one engagement and one Northwind ticket. The interview guide and Full Design overlapped heavily (gates, days, requirements, limits); each overlap was merged into one walkthrough step while keeping both source tables where they differ (e.g. stage/day/signer vs gate/blocks/signer). Every source table (24 of 25; the old navigation table is consolidated), all three code blocks and all seven figure pairs are retained beside prose that reads them. Added material (blank-page prompt, five follow-up drills, the 3/11 override arithmetic and 5/6 reuse arithmetic) is labelled or derived only from source facts. Reference URLs are the source's own. Source inconsistencies resolved in text (2026-11-16): the captured glossary expanded FDA as Food and Drug Administration \u2192 Forward Deployed Architect everywhere, with the term-list note about the mis-expansion removed; the minute-55 summary said two of four mitigations are built \u2192 three of four ('which one isn't'), matching the risk table and the code (check_escalation_triggers and the two intake refusals built, scope-change control not), with the visible correction paragraph replaced by a plain statement of the three."
+    }
+  }
+}

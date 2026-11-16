@@ -1,0 +1,1086 @@
+{
+  "title": "Model Development and Post-Training",
+  "slug": "model-development-and-post-training",
+  "subtitle": "Design a maths model from checkable data through SFT and scored post-training, where only a checkpoint that passes a clean held-out gate is released.",
+  "theme": "Model Development and Post-Training",
+  "kind": "System design",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/model-development-and-post-training",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-scenario",
+    "intro-what-it-assumes": "brief-terms",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-task",
+    "main-the-anchor-and-its-variants": "brief-task",
+    "main-questions-to-ask-the-interviewer": "walk-clarify",
+    "main-requirements-functional-non-functional": "walk-requirements",
+    "main-architecture": "walk-architecture",
+    "main-choices-to-defend": "walk-deliver",
+    "main-two-minute-interview-answer": "walk-deliver",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-data-quality-and-split-integrity": "walk-data",
+    "deep-dive-2-sft-scoring-and-updates": "walk-sft",
+    "deep-dive-3-arithmetic-and-compute-constrained-variant": "dive-compute",
+    "deep-dive-4-evaluation-and-alternate-objectives": "dive-eval",
+    "deep-dive-5-when-weights-are-the-right-surface": "dive-weights",
+    "cheat-sheet-intro": "review-path",
+    "cheat-sheet-ask-first": "review-path",
+    "cheat-sheet-whiteboard-path": "review-path",
+    "cheat-sheet-numbers-are-source-assumptions": "review-numbers",
+    "cheat-sheet-gate-and-pivots": "review-gate",
+    "full-pack-intro": "brief-task",
+    "full-pack-1-clarify-what-solves-math-means-before-collecting-anything": "walk-clarify",
+    "full-pack-2-state-requirements-as-testable-constraints": "walk-requirements",
+    "full-pack-3-size-the-run-before-naming-a-method": "walk-sizing",
+    "full-pack-4-draw-the-architecture-end-to-end": "walk-architecture",
+    "full-pack-5-collect-data-that-can-be-checked-not-just-read": "walk-data",
+    "full-pack-6-teach-the-format-with-sft-then-stop": "walk-sft",
+    "full-pack-part-2-7-reward-correct-answers-not-confident-ones": "walk-reward",
+    "full-pack-part-2-8-evaluate-on-problems-the-model-has-never-seen": "walk-eval",
+    "full-pack-part-2-9-scale-training-under-a-fixed-compute-budget": "dive-compute",
+    "full-pack-part-2-10-trade-harm-against-helpfulness-on-one-chart": "dive-harm",
+    "full-pack-part-2-11-shrink-the-model-without-shrinking-its-manners": "dive-phone",
+    "full-pack-part-3-12-decide-when-parameter-updates-earn-their-cost": "dive-weights",
+    "full-pack-part-3-13-deliver-it-in-sixty-minutes": "walk-deliver",
+    "full-pack-part-3-14-answer-the-compute-pivot-in-ten-minutes": "practice-compute-pivot",
+    "full-pack-part-3-level-calibration": "practice-levels",
+    "full-pack-part-3-key-takeaways": "review-takeaways",
+    "full-pack-part-3-check-yourself": "practice-check",
+    "full-pack-part-3-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "target",
+      "label": "Pin the target and requirements",
+      "hint": "Which questions change the data, reward and eval? State the must-haves as tests."
+    },
+    {
+      "id": "sizing",
+      "label": "Size the run",
+      "hint": "Use 6ND, 2N per token and 16 bytes per parameter to show where the budget goes."
+    },
+    {
+      "id": "pipeline",
+      "label": "Data, SFT and scorer",
+      "hint": "Trace one problem through dedup, SFT, sampling, scoring and the drift-controlled update."
+    },
+    {
+      "id": "gate",
+      "label": "Evaluation gate and pivots",
+      "hint": "Name the five slices, how you rule out leakage, and which stage a new constraint changes."
+    }
+  ],
+  "rubric": [
+    "Pins level, answer-versus-working and tool access before choosing a method.",
+    "States requirements as tests, including held-out pass@1, maximum general regression and a fabrication rate.",
+    "Shows with 6ND and 2N arithmetic that rollouts and evaluation, not SFT, take the budget.",
+    "Deduplicates before splitting, splits by source and time, and explains the 94% versus 78% failure.",
+    "Separates SFT (format) from post-training (finding answers) and picks a scorer for the target, with a drift penalty and high-reward audits.",
+    "Gates on five slices with sampling settings reported, and keeps the model from approving its own release.",
+    "Maps a compute, harm or device constraint to the single stage it changes and re-derives only that stage.",
+    "Justifies parameter updates over context, memory or procedure, and keeps a prompted fallback."
+  ],
+  "required_answer_reveals": [
+    "answer-pin-target",
+    "answer-post-training-cost",
+    "answer-gate-blocks",
+    "answer-checkable-data",
+    "answer-sft-teaches",
+    "answer-drift-penalty",
+    "answer-94-78",
+    "answer-size-pretraining",
+    "answer-harm-chart",
+    "answer-phone-memory",
+    "answer-update-not-worth",
+    "answer-sixty-second-compute",
+    "answer-contamination",
+    "answer-more-sft",
+    "answer-why-drift",
+    "answer-dpo-rlhf",
+    "answer-general-collapse",
+    "answer-huge-gain",
+    "answer-tenth-compute",
+    "answer-offline-laptop",
+    "answer-no-synthetic",
+    "answer-compute-pivot"
+  ],
+  "required_anchors": [
+    "brief-scenario",
+    "walk-sizing",
+    "walk-architecture",
+    "walk-eval",
+    "dive-compute",
+    "dive-harm",
+    "dive-phone",
+    "dive-weights",
+    "practice-check",
+    "review-takeaways"
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Task framing: data, SFT, post-training and evaluation, with evaluation integrity as the hard part",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The brief's first two paragraphs name the four stages and state that the case turns on whether the reported score covers unseen problems; the source's one-sentence 94%/78% figure is expanded into the full duplicated-trace story (81% baseline, honest ~83%, production within two points)."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary and the three neighbouring prompts",
+      "anchors": [
+        "brief-example",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Collect checkable problems, dedupe/decontaminate, short SFT, score sampled answers with verifier/step grader/preferences, drift-controlled update and the maths/general/safety gate with loop-back are traced in 'Follow one problem through the loop'; the fixed-compute, harmless-but-useful and phone variants are the variants table in brief-task."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "SFT glossary definition",
+      "anchors": [
+        "brief-terms"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The SFT bullet in 'Terms you need' keeps the glossary meaning (further training on example inputs and outputs so the model copies that behaviour) and adds the maths-specific output form."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and core-loop diagram (both variants)",
+      "anchors": [
+        "brief-scenario",
+        "figure-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The figure caption carries the sentence 'SFT teaches the format, scored attempts teach correctness, and only a checkpoint that passes a clean held-out gate moves forward'; both hashed SVGs (bd991125\u2026, 1ac07e91\u2026) are placed in figure-core-idea with a following paragraph reading the loop, including the fail branch to error analysis and data mix."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates in a model or post-training round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of brief-task names Forward Deployed, solutions and applied-AI engineering candidates facing a model or post-training round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain the pipeline from the gate constraint; model never approves its own release; answer follow-ups on five themes",
+      "anchors": [
+        "brief-scenario",
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-scenario states the dangerous constraint (decontaminated held-out gate, model never approves its own release, labels from programs/graders/people); brief-task lists the follow-up themes: data quality, SFT vs post-training, reward hacking, compute arithmetic and the three variants."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed background (LoRA, optimiser state, FLOPs, held-out eval) and LLM/FLOPs glossary",
+      "anchors": [
+        "brief-terms"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-terms defines LLM (keeping the 'confidently make things up' caveat), FLOPs, LoRA/QLoRA, and closes by stating the assumed background; the old 'related reviews at the foot of each section' pointer is site navigation replaced by these in-page definitions."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (mark parts read, Full Design optional, revisit Quick Review)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete old-site navigation. Its intent survives as the last sentence of brief-task: walkthrough for the answer, deep dives for follow-ups, Practice to test, Quick review the night before. The Full Design track is distributed, not kept as a sixth route."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old four-section table (Interview Guide, Deep Dive, Quick Review, optional Full Design)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation table of the old site; its content is redistributed into the five sections (Guide \u2192 walkthrough, Deep Dive \u2192 deep dives, Quick Review \u2192 Quick review, Full Design \u2192 spread across steps 1\u20139, deep dives and Practice). The reading-order guidance is the closing sentence of brief-task."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Provenance caveat: design built from reported prompts; run sizes and throughput are illustrations",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 'No worked design exists\u2026' states that every run size, token count and throughput figure is a whiteboard assumption, not a measured training result, and that the arithmetic is exact."
+      }
+    },
+    {
+      "source_id": "main-the-anchor-and-its-variants",
+      "teaching_item": "Anchor prompt and variants table (shared foundation / what changes)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The variants table keeps all four rows and both source columns verbatim in meaning, and adds the company prompt wording from full-pack-intro plus a link to where each variant is taught (walkthrough, dive-compute, dive-harm, dive-phone)."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six clarifying questions and their design consequences",
+      "anchors": [
+        "walk-clarify"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the full-pack section 1 table into one six-row table in step 1; each row keeps the main guide's consequence (datasets/generalisation, verifier vs step review, arithmetic outside weights, abstention/human checks, orders-of-magnitude budget, size/adapters/deployment) alongside the fuller full-pack reasons."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional requirements list",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2's second paragraph lists all seven functional requirements: checkable examples, dedupe/decontaminate, SFT incl. ill-posed cases, sample, score with the right verifier/preference method, update and checkpoint, gate on accuracy/general/safety/contamination."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Non-functional table (reproducibility, budget, integrity, safety, on-device)",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same paragraph gives each non-functional row as prose: lineage of data/config/seed/checkpoint, fixed compute with stop rules, no hidden leakage or unmeasured regression, no safety win from blanket refusal, phone memory/latency/battery on the real device."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Illustrative FLOPs row (2.1e18 SFT, 5.6e18 gen + 1.68e19 update, ~10x, ~2 GPU-hour sketch)",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Moved to step 3, where the sizing table derives each figure and the following paragraph states post-training \u224810\u00d7 SFT and that 'about 2 GPU-hours' is an assumed-throughput sketch, not a guarantee."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Interview shortcut answer for 'what are the requirements?'",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted verbatim as the closing paragraph of step 2."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Model never approves its own release; programs, graders and humans label; tracking and policy decide; failed eval loops back",
+      "anchors": [
+        "walk-architecture",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Stated in brief-scenario and again in step 4 (caption 'the model only gets trained', closing sentence on deterministic tracking and written release policy, move 7 loop-back to error analysis)."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Eight-step architecture and its diagram (both variants)",
+      "anchors": [
+        "walk-architecture",
+        "figure-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-architecture holds both hashed SVGs (38b5232f\u2026, 2ad40c5d\u2026). The numbered list 'Walk the diagram in eight moves' rewrites each source step (collect with provenance, verify/humans, mix general tasks, SFT incl. uncertainty, sample+score+audit, update with drift/DPO and lineage logging, gate, deploy/distil/on-device eval/flywheel) and says what each stage hands on."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "DPO glossary definition",
+      "anchors": [
+        "brief-terms"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "DPO bullet in brief-terms keeps 'pairs of this answer is better than that one, without a separate reward model'."
+      }
+    },
+    {
+      "source_id": "main-choices-to-defend",
+      "teaching_item": "SFT versus post-training defence",
+      "anchors": [
+        "walk-deliver"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 paragraph 'SFT versus post-training' keeps the verifier-rewards-bad-working caveat, step labels when reasoning matters, preference pairs for tone, drift penalty and high-reward inspection."
+      }
+    },
+    {
+      "source_id": "main-choices-to-defend",
+      "teaching_item": "Evaluation-integrity defence",
+      "anchors": [
+        "walk-deliver",
+        "dive-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 'Evaluation integrity' paragraph keeps source/time split, n-gram/embedding overlap, pass@1 with sampling settings, leakage suspicion, the five gate dimensions and no repeated tuning on the final test set; dive-eval expands each check."
+      }
+    },
+    {
+      "source_id": "main-choices-to-defend",
+      "teaching_item": "Compute-budget defence",
+      "anchors": [
+        "walk-deliver",
+        "dive-compute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 'Compute budget' paragraph keeps ~6ND, memory/throughput, LoRA/QLoRA before full FT after a demonstrated ceiling, sharded state, parallelism matched to layer size, streamed ordered data, optimiser+loader checkpoints and eval gain per GPU-hour with kill rule."
+      }
+    },
+    {
+      "source_id": "main-choices-to-defend",
+      "teaching_item": "Phone defence (3B \u22481.5GB at 4-bit before KV/runtime; 1\u20132GB budget) and KV glossary",
+      "anchors": [
+        "walk-deliver",
+        "dive-phone",
+        "brief-terms"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 'Phone variant' paragraph keeps the 1.5 GB figure, KV and runtime overhead, the 1\u20132 GB budget forcing a smaller model or shorter context, and distil/quantise/politeness/slowest-phone measurement; KV cache is defined in brief-terms."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "walk-deliver"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted in full as a labelled spoken example in step 9."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Keep assumptions apart from measured results",
+      "anchors": [
+        "brief-task",
+        "references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The assumptions-versus-measurements boundary appears in brief-task and in the closing paragraph of References, which labels the 94%, 140,000-trace, lab and four-surfaces material as source-reported. Old cross-navigation text dropped as navigation."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-data-quality-and-split-integrity",
+      "teaching_item": "Checkable answers, four source types, rejection sampling",
+      "anchors": [
+        "walk-data"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 opening and second paragraph: program-checkable answers, public/licensed/expert/synthetic sources, and rejection sampling defined as keeping synthetic answers only when verified."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-data-quality-and-split-integrity",
+      "teaching_item": "Dedupe before splitting; time/source split; datasheet; human adjudication",
+      "anchors": [
+        "walk-data"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 bold-led paragraphs: 'Deduplicate first' (before splitting), 'Split by time and by source, never at random', 'Route hard labels to people' (hard, high-impact, low-agreement) and the datasheet fields (collection period, filters, split, label source, bias)."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-data-quality-and-split-integrity",
+      "teaching_item": "94% offline / ~78% production / honest ~83% / within two points",
+      "anchors": [
+        "brief-scenario",
+        "walk-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Told in full in brief-scenario and restated in step 8 with the 81% baseline; step 5 links the random-split mechanism back to it."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-sft-scoring-and-updates",
+      "teaching_item": "SFT content, risks of over-training, general and no-unique-answer examples, adapters/QLoRA, full update only on measured miss",
+      "anchors": [
+        "walk-sft",
+        "dive-updates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 three rules plus adapter paragraph; dive-updates 'SFT data and adapters' restates the memorise/erode risk and 'full update only when the adapter misses a measured target'."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-sft-scoring-and-updates",
+      "teaching_item": "Scorer trade-offs, verbosity bias, RL+drift penalty, DPO path, audit every round",
+      "anchors": [
+        "dive-updates",
+        "walk-reward"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-updates 'Choosing the scorer', 'Choosing the update' and 'Catching reward hacking' teach verifier vs step vs preference, grader verbosity (with the Singhal/Hosking references), reference-model drift penalty, DPO, and per-round audit with a concrete signal (reward rises while held-out pass@1 does not)."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-arithmetic-and-compute-constrained-variant",
+      "teaching_item": "6ND / 2N rules, 2.1e18, 5.6e18, 1.68e19, 16 bytes/param \u2248112GB > 80GB",
+      "anchors": [
+        "dive-compute",
+        "walk-sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-compute 'Rules of thumb' subsection repeats each figure and links to step 3, where the table derives them."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-arithmetic-and-compute-constrained-variant",
+      "teaching_item": "20 tokens/param \u2192 140B tokens, 5.88e21 FLOPs, ~5,444 GPU-hours at 3e14",
+      "anchors": [
+        "dive-compute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-compute 'Sizing a pretraining run from the budget' shows the multiplication and labels it a whiteboard estimate."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-arithmetic-and-compute-constrained-variant",
+      "teaching_item": "Parallelism ladder, streamed shards with recorded order, optimiser+loader checkpoints, MFU and eval gain/GPU-hour",
+      "anchors": [
+        "dive-compute"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with full-pack section 9 into the parallelism table, 'Data is a pipeline problem' and 'Make the run survive failure'; MFU is defined in plain words."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-evaluation-and-alternate-objectives",
+      "teaching_item": "Gate slices, sampling settings, overlap checks, contamination report, investigate large gains",
+      "anchors": [
+        "dive-eval",
+        "walk-eval"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-eval covers each check with a reason (n-gram for copies, embeddings for paraphrases using the brief's pencils/pens twin, greedy vs majority-of-eight, contamination report attached to every gate decision)."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-evaluation-and-alternate-objectives",
+      "teaching_item": "Harmless-but-useful: harmful compliance vs over-refusal, written policy, preference pairs, audited AI feedback, red team, classifier",
+      "anchors": [
+        "dive-harm"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with full-pack section 10 into dive-harm subsections 'The chart', 'Post-training carries the policy' and 'Red-teaming and layers', including that a classifier changes faster than weights."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-evaluation-and-alternate-objectives",
+      "teaching_item": "On-device: ~1B student for 1\u20132GB, 3B \u22481.5GB at 4-bit, rude-prompt politeness eval, KV/runtime/TTFT/tokens-s/battery on device",
+      "anchors": [
+        "dive-phone"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with full-pack section 11 into dive-phone; the 'Measure on the device' subsection keeps first-token time, tokens/s, battery and 'a full-precision server eval does not count'."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-when-weights-are-the-right-surface",
+      "teaching_item": "Context/memory/procedure before parameters; three winning cases; frozen task definition; prompted fallback; compute-spike response",
+      "anchors": [
+        "dive-weights"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-weights defines the four surfaces, lists the three winning situations, the frozen-definition cost with prompted fallback, and ends with the compute-spike sequence (small ablations, adapters, targeted rollouts, frequent checkpoints)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation links",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only (Main, Deep Dive, unchanged source links); the five-section structure replaces it and Quick review starts at review-path."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first recall list",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of review-path keeps all six questions."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path and 'model is only trained' line",
+      "anchors": [
+        "review-path"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of review-path keeps the ten-stage arrow path and the deterministic-checks-and-human-labels sentence, adding the loop-back."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-are-source-assumptions",
+      "teaching_item": "Recall numbers: 6ND, 2N, 2.1e18, 5.6e18 + 1.68e19, 16 bytes \u2248112GB",
+      "anchors": [
+        "review-numbers"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-numbers keeps each figure and adds the 2 GPU-hour, pretraining, phone and source-reported example numbers so recall covers all variants."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-gate-and-pivots",
+      "teaching_item": "Gate recall, compute and phone pivots, 60-second close",
+      "anchors": [
+        "review-gate"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-gate keeps the SFT/verified rollouts/step grading line, decontamination and pass@1 settings, the five gate checks, both pivots and the quoted 60-second close; adds the harm pivot for symmetry."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "One budget, one changed stage per prompt; four company prompts table; no worked design; numbers are assumptions",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task variants table carries the Cohere/OpenAI/Anthropic/Google prompt wording and where each is taught; the following paragraph keeps 'no worked design exists', the grounding (fine-tuning labs, learning surfaces, air-gapped quantisation arithmetic) and the assumption marking. The compute-cost self-drill row maps to practice-compute-pivot."
+      }
+    },
+    {
+      "source_id": "full-pack-1-clarify-what-solves-math-means-before-collecting-anything",
+      "teaching_item": "Four products behind one sentence; clarifying table; question-bank 'clarify the mission' warning",
+      "anchors": [
+        "walk-clarify"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 opening paragraphs and merged table (tutor vs research assistant cost example, base vs chat model scope) keep every row's reason."
+      }
+    },
+    {
+      "source_id": "full-pack-1-clarify-what-solves-math-means-before-collecting-anything",
+      "teaching_item": "Safe default assumptions and spoken line",
+      "anchors": [
+        "walk-clarify"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 keeps the default (grade school to competition, final numeric answers, optional code tool, open base model) and quotes the spoken line."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint; six must-haves; three should-haves",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 opening paragraph, the numbered six must-haves and the should-have sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraint table (7 rows) and requirement-owner table (6 rows)",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both tables kept row for row with introducing sentences; the accuracy row keeps 'the number is theirs, not ours'."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-the-run-before-naming-a-method",
+      "teaching_item": "Sizing table, SFT cheap vs post-training ~10x, memory-bound generation",
+      "anchors": [
+        "walk-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 table keeps all four rows; the following paragraph explains memory-bound in plain words and concludes the budget belongs to post-training and evaluation."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-the-run-before-naming-a-method",
+      "teaching_item": "Adam 16 bytes/param, 112GB, shard or adapter",
+      "anchors": [
+        "walk-sizing",
+        "dive-compute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 last paragraph, with dive-compute applying the parallelism table to this 112 GB case."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Loop framing, versioned artefacts, run lineage, gate checks",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 opening and the paragraph after the eight moves list the versioned items, run ID/data hash/code/seed and shared checkpoint store and tracker."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Three Mermaid-rendered diagrams (lanes, data-to-SFT, post-training loop), both variants each",
+      "anchors": [
+        "figure-pipeline-lanes",
+        "figure-data-to-sft",
+        "figure-post-training-loop"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six hashed SVGs (ee6a460b\u2026/7ede1aa1\u2026, 0da5e790\u2026/c504e37a\u2026, 8cdbb34f\u2026/82019c9f\u2026) placed in step 4 with alt text listing their node labels and captions explaining each half."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Component / job / fails-how table (12 rows)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept row for row with an introduction explaining why the failure column matters in an interview."
+      }
+    },
+    {
+      "source_id": "full-pack-5-collect-data-that-can-be-checked-not-just-read",
+      "teaching_item": "Checkable data, four sources, rejection sampling",
+      "anchors": [
+        "walk-data"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 first two paragraphs: unchecked answers are worth less because nothing downstream can tell if training helped; four sources; rejection sampling defined and tied to checkability."
+      }
+    },
+    {
+      "source_id": "full-pack-5-collect-data-that-can-be-checked-not-just-read",
+      "teaching_item": "Foundations labs plumbing (JSONL, tokenise, split) and three flywheel gates: 140,000\u2192~9,000 dedup, time/source split, adjudication; datasheet",
+      "anchors": [
+        "walk-data"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 third paragraph defines JSONL and the lab steps; the three bold gates explain why each matters (140,000 to about 9,000; link to the 94% failure); datasheet field list kept."
+      }
+    },
+    {
+      "source_id": "full-pack-6-teach-the-format-with-sft-then-stop",
+      "teaching_item": "SFT teaches format; base vs instruction-tuned lab; pythia-70m observation",
+      "anchors": [
+        "walk-sft"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 first two paragraphs keep the lab contrast and 'style changed long before correctness'."
+      }
+    },
+    {
+      "source_id": "full-pack-6-teach-the-format-with-sft-then-stop",
+      "teaching_item": "Three SFT rules; LoRA/QLoRA; AutoTrain --use_peft/--use_int4 vs current --peft/--quantization int4",
+      "anchors": [
+        "walk-sft"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 rule list and adapter paragraph keep both flag pairs and 'full fine-tune only when an adapter demonstrably plateaus'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-reward-correct-answers-not-confident-ones",
+      "teaching_item": "Post-training loop and three-scorer table",
+      "anchors": [
+        "walk-reward"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 table kept row for row, followed by a paragraph taking each scorer separately and tying the verifier blind spot to the brief's illustrative trace."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-reward-correct-answers-not-confident-ones",
+      "teaching_item": "RLHF vs DPO vs RL with verifier; well-tuned PPO can beat DPO",
+      "anchors": [
+        "walk-reward",
+        "dive-updates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 'Two update methods' paragraph; PPO defined inline; dive-updates adds the Xu et al. evidence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-reward-correct-answers-not-confident-ones",
+      "teaching_item": "Drift penalty not optional; lenient matcher and length bias examples; audit; spoken line",
+      "anchors": [
+        "walk-reward"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 drift-penalty paragraph and the quoted spoken version."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-evaluate-on-problems-the-model-has-never-seen",
+      "teaching_item": "94/81/78/83 worked example and leakage-first rule",
+      "anchors": [
+        "walk-eval",
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 first paragraph, with the three checks from the follow-up table (dedup, split, labels from replaced system)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-evaluate-on-problems-the-model-has-never-seen",
+      "teaching_item": "Five-slice eval table; sampling settings; ARC lab; exact match; blocking gate as in Evaluation and Release Gating case",
+      "anchors": [
+        "walk-eval"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 table and following three paragraphs; the gate reference names the source's Evaluation and Release Gating case."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-scale-training-under-a-fixed-compute-budget",
+      "teaching_item": "Budget-first sizing incl. ~21 hours on 256 GPUs; shrink model before data",
+      "anchors": [
+        "dive-compute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-compute pretraining subsection, with a reason added for shrinking the model first."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-scale-training-under-a-fixed-compute-budget",
+      "teaching_item": "Parallelism table, streaming data, durable checkpoints, loss-spike rollback, MFU, spoken line",
+      "anchors": [
+        "dive-compute"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row table, 'Data is a pipeline problem', 'Make the run survive failure' and the quoted spoken version."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-trade-harm-against-helpfulness-on-one-chart",
+      "teaching_item": "Two-number chart and stuck-Python-process example",
+      "anchors": [
+        "dive-harm"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-harm 'The chart' defines harmful-compliance and over-refusal rates, keeps the stuck-Python-process example in the benign set and the down-without-up release rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-trade-harm-against-helpfulness-on-one-chart",
+      "teaching_item": "Written policy, preference pairs incl. needless-refusal losers, RLHF/DPO, Constitutional AI with human audit",
+      "anchors": [
+        "dive-harm"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-harm 'Post-training carries the policy'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-trade-harm-against-helpfulness-on-one-chart",
+      "teaching_item": "RAG sufficiency check three verdicts analogy; red-teaming; input/output classifier",
+      "anchors": [
+        "dive-harm"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-harm 'Partial answers' (RAG expanded, sufficient/partial/insufficient) and 'Red-teaming and layers'. The RAG reference is the source's own cross-case analogy, not transplanted design."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-shrink-the-model-without-shrinking-its-manners",
+      "teaching_item": "Weight-memory table, 1\u20132GB budget, KV cache and overhead, cap context",
+      "anchors": [
+        "dive-phone"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-phone 'Size the weights first' with the 3B/1B \u00d7 16/8/4-bit table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-shrink-the-model-without-shrinking-its-manners",
+      "teaching_item": "Distillation, QAT, politeness as preference target, on-device measurement",
+      "anchors": [
+        "dive-phone"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-phone 'Distil, then quantise', 'Politeness is a preference target' and 'Measure on the device' (quantised student vs full-precision student vs teacher, TTFT, tokens/s, battery on slowest phone)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-decide-when-parameter-updates-earn-their-cost",
+      "teaching_item": "Four surfaces ~10x per step; three winning cases; knowledge gaps are retrieval; map four prompts; prompted fallback",
+      "anchors": [
+        "dive-weights"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-weights paragraphs in order, with each surface defined in plain words and the Ovadia evidence named."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute plan table",
+      "anchors": [
+        "walk-deliver"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 table kept row for row; pivot row links to the three deep dives."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Mid-round constraint changes (tenth compute, offline laptop, no synthetic data)",
+      "anchors": [
+        "practice-pivots",
+        "walk-deliver"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each becomes a worked-answer reveal in practice-pivots that keeps the source's stage mapping and expands it with the walkthrough's reasoning."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-deliver-it-in-sixty-minutes",
+      "teaching_item": "Six follow-ups with strong answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Six answer-reveal blocks, one per follow-up, each answer containing the source's strong answer."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-answer-the-compute-pivot-in-ten-minutes",
+      "teaching_item": "Compute pivot table and four cost verbs",
+      "anchors": [
+        "practice-compute-pivot"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "answer-compute-pivot reveal holds the five-row table (driver, lever, metric, do-not, 60-second line) and the measure/route/bound/cache-safely paragraph."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Senior/Staff/Principal calibration table",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept row for row in practice-levels with the 'budget and who decides' framing sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fourteen takeaways listed in review-takeaways, in source order."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Twelve check-yourself questions and answers",
+      "anchors": [
+        "practice-check"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Twelve answer-reveal blocks in practice-check; each answer contains the source answer, some extended with the supporting figure from the walkthrough (e.g. 5.6e18 vs 2.1e18)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "Thirteen fact-check references with claims, checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All thirteen links in the References group, each with its supported claim and the check date; several are also cited inline in dive-updates and dive-weights."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: read all 44 captured sections of the maths-model source and built a 77-row item inventory before drafting. The source states most mechanisms three times (Interview Guide, Deep Dive, Full Design) at different depths; each was merged once at its fullest version: the two clarifying-question tables into step 1, the main requirements block and full-pack section 2 into step 2, deep dive 3 and full-pack 9 into the compute deep dive, deep dive 4 split into evaluation, harm and phone deep dives with full-pack 10 and 11. The brief opens on the 94%/78% leakage story because it is the case's dangerous constraint, defines thirteen training terms the source used undefined (rollout, verifier, drift penalty, pass@1, decontamination, KV cache, etc.), and adds a labelled illustrative pencils word-problem trace that is reused in steps 7 and the eval deep dive. Every source table is kept row for row; all five diagram pairs (10 hashed SVGs) sit beside the step that explains them. All 12 Check Yourself items, 6 follow-ups, the compute pivot and the 3 mid-round constraint changes are worked-answer reveals (22). Removed one unsupported addition during review (a claim that majority vote usually scores higher). Old navigation (sections table, how-to-use, cheat-sheet links) is consolidated, not reproduced."
+  }
+}

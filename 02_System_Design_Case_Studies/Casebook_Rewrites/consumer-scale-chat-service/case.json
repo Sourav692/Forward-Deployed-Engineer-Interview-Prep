@@ -1,0 +1,1030 @@
+{
+  "title": "Consumer-Scale Chat Service",
+  "slug": "consumer-scale-chat-service",
+  "subtitle": "Build durable conversations and responsive streams while controlling user isolation, admission and token cost.",
+  "theme": "AI Platforms and Scale",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/consumer-scale-chat-service",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief-example",
+    "main-the-anchor-and-variant": "brief-task",
+    "deep-dive-intro": "brief-task",
+    "cheat-sheet-intro": "brief",
+    "full-pack-intro": "brief-task",
+    "main-questions-to-ask-the-interviewer": "discovery",
+    "cheat-sheet-ask-first": "review",
+    "full-pack-1-clarify-the-product-before-the-scale": "discovery",
+    "main-requirements-functional-non-functional": "requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "deep-dive-1-from-users-to-streams": "sizing",
+    "cheat-sheet-assumed-sizing-not-production-data": "review",
+    "full-pack-3-size-it-from-daily-users-down-to-gpus": "sizing",
+    "main-architecture": "architecture",
+    "cheat-sheet-whiteboard-path": "review",
+    "full-pack-4-draw-the-architecture-end-to-end": "architecture",
+    "deep-dive-2-durable-state-with-bounded-context": "state",
+    "full-pack-5-store-the-conversation-send-only-what-the-turn-needs": "state",
+    "full-pack-part-2-6-stream-every-answer-and-cancel-the-ones-nobody-reads": "streaming",
+    "deep-dive-4-quotas-safety-and-regions": "admission",
+    "full-pack-part-2-8-limit-per-user-queue-fairly-per-tier": "admission",
+    "full-pack-part-2-9-moderate-both-directions-and-treat-every-file-as-untrusted": "moderation",
+    "main-evaluation-and-rollout": "release",
+    "deep-dive-5-measure-and-gate-releases": "release",
+    "full-pack-part-2-12-measure-what-users-feel-and-gate-what-ships": "release",
+    "deep-dive-3-streaming-cache-and-model-routing": "prefix",
+    "full-pack-part-2-10-keep-the-prefix-stable-and-the-conversation-on-a-warm-rep": "prefix",
+    "full-pack-part-2-7-route-by-tier-and-task-and-count-what-a-cascade-costs": "routing",
+    "main-key-trade-offs-and-failure-modes": "safety",
+    "full-pack-part-2-11-serve-from-many-regions-and-fail-over-cold-not-closed": "regions",
+    "full-pack-part-3-references": "references",
+    "full-pack-part-3-check-yourself": "practice-start",
+    "main-two-minute-interview-answer": "review-decisions",
+    "full-pack-part-2-13-answer-the-anthropic-wording-the-same-way": "claude-variant",
+    "full-pack-part-3-14-deliver-it-in-sixty-minutes": "interview",
+    "full-pack-part-3-level-calibration": "interview",
+    "full-pack-part-3-15-answer-the-cost-pivot-in-ten-minutes": "cost",
+    "cheat-sheet-five-lines-to-remember": "review",
+    "full-pack-part-3-key-takeaways": "review-decisions",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Clarify the product",
+      "hint": "Ask the six questions and state the assumptions you will design to."
+    },
+    {
+      "id": "sizing",
+      "label": "Size it aloud",
+      "hint": "Go from daily users to messages, tokens, open streams and replicas."
+    },
+    {
+      "id": "design",
+      "label": "Trace one turn",
+      "hint": "Admit, assemble, stream, persist, and name the three boundaries."
+    },
+    {
+      "id": "failures",
+      "label": "Disconnects, overload and failover",
+      "hint": "What stops, what survives, who gets shed and what degrades."
+    },
+    {
+      "id": "evaluation",
+      "label": "Metrics, release gate and cost pivot",
+      "hint": "Tie each choice to a metric; answer 'the bill grows faster than users'."
+    }
+  ],
+  "rubric": [
+    "Derives about 280,000 open streams from 100M DAU with Little's Law and labels every figure an assumption.",
+    "Separates durable full history from the bounded prompt and names the summariser's dropped-detail risk.",
+    "Propagates Stop and disconnect cancellation to inference and tools, and keeps the persisted partial answer.",
+    "Takes user_id from authentication at every store, memory and retrieval boundary.",
+    "Distinguishes per-user token-bucket admission from per-tier fair scheduling, and gateway 429s from capacity 429s.",
+    "Keeps the prompt prefix byte-stable and weighs a model cascade against the cache it forfeits.",
+    "Describes cold regional failover that respects residency and sheds the free tier first.",
+    "Proves the design with first-token time, abandonment, isolation tests and cost per successful conversation."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Stateless model inside a stateful product; whiteboard-assumption caveat; one-paragraph architecture summary",
+      "anchors": [
+        "brief",
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 2 defines LLM, states 'model is stateless and the product is not' and ties remembered tokens to repeat cost; 'every scale figure is a whiteboard assumption' sits in brief-task; the overview's gateway-to-cancel summary is walked step by step in walkthrough step 4's 'Follow one turn' paragraph."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Claude chat service variant uses the same architecture with batching, GPU capacity, queue and failover emphasis",
+      "anchors": [
+        "brief-task",
+        "claude-variant"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 1 states the variant and its emphasis; the claude-variant deep dive expands it with the degradation ladder."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the admitted/rate-limited flow figure (8da3cc6b light, 08220de7 dark)",
+      "anchors": [
+        "brief",
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 3 quotes 'store every turn, send the model only what this turn needs, and stream the answer back' and narrates the figure's Admitted? yes/no branches; figure-1-0 caption and alt text name all six labels read from the SVG."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task frames the round as a reported OpenAI/Anthropic interview prompt; the audience line is folded into that context rather than a separate audience subsection."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the stateless constraint; follow-ups on sizing, state, streaming, routing, quotas, moderation, regions, release gates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last paragraph of brief-task lists all eight follow-up areas named in the source objectives."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: LLM serving basics, caching, rate limiting, cloud architecture",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 lists the same four prerequisites with tokens/batching/streaming spelled out."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (mark parts read, open Full Design, revisit Quick Review)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation; replaced by the five-section shell and its read toggles. The 'revisit before the interview' advice survives as the Quick review section purpose; no Full Design track kept."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section map (Interview Guide, Deep Dive, Quick Review, Full Design parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation table only; each listed topic (sizing to GPUs, streaming/cancel, tier routing, fair queues, two-way moderation, prefix caching, failover, release gates, sixty-minute plan, cost pivot, sources) is mapped to a walkthrough step, deep dive or practice group in the rows below."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Sam free-tier end-to-end trace: admission, paid users may skip line, load conversation with deletion rules, summary not raw dump, input moderation, GPU stream, batching/fair queues, output moderation, sandboxed step-capped tools, store turn, fail over without pretending",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example retells every beat of the Sam trace in order, including deletion rules and 'never pretends the turn did not happen', and ends with the admit/load/infer/moderate/persist path. This was absent from the earlier draft and was added in review."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Scope: one slice (sessions, streaming, admission, moderation, cost); training out of scope; leave 'we'll train a new model' out",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 2 names the same slice and the 'leave it out unless asked' advice."
+      }
+    },
+    {
+      "source_id": "main-the-anchor-and-variant",
+      "teaching_item": "ChatGPT anchor and Claude variant share one architecture; no separate worked design exists",
+      "anchors": [
+        "brief-task",
+        "claude-variant"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 1 says neither prompt comes with a worked design or workload; claude-variant opens with 'the design above answers it unchanged'."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Design and sizing are constructed from one-line prompts; validate against real workload",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into brief-task's 'treat each number as a placeholder for measured throughput'."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation links",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; the cheat-sheet content now lives in the Quick review group."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Hook: first token instantly and whole history remembered, each remembered token paid again; distributed-systems framing",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 2 carries 'every token the service remembers and re-sends is paid for again on the next turn'."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Group table: OpenAI anchor, Anthropic variant, self-drill, related cases (Enterprise Knowledge Assistant, Secure Multi-Tenant AI Platform, Observability); one-line reported prompts; sizing is assumption",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task names both reported prompts, the absence of a worked design, and the three related cases with what each contributes (user-filtered retrieval, quotas/fair queues/regional control, stage timing/abandonment). The cost self-drill is in the cost group."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six interviewer questions and the design consequence of each",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the full-pack assumed-answer table in step 1; each of the six rows keeps question, assumed answer and what it decides."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first recall list",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First line of the review group repeats the six ask-first questions."
+      }
+    },
+    {
+      "source_id": "full-pack-1-clarify-the-product-before-the-scale",
+      "teaching_item": "First failure mode (architecture before scope) and the reported interviewer interruption quote",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraph 1 names the question-bank failure mode and quotes 'What questions would you ask the customer before designing anything?'; added in review, missing from the earlier draft."
+      }
+    },
+    {
+      "source_id": "full-pack-1-clarify-the-product-before-the-scale",
+      "teaching_item": "Mission framework quote (response time, cost, accuracy, equity of coverage; primary user) and state-assumptions advice",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 paragraph 2 quotes the framework verbatim (the draft had paraphrased 'equity of coverage' away) and adds 'state the assumption aloud'."
+      }
+    },
+    {
+      "source_id": "full-pack-1-clarify-the-product-before-the-scale",
+      "teaching_item": "Weak vs strong answer, three hard problems, opening-line quote",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of step 1 contrasts the load-balancer answer with naming state, concurrency and token cost, and quotes the source's opening line in full."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional vs non-functional framing, follow-on features, illustrative scale row, interview-shortcut quote",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 defines functional/non-functional, lists follow-on features, flags targets as 'constructed interview targets, not any product's SLA', and ends with the source's requirements shortcut quote. The scale row is taught in step 3."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "'A requirement that cannot fail a test is a preference'; six must-haves; should-haves; later voice/image",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 paragraphs 1-3 carry the preference/constraint line, all six must-haves and every should-have."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Eight-row testable constraint table and six-row requirement-owner table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both tables are reproduced row for row in step 2; an added paragraph explains what p95 means. The durability row is corrected to 'an acknowledged message ... never lost in the home region' so it agrees with the source's asynchronous cross-region replication; the paragraph after the table states the acknowledged-write rule and the recovery-point objective as fact. Status kept 'preserved' because every other cell is verbatim."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-from-users-to-streams",
+      "teaching_item": "Users-to-streams arithmetic, replica estimate, 2KB/2TB storage, prefill vs decode and 'report both'",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 prose walks the same numbers and caveat ('real prefill/decode throughput and KV memory may require more'); the prefill/decode paragraph ends with 'Report both numbers'."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-it-from-daily-users-down-to-gpus",
+      "teaching_item": "Full sizing table with Little's Law and storage line",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Ten-row table preserved; the broken first-row result cell left by the earlier draft (', ') is corrected to 'Starting assumption'. Little's Law is defined before use."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-it-from-daily-users-down-to-gpus",
+      "teaching_item": "Say arithmetic aloud; halving answer length halves streams; 70M input tokens mostly repeated history so prefix caching matters",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraph 1 and the 'Two consequences' paragraph carry these; the prefix-caching consequence was missing from the draft."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-assumed-sizing-not-production-data",
+      "teaching_item": "Compact sizing recall",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of the review group restates DAU, rates, token rates, streams and replicas."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "LLM vs code division of labour and the step-by-step architecture list",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 opens with the code-owns list and the 'Follow one turn through it' paragraph walks every step of the source list, including untrusted files never gaining instruction authority and cold regional failover."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Main architecture figure (37fa376f light, 2356703 dark) with block/pass/halt/disconnect edges",
+      "anchors": [
+        "figure-11-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-11-0 sits directly after the paragraph that names its block, halt and disconnect/stop edges; alt text lists every node label read from the SVG."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path and auth-scope rule",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Review group's 'Whiteboard path' paragraph reproduces the arrow path and both rules."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Admit, assemble, stream, persist rule with what each verb decides",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 paragraph 2; added in review because the draft dropped it."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Request-order figure (0064d5af / 4660ae37) and planes figure (aae02ff9 / cbfdd563) with plane responsibilities",
+      "anchors": [
+        "figure-30-0",
+        "figure-30-2",
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each figure now has its own caption written from its SVG labels (the draft used one generic caption for three figures). The planes paragraph before figure-30-2 lists the control-plane contents, user_id sharding, home-region replication, per-region pools and text-free telemetry."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Upload and bounded-tools figure (79db0b8f / c2333300)",
+      "anchors": [
+        "figure-30-1",
+        "moderation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Moved beside the file-pipeline explanation in the moderation deep dive so the scan/parse/chunk-and-embed and bounded-tool labels sit next to the prose that teaches them."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Fifteen-row component table with failure modes; three boundaries (admission, isolation, cost)",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept row for row; final paragraph of step 4 names the three boundaries and where each sits."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-durable-state-with-bounded-context",
+      "teaching_item": "Shard by user_id, partial persistence, message-ID reconnect, context order, ~15-turn illustrative fold, semantic vs episodic, auth scope, deletion propagation",
+      "anchors": [
+        "state"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with full-pack section 5 in step 5; every item appears, including 'illustrative threshold to tune, not a rule'."
+      }
+    },
+    {
+      "source_id": "full-pack-5-store-the-conversation-send-only-what-the-turn-needs",
+      "teaching_item": "Store everything, send little; never billed for unsent history; (user_id, conversation_id) key; one-shard listing",
+      "anchors": [
+        "state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraphs 1-2 carry 'store everything and send little', the never-billed-for-unsent-history line, the (user_id, conversation_id) key and single-shard listing."
+      }
+    },
+    {
+      "source_id": "full-pack-5-store-the-conversation-send-only-what-the-turn-needs",
+      "teaching_item": "Sliding window vs rolling summary with extra call and dropped-detail failure; turn-40 worked trace",
+      "anchors": [
+        "state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraph 3 teaches window and summary as separate alternatives on a turn-40 example and names the summariser failure and its recovery path."
+      }
+    },
+    {
+      "source_id": "full-pack-5-store-the-conversation-send-only-what-the-turn-needs",
+      "teaching_item": "Checkpoint key vs user namespace; semantic overwrite vs episodic append; no-exception isolation rule; visible, erasable memory",
+      "anchors": [
+        "state"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraphs 4-5, including 'a user who cannot see a remembered fact cannot correct it'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-stream-every-answer-and-cancel-the-ones-nobody-reads",
+      "teaching_item": "Perceived vs real latency; SSE vs WebSockets reasoning; message-ID resume",
+      "anchors": [
+        "streaming",
+        "state"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 paragraphs 1-2; an added, labelled note explains EventSource is GET-only so a POST chat API needs a fetch reader. Message-ID resume is in step 5."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-stream-every-answer-and-cancel-the-ones-nobody-reads",
+      "teaching_item": "Cancel-on-abandon quote, gateway cancel frees batch slot/KV/tools, Stop button path, abandonment as disguised first-token problem, Observability card 15.10",
+      "anchors": [
+        "streaming"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 paragraphs 3-4 quote the cost note verbatim, define KV cache, name the middleware test from vLLM #10087 and keep the card 15.10 cross-reference that the draft dropped."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-streaming-cache-and-model-routing",
+      "teaching_item": "SSE fit, cancel/release KV, byte-exact prefix, volatile content after breakpoints, soft affinity, cascade vs cache, prompt change as cache-cost event",
+      "anchors": [
+        "streaming",
+        "prefix",
+        "routing",
+        "release"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each sentence of this short summary is taught in fuller form in step 6, the prefix and routing deep dives, and the final paragraph of step 8."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-keep-the-prefix-stable-and-the-conversation-on-a-warm-rep",
+      "teaching_item": "Chat as best prefix-cache case; byte-exact match in tools\u2192system\u2192messages order; one byte invalidates the rest",
+      "anchors": [
+        "prefix"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Prefix deep dive paragraphs 1-2; the render order and 'one changed byte' line were missing from the draft and are now stated."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-keep-the-prefix-stable-and-the-conversation-on-a-warm-rep",
+      "teaching_item": "Stable-first prompt layout and the five silent invalidators including datetime.now(); prove with cache-read counter",
+      "anchors": [
+        "prefix"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bulleted invalidator list names all five, with datetime.now() as in the source."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-keep-the-prefix-stable-and-the-conversation-on-a-warm-rep",
+      "teaching_item": "Warm-replica session affinity trade-off; lost replica means slower full prefill; summarise in large steps",
+      "anchors": [
+        "prefix"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of the prefix deep dive; the self-hosted compute-vs-price note comes from the vLLM reference."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-route-by-tier-and-task-and-count-what-a-cascade-costs",
+      "teaching_item": "Two routing axes (tier, task); greeting vs proof example",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Routing deep dive paragraph 1."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-route-by-tier-and-task-and-count-what-a-cascade-costs",
+      "teaching_item": "Price example: 5\u00d7 output/input, Opus 5.5 $4/$20 vs Haiku 4.5 $1/$5, 80% slice \u22484\u00d7 cut, Sep 2026 list prices, 'say that sentence'",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Routing deep dive paragraph 2 keeps every figure and the date, labelled as the case's dated inputs."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-route-by-tier-and-task-and-count-what-a-cascade-costs",
+      "teaching_item": "Per-model caches make a cascade forfeit cache; measure one strong model at lower effort first; route at conversation start",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Routing deep dive paragraph 3."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-quotas-safety-and-regions",
+      "teaching_item": "Summary of buckets, fair queues, bounded queues, 429 split, tool caps, sandbox, two-way moderation, three control layers, regional containment, residency",
+      "anchors": [
+        "safety",
+        "admission",
+        "moderation",
+        "regions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 summarises each control and links to the admission, moderation and regions deep dives where each item is taught in full."
+      }
+    },
+    {
+      "source_id": "main-key-trade-offs-and-failure-modes",
+      "teaching_item": "Five trade-off groups: store everything/send little, admission vs fairness, trust boundary, regional failure, circuit breakers and spare capacity",
+      "anchors": [
+        "safety",
+        "state",
+        "prefix",
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Distributed: summary trade-off in step 5, cache/cascade in prefix and routing dives, admission/trust/regional bullets in step 7 with deep-dive links."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-limit-per-user-queue-fairly-per-tier",
+      "teaching_item": "Rate limit vs fair queue distinction (Secure Multi-Tenant section 7); token bucket per tier; count tokens (fifty short requests); weighted fair queue per tier",
+      "anchors": [
+        "admission"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Admission deep dive paragraphs 1-3; token bucket is defined in plain words; the 'fifty short ones' example and the section 7 cross-reference were restored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-limit-per-user-queue-fairly-per-tier",
+      "teaching_item": "Two kinds of 429 with quote; short-term retry-with-jitter and shed; long-term buy capacity; abuse limits per account/IP, burst detection, stricter new-account quotas",
+      "anchors": [
+        "admission"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Admission deep dive paragraphs 4-5; the short/long-term responses and the abuse paragraph were absent from the draft."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-moderate-both-directions-and-treat-every-file-as-untrusted",
+      "teaching_item": "Why moderate both directions; input-only costs half but misses multi-turn; gateway classifier; chunked output halt",
+      "anchors": [
+        "moderation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Moderation deep dive paragraphs 1-2, plus the fail-closed/timeout rule from component table row 04."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-moderate-both-directions-and-treat-every-file-as-untrusted",
+      "teaching_item": "Fixed categories and default thresholds; trained refusals vs classifier vs app policy; track false positives because over-blocking is noticed first",
+      "anchors": [
+        "moderation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Moderation deep dive paragraph 3."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-moderate-both-directions-and-treat-every-file-as-untrusted",
+      "teaching_item": "Indirect prompt injection (Tier 2 probe); object storage, scan, async parse, per-user embed; user_id filter (Enterprise Knowledge Assistant section 6); step caps; credential-free destroyed sandbox",
+      "anchors": [
+        "moderation",
+        "figure-30-1"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of the moderation dive with figure-30-1 between them; indirect prompt injection is defined on first use."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-serve-from-many-regions-and-fail-over-cold-not-closed",
+      "teaching_item": "Latency not availability; GeoDNS/anycast; independent regions; home region with async replica; central policy, regional enforcement (Secure Multi-Tenant section 8); residency map",
+      "anchors": [
+        "regions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Regions deep dive paragraphs 1-2. The acknowledged-write rule and recovery-point objective are stated as fact, consistent with the corrected durability row in step 2."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-serve-from-many-regions-and-fail-over-cold-not-closed",
+      "teaching_item": "Cold failover, shed free tier first, circuit breaker three states, same-tier model fallback, never an error page while a healthy model remains",
+      "anchors": [
+        "regions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Regions deep dive paragraphs 3-4."
+      }
+    },
+    {
+      "source_id": "main-evaluation-and-rollout",
+      "teaching_item": "Metric list, prompt/model change as release with canary and cache watch, LLM Inference Serving zoom for Anthropic wording",
+      "anchors": [
+        "release",
+        "claude-variant"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 table and closing paragraph; the Inference Serving pointer is in claude-variant."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-measure-and-gate-releases",
+      "teaching_item": "Observe list incl. queue vs service time, raw text out of telemetry, canary model/route/prompt changes on quality, safety, latency, cost",
+      "anchors": [
+        "release"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraph 1 (text-free telemetry), paragraph 3 (queue vs service time reported separately) and paragraph 4 (canary gated on quality, safety, latency and cost together)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-measure-what-users-feel-and-gate-what-ships",
+      "teaching_item": "First-token time is felt; stage-decomposition triage (queue, prefill, decode, moderation, tools); text-free telemetry (Observability section 2); second failure mode hand-waving evaluation",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 1-2; the stage trace and the second failure mode were missing from the draft."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-measure-what-users-feel-and-gate-what-ships",
+      "teaching_item": "Seven-row worry-to-metric table; Evaluation and Release Gating canary; prompt change moves cache and cost",
+      "anchors": [
+        "release"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept row for row; last paragraph of step 8."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-answer-the-anthropic-wording-the-same-way",
+      "teaching_item": "Same design, different emphasis; distributed-systems quote; neighbouring prompts (batching, GPU routing, 100k rps); spend time on sizing, fair queue, batching with affinity, failover",
+      "anchors": [
+        "claude-variant"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New claude-variant deep dive; the draft reduced this whole section to one line. Source section numbers 3, 8, 10, 11 are rewritten as links to their new groups."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-answer-the-anthropic-wording-the-same-way",
+      "teaching_item": "Expected follow-ups (which GPU has capacity, failover) and Tier 2 degradation ladder as a spoken list",
+      "anchors": [
+        "claude-variant"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "claude-variant paragraphs 2-3 with a five-rung ladder assembled only from source rules (shed free tier, breaker, same-tier model, cold region failover, explicit unavailable)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Sixty-minute timing table",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as a table in the interview group, with source section numbers replaced by links to their new steps; the draft had flattened it to prose."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Two-minute spoken answer with numbers and the eight lines that carry the round",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Spoken answer quoted in full as a blockquote and all eight lines listed. The draft had replaced the source answer with its own paraphrase and dropped the eight lines."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Eight follow-up questions with answers",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Converted from a visible table to answer-13 to answer-20 reveals so readers attempt each first; answer-20 replaces the dead 'section 12' pointer with a link to step 8 and names its metrics."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Shorter two-minute answer naming three hard trade-offs (history vs token cost, cache warmth vs routing, fairness vs latency)",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quoted in full as the closing answer of the Quick review."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration table",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept row for row at the end of the interview group."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Self-drill card: dominant driver, cheapest lever, proving metric, do-not, 60-second line",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Card placed behind answer-21 so the reader attempts the four fields first; header cells (empty in the draft) labelled."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Two cost drivers, per-successful-conversation costing, four verbs measure/route/bound/cache",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last two paragraphs of the cost group, each verb with its object."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Twelve self-check questions and answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "answer-1 to answer-12 keep the source questions in source wording and source answers, extended only with nearby teaching (for example answer-2 adds the replica step)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-lines-to-remember",
+      "teaching_item": "Five lines and 60-second close",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list in the review group; line 5 quotes the close."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Bulleted list in review-decisions covers each takeaway; the 'hour goes to state, streaming, admission and cost' takeaway is carried by the interview group's opening line."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "Nine fact-check references with what each supports, checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each link now carries its supported claim; the draft listed bare links only."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 46 captured sections against the earlier draft paragraph by paragraph. The draft dropped the Sam free-tier trace, the admit/assemble/stream/persist rule, the 70M-input-tokens-justify-caching point, the tools-system-messages cache order, both source two-minute answers, the eight carry-the-round lines, the sixty-minute table, 429 short/long-term responses, abuse limits, the stage-decomposition trace, the Claude-variant section (one line) and the reference annotations; all are restored. Split the overloaded step 7 into admission, moderation and regions deep dives plus a new Claude-variant dive with a degradation ladder built only from source rules. Fixed a broken sizing-table cell, an empty cost-card header, a paraphrased mission quote and a dead 'section 12' pointer; replaced one generic caption shared by three figures with captions read from each SVG and moved the upload figure beside the file pipeline. Follow-ups became answer reveals (21 total). Added material is labelled: the EventSource GET-only note and the durability vs async-replication reconciliation. Source inconsistencies resolved in text (2026-11-16): durability row 'a sent message is never lost' vs asynchronous replication to a second region (step 7 and the deep dive) \u2192 durability is stated for acknowledged writes in the home region, with a recovery-point objective bounding what a whole-region loss can drop, because the source's regional design, its failure notes and its 'slightly stale history' line all assume async replication; the reconciliation-note wording is removed."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-10",
+    "answer-11",
+    "answer-12",
+    "answer-13",
+    "answer-14",
+    "answer-15",
+    "answer-16",
+    "answer-17",
+    "answer-18",
+    "answer-19",
+    "answer-20",
+    "answer-21"
+  ]
+}

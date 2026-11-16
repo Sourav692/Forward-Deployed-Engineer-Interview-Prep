@@ -1,0 +1,670 @@
+{
+  "title": "Build When the Customer\u2019s Data Is Poor",
+  "slug": "build-when-customer-data-is-poor",
+  "subtitle": "Decide whether poor warranty data can support a measurable improvement, then ship a data-repair pipeline with a small decision layer, phase by phase.",
+  "theme": "Product Judgement and Problem Decomposition",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/build-when-customer-data-is-poor",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "guide-intro": "brief-task",
+    "guide-1-refuse-to-start-with-the-model": "walk-model-last",
+    "guide-2-ask-the-questions-that-decide-whether-data-matters": "walk-discovery",
+    "guide-3-split-poor-into-failure-types-you-can-measure": "walk-profile",
+    "guide-4-score-readiness-in-one-week": "walk-readiness",
+    "guide-5-decide-what-to-build-anyway-or-say-not-yet": "walk-choice",
+    "guide-part-2-6-state-requirements-as-testable-constraints": "walk-requirements",
+    "guide-part-2-7-draw-the-architecture-end-to-end": "walk-architecture",
+    "guide-part-2-8-put-quality-gates-at-ingestion-not-after-the-model": "walk-gates",
+    "guide-part-2-9-grow-labels-from-the-review-queue": "dive-labels",
+    "guide-part-2-10-build-the-eval-set-before-the-labels-are-clean": "dive-evaluation",
+    "guide-part-2-11-tell-the-customer-their-data-is-poor": "walk-customer",
+    "guide-part-2-12-phase-the-work-so-data-fixes-ship-as-value": "walk-rollout",
+    "guide-part-3-13-name-the-failure-modes-before-the-interviewer-does": "dive-failures",
+    "guide-part-3-14-deliver-it-in-forty-five-minutes": "practice-delivery",
+    "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes": "dive-cost",
+    "guide-part-3-level-calibration": "practice-levels",
+    "guide-part-3-key-takeaways": "review-decisions",
+    "guide-part-3-check-yourself": "practice-checks",
+    "guide-part-3-references": "dive-sources",
+    "intro": "case-brief",
+    "guide": "walkthrough",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "opening",
+      "label": "Opening and the decision to improve",
+      "hint": "Say the model-last sentence, then the clarifying questions that decide which fields matter, including whether a form or rules fix is enough."
+    },
+    {
+      "id": "readiness",
+      "label": "Measure the data and score readiness",
+      "hint": "Name the eight failure types with a week-one measurement each, the day-3 two-SME relabel with kappa, and your build, narrow or not-yet rule."
+    },
+    {
+      "id": "pipeline",
+      "label": "Pipeline, gates and the label loop",
+      "hint": "Trace one claim through ingest, gates and quarantine, extraction, normalisation, the confidence router and the label store."
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation, customer and phases",
+      "hint": "Say what a 100-claim seed can detect, which strata you report, how you tell the customer, and each phase's exit condition."
+    }
+  ],
+  "rubric": [
+    "Opened by refusing to start with model selection and tied the answer to one decision the customer wants improved.",
+    "Asked whether a rules or entry-form fix would solve the problem before proposing AI.",
+    "Split 'poor' into measurable failure types and explained why inconsistent labels are worse than missing ones.",
+    "Used chance-corrected agreement (kappa) on a two-SME relabel and read 0.81 on outcomes as usable and 0.52 on codes as not ground truth.",
+    "Stated the three-part 'not yet' condition and chose a first build, such as extraction with review, that needs no historical labels.",
+    "Put quality gates before extraction, quarantined with a reason instead of defaulting, and proposed a data contract at source.",
+    "Designed review corrections as labels: in the tool, original kept, reviewer and time recorded, disagreements adjudicated.",
+    "Sized the eval set honestly (about 11 points detectable with 200 cases at p = 0.8), split by time and reported per stratum.",
+    "Told the customer with measurements, framed phase 0 as value and wrote down the non-goals.",
+    "Exited each phase on a measured condition with shadow mode before live drafts, and answered the cost pivot with expert time as the driver."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Prompt framing: value this quarter, four defect kinds, two tempting wrong answers, 'data can only prove what it contains', not-yet only on a blocking measured defect, eight types, one-week score, repair pipeline, phased value",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraphs 1-3 carry each clause: missing fields/inconsistent labels/duplicates/gaps, 'pick a model anyway' vs 'refuse until cleaned', the bolded constraint, the not-yet condition and the four moves. Previous version dropped the two tempting answers and the constraint sentence; restored."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and core-idea diagram (97d955 light / 96b3a5 dark)",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Core idea sentence closes paragraph 3; figure-1-0 keeps both hashed variants. Generic alt 'source figure 1' replaced with the diagram's actual nodes (eight failure types, readiness score, Build or narrow / Not yet, gates, decision layer, review queue, fix at source), and a reading paragraph after it explains the fork."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions, applied-AI candidates; messy, sparse or untrusted data rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of 'What you need to design' names the same three roles and the customer-scenario/decomposition round with messy, sparse or untrusted data. Previously only 'engineers practising discovery'."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: end-to-end explanation plus seven follow-up areas",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of brief-task lists readiness scoring, build anyway, ingestion gates, growing labels, early eval set, telling the customer and the cost pivot. Missing in the previous version."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed knowledge and the two linked prerequisite cases",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 names pipelines/labelling/evaluation and links Scoping to Deployed Agent and Evaluation and Release Gating by role; dive-sources links both. Previously absent from the brief."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: list defects before section 3, rehearse 45 minutes aloud, revisit levels and takeaways",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 4 keeps the three study instructions, retargeted to 'step 3', Practice's 45-minute plan and Quick review. The old 'mark each part read' instruction is replaced by the new reader's own progress toggles."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old navigation table: one mandatory Interview Guide in three parts",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last brief-task paragraph notes the original single mandatory three-part guide and that its material is redistributed across the five sections; no competing reading track kept."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Source limits: one prompt, eleven talking points, one closing line, no follow-up block; every number in sections 6-10 is an assumption; links to Scoping and Evaluation cases",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last brief-task paragraph states the bank gives one prompt, eleven talking points, one closing line and no follow-ups, and that Practice follow-ups were written for this case; walk-requirements opening and dive-sources carry the 'every number is an assumption' caveat. Previously only a generic 'source assumptions' line."
+      }
+    },
+    {
+      "source_id": "guide-1-refuse-to-start-with-the-model",
+      "teaching_item": "Verbatim prompt, strong-answer topic list, closing line, mistakes one and five, RAG glossary",
+      "anchors": [
+        "walk-model-last"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 1 quotes the prompt (also in the brief), lists all eleven topics in three groups, quotes the closing line as a blockquote, explains 'more fluent answers from the same broken records' with the missing-serial example, and quotes mistakes one (RAG expanded) and five. The previous version reduced this to one sentence in the brief and step 1."
+      }
+    },
+    {
+      "source_id": "guide-2-ask-the-questions-that-decide-whether-data-matters",
+      "teaching_item": "Eight clarifying questions table, form/dropdown fix, judgement-not-failure-to-sell, reusable opening plus 'measure the data before I trust it'",
+      "anchors": [
+        "walk-discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 keeps the full question table, explains the dropdown example with adjusters typing free text, and restores the reusable opening and its extra promise, which the previous version dropped."
+      }
+    },
+    {
+      "source_id": "guide-3-split-poor-into-failure-types-you-can-measure",
+      "teaching_item": "Eight-type table with symptom, week-1 measure, what it blocks, remedy; SME glossary",
+      "anchors": [
+        "walk-profile"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps the full table and adds a row-by-row reading that maps the brief's claim onto four types (placeholder OTHER, missing serial, scanned invoice, cross-ERP duplicate). SME defined in the brief."
+      }
+    },
+    {
+      "source_id": "guide-3-split-poor-into-failure-types-you-can-measure",
+      "teaching_item": "Inconsistent labels worse than missing; routing case 94% vs 81% baseline, ~78% prod, ~83% after dedup/time split/adjudication, prod within two points",
+      "anchors": [
+        "walk-profile"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 paragraphs 3-4 keep every figure and the 'labels from a previous version of the same system' cause, attributed as source-reported."
+      }
+    },
+    {
+      "source_id": "guide-3-split-poor-into-failure-types-you-can-measure",
+      "teaching_item": "Access restriction as a quality problem; 'Start day 1, escalate day 3'; quality zero",
+      "anchors": [
+        "walk-profile"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-3 paragraph quotes the Scoping mechanism and restores 'data nobody can read has quality zero', which the previous version omitted."
+      }
+    },
+    {
+      "source_id": "guide-4-score-readiness-in-one-week",
+      "teaching_item": "Five-day readiness plan, one decision not the whole estate, day 3 most important",
+      "anchors": [
+        "walk-readiness"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 keeps the day table and the one-decision scoping, and explains why measured relabel agreement beats asking owners."
+      }
+    },
+    {
+      "source_id": "guide-4-score-readiness-in-one-week",
+      "teaching_item": "Cohen's kappa vs raw agreement, majority-class trap, 0.60 floor for judge and humans",
+      "anchors": [
+        "walk-readiness"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 gives the kappa formula and an illustrative 90%-raw/\u03ba\u22480.44 example (labelled not from source), and restores that 0.60 is the source's LLM-judge floor applied to humans. Previous version lacked the majority-class explanation and the judge origin."
+      }
+    },
+    {
+      "source_id": "guide-4-score-readiness-in-one-week",
+      "teaching_item": "Eight-dimension green/amber/red scorecard; thresholds adjustable, decision rule fixed; Scoping days 3-4 and data_access_granted gate signed by SME",
+      "anchors": [
+        "walk-readiness"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Scorecard table kept; the redesign-or-wait vs narrow-in-writing rule kept; the Scoping slot (days 3-4, data_access_granted, SME signature) and 'access to red data is not readiness' restored - the gate name was missing before."
+      }
+    },
+    {
+      "source_id": "guide-5-decide-what-to-build-anyway-or-say-not-yet",
+      "teaching_item": "Six designs tolerant of poor data with prerequisites",
+      "anchors": [
+        "walk-choice"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps the full design table and the 'weakest input the data can supply' rule; LLM expanded."
+      }
+    },
+    {
+      "source_id": "guide-5-decide-what-to-build-anyway-or-say-not-yet",
+      "teaching_item": "Weak supervision gloss (keyword, lookup, model guess; accuracy-weighted votes; Snorkel; trusted sample) and synthetic-data caveat quote",
+      "anchors": [
+        "walk-choice"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 paragraphs on weak supervision and synthetic data restore the three example rules, weighting, Snorkel and the quoted 'small, real eval beats a synthetic one'; the quote was missing before. Applied case continues in dive-labels."
+      }
+    },
+    {
+      "source_id": "guide-5-decide-what-to-build-anyway-or-say-not-yet",
+      "teaching_item": "Three-part not-yet rule, 'data project with a date', intake refusal quote",
+      "anchors": [
+        "walk-choice"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-5 paragraph keeps all three conditions, the 'not an AI project with a hope' line and restores the Scoping intake quote, absent previously."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-state-requirements-as-testable-constraints",
+      "teaching_item": "Pump scenario and week-1 defect table; 'that last row decides the design'; ERP glossary",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps 12,000/month, 11 minutes, the two goals and the defect table, and expands why \u03ba 0.81 vs 0.52 moves codes from training label to field to repair, referencing the 0.60 floor."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-state-requirements-as-testable-constraints",
+      "teaching_item": "Six functional requirements with tests; five NFRs with thresholds and reasons; NFR glossary",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "FR and NFR tables kept verbatim; added a paragraph on why the quality floor matters (wrong serial routes to wrong product history). The previous version also repeated both tables as prose, now removed as duplication."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-state-requirements-as-testable-constraints",
+      "teaching_item": "Success metrics: 11 to 6 minutes, OTHER 38% to under 10%, clusters within two weeks vs about a quarter",
+      "anchors": [
+        "walk-requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-6 paragraph keeps all three metrics and marks them as targets; repeated in Quick review numbers."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-draw-the-architecture-end-to-end",
+      "teaching_item": "Repair pipeline with small decision layer, 'draw it that way round', most phase-1 value from lower half",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 opening keeps the repair-pipeline-with-decision-layer claim and 'draw it that way round'; it now says plainly that the two top-to-bottom flowcharts show the repair stages first and the decision layer after them (the source's 'lower half' wording did not match its own flowcharts and was resolved in text)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-draw-the-architecture-end-to-end",
+      "teaching_item": "Claim-path diagram (b93385 light / 44fee8 dark) and component diagram with evaluation gate (b667b0 light / bf1ffb dark)",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-14-0 and figure-14-1 keep both variants with hashes; generic 'source figure 1/2' alts replaced by node-accurate alt text and captions, and a new trace walks the brief's claim through figure-14-0 (illustrative 0.72 serial confidence labelled)."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-draw-the-architecture-end-to-end",
+      "teaching_item": "Fourteen-component table in dependency order",
+      "anchors": [
+        "walk-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Component table kept in full; closing paragraph explains that only extraction and drafting use a model and that the label store feeds gold set, thresholds and clusters."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-put-quality-gates-at-ingestion-not-after-the-model",
+      "teaching_item": "Cost asymmetry of catching defects at ingestion vs after the model",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 8 opens with one rejected record vs wrong recommendation, reviewer time and trust; this argument was missing in the previous version, which merged section 8 into the architecture step."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-put-quality-gates-at-ingestion-not-after-the-model",
+      "teaching_item": "Enterprise RAG quarantine quote, last_synced_at, queryable rejects, content hashing to avoid re-extraction",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs 2-4 restore the 'quarantined, not defaulted to internal' quote, last_synced_at, queryable-after-exit rejects and hash-skips with extraction as the costliest step."
+      }
+    },
+    {
+      "source_id": "guide-part-2-8-put-quality-gates-at-ingestion-not-after-the-model",
+      "teaching_item": "Repair at source via data contracts; FDE cross-team case quote; serial required and one code list; quarantine report as evidence",
+      "anchors": [
+        "walk-gates"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final step-8 paragraph restores the speed-vs-stability conflict and the 'ownership argument into an interface agreement' quote, previously absent, plus the contract terms."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-grow-labels-from-the-review-queue",
+      "teaching_item": "Three rules for usable corrections; low-agreement reviewer weighting",
+      "anchors": [
+        "dive-labels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list in dive-labels keeps all three rules, restores 'weighted down' for low-agreement reviewers and defines adjudication."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-grow-labels-from-the-review-queue",
+      "teaching_item": "Dataset hygiene: dedupe (100,000 traces quote), time/user split, adjudication; weak automatic labels",
+      "anchors": [
+        "dive-labels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs 2-3 restore the quoted trace-count line (missing before) and explain why 'approved and not disputed' is weak with a wrongly-approved-claim example."
+      }
+    },
+    {
+      "source_id": "guide-part-2-9-grow-labels-from-the-review-queue",
+      "teaching_item": "Weak supervision on failure codes (\u03ba 0.52) with three rules, agreement to training, disagreement to review; synthetic claims tagged and excluded",
+      "anchors": [
+        "dive-labels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraphs 4-5 keep all three rules, scoring against the adjudicated sample, routing and the new-pump-model synthetic gap."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-build-the-eval-set-before-the-labels-are-clean",
+      "teaching_item": "Three seeding methods and the 100-claim adjudicated seed",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-evaluation paragraph 2 keeps FAQ/ticket mining, the '3-4 power users, 10 questions' quote and the combined method with grader agreement."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-build-the-eval-set-before-the-labels-are-clean",
+      "teaching_item": "Sample size: n \u2248 15.7 p(1-p)/\u03b4\u00b2, ~1,000 per arm for 5 points, ~11 points at 200, seed gates only large changes, paired eval",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Worked arithmetic shown for 1,000 and 11 points (rechecked: 1004.8 and 0.112), origin of 15.7 explained, added 16-point figure for 100 cases labelled as this casebook's calculation, and paired evaluation defined."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-build-the-eval-set-before-the-labels-are-clean",
+      "teaching_item": "Strata (book list and claims mapping), aggregate hides scanned-claim collapse, insufficient-data cases",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restores the book's intent/tenant/recency/difficulty list and the acquired-ERP scanned-claim collapse, both missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-10-build-the-eval-set-before-the-labels-are-clean",
+      "teaching_item": "Golden-set label war story (permitted-but-irrelevant 'leak', split into gating and tracked fields plus a drift test); datasheet and 'hour saves weeks'",
+      "anchors": [
+        "dive-evaluation"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "War story now names the account manager, the irrelevance and which field gates vs is tracked; datasheet fields kept and the hour-vs-weeks estimate restored."
+      }
+    },
+    {
+      "source_id": "guide-part-2-11-tell-the-customer-their-data-is-poor",
+      "teaching_item": "Measurements not adjectives; phase 0 as value; narrow first win; written non-goals",
+      "anchors": [
+        "walk-customer"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 9 keeps both quoted sentences, the three phase-0 outputs, the contract-improves-every-report point, serial/invoice extraction as first win, same-dashboard progress and both non-goals. Previous version misquoted 38% as 'new claims' and buried this in a cost dive; fixed. The quoted measurement sentence now states \u03ba = 0.52 correctly (about half of the agreement possible beyond chance, not agreement half the time); resolved in text 2026-11-16."
+      }
+    },
+    {
+      "source_id": "guide-part-2-12-phase-the-work-so-data-fixes-ship-as-value",
+      "teaching_item": "Five phases with weeks, deliverables and exit conditions; shadow mode definition; parallel data contract",
+      "anchors": [
+        "walk-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Phase table restored to the source's phase-4 wording (previous version paraphrased it); added a reading of exits as a trust ladder; restored 'first real action is never the first time nobody is watching', previously missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-13-name-the-failure-modes-before-the-interviewer-does",
+      "teaching_item": "Ten failure modes with signal and defence",
+      "anchors": [
+        "dive-failures"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own deep dive now (was folded into a cost section); table kept and automation bias and schema drift explained with the seeded-wrong-draft catch rate and quarantine spike."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "45-minute plan and 'pipeline at minute three' warning",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-delivery keeps the minute table and restores the minute-three warning; table's 'section 2' reference left as source wording but the walkthrough numbering matches (step 2)."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full spoken answer kept verbatim in reveal poor-data-spoken-answer, labelled as a first-person spoken example. It was entirely missing from the previous version."
+      }
+    },
+    {
+      "source_id": "guide-part-3-14-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Four likely follow-ups with answers",
+      "anchors": [
+        "practice-followups"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four answer reveals, one per follow-up, with the source answers plus one-line reasoning. Previously only two were paraphrased in prose and 'large model' and 'getting better' answers were missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-15-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost card (driver, cheapest lever, metric, do-not, 60-second line), self-drill note, four playbook verbs, label-store economics",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-cost keeps the card (empty headers given labels), restores the no-drill/self-drill note and the four verbs as a numbered list, and the phase-1 label-store argument, flagged as a prediction to verify. Practice reveal poor-data-cost-pivot drills the 60-second line."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Senior/Staff/Principal table and 'how far past the model' framing",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Practice-levels keeps the table and restores the framing sentence that was missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-decisions"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review lists all fifteen takeaways (previous version compressed them into two paragraphs); a second group, review-numbers, collects the scenario, defect, agreement, target, gate, sample-size and routing figures."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Thirteen self-check questions and answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All thirteen reveals keep their ids; questions and answers restored to the source wording. Previous answers had drifted (e.g. answer 12 added unsourced permission/approval checks); removed."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Related packs with roles, fact-check date 27 Sep 2026, Snorkel and Cohen annotations",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Dive-sources lists all five related cases with what each is for, the check date and both primary references with their source annotations; also states which figures this casebook added."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review against all 27 captured sections, split into 46 coverage rows. The previous version kept the tables and the 13 checks but thinned most prose: the two-minute spoken answer, two of four follow-up answers, the section 8 cost-asymmetry argument and its two quotes, the data_access_granted gate, the Snorkel/synthetic/intake quotes, the strata list, the datasheet estimate, shadow-mode definition and 11 of 15 takeaways were missing, and it misquoted '38% of claims' as new claims. I restored each, split section 8 and 11 into their own walkthrough steps (8, 9) and failure modes into its own dive, rewrote the brief around the verbatim prompt with an illustrative claim trace, added a labelled kappa example and worked sample-size arithmetic (rechecked: 1004.8 and 0.112), and replaced generic figure alt text with node-accurate text. Duplicate prose restatements of the FR/NFR tables were removed. Source inconsistencies resolved in text (2026-11-16): 'lower half' of the picture versus flowcharts that run top to bottom \u2192 the prose now describes the flowcharts as drawn (repair stages first, decision layer after), since the figures are hashed originals; 'agree about half the time beyond chance' for \u03ba = 0.52 \u2192 the step 9 quote now says the adjusters reach about half of the agreement possible beyond chance, which is what \u03ba = (0.52) means by its definition in step 4."
+  },
+  "required_answer_reveals": [
+    "poor-data-check-1",
+    "poor-data-check-2",
+    "poor-data-check-3",
+    "poor-data-check-4",
+    "poor-data-check-5",
+    "poor-data-check-6",
+    "poor-data-check-7",
+    "poor-data-check-8",
+    "poor-data-check-9",
+    "poor-data-check-10",
+    "poor-data-check-11",
+    "poor-data-check-12",
+    "poor-data-check-13",
+    "poor-data-spoken-answer",
+    "poor-data-followup-no-time",
+    "poor-data-followup-experts-disagree",
+    "poor-data-followup-large-model",
+    "poor-data-followup-getting-better",
+    "poor-data-cost-pivot"
+  ],
+  "required_anchors": [
+    "walk-model-last",
+    "walk-readiness",
+    "walk-architecture",
+    "walk-gates",
+    "dive-labels",
+    "dive-evaluation",
+    "practice-followups",
+    "review-numbers"
+  ]
+}

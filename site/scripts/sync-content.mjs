@@ -19,6 +19,7 @@ import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
+import { syncCasebookRewrites } from './casebook-rewrites.mjs'
 import { siteText } from './site-text-edits.mjs'
 import { renderDiagrams } from './render-diagrams.mjs'
 import { explorerSources, writeExplorers } from './explorers.mjs'
@@ -332,6 +333,8 @@ async function main() {
   } finally {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
   }
+
+  await syncCasebookRewrites({ repoRoot: REPO_ROOT, siteDir: SITE_DIR })
 
   const manifest = {
     generatedAt: new Date().toISOString(),

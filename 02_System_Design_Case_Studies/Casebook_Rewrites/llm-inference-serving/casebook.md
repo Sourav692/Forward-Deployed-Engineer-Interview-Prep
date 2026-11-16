@@ -1,0 +1,950 @@
+## Case brief
+
+### Batch language-model requests on stateful GPUs {#brief}
+
+The interviewer asks for an end-to-end system that batches large language model (LLM) requests onto GPUs, decides which GPU has capacity for the next request and keeps working when a GPU fails. The prompt sounds like an AI question. It is graded as a distributed-systems question about queues, batches, load balancing, health checks and backpressure (pushing "slow down" signals back toward the caller).
+
+The hard part is that each GPU is a stateful server with a fixed memory budget, not an interchangeable worker. A model generates text in two phases. **Prefill** reads the whole prompt in one parallel pass and produces the first output token, so it sets time to first token (TTFT). **Decode** then produces one token per step, so it sets time per output token (TPOT) and total duration. While a sequence is active, the GPU keeps the attention keys and values for every token it has seen. That store is the **key-value (KV) cache**, and it grows with every token until the sequence ends. Request count therefore says little about load: KV memory decides where a request can run.
+
+One tension runs through every decision. A bigger batch buys throughput, and every request inside it pays for that throughput in latency. The design's core idea follows: admit work before it reaches a GPU, place it by free KV memory, and batch continuously so each sequence leaves the moment it finishes.
+
+The figure below shows that idea as a six-step path, with the one branch that matters most: a full queue refuses work early instead of letting it wait.
+
+<figure class="source-diagram" id="figure-1-0"><a href="source-assets/b223ba4fc61b0adb.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/b223ba4fc61b0adb.svg" alt="Tokenise and assign an ID, check whether the queue has room, refuse early if not, otherwise route by free KV, batch continuously and stream by request ID."></a><img class="diagram-dark" src="source-assets/0045a550526ebe0d.svg" alt="Dark variant: tokenise and assign an ID, check queue room, refuse early or route by free KV, batch continuously and stream by request ID."><figcaption>Figure 1. The core idea: tokenise and assign an ID, refuse early when the queue is full, route by free KV, batch continuously, stream by request ID. Open for full size.</figcaption></figure>
+
+Trace one request through it. A caller sends a 1,000-token prompt asking for a streamed answer. The gateway counts its tokens on CPU and gives it a request ID. Admission checks that the caller's tenant has token budget and that the bounded queue has room; if not, the caller gets an immediate "retry later" rather than a seven-second wait that times out. An admitted request goes to a GPU with enough free KV for about 1,250 tokens. That GPU's scheduler slots it into the running batch at the next decode step, and each generated token travels back to the caller matched by its request ID.
+
+Every capacity number in this case is a constructed example, not a benchmark of a real engine. The source asks you to say so in the room: "I would replace these with a load test of the actual model."
+
+### The anchor prompt and four related prompts {#brief-prompts}
+
+Five interview prompts share one foundation. The anchor asks for the whole batching system. The other four shrink it, scale it, critique it or debug it, so a reader who understands the anchor can answer all five. The table shows what each one reuses and what it changes.
+
+<p class="figure-caption">The anchor and related prompts: shared foundation and what changes.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Shared foundation</th>
+<th>What changes</th>
+<th>Where it is taught</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Batching system (anchor): end-to-end batching for LLM queries, with "which GPU has capacity?" and "how do you handle failover?"</td>
+<td>Admission → capacity-aware routing → local scheduler → streamed result</td>
+<td>Balanced interactive service with failover.</td>
+<td>Design walkthrough, cost pivot</td>
+</tr>
+<tr>
+<td>One GPU, up to 100 synchronous inputs per batch</td>
+<td>Same request IDs and batching</td>
+<td>Size-or-time flush, futures and one bounded queue.</td>
+<td><a href="#one-gpu">One GPU with synchronous callers</a></td>
+</tr>
+<tr>
+<td>Token-generation service at 100,000 requests/s</td>
+<td>Same token-work method</td>
+<td>Independent cells, global backpressure and large reserved headroom.</td>
+<td><a href="#hundred-k">One hundred thousand requests per second</a></td>
+</tr>
+<tr>
+<td>Review a junior developer's batching design</td>
+<td>Same invariants</td>
+<td>Rank flaws such as static generative batches, unbounded FIFO and round-robin routing.</td>
+<td><a href="#design-review">Review a junior design</a></td>
+</tr>
+<tr>
+<td>Diagnose high latency in an LLM inference pipeline</td>
+<td>Same spans</td>
+<td>Diagnose tokenization, network, queue, prefill, KV, decode and post-processing.</td>
+<td><a href="#diagnosis">Walk the latency stack</a></td>
+</tr>
+</tbody></table></div>
+
+The source labels the first four as Anthropic prompts and the latency prompt as an OpenAI favourite; the latency walk is shared with the Observability and Production Diagnosis case. The case is written for engineers preparing for Forward Deployed, solutions or applied-AI rounds that ask about LLM serving, request batching or GPU capacity. It assumes you know how a transformer generates tokens, basic GPU memory, queueing with Little's Law and load balancing.
+
+By the end you should be able to explain the system end to end, starting from its dangerous constraint (KV memory, not request count, decides placement, and a GPU can fail mid-stream), and answer follow-ups on prefill and decode capacity, continuous batching, KV budgeting, routing and failover, backpressure, latency diagnosis and cost. The case serves an existing model; it does not train one.
+
+## Design walkthrough
+
+### 1. Establish the request shape before sizing {#discovery}
+
+"100,000 requests per second" means nothing until you know the tokens in each request. A 20-token completion and a 2,000-token essay differ in decode work by two orders of magnitude. So the first move is to ask what kind of request this is, and to state an assumption aloud for each question the interviewer declines to answer. The table lists the questions, why each changes the design and the anchor's assumed answer.
+
+<p class="figure-caption">Discovery questions, why each matters and the anchor's assumed answers.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Why it matters</th>
+<th>Anchor assumption</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>How many input and output tokens per request, at p50 and p95?</td>
+<td>Input drives prefill; output drives decode. They cost GPU time differently</td>
+<td>1,000 in, 250 out on average</td>
+</tr>
+<tr>
+<td>Interactive or offline? Streamed or whole?</td>
+<td>Interactive needs a first-token target; offline can batch hard</td>
+<td>Interactive, streamed</td>
+</tr>
+<tr>
+<td>What latency matters: first token, per token, or total?</td>
+<td>Three different <abbr title='service level objective: The target you commit to internally: "95% of answers in under 3 seconds".'>SLOs</abbr> with three different fixes</td>
+<td>First token and per-token both</td>
+</tr>
+<tr>
+<td>One model or many? Fixed or variable output length?</td>
+<td>Variable length rules out static batching</td>
+<td>One model, variable output</td>
+</tr>
+<tr>
+<td>Peak rate, burst shape, tenants and priorities?</td>
+<td>Sets headroom, fairness and shedding policy</td>
+<td>1,000 rps peak, bursty, several tenants</td>
+</tr>
+</tbody></table></div>
+
+Ask one more question that the table does not carry: what should a caller see if a GPU dies after some tokens have already streamed? The answer chooses between continuing the answer elsewhere and returning an explicit partial error, and step 8 depends on it. Model count matters too: several models mean separate pools, because one model's weights and KV cannot serve another.
+
+The weak answer draws a load balancer, a queue and a pool of GPUs, then stops. It never says what a batch is or why a GPU fills up. The strong answer names the two phases of inference in the first two minutes, because every later decision is a way of scheduling prefill and decode on scarce memory. The source gives a line to say once the questions are answered:
+
+> "A GPU is a stateful server with a memory budget. Prefill sets first-token time, decode sets streaming speed, and the KV (key–value) cache decides how many requests fit at once. I'll design the scheduler around those three facts."
+
+### 2. Define latency, useful throughput and failure contracts {#requirements}
+
+A requirement that cannot fail a test is a preference. "Fast" is a preference; "first token under 500 ms at p95 at 1,000 rps" is a constraint. The nouns below come from the prompt. The split into must-haves and should-haves, and every number, are the source's assumptions.
+
+The must-haves follow the anchor's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag. Batch them onto GPUs. Route each sequence to a GPU with capacity. Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere. Reject or queue excess load rather than collapse under it.
+
+The should-haves make the service operable: per-tenant quotas and priorities, cancellation when a caller disconnects, prefix reuse for repeated system prompts, rolling model upgrades (drain and canary) without dropping traffic, and metrics that separate queue wait from service time.
+
+The next table turns the non-functional side into testable targets.
+
+<p class="figure-caption">Non-functional constraints stated so a load test can fail them.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Stated so it can be tested</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>First-token latency (<abbr title="time to first token: How long until the first word of the answer appears. With streaming, this is what feels fast or slow.">TTFT</abbr>)</td>
+<td>p95 ≤ 500 ms at peak for interactive traffic</td>
+</tr>
+<tr>
+<td>Per-token latency (<abbr title="time per output token: How fast the rest of the answer streams once it has started.">TPOT</abbr>)</td>
+<td>p95 ≤ 50 ms between streamed tokens</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>1,000 rps sustained at peak with the anchor request shape</td>
+</tr>
+<tr>
+<td>Utilisation target</td>
+<td>≤ 70% of measured replica capacity, because queueing delay climbs steeply past roughly 70–80% utilisation (rule of thumb)</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>99.9% of requests complete or fail explicitly; none vanish</td>
+</tr>
+<tr>
+<td>Failover</td>
+<td>Loss of one GPU loses no un-streamed request; loss of one zone keeps service at reduced headroom</td>
+</tr>
+<tr>
+<td>Fairness</td>
+<td>No tenant above its quota can raise another tenant's p95</td>
+</tr>
+<tr>
+<td>Goodput</td>
+<td>Requests per second that finish inside the SLO, reported next to raw throughput</td>
+</tr>
+</tbody></table></div>
+
+Two of these need a plain definition. **Goodput** counts only requests that finish within their objective. Raw throughput can rise while goodput falls, which means the fleet is doing more paid work that arrives too late to matter. The **70% utilisation ceiling** is a planning rule that leaves room for bursts and failures; the point where tail latency climbs depends on how variable service times are, so measure the real curve before trusting the rule.
+
+Every must-have then needs an owner, so nothing in the prompt is left to "the system".
+
+<p class="figure-caption">Components owning each functional requirement.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Primary component(s)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accept and validate requests</td>
+<td>API gateway, tokenizer service</td>
+</tr>
+<tr>
+<td>Batch onto GPUs</td>
+<td>Per-replica scheduler with continuous batching</td>
+</tr>
+<tr>
+<td>Route to a GPU with capacity</td>
+<td>Router plus capacity registry</td>
+</tr>
+<tr>
+<td>Deliver to the right caller</td>
+<td>Response demultiplexer keyed by request ID, streaming layer</td>
+</tr>
+<tr>
+<td>Survive GPU failure</td>
+<td>Health checker, router eviction, retry with a budget</td>
+</tr>
+<tr>
+<td>Reject excess load</td>
+<td>Admission controller, bounded queues</td>
+</tr>
+<tr>
+<td>Fairness</td>
+<td>Per-tenant token buckets at admission</td>
+</tr>
+</tbody></table></div>
+
+If the interviewer asks "what are the requirements?" in one breath, the source's short form is: "Functionally, admit, place on a replica with KV room, batch, stream, cancel, fail loud. Non-functionally, TTFT and TPOT SLOs, no lost streams, and tenant fairness. The model only does prefill and decode."
+
+### 3. Calculate compute, concurrency and memory separately {#sizing}
+
+GPU count is the answer, never the method. The method converts requests into token work, then token work into replicas (a replica is one copy of the model serving traffic, here one GPU). A general single-rate formula from the source's air-gapped design chapter is:
+
+Replicas = ⌈ (QPS × Tokens_request) / (TokensPerSecond_replica × UtilizationTarget) ⌉
+
+The same chapter warns that a candidate who talks GPU count without throughput misses the bottleneck, and one who talks memory without throughput misses the placement constraint. Prefill and decode run at very different rates, so this case prices each phase separately. Three independent checks follow: compute, slots and memory.
+
+The rates below are assumptions for an illustrative 8B-class model on one 80 GB H100-class GPU. An A100's peak compute could not reach this prefill rate, so do not reuse the numbers for older hardware.
+
+<p class="figure-caption">Assumed rates and request profile used in the replica-seconds calculation.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Assumption</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Prefill rate per replica (assumed, H100-class)</td>
+<td>20,000 input tokens/s</td>
+</tr>
+<tr>
+<td>Decode rate per replica</td>
+<td>2,500 output tokens/s aggregate, at ~64 concurrent sequences</td>
+</tr>
+<tr>
+<td>Anchor request</td>
+<td>1,000 input, 250 output tokens</td>
+</tr>
+<tr>
+<td>Peak arrival</td>
+<td>1,000 rps</td>
+</tr>
+<tr>
+<td>Utilisation target</td>
+<td>70%</td>
+</tr>
+</tbody></table></div>
+
+**Check one: compute.** One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = 0.15 replica-seconds. At 1,000 rps that is 150 replicas of pure work. Divided by 0.70, it is 214.3, so plan on about 214 replicas (215 if you round strictly up). Decode is 0.10 of the 0.15, two-thirds of the bill, so output length is the biggest cost lever in this workload.
+
+**Check two: slots, by Little's Law.** Little's Law says work in flight equals arrival rate times time in the system. Each sequence streams at about 2,500 ÷ 64 ≈ 39 tokens/s, or roughly 26 ms a token. A request therefore lives about 0.5 s to its first token plus 250 × 26 ms ≈ 6.4 s, so about 7 s in total. At 1,000 rps that is about 7,000 sequences in flight. At 64 slots a replica, that needs about 110 replicas' worth of slots.
+
+**Take the larger number.** Compute says 214 and slots say 110, so compute binds. Provision about 214, then add N+1 per zone so that losing a GPU or a zone does not breach the targets. Say both checks aloud: a reviewer trusts the number that survived two independent methods.
+
+**Check three: memory.** The KV cache grows with every token, and the [KV deep dive](#kv) does the arithmetic for this model. The source borrows the air-gapped design's replica budget to show the shape of the check: quantised weights 12 GB, runtime overhead 2 GB, KV cache and activations 6 GB, batch buffers and fragmentation slack 2 GB, roughly 22 GB in total. That is too tight for a 24 GB card even when compute fits. The same design's rule applies here: if the replica count exceeds the hardware pool, challenge the request profile rather than ask for more GPUs.
+
+All three results move with the real model, hardware, batch occupancy and token distributions. They are a way to reason in the room, not a purchase order.
+
+### 4. Admit globally, route by capacity, batch locally {#architecture}
+
+Start by separating what the model does from what code does. The LLM performs prefill and token-by-token decode. Code owns request identity, quotas, admission, placement, scheduling policy, health, the retry budget and response routing. The organising rule is admit, then route, then batch per GPU. Admission and routing are global and stateless. Batching is local, because only the replica can see its own memory, so replica-local memory checks have final authority over whether a sequence fits.
+
+The first figure is the main request path, read top to bottom.
+
+<figure class="source-diagram" id="figure-11-0"><a href="source-assets/8448dd05c964b25d.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/8448dd05c964b25d.svg" alt="Client to gateway (auth, validate, CPU tokenize, request ID), admission (tenant token bucket and bounded queue, 429 or batch defer when over limit), router (free KV, queue, prefix affinity) fed by capacity registry heartbeats and health probes, replica scheduler with continuous batching, LLM GPU with chunked prefill, decode and paged KV, demux by request ID and detokenize, token stream to client; a disconnect cancels the sequence and releases KV; model registry, rollout and autoscaler supply configuration."></a><img class="diagram-dark" src="source-assets/a298f971ad5f8a89.svg" alt="Dark variant: request path from gateway through admission, router, replica scheduler and GPU to demux and token stream, with overload, disconnect, heartbeat and configuration branches."><figcaption>Figure 2. The request path: gateway, token-weighted admission, a router fed by the capacity registry, a per-replica continuous scheduler, demultiplexing by request ID, and the overload and disconnect branches. Open for full size.</figcaption></figure>
+
+Follow the anchor request through it step by step.
+
+1. The **gateway** authenticates the caller, assigns a request ID, validates limits and tokenises on CPU, so the request's token work is known before any GPU time is spent.
+2. **Admission** charges the tenant's token bucket by estimated tokens and places the request in a bounded priority queue. When the objective cannot be met, it returns a clear signal at once: 429 with Retry-After, or deferral to a batch tier.
+3. The **router** samples healthy replicas using free KV blocks, queue length and shared-prefix warmth. The chosen replica performs the final capacity check, which stops several routers from herding onto one replica on the strength of stale registry data.
+4. The **replica scheduler** adds waiting sequences and removes finished ones at each decode step. Chunked prefill stops a long incoming prompt from stalling the token streams already running.
+5. The **GPU** runs prefill and decode while paged KV blocks are allocated on demand.
+6. Tokens are matched to callers by request ID, detokenised and streamed.
+7. **Health probes** evict sick replicas. Unstreamed requests may retry under a budget; after partial output, the product either resumes by re-prefilling, with caveats, or returns an explicit partial error.
+8. A client disconnect or stop request cancels the sequence and frees its KV. Rollouts drain replicas and canary new versions rather than dropping active requests.
+
+The source draws the same system twice more. The next figure redraws the request path with the overload and disconnect exits made explicit.
+
+<figure class="source-diagram" id="figure-31-0"><a href="source-assets/98705e3b229fdd23.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/98705e3b229fdd23.svg" alt="Client, gateway authenticates, validates and tokenises on CPU, admission with token-weighted tenant bucket and bounded queue, overload path to 429 and Retry-After or deferral to batch, admitted path to a router reading free KV, queue, running sequences and health, power-of-two choice and prefix affinity, replica scheduler, GPU prefill, decode and KV pool, demultiplex by request_id, detokenise and post-process, SSE stream to client; a client disconnect cancels and frees the KV slot immediately."></a><img class="diagram-dark" src="source-assets/26fe817137b20316.svg" alt="Dark variant: request path with overload exit to 429 and disconnect path that cancels and frees the KV slot."><figcaption>Figure 3. The request path in detail: power-of-two choice with prefix affinity at the router, the 429 or batch-defer exit at admission, and a disconnect that frees the KV slot immediately. Open for full size.</figcaption></figure>
+
+The control loop that answers "which GPU has capacity?" sits beside that path. Replicas report state about once a second; the router reads it; a health checker removes replicas that fail.
+
+<figure class="source-diagram" id="figure-31-1"><a href="source-assets/0a3d628467b270e0.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/0a3d628467b270e0.svg" alt="Replica heartbeat about every 1 s feeds a capacity registry of free KV blocks, waiting, running and health, which the router reads; a health checker with liveness, readiness and a 1-token probe evicts or drains replicas."></a><img class="diagram-dark" src="source-assets/a67c7fd77285f347.svg" alt="Dark variant: heartbeat to capacity registry to router, with health checker that evicts or drains replicas."><figcaption>Figure 4. The capacity and health loop: heartbeats about every second fill the registry the router reads, and a three-layer health checker evicts or drains bad replicas. Open for full size.</figcaption></figure>
+
+The control plane governs both. It versions the model registry, tenant quotas, routing and health policy and SLO targets, and runs drain-and-canary rollouts. The autoscaler uses queue depth and KV use, not CPU. The service reports TTFT, TPOT, queue wait against service time, goodput, KV use and errors. The last figure draws the whole system as one wide diagram: the control plane box at the left configures the path, a health checker and capacity registry receive heartbeats from two replicas, and the request runs from client through gateway, admission and router to a replica, then back through demux, detokenise and the SSE stream.
+
+<figure class="source-diagram" id="figure-31-2"><a href="source-assets/822fb2d62a7e7cc7.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/822fb2d62a7e7cc7.svg" alt="Control plane with model registry, autoscaler on queue depth and KV use, tenant quotas and drain-and-canary rollout beside a request path: client, gateway, admission with 429 or batch-tier exit, router with power of two choices and prefix affinity, capacity registry receiving heartbeats from two replicas each with scheduler and GPU, health checker, demux by request_id, detokenize and post-process, SSE stream, and cancel that frees the KV slot."></a><img class="diagram-dark" src="source-assets/b0c985bc5cf18b21.svg" alt="Dark variant: control plane beside the full request path across two replicas."><figcaption>Figure 5. The whole system drawn a second way: control plane at the left, two replicas heartbeating to one capacity registry, the full request path with its 429 and cancel exits. Wide figure; open for full size.</figcaption></figure>
+
+The component table gives each box one responsibility and one failure behaviour. "Closed" means the component refuses rather than guesses; "degrades" means it keeps serving with less.
+
+<p class="figure-caption">Thirteen components, their responsibilities and how each fails.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Component</th>
+<th>Responsibility</th>
+<th>Fails how</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01</td>
+<td>Gateway</td>
+<td>Authenticates, validates, assigns <code>request_id</code>, tokenizes</td>
+<td>Closed: bad request rejected before any GPU work</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Tokenizer</td>
+<td>Converts text to token IDs on CPU, counts tokens for admission</td>
+<td>Degrades: add CPU replicas; never on the GPU hot path</td>
+</tr>
+<tr>
+<td>03</td>
+<td>Admission controller</td>
+<td>Per-tenant token buckets weighted by estimated tokens; bounded queue</td>
+<td>Closed: 429 with Retry-After, never an unbounded wait</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Router</td>
+<td>Picks a replica by free capacity, with prefix affinity</td>
+<td>Degrades: falls back to least-loaded if affinity target is hot</td>
+</tr>
+<tr>
+<td>05</td>
+<td>Capacity registry</td>
+<td>Holds each replica's free KV blocks, queue and running count</td>
+<td>Degrades: stale data tolerated by random-two choice plus replica-side check</td>
+</tr>
+<tr>
+<td>06</td>
+<td>Replica scheduler</td>
+<td>Continuous batching: admits and evicts sequences every decode step</td>
+<td>Degrades: preempts lowest priority when KV is full</td>
+</tr>
+<tr>
+<td>07</td>
+<td>GPU worker</td>
+<td>Runs prefill and decode on a paged KV pool</td>
+<td>Fails: evicted by health checker, work rerouted</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Health checker</td>
+<td>Liveness, readiness, and a one-token synthetic probe</td>
+<td>Closed: an unready replica gets no traffic</td>
+</tr>
+<tr>
+<td>09</td>
+<td>Demultiplexer</td>
+<td>Returns each sequence's tokens to its caller by <code>request_id</code></td>
+<td>Closed: an unmatched ID is dropped and logged, never misdelivered</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Detokenizer and post-processor</td>
+<td>Incremental text, stop sequences, safety or schema checks</td>
+<td>Degrades: skip optional checks, never skip required ones</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Streaming layer</td>
+<td>Server-sent events or websocket, flushes per token</td>
+<td>Degrades: fall back to whole response</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Autoscaler</td>
+<td>Scales on queue depth and KV use, not on CPU</td>
+<td>Degrades: headroom absorbs the minutes a new replica often takes to provision and load</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Rollout controller</td>
+<td>Drains a replica before upgrade; canaries a new model version</td>
+<td>Closed: a failing canary stops the rollout</td>
+</tr>
+</tbody></table></div>
+
+While the diagram is up, point at three boundaries. Admission is the only place load is refused, so no queue downstream grows without limit. The router decides where a request runs but never how, because only the replica sees its memory. The request ID is the thread through everything, so a response can never reach the wrong caller.
+
+### 5. Tokenise at the edge and stream back by request ID {#edges}
+
+Tokenisation is CPU work, and CPU work on the GPU's request thread steals time from the most expensive machine in the building. Move it to the gateway. Tokenising early buys three things. The admission controller can charge a tenant by real tokens rather than request count. The router can estimate the KV memory a request will need before it picks a replica. A malformed or oversized prompt fails before it reaches a queue. Cap input length at the gateway and return a clear error, because one 100,000-token prompt can monopolise a replica's prefill.
+
+Detokenisation runs at the other end, incrementally. Some tokens are partial characters, so the streaming layer buffers until a complete character exists. Stop sequences are checked on assembled text, not on tokens, for the same reason.
+
+Streaming changes perceived latency, not total latency. A user reading the first sentence after 500 ms experiences a fast system, even if the answer takes seven seconds to finish. Stream over server-sent events (SSE) or a websocket and flush per token. Watch for proxies that buffer responses: one buffering hop turns streaming back into a seven-second wait. Report TTFT and TPOT as separate objectives, because they break for different reasons.
+
+Cancellation is a cost control as well as a courtesy. When a caller disconnects, the sequence keeps decoding if any hop fails to pass the disconnect on, burning GPU time on tokens nobody reads. The source's references show both halves: vLLM's server aborts a request when the client disconnects, and a reported vLLM issue shows the abort breaking when middleware fails to forward the disconnect. Propagate the disconnect through every hop to the scheduler, which evicts the sequence and frees its KV blocks at the next step, and test the middleware rather than assuming it.
+
+### 6. Batch at the iteration that can release work {#batching}
+
+A GPU is efficient only when it multiplies many rows at once, so batching is the whole point. The design question is when a batch forms and when it ends. There are three answers, and the table compares them before the text explains each.
+
+<p class="figure-caption">Three batching strategies: how a batch forms, how it ends and what each suits.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How a batch forms</th>
+<th>How it ends</th>
+<th>Right for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Static</td>
+<td>Wait for N requests</td>
+<td>When the longest sequence finishes</td>
+<td>Fixed-shape offline work only</td>
+</tr>
+<tr>
+<td>Dynamic</td>
+<td>Flush at N requests or after a max wait, such as 10 ms</td>
+<td>When the batch's forward pass finishes</td>
+<td>Fixed-shape models: embeddings, classifiers, rerankers</td>
+</tr>
+<tr>
+<td>Continuous (iteration-level)</td>
+<td>New sequences join at every decode step</td>
+<td>Each sequence leaves the moment it finishes</td>
+<td>Generative <abbr title="large language model: The model that reads text and writes text, such as GPT, Claude or Llama. Powerful, but it will confidently make things up if you let it.">LLMs</abbr> with variable output length</td>
+</tr>
+</tbody></table></div>
+
+**Static batching** fails generative traffic because a batch finishes only when its longest member finishes. Put a 10-token answer in the same batch as a 1,000-token answer: the short one is done after 10 steps, and its slot sits idle for the remaining 990.
+
+**Dynamic batching** flushes when the batch is full or the oldest request has waited a maximum time, such as 10 ms. It suits fixed-shape models, where every item in the batch takes one forward pass, so nobody waits for a longer neighbour.
+
+**Continuous batching** schedules at the level of a single decode step. Every iteration, the scheduler removes finished sequences and admits waiting ones into the freed slots. Trace the same pair: the 10-token answer leaves after step 10, and a waiting request takes its slot at step 11 while the long answer keeps decoding.
+
+Prefill complicates the picture. A long prompt's prefill can stall every decoding sequence in the batch for tens of milliseconds, which callers see as a per-token latency spike. Split long prefills into chunks and interleave them with decode steps. That trades a little first-token time for the new request against smooth streaming for everyone else. Say the trade aloud: it is the same throughput-versus-latency tension the case opened with.
+
+Batch size is a knob, not a constant. Larger batches raise throughput and raise per-token latency. Tune it against the TPOT objective and goodput, not the largest raw token-throughput number, and let the scheduler cap concurrency when per-token latency drifts up.
+
+### 7. Route by free memory and refuse overload early {#routing}
+
+Round-robin assumes every request costs the same, and here none do. A long prompt and a short one land on the same GPU in turn, and the long ones pile up. The answer to "how do you determine which GPU has capacity?" is a **capacity registry**. Each replica publishes its state on a heartbeat of about one second and piggybacks it on every response: free KV blocks, sequences running, sequences waiting, and health. The router scores a replica by the free KV left after reserving the new request's estimated tokens, and queue length breaks ties.
+
+Registry data is always slightly stale. If every router picks the single best replica, they all pick the same one and herd onto it. Instead, sample two replicas at random and send to the better of the two. This **power of two choices** spreads load almost as well as perfect knowledge and tolerates stale data. The replica makes the final check: if it cannot fit the request, it rejects quickly and the router tries its next choice.
+
+**Prefix affinity** layers on top. Hash the prompt's shared prefix, such as a system prompt, to a preferred replica so its cached prefix blocks get reused. Override affinity when that replica is hot. A cache hit is not worth a queue.
+
+Routing places admitted work; **admission** decides how much work is admitted at all. An unbounded queue converts overload into latency for everyone, then into timeouts for everyone, so refuse work early and explicitly. Each tenant holds a token bucket charged by estimated tokens, not by request count, so one tenant's long prompts cannot starve another's short ones. The queue behind it is bounded, and a full queue returns 429 with a Retry-After header.
+
+The bound follows from Little's Law. Queue wait equals queue length divided by drain rate, so a queue deeper than the latency objective allows will only ever serve requests that have already failed their objective. Those requests consume GPU time and still arrive late.
+
+Backpressure flows upstream. Replicas signal saturation through the registry, the router stops sending, admission tightens and the gateway rejects. Shed by priority: interactive traffic stays and offline traffic moves to a batch tier. The Observability and Production Diagnosis case answers its provider-limits scenario the same way, and the High-Volume Batch Inference Pipeline case applies the rule at batch scale: admission control belongs before the quota breach, not after. Measure queue wait separately from service time, or peak overload will look like a slow model.
+
+### 8. Recover a failed worker without amplifying failure {#recovery}
+
+A GPU fails in ways a process check cannot see. The process stays alive while the device throws memory errors or hangs mid-kernel. Health checks therefore need three layers, each answering a different question.
+
+<p class="figure-caption">Three health-check layers: the question each answers and the action on failure.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Question it answers</th>
+<th>Action on failure</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Liveness</td>
+<td>Is the process running?</td>
+<td>Restart the process</td>
+</tr>
+<tr>
+<td>Readiness</td>
+<td>Is the model loaded and the scheduler accepting?</td>
+<td>Remove from the registry; send no traffic</td>
+</tr>
+<tr>
+<td>Deep probe</td>
+<td>Can it generate one token inside, say, 200 ms?</td>
+<td>Drain and evict; alert on repeated failure</td>
+</tr>
+</tbody></table></div>
+
+A failed replica takes its KV cache with it, so its in-flight sequences cannot simply continue elsewhere. Recovery depends on what the caller has already seen.
+
+- **No token has streamed.** Retry the request from scratch on another replica. The caller sees only extra latency.
+- **Tokens have streamed.** Re-prefill the original prompt plus the tokens already emitted on a new replica and continue, if the product's continuation contract allows it. Greedy decoding makes the continuation very likely to match, but not guaranteed, because batch size and GPU kernels can change floating-point results. With sampling, the text may diverge. The honest alternative is an explicit error carrying the partial output, and the product decides which.
+
+Retries need a budget. When a zone degrades, naive retries multiply load just as capacity drops, which is a retry storm. Cap retries at a fixed share of traffic, such as 10%, with jittered backoff, and key them by request ID so a duplicate is detected rather than re-run. Keep N+1 headroom per zone and fail over between zones at the router.
+
+Headroom, not autoscaling, absorbs a sudden loss. A new GPU replica often takes minutes to provision, pull its image and load weights; the source's references note that weight loading alone can take seconds with a fast streamer, and provisioning is what takes minutes. The same logic governs upgrades: drain a replica before upgrading it, canary the new model version and stop the rollout when the canary fails.
+
+### 9. Prove the design with the actual traffic {#evaluation}
+
+The replica count so far is arithmetic on assumed rates, so the design is not finished until a load test with the real model confirms it. Load-test the actual prompt and output distributions, long-prefill interference, stale capacity heartbeats, overload, cancellation, and the loss of a worker and of a zone.
+
+Track p50 and p95 TTFT and TPOT, queue wait and service time separately, prefill and decode throughput, prefix-cache hit rate, KV occupancy and preemptions, cancellation delay, explicit failures and goodput. Goodput is the number that would prove the design wrong: if throughput rises while goodput falls, the fleet is finishing more work too late.
+
+## Technical deep dives
+
+### KV arithmetic, paged allocation and preemption {#kv}
+
+The KV cache, not compute, usually caps how many sequences fit on a GPU. Every generated token adds a key vector and a value vector for every layer, and they stay resident until the sequence ends. The table gives the illustrative model's architecture; these numbers are assumptions, and a different attention design or cache datatype changes the result.
+
+<p class="figure-caption">Assumed model architecture behind the per-token KV estimate.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Assumed value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Layers</td>
+<td>32</td>
+</tr>
+<tr>
+<td>KV heads (grouped-query attention)</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Head dimension</td>
+<td>128</td>
+</tr>
+<tr>
+<td>Bytes per value (fp16)</td>
+<td>2</td>
+</tr>
+</tbody></table></div>
+
+Per token: 2 (keys and values) × 32 layers × 8 KV heads × 128 dimensions × 2 bytes = 131,072 bytes, or 128 KiB. Grouped-query attention is why the head count is 8 rather than the full number of query heads: several query heads share one key-value head, which shrinks the cache.
+
+Now scale it. The anchor sequence of 1,250 tokens (1,000 in, 250 out) needs about 160 MB (156 MiB). Sixty-four of them need about 10 GB, which fits beside 16 GB of fp16 weights on an 80 GB card. Raise the context to 8,000 tokens and one sequence needs about 1 GB, so a KV pool of about 50 GB holds only about 50 sequences. Context length divides concurrency, which is why the router must track free KV rather than request counts.
+
+**Paged allocation.** Reserving each sequence's maximum length up front wastes most of that memory, because most sequences stop early. Paged attention allocates KV in small fixed-size blocks on demand; vLLM's default block holds 16 tokens. Blocks need not be contiguous, so fragmentation mostly disappears. Blocks can also be shared: requests with an identical system prompt point at the same prefix blocks, which is prefix caching at the serving layer. Share only identical prefixes.
+
+**Preemption.** When the pool fills anyway, the scheduler must choose a victim. Preempt the lowest-priority or youngest sequence and recompute its KV later, which is vLLM V1's default, or, in engines that support it, swap it to CPU memory (vLLM's older V0 engine offered swap). Never let an allocation failure crash the replica: that turns one long prompt into an outage for the 64 callers sharing the GPU.
+
+These engine behaviours are the source's captured references, checked in September 2026. Confirm the block size and preemption options of the runtime you actually deploy.
+
+### One GPU with synchronous callers {#one-gpu}
+
+The one-GPU variant is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, and callers who block until they get an answer. The design shrinks to intake, a batcher, the GPU and a way back to the right caller.
+
+Trace one call. The HTTP handler assigns a request ID, parks a **future** for it (an object the handler waits on until a result is filled in) and enqueues the input. A batcher thread flushes when it holds 100 inputs or when the oldest has waited, say, 20 ms, so a lone request at quiet times is not stuck waiting for company. The GPU worker runs the batch. The demultiplexer resolves each future by request ID, and the handler returns. A timeout on the future turns a stuck batch into an error rather than a hung connection.
+
+Say the arithmetic. Assume a full batch of 100 takes 200 ms. Maximum throughput is then 100 ÷ 0.2 s = 500 requests per second. At 400 rps the GPU runs at 80%, and queues start to form in bursts. Each caller's latency is the batching wait plus queue time plus 200 ms. Synchronous callers each hold a connection, so by Little's Law 400 rps at about 0.3 s holds about 120 open connections. That is trivial until overload, when it grows without limit.
+
+So bound the queue, for example at two batches (200 requests), and return 503 with Retry-After beyond that. Two batches means a new arrival waits at most about two batch times before its own batch runs; pick the bound from the latency the callers can tolerate rather than treating two as universal.
+
+One follow-up changes the answer. If the model generates variable-length output, a static batch of 100 finishes at its longest member. Move to continuous batching, even on one GPU: the number of devices does not remove the longest-sequence problem.
+
+### One hundred thousand requests per second {#hundred-k}
+
+At this scale the request shape decides everything, so price it before drawing anything. The table uses the walkthrough's replica-seconds method with the same assumed rates and the 70% target.
+
+<p class="figure-caption">Three request shapes priced at 100,000 requests per second with the assumed rates.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Request shape</th>
+<th>Input / output tokens</th>
+<th>Replica-seconds each</th>
+<th>Replicas at 100,000 rps and 70%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chat answer</td>
+<td>1,000 / 250</td>
+<td>0.15</td>
+<td>~21,400</td>
+</tr>
+<tr>
+<td>Short completion</td>
+<td>200 / 20</td>
+<td>0.018</td>
+<td>~2,570</td>
+</tr>
+<tr>
+<td>Scoring, one token out</td>
+<td>500 / 1</td>
+<td>0.0254</td>
+<td>~3,630</td>
+</tr>
+</tbody></table></div>
+
+Work one row to see where the cost comes from. A short completion costs 200 ÷ 20,000 + 20 ÷ 2,500 = 0.010 + 0.008 = 0.018 replica-seconds. A scoring request costs 500 ÷ 20,000 + 1 ÷ 2,500 = 0.025 + 0.0004 = 0.0254. Scoring emits a single token yet costs more than a short completion, because its longer prompt makes prefill dominate. Multiply by 100,000 and divide by 0.7 to get the fleet column.
+
+The spread is almost an order of magnitude, from about 2,570 to about 21,400 replicas. The air-gapped chapter's advice applies directly: expect an absurd replica count from some request mixes, and challenge the mix instead of defending the count. These are planning comparisons on assumed rates, not purchase counts.
+
+The architecture adds four things at this scale.
+
+- **Cells.** Split the fleet into independent cells of a few hundred replicas, each with its own router and registry. A global load balancer spreads traffic across cells and regions. A bad deployment or a hot tenant then damages one cell, not the service.
+- **Admission by tokens.** At 100,000 rps, request counts lie. Charge every tenant's bucket by estimated tokens and shed the lowest priority first.
+- **Backpressure across layers.** Cells report saturation upward, and the global balancer shifts traffic before a cell's queue deepens.
+- **Headroom over autoscaling.** New GPU replicas often take minutes to provision and load, so autoscaling follows the daily curve while reserved headroom absorbs bursts and failures.
+
+Prefix caching and short output caps are the cheapest capacity at this size, because they cut replica-seconds per request directly.
+
+### Review a junior design {#design-review}
+
+The junior-design review is not a design question. It hands over a design and asks what to change, so the anchor becomes the rubric. Open with what works. Clarify the requirements the design assumed. Then name the top three risks by severity, rather than every flaw you can find. The table is the full checklist to search with; it is not the script to read aloud.
+
+<p class="figure-caption">Review checklist: what to look for, why it breaks and the correction.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Look for</th>
+<th>Why it breaks</th>
+<th>Change it to</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Static batches for generative output</td>
+<td>Short answers wait for the longest in the batch</td>
+<td>Continuous batching</td>
+</tr>
+<tr>
+<td>Flush only when the batch is full</td>
+<td>At low traffic, a request waits forever for company</td>
+<td>Size-or-timeout flush</td>
+</tr>
+<tr>
+<td>One global <abbr title="first in, first out: Handle things in the order they arrived.">FIFO</abbr> queue, unbounded</td>
+<td>Overload becomes timeouts for everyone; no fairness</td>
+<td>Bounded per-tenant admission, 429 early</td>
+</tr>
+<tr>
+<td>Round-robin routing</td>
+<td>Ignores memory; long prompts pile onto one GPU</td>
+<td>Route by free KV, power of two choices</td>
+</tr>
+<tr>
+<td>Sizing by GPU count</td>
+<td>No link between traffic and capacity</td>
+<td>Token work per request, Little's Law cross-check</td>
+</tr>
+<tr>
+<td>Health check is a <abbr title="Transmission Control Protocol: The internet protocol that gives an ordered, reliable byte stream between two machines. HTTP/1.1 and HTTP/2 run on top of it.">TCP</abbr> ping</td>
+<td>A hung GPU stays in rotation</td>
+<td>Readiness plus a one-token probe</td>
+</tr>
+<tr>
+<td>Unlimited retries</td>
+<td>Retry storm when a zone degrades</td>
+<td>Retry budget, jitter, <code>request_id</code> dedupe</td>
+</tr>
+<tr>
+<td>No request ID through the pipeline</td>
+<td>Responses can reach the wrong caller</td>
+<td>Demux by <code>request_id</code> end to end</td>
+</tr>
+<tr>
+<td>No cancellation</td>
+<td>Abandoned requests burn GPU time</td>
+<td>Propagate disconnect, free KV</td>
+</tr>
+<tr>
+<td>Tokenizing on the GPU thread</td>
+<td>CPU work stalls the most expensive resource</td>
+<td>Tokenize at the gateway</td>
+</tr>
+<tr>
+<td>One latency metric</td>
+<td>Queue wait looks like a slow model</td>
+<td>Separate TTFT, TPOT, queue wait and service time</td>
+</tr>
+</tbody></table></div>
+
+The first three rows usually lead, because each one breaks the service for everyone: static batches waste most of the GPU on variable output, an unbounded global FIFO turns overload into universal timeouts with no fairness, and round-robin ignores the memory that actually limits placement. Then inspect the rest: size-only flush, weak health checks, unlimited retries, missing request IDs, no cancellation and tokenisation on the GPU thread.
+
+Deliver it as a conversation, not a verdict. A review that ranks three fixes and explains the failure each prevents shows seniority. Eleven findings read aloud shows only that the list was memorised.
+
+### Walk the latency stack {#diagnosis}
+
+The latency-diagnosis prompt asks for the full stack: tokenisation, network, batch size, KV cache and post-processing. The Observability and Production Diagnosis case answers it from the application's traces; this section answers it from inside the serving layer.
+
+First ask which latency is slow: first token, per token or total. Each points at different layers. The table maps each layer to its symptom, likely cause and the measurement that confirms it.
+
+<p class="figure-caption">The latency stack: symptom, likely cause and check for each layer.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Check</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tokenization</td>
+<td>Slow before the request reaches a queue</td>
+<td>Long inputs tokenized on a starved CPU pool</td>
+<td>Gateway span time; CPU saturation</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Slow for one region or client</td>
+<td>Cross-region hop, <abbr title="Transport Layer Security: The encryption that protects data in transit, the S in HTTPS. mTLS makes both sides prove who they are.">TLS</abbr> setup, a buffering proxy</td>
+<td>Client-to-gateway span; <abbr title="time to first token: How long until the first word of the answer appears. With streaming, this is what feels fast or slow.">TTFT</abbr> by region</td>
+</tr>
+<tr>
+<td>Queue wait</td>
+<td>TTFT slow only at peak; p99 up, p50 flat</td>
+<td>Utilisation past the knee</td>
+<td>Queue wait against service time</td>
+</tr>
+<tr>
+<td>Batch size</td>
+<td><abbr title="time per output token: How fast the rest of the answer streams once it has started.">TPOT</abbr> slow while throughput looks healthy</td>
+<td>Batches too large for the per-token <abbr title='service level objective: The target you commit to internally: "95% of answers in under 3 seconds".'>SLO</abbr></td>
+<td>TPOT against running sequences</td>
+</tr>
+<tr>
+<td>Prefill</td>
+<td>TTFT slow on long prompts</td>
+<td>Prompt growth, prefills stalling decode</td>
+<td>TTFT by input tokens; chunked prefill on or off</td>
+</tr>
+<tr>
+<td>KV cache</td>
+<td>Latency spikes, preemptions</td>
+<td>Pool full; low prefix-cache hit rate</td>
+<td>KV use, preemption count, prefix hit rate</td>
+</tr>
+<tr>
+<td>Decode</td>
+<td>Starts fast, then drags</td>
+<td>Output length grew</td>
+<td>Output tokens per request</td>
+</tr>
+<tr>
+<td>Post-processing</td>
+<td>Gap after the last token</td>
+<td>Safety filter, schema validation, detokenization</td>
+<td>Span after final token</td>
+</tr>
+</tbody></table></div>
+
+One rule carries most diagnoses. A frozen screen (slow first token) points at the prompt, the queue or prefill: check the client and network, CPU tokenisation, queue wait, long-prompt prefill and KV preemption. An answer that starts fast then drags (slow per-token) points at output length, oversized batches, decode saturation or prefill interference. A gap after the last token belongs to detokenisation, safety or schema post-processing, or a buffering proxy.
+
+The peak-only follow-up, where p50 stays flat and p99 rises only at peak, points toward queueing. Separate queue wait from service time, then tighten admission and shed non-interactive traffic. Changing the model does not fix a buffering proxy or a starved CPU tokenizer.
+
+### References and source notes {#references}
+
+The source fact-checked these references on 27 September 2026. Each is listed with the claim it supports in this case.
+
+- [NVIDIA H100 datasheet](https://resources.nvidia.com/en-us-gpu-resources/h100-datasheet-24306): the assumed 20,000 tokens/s prefill for an 8B model needs H100-class compute.
+- [Hugging Face tokenizers: Decoders](https://huggingface.co/docs/tokenizers/api/decoders): streaming decode must buffer partial characters.
+- [Agrawal et al. 2024, Sarathi-Serve](https://arxiv.org/abs/2403.02310): a long prefill stalls co-batched decodes; chunked prefill fixes it.
+- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): vLLM V1 preempts by recompute by default; chunked prefill.
+- [Kwon et al. 2023, PagedAttention](https://arxiv.org/abs/2309.06180): KV memory caps concurrency; max-length reservation wastes memory; paged, non-contiguous blocks.
+- [vLLM API: CacheConfig](https://docs.vllm.ai/en/latest/api/vllm/config/cache.html): default KV block size of 16 tokens.
+- [Mitzenmacher 2001, The Power of Two Choices in Randomized Load Balancing](https://dl.acm.org/doi/10.1109/71.963420): two random choices spread load almost as well as full information.
+- [Mitzenmacher 2000, How Useful Is Old Information?](https://perso.ens-lyon.fr/loris.marchal/scheduling/Mitzenmacher.pdf): two choices tolerate stale load data.
+- [Thinking Machines 2025, Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/): greedy output can differ across batch sizes and kernels.
+- [NVIDIA blog: Reducing cold-start latency with Run:ai Model Streamer](https://developer.nvidia.com/blog/reducing-cold-start-latency-for-llm-inference-with-nvidia-runai-model-streamer): weight loading alone can take seconds; provisioning is what takes minutes.
+- [Azure SDK blog: Load models up to 6x faster with Run:ai Model Streamer](https://devblogs.microsoft.com/azure-sdk/eliminate-llm-cold-starts-load-models-up-to-6x-faster-with-azure-blob-storage-and-runai-model-streamer/): faster weight streaming for cold starts.
+- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/): the engine aborts a request when the client disconnects.
+- [vLLM issue #10087](https://github.com/vllm-project/vllm/issues/10087): the abort breaks when middleware fails to pass the disconnect on.
+
+The source design is built from general serving practice (continuous batching, paged attention and the engines that use them). It takes the replica memory budget and sizing formula from the site's air-gapped design case, and the prefill, decode, Little's Law and goodput arithmetic from the site's cost and latency material. It also cites internal companion notes that were not part of the captured page: an additions file (for the two phases, Little's Law, the utilisation knee, goodput and cancellation), a decomposition-questions file (for "which latency is slow?") and a cost-drivers file (for cold starts). Their claims are kept here where the page stated them; the notes themselves could not be checked.
+
+## Practice
+
+### Derive and stress the scheduler {#practice-start}
+
+Start on a blank page with the anchor prompt: batch LLM requests end to end, say which GPU has capacity and handle failover. Ask your discovery questions, state assumptions for the rest, then derive replica-seconds, slot concurrency and the KV footprint. Trace one sequence through admission, placement, batching and return. Then break it: kill its GPU before the first token and again after 40 tokens have streamed, and say what the caller sees each time.
+
+The twelve questions below are the source's self-checks, with its worked answers. Try each aloud before opening it.
+
+<details class="answer-reveal" id="answer-1"><summary>Why does input length hurt first-token time while output length hurts total time?</summary><div class="detail-body"><p>Prefill processes the whole prompt in parallel and sets time to first token, so a longer prompt delays the first token. Decode generates one token at a time and sets streaming speed and total time, so a longer answer extends duration and holds its batch slot and KV memory longer.</p></div></details>
+
+<details class="answer-reveal" id="answer-2"><summary>Size the anchor aloud.</summary><div class="detail-body"><p>1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.15 replica-seconds; × 1,000 rps = 150; ÷ 0.7 ≈ 214 replicas (215 with a strict ceiling), before N+1 zone headroom. Little's Law gives about 7,000 sequences in flight (about 7 s each at 1,000 rps), which is about 110 replicas of 64 slots, so compute binds.</p></div></details>
+
+<details class="answer-reveal" id="answer-3"><summary>Why does static batching fail generative traffic?</summary><div class="detail-body"><p>A batch ends when its longest sequence ends, so short answers wait and their slots sit idle: a 10-token answer batched with a 1,000-token answer idles for 990 steps. Continuous batching removes finished sequences at every decode step and admits waiting ones.</p></div></details>
+
+<details class="answer-reveal" id="answer-4"><summary>How does context length change concurrency?</summary><div class="detail-body"><p>At 128 KiB a token, an 8,000-token sequence needs about 1 GB of KV, so a ~50 GB pool holds about 50 sequences, against 64 anchor-length sequences in about 10 GB. Placement must track free KV rather than request counts.</p></div></details>
+
+<details class="answer-reveal" id="answer-5"><summary>How is the question of which GPU has capacity answered?</summary><div class="detail-body"><p>Replicas heartbeat free KV blocks, running and waiting counts and health to a registry about once a second. The router samples two replicas, picks the one with more free KV after reserving the request's estimated tokens, and the replica rejects quickly if the request does not fit. Prefix affinity is a preference that yields when the preferred replica is hot.</p></div></details>
+
+<details class="answer-reveal" id="answer-6"><summary>A GPU dies mid-generation. What happens to its requests?</summary><div class="detail-body"><p>Un-streamed ones retry from scratch elsewhere under the retry budget, keyed by request ID. Streamed ones re-prefill prompt plus emitted tokens, likely but not guaranteed to match under greedy decoding, or fail explicitly with the partial output. The product's continuation contract decides which.</p></div></details>
+
+<details class="answer-reveal" id="answer-7"><summary>Why charge admission by tokens rather than requests?</summary><div class="detail-body"><p>One tenant's long prompts cost many times another's short ones, so request counts let a heavy tenant starve light ones while every quota looks fair on paper.</p></div></details>
+
+<details class="answer-reveal" id="answer-8"><summary>In the one-GPU variant, why bound the queue at two batches?</summary><div class="detail-body"><p>A deeper queue only serves requests that have already missed the SLO, and synchronous callers hold a connection each while they wait. Beyond the bound, return 503 with Retry-After so callers fail fast instead of piling up connections.</p></div></details>
+
+<details class="answer-reveal" id="answer-9"><summary>What is the first question for the 100,000-requests-per-second variant?</summary><div class="detail-body"><p>What each request is. A chat answer (about 21,400 replicas) and a short completion (about 2,570) differ by almost an order of magnitude in fleet size under the same assumed rates.</p></div></details>
+
+<details class="answer-reveal" id="answer-10"><summary>Name three findings to lead a junior-design review with.</summary><div class="detail-body"><p>Static batching for generative output, an unbounded global FIFO (first in, first out) queue, and round-robin routing that ignores memory. Fix them with continuous batching, bounded token-weighted per-tenant admission that returns 429 early, and routing by free KV with power-of-two choices.</p></div></details>
+
+<details class="answer-reveal" id="answer-11"><summary>Latency is fine at p50 and bad at p99 only at peak. Where do you look?</summary><div class="detail-body"><p>Queueing. Separate queue wait from service time, then tighten admission and shed non-interactive work to a batch tier rather than treating the wait as a slow model.</p></div></details>
+
+<details class="answer-reveal" id="answer-12"><summary>What is the cost card's sixty-second line?</summary><div class="detail-body"><p>A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.</p></div></details>
+
+The next two drills are added for this casebook, not taken from the source. They test the same mechanisms under a changed constraint.
+
+<details class="answer-reveal" id="answer-13"><summary>Added drill: the GPU serving your request dies after 40 tokens have streamed. Walk through what each component does.</summary><div class="detail-body"><p>The deep probe or readiness check fails, the health checker evicts the replica and the registry stops listing it. The request's KV is gone with the GPU. Because tokens have streamed, a plain retry would repeat text the caller has already seen. If the contract allows continuation, the router picks a new replica by free KV, which re-prefills the original prompt plus the 40 emitted tokens and continues; under greedy decoding the continuation very likely matches, under sampling it may not. Otherwise the caller receives an explicit partial error with the 40 tokens. Either way the retry counts against the budget and carries the same request ID, so a duplicate attempt is detected rather than re-run.</p></div></details>
+
+<details class="answer-reveal" id="answer-14"><summary>Added drill: average context grows from 1,250 to 8,000 tokens while the arrival rate stays at 1,000 rps. What changes first?</summary><div class="detail-body"><p>Memory binds before compute. At 128 KiB a token each sequence needs about 1 GB of KV instead of about 160 MB, so a 50 GB pool holds about 50 sequences instead of 64 or more, and the slot check, not the compute check, may now set the replica count. Prefill per request also grows with the longer input, raising TTFT and the compute estimate, so redo both checks with the new shape. The router must reserve the larger KV estimate, chunked prefill matters more because long prompts stall decodes, and the gateway's input cap and token-weighted admission protect the fleet from the longest prompts.</p></div></details>
+
+### Rehearse the forty-five-minute design {#interview}
+
+The hour belongs to batching, routing and failover, because those are the words in the prompt. The source's plan spends the time in this order.
+
+<p class="figure-caption">Forty-five-minute delivery plan.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Minutes</th>
+<th>What to say</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0–5</td>
+<td>Request shape questions; prefill versus decode; state the assumptions</td>
+</tr>
+<tr>
+<td>5–10</td>
+<td>Requirements with numbers; TTFT, TPOT, goodput</td>
+</tr>
+<tr>
+<td>10–15</td>
+<td>Sizing: replica-seconds, 214 replicas, Little's Law cross-check</td>
+</tr>
+<tr>
+<td>15–25</td>
+<td>The diagram: admit, route, batch per replica</td>
+</tr>
+<tr>
+<td>25–32</td>
+<td>Continuous batching and the KV budget</td>
+</tr>
+<tr>
+<td>32–38</td>
+<td>"Which GPU has capacity?" and failover</td>
+</tr>
+<tr>
+<td>38–43</td>
+<td>Admission, backpressure, streaming, cancellation</td>
+</tr>
+<tr>
+<td>43–45</td>
+<td>The cost pivot and what would prove the design wrong</td>
+</tr>
+</tbody></table></div>
+
+The source gives two closing summaries to rehearse. The first is its two-minute interview answer:
+
+> "I would ask for input and output token distributions and the first-token and per-token targets before sizing. I tokenize at the gateway, admit by per-tenant token budget and bounded queue, then route by free KV capacity rather than round-robin. Each GPU schedules continuously, admitting and finishing sequences at decode steps, with chunked prefill and paged KV to protect latency and memory. Tokens are demultiplexed by request ID and streamed; disconnect cancels the sequence. A capacity registry plus readiness and one-token probes evicts sick GPUs. Unstreamed work retries under a budget; streamed work has an explicit continuation or partial-error policy. The source's 214-replica example is arithmetic on assumed throughput, so I would validate it with goodput, TTFT, TPOT and KV use on the actual model."
+
+The second is the summary that closes the forty-five-minute plan, and it adds the routing and sizing details:
+
+> "I'd treat each GPU as a stateful server with a memory budget. Requests are tokenized at the gateway and admitted against per-tenant token buckets, with a bounded queue that returns 429 early. A router picks a replica from a capacity registry of free KV blocks. It uses power-of-two choices so stale data doesn't cause herding, and prefix affinity so shared prompts reuse cache. Each replica runs continuous batching on a paged KV pool, with chunked prefill so long prompts don't stall streams. A three-layer health check evicts bad GPUs. Un-streamed requests retry under a budget, and streamed ones re-prefill or fail explicitly. At a thousand requests a second with this shape, that's about 214 replicas plus N+1 per zone. The metric that would prove me wrong is goodput, not throughput."
+
+Every level can draw a queue in front of GPUs. The level shows in whether each GPU is treated as a stateful server with a memory budget, and how far the plan reaches past one cell. The calibration table states what each level sounds like and what it still misses.
+
+<p class="figure-caption">Senior, staff and principal calibration.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Sounds like</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Senior</td>
+<td>Asks for input and output tokens first, prices a request at 0.15 replica-seconds and provisions about 214 replicas, cross-checked with Little's Law. Routes by free KV with power-of-two choices, batches continuously with chunked prefill and paged KV, and retries unstreamed work under a budget.</td>
+<td>Tenant fairness under overload, the contract after a mid-stream failure, and how rollouts and autoscaling live with minutes-long cold starts.</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>Adds the operating rules: token-weighted tenant buckets with a bounded queue that returns 429 early, backpressure from replica to gateway, N+1 headroom per zone, drain-and-canary rollouts, and an explicit choice between re-prefill and a partial error. Reports goodput, TTFT, TPOT and queue wait separately.</td>
+<td>How the fleet is partitioned so one bad deploy or hot tenant cannot hurt everyone, and how request shape drives the capacity plan.</td>
+</tr>
+<tr>
+<td>Principal</td>
+<td>Splits the fleet into independent cells behind a global balancer, prices the request mix before any fleet size, since chat, short completion and scoring differ almost tenfold at 100,000 rps, and challenges the profile rather than buying hardware. Sets goodput per GPU-hour as the cost measure and moves offline work to a batch tier.</td>
+<td>Measured prefill and decode rates, KV use and token distributions for the real model; every replica count here rests on assumed throughput.</td>
+</tr>
+</tbody></table></div>
+
+### Answer the cost pivot in ten minutes {#cost}
+
+The source names this its self-drill. After a good design, the interviewer says "the GPU bill is too high." Attempt it before reading the card: name the dominant cost driver, the cheapest lever, the metric that proves the fix and the mistake to avoid.
+
+The card builds on two cost drivers, output tokens and cold starts, and on the prefill, decode and goodput arithmetic from the walkthrough.
+
+<p class="figure-caption">The ten-minute cost card.</p>
+<div class="source-table-wrap"><table>
+<thead>
+<tr>
+<th>Card field</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dominant driver</td>
+<td>GPU time wasted in half-empty batches, long outputs, and KV memory that caps concurrency</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Continuous batching to raise occupancy; cap <code>max_tokens</code>; prefix caching for shared prompts; quantise to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Goodput per GPU-hour; cost per million output tokens; batch occupancy; KV utilisation; queue wait p95</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Buy more GPUs before measuring batch occupancy and KV use</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour.</td>
+</tr>
+</tbody></table></div>
+
+Decode was two-thirds of the anchor's replica-seconds, so output length is the first number to cut. Cancellation on disconnect is the second lever, because it recovers tokens nobody reads; measure tokens generated after disconnect to see how much it is worth. Quantisation frees memory for more sequences, but check quality and kernel speed on the actual model before relying on it.
+
+Every strong cost answer follows four verbs in order. **Measure**, with occupancy and goodput. **Route**, sending offline work to the batch tier. **Bound**, with output caps and admission. **Cache safely**, sharing prefix blocks only for identical prefixes. Changing the model or buying GPUs before measuring occupancy may leave the bottleneck untouched.
+
+## Quick review
+
+### Ask first and draw the path {#review}
+
+Ask first: input and output tokens at p50 and p95; interactive or batch; whether the target is TTFT (time to first token) or TPOT (time per output token); whether output length varies; peak rate, tenants and priorities; and the contract after a mid-stream failure.
+
+Whiteboard path: gateway tokenises and assigns an ID → token-weighted bounded admission → router by free KV → replica continuous batch → LLM prefill and decode on paged KV → demultiplex by ID → stream. Health checks evict sick GPUs; a disconnect cancels the sequence and frees its KV.
+
+### Recall the arithmetic and five rules {#review-rules}
+
+Assumed anchor arithmetic: 1,000/20,000 + 250/2,500 = 0.15 replica-seconds. 1,000 rps × 0.15 ÷ 0.70 ≈ 214 replicas. About 7,000 in-flight streams ÷ 64 slots ≈ 110 slot-limited replicas, so compute binds. KV is about 128 KiB per token, so about 160 MB for an anchor sequence and about 1 GB at 8,000 tokens. The rates are illustrative H100-class assumptions, not benchmarks.
+
+Five rules:
+
+1. Prefill sets TTFT; decode sets TPOT and total time.
+2. Static generative batches wait for the longest output; continuous batches release finished sequences.
+3. KV memory, not request count, decides GPU placement.
+4. Unstreamed failed requests retry under a budget; streamed ones need an explicit continuation or partial-error contract.
+5. Refuse early with bounded queues, and optimise goodput, not raw throughput.
+
+### Recall the variants and close {#review-close}
+
+One GPU: size-or-timeout batch of 100, request-ID futures, a queue bounded at about two batches. 100,000 rps: price the request shape first, then independent cells, token admission and global backpressure. Junior-design review: lead with static batches, the unbounded FIFO and round-robin routing. Latency diagnosis: ask which latency first, then split queue and prefill from decode and post-processing. Cost: measure, route, bound, cache safely, proven by goodput per GPU-hour.
+
+Sixty-second close: "Tokenize and admit before GPU work, route by free KV, schedule continuously, stream by request ID, cancel abandoned work and handle GPU failure with a bounded, honest retry policy."

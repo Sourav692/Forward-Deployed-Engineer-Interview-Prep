@@ -1,0 +1,742 @@
+{
+  "title": "AI-Powered Recruiting Platform",
+  "slug": "recruiting-platform",
+  "subtitle": "Design explainable candidate ranking and interview support while recruiters retain the decision.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/recruiting-platform",
+  "updated": "Teaching rewrite, re-reviewed 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "casebook-the-prompt": "brief-task",
+    "full-design-intro": "brief-task",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "casebook-step-1-define-the-problem-space": "walk-scope",
+    "full-design-1-define-the-problem-space": "walk-scope",
+    "casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p": "walk-intake",
+    "full-design-2-high-level-architecture": "walk-intake",
+    "casebook-step-3-the-flow": "walk-flow",
+    "full-design-3-step-by-step-request-flow": "walk-flow",
+    "full-design-6-ai-specific-design-considerations": "dive-ai",
+    "casebook-step-4-the-deep-dive-explainable-ranking": "walk-ranking",
+    "full-design-4-explainable-candidate-ranking": "walk-ranking",
+    "casebook-step-5-scaling-to-thousands-of-resumes-an-hour": "walk-scale",
+    "full-design-7-scalability-considerations": "walk-scale",
+    "casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec": "dive-fairness",
+    "full-design-8-security-fairness": "dive-fairness",
+    "casebook-trade-offs": "dive-components",
+    "full-design-5-major-components": "dive-components",
+    "full-design-9-tradeoffs": "dive-components",
+    "casebook-follow-ups-to-have-ready": "practice-pivots",
+    "full-design-10-common-follow-up-questions": "practice-pivots",
+    "casebook-level-calibration": "practice-levels",
+    "casebook-checkpoint": "practice-checks",
+    "casebook-summary": "review-closing",
+    "casebook-key-takeaways": "review-decisions",
+    "full-design-11-final-design-summary": "walk-close",
+    "full-design-sources-checked-27-sep-2026": "dive-sources",
+    "intro": "case-brief",
+    "casebook": "walkthrough",
+    "full-design": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Discovery and the decision boundary",
+      "hint": "Ask the five discovery questions and say what each answer changes; state what the AI may and may not decide."
+    },
+    {
+      "id": "pipeline",
+      "label": "Intake, extraction, matching and ranking",
+      "hint": "Trace the Senior AI Engineer role through both lanes, extraction, embeddings, search and weighted ranking with reasons."
+    },
+    {
+      "id": "assessment",
+      "label": "Questions, AI judge and human review",
+      "hint": "Explain the judge's rubric, the confidence threshold, what the reviewer sees and why nothing is booked before approval."
+    },
+    {
+      "id": "scale-fairness",
+      "label": "Scale, privacy and fairness",
+      "hint": "Cover async event-driven intake, bursts, regions, deletion, audit logging and continuous fairness monitoring with owners."
+    }
+  ],
+  "rubric": [
+    "I separated the resume and JD intake lanes and explained structured extraction as the line between documents and data.",
+    "I combined keyword and semantic matching and justified it with a labelled-set comparison.",
+    "I ranked on explicit weighted signals with reasons per candidate, and said weights alone do not prove fairness or job relevance.",
+    "I kept the AI judge rubric-based and provisional, named a confidence threshold for mandatory review, and kept booking behind recruiter approval.",
+    "I explained how async, event-driven processing, queues, caches, GPU inference and sharded vector search absorb a posting burst.",
+    "I covered encryption, RBAC, audit logging, deletion across derived data and continuous fairness monitoring, including the risk in learning from past hires."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Hiring team wants AI at every step; thousands of resumes per posting; short recruiter queue",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of 'Help recruiters compare candidates' keeps all five AI steps, the thousands-per-posting volume and the short queue, and adds who the user is and what result they need."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Hard constraint: a person makes every decision; GDPR/EEOC legal weight; rankings explain, suggestions logged, recruiter can overrule",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of brief-scenario keeps the three consequences (explain, log, overrule) and now defines GDPR and EEOC in plain words; the previous version dropped the EEOC definition and the 'every suggestion is logged' clause."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "GDPR glossary definition",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "GDPR abbr in brief-scenario carries the source glossary definition (consent, right to be forgotten, where data may live), lightly reworded to drop the colon chain."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: structured profiles, explicit weighted signals, recruiter sees every shortlist, fairness monitoring across the whole path",
+      "anchors": [
+        "brief-example",
+        "walk-evaluation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example traces profiles, weighted ranking and review before booking; 'whole path, not once at launch' fairness is taught in walkthrough step 7."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea: AI ranks and explains; recruiter approves or overrides before anything happens",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-scenario states the one-sentence core idea verbatim in substance, then reads the figure: the approve and override exits are both normal paths. Previous version paraphrased it away."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core-idea diagram (light and dark variants)",
+      "anchors": [
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-1-0 keeps both hashed variants; caption and alt now name the actual nodes (Structured profiles, Weighted explained ranking, Recruiter review, Book the interview, Change the shortlist) instead of the old generic 'source figure 1' caption."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates; matching/ranking rounds; designs where AI affects a person",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second paragraph of brief-task keeps all three audience clauses, including 'any design where an AI recommendation affects a person', which the old version had dropped."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the hard constraint; answer follow-ups on extraction, matching, ranking, judge, scale, fairness, compliance",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of brief-task lists the hard constraint and all seven follow-up areas."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumes embeddings/similarity search, LLM rubric evaluation, basic cloud; Classic AI designs lesson covers it in brief; LLM glossary",
+      "anchors": [
+        "brief-task",
+        "brief-example"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task names the three prerequisites and the shorter Classic AI designs lesson; the LLM glossary definition is on the LLMs abbr in brief-example."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: read the casebook, mark parts read, reference design for components/sources, level calibration the night before",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Old two-tab reading instructions are obsolete in the five-section format; brief-task keeps the useful advice (walkthrough first, Practice, level calibration and Quick review the night before) with links to practice-levels and review-decisions."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old sections table: Interview Casebook mandatory, Reference Design optional",
+      "anchors": [
+        "brief-task",
+        "dive-sources"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The old navigation table is not reproduced; dive-sources explains that the interview casebook and reference design were merged, and every reference-design-only item is mapped in its own row."
+      }
+    },
+    {
+      "source_id": "casebook-the-prompt",
+      "teaching_item": "The prompt: AI at every step, read, match, draft, score, book, support hiring manager; scope upload to decision",
+      "anchors": [
+        "brief-task",
+        "practice-prompt"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of brief-task restates the full prompt and scope; practice-prompt reuses it as the blank-page exercise."
+      }
+    },
+    {
+      "source_id": "full-design-intro",
+      "teaching_item": "Reference intro prompt and four tags: thousands/hour, explainable ranking, human makes the call, EEOC and GDPR",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task's first paragraph now carries the four summary phrases, which the earlier version omitted."
+      }
+    },
+    {
+      "source_id": "casebook-step-1-define-the-problem-space",
+      "teaching_item": "Problem statement: rank, draft, book, suggest; recruiter final call; tool that helps people hire",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of walkthrough step 1 keeps 'a tool that helps people hire, not one that hires on its own'."
+      }
+    },
+    {
+      "source_id": "casebook-step-1-define-the-problem-space",
+      "teaching_item": "Discovery table: five questions, answers and what each decides",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table preserved row for row; a new paragraph after it walks each answer to its consequence (tenancy, two modes, review as product feature, reasons on every output, audit trail)."
+      }
+    },
+    {
+      "source_id": "casebook-step-1-define-the-problem-space",
+      "teaching_item": "Functional and non-functional requirement lists; JD and PII glossary",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 now lists all twelve functional jobs as a list and all eight non-functional qualities, including 'keep hallucination low' (defined) and 'control cost'; JD and PII definitions sit on their brief-scenario abbrs."
+      }
+    },
+    {
+      "source_id": "full-design-1-define-the-problem-space",
+      "teaching_item": "Reference discovery prose and full functional list (PDF/DOCX) vs flow formats",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same five questions consolidated into the step 1 table. Source inconsistency resolved in text (2026-11-16): the functional list said PDF or DOCX while the request flow adds LinkedIn and ATS records; the resume bullet now lists all four formats, matching the request flow and the brief."
+      }
+    },
+    {
+      "source_id": "full-design-1-define-the-problem-space",
+      "teaching_item": "Check each answer with the interviewer before building on it",
+      "anchors": [
+        "walk-scope"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Sentence before the step 1 table keeps the instruction to confirm each answer."
+      }
+    },
+    {
+      "source_id": "casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p",
+      "teaching_item": "Extraction as boundary between documents and comparable profiles; chunking-by-format lesson reference",
+      "anchors": [
+        "walk-intake"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second and third paragraphs of step 2 keep the upstream/downstream framing and the chunking-by-format cross-reference (missing before), and add why extraction errors are costliest and a source-passage link, labelled as our advice."
+      }
+    },
+    {
+      "source_id": "casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p",
+      "teaching_item": "Interview casebook architecture diagram (light/dark)",
+      "anchors": [
+        "figure-9-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-9-0 keeps both variants beside the step 2 prose; caption now names the two parsers, the 'after the interview or assessment' edge and the review-before-scheduler position, checked against the SVG labels."
+      }
+    },
+    {
+      "source_id": "full-design-2-high-level-architecture",
+      "teaching_item": "Two lanes, own parsers, one extraction service, then profiles, embeddings, ranking, questions, judge, evaluation, human review, scheduling",
+      "anchors": [
+        "walk-intake"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First paragraph of step 2 follows the reference pipeline order exactly and defines OCR."
+      }
+    },
+    {
+      "source_id": "full-design-2-high-level-architecture",
+      "teaching_item": "Reference architecture diagram (light/dark)",
+      "anchors": [
+        "figure-22-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-22-0 moved beside the sixteen-component table in dive-components, with a paragraph naming its shorter labels (Candidate profile, Evaluation, Interview scheduling) against figure-9-0; previously stacked directly under figure-9-0 with an identical generic caption."
+      }
+    },
+    {
+      "source_id": "casebook-step-3-the-flow",
+      "teaching_item": "Flow stages: JD fields, resume formats incl. ATS, structured extraction, embeddings, similarity search with LLM Engineer example",
+      "anchors": [
+        "walk-flow"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New walkthrough step 3 is a numbered trace of the Senior AI Engineer role through all five intake stages, with embeddings defined; the old version folded these into a review step."
+      }
+    },
+    {
+      "source_id": "casebook-step-3-the-flow",
+      "teaching_item": "Ranking with reasons, interview questions, AI judge, human review (real power), scheduling",
+      "anchors": [
+        "walk-ranking",
+        "walk-review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Steps 4 and 5 carry ranking with reasons, question inputs, judge criteria, 'only if the reviewer can genuinely overrule' and the scheduling actions; ATS, LLM and RAG glossary definitions are on brief abbrs."
+      }
+    },
+    {
+      "source_id": "full-design-3-step-by-step-request-flow",
+      "teaching_item": "Senior AI Engineer example: Python, LLMs, LangGraph, vector databases, AWS",
+      "anchors": [
+        "brief-example",
+        "walk-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example and step 3 item 1 name all five required skills; step 5 adds an illustrative LangGraph-gap question, labelled by context as a drafting example."
+      }
+    },
+    {
+      "source_id": "full-design-3-step-by-step-request-flow",
+      "teaching_item": "Question types: coding, system design, behavioural, domain",
+      "anchors": [
+        "walk-review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 first paragraph lists all four question types."
+      }
+    },
+    {
+      "source_id": "full-design-3-step-by-step-request-flow",
+      "teaching_item": "Accountability and bias check vanish if reviewer approves whatever AI ranked; nothing booked before approval",
+      "anchors": [
+        "walk-review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 fourth and fifth paragraphs keep both caveats, plus separating the approval record from calendar actions."
+      }
+    },
+    {
+      "source_id": "full-design-6-ai-specific-design-considerations",
+      "teaching_item": "Structured extraction keeps matching accurate and lets later steps run on their own",
+      "anchors": [
+        "dive-ai",
+        "walk-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "First bullet of dive-ai and step 3 item 3 keep 'later steps run independently', missing from the previous version."
+      }
+    },
+    {
+      "source_id": "full-design-6-ai-specific-design-considerations",
+      "teaching_item": "Agentic AI matches Multi-Agent Systems transfer example",
+      "anchors": [
+        "dive-ai",
+        "walk-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored in dive-ai similarity bullet and step 3 item 5; the previous version had no trace of this example."
+      }
+    },
+    {
+      "source_id": "full-design-6-ai-specific-design-considerations",
+      "teaching_item": "Prompt management: separate versioned templates for extraction, summaries, questions, evaluation, recommendations",
+      "anchors": [
+        "dive-ai"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as the prompt-management bullet in dive-ai with all five template types and versioning for consistency; adds audit traceability of template versions. Entirely missing before."
+      }
+    },
+    {
+      "source_id": "full-design-6-ai-specific-design-considerations",
+      "teaching_item": "AI judge scope and evaluation pipeline inputs with confidence thresholds",
+      "anchors": [
+        "dive-ai"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-ai judge and evaluation bullets list coding tasks, technical/behavioural interviews, communication and all six pipeline inputs; a closing paragraph explains how rubric and threshold work together."
+      }
+    },
+    {
+      "source_id": "casebook-step-4-the-deep-dive-explainable-ranking",
+      "teaching_item": "Signals blended; explicit weights let recruiter follow and auditor inspect; not by themselves fair",
+      "anchors": [
+        "walk-ranking"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough step 4 keeps all eight signals, the follow/inspect wording and the fairness caveat."
+      }
+    },
+    {
+      "source_id": "casebook-step-4-the-deep-dive-explainable-ranking",
+      "teaching_item": "Starting weights ~30/25/20/15/10, author's own starting point not industry norm",
+      "anchors": [
+        "walk-ranking",
+        "dive-ranking"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Weights and the 'not an industry norm' qualification appear in step 4 and dive-ranking; past hiring success, listed by the source as a signal but given no share in the 30/25/20/15/10 mix, is resolved in text (2026-11-16) as a later signal that enters only after its historical data is audited, so the five weights still sum to 100%; dive-ranking and works an illustrative 0.745 example with per-signal contributions (arithmetic rechecked)."
+      }
+    },
+    {
+      "source_id": "casebook-step-4-the-deep-dive-explainable-ranking",
+      "teaching_item": "Judge fixed rubric; evaluation pipeline; confidence threshold; Module 04 warning: LLM judge alone must not gate a career",
+      "anchors": [
+        "walk-review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 second and third paragraphs carry the rubric, the pipeline's inputs, the threshold and the course's warning ending 'Here the outcome is someone's career', which the previous version dropped."
+      }
+    },
+    {
+      "source_id": "full-design-4-explainable-candidate-ranking",
+      "teaching_item": "Other signals = location, certifications, availability; reasons behind each place not only the place",
+      "anchors": [
+        "walk-ranking",
+        "dive-ranking"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both passages name the three 'other' signals and the reasons-not-only-place point."
+      }
+    },
+    {
+      "source_id": "casebook-step-5-scaling-to-thousands-of-resumes-an-hour",
+      "teaching_item": "Stateless servers, async processing, distributed vector DB, GPU bursts, event-driven ingestion, multi-region, caches, queues",
+      "anchors": [
+        "walk-scale"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walkthrough step 6 has one bullet per mechanism plus the caches and queues paragraph; shards and statelessness are defined."
+      }
+    },
+    {
+      "source_id": "full-design-7-scalability-considerations",
+      "teaching_item": "Load balancers; shards keep search quick; one posting triggers thousands of comparisons; PII residency",
+      "anchors": [
+        "walk-scale"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 opens with the burst example and keeps each reference detail; adds that thousands/hour is an assumption to size from real volume."
+      }
+    },
+    {
+      "source_id": "casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec",
+      "teaching_item": "Encrypt, guard PII, RBAC, audit every suggestion and action, agree GDPR/CCPA/EEOC, deletion; supports not certifies; continuous bias monitoring; no ranking to decision without a person",
+      "anchors": [
+        "walk-evaluation",
+        "dive-fairness"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 lists every control and the 'support, not certify' caveat; dive-fairness adds what the audit log holds and deletion across derived copies. RBAC glossary on its dive-fairness abbr."
+      }
+    },
+    {
+      "source_id": "casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec",
+      "teaching_item": "Decision boundary diagram (light/dark)",
+      "anchors": [
+        "figure-13-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-13-0 keeps both variants with a caption naming the four nodes; prose after it explains there is no arrow from AI output to decision."
+      }
+    },
+    {
+      "source_id": "full-design-8-security-fairness",
+      "teaching_item": "Same controls; diagram repeated in reference design",
+      "anchors": [
+        "dive-fairness",
+        "figure-13-0"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The reference section reused the same SVG pair; the previous version rendered it twice in a row (figure-28-0), now shown once at figure-13-0, which carries both hashed assets."
+      }
+    },
+    {
+      "source_id": "casebook-trade-offs",
+      "teaching_item": "Interview trade-off table (six choices)",
+      "anchors": [
+        "dive-components"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the reference table, which differs only in wording ('Finds' vs 'Surfaces', 'Carries' vs 'Greater'); the reference wording is kept and the step 8 prose restates each pair."
+      }
+    },
+    {
+      "source_id": "full-design-9-tradeoffs",
+      "teaching_item": "Reference trade-off table",
+      "anchors": [
+        "dive-components",
+        "walk-close"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table preserved in dive-components with a paragraph resolving each pair (hybrid matching, fast review, per-task model choice); step 8 voices them as an interview close."
+      }
+    },
+    {
+      "source_id": "full-design-5-major-components",
+      "teaching_item": "Sixteen components and responsibilities",
+      "anchors": [
+        "dive-components"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table preserved row for row; the old intro sentence listed 'profile storage' and 'observation', which are not in the source table, and is corrected to the real list."
+      }
+    },
+    {
+      "source_id": "casebook-follow-ups-to-have-ready",
+      "teaching_item": "Bias, matching-accuracy and personalisation follow-ups",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Previously one summarising paragraph; now three answer-reveals (followup-bias, followup-matching, followup-personalise) with every source step, including scheduled audits, precision/recall against past outcomes and recruiter-set weights."
+      }
+    },
+    {
+      "source_id": "full-design-10-common-follow-up-questions",
+      "teaching_item": "Reference follow-up answers: skills/experience/projects/certifications signals; weighting factors skills, location, experience",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reference-only details (four named signals, the three named weighting factors, 'bias nobody intended') are merged into the three follow-up reveals."
+      }
+    },
+    {
+      "source_id": "casebook-checkpoint",
+      "teaching_item": "Five checkpoint questions with worked answers",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Summaries now use the source's exact questions (previously shortened); answers expanded, e.g. check 3 now says what the judge is barred from, check 4 lists the six mechanisms."
+      }
+    },
+    {
+      "source_id": "casebook-level-calibration",
+      "teaching_item": "Senior/Staff/Principal table and 'beyond a slogan' framing",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table preserved verbatim in its own section; the source's framing sentence (missing before) introduces it and a closing paragraph shows how each 'missing' column becomes the next level."
+      }
+    },
+    {
+      "source_id": "casebook-summary",
+      "teaching_item": "One AI workflow; person keeps decision; fairness/PII/compliance from the start; AI helps everywhere, decides nowhere",
+      "anchors": [
+        "review-closing",
+        "walk-close"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Closing paragraph of review-closing and the step 8 summary carry the workflow summary and the closing line, which the old Quick review lacked."
+      }
+    },
+    {
+      "source_id": "casebook-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-closing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each takeaway checked against Quick review: two modes, LLM Engineer example, real override power, GPU/cache/queue bursts and multi-region were missing before and are now in review-decisions or review-closing."
+      }
+    },
+    {
+      "source_id": "full-design-11-final-design-summary",
+      "teaching_item": "Final summary: scale list, security list, constraints from day one not boxes to tick",
+      "anchors": [
+        "walk-close",
+        "walk-evaluation"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 repeats the scale and security lists; step 7 opens with 'design constraints from day one rather than boxes ticked at launch'."
+      }
+    },
+    {
+      "source_id": "full-design-sources-checked-27-sep-2026",
+      "teaching_item": "Six cited regulations with their annotations and check date",
+      "anchors": [
+        "dive-sources",
+        "dive-fairness"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Previous version kept bare links only; each link now carries its annotation, and dive-fairness explains which control each regulation motivates, defining disparate impact and automation bias."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 33 captured sections (7 intro, 13 interview casebook, 13 reference design) item by item with the previous casebook.md. The previous version was a compressed summary (about 2,900 words) that dropped or thinned: prompt-management templates, the 'Agentic AI' to 'Multi-Agent Systems' example, 'extraction lets later steps run on their own', the Module 04 'someone's career' judge warning, the chunking-by-format link, the annotations on all six regulatory sources, the three follow-up answers (reduced to one paragraph), the level-calibration framing sentence, several key takeaways and the closing 'decides at none' line. It also rendered the same security SVG twice, gave every figure a generic 'source figure 1' caption, and listed components ('profile storage', 'observation') that the source table does not have. This rewrite adds a numbered request-flow step, an AI-specific deep dive, an explicit trade-off close, three follow-up reveals and three labelled added constraint drills,. The brief keeps a scenario, a Senior AI Engineer trace and the task, because JD, ATS, PII, GDPR and EEOC need defining before the walkthrough. Source inconsistencies resolved in text (2026-11-16): functional list naming only PDF and DOCX while the request flow takes LinkedIn and ATS records \u2192 the requirement lists all four formats, matching the flow and brief; 'past hiring success' listed as a ranking signal with no share in the 30/25/20/15/10 weights \u2192 taught as a deferred signal that enters, capped, only after its historical data is audited, keeping the starting mix at five shares summing to 100%."
+  },
+  "required_answer_reveals": [
+    "recruiting-check-1",
+    "recruiting-check-2",
+    "recruiting-check-3",
+    "recruiting-check-4",
+    "recruiting-check-5",
+    "followup-bias",
+    "followup-matching",
+    "followup-personalise",
+    "constraint-agency",
+    "constraint-deletion",
+    "constraint-override-rate"
+  ],
+  "required_anchors": [
+    "walk-flow",
+    "dive-ai",
+    "walk-close",
+    "practice-levels",
+    "practice-constraints",
+    "review-closing"
+  ],
+  "visual_review": {
+    "status": "reviewed",
+    "evidence": "Fresh desktop.png and phone.png (built 16 Nov 07:18) show the new brief: GDPR/EEOC defined inline, the core-loop figure after the one-sentence core idea, and the phone layout with topic selector and no horizontal overflow. The browser-screens figure sheets were stale (pre-rewrite, five figures), so each of the four built figures was screenshotted in place with puppeteer at 1280px: figure-1-0 shows Resume and job description > Structured profiles > Weighted, explained ranking > Recruiter review diamond with Approve > Book the interview and Override > Change the shortlist, matching its caption; figure-9-0 shows the two upload lanes through OCR/Document Parser and JD Parser converging on Structured Extraction Service, the 'after the interview or assessment' edge before AI Judge Scoring, and Human Recruiter Review before Interview Scheduler, as the step 2 caption states; figure-22-0 is the same topology with shorter labels (Candidate profile, Evaluation, Interview scheduling) beside the 16-component table; figure-13-0 shows AI ranking and scores > Human recruiter review > Approve or override > Final hiring decision with no bypass, as the dive-fairness prose says. The duplicated security figure from the previous build is gone."
+  }
+}

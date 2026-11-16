@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "1aa7033a00c690143a695dddcc30f67157d40e1516f5bdd88b8275f741ca0c3f",
+  "html_sha256": "27806876fc25d381e2b61dcf22a5310dfbca795d572e8ec7c70ac4ed821bd20a",
+  "config_sha256": "779d65beb5c6f20612a95fb995e4e76ebe173a48ee255c6cb5fe1244002d9e5e",
+  "source_url": "https://forwarddeployedprep.com/design/sales-copilot",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 60,
+    "coverage_rows": 73,
+    "worked_answers": 12,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Re-read all 60 captured sections against the earlier draft and the rewrite. The draft had dropped the Sara/Acme trace, the guide's 'what it is really asking' examples, the weak/average/strong tiers, the stakeholder table, the explore list, the related-variants table, MoSCoW and the interview shortcut, the freshness-is-an-assumption caveat, the seven-step architecture and ENFORCE/APPROVE boundaries, the 'conversational coat' routing example, the warn-only-to-reduce-false-positives cause, the strong/weak incident answers, the sixty-second latency line and sub-3-second sibling, the two-minute answer, the eight lines, and the source group table; each is now restored in its step. The four lane/end-to-end figures had generic 'source figure N' captions; each now has a caption and paragraph read from its own labels. The draft's invented spoken answer was replaced by the source's two spoken answers, an empty table cell and broken abbr punctuation were fixed, and the authored territory exercise and two pivot reveals are labelled as additions. Cheat-sheet cards are recalled in Quick review only after full teaching."
+    }
+  }
+}

@@ -1,0 +1,984 @@
+{
+  "title": "LLM Inference Serving",
+  "slug": "llm-inference-serving",
+  "subtitle": "Schedule prefill, decode and KV memory across GPU replicas with explicit overload and recovery contracts.",
+  "theme": "AI Platforms and Scale",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/llm-inference-serving",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief",
+    "intro-who-it-is-for": "brief-prompts",
+    "intro-objectives": "brief-prompts",
+    "intro-what-it-assumes": "brief-prompts",
+    "intro-how-to-use-it": "brief",
+    "intro-the-sections": "brief",
+    "main-intro": "brief",
+    "main-anchor-and-related-prompts": "brief-prompts",
+    "deep-dive-intro": "brief",
+    "cheat-sheet-intro": "brief",
+    "full-pack-intro": "brief-prompts",
+    "main-questions-to-ask-the-interviewer": "discovery",
+    "cheat-sheet-ask-first": "review",
+    "full-pack-1-ask-what-kind-of-request-before-sizing-anything": "discovery",
+    "main-requirements-functional-non-functional": "requirements",
+    "full-pack-2-state-requirements-as-testable-constraints": "requirements",
+    "main-architecture": "architecture",
+    "cheat-sheet-whiteboard-path": "review",
+    "full-pack-4-draw-the-architecture-end-to-end": "architecture",
+    "main-choices-and-failure-modes": "batching",
+    "main-variants-and-evaluation": "evaluation",
+    "main-two-minute-interview-answer": "interview",
+    "deep-dive-1-two-phases-and-two-capacity-checks": "sizing",
+    "deep-dive-2-continuous-batching-and-kv-memory": "batching",
+    "deep-dive-3-routing-failure-and-backpressure": "routing",
+    "deep-dive-4-one-gpu-100k-rps-and-design-review": "one-gpu",
+    "deep-dive-5-latency-and-economics": "diagnosis",
+    "cheat-sheet-assumed-anchor-arithmetic": "review-rules",
+    "cheat-sheet-five-rules": "review-rules",
+    "cheat-sheet-variants": "review-close",
+    "full-pack-3-size-by-tokens-per-second-then-check-with-little-s-law": "sizing",
+    "full-pack-5-tokenize-at-the-edge-not-on-the-gpu": "edges",
+    "full-pack-part-2-6-batch-continuously-not-statically": "batching",
+    "full-pack-part-2-7-budget-the-kv-cache-before-it-budgets-you": "kv",
+    "full-pack-part-2-8-route-by-free-capacity-not-by-turn": "routing",
+    "full-pack-part-2-9-fail-over-without-losing-the-request-twice": "recovery",
+    "full-pack-part-2-10-admit-less-work-before-the-queue-admits-too-much": "routing",
+    "full-pack-part-2-11-stream-every-token-and-cancel-on-disconnect": "edges",
+    "full-pack-part-2-12-shrink-it-to-one-gpu-for-the-synchronous-variant": "one-gpu",
+    "full-pack-part-2-13-scale-it-to-100-000-requests-per-second": "hundred-k",
+    "full-pack-part-2-14-review-the-junior-design-against-the-anchor": "design-review",
+    "full-pack-part-3-15-walk-the-latency-stack-when-it-gets-slow": "diagnosis",
+    "full-pack-part-3-16-deliver-it-in-forty-five-minutes": "interview",
+    "full-pack-part-3-17-answer-the-cost-pivot-in-ten-minutes": "cost",
+    "full-pack-part-3-level-calibration": "interview",
+    "full-pack-part-3-key-takeaways": "review",
+    "full-pack-part-3-check-yourself": "practice-start",
+    "full-pack-part-3-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "shape",
+      "label": "Request shape and targets",
+      "hint": "Which token, latency and failure questions change the design? State the assumptions you would use."
+    },
+    {
+      "id": "sizing",
+      "label": "Size compute, slots and KV",
+      "hint": "Derive replica-seconds, Little's Law concurrency and per-sequence KV, then say which binds."
+    },
+    {
+      "id": "scheduling",
+      "label": "Admit, route and batch",
+      "hint": "Trace one request through admission, power-of-two routing and continuous batching with chunked prefill."
+    },
+    {
+      "id": "failure",
+      "label": "Failure, overload and cost",
+      "hint": "Kill a GPU before and after the first token, overload a tenant, then answer the GPU-bill pivot."
+    }
+  ],
+  "rubric": [
+    "Asks for input and output token distributions before sizing, and names prefill, decode and KV as the three capacity facts.",
+    "Prices a request in replica-seconds (0.15 for the anchor), cross-checks slots with Little's Law and states which constraint binds.",
+    "Explains why continuous batching beats static batching for variable output and what chunked prefill trades.",
+    "Routes by free KV with power-of-two choices and a replica-side final check, not round-robin.",
+    "Distinguishes recovery before and after the first streamed token, with a retry budget and request-ID dedupe.",
+    "Bounds admission by tenant tokens, returns 429 early and reports goodput, TTFT, TPOT and queue wait separately."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Prompt: batch LLM requests, which GPU has capacity, failover; GPU as stateful server with KV budget",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief para 1-2 restate the anchor prompt and define prefill (TTFT), decode (TPOT) and the KV cache in plain words before use; the overview's 'stateful server with a limited KV-memory budget' is the second paragraph's thesis."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: gateway tokenise and ID, token-weighted bounded queue, route by free KV, continuous batching, failure semantics, constructed-figures caveat",
+      "anchors": [
+        "brief",
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief's traced request (1,000-token prompt through gateway, admission, KV-based placement, decode-step slotting, ID-matched return) carries the summary; the 'constructed examples, not measurements' caveat closes the first brief group; failure semantics are taught in walkthrough step 8."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and six-step core-idea figure",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The sentence 'admit work before it reaches a GPU, place it by free KV memory, and batch continuously' appears verbatim in the brief; Figure 1 (b223.../0045... light and dark) sits beside it with a caption naming all six nodes including the 'Queue has room? / Refuse early' branch."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: Forward Deployed, solutions and applied-AI candidates facing serving rounds",
+      "anchors": [
+        "brief-prompts"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "One sentence in 'The anchor prompt and four related prompts' names the same three roles and the serving, batching and GPU-capacity rounds."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: end-to-end at interview depth from the KV/mid-stream constraint; follow-ups list",
+      "anchors": [
+        "brief-prompts"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final brief paragraph states both objectives, including the 'KV memory, not request count, decides placement, and a GPU can fail mid-stream' constraint and the full follow-up topic list."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: token generation, GPU memory, queueing and Little's Law, load balancing",
+      "anchors": [
+        "brief-prompts"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same four prerequisites listed in the brief-prompts group; Little's Law is also defined inline at its first use in sizing check two."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading order (Interview Guide, Deep Dive, Quick Review, optional Full Design)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete navigation instruction; the five-section structure replaces it. The Full Design material it pointed to is distributed into walkthrough steps 1-9, deep dives and Practice rather than kept as a sixth track."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table describing Interview Guide, Deep Dive, Quick Review and Full Design (3 parts)",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation table not reproduced; each topic it lists (two phases, KV, routing, failover, admission, cancellation, variants, latency stack, 45-minute plan, cost pivot, sources) is mapped to its new anchor in the rows below."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Source pointer and constructed-numbers disclaimer",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Disclaimer kept in the brief ('Every capacity number in this case is a constructed example, not a benchmark'); the old cross-section reading pointers are dropped as navigation."
+      }
+    },
+    {
+      "source_id": "main-anchor-and-related-prompts",
+      "teaching_item": "Related-prompts table: anchor, one GPU, 100K rps, junior review, high latency with shared foundation and what changes",
+      "anchors": [
+        "brief-prompts"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with all five rows and both original columns, plus an added 'where it is taught' column linking #one-gpu, #hundred-k, #design-review and #diagnosis."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep-dive provenance note: engine mechanisms and rates are illustrative",
+      "anchors": [
+        "brief",
+        "kv"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Illustrative-rate caveat stated in the brief and again at the end of the KV deep dive ('captured references... confirm the block size and preemption options of the runtime you deploy')."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation line",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation-only line (Main, Deep Dive, Unchanged source); nothing to teach, replaced by the Quick review section."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Tagline: bigger batch buys throughput, every request pays in latency; graded as distributed systems",
+      "anchors": [
+        "brief"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief para 1 keeps 'graded as a distributed-systems question about queues, batches, load balancing, health checks and backpressure'; para 3 keeps the throughput-versus-latency tagline and the batching step refers back to it."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Prompt group table (Anthropic anchor/one GPU/100K/review, OpenAI latency) and provenance of numbers",
+      "anchors": [
+        "brief-prompts",
+        "references"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Group table merged into the related-prompts table; the Anthropic/OpenAI labels and the Observability case link are in the paragraph after it. Provenance (general serving practice, air-gapped design, cost and latency material) and 'I would replace these with a load test' are in the references note and brief."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Five ask-first questions incl. mid-stream failure contract",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The draft had dropped 'what should a caller see after mid-stream failure?'; step 1 now asks it explicitly and says it chooses continuation versus partial error, linking to step 8. Pool isolation for several models is also restated."
+      }
+    },
+    {
+      "source_id": "full-pack-1-ask-what-kind-of-request-before-sizing-anything",
+      "teaching_item": "Questions table with why-it-matters and anchor assumptions; 20 vs 2,000 tokens example",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row table kept intact; the two-orders-of-magnitude 20-token vs 2,000-token example and 'state an assumption for each declined question' open step 1."
+      }
+    },
+    {
+      "source_id": "full-pack-1-ask-what-kind-of-request-before-sizing-anything",
+      "teaching_item": "Weak versus strong answer and the spoken 'stateful server with a memory budget' line",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored after the draft omitted them: the weak answer (load balancer, queue, GPU pool, stops) versus naming both phases in two minutes, followed by the source's quoted line as a blockquote."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first recall list",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Ask first' paragraph repeats all six cheat-sheet prompts including the mid-stream failover contract."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional list, sizing summary and the one-breath interview shortcut",
+      "anchors": [
+        "requirements",
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Must-have and should-have paragraphs in step 2 cover validate/tokenise, token budgets, KV-aware routing, continuous batching, demux/stream/cancel, failure, early rejection, canary/drain and split metrics; the quoted interview shortcut ends step 2; the sizing line is taught in step 3."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "Testable constraints table: TTFT 500 ms, TPOT 50 ms, 1,000 rps, 70% utilisation, 99.9%, failover, fairness, goodput",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Eight-row table kept; only the uncheckable '(additions file, section D)' notes were moved to the references note. Goodput and the 70% knee get plain definitions after the table, with the caveat that the knee depends on service variability."
+      }
+    },
+    {
+      "source_id": "full-pack-2-state-requirements-as-testable-constraints",
+      "teaching_item": "'A requirement that cannot fail a test is a preference' and the requirement-to-component ownership table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening sentence of step 2 keeps the preference/constraint contrast with the 500 ms example; seven-row ownership table kept after it."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-by-tokens-per-second-then-check-with-little-s-law",
+      "teaching_item": "Replica formula and the air-gapped warning about GPU count/memory without throughput",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Formula shown verbatim in step 3 with replica defined; both halves of the warning (misses the bottleneck, misses the placement constraint) restored after the draft paraphrased them away."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-by-tokens-per-second-then-check-with-little-s-law",
+      "teaching_item": "Compute check: 0.15 replica-seconds, 150, ~214; decode two-thirds; A100 caveat",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Check one' paragraph carries the arithmetic and states 214.3 as about 214 replicas, 215 by strict ceiling (meta wording about the source's rounding removed 2026-11-16); the A100 caveat the draft dropped is restored before the rates table."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-by-tokens-per-second-then-check-with-little-s-law",
+      "teaching_item": "Little's Law slot check: 39 tok/s, 26 ms, ~7 s, ~7,000 in flight, ~110 replicas; take the larger; say both aloud",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Check two' and 'Take the larger number' paragraphs keep every figure, N+1 per zone and 'a reviewer trusts the number that survived two independent methods'."
+      }
+    },
+    {
+      "source_id": "full-pack-3-size-by-tokens-per-second-then-check-with-little-s-law",
+      "teaching_item": "Memory check: 12+2+6+2 = 22 GB vs 24 GB card; challenge the profile",
+      "anchors": [
+        "sizing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Check three' keeps the four budget lines, the 24 GB conclusion and the challenge-the-profile rule, with a link forward to the KV deep dive."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-two-phases-and-two-capacity-checks",
+      "teaching_item": "Two phases, two capacity checks, CPU tokenisation, incremental detokenisation, queue vs service time",
+      "anchors": [
+        "sizing",
+        "edges",
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Phases defined in the brief; both checks in step 3; tokenisation and detokenisation in step 5; 'measure queue wait separately or overload looks like a slow model' ends step 7."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-assumed-anchor-arithmetic",
+      "teaching_item": "Recall arithmetic 0.15, 214, 7,000/64 = 110",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review arithmetic paragraph restates the same lines plus the 128 KiB KV figure, labelled as H100-class assumptions."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "LLM-versus-code ownership and replica-local final authority",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Missing in the draft; step 4 now opens by separating what the model does (prefill, decode) from what code owns (identity, quotas, admission, placement, scheduling, health, retry budget, response routing)."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Eight-step architecture walk with main request-path figure",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figure 2 (8448.../a298...) sits before a numbered eight-step trace that follows the same order as its boxes: gateway, admission (429/defer), router with replica-side check, scheduler with chunked prefill, paged KV, demux, health and partial-output policy, cancel and drain/canary."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Organising rule and three original figures (request path, registry/health loop, wide two-replica view)",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Draft captions were generic ('source figure 1/2/3'). Each figure now has its own caption and alt text naming its real labels: Figure 3 overload and disconnect exits, Figure 4 heartbeat-registry-router-health loop, Figure 5 control plane over two replicas. Control-plane and metrics bullets are prose between Figures 4 and 5, in source order."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Thirteen-component table and three boundaries to point at",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept with all thirteen rows; 'closed' and 'degrades' are defined before it; the three boundaries (admission is the only refusal point, router decides where not how, request ID as the thread) restored after it."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Whiteboard path' paragraph keeps the arrow chain and the evict/cancel line."
+      }
+    },
+    {
+      "source_id": "full-pack-5-tokenize-at-the-edge-not-on-the-gpu",
+      "teaching_item": "Tokenise at the gateway: three benefits, input cap against a 100,000-token prompt; incremental detokenisation and stop sequences",
+      "anchors": [
+        "edges"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "New step 5 teaches all three benefits and the 100,000-token cap (the draft omitted the cap), then partial-character buffering and text-level stop checks."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-stream-every-token-and-cancel-on-disconnect",
+      "teaching_item": "Streaming changes perceived not total latency; buffering proxy; separate TTFT/TPOT SLOs",
+      "anchors": [
+        "edges"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps the 500 ms vs seven-second example, the one-buffering-hop warning and the separate-SLO reason, all absent or flattened in the draft."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-11-stream-every-token-and-cancel-on-disconnect",
+      "teaching_item": "Cancellation as cost control; propagate disconnect to scheduler",
+      "anchors": [
+        "edges"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final paragraph of step 5 explains tokens nobody reads, ties it to the vLLM abort reference and issue #10087 middleware failure, and ends with KV freed at the next step."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-batch-continuously-not-statically",
+      "teaching_item": "Static, dynamic and continuous batching table and separate explanations",
+      "anchors": [
+        "batching"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; each strategy then gets its own paragraph, and the same 10-token/1,000-token pair is traced through static (990 idle steps, restored) and continuous (slot reused at step 11)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-batch-continuously-not-statically",
+      "teaching_item": "Chunked prefill trade and batch size as a knob",
+      "anchors": [
+        "batching"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps 'tens of milliseconds' stall, the TTFT-for-TPOT trade, 'say it aloud', and 'let the scheduler cap concurrency when per-token latency drifts up' (dropped in the draft)."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-continuous-batching-and-kv-memory",
+      "teaching_item": "Deep-dive summary of batching, chunking, goodput tuning and KV numbers incl. V1 recompute vs V0 swap",
+      "anchors": [
+        "batching",
+        "kv"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Batching points in step 6; KV numbers and the V1-recompute / V0-swap distinction in the KV deep dive's preemption paragraph."
+      }
+    },
+    {
+      "source_id": "main-choices-and-failure-modes",
+      "teaching_item": "Choices and failure modes: static vs continuous, KV as capacity, failover, cost measures",
+      "anchors": [
+        "batching",
+        "kv",
+        "recovery",
+        "cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each paragraph has a fuller home: batching step 6, KV deep dive (128 KiB, 160 MB, 1 GB, paging, prefix affinity only with headroom), recovery step 8 (deep probe, greedy caveat, retry cap), cost pivot (goodput/GPU-hour, cancel before buying)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-budget-the-kv-cache-before-it-budgets-you",
+      "teaching_item": "KV per-token arithmetic and table; 1,250 and 8,000-token scaling",
+      "anchors": [
+        "kv"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "KV deep dive keeps the four-row table and 2\u00d732\u00d78\u00d7128\u00d72 = 128 KiB, adds a one-line explanation of grouped-query attention, and keeps 160 MB, 64 sequences in ~10 GB beside 16 GB weights on 80 GB, and ~1 GB / ~50 sequences at 8,000 tokens."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-budget-the-kv-cache-before-it-budgets-you",
+      "teaching_item": "Paged blocks, 16-token default, prefix sharing; preemption policy and the 64-caller outage",
+      "anchors": [
+        "kv"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paged-allocation and preemption paragraphs keep all mechanisms; the '64 callers' consequence the draft softened is restored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-route-by-free-capacity-not-by-turn",
+      "teaching_item": "Capacity registry, one-second heartbeat, score by free KV after reservation, queue length breaks ties",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 opening: the draft had queue length as 'another signal'; corrected to the source's tie-breaker rule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-route-by-free-capacity-not-by-turn",
+      "teaching_item": "Power of two choices against herding; replica final check; prefix affinity override",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Named 'power of two choices' (missing by name in the draft step), 'almost as well as perfect knowledge', fast reject then next choice, and 'a cache hit is not worth a queue'."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-routing-failure-and-backpressure",
+      "teaching_item": "Routing, health layers, retry semantics, admission and disconnect summary",
+      "anchors": [
+        "routing",
+        "recovery",
+        "edges"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Split across steps 7 (routing, admission, backpressure, interactive over offline), 8 (health, retries, N+1, cold-start headroom) and 5 (disconnect through every hop)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-admit-less-work-before-the-queue-admits-too-much",
+      "teaching_item": "Token buckets, bounded queue, 429 Retry-After, Little's Law bound, upstream backpressure, shed by priority, cross-case links",
+      "anchors": [
+        "routing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 now explains why the bound follows from Little's Law (queue wait = length / drain rate), which the draft omitted, and keeps the Observability and High-Volume Batch Inference cross-references."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-fail-over-without-losing-the-request-twice",
+      "teaching_item": "Three health-check layers table",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps the liveness/readiness/deep-probe table with the 200 ms example after explaining why a live process can hide a hung device."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-fail-over-without-losing-the-request-twice",
+      "teaching_item": "Recovery by what the caller saw; greedy vs sampling caveat; partial error",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two-case list in step 8 (nothing streamed: extra latency only; streamed: re-prefill or explicit partial error) with the floating-point caveat; added drill answer-13 traces the 40-token case."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-fail-over-without-losing-the-request-twice",
+      "teaching_item": "Retry budget 10%, jitter, request-ID dedupe, N+1 per zone, cold start minutes",
+      "anchors": [
+        "recovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Retry-storm and headroom paragraphs keep every number and the seconds-versus-minutes distinction from the Run:ai references; drain/canary closes step 8."
+      }
+    },
+    {
+      "source_id": "main-variants-and-evaluation",
+      "teaching_item": "Variant summaries and the metrics and load-test list",
+      "anchors": [
+        "evaluation",
+        "one-gpu",
+        "hundred-k",
+        "design-review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Metrics and load-test list in step 9 (p50/p95 TTFT, TPOT, queue vs service, prefill/decode throughput, prefix hits, KV/preemptions, cancellation delay, explicit failures, goodput); variants link to their deep dives."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-shrink-it-to-one-gpu-for-the-synchronous-variant",
+      "teaching_item": "One-GPU mechanism: request ID, future, 100-or-20 ms flush, demux, timeout",
+      "anchors": [
+        "one-gpu"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Deep dive traces one call and defines a future in plain words before using it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-12-shrink-it-to-one-gpu-for-the-synchronous-variant",
+      "teaching_item": "200 ms batch, 500 rps max, 400 rps at 80%, ~120 connections, two-batch bound, 503; variable output switches to continuous",
+      "anchors": [
+        "one-gpu"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Arithmetic paragraph shows 100 \u00f7 0.2 s and keeps 'latency = wait + queue + 200 ms' and 'trivial until overload' (both missing in the draft); bound and the variable-output exception follow."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-one-gpu-100k-rps-and-design-review",
+      "teaching_item": "Deep-dive summary of one GPU, 100K-rps fleet sizes, cells and review ranking",
+      "anchors": [
+        "one-gpu",
+        "hundred-k",
+        "design-review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each part lives in its own deep dive with fuller teaching; no item exists only here."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-scale-it-to-100-000-requests-per-second",
+      "teaching_item": "Three request shapes table (~21,400 / ~2,570 / ~3,630)",
+      "anchors": [
+        "hundred-k"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept (the draft's 'historical' caption was wrong and is fixed); added worked rows show why 500/1 scoring (0.0254) costs more than 200/20 completion (0.018): prefill dominates."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-13-scale-it-to-100-000-requests-per-second",
+      "teaching_item": "Four additions: cells, token admission, cross-layer backpressure, headroom over autoscaling; prefix caching and output caps",
+      "anchors": [
+        "hundred-k"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four labelled bullets keep 'request counts lie' and 'the global balancer shifts traffic before a cell's queue deepens'; challenge-the-mix advice and cheapest-capacity line kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-14-review-the-junior-design-against-the-anchor",
+      "teaching_item": "Review method and eleven-row checklist",
+      "anchors": [
+        "design-review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own deep dive (was merged with latency in the draft): open with what works, clarify requirements, rank three; table kept intact."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-14-review-the-junior-design-against-the-anchor",
+      "teaching_item": "Lead with three, deliver as a conversation; eleven findings reads as memorised",
+      "anchors": [
+        "design-review"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph explains why the first three rows lead (each breaks service for everyone) and keeps the conversation-not-verdict closing advice, which the draft omitted."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-15-walk-the-latency-stack-when-it-gets-slow",
+      "teaching_item": "Which latency first; eight-layer stack table",
+      "anchors": [
+        "diagnosis"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency deep dive keeps the Observability cross-reference, the first question and the full table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-15-walk-the-latency-stack-when-it-gets-slow",
+      "teaching_item": "Frozen screen vs fast-then-drags rule; peak-only follow-up",
+      "anchors": [
+        "diagnosis"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The frozen-screen rule (missing in the draft) now organises the paragraph after the table and folds in deep-dive-5's TTFT, TPOT and after-last-token cause lists."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-latency-and-economics",
+      "teaching_item": "TTFT/TPOT/post-last-token causes; goodput; GPU-bill measures incl. tokens after disconnect; levers",
+      "anchors": [
+        "diagnosis",
+        "cost"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency causes in #diagnosis; 'tokens generated after disconnect' (dropped by the draft) restored in the cost pivot with quantisation's quality caveat and the 'buying GPUs first may leave the bottleneck untouched' line."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-16-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Forty-five-minute plan table",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The draft turned this into prose and misstated 43-45 as 'the close'; the eight-row table is restored with 'the cost pivot and what would prove the design wrong'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-16-deliver-it-in-forty-five-minutes",
+      "teaching_item": "Rehearsed two-minute summary (power-of-two, 214 plus N+1, goodput proves me wrong)",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept verbatim as the second attributed blockquote; the draft's mixed paraphrase is removed."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Main-guide two-minute answer",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept verbatim as the first attributed blockquote, including its 214-replica validation caveat."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-level-calibration",
+      "teaching_item": "Senior/staff/principal table and its lead sentence",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; the 'every level can draw a queue in front of GPUs' lead, missing in the draft, now introduces it."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-17-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost card: driver, cheapest lever, proof metric, do-not, 60-second line",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Card table kept with labelled columns (the draft had empty headers); framed as the source's self-drill with an attempt prompt before the card."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-17-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Decode two-thirds so cut output first; cancellation second; four verbs",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Following paragraphs keep the two-lever order and the Measure / Route / Bound / Cache-safely sequence in bold."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-check-yourself",
+      "teaching_item": "Twelve check-yourself questions with worked answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "answer-1 to answer-12 keep the source question order and answers; answer-8 was rewritten in the draft into a vaguer claim and now matches the source (missed-SLO queue, one connection per caller), with 503 added from section 12. answer-13 and answer-14 are labelled added drills."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-key-takeaways",
+      "teaching_item": "Seventeen key takeaways",
+      "anchors": [
+        "review",
+        "review-rules",
+        "review-close"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review's three groups cover every takeaway: request shape, testable requirements, two-check sizing, admit/route/batch, gateway tokenisation, continuous batching, KV division, power-of-two, failover, admission, streaming and cancel, the three variants, latency walk, 45-minute plan and cost pivot. Each is taught in full earlier."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Numbered list in Quick review keeps all five rules; the 128 KiB example moved into the arithmetic paragraph beside it."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-variants",
+      "teaching_item": "Variants recall and the 60-second close",
+      "anchors": [
+        "review-close"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Variants paragraph plus the quoted 60-second close, which the draft had dropped."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-references",
+      "teaching_item": "Thirteen fact-check references with the claim each supports, checked 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All thirteen links kept with their source URLs and, restored from the source, the specific claim each supports; uncaptured internal notes (additions, decomposition-questions, cost-drivers files) are disclosed rather than cited as links."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: read all 49 captured sections of source.json against the earlier teach-mode draft paragraph by paragraph. The draft kept every source table but had dropped or flattened specific items: the mid-stream-failure discovery question, the weak/strong answer and spoken line, the A100 caveat, 'say both checks aloud', LLM-versus-code ownership, the three architecture boundaries, gateway input cap, perceived-versus-total streaming latency, the 990 idle steps, queue length as tie-breaker, the Little's Law queue bound, the 64-caller crash, 'latency = wait + queue + 200 ms', review delivery advice, the frozen-screen rule, the 45-minute table (misstated last slot), both verbatim two-minute answers, the 60-second close, reference claims and tokens-after-disconnect. All restored. Structural changes: added walkthrough step 5 (tokenise at the edge, stream and cancel) and step 9 (evaluation), split the junior review from latency diagnosis, gave the five figures specific captions from their actual SVG labels, explained each batching strategy separately with one traced pair, added worked 100K-row arithmetic, corrected Check-yourself answer 8 to the source, and added two labelled drills. The brief keeps a traced request and a related-prompts table; old navigation sections are consolidated, not shown. Uncaptured internal source notes are disclosed in References. Source-problem sweep (2026-11-16): no real source inconsistencies in this case; the only source-pointing aside (the source 'rounds' 214.3 to about 214) was reworded neutrally, keeping both 214 and the 215 strict ceiling."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-10",
+    "answer-11",
+    "answer-12",
+    "answer-13",
+    "answer-14"
+  ]
+}

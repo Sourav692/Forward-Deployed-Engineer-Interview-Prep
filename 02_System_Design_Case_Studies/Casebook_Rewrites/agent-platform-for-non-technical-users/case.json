@@ -1,0 +1,867 @@
+{
+  "title": "Agent Platform for Non-Technical Users",
+  "slug": "agent-platform-for-non-technical-users",
+  "subtitle": "Turn multi-channel workflow configuration into versioned, bounded actions with explicit authority and recovery.",
+  "theme": "AI Platforms and Scale",
+  "kind": "Case study",
+  "level": "Advanced",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief",
+    "intro-the-core-idea": "brief",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "main-intro": "brief",
+    "main-the-anchor-and-its-related-case": "brief-related",
+    "deep-dive-intro": "brief-task",
+    "cheat-sheet-intro": "brief-task",
+    "full-pack-intro": "brief-related",
+    "main-questions-to-ask-the-interviewer": "discovery",
+    "cheat-sheet-ask-first": "review",
+    "full-pack-1-frame-the-round-as-trust-not-tool-selection": "discovery",
+    "main-requirements-functional-non-functional": "requirements",
+    "full-pack-2-anchor-every-answer-on-one-500-refund": "anchor",
+    "full-pack-3-state-requirements-as-testable-constraints": "requirements",
+    "main-architecture": "architecture-steps",
+    "cheat-sheet-whiteboard-path": "review",
+    "full-pack-4-draw-the-architecture-end-to-end": "architecture",
+    "deep-dive-1-the-contract-between-authoring-and-runtime": "specification",
+    "full-pack-part-2-5-translate-every-channel-once-at-the-edge": "events",
+    "deep-dive-2-routing-and-concurrency": "routing",
+    "full-pack-part-2-6-route-twice-priority-for-configuration-a-lock-for-safety": "routing",
+    "full-pack-part-2-7-keep-control-flow-in-data-and-let-the-model-fill-only-type": "specification",
+    "main-decisions-an-interviewer-will-probe": "guardrails",
+    "deep-dive-4-guardrail-order-and-the-500-story": "guardrails",
+    "full-pack-part-3-10-deny-in-a-fixed-order-and-let-deny-override": "guardrails",
+    "deep-dive-5-promotion-and-negative-evidence": "promotion",
+    "full-pack-part-3-11-make-autonomy-something-a-workflow-earns-through-four-gat": "promotion",
+    "deep-dive-3-one-execution-loop-and-action-level-idempotency": "durability",
+    "full-pack-part-2-8-checkpoint-every-step-and-run-one-loop-for-resume": "durability",
+    "full-pack-part-2-9-key-idempotency-on-the-action-and-cover-every-side-effect": "idempotency",
+    "main-rollout-scale-and-honest-gaps": "rollout",
+    "deep-dive-6-product-and-production-gaps": "gaps",
+    "full-pack-part-3-12-name-the-gaps-before-the-interviewer-does": "gaps",
+    "full-pack-part-3-13-walk-through-the-cascade-robotics-example": "cascade",
+    "full-pack-part-4-14-deliver-it-in-sixty-minutes": "interview",
+    "full-pack-part-4-15-stop-runaway-automations-before-the-invoice-does": "cost",
+    "full-pack-part-4-level-calibration": "interview",
+    "full-pack-part-4-key-takeaways": "review-takeaways",
+    "full-pack-part-4-check-yourself": "practice-start",
+    "full-pack-part-4-references": "references",
+    "main-two-minute-interview-answer": "two-minute-answer",
+    "cheat-sheet-five-rules": "review-rules",
+    "cheat-sheet-failure-story": "review-rules",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Framing and discovery",
+      "hint": "Say why this is a trust problem, ask the five questions and scope out the builder and compiler."
+    },
+    {
+      "id": "refund",
+      "label": "Trace the $500 refund",
+      "hint": "Route the Cascade event, name the rule that denies it and why it is refused rather than clamped."
+    },
+    {
+      "id": "durability",
+      "label": "Crash, replay and the two bugs",
+      "hint": "Resume after step 0, explain the action key and tell both bugs in order."
+    },
+    {
+      "id": "rollout",
+      "label": "Promotion, gaps and week one",
+      "hint": "Walk the five stages, name the in-process store gap and close with one safe workflow."
+    }
+  ],
+  "rubric": [
+    "Frames the round as trust and scopes out the visual builder and NL compiler while naming the spec they must produce.",
+    "Separates priority (which workflow should run) from the entity lock (whether two can run at once) with named reasons for no match and lock conflict.",
+    "Keeps control flow in a versioned declarative spec and limits the model to typed, validated values.",
+    "States the five deny rules in order and refuses the $500 refund under the $50 cap rather than clamping it, keeping the allow-list question separate.",
+    "Explains one loop at next_step_index and an action-level idempotency key checked before authorisation, including why cost accounting is a side effect.",
+    "Promotes one stage at a time with a non-author approver and names the no-LLM and in-process-store gaps with their production replacements."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Trust problem: a refund must be authorised, executed once and recoverable without paying twice",
+      "anchors": [
+        "brief"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Case brief para 2 states the three-part constraint (authorised, once, recoverable without double pay) and adds why a non-programmer makes it hard; para 3 defines tenant, canonical event, declarative spec, guardrail and idempotency in plain words before the walkthrough uses them."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Design summary: canonical event with tenant ID, one live workflow, entity lock, typed values, checkpoints, idempotency before authorisation, ordered deny, staged autonomy, author never self-approves",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'What you need to design' para 1 restates each element of the overview's design sentence in order; the human-responsibility paragraph at the end of the brief carries 'author can never approve it alone'."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the core-path figure",
+      "anchors": [
+        "brief"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief para 4 quotes the one-line idea and introduces figure-1-0 (0bb5/a103 light/dark); caption names its five nodes (canonical event, match one live workflow, guardrail allows?, run once and checkpoint, refuse or seek approval), checked against the rendered SVG."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Third paragraph of brief-task names the audience and the agent/workflow-automation round."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on specs, routing, loop, idempotency, guardrail order, promotion, gaps",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same paragraph lists the seven follow-up areas verbatim in meaning."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumed knowledge: LLM agents and tool calling, idempotency, state machines, multi-tenant cloud",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task para 3 lists the four prerequisites; LLM acronym expanded on first use in para 2."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions (three mandatory tabs, mark-as-read, Full Design optional)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Obsolete tab navigation replaced by the five-section shell; no reader-facing instructions about old tabs are kept. Alias routes the old fragment to brief-task."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section map (Interview Guide, Deep Dive, Quick Review, Full Design in 4 parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each old section's content is distributed: Interview Guide to walkthrough steps 1-10, Deep Dive topics to walkthrough 5-9 and deep dives, Quick Review to Quick review, Full Design parts 1-15 to their matching steps. No sixth Full Design track."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Main-guide intro: one slice (events, versioned spec, guardrails, durable steps), demo is deterministic, end-to-end flow event to one spec to guardrail to execute once to recover",
+      "anchors": [
+        "brief"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief para 5 traces the same Cascade flow ($500 vs $50, refuse not clamp, approval, idempotent retry); brief-task para 2 carries the no-LLM deterministic demo and the 'one slice' scope. Crash-resume is in brief-task para 1 and the durability deep dive."
+      }
+    },
+    {
+      "source_id": "main-the-anchor-and-its-related-case",
+      "teaching_item": "Anchor vs Cascade Robotics: shared foundation and what changes",
+      "anchors": [
+        "brief-related"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'How the whiteboard anchor and Cascade Robotics fit together' disclosure keeps the table's shared-foundation and what-changes cells for both cases."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Group contribution table (anchor sections 1-12 and 14, Cascade section 13, self-drill section 15) and 'safety problem wearing an AI costume' framing",
+      "anchors": [
+        "brief-related"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Contribution table merged into the brief-related table (third row is the self-drill cost pivot). The 'model chooses a value; code decides whether destructive action runs' framing is brief para 2 and walkthrough step 7."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep-dive navigation note",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pure navigation text ('read with the unchanged source'); no teaching content. Alias only."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation note",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pure navigation links; no teaching content. Alias only."
+      }
+    },
+    {
+      "source_id": "full-pack-1-frame-the-round-as-trust-not-tool-selection",
+      "teaching_item": "Framing sentence quote and why: function calling standard since 2023",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 para 1 gives the 40-minutes-wasted reason with the OpenAI June 2023 link, then the attributed blockquote kept verbatim."
+      }
+    },
+    {
+      "source_id": "full-pack-1-frame-the-round-as-trust-not-tool-selection",
+      "teaching_item": "Prompt quotation and four-phrase table",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 quotes the prompt and keeps all four phrase rows unchanged."
+      }
+    },
+    {
+      "source_id": "full-pack-1-frame-the-round-as-trust-not-tool-selection",
+      "teaching_item": "Five clarifying questions and what each decides; scope-out-loud statement",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with main's question table into one three-column table: every 'what it decides' clause from the full pack (NL authoring importance, email threading/web-form dedup, guardrail vs UI problem, embarrassing vs money, retrofit vs load-bearing) appears in column three. Scope quote kept verbatim after the table."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Questions table: concrete restatements ('refund angry VIP emails', who dedups two emails, refund $500, refund every customer tonight, Acme vs Globex) and decisions",
+      "anchors": [
+        "discovery"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five 'what it's really asking' cells form column two of the merged step-1 table; 'what you then decide' merged into column three."
+      }
+    },
+    {
+      "source_id": "full-pack-2-anchor-every-answer-on-one-500-refund",
+      "teaching_item": "Cascade scenario: Zendesk webhook, #support-escalations, drafted reply, auto-refund up to hard $50 cap, above-cap refused even with approval, cap change is a separate policy change, no second refund",
+      "anchors": [
+        "anchor"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 para 1 carries every scenario detail including the separate authorised policy change."
+      }
+    },
+    {
+      "source_id": "full-pack-2-anchor-every-answer-on-one-500-refund",
+      "teaching_item": "User's own words quote and six hidden guarantees table",
+      "anchors": [
+        "anchor"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quote opens the brief's example paragraph; six-guarantee table kept whole in step 2 with an added sentence explaining why the user names none of them."
+      }
+    },
+    {
+      "source_id": "full-pack-2-anchor-every-answer-on-one-500-refund",
+      "teaching_item": "Demo question table (autonomous? budget? retry?) and the 'cap is not a nice-to-have' quote",
+      "anchors": [
+        "anchor"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row table kept; attributed quote kept; added one sentence on why clamping is worse than refusing (a $50 refund nobody decided). Same reasoning also traced in the brief and answer-2."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional list including four Cascade behaviours (refuse not clamp, autonomy cannot bypass cap, issue_refund allow-list or approval, retry cannot refund twice)",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 numbered list plus the following paragraph state all eleven functional items; stage names listed in item 8."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Non-functional table (security, spend, reliability, audit), demo note and interview shortcut",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Four-row NFR table added (the draft had dropped it); demo note becomes the sentence before the constraint table; interview shortcut quoted verbatim at the end of step 3."
+      }
+    },
+    {
+      "source_id": "full-pack-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Must-haves vs should-haves; ten testable constraints; requirement-to-component table",
+      "anchors": [
+        "requirements"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'A requirement that cannot fail a test is a preference' opens step 3; should-haves (clone, NL authoring, plain-language history, retries around resume, gradual migration) in their own paragraph; both tables kept whole including 21 tests well under a second."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Nouns before boxes and narrate one event",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 lists the nine nouns and adds a plain definition of Principal; the narrated webhook trace is kept, clarifying that non-destructive steps still pass budget checks (source rule 10)."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four original figures: anchor board, authoring plane, runtime plane with stores, detailed named exits",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Draft had four identical 'source figure N' captions. Each figure now has its own lead paragraph and caption naming its actual nodes (checked against the SVG labels: three exits; builder gap to live selection; replay no-op vs authorise; no_trigger_match, entity_locked, HALTED, replay check). Order matches the source."
+      }
+    },
+    {
+      "source_id": "full-pack-4-draw-the-architecture-end-to-end",
+      "teaching_item": "Four tools, two destructive; live store vs tenant policy and approval; component table",
+      "anchors": [
+        "architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before figure-31-3 lists the tools and separation of stores; twelve-row component table kept with function names."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Seven-step architecture trace and its combined figure; demo has no LLM",
+      "anchors": [
+        "architecture-steps"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The same path, step by step' subsection turns the source paragraph into seven numbered steps (adapter, tenant-only routing with lock, pinned version and next_step_index, typed validation, idempotency after access checks before authorisation, guardrail with tighter caps, scoped tool and checkpoint) and places figure-11-0 (7f12/f166) after it with a caption tied to those steps."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Whiteboard path arrow chain and no-LLM note",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review 'Ask first, then draw the path' keeps the ten-stage arrow chain and the model-proposes/code-authorises sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-5-translate-every-channel-once-at-the-edge",
+      "teaching_item": "Normalise once; six Event fields and what five carry; sixth channel is one adapter; Slack urgent_message classification",
+      "anchors": [
+        "events"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 explains each field's job (trigger match, tenant scope, lock key, raw_ref audit) and adds what payload carries; sixth-channel claim and the wf_slack_escalation example kept."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-routing-and-concurrency",
+      "teaching_item": "Router matches tenant, LIVE, trigger; priority 10 vs 1; lock refuses with entity_locked even on equal priority; production lock needs uniqueness or fenced lease",
+      "anchors": [
+        "routing"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 carries every item; the production-lock sentence links to the gaps deep dive where fencing is explained."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-route-twice-priority-for-configuration-a-lock-for-safety",
+      "teaching_item": "Two questions, two checks; match/prioritise/lock steps; DRAFT never matches; route() never silent; fixture; quote; build-only-one failure",
+      "anchors": [
+        "routing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 numbered match/prioritise/lock list, named reasons, fixture triggers, attributed quote and both build-only-one failure sentences."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-the-contract-between-authoring-and-runtime",
+      "teaching_item": "WorkflowSpec, Event, tool registration contract; builder or compiler produces reviewable draft; runs pin versions; no LLM on purpose; future LLM bounded; open planning loop is a separate change",
+      "anchors": [
+        "specification"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraphs on the spec fields, reviewable form, version pinning and the closing paragraph on the deliberate no-LLM choice and the bounded planning loop."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-keep-control-flow-in-data-and-let-the-model-fill-only-type",
+      "teaching_item": "Bad/good typed call, spec fields, args_template example, walked not executed",
+      "anchors": [
+        "specification"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Code block kept as the source's example; args_template JSON example and 'walks it' sentence kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-keep-control-flow-in-data-and-let-the-model-fill-only-type",
+      "teaching_item": "Five determinism controls; four-tool registry with destructive flag declared once; scopes as least privilege",
+      "anchors": [
+        "specification"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Determinism table kept; old 'section 9/10' references rewritten as links to the idempotency and ordered-deny anchors. Registry paragraph keeps 'cannot reason about risk it is not told about'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-keep-control-flow-in-data-and-let-the-model-fill-only-type",
+      "teaching_item": "Five non-technical product constraints with built status; versioning",
+      "anchors": [
+        "specification"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Product-surface table kept with built/partial/not-built cells; versioning paragraph follows; 'decides THAT / HOW' line closes step 7."
+      }
+    },
+    {
+      "source_id": "main-decisions-an-interviewer-will-probe",
+      "teaching_item": "Probed decisions: priority vs lock, draft never matches, dollars vs compute (bug 1), replay charge (bug 2), ordered denial, workflow tighter never looser, autonomy keeps caps, promotion, shadow mocks writes, runaway cost",
+      "anchors": [
+        "guardrails"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each item has a home: priority/lock in step 6, deny order and tighter-not-looser in step 8, both bugs in the idempotency deep dive with a pointer from step 8, promotion in step 9, runaway cost in the cost deep dive."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-guardrail-order-and-the-500-story",
+      "teaching_item": "authorize_step order, non-destructive after budgets, $500 refused not reduced, wrong-cost bug, amount_usd fix, 30-step vs $500 examples, no retry or clamp",
+      "anchors": [
+        "guardrails"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 table plus the step-vs-spend paragraph (both examples) and the bug-1 paragraph naming amount_usd."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-deny-in-a-fixed-order-and-let-deny-override",
+      "teaching_item": "Five deny rules and two allows table; seven-line ladder note",
+      "anchors": [
+        "guardrails"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; the source's blank first cell on the allow row (the draft had rendered it as ', ') now reads 'Allow'. Seven-rule count and the whiteboard ladder note follow the table."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-deny-in-a-fixed-order-and-let-deny-override",
+      "teaching_item": "Step budget vs spend cap count different things; autonomy quote; GuardrailPolicy fields; tighter never looser; tenant owns allow-list",
+      "anchors": [
+        "guardrails"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 paragraphs keep each claim; added one sentence tying rule 2 vs rule 5 back to Cascade's autonomous workflow."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-10-deny-in-a-fixed-order-and-let-deny-override",
+      "teaching_item": "Negative-control demo: seven denials in demo_guardrail_failure.py",
+      "anchors": [
+        "guardrails"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven-item bullet list with each rule name and example, plus 'stopped proves more than working'."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-promotion-and-negative-evidence",
+      "teaching_item": "Five states, one stage at a time by non-author approver/admin; testing historical, shadow mocks writes, live per-action approval, autonomous only allow-listed; 21 tests list; tests prove engine not planner",
+      "anchors": [
+        "promotion"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 table and paragraphs carry the stage semantics; the 21-test coverage list maps to the constraint table in step 3 and the seven-denial list in step 8; the engine-not-planner caveat is in brief-task and step 10."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-make-autonomy-something-a-workflow-earns-through-four-gat",
+      "teaching_item": "Stage table; why four gates; promote() wrong_role and cannot_skip_stage; u_author_wrong_hat; two standard follow-ups",
+      "anchors": [
+        "promotion"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 keeps the table, the fewer/more-gates argument, both promote() denials, the named fixture (missing in the draft) and the two follow-ups, which are also practised as answer-12 and answer-13."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-one-execution-loop-and-action-level-idempotency",
+      "teaching_item": "Same loop at next_step_index; crash after 0 resumes at 1; at-least-once replay needs action key and durable store; provider key; access checks then lookup before authorisation; replay no-op may advance checkpoint",
+      "anchors": [
+        "durability"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Durability deep dive carries the loop and crash facts; the idempotency deep dive carries the key, durable store, provider key (with Stripe link), access-check ordering and 'may advance the checkpoint'."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-checkpoint-every-step-and-run-one-loop-for-resume",
+      "teaching_item": "One loop, crash_after_step=0 demo, three terminal states plus transient CRASHED, run_001 happy path, quote, resume figure",
+      "anchors": [
+        "durability"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Durability deep dive keeps every fact and the quote; figure-35-0 (679f/003a) gets a paragraph walking its left and right columns and a caption naming next_step_index = 1. Pending-approval behaviour and a labelled 'Beyond the source' note on the effect-before-checkpoint window follow."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-key-idempotency-on-the-action-and-cover-every-side-effect",
+      "teaching_item": "Key on the action; original run_id:step_name key; _apply_side_effect; 1 apply before and after retry",
+      "anchors": [
+        "idempotency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Idempotency deep dive opening paragraphs; the verified 1-apply result was missing in the draft and is restored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-key-idempotency-on-the-action-and-cover-every-side-effect",
+      "teaching_item": "Bug 1 and bug 2 as stories; 'cover every side effect' quote; RAG false-alarm link; $5 vs $50 note",
+      "anchors": [
+        "idempotency"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two bold-led story paragraphs keep the $500/$5/0.02 USD numbers and the fix order; quote kept; RAG false-security-alarm link and the $5-vs-$50 scenario note restored (both absent from the draft)."
+      }
+    },
+    {
+      "source_id": "main-rollout-scale-and-honest-gaps",
+      "teaching_item": "Start with one channel and one non-destructive workflow; in-process stores need distributed lock and shared idempotency store; listed missing features; NL spec lands in DRAFT",
+      "anchors": [
+        "rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 carries rollout order, the distributed-lock options, the seven missing features with PII expanded, and DRAFT-not-LIVE."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-product-and-production-gaps",
+      "teaching_item": "Incomplete product features; production stores, scoped credentials, observability, tenant breaker; trace with rule and plain reason; week one around one safe workflow",
+      "anchors": [
+        "gaps"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Gaps deep dive paragraph after the gap table lists the production needs and the plain-reason trace; week-one plan is step 10."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-name-the-gaps-before-the-interviewer-does",
+      "teaching_item": "No-LLM honesty; gap table; scale quote; failure table",
+      "anchors": [
+        "gaps"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Gap and failure tables kept; scale quote kept verbatim (the draft had paraphrased it and lost 'acquire_lock/release_lock stay the same two functions'); added a paragraph explaining what a fencing token protects, citing the Kleppmann and Redis references."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-walk-through-the-cascade-robotics-example",
+      "teaching_item": "Three-layer map with weak vs strong answer; layer figure",
+      "anchors": [
+        "cascade"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cascade deep dive 'First' paragraph names all three layers and the weak/strong contrast (absent from the draft); figure-40-0 (7a2f/93b9) caption matches the layer labels."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-walk-through-the-cascade-robotics-example",
+      "teaching_item": "Fixture, cross-project Decision shape and bridge to other cases, coverage discipline, effort punch list, one-breath restatement",
+      "anchors": [
+        "cascade"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Second to fourth paragraphs plus the restatement quote; punch list lives in the gaps deep dive and is linked; the bridge to Enterprise Knowledge Assistant and Scoping to Deployed Agent restored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Announce the risk; minute table; three-sentence close; decision/revisit table",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Deliver it in sixty minutes' keeps the opening quote and the six-row timing table, with old section numbers rewritten as links to the matching steps; three-sentence close and trade-off table kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-sixty-minutes",
+      "teaching_item": "Week-one close; six lines that carry the round; questions to ask them; laptop demo commands and durability demo",
+      "anchors": [
+        "interview"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Week-one quote in step 10 with a pointer here; six lines as a list; four closing questions; demo commands kept in the Cascade deep dive and labelled as belonging to the separate project."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-15-stop-runaway-automations-before-the-invoice-does",
+      "teaching_item": "Cost card; levers already in design; token metering and tenant breaker; bug 2; four verbs",
+      "anchors": [
+        "cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Cost deep dive keeps the five-row card (header row given labels), the three existing levers, total_cost_usd metering, bug 2 and the measure/route/bound/cache order. Also practised as answer-14."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-level-calibration",
+      "teaching_item": "Senior, staff, principal: sounds like and missing",
+      "anchors": [
+        "interview"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row table kept with its framing sentence."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "two-minute-answer"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept as a labelled spoken-answer disclosure in Practice. The draft had replaced it with an authored paraphrase; the source text is restored."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-check-yourself",
+      "teaching_item": "Eleven check-yourself questions and answers",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "answer-1 to answer-11 keep each source question as the summary and its answer's facts (answer-10 now says locks and idempotency keys, matching the source, rather than adding checkpoints)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-references",
+      "teaching_item": "Five fact-check references dated 27 Sep 2026",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "References list keeps all five with the source's one-line reason; each is also linked beside the claim it supports (framing, idempotency, gaps)."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Ask-first questions",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The five ask-first questions are the opening line of Quick review; each is taught with its decision in the step-1 table."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-five-rules",
+      "teaching_item": "Five rules",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All five rules kept as a numbered list in 'Five rules and the failure story', with the idempotency key and deny order spelled out."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-failure-story",
+      "teaching_item": "Failure story and 60-second close",
+      "anchors": [
+        "review-rules"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Failure story paragraph and the 60-second close quote follow the five rules."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review-takeaways"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fifteen-item list kept; each item is taught in full earlier on the page."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "16 November 2026: re-read all 47 captured sections against the earlier draft section by section. The draft covered the guardrail and gap tables but had dropped or paraphrased away the main questions table's concrete restatements, the non-functional table, the interview shortcut, the nine nouns, u_author_wrong_hat, the 1-apply/1-apply result, the RAG false-alarm link, the $5-vs-$50 note, the three-layer weak/strong argument, the bridge to other cases, the sixty-minute timing table, the six carrying lines and the source two-minute answer (replaced by an authored one); all are restored. The $500 anchor is now its own walkthrough step, the brief defines tenant, canonical event, declarative spec, guardrail and idempotency before use, and each of the eight source figures has a caption and lead naming its actual nodes instead of 'source figure N'. Added reasoning not in the source (effect-before-checkpoint window, args_hash implying fresh authority, event-to-run dedup) is labelled 'Beyond the source'. Broken ', ' allow-row cell fixed; old section-number references rewritten as links. Three source follow-ups (shadow trial, mid-flight stop, cost pivot) added as worked answers 12-14. No RAG specifics transplanted."
+  },
+  "required_answer_reveals": [
+    "answer-1",
+    "answer-2",
+    "answer-3",
+    "answer-4",
+    "answer-5",
+    "answer-6",
+    "answer-7",
+    "answer-8",
+    "answer-9",
+    "answer-10",
+    "answer-11",
+    "answer-12",
+    "answer-13",
+    "answer-14"
+  ]
+}

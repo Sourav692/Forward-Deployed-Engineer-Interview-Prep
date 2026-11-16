@@ -1,0 +1,501 @@
+{
+  "source_url": "https://forwarddeployedprep.com/design/recruiting-platform",
+  "retrieved_at": "2026-11-15T22:33:24.340956+00:00",
+  "source_html_sha256": "3d94f29489a4ba88325c26c43bae703717a00a50a5b66f527e4f251ef46b9b61",
+  "title": "AI-Powered Recruiting Platform",
+  "selector": "article",
+  "sections": [
+    {
+      "id": "intro-overview",
+      "title": "Overview",
+      "text": "OverviewA hiring team wants AI at every step of recruiting: reading resumes, matching people to open roles, drafting interview questions, scoring candidates and booking interviews. A posting can bring in thousands of resumes, so the platform has to rank them fast and keep the recruiter's queue short. The hard constraint is that a person makes every hiring decision. Hiring outcomes carry legal weight under GDPR (General Data Protection Regulation) and EEOC rules, so every ranking must explain itself, every suggestion is logged, and a recruiter can always overrule the system. The design turns resumes and job descriptions into structured profiles, ranks candidates on explicit weighted signals, and sends every shortlist to a recruiter before anything is booked. Fairness monitoring runs across the whole path, not once at launch.",
+      "text_sha256": "5112bc8d59967fe9143326e6505a5d7527cd6ca7898858aed0d589fc9d5bdf24",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-overview\" id=\"intro-overview\"><h4 class=\"source-title\">Overview</h4><div><div><p>A hiring team wants AI at every step of recruiting: reading resumes, matching people to open roles, drafting interview questions, scoring candidates and booking interviews. A posting can bring in thousands of resumes, so the platform has to rank them fast and keep the recruiter's queue short.</p>\n<p>The hard constraint is that a person makes every hiring decision. Hiring outcomes carry legal weight under <abbr title=\"General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live.\">GDPR</abbr> <span>(General Data Protection Regulation)</span> and EEOC rules, so every ranking must explain itself, every suggestion is logged, and a recruiter can always overrule the system.</p>\n<p>The design turns resumes and job descriptions into structured profiles, ranks candidates on explicit weighted signals, and sends every shortlist to a recruiter before anything is booked. Fairness monitoring runs across the whole path, not once at launch.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "GDPR",
+          "definition": "General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "intro-the-core-idea",
+      "title": "The core idea",
+      "text": "The core ideaThe AI ranks and explains; a recruiter approves or overrides before anything happens to a candidate.",
+      "text_sha256": "bf78624e18bfbc439f19e64bdd6faf55e698175f36634976cde7d6dc2bc3cdee",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-the-core-idea\" id=\"intro-the-core-idea\"><h4 class=\"source-title\">The core idea</h4><div><div><p>The AI ranks and explains; a recruiter approves or overrides before anything happens to a candidate.</p></div><div><div aria-label=\"Diagram\" class=\"source-diagram\" role=\"figure\"><img alt=\"Diagram: Resume and job description; Structured profiles; Weighted, explained ranking; Recruiter review; Book the interview; Change the shortlist\" class=\"diagram-light\" height=\"183\" loading=\"lazy\" src=\"source-assets/cdf9bb5aa859ab88.svg\" width=\"1053\"/><img alt=\"Diagram: Resume and job description; Structured profiles; Weighted, explained ranking; Recruiter review; Book the interview; Change the shortlist\" class=\"diagram-dark\" height=\"183\" loading=\"lazy\" src=\"source-assets/ee71e30c275d6f44.svg\" width=\"1053\"/></div></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": [
+        "source-assets/cdf9bb5aa859ab88.svg",
+        "source-assets/ee71e30c275d6f44.svg"
+      ]
+    },
+    {
+      "id": "intro-who-it-is-for",
+      "title": "Who it is for",
+      "text": "Who it is forEngineers preparing for Forward Deployed, solutions or applied-AI engineering interviews, especially a round that asks for a matching or ranking system, or any design where an AI recommendation affects a person.",
+      "text_sha256": "80d025824a90bd11920e294ee2edf3b573fec64e96ac1b215c63b93d3e4b5c92",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-who-it-is-for\" id=\"intro-who-it-is-for\"><h4 class=\"source-title\">Who it is for</h4><div><div><p>Engineers preparing for Forward Deployed, solutions or applied-AI engineering interviews, especially a round that asks for a matching or ranking system, or any design where an AI recommendation affects a person.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "intro-objectives",
+      "title": "Objectives",
+      "text": "ObjectivesAfter this case you can: explain the platform end to end at interview depth, starting from its hard constraint: the AI recommends, and a recruiter decides; answer follow-up questions on extraction, matching, explainable ranking, the AI judge, scale, fairness and compliance.",
+      "text_sha256": "862cbec53c2e446dad62a20bb9887a135bd40c463a0fd71c9d30509d3548e18b",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-objectives\" id=\"intro-objectives\"><h4 class=\"source-title\">Objectives</h4><div><div><p>After this case you can:</p>\n<ul>\n<li>explain the platform end to end at interview depth, starting from its hard constraint: the AI recommends, and a recruiter decides;</li>\n<li>answer follow-up questions on extraction, matching, explainable ranking, the AI judge, scale, fairness and compliance.</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "intro-what-it-assumes",
+      "title": "What it assumes",
+      "text": "What it assumesComfort with embeddings and similarity search, LLM (large language model) evaluation with a rubric, and basic cloud architecture. The Classic AI designs lesson on the recruiting platform in Learn covers the same problem in a shorter form.",
+      "text_sha256": "16c4f4f6cf80ce6262f0961120de9c0ca3e29f0e8a21105dcf54317d6142d36b",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-what-it-assumes\" id=\"intro-what-it-assumes\"><h4 class=\"source-title\">What it assumes</h4><div><div><p>Comfort with embeddings and similarity search, <abbr title=\"large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.\">LLM</abbr> <span>(large language model)</span> evaluation with a rubric, and basic cloud architecture. The Classic AI designs lesson on the recruiting platform in Learn covers the same problem in a shorter form.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "LLM",
+          "definition": "large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "intro-how-to-use-it",
+      "title": "How to use it",
+      "text": "How to use it Read the Interview Casebook. It is the answer you would give in the interview, and it stands on its own. Mark each part as read when you finish it. The case counts as done in your progress when every part is read. Open the Reference Design when you need the component list, the AI-specific design choices or the sources. Come back to the Casebook's level calibration the night before the interview.",
+      "text_sha256": "c426c365d4b1c66b039bef1c4285d8134c42e1fd40e048e49037ff79872fa2a1",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-how-to-use-it\" id=\"intro-how-to-use-it\"><h4 class=\"source-title\">How to use it</h4><div><div><ol>\n<li>Read the Interview Casebook. It is the answer you would give in the interview, and it stands on its own.</li>\n<li>Mark each part as read when you finish it. The case counts as done in your progress when every part is read.</li>\n<li>Open the Reference Design when you need the component list, the AI-specific design choices or the sources.</li>\n<li>Come back to the Casebook's level calibration the night before the interview.</li>\n</ol></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "intro-the-sections",
+      "title": "The sections",
+      "text": "The sections Section What it is for Interview prep Interview Casebook The case as you would present it: the prompt, clarifying questions, the architecture, explainable ranking, scale, fairness, trade-offs, follow-ups and level calibration. Mandatory Reference Design The long-form design behind the Casebook: the request flow step by step, each major component, AI-specific design choices, scalability, security and fairness, and the sources. Optional",
+      "text_sha256": "77d0cfb0c2a8cafe2307dcf8669ae1e15fc454f3aeda50d2fb75f26eb43cdf7f",
+      "html": "<section class=\"source-content\" data-source-id=\"intro-the-sections\" id=\"intro-the-sections\"><h4 class=\"source-title\">The sections</h4><div><div><div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>Section</th>\n<th>What it is for</th>\n<th>Interview prep</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><a href=\"#casebook\">Interview Casebook</a></td>\n<td>The case as you would present it: the prompt, clarifying questions, the architecture, explainable ranking, scale, fairness, trade-offs, follow-ups and level calibration.</td>\n<td>Mandatory</td>\n</tr>\n<tr>\n<td><a href=\"#full-design\">Reference Design</a></td>\n<td>The long-form design behind the Casebook: the request flow step by step, each major component, AI-specific design choices, scalability, security and fairness, and the sources.</td>\n<td>Optional</td>\n</tr>\n</tbody></table></div></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-the-prompt",
+      "title": "The prompt",
+      "text": "The promptYou are asked to build a recruiting platform with AI at every step. It reads resumes, matches people to open roles, drafts interview questions, scores candidates, books interviews and supports the hiring manager. The scope runs the whole way, from the first upload to the hiring decision.",
+      "text_sha256": "6df8a226e15672a1556fd59283f91f583d564d8807d5b084d0ff28cb0ecfd2e4",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-the-prompt\" id=\"casebook-the-prompt\"><h4 class=\"source-title\">The prompt</h4><div><div><p>You are asked to build a recruiting platform with AI at every step. It reads resumes, matches people to open roles, drafts interview questions, scores candidates, books interviews and supports the hiring manager. The scope runs the whole way, from the first upload to the hiring decision.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-step-1-define-the-problem-space",
+      "title": "Step 1. Define the problem space",
+      "text": "Step 1. Define the problem space A recruiter posts a job description and a large batch of resumes arrives. The platform has to rank those candidates by fit, draft questions and scorecards, book interviews and suggest a decision. The recruiter still makes the final call, and that requirement shapes the rest of the design: we are building a tool that helps people hire, not one that hires on its own. This case works from the answers in the table. Check each one with the interviewer before you rely on it. Question Answer What it decides Who is the customer: an enterprise hiring team or a staffing agency? It varies How many tenants and how much volume to plan for Does matching run in batches or live? Batches for bulk intake; close to live when a recruiter searches The system needs two processing modes May a recruiter overrule the AI? Always Human review is a core feature, not an add-on Does the system decide, or help a person decide? It helps a person decide Explainability drives every later choice Do GDPR and EEOC rules apply? Yes Fairness checks and an audit trail are mandatory Functional: take in a JD (job description) and resumes; turn them into structured data; rank candidates by fit; search profiles by meaning; draft interview questions and scorecards; suggest a decision; book interviews; summarise interviewer feedback; give recruiters a chatbot; improve from past hiring decisions. Non-functional: handle thousands of resumes an hour; match accurately; keep hallucination low; protect PII (personally identifiable information); scale out; make every ranking explainable; stay compliant; control cost.",
+      "text_sha256": "7fd45809c833a3692429d9c4d37cef7dde0e0fd6804a3dfbd4bb5299db625303",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-step-1-define-the-problem-space\" id=\"casebook-step-1-define-the-problem-space\"><h4 class=\"source-title\">Step 1. Define the problem space</h4><div><div><ul>\n<li>A recruiter posts a job description and a large batch of resumes arrives.</li>\n<li>The platform has to rank those candidates by fit, draft questions and scorecards, book interviews and suggest a decision.</li>\n<li>The recruiter still makes the final call, and that requirement shapes the rest of the design: we are building a tool that helps people hire, not one that hires on its own.</li>\n</ul>\n<p>This case works from the answers in the table. Check each one with the interviewer before you rely on it.</p>\n<div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>Question</th>\n<th>Answer</th>\n<th>What it decides</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Who is the customer: an enterprise hiring team or a staffing agency?</td>\n<td>It varies</td>\n<td>How many tenants and how much volume to plan for</td>\n</tr>\n<tr>\n<td>Does matching run in batches or live?</td>\n<td>Batches for bulk intake; close to live when a recruiter searches</td>\n<td>The system needs two processing modes</td>\n</tr>\n<tr>\n<td>May a recruiter overrule the AI?</td>\n<td>Always</td>\n<td>Human review is a core feature, not an add-on</td>\n</tr>\n<tr>\n<td>Does the system decide, or help a person decide?</td>\n<td>It helps a person decide</td>\n<td>Explainability drives every later choice</td>\n</tr>\n<tr>\n<td>Do <abbr title=\"General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live.\">GDPR</abbr> and EEOC rules apply?</td>\n<td>Yes</td>\n<td>Fairness checks and an audit trail are mandatory</td>\n</tr>\n</tbody></table></div>\n<p><strong>Functional:</strong> take in a <abbr title=\"job description: The written description of a role that recruiting systems match candidates against.\">JD</abbr> <span>(job description)</span> and resumes; turn them into structured data; rank candidates by fit; search profiles by meaning; draft interview questions and scorecards; suggest a decision; book interviews; summarise interviewer feedback; give recruiters a chatbot; improve from past hiring decisions. <strong>Non-functional:</strong> handle thousands of resumes an hour; match accurately; keep hallucination low; protect <abbr title=\"personally identifiable information: Anything that identifies a person — name, email, phone, account number. It needs masking, access control and care in logs.\">PII</abbr> <span>(personally identifiable information)</span>; scale out; make every ranking explainable; stay compliant; control cost.</p></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "GDPR",
+          "definition": "General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live."
+        },
+        {
+          "term": "JD",
+          "definition": "job description: The written description of a role that recruiting systems match candidates against."
+        },
+        {
+          "term": "PII",
+          "definition": "personally identifiable information: Anything that identifies a person — name, email, phone, account number. It needs masking, access control and care in logs."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p",
+      "title": "Step 2. High-level architecture: two intake paths, one ranked pipeline",
+      "text": "Step 2. High-level architecture: two intake paths, one ranked pipelineThe extraction service is where documents turn into data. Upstream of it, the system handles PDFs and loose text. Downstream, it handles profiles that share one shape, so they can be compared and ranked. This is the chunking-by-format lesson from Module 06 again. Resumes come in every layout, and the parser must still emit one consistent structure.",
+      "text_sha256": "71bcb4ceddce3b800546b1308cbc77c14a23cd5095b2533043faceca88f2b308",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p\" id=\"casebook-step-2-high-level-architecture-two-intake-paths-one-ranked-p\"><h4 class=\"source-title\">Step 2. High-level architecture: two intake paths, one ranked pipeline</h4><div><div><div aria-label=\"Diagram\" class=\"source-diagram\" role=\"figure\"><img alt=\"Diagram: Recruiter Portal; Authentication Service; API Gateway / Load Balancer; Resume Upload; Job Description Upload; OCR / Document Parser; JD Parser; Structured Extraction Service; Candidate Profile Builder; Embedding Generation Service; Vector Database (candidate &amp; JD embeddings); Similarity Search Engine; Candidate Ranking; Interview Question Generator; AI Judge Scoring\" class=\"diagram-light\" height=\"1769\" loading=\"lazy\" src=\"source-assets/07809d7af205dcac.svg\" width=\"360\"/><img alt=\"Diagram: Recruiter Portal; Authentication Service; API Gateway / Load Balancer; Resume Upload; Job Description Upload; OCR / Document Parser; JD Parser; Structured Extraction Service; Candidate Profile Builder; Embedding Generation Service; Vector Database (candidate &amp; JD embeddings); Similarity Search Engine; Candidate Ranking; Interview Question Generator; AI Judge Scoring\" class=\"diagram-dark\" height=\"1769\" loading=\"lazy\" src=\"source-assets/87c1a1b93f043774.svg\" width=\"360\"/></div></div><div><p><strong>The extraction service is where documents turn into data.</strong> Upstream of it, the system handles PDFs and loose text. Downstream, it handles profiles that share one shape, so they can be compared and ranked. This is the chunking-by-format lesson from Module 06 again. Resumes come in every layout, and the parser must still emit one consistent structure.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": [
+        "source-assets/07809d7af205dcac.svg",
+        "source-assets/87c1a1b93f043774.svg"
+      ]
+    },
+    {
+      "id": "casebook-step-3-the-flow",
+      "title": "Step 3. The flow",
+      "text": "Step 3. The flow JD upload. The parser pulls out must-have and nice-to-have skills, years of experience, education, certifications, location and salary band. Resume upload. Input can be a PDF, a DOCX file, a LinkedIn profile or a record from the ATS (applicant tracking system). Structured extraction. Each resume becomes a set of fields rather than a block of text. Search and ranking need those fields to be reliable. Embeddings. The system embeds the JD and the profile, plus skills, projects, experience and certifications. Embeddings capture meaning, so matching is not tied to exact words. Similarity search. A query for \"LLM (large language model) Engineer\" can surface people who list Generative AI, RAG (retrieval-augmented generation), prompt engineering or agentic AI. Ranking. Several weighted signals feed one ordered list. Each place in the list comes with a reason, which beats a bare pass or fail. Interview questions. Questions fit the role. They draw on the JD, the candidate's background, the skills they lack and the projects they have done. AI judge. Once an interview or assessment is over, the judge rates technical accuracy, communication, problem-solving and fit with the role. It returns structured feedback and a provisional score. Human review. A recruiter or hiring manager looks at the ranking, scores, summaries and suggestion, then takes the final decision. That gives clear accountability and a human check on bias, but only if the reviewer can genuinely overrule the system. Scheduling. The platform reads calendars, finds free slots, sends invites, notifies the candidate and updates the ATS.",
+      "text_sha256": "de6ea2ffb45226105a0a7c4159bffa9e25352fe2d38fcf72cb238bfaeed74260",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-step-3-the-flow\" id=\"casebook-step-3-the-flow\"><h4 class=\"source-title\">Step 3. The flow</h4><div><div><ol>\n<li><strong>JD upload.</strong> The parser pulls out must-have and nice-to-have skills, years of experience, education, certifications, location and salary band.</li>\n<li><strong>Resume upload.</strong> Input can be a PDF, a DOCX file, a LinkedIn profile or a record from the <abbr title=\"applicant tracking system: The recruiting system that holds candidates, applications and hiring stages.\">ATS</abbr> <span>(applicant tracking system)</span>.</li>\n<li><strong>Structured extraction.</strong> Each resume becomes a set of fields rather than a block of text. Search and ranking need those fields to be reliable.</li>\n<li><strong>Embeddings.</strong> The system embeds the JD and the profile, plus skills, projects, experience and certifications. Embeddings capture meaning, so matching is not tied to exact words.</li>\n<li><strong>Similarity search.</strong> A query for <em>\"<abbr title=\"large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.\">LLM</abbr> <span>(large language model)</span> Engineer\"</em> can surface people who list Generative AI, <abbr title=\"retrieval-augmented generation: Fetch the relevant documents first, then have the model answer only from them.\">RAG</abbr> <span>(retrieval-augmented generation)</span>, prompt engineering or agentic AI.</li>\n<li><strong>Ranking.</strong> Several weighted signals feed one ordered list. Each place in the list comes with a reason, which beats a bare pass or fail.</li>\n<li><strong>Interview questions.</strong> Questions fit the role. They draw on the JD, the candidate's background, the skills they lack and the projects they have done.</li>\n<li><strong>AI judge.</strong> Once an interview or assessment is over, the judge rates technical accuracy, communication, problem-solving and fit with the role. It returns structured feedback and a provisional score.</li>\n<li><strong>Human review.</strong> A recruiter or hiring manager looks at the ranking, scores, summaries and suggestion, then takes the final decision. That gives clear accountability and a human check on bias, but only if the reviewer can genuinely overrule the system.</li>\n<li><strong>Scheduling.</strong> The platform reads calendars, finds free slots, sends invites, notifies the candidate and updates the ATS.</li>\n</ol></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "ATS",
+          "definition": "applicant tracking system: The recruiting system that holds candidates, applications and hiring stages."
+        },
+        {
+          "term": "LLM",
+          "definition": "large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it."
+        },
+        {
+          "term": "RAG",
+          "definition": "retrieval-augmented generation: Fetch the relevant documents first, then have the model answer only from them."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "casebook-step-4-the-deep-dive-explainable-ranking",
+      "title": "Step 4. The deep dive: explainable ranking",
+      "text": "Step 4. The deep dive: explainable ranking The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. Explicit weights let a recruiter follow the ranking and an auditor inspect it; one opaque score allows neither. The weights do not by themselves make the ranking fair or job-relevant. Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · everything else ~10%. With weights like these on show, a recruiter can see the reasons behind a candidate's place as well as the place. The AI judge works the same way. It scores against a fixed rubric and explains each score, and the decision is never its to make. The evaluation pipeline pulls together similarity, profile completeness, judge scores, interview feedback and input from the recruiter and hiring manager. When confidence falls below a set threshold, a person must review the case. Module 04 warned against letting an LLM judge alone gate a high-stakes outcome. Here the outcome is someone's career.",
+      "text_sha256": "a3c0d4f85af592a329df5b3c107d269af8c4e239461751776d208956e77d4759",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-step-4-the-deep-dive-explainable-ranking\" id=\"casebook-step-4-the-deep-dive-explainable-ranking\"><h4 class=\"source-title\">Step 4. The deep dive: explainable ranking</h4><div><div><ul>\n<li>The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success.</li>\n<li>Explicit weights let a recruiter follow the ranking and an auditor inspect it; one opaque score allows neither.</li>\n<li>The weights do not by themselves make the ranking fair or job-relevant.</li>\n</ul>\n<p>Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · everything else ~10%. With weights like these on show, a recruiter can see the reasons behind a candidate's place as well as the place.</p>\n<ul>\n<li>The AI judge works the same way. It scores against a fixed rubric and explains each score, and the decision is never its to make.</li>\n<li>The evaluation pipeline pulls together similarity, profile completeness, judge scores, interview feedback and input from the recruiter and hiring manager.</li>\n<li>When confidence falls below a set threshold, a person must review the case.</li>\n<li>Module 04 warned against letting an LLM judge alone gate a high-stakes outcome.</li>\n<li>Here the outcome is someone's career.</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-step-5-scaling-to-thousands-of-resumes-an-hour",
+      "title": "Step 5. Scaling to thousands of resumes an hour",
+      "text": "Step 5. Scaling to thousands of resumes an hour Keep the application servers stateless so they scale out. Process documents asynchronously: parsing and embedding run as background jobs, and an upload never waits on them. Spread the vector database across nodes. Use GPU-backed inference to soak up bursts, such as a new posting that sets off thousands of comparisons at once. Drive ingestion with events, so upload is decoupled from parsing, extraction, embedding and ranking. Deploy in several regions to cut latency and keep candidate PII where it has to stay. Cache embeddings and generated text, and lean on queues during peak hiring periods.",
+      "text_sha256": "eaf713cb45922b3720741b4fa44effbef97b0f48c6c298849c03c2e7d02e81a9",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-step-5-scaling-to-thousands-of-resumes-an-hour\" id=\"casebook-step-5-scaling-to-thousands-of-resumes-an-hour\"><h4 class=\"source-title\">Step 5. Scaling to thousands of resumes an hour</h4><div><div><ul>\n<li>Keep the application servers stateless so they scale out. Process documents asynchronously: parsing and embedding run as background jobs, and an upload never waits on them.</li>\n<li>Spread the vector database across nodes. Use GPU-backed inference to soak up bursts, such as a new posting that sets off thousands of comparisons at once.</li>\n<li>Drive ingestion with events, so upload is decoupled from parsing, extraction, embedding and ranking.</li>\n<li>Deploy in several regions to cut latency and keep candidate PII where it has to stay.</li>\n<li>Cache embeddings and generated text, and lean on queues during peak hiring periods.</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec",
+      "title": "Security and fairness: candidate data is sensitive; hiring decisions carry legal weight",
+      "text": "Security and fairness: candidate data is sensitive; hiring decisions carry legal weight Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC. Write an audit record for every AI suggestion and every hiring action. Agree with the privacy and legal owners which GDPR, CCPA and EEOC duties apply, and honour candidates who ask for their data to be deleted. These controls support compliance; they do not certify it. Watch the models for bias across protected groups continuously, not once at launch. Monitor bias and fairness across the full decision path. No AI ranking reaches a decision without a person in between.",
+      "text_sha256": "8a6d16dae35377fb3aef3d258733a112a293c7ca78d1455330ef4d838128c8f4",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec\" id=\"casebook-security-and-fairness-candidate-data-is-sensitive-hiring-dec\"><h4 class=\"source-title\">Security and fairness: candidate data is sensitive; hiring decisions carry legal weight</h4><div><div><ul>\n<li>Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through <abbr title=\"role-based access control: Permissions given by role: managers can do this, agents can do that.\">RBAC</abbr>.</li>\n<li>Write an audit record for every AI suggestion and every hiring action.</li>\n<li>Agree with the privacy and legal owners which GDPR, CCPA and EEOC duties apply, and honour candidates who ask for their data to be deleted.</li>\n<li>These controls support compliance; they do not certify it. Watch the models for bias across protected groups continuously, not once at launch.</li>\n</ul></div><div><div aria-label=\"Diagram\" class=\"source-diagram\" role=\"figure\"><img alt=\"Diagram: AI ranking and scores; Human recruiter review; Approve or override; Final hiring decision\" class=\"diagram-light\" height=\"366\" loading=\"lazy\" src=\"source-assets/6440537010f06306.svg\" width=\"168\"/><img alt=\"Diagram: AI ranking and scores; Human recruiter review; Approve or override; Final hiring decision\" class=\"diagram-dark\" height=\"366\" loading=\"lazy\" src=\"source-assets/781627ac4ef529c8.svg\" width=\"168\"/></div></div><div><ul>\n<li>Monitor bias and fairness across the full decision path.</li>\n</ul>\n<p>No AI ranking reaches a decision without a person in between.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "RBAC",
+          "definition": "role-based access control: Permissions given by role: managers can do this, agents can do that."
+        }
+      ],
+      "assets": [
+        "source-assets/6440537010f06306.svg",
+        "source-assets/781627ac4ef529c8.svg"
+      ]
+    },
+    {
+      "id": "casebook-trade-offs",
+      "title": "Trade-offs",
+      "text": "Trade-offs Decision Pros Cons Keyword matching Quick and easy to build Misses people who describe the same skill in other words Embedding-based search Finds more good candidates Costs more compute Fully automated hiring Decisions come sooner Carries legal and ethical exposure Human-in-the-loop Keeps oversight and fairness Takes longer Large reasoning model Stronger summaries and questions Slower and dearer Smaller model Quicker and cheaper Weaker reasoning",
+      "text_sha256": "fface1b6dc01e85dc05ddcbdfbdf7523a1d31a28d5497610969b8cbad86dee7d",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-trade-offs\" id=\"casebook-trade-offs\"><h4 class=\"source-title\">Trade-offs</h4><div><div><div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>Decision</th>\n<th>Pros</th>\n<th>Cons</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Keyword matching</td>\n<td>Quick and easy to build</td>\n<td>Misses people who describe the same skill in other words</td>\n</tr>\n<tr>\n<td>Embedding-based search</td>\n<td>Finds more good candidates</td>\n<td>Costs more compute</td>\n</tr>\n<tr>\n<td>Fully automated hiring</td>\n<td>Decisions come sooner</td>\n<td>Carries legal and ethical exposure</td>\n</tr>\n<tr>\n<td>Human-in-the-loop</td>\n<td>Keeps oversight and fairness</td>\n<td>Takes longer</td>\n</tr>\n<tr>\n<td>Large reasoning model</td>\n<td>Stronger summaries and questions</td>\n<td>Slower and dearer</td>\n</tr>\n<tr>\n<td>Smaller model</td>\n<td>Quicker and cheaper</td>\n<td>Weaker reasoning</td>\n</tr>\n</tbody></table></div></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-follow-ups-to-have-ready",
+      "title": "Follow-ups to have ready",
+      "text": "Follow-ups to have readyHow do you reduce bias? Hide or mask demographic details where that makes sense. Train and test on varied data. Track fairness metrics continuously. Keep a human sign-off on every hire. Explain each ranking openly. Audit on a regular schedule. How do you improve matching accuracy? Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win. Blend several ranking signals. Feed recruiter feedback back into the ranker. Measure precision and recall against past hiring outcomes. Tune prompts and retrieval using that same feedback. How do you personalise for recruiters? Learn from each recruiter's earlier decisions. Lift candidates who resemble past successful hires, and watch that step closely for bias. Set question difficulty by the seniority of the role. Reflect the skills a given team needs. Let recruiters adjust the weights themselves.",
+      "text_sha256": "09f620dee74b80dd1da95ec3f246c085c41be1a43d8fa568848207a5b59b43cc",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-follow-ups-to-have-ready\" id=\"casebook-follow-ups-to-have-ready\"><h4 class=\"source-title\">Follow-ups to have ready</h4><div><div><p><strong>How do you reduce bias?</strong> Hide or mask demographic details where that makes sense. Train and test on varied data. Track fairness metrics continuously. Keep a human sign-off on every hire. Explain each ranking openly. Audit on a regular schedule.</p>\n<p><strong>How do you improve matching accuracy?</strong> Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win. Blend several ranking signals. Feed recruiter feedback back into the ranker. Measure precision and recall against past hiring outcomes. Tune prompts and retrieval using that same feedback.</p>\n<p><strong>How do you personalise for recruiters?</strong> Learn from each recruiter's earlier decisions. Lift candidates who resemble past successful hires, <em>and watch that step closely for bias</em>. Set question difficulty by the seniority of the role. Reflect the skills a given team needs. Let recruiters adjust the weights themselves.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-summary",
+      "title": "Summary",
+      "text": "SummaryThe design is one AI workflow from end to end: structured extraction, matching by meaning, ranking you can explain, and evaluation by an AI judge. A person keeps the final decision. Fairness, PII protection and compliance are built into the design from the start, not ticked off at the end. AI helps at every stage and decides at none.",
+      "text_sha256": "c11f823a905b3649d523ec3f23b320752efd5683dfdc4f55e5525c14982a5611",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-summary\" id=\"casebook-summary\"><h4 class=\"source-title\">Summary</h4><div><div><p>The design is one AI workflow from end to end: structured extraction, matching by meaning, ranking you can explain, and evaluation by an AI judge. A person keeps the final decision. Fairness, PII protection and compliance are built into the design from the start, not ticked off at the end. AI helps at every stage and decides at none.</p></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-checkpoint",
+      "title": "Checkpoint",
+      "text": "Checkpoint What makes structured extraction the most important boundary in this architecture? Why is an explicit weighted ranking easier to defend than one model score? What is the AI judge allowed to do, what is it barred from doing, and what triggers manual review? Give three fairness mechanisms and say which one runs all the time. In the personalisation answer, why is \"similar to successful hires\" a bias risk, and how do you contain it?",
+      "text_sha256": "49d069d0d3cd9efbf0c16cedb8fe10a32f507af8a8fc75d39db83c2f44f58425",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-checkpoint\" id=\"casebook-checkpoint\"><h4 class=\"source-title\">Checkpoint</h4><div><div><ul>\n<li>What makes structured extraction the most important boundary in this architecture?</li>\n<li>Why is an explicit weighted ranking easier to defend than one model score?</li>\n<li>What is the AI judge allowed to do, what is it barred from doing, and what triggers manual review?</li>\n<li>Give three fairness mechanisms and say which one runs all the time.</li>\n<li>In the personalisation answer, why is \"similar to successful hires\" a bias risk, and how do you contain it?</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-key-takeaways",
+      "title": "Key Takeaways",
+      "text": "Key Takeaways The recruiter makes the final call, so the platform is a tool that helps people hire, not one that hires on its own. Because the system helps a person decide rather than deciding, explainability drives every later choice. Structured extraction is the line between documents and data: every resume layout must come out as one profile shape that can be compared and ranked. Run matching in two modes: batches for bulk intake, and close to live when a recruiter searches. Embeddings match on meaning, so a search for \"LLM Engineer\" can surface people who list RAG, prompt engineering or agentic AI. Rank on explicit weighted signals, opening at semantic similarity ~30%, skills ~25%, experience ~20% and domain ~15%, with ~10% for the rest. Explicit weights let a recruiter follow the ranking and an auditor inspect it, and one opaque score allows neither. They do not by themselves make the ranking fair. The AI judge scores against a fixed rubric and explains each score, but the decision is never its to make. When confidence falls below a set threshold, a person must review the case. Human review only adds accountability and a bias check if the reviewer has real power to overrule the ranking. Parse and embed as asynchronous, event-driven background jobs, so thousands of resumes an hour never block an upload. Absorb bursts from a popular posting with GPU-backed inference, cached embeddings and queues. Deploy in several regions to cut latency and keep candidate PII where it has to stay. Audit-log every AI suggestion and hiring action, and monitor bias across protected groups all the time, not once at launch. Lifting candidates who resemble past successful hires can learn past bias, so that step needs close fairness monitoring.",
+      "text_sha256": "e884e0aa188697f1f038d11b6e7cba34d6984849051472c8e445a07b3bfda277",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-key-takeaways\" id=\"casebook-key-takeaways\"><h4 class=\"source-title\">Key Takeaways</h4><div><div><ul>\n<li>The recruiter makes the final call, so the platform is a tool that helps people hire, not one that hires on its own.</li>\n<li>Because the system helps a person decide rather than deciding, explainability drives every later choice.</li>\n<li>Structured extraction is the line between documents and data: every resume layout must come out as one profile shape that can be compared and ranked.</li>\n<li>Run matching in two modes: batches for bulk intake, and close to live when a recruiter searches.</li>\n<li>Embeddings match on meaning, so a search for \"LLM Engineer\" can surface people who list RAG, prompt engineering or agentic AI.</li>\n<li>Rank on explicit weighted signals, opening at semantic similarity ~30%, skills ~25%, experience ~20% and domain ~15%, with ~10% for the rest.</li>\n<li>Explicit weights let a recruiter follow the ranking and an auditor inspect it, and one opaque score allows neither. They do not by themselves make the ranking fair.</li>\n<li>The AI judge scores against a fixed rubric and explains each score, but the decision is never its to make.</li>\n<li>When confidence falls below a set threshold, a person must review the case.</li>\n<li>Human review only adds accountability and a bias check if the reviewer has real power to overrule the ranking.</li>\n<li>Parse and embed as asynchronous, event-driven background jobs, so thousands of resumes an hour never block an upload.</li>\n<li>Absorb bursts from a popular posting with GPU-backed inference, cached embeddings and queues.</li>\n<li>Deploy in several regions to cut latency and keep candidate PII where it has to stay.</li>\n<li>Audit-log every AI suggestion and hiring action, and monitor bias across protected groups all the time, not once at launch.</li>\n<li>Lifting candidates who resemble past successful hires can learn past bias, so that step needs close fairness monitoring.</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "casebook-level-calibration",
+      "title": "Level calibration",
+      "text": "Level calibrationOn the recruiting platform, the levels split on how far an answer takes \"AI-assisted, never AI-decided\" beyond a slogan. Level Sounds like Missing Senior \"Parse JDs and resumes into structured profiles, embed them, and rank on explicit weighted signals, semantic similarity ~30% and skills ~25% and so on. Parsing and embedding run as async jobs, so thousands of resumes an hour never block an upload, and every shortlist goes to a recruiter.\" Who owns the weights, the confidence threshold that forces manual review, and how bias gets caught once the system is live. Staff \"The recruiter review needs real power to override. Below a confidence threshold agreed with the hiring team, review is mandatory, and every recommendation and override is audit-logged. Fairness monitoring across protected groups runs continuously and is owned with legal and hiring leadership, and deletion requests and candidate PII stay in their region.\" How recruiter feedback flows back into ranking, and the risk that \"similar to successful hires\" learns past bias. Principal \"Personalised weights and learning from past decisions only ship behind continuous fairness audits and demographic masking. No stage ever becomes autonomous, because AI that filters candidates is classed as high-risk. I'd also set the organisation-wide rule for who may change weights, prompts and judge rubrics.\" Whether historical hiring outcomes are clean enough to learn from. That needs the customer's own data and an audit of past decisions.",
+      "text_sha256": "a0dfbe3b4589e43ad996cea32d142b98585bc1b594425b6c8daeda3144954473",
+      "html": "<section class=\"source-content\" data-source-id=\"casebook-level-calibration\" id=\"casebook-level-calibration\"><h4 class=\"source-title\">Level calibration</h4><div><div><p>On the recruiting platform, the levels split on how far an answer takes \"AI-assisted, never AI-decided\" beyond a slogan.</p>\n<div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>Level</th>\n<th>Sounds like</th>\n<th>Missing</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Senior</td>\n<td>\"Parse JDs and resumes into structured profiles, embed them, and rank on explicit weighted signals, semantic similarity ~30% and skills ~25% and so on. Parsing and embedding run as async jobs, so thousands of resumes an hour never block an upload, and every shortlist goes to a recruiter.\"</td>\n<td>Who owns the weights, the confidence threshold that forces manual review, and how bias gets caught once the system is live.</td>\n</tr>\n<tr>\n<td>Staff</td>\n<td>\"The recruiter review needs real power to override. Below a confidence threshold agreed with the hiring team, review is mandatory, and every recommendation and override is audit-logged. Fairness monitoring across protected groups runs continuously and is owned with legal and hiring leadership, and deletion requests and candidate PII stay in their region.\"</td>\n<td>How recruiter feedback flows back into ranking, and the risk that \"similar to successful hires\" learns past bias.</td>\n</tr>\n<tr>\n<td>Principal</td>\n<td>\"Personalised weights and learning from past decisions only ship behind continuous fairness audits and demographic masking. No stage ever becomes autonomous, because AI that filters candidates is classed as high-risk. I'd also set the organisation-wide rule for who may change weights, prompts and judge rubrics.\"</td>\n<td>Whether historical hiring outcomes are clean enough to learn from. That needs the customer's own data and an audit of past decisions.</td>\n</tr>\n</tbody></table></div></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-intro",
+      "title": "Introduction",
+      "text": "Design case: full reference write-up The prompt: build a recruiting platform where AI supports the recruiter at every stage. It screens resumes, matches candidates to job descriptions, drafts interview questions, scores candidates, books interviews and helps hiring managers decide. The scope covers the full journey, from the first resume upload to the hiring decision. thousands of resumes an hour · ranking you can explain · a human makes the call · EEOC and GDPR controls",
+      "text_sha256": "f055c1271fb79c9ce9321e13da0817b2439706bae1925a08a0dcbaba2bddb6f1",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-intro\" id=\"full-design-intro\"><div><div><p><em>Design case: full reference write-up</em></p>\n<p>The prompt: build a recruiting platform where AI supports the recruiter at every stage. It screens resumes, matches candidates to job descriptions, drafts interview questions, scores candidates, books interviews and helps hiring managers decide. The scope covers the full journey, from the first resume upload to the hiring decision.</p>\n<p><code>thousands of resumes an hour</code> · <code>ranking you can explain</code> · <code>a human makes the call</code> · <code>EEOC and GDPR controls</code></p>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-1-define-the-problem-space",
+      "title": "1. Define the problem space",
+      "text": "1. Define the problem spaceFrom first resume to final hire. A recruiter posts a job description, a flood of resumes follows, and the platform has to rank the applicants, draft questions and scorecards, book interviews and offer a hiring suggestion. Through all of it, the recruiter keeps the final say. That requirement sets the boundary for the whole design: the platform assists the people who hire and never hires by itself. Below are the clarifying questions, with the answers this case takes as given. In a real interview, check each one before you build on it. First, who buys it: an enterprise hiring team or a staffing agency? The answer changes how many tenants and how much volume you plan for. Second, does matching run live or in batches? Bulk intake runs in batches, while a recruiter's search should feel close to live. Third, can a recruiter overrule the AI? Always, so human review is a core requirement from day one, not a late addition. Fourth, does the system decide, or help a person decide? It helps, and that pushes every later choice towards explainability. Fifth, do GDPR (General Data Protection Regulation) or EEOC rules apply? They do, so fairness monitoring and audit logs cannot be dropped. Functional. The jobs the platform has to do: Accept a Job Description (JD) Accept resumes as PDF or DOCX Turn each resume into structured candidate data Order candidates by how well they fit the role Search profiles by meaning Draft interview questions Draft interview scorecards Suggest a hiring decision Book interviews Summarise what interviewers said Give recruiters a chatbot Improve using past hiring decisions Non-functional. The qualities a production system needs: Handle thousands of resumes every hour Match with high accuracy Keep hallucinations rare Handle PII (personally identifiable information) securely Scale out with ease Explain every candidate ranking Meet enterprise compliance standards Keep running costs in check",
+      "text_sha256": "850e2dbfc46dab3e25484bf80976149bffa8ad680d257067beabb23be6cd22d7",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-1-define-the-problem-space\" id=\"full-design-1-define-the-problem-space\"><h4 class=\"source-title\">1. Define the problem space</h4><div><div><p><strong>From first resume to final hire.</strong></p>\n<ul>\n<li>A recruiter posts a job description, a flood of resumes follows, and the platform has to rank the applicants, draft questions and scorecards, book interviews and offer a hiring suggestion.</li>\n<li>Through all of it, the recruiter keeps the final say. That requirement sets the boundary for the whole design: the platform assists the people who hire and never hires by itself.</li>\n</ul>\n<p>Below are the clarifying questions, with the answers this case takes as given. In a real interview, check each one before you build on it.</p>\n<blockquote>\n<p>First, who buys it: an enterprise hiring team or a staffing agency? The answer changes how many tenants and how much volume you plan for. Second, does matching run live or in batches? Bulk intake runs in batches, while a recruiter's search should feel close to live. Third, can a recruiter overrule the AI? Always, so human review is a core requirement from day one, not a late addition. Fourth, does the system decide, or help a person decide? It helps, and that pushes every later choice towards explainability. Fifth, do <abbr title=\"General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live.\">GDPR</abbr> <span>(General Data Protection Regulation)</span> or EEOC rules apply? They do, so fairness monitoring and audit logs cannot be dropped.</p>\n</blockquote>\n<p><strong>Functional.</strong> The jobs the platform has to do:</p>\n<ul>\n<li>Accept a Job Description (<abbr title=\"job description: The written description of a role that recruiting systems match candidates against.\">JD</abbr>)</li>\n<li>Accept resumes as PDF or DOCX</li>\n<li>Turn each resume into structured candidate data</li>\n<li>Order candidates by how well they fit the role</li>\n<li>Search profiles by meaning</li>\n<li>Draft interview questions</li>\n<li>Draft interview scorecards</li>\n<li>Suggest a hiring decision</li>\n<li>Book interviews</li>\n<li>Summarise what interviewers said</li>\n<li>Give recruiters a chatbot</li>\n<li>Improve using past hiring decisions</li>\n</ul>\n<p><strong>Non-functional.</strong> The qualities a production system needs:</p>\n<ul>\n<li>Handle thousands of resumes every hour</li>\n<li>Match with high accuracy</li>\n<li>Keep hallucinations rare</li>\n<li>Handle <abbr title=\"personally identifiable information: Anything that identifies a person — name, email, phone, account number. It needs masking, access control and care in logs.\">PII</abbr> <span>(personally identifiable information)</span> securely</li>\n<li>Scale out with ease</li>\n<li>Explain every candidate ranking</li>\n<li>Meet enterprise compliance standards</li>\n<li>Keep running costs in check</li>\n</ul>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "GDPR",
+          "definition": "General Data Protection Regulation: The EU's data-privacy law: consent, the right to be forgotten, where data may live."
+        },
+        {
+          "term": "JD",
+          "definition": "job description: The written description of a role that recruiting systems match candidates against."
+        },
+        {
+          "term": "PII",
+          "definition": "personally identifiable information: Anything that identifies a person — name, email, phone, account number. It needs masking, access control and care in logs."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "full-design-2-high-level-architecture",
+      "title": "2. High-level architecture",
+      "text": "2. High-level architectureTwo intake lanes that merge into a single ranking pipeline. Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser. Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity. Ranking feeds interview question drafting, and once the interview or assessment is over, the AI judge scores it. The evaluation pipeline then combines those scores with the rest of the evidence. A human recruiter reviews its output, and only then do scheduling and candidate messages go out. Think of structured extraction as the line between documents and data. On one side the system handles PDFs and loose text. On the other it handles candidate profiles with a shared shape, which can be compared and ranked.",
+      "text_sha256": "64da3138550b94470fae6291ae1ebc3de4ed64bd753fef9c12f6021e982caec1",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-2-high-level-architecture\" id=\"full-design-2-high-level-architecture\"><h4 class=\"source-title\">2. High-level architecture</h4><div><div><p><strong>Two intake lanes that merge into a single ranking pipeline.</strong></p>\n<ul>\n<li>Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser.</li>\n<li>Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity.</li>\n<li>Ranking feeds interview question drafting, and once the interview or assessment is over, the AI judge scores it.</li>\n<li>The evaluation pipeline then combines those scores with the rest of the evidence.</li>\n<li>A human recruiter reviews its output, and only then do scheduling and candidate messages go out.</li>\n</ul></div><div><div aria-label=\"Diagram\" class=\"source-diagram\" role=\"figure\"><img alt=\"Diagram: Recruiter portal; Authentication; API Gateway and load balancer; Resume upload; OCR and document parsing; Structured extraction; Job-description upload; Job-description parser; Candidate profile; Embeddings; Candidate and job vector database; Similarity search; Candidate ranking; Interview questions; AI judge scoring\" class=\"diagram-light\" height=\"1519\" loading=\"lazy\" src=\"source-assets/b9d1aa45f4d8f4de.svg\" width=\"360\"/><img alt=\"Diagram: Recruiter portal; Authentication; API Gateway and load balancer; Resume upload; OCR and document parsing; Structured extraction; Job-description upload; Job-description parser; Candidate profile; Embeddings; Candidate and job vector database; Similarity search; Candidate ranking; Interview questions; AI judge scoring\" class=\"diagram-dark\" height=\"1519\" loading=\"lazy\" src=\"source-assets/41e3f16cf96705ec.svg\" width=\"360\"/></div></div><div><p>Think of structured extraction as the line between documents and data. On one side the system handles PDFs and loose text. On the other it handles candidate profiles with a shared shape, which can be compared and ranked.</p>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": [
+        "source-assets/b9d1aa45f4d8f4de.svg",
+        "source-assets/41e3f16cf96705ec.svg"
+      ]
+    },
+    {
+      "id": "full-design-3-step-by-step-request-flow",
+      "title": "3. Step-by-step request flow",
+      "text": "3. Step-by-step request flowHow a job posting becomes a booked interview. The recruiter uploads a job description. Take a Senior AI Engineer role that asks for Python, LLMs (large language models), LangGraph, vector databases and AWS. The parser pulls out must-have skills, nice-to-have skills, years of experience, education, certifications, location and salary band. The candidate submits a resume. It can arrive as a PDF, a DOCX file, a LinkedIn profile or a record already held in the ATS (applicant tracking system). Structured extraction. Rather than keep the resume as raw text, the AI pulls out structured fields. Search and ranking are far more reliable over fields than over free text. Embedding generation. The system creates embeddings for the job description, the candidate profile, and the skills, projects, experience and certifications inside it. These vectors capture meaning, so matching does not hinge on exact keywords. Similarity search. The engine returns candidates whose profiles sit close in meaning to the JD. A search for \"LLM Engineer\" can bring back people who list Generative AI, RAG (retrieval-augmented generation), Prompt Engineering or Agentic AI, even though none of them used that exact title. Candidate ranking. The ranker weighs several signals together. The output is an ordered list with reasons attached, not a yes-or-no verdict. Interview question generation. The LLM drafts questions for this role and this person. It works from the JD, the candidate's background, the skills they lack and their past projects, and it can produce coding, system design, behavioural or domain questions. AI judge evaluation. When an interview or coding test is done, the AI judge rates technical accuracy, clarity of communication, the approach to the problem and fit with the job. It returns structured feedback and a provisional score. Human recruiter review. A recruiter or hiring manager reads the ranking, the AI scores, the interview summaries and the suggestion, and then makes the hiring decision. This step adds accountability and a human check on bias. Both vanish if the reviewer approves whatever the AI ranked, so the reviewer must have real power to overrule it. Interview scheduling. Once the recruiter approves a candidate for interview, the platform checks when interviewers are free, picks suitable slots, sends calendar invites, tells the candidate and updates the ATS. Nothing is booked before that approval.",
+      "text_sha256": "d4e74523ddb0eee4510f56f4460ea7c237dbd1ca9afdf26204c8c6fef6d96f40",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-3-step-by-step-request-flow\" id=\"full-design-3-step-by-step-request-flow\"><h4 class=\"source-title\">3. Step-by-step request flow</h4><div><div><p><strong>How a job posting becomes a booked interview.</strong></p>\n<ol>\n<li><strong>The recruiter uploads a job description.</strong> Take a Senior AI Engineer role that asks for Python, <abbr title=\"large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.\">LLMs</abbr> <span>(large language models)</span>, LangGraph, vector databases and AWS. The parser pulls out must-have skills, nice-to-have skills, years of experience, education, certifications, location and salary band.</li>\n<li><strong>The candidate submits a resume.</strong> It can arrive as a PDF, a DOCX file, a LinkedIn profile or a record already held in the <abbr title=\"applicant tracking system: The recruiting system that holds candidates, applications and hiring stages.\">ATS</abbr> <span>(applicant tracking system)</span>.</li>\n<li><strong>Structured extraction.</strong> Rather than keep the resume as raw text, the AI pulls out structured fields. Search and ranking are far more reliable over fields than over free text.</li>\n<li><strong>Embedding generation.</strong> The system creates embeddings for the job description, the candidate profile, and the skills, projects, experience and certifications inside it. These vectors capture meaning, so matching does not hinge on exact keywords.</li>\n<li><strong>Similarity search.</strong> The engine returns candidates whose profiles sit close in meaning to the JD. A search for \"LLM Engineer\" can bring back people who list Generative AI, <abbr title=\"retrieval-augmented generation: Fetch the relevant documents first, then have the model answer only from them.\">RAG</abbr> <span>(retrieval-augmented generation)</span>, Prompt Engineering or Agentic AI, even though none of them used that exact title.</li>\n<li><strong>Candidate ranking.</strong> The ranker weighs several signals together. The output is an ordered list with reasons attached, not a yes-or-no verdict.</li>\n<li><strong>Interview question generation.</strong> The LLM drafts questions for this role and this person. It works from the JD, the candidate's background, the skills they lack and their past projects, and it can produce coding, system design, behavioural or domain questions.</li>\n<li><strong>AI judge evaluation.</strong> When an interview or coding test is done, the AI judge rates technical accuracy, clarity of communication, the approach to the problem and fit with the job. It returns structured feedback and a provisional score.</li>\n<li><strong>Human recruiter review.</strong> A recruiter or hiring manager reads the ranking, the AI scores, the interview summaries and the suggestion, and then makes the hiring decision. This step adds accountability and a human check on bias. Both vanish if the reviewer approves whatever the AI ranked, so the reviewer must have real power to overrule it.</li>\n<li><strong>Interview scheduling.</strong> Once the recruiter approves a candidate for interview, the platform checks when interviewers are free, picks suitable slots, sends calendar invites, tells the candidate and updates the ATS. Nothing is booked before that approval.</li>\n</ol>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "LLMs",
+          "definition": "large language model: The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it."
+        },
+        {
+          "term": "ATS",
+          "definition": "applicant tracking system: The recruiting system that holds candidates, applications and hiring stages."
+        },
+        {
+          "term": "RAG",
+          "definition": "retrieval-augmented generation: Fetch the relevant documents first, then have the model answer only from them."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "full-design-4-explainable-candidate-ranking",
+      "title": "4. Explainable candidate ranking",
+      "text": "4. Explainable candidate rankingWeighted signals you can inspect, not a hidden pass or fail. A single similarity number is not enough to rank people. The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. An explicit weight per signal lets a recruiter understand the ranking and an auditor inspect it; one opaque model score allows neither. The weights do not by themselves establish fairness or job relevance. Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience level ~20% · domain expertise ~15% · other signals (location, certifications, availability) ~10%. With the weights on show, a recruiter can see the reasons behind each candidate's place, not only the place itself.",
+      "text_sha256": "7d0959b87e4651c23e1cff174ad8b36f868bc191d306e273fd8d0c8a8ef5f2c5",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-4-explainable-candidate-ranking\" id=\"full-design-4-explainable-candidate-ranking\"><h4 class=\"source-title\">4. Explainable candidate ranking</h4><div><div><p><strong>Weighted signals you can inspect, not a hidden pass or fail.</strong></p>\n<ul>\n<li><p>A single similarity number is not enough to rank people.</p>\n</li>\n<li><p>The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success.</p>\n</li>\n<li><p>An explicit weight per signal lets a recruiter understand the ranking and an auditor inspect it; one opaque model score allows neither.</p>\n</li>\n<li><p>The weights do not by themselves establish fairness or job relevance.</p>\n</li>\n<li><p>Here is a weighting I would open with.</p>\n</li>\n<li><p>It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience level ~20% · domain expertise ~15% · other signals (location, certifications, availability) ~10%.</p>\n</li>\n<li><p>With the weights on show, a recruiter can see the reasons behind each candidate's place, not only the place itself.</p>\n</li>\n</ul>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-5-major-components",
+      "title": "5. Major components",
+      "text": "5. Major componentsSixteen services, one job apiece. # Component Responsibility 01 Recruiter Portal Where recruiters post JDs, review candidates and run hiring 02 Candidate Portal Where candidates submit resumes and follow their application 03 Authentication Service Controls sign-in and assigns roles 04 Resume Parser Pulls the text out of each resume 05 JD Parser Turns a job description into structured requirements 06 Structured Extraction Service Reshapes loose documents into structured profiles 07 Embedding Service Produces vectors that capture meaning 08 Vector Database Holds the candidate and JD embeddings 09 Similarity Search Engine Finds the closest-matching candidates 10 Ranking Engine Orders candidates on several signals 11 Prompt Builder Assembles prompts for question drafting and evaluation 12 LLM Inference Service Writes interview questions and summaries 13 AI Judge Scores interviews and coding tests 14 Evaluation Pipeline Combines AI scores, feedback and confidence 15 Human Review Dashboard Lets recruiters check results and overrule them 16 Scheduler Books interviews against calendars",
+      "text_sha256": "73b9dd2c3a80177de94b08a424b0e4b6059d3b65ed3360bea735351d659a99c3",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-5-major-components\" id=\"full-design-5-major-components\"><h4 class=\"source-title\">5. Major components</h4><div><div><p><strong>Sixteen services, one job apiece.</strong></p>\n<div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>#</th>\n<th>Component</th>\n<th>Responsibility</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>01</td>\n<td>Recruiter Portal</td>\n<td>Where recruiters post JDs, review candidates and run hiring</td>\n</tr>\n<tr>\n<td>02</td>\n<td>Candidate Portal</td>\n<td>Where candidates submit resumes and follow their application</td>\n</tr>\n<tr>\n<td>03</td>\n<td>Authentication Service</td>\n<td>Controls sign-in and assigns roles</td>\n</tr>\n<tr>\n<td>04</td>\n<td>Resume Parser</td>\n<td>Pulls the text out of each resume</td>\n</tr>\n<tr>\n<td>05</td>\n<td>JD Parser</td>\n<td>Turns a job description into structured requirements</td>\n</tr>\n<tr>\n<td>06</td>\n<td>Structured Extraction Service</td>\n<td>Reshapes loose documents into structured profiles</td>\n</tr>\n<tr>\n<td>07</td>\n<td>Embedding Service</td>\n<td>Produces vectors that capture meaning</td>\n</tr>\n<tr>\n<td>08</td>\n<td>Vector Database</td>\n<td>Holds the candidate and JD embeddings</td>\n</tr>\n<tr>\n<td>09</td>\n<td>Similarity Search Engine</td>\n<td>Finds the closest-matching candidates</td>\n</tr>\n<tr>\n<td>10</td>\n<td>Ranking Engine</td>\n<td>Orders candidates on several signals</td>\n</tr>\n<tr>\n<td>11</td>\n<td>Prompt Builder</td>\n<td>Assembles prompts for question drafting and evaluation</td>\n</tr>\n<tr>\n<td>12</td>\n<td>LLM Inference Service</td>\n<td>Writes interview questions and summaries</td>\n</tr>\n<tr>\n<td>13</td>\n<td>AI Judge</td>\n<td>Scores interviews and coding tests</td>\n</tr>\n<tr>\n<td>14</td>\n<td>Evaluation Pipeline</td>\n<td>Combines AI scores, feedback and confidence</td>\n</tr>\n<tr>\n<td>15</td>\n<td>Human Review Dashboard</td>\n<td>Lets recruiters check results and overrule them</td>\n</tr>\n<tr>\n<td>16</td>\n<td>Scheduler</td>\n<td>Books interviews against calendars</td>\n</tr>\n</tbody></table></div>\n<hr/></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-6-ai-specific-design-considerations",
+      "title": "6. AI-specific design considerations",
+      "text": "6. AI-specific design considerationsWhat interviewers are listening for. Structured extraction. No two resumes share a layout. An LLM reshapes each one into a profile with the same fields, which keeps matching accurate and lets later steps run on their own. Embeddings. Skills, experience, projects, job descriptions and certifications all get a vector form. That lets the system match on meaning instead of on keywords alone. Similarity search. Semantic search spots experience that transfers, where exact keyword matching would miss it. A resume that says \"Agentic AI\" can still match a role that asks for \"Multi-Agent Systems.\" Prompt management. Separate prompt templates cover resume extraction, candidate summaries, question drafting, evaluation and recommendations. Version every template, so you can improve them over time and still keep output consistent. AI Judge. The judge assesses coding tasks, technical and behavioural interviews, and communication. It applies a standard rubric and explains each score. It never makes the hiring decision. Evaluation pipeline. It brings together the similarity score, how complete the resume is, AI Judge scores, interview feedback, recruiter feedback and the hiring manager's view. Confidence thresholds decide when a person must review the case.",
+      "text_sha256": "002c3844f43327e58a0a7256ae05188f1c31feb1ec226c85bd211ffc1fab1c8d",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-6-ai-specific-design-considerations\" id=\"full-design-6-ai-specific-design-considerations\"><h4 class=\"source-title\">6. AI-specific design considerations</h4><div><div><p><strong>What interviewers are listening for.</strong></p>\n<p><strong>Structured extraction.</strong> No two resumes share a layout. An LLM reshapes each one into a profile with the same fields, which keeps matching accurate and lets later steps run on their own.</p>\n<p><strong>Embeddings.</strong> Skills, experience, projects, job descriptions and certifications all get a vector form. That lets the system match on meaning instead of on keywords alone.</p>\n<p><strong>Similarity search.</strong> Semantic search spots experience that transfers, where exact keyword matching would miss it. A resume that says \"Agentic AI\" can still match a role that asks for \"Multi-Agent Systems.\"</p>\n<p><strong>Prompt management.</strong> Separate prompt templates cover resume extraction, candidate summaries, question drafting, evaluation and recommendations. Version every template, so you can improve them over time and still keep output consistent.</p>\n<p><strong>AI Judge.</strong> The judge assesses coding tasks, technical and behavioural interviews, and communication. It applies a standard rubric and explains each score. It never makes the hiring decision.</p>\n<p><strong>Evaluation pipeline.</strong> It brings together the similarity score, how complete the resume is, AI Judge scores, interview feedback, recruiter feedback and the hiring manager's view. Confidence thresholds decide when a person must review the case.</p>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-7-scalability-considerations",
+      "title": "7. Scalability considerations",
+      "text": "7. Scalability considerationsKeeping up with thousands of resumes an hour. Stateless application servers. The API servers sit behind load balancers, so both ingestion and search scale out as demand grows. Asynchronous document processing. Parsing and embedding happen in background jobs. The upload request returns without waiting for them. Distributed vector databases. Candidate and JD embeddings are split across shards, which keeps similarity search quick as the candidate pool grows. GPU-backed LLM inference clusters. GPU clusters autoscale to absorb spikes. One new job posting can kick off thousands of resume comparisons at the same moment. Event-driven workflows. Events drive resume ingestion, so upload is decoupled from parsing, extraction, embedding and ranking. Multi-region deployment. Running in several regions cuts latency and helps keep candidate PII inside the region where it has to stay. When a popular posting brings a surge of applications, two things keep the system responsive: cached embeddings and generated outputs, and queues that soak up the load in peak hiring seasons.",
+      "text_sha256": "a969710a322b0d406204ab90173d49bc370462ab35e51eae2496230e60bc5ce5",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-7-scalability-considerations\" id=\"full-design-7-scalability-considerations\"><h4 class=\"source-title\">7. Scalability considerations</h4><div><div><p><strong>Keeping up with thousands of resumes an hour.</strong></p>\n<p><strong>Stateless application servers.</strong> The API servers sit behind load balancers, so both ingestion and search scale out as demand grows.</p>\n<p><strong>Asynchronous document processing.</strong> Parsing and embedding happen in background jobs. The upload request returns without waiting for them.</p>\n<p><strong>Distributed vector databases.</strong> Candidate and JD embeddings are split across shards, which keeps similarity search quick as the candidate pool grows.</p>\n<p><strong>GPU-backed LLM inference clusters.</strong> GPU clusters autoscale to absorb spikes. One new job posting can kick off thousands of resume comparisons at the same moment.</p>\n<p><strong>Event-driven workflows.</strong> Events drive resume ingestion, so upload is decoupled from parsing, extraction, embedding and ranking.</p>\n<p><strong>Multi-region deployment.</strong> Running in several regions cuts latency and helps keep candidate PII inside the region where it has to stay.</p>\n<p>When a popular posting brings a surge of applications, two things keep the system responsive: cached embeddings and generated outputs, and queues that soak up the load in peak hiring seasons.</p>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-8-security-fairness",
+      "title": "8. Security & fairness",
+      "text": "8. Security & fairnessCandidate data is sensitive, and hiring decisions have legal consequences. Encrypt resumes and all candidate data, both stored and in transit. Safeguard Personally Identifiable Information (PII). Apply role-based access control to recruiters and hiring managers. Keep an audit log of every AI recommendation and every hiring action. Agree with the privacy and legal owners which GDPR, CCPA and EEOC requirements apply. These controls support compliance; they do not certify it. Let candidates ask for their data to be deleted. Track model fairness and bias across protected groups. Monitor bias and fairness across the full decision path. No AI ranking or score goes straight to a decision. A recruiter approves it or overrules it first, and fairness monitoring covers the entire path all the time, not as a check done once.",
+      "text_sha256": "8e5f183adc88815771306d24e638dbb243d3b30a0898bb5c21fe363d6ddc1d1e",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-8-security-fairness\" id=\"full-design-8-security-fairness\"><h4 class=\"source-title\">8. Security &amp; fairness</h4><div><div><p><strong>Candidate data is sensitive, and hiring decisions have legal consequences.</strong></p>\n<ul>\n<li>Encrypt resumes and all candidate data, both stored and in transit.</li>\n<li>Safeguard Personally Identifiable Information (PII).</li>\n<li>Apply role-based access control to recruiters and hiring managers.</li>\n<li>Keep an audit log of every AI recommendation and every hiring action.</li>\n<li>Agree with the privacy and legal owners which GDPR, CCPA and EEOC requirements apply. These controls support compliance; they do not certify it.</li>\n<li>Let candidates ask for their data to be deleted.</li>\n<li>Track model fairness and bias across protected groups.</li>\n</ul></div><div><div aria-label=\"Diagram\" class=\"source-diagram\" role=\"figure\"><img alt=\"Diagram: AI ranking and scores; Human recruiter review; Approve or override; Final hiring decision\" class=\"diagram-light\" height=\"366\" loading=\"lazy\" src=\"source-assets/6440537010f06306.svg\" width=\"168\"/><img alt=\"Diagram: AI ranking and scores; Human recruiter review; Approve or override; Final hiring decision\" class=\"diagram-dark\" height=\"366\" loading=\"lazy\" src=\"source-assets/781627ac4ef529c8.svg\" width=\"168\"/></div></div><div><ul>\n<li>Monitor bias and fairness across the full decision path.</li>\n</ul>\n<p>No AI ranking or score goes straight to a decision. A recruiter approves it or overrules it first, and fairness monitoring covers the entire path all the time, not as a check done once.</p>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": [
+        "source-assets/6440537010f06306.svg",
+        "source-assets/781627ac4ef529c8.svg"
+      ]
+    },
+    {
+      "id": "full-design-9-tradeoffs",
+      "title": "9. Tradeoffs",
+      "text": "9. TradeoffsSix choices, and the price of each. Decision Pros Cons Keyword matching Quick and easy to build Misses people who describe the same skill in other words Embedding-based search Surfaces more good candidates Costs more compute Fully automated hiring Decisions come sooner Greater legal and ethical exposure Human-in-the-loop Stronger oversight and fairness The process takes longer Large reasoning model Better summaries and questions More latency and higher cost Smaller model Quicker and cheaper Weaker at reasoning",
+      "text_sha256": "08d2a599f10e42866fa88dd0facf09cbeaad98194e6ad26028998f033b9a58e3",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-9-tradeoffs\" id=\"full-design-9-tradeoffs\"><h4 class=\"source-title\">9. Tradeoffs</h4><div><div><p><strong>Six choices, and the price of each.</strong></p>\n<div aria-label=\"Table\" class=\"source-table-wrap\" role=\"region\" tabindex=\"0\"><table>\n<thead>\n<tr>\n<th>Decision</th>\n<th>Pros</th>\n<th>Cons</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Keyword matching</td>\n<td>Quick and easy to build</td>\n<td>Misses people who describe the same skill in other words</td>\n</tr>\n<tr>\n<td>Embedding-based search</td>\n<td>Surfaces more good candidates</td>\n<td>Costs more compute</td>\n</tr>\n<tr>\n<td>Fully automated hiring</td>\n<td>Decisions come sooner</td>\n<td>Greater legal and ethical exposure</td>\n</tr>\n<tr>\n<td>Human-in-the-loop</td>\n<td>Stronger oversight and fairness</td>\n<td>The process takes longer</td>\n</tr>\n<tr>\n<td>Large reasoning model</td>\n<td>Better summaries and questions</td>\n<td>More latency and higher cost</td>\n</tr>\n<tr>\n<td>Smaller model</td>\n<td>Quicker and cheaper</td>\n<td>Weaker at reasoning</td>\n</tr>\n</tbody></table></div>\n<hr/></div></div></section>",
+      "tables": 1,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-10-common-follow-up-questions",
+      "title": "10. Common follow-up questions",
+      "text": "10. Common follow-up questionsThree questions that come up again and again. How do you reduce bias in AI hiring? Hide or mask sensitive demographic details where that makes sense. Use varied datasets for both training and evaluation. Track fairness metrics on an ongoing basis. Keep human sign-off on every hiring decision. Explain every ranking openly. Audit the models on a schedule for bias that nobody intended. How do you improve candidate matching accuracy? Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win. Blend several ranking signals: skills, experience, projects and certifications. Feed recruiter feedback into the ranking models. Keep measuring precision and recall against past hiring outcomes. Adjust prompts and retrieval based on what recruiters tell you. How would you personalise recommendations for different recruiters? Learn what each recruiter prefers from their earlier hiring decisions. Raise candidates who resemble past successful hires, while checking that step for bias. Set question difficulty by how senior the role is. Shape the ranking around the skills and projects a given team needs. Let recruiters set weighting factors such as skills, location or experience.",
+      "text_sha256": "7b462b8912f7bf8f60c84d636b1a4d849ba1e7cc52a57e85c3a76102df839479",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-10-common-follow-up-questions\" id=\"full-design-10-common-follow-up-questions\"><h4 class=\"source-title\">10. Common follow-up questions</h4><div><div><p><strong>Three questions that come up again and again.</strong></p>\n<p><strong>How do you reduce bias in AI hiring?</strong></p>\n<ul>\n<li>Hide or mask sensitive demographic details where that makes sense.</li>\n<li>Use varied datasets for both training and evaluation.</li>\n<li>Track fairness metrics on an ongoing basis.</li>\n<li>Keep human sign-off on every hiring decision.</li>\n<li>Explain every ranking openly.</li>\n<li>Audit the models on a schedule for bias that nobody intended.</li>\n</ul>\n<p><strong>How do you improve candidate matching accuracy?</strong></p>\n<ul>\n<li>Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win.</li>\n<li>Blend several ranking signals: skills, experience, projects and certifications.</li>\n<li>Feed recruiter feedback into the ranking models.</li>\n<li>Keep measuring precision and recall against past hiring outcomes.</li>\n<li>Adjust prompts and retrieval based on what recruiters tell you.</li>\n</ul>\n<p><strong>How would you personalise recommendations for different recruiters?</strong></p>\n<ul>\n<li>Learn what each recruiter prefers from their earlier hiring decisions.</li>\n<li>Raise candidates who resemble past successful hires, while checking that step for bias.</li>\n<li>Set question difficulty by how senior the role is.</li>\n<li>Shape the ranking around the skills and projects a given team needs.</li>\n<li>Let recruiters set weighting factors such as skills, location or experience.</li>\n</ul>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    },
+    {
+      "id": "full-design-11-final-design-summary",
+      "title": "11. Final design summary",
+      "text": "11. Final design summaryAI across the whole workflow, with a person at the point of decision. Strong answers treat recruiting as a single AI workflow. Structured extraction, semantic matching, explainable ranking and AI-judged evaluation run in sequence, while a human keeps control of the final decision. Fairness, PII protection and compliance apply at every step. From resume parsing to interview scheduling, AI assists at every stage and decides at none. Scale comes from stateless application servers, asynchronous document processing, sharded vector databases, GPU-backed inference clusters, event-driven ingestion and deployment across regions. Security and fairness come from encryption, RBAC (role-based access control), audit logs, data handling that respects GDPR and EEOC, and bias monitoring that never stops. Treat them as design constraints that shape the ranking and evaluation pipeline from day one, not compliance boxes to tick. The design shows you can build one AI workflow from resume intake to hire. It uses embeddings and semantic search to match candidates well, pulls structured data out of messy documents, and balances automation against human oversight so that people can trust the hiring decisions it supports.",
+      "text_sha256": "7151d2005753e3af942ddd4fa1dfd02b25970c47f15b55fbd10ac86360b022c9",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-11-final-design-summary\" id=\"full-design-11-final-design-summary\"><h4 class=\"source-title\">11. Final design summary</h4><div><div><p><strong>AI across the whole workflow, with a person at the point of decision.</strong></p>\n<p>Strong answers treat recruiting as a single AI workflow. Structured extraction, semantic matching, explainable ranking and AI-judged evaluation run in sequence, while a human keeps control of the final decision. Fairness, PII protection and compliance apply at every step. From resume parsing to interview scheduling, AI assists at every stage and decides at none.</p>\n<ul>\n<li>Scale comes from stateless application servers, asynchronous document processing, sharded vector databases, GPU-backed inference clusters, event-driven ingestion and deployment across regions.</li>\n<li>Security and fairness come from encryption, <abbr title=\"role-based access control: Permissions given by role: managers can do this, agents can do that.\">RBAC</abbr> <span>(role-based access control)</span>, audit logs, data handling that respects GDPR and EEOC, and bias monitoring that never stops.</li>\n<li>Treat them as design constraints that shape the ranking and evaluation pipeline from day one, not compliance boxes to tick.</li>\n</ul>\n<blockquote>\n<p>The design shows you can build one AI workflow from resume intake to hire. It uses embeddings and semantic search to match candidates well, pulls structured data out of messy documents, and balances automation against human oversight so that people can trust the hiring decisions it supports.</p>\n</blockquote>\n<hr/></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [
+        {
+          "term": "RBAC",
+          "definition": "role-based access control: Permissions given by role: managers can do this, agents can do that."
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "full-design-sources-checked-27-sep-2026",
+      "title": "Sources (checked 27 Sep 2026)",
+      "text": "Sources (checked 27 Sep 2026) GDPR Article 22: automated individual decision-making: right not to be subject to solely automated decisions with significant effects, which is why hiring stays human-assisted GDPR Article 17: right to erasure: candidates can request deletion of their data CCPA, California Attorney General: right to delete; applicant and employee data covered since 1 Jan 2023 Prohibited employment policies and practices (EEOC): hiring discrimination and neutral practices with disparate impact, the basis for fairness monitoring across protected groups EU AI Act, Annex III: AI used to filter applications and evaluate candidates is classed as high-risk EU AI Act, Article 14: human oversight: overseers must guard against automation bias",
+      "text_sha256": "391b4d47aa9502c4dc57d4398daabdf559c7293cff6e7fe658352c525f02402c",
+      "html": "<section class=\"source-content\" data-source-id=\"full-design-sources-checked-27-sep-2026\" id=\"full-design-sources-checked-27-sep-2026\"><h4 class=\"source-title\">Sources (checked 27 Sep 2026)</h4><div><div><ul>\n<li><a href=\"https://gdpr-info.eu/art-22-gdpr/\">GDPR Article 22: automated individual decision-making</a>: right not to be subject to solely automated decisions with significant effects, which is why hiring stays human-assisted</li>\n<li><a href=\"https://gdpr-info.eu/art-17-gdpr/\">GDPR Article 17: right to erasure</a>: candidates can request deletion of their data</li>\n<li><a href=\"https://oag.ca.gov/privacy/ccpa\">CCPA, California Attorney General</a>: right to delete; applicant and employee data covered since 1 Jan 2023</li>\n<li><a href=\"https://www.eeoc.gov/prohibited-employment-policiespractices\">Prohibited employment policies and practices (EEOC)</a>: hiring discrimination and neutral practices with disparate impact, the basis for fairness monitoring across protected groups</li>\n<li><a href=\"https://artificialintelligenceact.eu/annex/3/\">EU AI Act, Annex III</a>: AI used to filter applications and evaluate candidates is classed as high-risk</li>\n<li><a href=\"https://artificialintelligenceact.eu/article/14/\">EU AI Act, Article 14: human oversight</a>: overseers must guard against automation bias</li>\n</ul></div></div></section>",
+      "tables": 0,
+      "code_blocks": [],
+      "glossary": [],
+      "assets": []
+    }
+  ],
+  "assets": [
+    {
+      "path": "source-assets/cdf9bb5aa859ab88.svg",
+      "sha256": "cdf9bb5aa859ab8855debda98e50a88375ffbaad522f702c0ccca5574e3c696f",
+      "source_url": "https://forwarddeployedprep.com/diagrams/1d2e30130a8147-light.svg"
+    },
+    {
+      "path": "source-assets/ee71e30c275d6f44.svg",
+      "sha256": "ee71e30c275d6f447db90d9f029a272ad7e83dec8e5494c2c1d6d551a14c6929",
+      "source_url": "https://forwarddeployedprep.com/diagrams/1d2e30130a8147-dark.svg"
+    },
+    {
+      "path": "source-assets/07809d7af205dcac.svg",
+      "sha256": "07809d7af205dcacda24c2a92cbe8ca76a6f5812a2976c60cf5a4ab19f75903a",
+      "source_url": "https://forwarddeployedprep.com/diagrams/0d4a9848e53333-light.svg"
+    },
+    {
+      "path": "source-assets/87c1a1b93f043774.svg",
+      "sha256": "87c1a1b93f043774bf5a8c72885c601878be75145d5880a2d92afd9314f0f32b",
+      "source_url": "https://forwarddeployedprep.com/diagrams/0d4a9848e53333-dark.svg"
+    },
+    {
+      "path": "source-assets/6440537010f06306.svg",
+      "sha256": "6440537010f063068f311b62ec1c9f951340937f99aeabcc04072603a294254e",
+      "source_url": "https://forwarddeployedprep.com/diagrams/0fd23869bad689-light.svg"
+    },
+    {
+      "path": "source-assets/781627ac4ef529c8.svg",
+      "sha256": "781627ac4ef529c8aa155c3333a68eb59156845f081e73a5587d8089807ee767",
+      "source_url": "https://forwarddeployedprep.com/diagrams/0fd23869bad689-dark.svg"
+    },
+    {
+      "path": "source-assets/b9d1aa45f4d8f4de.svg",
+      "sha256": "b9d1aa45f4d8f4de4649344f6450a06ac93b51fae6a26e62143ad354d99b9a72",
+      "source_url": "https://forwarddeployedprep.com/diagrams/056a5bffc24bb0-light.svg"
+    },
+    {
+      "path": "source-assets/41e3f16cf96705ec.svg",
+      "sha256": "41e3f16cf96705ecfd98992d36bcf360515d4d84ceecaace4dc73ce82a677063",
+      "source_url": "https://forwarddeployedprep.com/diagrams/056a5bffc24bb0-dark.svg"
+    }
+  ]
+}

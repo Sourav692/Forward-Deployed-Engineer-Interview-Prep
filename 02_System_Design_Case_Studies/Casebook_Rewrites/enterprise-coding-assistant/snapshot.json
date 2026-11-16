@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "7db2a409e0100196e8349f72368bdc68200a8e1deb4e16fb6ca4af5954da9d75",
+  "html_sha256": "2af5a200fbf878b4e2656b060ebc6fb1a12cd2bc804ac8560002a4ce4b4f53f0",
+  "config_sha256": "a82e303d0e775eb9bda1a66e919d5b542dbdaa41d7085dc1e6f9ad1eeb712e4e",
+  "source_url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 51,
+    "coverage_rows": 64,
+    "worked_answers": 17,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 Nov 2026: re-read all 51 captured sections against the earlier teach-mode draft section by section. The draft had omitted the intern Alex keystroke trace, the seven-question discovery table, the six functional requirements and interview shortcut, the eight-step architecture list, the 'what gets cached' and semantic-invalidation points, the 'ignore previous instructions' injection example, the two-minute answer, three-sentence close, eight carry lines and six weak-answer repairs; all are restored. Telegraphic draft prose was rewritten into full sentences with terms (ghost text, ACL, p95, MoSCoW, SLO, CDN) defined on first use. Figure captions and alt text were rewritten from each SVG's actual labels; inspecting the hot-path lane showed its cache hit bypasses validation. Follow-ups that duplicated Check Yourself were merged into those answers and the rest became reveals; added illustrative values and our own cautions are labelled. Coverage now has 64 rows with section-specific evidence. Source inconsistencies resolved in text (2026-11-16): hot-path figure's cache hit going straight to the editor vs the text's hit-to-validation rule \u2192 validation on every path, because the text, the compact and wide figures and the Check Yourself answer all route hits through validation; the figure stays unedited and its caption says in one neutral sentence what it leaves out. Original vertical figure's hit rejoining the prompt builder \u2192 caption states the design (hit skips the model, goes to validation); correction meta-paragraph removed. Stream-before-validate tension \u2192 nothing shown before validation passes (buffer or incremental validation); the 'our note, not the source's' label removed."
+    }
+  }
+}

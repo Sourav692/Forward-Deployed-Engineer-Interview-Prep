@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "121c5a73aecd4d55fc5e9e81548f7b58f30af300ac42b7d341b0310d4a2327fb",
+  "html_sha256": "b6b5d9ba58f0255077cb2663a77371d9bfe772ae83592be610c0c16ac0fe01fb",
+  "config_sha256": "cdadda21ec135a54e61356070d5028a69179499ed723a91a3c2a30b41ff5715b",
+  "source_url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 44,
+    "coverage_rows": 70,
+    "worked_answers": 23,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "16 November 2026: read all 44 captured sections of the real-time call assistant source and authored a teach-mode rewrite from scratch. The overview, main guide, deep dive and cheat sheet repeat the Full Design's mechanisms, so each mechanism is taught once in the place that fits (three-clock split in step 1, budget arithmetic with the explicit 2,000 ms sum in step 4, per-lane figures inside the snapshot, live-lane and post-call dives) and the shorter versions are mapped as consolidated. The brief uses the source's own Sara/Acme trace as the example and defines CRM, ASR, diarization, PII, VAD and p95 before use. Every substantive table (14 of 18; the old navigation table is consolidated, the main NFR table is merged into the fuller constraints table, and the follow-up table became eight reveals) and all 8 diagrams in both variants are kept beside their explanation. Old 'section N' pointers were removed from table cells and replaced with links to the new anchors. Three changed-constraint questions (unknown inbound caller, mid-call redaction outage, auto-applied stage) are labelled as authored additions; the consent-law example in the privacy dive comes from the source's own references. No RAG-case material was imported beyond the voice project's retrieval step the source itself describes."
+    }
+  }
+}

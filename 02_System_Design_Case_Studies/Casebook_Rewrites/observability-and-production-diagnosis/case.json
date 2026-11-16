@@ -1,0 +1,889 @@
+{
+  "title": "Observability and Production Diagnosis",
+  "slug": "observability-and-production-diagnosis",
+  "subtitle": "Trace a slow or wrong answer to the hop that caused it, without turning telemetry into a second copy of customer data.",
+  "theme": "Delivery, Evaluation, and Operations",
+  "kind": "Case study",
+  "level": "Core",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-complaint",
+    "intro-the-core-idea": "figure-core-idea",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "intro-practise-it": "practice-start",
+    "main-intro": "brief-example",
+    "main-the-anchor-and-its-family": "brief-task",
+    "main-questions-to-ask-the-interviewer": "walkthrough-split",
+    "main-requirements-functional-non-functional": "walkthrough-requirements",
+    "main-architecture": "walkthrough-architecture",
+    "main-diagnose-from-the-complaint-down": "walkthrough-diagnosis",
+    "main-failure-policy-cost-and-rollout": "walkthrough-failure-policy",
+    "main-two-minute-interview-answer": "practice-delivery",
+    "deep-dive-intro": "brief-task",
+    "deep-dive-1-collection-policy-is-the-first-capacity-decision": "walkthrough-no-capture",
+    "deep-dive-2-boundaries-and-data-mechanics": "dive-redaction",
+    "deep-dive-3-sampling-and-missing-evidence-drill": "dive-sampling",
+    "deep-dive-4-root-cause-method-and-incident-evidence": "dive-latency-incident",
+    "deep-dive-5-failure-matrix-and-operational-use": "walkthrough-failure-policy",
+    "deep-dive-6-cost-and-latency-pivot-pattern": "dive-pivot-pattern",
+    "cheat-sheet-intro": "review",
+    "cheat-sheet-ask-first": "review",
+    "cheat-sheet-whiteboard-path": "review",
+    "cheat-sheet-four-rules": "review",
+    "cheat-sheet-numbers-and-incidents": "review",
+    "cheat-sheet-diagnosis": "review",
+    "full-pack-intro": "walkthrough-split",
+    "full-pack-1-split-slow-and-sometimes-wrong-into-three-problems": "walkthrough-split",
+    "full-pack-2-decide-what-not-to-collect-first": "walkthrough-no-capture",
+    "full-pack-3-state-requirements-as-testable-constraints": "walkthrough-requirements",
+    "full-pack-4-size-the-telemetry-by-collection-policy": "walkthrough-sizing",
+    "full-pack-5-draw-the-architecture-end-to-end": "walkthrough-architecture",
+    "full-pack-part-2-6-classify-and-hash-before-storage": "dive-redaction",
+    "full-pack-part-2-7-sample-toward-the-failures": "dive-sampling",
+    "full-pack-part-2-8-name-the-failure-policy-for-every-layer": "walkthrough-failure-policy",
+    "full-pack-part-2-9-triage-from-the-complaint-down": "walkthrough-diagnosis",
+    "full-pack-part-2-10-walk-through-the-latency-spike": "dive-latency-incident",
+    "full-pack-part-3-11-walk-through-the-cost-spike": "dive-cost-incident",
+    "full-pack-part-3-12-answer-the-neighbouring-prompts-with-the-same-traces": "dive-neighbouring",
+    "full-pack-part-3-13-roll-out-in-four-phases-with-named-owners": "walkthrough-rollout",
+    "full-pack-part-4-14-deliver-it-in-fifty-minutes": "practice-delivery",
+    "full-pack-part-4-15-answer-every-cost-and-latency-pivot-with-a-card": "practice-pivots",
+    "full-pack-part-5-level-calibration": "practice-delivery",
+    "full-pack-part-5-key-takeaways": "review",
+    "full-pack-part-5-check-yourself": "practice-check",
+    "full-pack-part-5-references": "references",
+    "intro": "case-brief",
+    "main": "walkthrough",
+    "deep-dive": "deep-dives",
+    "cheat-sheet": "quick-review",
+    "full-pack": "walkthrough",
+    "full-pack-part-2": "walkthrough",
+    "full-pack-part-3": "walkthrough",
+    "full-pack-part-4": "walkthrough",
+    "full-pack-part-5": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "scope",
+      "label": "Discovery and the no-capture list",
+      "hint": "Split slow and wrong into measurable problems and name what telemetry may never hold."
+    },
+    {
+      "id": "design",
+      "label": "Both paths and the support workflow",
+      "hint": "Trace one request through the request path and the observability path, and how support reaches its hop."
+    },
+    {
+      "id": "failures",
+      "label": "Failure policy and the dropped trace",
+      "hint": "Say which layers fail closed or degrade, and what you do when sampling lost the only bad trace."
+    },
+    {
+      "id": "incidents",
+      "label": "Incidents and rollout",
+      "hint": "Diagnose the latency and cost spikes from their spans, then name the rollout gates and owners."
+    }
+  ],
+  "rubric": [
+    "Separates latency, correctness and diagnosability before proposing components.",
+    "Writes the no-capture list first and names a narrow, audited break-glass path.",
+    "Keeps the observability path unable to block, alter or authorise the request path.",
+    "Classifies and applies a keyed HMAC before storage, and treats a missing key as an error.",
+    "Biases sampling toward errors and slow traces, and runs the dropped-trace drill without treating a missing trace as health.",
+    "Fails closed on auth, cross-tenant lookup, redaction failure and audit evidence while letting export degrade.",
+    "Decomposes the latency incident by span against baselines and reads the cost incident's role_scope loss as a permission incident.",
+    "Gates rollout on trace coverage and telemetry overhead with named owners per phase."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Slow-and-wrong complaint, privacy as the hard part, correlation ID + async redacted sampled spans, tenant-scoped support, complaint-down diagnosis, same traces for related prompts",
+      "anchors": [
+        "brief-complaint"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraphs of 'Find the hop' keep the complaint, the second-copy-of-customer-data risk, the no-raw-prompt default and tenant-only support, then the design sentence (correlation ID, async export, redact before storage, error/slow sampling) and the three-level diagnosis order. Terms span, trace, correlation ID, tenant, p95 and RAG are now defined before use."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and the complaint-to-span flowchart (both variants)",
+      "anchors": [
+        "brief-complaint",
+        "figure-core-idea"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-core-idea carries 29d35c59/c85451a8 with the source sentence as caption; the paragraph after it walks the flowchart's three branches (bad evidence -> retrieval, contradicted evidence -> model/prompt, otherwise tools and latency), matching the SVG labels."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions, applied-AI interviews, production operations round on live LLM latency or cost incidents",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph two names the same three roles and the production-operations round on debugging a live LLM application or a latency/cost incident; LLM expanded on first use."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: explain end to end from the dangerous constraint; answer follow-ups on redaction, sampling, root cause, failure policy, incidents, rollout",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task states the dangerous constraint verbatim in substance (no raw prompts, documents, secrets; no cross-tenant support reads) and lists the same six follow-up areas as learning goals."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: tracing and spans, percentile latency, RAG, multi-tenant access control",
+      "anchors": [
+        "brief-task",
+        "brief-complaint"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four prerequisites are listed in brief-task; spans, percentiles, tenants and RAG are additionally given plain definitions in the opening term list since the old 'related reviews' footer links are not part of this bundle."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Old reading instructions: three mandatory sections, mark read, open Full Design, revisit Quick Review",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Replaced by the final brief-task paragraph's reading order for the five new sections; the Full Design is no longer a separate track (its material is distributed), and the night-before Quick Review advice is kept."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old section table (Interview Guide, Deep Dive, Quick Review, Full Design with five parts)",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The four-track table is old navigation; its descriptions map onto the five-section reading guide in brief-task, and every listed Full Design topic (no-capture, sizing, sampling, triage, spikes, rollout, ten pivot cards) has its own anchor listed in other rows."
+      }
+    },
+    {
+      "source_id": "intro-practise-it",
+      "teaching_item": "Link to the external blank-page worksheet",
+      "anchors": [
+        "practice-start"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-start sets the same blank-page task and states plainly that the external 'Observability for a Customer-Facing AI Application' worksheet was not captured; the local worksheet fields replace it."
+      }
+    },
+    {
+      "source_id": "main-intro",
+      "teaching_item": "Acme German refund flow trace: correlation ID at auth, per-hop time/outcome without raw prompt, classifier redacts (1.2s/3 docs yes, SSN no), Acme-only support, L1 cannot open Globex, first token vs last sentence and empty vs made-up vs tool 500, errors kept and happy traffic sampled; the loop",
+      "anchors": [
+        "brief-example"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-example turns the six bullets into a numbered six-step trace with every example kept ('Retrieval 1.2s, 3 docs', SSN defined, Acme vs Globex, tool 500) and ends with the source loop and 'telemetry must not stall the user'. The slice scope sentence moved to brief-task; old cross-links to Full Design/Cheat Sheet dropped as navigation."
+      }
+    },
+    {
+      "source_id": "main-the-anchor-and-its-family",
+      "teaching_item": "Anchor goal and five-row related-case table",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-row table (latency spike, cost spike, latency questions, poor RAG quality, cost/latency pivots) kept with all three columns in brief-task, introduced by the sentence that the same traces answer them at different depths."
+      }
+    },
+    {
+      "source_id": "main-questions-to-ask-the-interviewer",
+      "teaching_item": "Six interviewer questions with plain-language meaning and the decision each drives",
+      "anchors": [
+        "walkthrough-split"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full six-row, three-column table in step 1 including the '100% for 90 days or 5% for 14' and 'L1 open another tenant's tickets' phrasings; SLO defined directly after it."
+      }
+    },
+    {
+      "source_id": "main-requirements-functional-non-functional",
+      "teaching_item": "Functional list (five), non-functional table with illustrative volume, interview shortcut quote",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 merges the five main-guide functionals into the six full-design bullets (queues, timings with outcome tags, global vs tenant views, request family without raw content, audit independent of sampling), keeps the compact six-row NFR table with the 500 rps/110-155 GB volume row verbatim, and keeps the interview shortcut as a labelled quote."
+      }
+    },
+    {
+      "source_id": "main-architecture",
+      "teaching_item": "Request vs observability path, bounded async export, classifier boundary; seven-step architecture; architecture figure",
+      "anchors": [
+        "walkthrough-architecture",
+        "figure-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-architecture (9a5efaf9/398dd262) sits under the two-path explanation; the seven source steps become a numbered trace through it, with HMAC and exemplar defined at the step where they appear and the fallback 'serve the user and alert on the gap' kept."
+      }
+    },
+    {
+      "source_id": "main-diagnose-from-the-complaint-down",
+      "teaching_item": "Outcome-first diagnosis, time split, evidence vs answer rules, completion/abandonment, dropped-trace response, latency and cost incident summaries",
+      "anchors": [
+        "walkthrough-diagnosis"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 keeps p95/p99, first token, failure/partial rate and tenant in the top panel, the six-way time split in the middle panel, the three evidence-vs-answer rules beside the triage figure, the dropped-trace five actions, and both incident summaries with every number (22.18 s vs 7 s; 4.2/3.1/2.8/9.36 s; 7%, 351%, 67%->4%, role_scope) linked to their full deep dives."
+      }
+    },
+    {
+      "source_id": "main-failure-policy-cost-and-rollout",
+      "teaching_item": "Degrade vs fail-closed list, retries/breaker, dead-letter, blast radius axes; four-phase rollout, gates and success measures",
+      "anchors": [
+        "walkthrough-failure-policy",
+        "walkthrough-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Fail-closed list (auth, cross-tenant lookup, redaction failure, audit) is restated at the end of the 'why rows differ' paragraph in step 6; four blast-radius axes in step 6; the phase list, coverage/overhead gate and the eight success measures close step 8."
+      }
+    },
+    {
+      "source_id": "main-two-minute-interview-answer",
+      "teaching_item": "Two-minute spoken answer",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept word for word as a labelled 'spoken answer example (source)' blockquote under 'Spoken answers to rehearse'."
+      }
+    },
+    {
+      "source_id": "deep-dive-intro",
+      "teaching_item": "Deep-dive reading instruction and cross-links",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Pure navigation ('read with the unchanged source'); replaced by the brief-task reading guide describing what the Technical deep dives section holds."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-collection-policy-is-the-first-capacity-decision",
+      "teaching_item": "Fixed span schema, default exclusions, break-glass conditions",
+      "anchors": [
+        "walkthrough-no-capture"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 lists the same schema fields (correlation ID, tenant, span name, timing, model and prompt-template versions, retrieval references, tool outcome, error class, outcome) and the break-glass conditions (approval, strict access, short timer, audit record) plus 'never collected cannot leak'."
+      }
+    },
+    {
+      "source_id": "deep-dive-1-collection-policy-is-the-first-capacity-decision",
+      "teaching_item": "Sizing bullets: 3,000 spans/s, 2-5% + 5% head, 110-155 GB / 270-390 GB, volume caveats, classifier as bottleneck",
+      "anchors": [
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 shows the arithmetic (7-10% kept, 210-300 spans/s, x 2,592,000 s = ~109-156 GB) that reproduces the source range, keeps the span-size/overlap/traffic-shape caveat and the classifier-CPU conclusion."
+      }
+    },
+    {
+      "source_id": "deep-dive-2-boundaries-and-data-mechanics",
+      "teaching_item": "Non-blocking export, queue serialisation, idempotent ingestion, keyed HMAC with vault and rotation, no unkeyed fallback, cardinality rejection, separate audit path, global vs tenant views, break-glass audit",
+      "anchors": [
+        "dive-redaction"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The redaction deep dive explains why a plain hash allows a dictionary attack before stating vault/rotation/no-fallback, why queues (unlike HTTP headers) lose context and create orphan spans, and why audit kept in the trace store would inherit sampling; idempotency and the gateway leakage check are kept."
+      }
+    },
+    {
+      "source_id": "deep-dive-3-sampling-and-missing-evidence-drill",
+      "teaching_item": "Head vs tail-biased, four combined mechanisms, coverage vs complaints, reconstruction with uncertainty, missing trace is not health",
+      "anchors": [
+        "dive-sampling",
+        "walkthrough-sizing"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-sampling lists low-rate sampling, error-class overrides, always-on exemplars and incident escalation as separate bullets, adds an illustrative 0.95^3 = 86% calculation clearly labelled as not from the source, and keeps 'record uncertainty' and 'never read a missing trace as proof of health'."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-root-cause-method-and-incident-evidence",
+      "teaching_item": "Latency method: first-token/per-token/total, ten-way split, queue vs service, prefill vs decode, p99 rising with flat p50, synchronous evaluator",
+      "anchors": [
+        "dive-neighbouring",
+        "walkthrough-diagnosis"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The ten-stage split, queue-wait vs service time, p99/p50 queueing signal and synchronous-evaluator trap sit in the latency-regression subsection of dive-neighbouring; prefill/decode is explained in the inference subsection and summarised in step 7."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-root-cause-method-and-incident-evidence",
+      "teaching_item": "Latency incident evidence: 22,180/34,890 ms, 12.8% vs 1.1%, stage figures, 80 candidates, depth 29, 18,500 tokens, off-peak canary, immediate and permanent fixes",
+      "anchors": [
+        "dive-latency-incident"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Every figure appears in the latency telemetry table, and the 30-candidate cap, depth>10 light reranker, context cap, regional endpoint, per-stage budgets and peak load gates appear in its Fix subsection."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-root-cause-method-and-incident-evidence",
+      "teaching_item": "Quality metrics by layer and fine-tuning caveat",
+      "anchors": [
+        "dive-neighbouring"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "recall@k/precision@k/MRR/nDCG, citation correctness/context sufficiency, faithfulness/relevance/abstention and task success are listed per layer with recall@k, precision@k and MRR defined; the fine-tuning caveat (poor for missing knowledge, stale index, unauthorised retrieval) is kept with the Ovadia citation."
+      }
+    },
+    {
+      "source_id": "deep-dive-4-root-cause-method-and-incident-evidence",
+      "teaching_item": "Cost attribution evidence: $240/$912/$1,680, +7%/+351%, 4,200->19,000 tokens, 67%->4%, key missing date/snapshot/role, fix spend and permissions",
+      "anchors": [
+        "dive-cost-incident"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All figures are in the cost telemetry table; the three missing key fields and 'fix both spend and permissions' appear in the hidden correctness bug and Fix subsections."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-failure-matrix-and-operational-use",
+      "teaching_item": "Failure matrix: fail closed auth/tenant, degrade export, audit sink blocks, retrieval retry once, model queue, breakers, quarantine, raw-prompt incident response",
+      "anchors": [
+        "walkthrough-failure-policy",
+        "dive-failure-drills"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The eight-row policy table in step 6 carries each policy; dive-failure-drills repeats the operational short rules and treats raw-prompt export as a privacy incident with the four containment actions (contain sink, rotate, delete/redact by contract, fix guardrail)."
+      }
+    },
+    {
+      "source_id": "deep-dive-5-failure-matrix-and-operational-use",
+      "teaching_item": "Top-down dashboards, alert triggers, rollout order, go/no-go, schema compatibility, rollback switch",
+      "anchors": [
+        "walkthrough-diagnosis",
+        "walkthrough-rollout"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three dashboard panels and the five alert triggers (SLO, empty retrieval, fallback growth, critical tools, wrong-answer feedback by tenant) are in step 7; rollout order, coverage/overhead gate, interoperable schemas and rollback switch in step 8."
+      }
+    },
+    {
+      "source_id": "deep-dive-6-cost-and-latency-pivot-pattern",
+      "teaching_item": "Measure/route/bound/cache safely, batch/eval segregation, 429 separation, cancel on abandon, cache-miss inspection order, TTL",
+      "anchors": [
+        "dive-pivot-pattern"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-pivot-pattern teaches the four verbs as an ordered list, then applies them to the 429, abandoned-stream and cache-miss situations, adding the provider-billing caveat from the OpenRouter and vLLM references; TTL defined."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-intro",
+      "teaching_item": "Cheat-sheet navigation links",
+      "anchors": [
+        "review"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Navigation only; the Quick review section replaces the cheat-sheet as the recall page."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-ask-first",
+      "teaching_item": "Six first questions",
+      "anchors": [
+        "review",
+        "walkthrough-split"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Ask first' line in Quick review lists the same six questions; each is taught with its decision in step 1."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-whiteboard-path",
+      "teaching_item": "Request and span whiteboard path, separate audit, non-blocking export",
+      "anchors": [
+        "review",
+        "walkthrough-architecture"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Whiteboard path is repeated in Quick review and spoken as the four-line summary inside step 5 after the numbered trace."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-four-rules",
+      "teaching_item": "Four rules",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review numbered 'Four rules' keeps all four; each is taught in steps 2, 5 and 6 and the redaction/sampling dives."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-numbers-and-incidents",
+      "teaching_item": "Recall numbers: 3,000 spans/s, 5%, 22.18 s, +7%/+351%, 67%->4%, role_scope",
+      "anchors": [
+        "review"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Numbers and incidents' recall keeps each figure and adds the stage values, the storage range and the classifier conclusion already taught in step 4."
+      }
+    },
+    {
+      "source_id": "cheat-sheet-diagnosis",
+      "teaching_item": "Diagnosis shortcuts and the 60-second close",
+      "anchors": [
+        "review",
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Diagnosis' recall keeps the four shortcuts and adds the missing-trace rule; the 60-second close quote appears both in Quick review and under Spoken answers to rehearse."
+      }
+    },
+    {
+      "source_id": "full-pack-intro",
+      "teaching_item": "Thesis sentence, 'three problems in one sentence', group table, provenance note for sizing numbers",
+      "anchors": [
+        "dive-neighbouring",
+        "walkthrough-split"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The thesis is the opening sentence of step 1; the nine-row group table is in dive-neighbouring with its right-hand column rewritten to point at this casebook's anchors instead of old section numbers; the V2 gap-note provenance note is kept beneath it and beside the sizing table."
+      }
+    },
+    {
+      "source_id": "full-pack-1-split-slow-and-sometimes-wrong-into-three-problems",
+      "teaching_item": "Three problems, four stakeholder signals, eight-row discovery table, opening sentence",
+      "anchors": [
+        "walkthrough-split"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 1 keeps latency/correctness/diagnosability as defined bullets, the support/engineering/security/sponsor signals, the eight-row question-and-why table and the one-sentence opener with 'state assumptions, invite redirection'."
+      }
+    },
+    {
+      "source_id": "full-pack-2-decide-what-not-to-collect-first",
+      "teaching_item": "No-capture list rationale, two-column table, 'never capture' is too far, break-glass, hidden-constraint injection",
+      "anchors": [
+        "walkthrough-no-capture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 keeps the six/four-row table, adds a plain definition of cardinality explaining why free-form labels sit beside secrets, keeps hashes/references and the break-glass path, and the restart-versus-name-the-path contrast for the hidden constraint."
+      }
+    },
+    {
+      "source_id": "full-pack-3-state-requirements-as-testable-constraints",
+      "teaching_item": "Preference vs constraint, six functional requirements, seven-row testable constraint table, requirement-to-component table",
+      "anchors": [
+        "walkthrough-requirements"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 defines 'request family', keeps the support workflow as functional core plus the other requirements, the seven testable constraints (including 'zero raw prompts in any sink' and 'no single global sampling rule') and the seven-row ownership table."
+      }
+    },
+    {
+      "source_id": "full-pack-4-size-the-telemetry-by-collection-policy",
+      "teaching_item": "Collection-policy sizing, seven-row worked table, storage is not the constraint, head vs tail sampling, sampling figure",
+      "anchors": [
+        "walkthrough-sizing",
+        "figure-sampling-decision"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 keeps the table and the 'chapter gives no numbers' provenance, derives its storage figures step by step, cites the Tempo 500-byte source, explains why a 5% head sample also drops 95% of failures, and walks both branches of figure-sampling-decision (5a13c654/c366796b) whose labels match."
+      }
+    },
+    {
+      "source_id": "full-pack-5-draw-the-architecture-end-to-end",
+      "teaching_item": "Tracing-first two-path design, request-path and observability-path figures, verbatim source diagram, component table with failure column, four organising questions",
+      "anchors": [
+        "walkthrough-architecture",
+        "figure-request-path",
+        "figure-observability-path",
+        "figure-source-architecture"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 places d8703215/18c14825, a4a2ef80/4be687cd and the verbatim 54fc4184/5fd5ab6c diagram with captions naming what each shows, keeps both invariants, the seven-row table with 'Fails how', and answers each of the four questions in a numbered list against the diagram."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-classify-and-hash-before-storage",
+      "teaching_item": "Classify before storage, Request/ExportedTrace model, HMAC-SHA256 properties, vault/rotation, missing key error",
+      "anchors": [
+        "dive-redaction"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'The data model' and 'Why the hash must be keyed' subsections keep both record shapes and explain deterministic fingerprinting, the dictionary-attack threat that keying blocks, leak consequences and the no-silent-fallback rule, with RFC 2104 cited."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-6-classify-and-hash-before-storage",
+      "teaching_item": "Three executable tests, schema validation, 'other' bucket, queue contracts",
+      "anchors": [
+        "dive-redaction"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row test table kept (deduplicated, person@example.com, partial_failure in finally) with an added sentence on why finally matters; schema validation, 'other' bucket and queue contract fields kept in their own subsection."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-7-sample-toward-the-failures",
+      "teaching_item": "Signature phrase, uniform sampling of rare failures, four-step drill table, weak move",
+      "anchors": [
+        "dive-sampling"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-sampling opens with the signature phrase, keeps the detection/containment/recovery/prevention table verbatim and the 'contain, preserve, make legible; do not defend the sampler' close."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-name-the-failure-policy-for-every-layer",
+      "teaching_item": "Five policy terms and eight-row failure policy table, why rows differ, blast radius four axes with examples",
+      "anchors": [
+        "walkthrough-failure-policy"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 defines fail open/closed, degrade, queue and human intervention, keeps all eight rows, defines SLA, circuit breaker and dead-letter queue, keeps both 'why rows differ' contrasts and the four blast-radius examples."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-8-name-the-failure-policy-for-every-layer",
+      "teaching_item": "Four named failures through detection/containment/recovery/prevention, abuse case, chaos practice",
+      "anchors": [
+        "dive-failure-drills"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Five-column table for high-cardinality tenant ID, raw prompt in logs, queue context break and quality-vs-adoption kept; the debug-span abuse case and its three-layer fix, and staging chaos injection list, kept."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-9-triage-from-the-complaint-down",
+      "teaching_item": "Top-down dashboard panels, evidence vs answer triage, triage figure, signals that make it possible, alert triggers",
+      "anchors": [
+        "walkthrough-diagnosis",
+        "figure-bad-answer-triage"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 keeps all three panels' contents, the three triage rules beside figure-bad-answer-triage (b4aa2e22/6f55a31d, labels checked), the signal list linked back to step 2, and harm-based alerting triggers."
+      }
+    },
+    {
+      "source_id": "full-pack-part-2-10-walk-through-the-latency-spike",
+      "teaching_item": "Latency spike: setting, path, 7 s/12 s targets, symptom, nine-row telemetry, what changed, root cause, debugging path, fix now/later, abuse angle, spoken and weak answers",
+      "anchors": [
+        "dive-latency-incident"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The deep dive keeps every value and both reranker names, defines a cross-encoder reranker, adds a read-the-table paragraph (tail vs median, ~20.2 s stage sum with the percentile-addition caveat, 14.1 s first token beyond 12 s), and labels the spoken answer as source."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-11-walk-through-the-cost-spike",
+      "teaching_item": "Cost spike: setting, path, intended cache key, symptom, six-row telemetry, what changed, three multiplying effects, debugging path, role_scope bug, fix now/later, spoken and weak answers",
+      "anchors": [
+        "dive-cost-incident"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All six telemetry rows kept including the illustrative $2.74 vs $0.31 caveat; an added paragraph reads the deltas to rule out usage growth; 3.8 days of budget computed from $912/$240; v5 invalidation reason and the cache-key-as-permission point made explicit."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-answer-the-neighbouring-prompts-with-the-same-traces",
+      "teaching_item": "Latency regression prompt: which latency, ten stages, checks, peak-only queueing with 4x/9x arithmetic and provenance",
+      "anchors": [
+        "dive-neighbouring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Latency-regression subsection keeps all ten stages and the check order, shows the rho/(1-rho) formula producing 4x at 80% and 9x at 90%, and keeps the additions-file section D provenance note."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-answer-the-neighbouring-prompts-with-the-same-traces",
+      "teaching_item": "Poor RAG quality: seven failure classes, metrics per layer, fine-tuning follow-up classification",
+      "anchors": [
+        "dive-neighbouring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Seven classes listed, metrics grouped per layer with MRR and nDCG expanded, and the knowledge/behaviour/freshness/permission classification kept with fine-tuning helping only behaviour."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-12-answer-the-neighbouring-prompts-with-the-same-traces",
+      "teaching_item": "Inference pipeline: stack walk, prefill vs decode, frozen UI vs dragging answer, batching, KV cache, post-processing, link to inference-serving case",
+      "anchors": [
+        "dive-neighbouring"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Inference subsection keeps the additions-file section B provenance, adds the incident's 18,500-in/610-out tokens as the worked example of prefill dominating, defines the KV cache and keeps the cross-reference to the LLM Inference Serving case."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-roll-out-in-four-phases-with-named-owners",
+      "teaching_item": "Four phases with owners and exit criteria, weekly schedule",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 keeps the four-row phase table and the weeks 0-1 through 6-8 schedule."
+      }
+    },
+    {
+      "source_id": "full-pack-part-3-13-roll-out-in-four-phases-with-named-owners",
+      "teaching_item": "Eight-metric scorecard, go/no-go and rollback triggers, product/service/adapter/configuration split, launch readiness, three artefacts, risk register",
+      "anchors": [
+        "walkthrough-rollout"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All eight scorecard rows with calculation/owner/alert, the coverage-or-overhead pause rule, three rollback triggers, the four-way ownership split, canary/rollback/interop/training/ops guide items, the three artefacts and the five-row risk register are in step 8; SRE and ML expanded."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Fifty-minute pacing table, four trade-offs, weak-answer repairs, executive summary spoken answer",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-delivery keeps the eight-row pacing table, the four trade-offs, all five weak-answer repairs and the executive summary as a labelled source quote."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-14-deliver-it-in-fifty-minutes",
+      "teaching_item": "Gap answers: build vs buy, GDPR deletion, keyed hash still personal data, retention follows DPA",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Two worked reveals (answer-gap-build-buy, answer-gap-regulation) keep both gap answers; the regulation answer ties the claims to Recital 26, the EDPB pseudonymisation guidance and Article 17 from the source reference list."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-15-answer-every-cost-and-latency-pivot-with-a-card",
+      "teaching_item": "Card format, shared customer-communication sentence, four verbs",
+      "anchors": [
+        "dive-pivot-pattern",
+        "practice-pivots"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The five card fields and the shared sentence appear in dive-pivot-pattern and again at the top of practice-pivots; the closing four-verb paragraph became the ordered list in dive-pivot-pattern."
+      }
+    },
+    {
+      "source_id": "full-pack-part-4-15-answer-every-cost-and-latency-pivot-with-a-card",
+      "teaching_item": "Ten cards 15.1-15.10 with every field, and card 15.8's prefix-caching facts",
+      "anchors": [
+        "practice-pivots"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Each card is its own answer reveal titled with its source number and question, holding the five-row table unchanged; the A1 prefix-match facts and role_scope note stay inside card 15.8 and are also taught in dive-pivot-pattern."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-level-calibration",
+      "teaching_item": "Senior/staff/principal calibration table",
+      "anchors": [
+        "practice-delivery"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Three-row 'sounds like / missing' table kept in practice-delivery under Level calibration with its framing sentence."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-key-takeaways",
+      "teaching_item": "Fifteen key takeaways",
+      "anchors": [
+        "review"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All fifteen takeaways are listed in Quick review; each is taught in a walkthrough step, deep dive or Practice section (for example the three tests in dive-redaction, the 50-minute allocation in practice-delivery)."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-check-yourself",
+      "teaching_item": "Twelve self-check questions with answers",
+      "anchors": [
+        "practice-check"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-check holds twelve answer-check-* reveals, one per source question, with the source answer in each body; the HMAC and inference answers gain one clarifying clause each."
+      }
+    },
+    {
+      "source_id": "full-pack-part-5-references",
+      "teaching_item": "Thirteen fact-check references with the claim each supports",
+      "anchors": [
+        "references"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All thirteen links and claim notes kept in the References group with the 27 September 2026 check date; Tempo, RFC 2104, Ovadia, Kwon/vLLM, GDPR/EDPB, prompt-caching and OpenRouter/vLLM-server sources are also named beside their claims in the body."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 49 captured sections (dumped from source.json HTML with tables) against the rewrite item by item. The four overlapping tracks were folded into one path: the main guide's compact requirement and failure paragraphs were merged with the fuller Full Design tables in steps 3 and 6, the deep-dive incident bullets merged into the complete latency and cost spike dives, and the cheat-sheet kept as Quick review. Expansions are definitions the source assumed (span, trace, correlation ID, tenant, cardinality, exemplar, break-glass, cross-encoder, KV cache, prefill/decode), derived arithmetic that reproduces source figures (110-155 GB storage, 4x/9x queueing, 3.8 days of budget, ~20.2 s stage sum with a percentile caveat), and read-the-table paragraphs for both incident telemetry tables. Two additions are labelled as not from the source: the 0.95^3 sampling illustration and the 100%/90-day changed-constraint question. The Acme German refund trace became the brief's worked example; the external worksheet is disclosed as not imported. All seven figures in both variants are placed beside the text that walks them."
+  },
+  "required_answer_reveals": [
+    "answer-check-three-problems",
+    "answer-check-never-captured",
+    "answer-check-classify-first",
+    "answer-check-keyed-hash",
+    "answer-check-dropped-trace",
+    "answer-check-fail-closed",
+    "answer-check-retrieval-vs-model",
+    "answer-check-latency-stack",
+    "answer-check-cost-security",
+    "answer-check-prefill-decode",
+    "answer-check-go-no-go",
+    "answer-check-four-verbs",
+    "answer-new-full-retention",
+    "answer-gap-build-buy",
+    "answer-gap-regulation",
+    "answer-card-costs-exploded",
+    "answer-card-cost-5x",
+    "answer-card-latency-2-to-20",
+    "answer-card-exec-demo",
+    "answer-card-too-expensive",
+    "answer-card-prompt-tokens",
+    "answer-card-provider-unstable",
+    "answer-card-cache-drop",
+    "answer-card-rate-limits",
+    "answer-card-abandon-stream"
+  ]
+}

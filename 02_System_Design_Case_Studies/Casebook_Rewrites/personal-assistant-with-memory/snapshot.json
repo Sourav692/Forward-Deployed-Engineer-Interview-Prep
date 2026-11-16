@@ -1,0 +1,25 @@
+{
+  "mode": "teach",
+  "validated": true,
+  "markdown_sha256": "3ab3c1bd8dbeaa89857d820d074240243c1de6c908b1acdb55429e407bd54ca4",
+  "html_sha256": "b84799f438dcee4973f4c50e30fa6a9c84f8e3b30baafab12301a94017a5245e",
+  "config_sha256": "aabd8067a0bd75b65b885925cbddecf5db4a5ac51d7eb6f891663ea1c4551c43",
+  "source_url": "https://forwarddeployedprep.com/design/personal-assistant-with-memory",
+  "validation": {
+    "passed": true,
+    "mode": "teach",
+    "source_sections": 28,
+    "coverage_rows": 53,
+    "worked_answers": 22,
+    "reports": {
+      "structure": "content-check.json",
+      "browser": "browser-check.json",
+      "aliases": "alias-check.json",
+      "visual": "visual-review.json"
+    },
+    "editorial": {
+      "status": "reviewed",
+      "evidence": "Compared all 28 captured sections against the earlier draft paragraph by paragraph. The draft had dropped the verbatim prompt, the three architecture boundaries, 'short-term is scope not lifetime', MemGPT and extractor-on-queue, the 10-vs-10,000 demo point, 'budget memory like any dependency', the hidden-context cost paragraph, FDE line and four verbs, the seven round-carrying lines and the source's two-minute answer (replaced by a paraphrase); all are restored. It gave all three section-4 diagrams one identical caption; each now has a caption and walkthrough matching its labels, with the 'whole system' pair before the control-plane bullets and the three-lane drawing after, as in the source. Check-yourself answers were reworded and follow-ups were a table: all 12 checks and 8 follow-ups are now reveals that start from the source answer, plus the cost pivot and one labelled authored drill (22 total). Restating paragraphs under the failure table and in the brief were replaced with explanation (latency longest-chain arithmetic, where each failure is observable, sizing chain). A scrubbed em dash had left a ', ' table cell and broken the verbatim rubric line; both fixed. Authored additions (illustrative trace, deletion marker, task identity, 400 GB overhead caveat) are labelled."
+    }
+  }
+}

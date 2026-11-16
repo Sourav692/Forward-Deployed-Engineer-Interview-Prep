@@ -1,0 +1,704 @@
+<nav aria-label="Casebook sections" class="section-nav">
+<a data-panel-link="case-brief" href="#case-brief"><span class="section-number">1</span>Case brief</a>
+<a data-panel-link="walkthrough" href="#walkthrough"><span class="section-number">2</span>Design walkthrough</a>
+<a data-panel-link="deep-dives" href="#deep-dives"><span class="section-number">3</span>Technical deep dives</a>
+<a data-panel-link="practice" href="#practice"><span class="section-number">4</span>Practice</a>
+<a data-panel-link="quick-review" href="#quick-review"><span class="section-number">5</span>Quick review</a>
+</nav>
+<div class="reading-layout">
+<aside aria-label="Reading navigation" class="contents-rail">
+<div class="rail-sticky">
+<p class="rail-heading">In this section</p>
+<nav aria-label="On this page" id="section-contents"><a href="#gateway-brief">Four constraints on every support turn</a><a href="#gateway-example">Trace a support request</a></nav>
+<div class="rail-note"><p>One case, three ways in.</p><p>Learn the design, test your reasoning, or revise before an interview.</p></div>
+<a class="rail-review" href="#quick-review">Open quick review</a>
+</div>
+</aside>
+<div class="casebook-body" id="content" tabindex="-1">
+<section class="panel" data-title="Case brief" id="case-brief"><div class="section-heading"><h2>Case brief</h2><p>Understand the scenario, task, and constraints.</p></div>
+<section class="reading-section" id="gateway-brief"><h3>Four constraints on every support turn</h3>
+<p>Design a gateway for a customer-support agent that survives a provider outage without customer-visible downtime, resists prompt injection and personally identifiable information (PII) leaks, spends less than $500 per day, and keeps p95 latency below three seconds. P95 means 95% of the measured requests finish within that time. The first discovery question is what counts as finishing: the first streamed token or the complete answer.</p>
+<p>A gateway is the shared path through which model traffic passes. It screens, meters, routes and recovers each call. A customer message may trigger an agent turn with several model and tool steps. Screening only that message leaves the later paid calls outside the budget and recovery controls.</p>
+<p>This case is for engineers preparing for Forward Deployed, solutions and applied AI interviews. It assumes familiarity with model APIs, token pricing, API gateways, retries and circuit breakers. Work through the dollar arithmetic before reading the solution, then rehearse the design and cost pivot. The target is an explainable design, not a deployed gateway. The source is a mock design built from a production and operations tutorial: its prompt, seven-point rubric and strong-answer outline supply the constraints. Pricing, latency and residency receive further worked treatment here.</p>
+<p>All model names, prices, durations and traffic assumptions below belong to the captured case. They are historical whiteboard inputs, not current vendor offers or measured service guarantees. The captured reference reports its price check as 27 September 2026. No current price verification is claimed.</p>
+<figure id="figure-1-0"><a href="/casebook-assets/production-llm-gateway/5bd553b4bf8cee17.svg"><img alt="Overview: safe cache hits bypass metering and generation. Misses enter budget, complexity routing and recovery. Light source variant." src="/casebook-assets/production-llm-gateway/5bd553b4bf8cee17.svg"/></a><figcaption>Overview: safe cache hits bypass metering and generation. Misses enter budget, complexity routing and recovery. Light source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/5bd553b4bf8cee17.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-1-1"><a href="/casebook-assets/production-llm-gateway/45b9232b723bd6d6.svg"><img alt="Overview: safe cache hits bypass metering and generation. Misses enter budget, complexity routing and recovery. Dark source variant." src="/casebook-assets/production-llm-gateway/45b9232b723bd6d6.svg"/></a><figcaption>Overview: safe cache hits bypass metering and generation. Misses enter budget, complexity routing and recovery. Dark source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/45b9232b723bd6d6.svg">Open full-size diagram</a>.</figcaption></figure>
+</section><section class="reading-section" id="gateway-example"><h3>Trace a support request</h3>
+<p>Consider an illustrative customer asking a support question that includes an account number. Authentication identifies the session and policy assigns its data class. The input guard masks PII before cache lookup or any provider call. A safe FAQ cache hit can answer immediately after output validation. Live account answers bypass reusable caching.</p>
+<p>On a miss, the gateway counts tokens, checks budget admission, classifies complexity and checks intent. A simple turn takes a small-model route. An agent turn may make five calls, each admitted and metered through the model face. A failed provider moves the request to an allowed fallback only while time and budget remain. The customer receives a validated answer with its model source, a labelled degraded response, or a human handoff. An agent instead receives a typed failure when no trustworthy model response is available.</p>
+</section><div class="section-end"><p>Next: build the answer in interview order.</p><a class="btn primary" href="#walkthrough">Start the walkthrough</a></div></section>
+<section class="panel" data-title="Design walkthrough" id="walkthrough"><div class="section-heading"><h2>Design walkthrough</h2><p>Follow the reasoning from discovery to delivery.</p></div>
+<section class="reading-section" id="two-faces"><h3>1. Place the gateway on both sides of the agent</h3>
+<p>The edge face screens customer input and final agent output. The model face sits between every agent or evaluator call and its provider. The source playbook estimates that one user request can become 5 to 20 sub-requests. Budget enforcement at the edge alone therefore misses most of an agent's spend and leaves later failures unrecovered.</p>
+<p>One source-reported research platform uses a shared sidecar: agents ask for a function, and configuration maps that function to a provider. When a provider changes, the team changes one mapping rather than provider code in five places. This is the shared function-to-model layer a platform can extend to further agents.</p>
+<p>Ask the five questions in the table before drawing. The case assumes 10,000 daily users and three turns each, one customer across several regions, and a prohibition on PII reaching an unauthorised customer or provider. Residency remains an explicit discovery question. Use first token for multi-step turns and full answer for one-call turns only after agreeing that interpretation with the interviewer.</p>
+<p>The action-authorisation gateway described in the source's Customer Support Automation reference has another job: deciding which actions an agent may take. A real support product may need both. The model traffic gateway described here does not grant refund or booking authority.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Why it matters</th>
+<th>Assumption for this page</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>How many conversations a day, and how many turns each?</td>
+<td>Sets the spend the $500 must cover</td>
+<td>10,000 users a day, borrowed from the playbook's support-chatbot case; 3 turns each</td>
+</tr>
+<tr>
+<td>Is 3 s the time to first token or to the full answer?</td>
+<td>An agent turn with several tool steps usually cannot finish in 3 s</td>
+<td>First streamed token for agent turns; full answer for one-call turns</td>
+</tr>
+<tr>
+<td>One tenant or many?</td>
+<td>Decides whether budgets, caches and residency are per tenant</td>
+<td>One customer, several regions</td>
+</tr>
+<tr>
+<td>Can data leave the customer's network or region?</td>
+<td>The source's named gap; changes which providers are legal</td>
+<td>Unknown; see the residency topic for both cases</td>
+</tr>
+<tr>
+<td>What must never happen?</td>
+<td>Sets which checks fail closed</td>
+<td><abbr title="personally identifiable information: Anything that identifies a person: name, email, phone, account number. It needs masking, access control and care in logs.">PII</abbr> leaks to a customer or a provider it should not reach</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="requirements"><h3>2. Make each constraint fail a test</h3>
+<p>Turn each requirement into a test and assign an owning component. During a single-provider outage, every customer response must be answered, labelled as degraded, or handed off. That is a useful availability test. It does not establish that all outages can produce an equivalent model answer.</p>
+<p>The latency targets are p95 under three seconds to first token on every turn and to full answer on one-call turns. Enforce the daily $500 ledger before admission. The illustrative per-call input cap is 8,000 tokens. Reject an oversized call explicitly rather than silently truncating context.</p>
+<p>Version the red-team suite and block release when a known attack passes through input or output checks. This is a finite regression requirement. It cannot establish zero residual injection risk. Apply PII policy to responses and logs, tag every answer with model and provider, and retain enough trace information to reconstruct guard decisions, route, tokens and cost.</p>
+<p>Safe caching, region routing, real-path red teaming and versioned configuration make these requirements operable. The tables connect each requirement to a component, so an interview answer can name who enforces it.</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Stated so it can be tested</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Availability</td>
+<td>A single-provider outage produces zero customer-visible errors; every response is answered, degraded with a label, or handed to a human</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>p95 under 3 s to first token on every turn; p95 under 3 s to full answer on one-call turns</td>
+</tr>
+<tr>
+<td>Daily spend</td>
+<td>Under $500/day, enforced by a live ledger, never discovered on the invoice</td>
+</tr>
+<tr>
+<td>Per-request spend</td>
+<td>Rejected before the paid call if it exceeds a token cap <em>(assumption: 8,000 input tokens per call)</em></td>
+</tr>
+<tr>
+<td>Injection</td>
+<td>Every attack in the red-team suite blocked at input or at output; no release if one passes</td>
+</tr>
+<tr>
+<td>PII</td>
+<td>No PII from one turn appears in a response or a log unless policy allows it</td>
+</tr>
+<tr>
+<td>Attribution</td>
+<td>Every response tagged with the model and provider that produced it</td>
+</tr>
+<tr>
+<td>Replay</td>
+<td>Any request reconstructable from its trace: guardrail decisions, route, model, tokens, cost</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Primary component(s)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Screen input</td>
+<td>Rule-based input guard, then LLM input guard</td>
+</tr>
+<tr>
+<td>Screen output</td>
+<td>Rule-based output validator, then optional LLM output check</td>
+</tr>
+<tr>
+<td>Cheapest capable model</td>
+<td>Complexity router</td>
+</tr>
+<tr>
+<td>Survive outage</td>
+<td>Provider adapters with retry and breaker, fallback provider, degradation responder</td>
+</tr>
+<tr>
+<td>Stay under budget</td>
+<td>Token-budget check, spend ledger and pacer</td>
+</tr>
+<tr>
+<td>Replay</td>
+<td>Tracer, structured logs, metrics collector</td>
+</tr>
+<tr>
+<td>Residency</td>
+<td>Data-class policy and region-bound provider pool</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="pricing"><h3>3. Calculate the $500 day</h3>
+<p>Use 30,000 turns a day: 10,000 users multiplied by three turns. A 30% cache hit rate removes 9,000 generation paths. Of 21,000 misses, 70% are simple one-call turns and 30% are complex five-call turns. Five calls is the low end of the source's 5 to 20 sub-request rule. Each call has 2,000 input and 250 output tokens.</p>
+<p>At the historical illustrative small-model rates of $0.15 input and $0.60 output per million tokens, one call costs (2,000 × 0.15 + 250 × 0.60) / 1,000,000 = $0.00045. At the large-model rates of $2.50 and $10.00, the call costs $0.0075. Five such calls cost $0.0375.</p>
+<p>Multiply those unit costs by 14,700 simple turns and 6,300 complex turns. Add $1.05 for 21,000 router classifications at $0.00005 and $1.35 for 15,000 input checks at $0.00005 plus 6,000 output checks at $0.0001. The total is $245.265, reported as about $245 or 49% of budget. Simple turns come to $6.615, shown as $6.62 in the table. Cache hits cost no generation tokens in this model, but still require gateway infrastructure and safety processing.</p>
+<p>Without caching or routing, 30,000 five-call large-model turns cost $1,125, or 2.25 times the cap. Complex turns are 21% of all traffic and about 96% of this modelled spend. Increasing their share of misses from 30% to 40% raises daily spend to about $323. Holding all rates and proportions constant, $500 buys roughly 61,000 turns. That is a sensitivity estimate, not a capacity promise.</p>
+<table>
+<thead>
+<tr>
+<th>Assumption</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Customer turns per day</td>
+<td>10,000 users × 3 turns = <strong>30,000</strong></td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>30% of turns, so 9,000 turns avoid generation cost</td>
+</tr>
+<tr>
+<td>Router split of the 21,000 misses</td>
+<td>70% simple, 30% complex</td>
+</tr>
+<tr>
+<td>Simple turn</td>
+<td>One call to the small model</td>
+</tr>
+<tr>
+<td>Complex turn</td>
+<td>An agent path of 5 calls to the large model, the low end of the playbook's 5 to 20 rule of thumb</td>
+</tr>
+<tr>
+<td>Tokens per call</td>
+<td>2,000 in, 250 out</td>
+</tr>
+<tr>
+<td>Small model price</td>
+<td>$0.15 in, $0.60 out, per million tokens <em>(illustrative: the captured source's September 2026 GPT-4o mini pricing example, not a current offer)</em></td>
+</tr>
+<tr>
+<td>Large model price</td>
+<td>$2.50 in, $10.00 out, per million tokens <em>(illustrative: the captured source's September 2026 GPT-4o pricing example, not a current offer)</em></td>
+</tr>
+<tr>
+<td>Router classification</td>
+<td>About $0.00005 per call on the small model</td>
+</tr>
+<tr>
+<td>LLM input guard</td>
+<td>Fires on half of turns, about $0.00005 each</td>
+</tr>
+<tr>
+<td>LLM output check</td>
+<td>Fires on 6,000 turns, about $0.0001 each</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Arithmetic</th>
+<th>Per day</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache hits</td>
+<td>9,000 × $0</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>Router</td>
+<td>21,000 × $0.00005</td>
+<td>$1.05</td>
+</tr>
+<tr>
+<td>Simple turns</td>
+<td>14,700 × $0.00045</td>
+<td>$6.62</td>
+</tr>
+<tr>
+<td>Complex turns</td>
+<td>6,300 × $0.0375</td>
+<td>$236.25</td>
+</tr>
+<tr>
+<td>Guards</td>
+<td>15,000 × $0.00005 + 6,000 × $0.0001</td>
+<td>$1.35</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>about $245, 49% of the budget</strong></td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="architecture"><h3>4. Trace components and failure ownership</h3>
+<p>The source diagrams show the same request path in several arrangements, with a versioned control plane above it. Read them as one system rather than competing designs. The control plane holds guard rules, banned phrases, routes and thresholds, prompts, provider and residency registry, budgets, pacing and red-team versions. Bad configuration must roll back atomically rather than leave half the workers on unsafe policy.</p>
+<p>Authentication and rate limits reject unauthorised traffic before it can spend money. The microsecond rule guard blocks injection patterns and masks PII. Cache lookup follows masking. A cache failure becomes a miss. The token check rejects oversized calls. The complexity router chooses a capable model, defaulting to a safe route on failure. The LLM intent guard may be skipped only for policy-approved low-risk, previously seen patterns.</p>
+<p>Every agent call reaches the spend ledger and pacer. Adapters wrap providers in deadline-bounded retry and a breaker. If A fails, B receives a portable prompt and tool schema. If both fail, the edge responder labels degradation or hands off. Output rules always validate PII and banned content, with a semantic check for risky replies. A cache write occurs only after output validation passes.</p>
+<p>The ordering phrase screen, meter, route, recover describes responsibilities rather than permission to make an unmetered router or guard call. All paid classifier, guard, retry and fallback calls need admission too. The control-plane table and figures preserve the original component responsibilities and failure modes. Telemetry writes asynchronously with request traces, metrics, JSON events, cost tags and model tags.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Component</th>
+<th>Responsibility</th>
+<th>Fails how</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01</td>
+<td>Auth and rate limit</td>
+<td>Identifies the user and session, tags the data class, applies per-user limits</td>
+<td>Closed: unauthenticated traffic never reaches a model</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Rule-based input guard</td>
+<td>Injection regex and <abbr title="personally identifiable information: Anything that identifies a person: name, email, phone, account number. It needs masking, access control and care in logs.">PII</abbr> detection and masking, in microseconds</td>
+<td>Closed: a match blocks with a logged reason</td>
+</tr>
+<tr>
+<td>03</td>
+<td>Cache</td>
+<td>Exact match first, semantic only if traffic shows paraphrase-heavy repeats</td>
+<td>Degrades: a cache outage is a miss, never an error</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Token budget</td>
+<td>Rejects an oversized request before the paid call</td>
+<td>Closed: explicit rejection, never silent truncation</td>
+</tr>
+<tr>
+<td>05</td>
+<td>Complexity router</td>
+<td>Small model labels the turn simple or complex</td>
+<td>Degrades: on router failure, default to the safe route</td>
+</tr>
+<tr>
+<td>06</td>
+<td>LLM input guard</td>
+<td>Small model classifies intent, catching rephrased attacks</td>
+<td>Degrades by policy: skip only for low-risk, previously seen patterns</td>
+</tr>
+<tr>
+<td>07</td>
+<td>Spend ledger and pacer</td>
+<td>Charges every call's real tokens to the day; tightens routing as spend climbs</td>
+<td>Closed at 100%: no new paid calls; cache and handoff only</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Provider adapter A</td>
+<td>Retry with backoff inside a per-provider breaker</td>
+<td>Degrades: breaker trip sends traffic to B at once</td>
+</tr>
+<tr>
+<td>09</td>
+<td>Provider adapter B</td>
+<td>Same pattern, portable prompts and tool schemas</td>
+<td>Degrades: both down reaches the degradation responder</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Degradation responder</td>
+<td>Labelled answer from cached context, or a human handoff</td>
+<td>Returns the labelled fallback outcome; if the gateway itself is unavailable, the channel must offer a separate human-contact path</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Rule-based output validator</td>
+<td>Re-runs PII detection, checks banned phrases</td>
+<td>Closed: block with a logged reason</td>
+</tr>
+<tr>
+<td>12</td>
+<td>LLM output check</td>
+<td>Semantic policy check on risky replies</td>
+<td>Degrades: off for low-risk replies to save latency</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Telemetry</td>
+<td>JSON logs, metrics, one trace per request, cost and model tags</td>
+<td>Degrades: async, sampled; never on the hot path</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Control plane</td>
+<td>Rules, routes, prompts, providers, budgets as versioned config</td>
+<td>Closed: a bad config rolls back, never half-applies</td>
+</tr>
+</tbody></table>
+<figure id="figure-11-0"><a href="/casebook-assets/production-llm-gateway/c11c942f235cf3e9.svg"><img alt="Input path: authenticate, mask PII, check cache and tokens, then run router and intent guard in parallel. Light source variant." src="/casebook-assets/production-llm-gateway/c11c942f235cf3e9.svg"/></a><figcaption>Input path: authenticate, mask PII, check cache and tokens, then run router and intent guard in parallel. Light source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/c11c942f235cf3e9.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-1"><a href="/casebook-assets/production-llm-gateway/813962ee4add27e2.svg"><img alt="Input path: authenticate, mask PII, check cache and tokens, then run router and intent guard in parallel. Dark source variant." src="/casebook-assets/production-llm-gateway/813962ee4add27e2.svg"/></a><figcaption>Input path: authenticate, mask PII, check cache and tokens, then run router and intent guard in parallel. Dark source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/813962ee4add27e2.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-2"><a href="/casebook-assets/production-llm-gateway/b733c059d975d41c.svg"><img alt="Model face: meter every call, retry inside each provider breaker, then return a typed failure if both providers are unavailable. Light source variant." src="/casebook-assets/production-llm-gateway/b733c059d975d41c.svg"/></a><figcaption>Model face: meter every call, retry inside each provider breaker, then return a typed failure if both providers are unavailable. Light source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/b733c059d975d41c.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-3"><a href="/casebook-assets/production-llm-gateway/9bbfedf6ec6ca56c.svg"><img alt="Model face: meter every call, retry inside each provider breaker, then return a typed failure if both providers are unavailable. Dark source variant." src="/casebook-assets/production-llm-gateway/9bbfedf6ec6ca56c.svg"/></a><figcaption>Model face: meter every call, retry inside each provider breaker, then return a typed failure if both providers are unavailable. Dark source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/9bbfedf6ec6ca56c.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-4"><a href="/casebook-assets/production-llm-gateway/b5b80ae86570f522.svg"><img alt="Output path: validate PII and banned phrases, check risky content, then release and cache only validated output. Light source variant." src="/casebook-assets/production-llm-gateway/b5b80ae86570f522.svg"/></a><figcaption>Output path: validate PII and banned phrases, check risky content, then release and cache only validated output. Light source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/b5b80ae86570f522.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-5"><a href="/casebook-assets/production-llm-gateway/97717f1c1ce803db.svg"><img alt="Output path: validate PII and banned phrases, check risky content, then release and cache only validated output. Dark source variant." src="/casebook-assets/production-llm-gateway/97717f1c1ce803db.svg"/></a><figcaption>Output path: validate PII and banned phrases, check risky content, then release and cache only validated output. Dark source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/97717f1c1ce803db.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-6"><a href="/casebook-assets/production-llm-gateway/ffdcf390b1c41809.svg"><img alt="Complete topology: versioned policy controls input, model admission, allowed provider recovery, output checks and telemetry. Light source variant." src="/casebook-assets/production-llm-gateway/ffdcf390b1c41809.svg"/></a><figcaption>Complete topology: versioned policy controls input, model admission, allowed provider recovery, output checks and telemetry. Light source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/ffdcf390b1c41809.svg">Open full-size diagram</a>.</figcaption></figure>
+<figure id="figure-11-7"><a href="/casebook-assets/production-llm-gateway/8ddcf2d89ca250aa.svg"><img alt="Complete topology: versioned policy controls input, model admission, allowed provider recovery, output checks and telemetry. Dark source variant." src="/casebook-assets/production-llm-gateway/8ddcf2d89ca250aa.svg"/></a><figcaption>Complete topology: versioned policy controls input, model admission, allowed provider recovery, output checks and telemetry. Dark source variant, preserved byte for byte. <a href="/casebook-assets/production-llm-gateway/8ddcf2d89ca250aa.svg">Open full-size diagram</a>.</figcaption></figure>
+</section><section class="reading-section" id="delivery"><h3>5. Validate before shipping configuration</h3>
+<p>Exercise the actual authenticated endpoint, rate limits and guard path with the versioned red-team suite. Test a primary outage, fallback quota exhaustion, both providers unavailable, cache outage and each budget threshold. Verify that a region-bound request never escapes its pool, including during recovery. Confirm a model-face typed failure cannot be mistaken for a successful tool response.</p>
+<p>Use labelled traffic to compare routing cost with misrouting and resolution rate. Measure first-token and full-answer latency separately by route. Test PII redaction in cache, responses, logs and traces. Replaying a bad run must identify the prompt version, guard reason, selected model, retries and final outcome.</p>
+<p>Ship prompts, policy and routes as versioned configuration with rollback. Keep the fallback warm with the source's illustrative 1% live traffic share and verify it can accept full-load quota before an outage. The walkthrough's validation and rollout sequence is an authored synthesis of the source's tests and control-plane requirements.</p>
+</section><div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="walkthrough" type="button">Mark walkthrough as read</button><a class="btn primary" href="#practice">Try the case yourself</a></div></section>
+<section class="panel" data-title="Technical deep dives" id="deep-dives"><div class="section-heading"><h2>Technical deep dives</h2><p>Examine mechanisms, alternatives, and operational consequences.</p></div>
+<section class="reading-section" id="guards"><h3>Rules, intent checks and streaming boundaries</h3>
+<p>Rules check regex patterns, length, schemas and banned phrases in microseconds without a per-model-call bill. They cannot recognise every paraphrase: “pretend the rules above never existed” may evade literal injection patterns. A small-model guard classifies the intent of the surviving text and can recognise that rephrase, while spending money and a few hundred milliseconds.</p>
+<p>Run checks in both directions. Mask a customer's PII before forwarding input. Validate output because a model can repeat something the customer supplied two turns earlier. A clean current input cannot prove that conversation history is safe to disclose.</p>
+<p>Moderation applies a fixed general harm taxonomy, including harassment, hate, self-harm, sexual content and violence. Category scores determine flags. The source reports that mild rudeness such as “you are very poor ha ha” passed its moderation test. Product guardrails separately enforce support scope and system-prompt secrecy. A moderation pass does not mean a product-policy pass.</p>
+<p>Log a reason for every block, return a safe reply and retain evidence for security review. A source-reported research platform attacks its own public endpoint through the normal auth, rate-limit and guard path. Include custom vulnerabilities for narrow policy exceptions: an apparently reasonable exception can reveal exactly the fact an attacker asks for. Both rule and LLM defences remain probabilistic. Report measured residual risk rather than invent a zero-risk promise.</p>
+</section><section class="reading-section" id="safe-cache"><h3>Exact and semantic caching have different mechanisms</h3>
+<p>An exact cache normalises the PII-masked query and hashes it into a lookup key. “What is Python?” and “Tell me about Python” remain different inputs. A class called SemanticCache that only hashes text still implements exact matching.</p>
+<p>A semantic cache embeds the query into a vector and searches nearby stored vectors. A tuned similarity threshold decides whether a paraphrase can reuse an answer. A loose threshold can return mismatched or stale answers. Start with exact matching and introduce vector lookup only when observed traffic contains enough repeated paraphrases to justify its risk and operating cost.</p>
+<p>Include tenant, user permission, document version and prompt version in the response key. Cache reusable FAQ responses, never live account answers. Changing a prompt or knowledge version deliberately invalidates prior entries. Invalidate on document, access-control list (ACL) or metadata changes. Freshness and permission checks still apply to semantic hits.</p>
+<p>A sudden hit-rate drop is a reason to inspect keying, versioning, traffic mix and invalidation before adding capacity. Output validation precedes writes: a blocked answer must never become a future cache hit.</p>
+</section><section class="reading-section" id="metering"><h3>Classification, token admission and daily pacing</h3>
+<p>The router requests a structured simple-or-complex label from a small model. A schema constrains the label rather than accepting arbitrary prose. Choose a threshold on labelled real traffic. Sending a simple request to the large model wastes money. Sending a complex request to a weak route can reduce resolution. Compare the cost saving with the product's tolerated misrouting rate.</p>
+<p>A token cap catches one oversized request or runaway context. A daily ledger catches many ordinary calls adding up. Use a real tokenizer for the pre-call count, then reconcile with provider-reported usage. The rough examples len(text.split()) × 1.3 and len(text.split()) × 4 // 3 are trend approximations, not reliable admission accounting.</p>
+<p>The pacer responds before exhaustion. At 80% spent, tighten routing toward cheaper paths. At 95%, allow the small model and hand complex work to humans. At 100%, allow cache and handoff only. In this case, “raise the router threshold” means require stronger evidence before taking the expensive route. A plain hard cap that runs out at 4 p.m. cannot meet the customer availability goal.</p>
+<p>Implementation caveat added for the teaching design: concurrent calls need atomic budget reservations for their bounded potential cost, followed by usage reconciliation. Otherwise several individually admitted calls can overspend the same remaining balance. Output-token caps, retry reservations and classification/guard spend belong in that reservation. The source describes pre-call caps and a live ledger but does not supply this concurrency protocol.</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Catches</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Per-request token cap</td>
+<td>One oversized prompt or runaway context</td>
+<td>Reject explicitly before the call, never truncate silently</td>
+</tr>
+<tr>
+<td>Daily ledger and pacer</td>
+<td>Many ordinary requests adding up</td>
+<td>At 80% spent, raise the router threshold; at 95%, small model only plus human handoff for complex turns; at 100%, cache and handoff only</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="recovery"><h3>Retry, breaker, fallback and degradation</h3>
+<p>A retry handles a transient connection drop or provider rate limit. Exponential backoff with jitter spreads clients across time. Fixed intervals synchronise retries into a thundering herd. The source's general pattern allows three to four attempts, but interactive requests must obey a deadline instead.</p>
+<p>The breaker wraps the retried provider call and remembers dependency health. The illustrative settings are failure_threshold=3 and cooldown_seconds=5.0. Closed admits calls. Open rejects immediately. After cooldown, half-open admits a probe. Success permits recovery. Without the probe, the breaker has no path back to healthy. Under flapping load, count failures over a sliding window and require more than one successful probe before closing.</p>
+<p>Fallback sends work to an independent provider when retries run out or the breaker opens. Attribute every response to its actual provider and model to measure cost and quality drift. Portable prompts and tool schemas prevent a different tool-calling format from silently breaking the agent. Keep the backup warm, verify quota at full load, and distinguish provider 429 responses from your own gateway limits.</p>
+<p>When neither provider can answer, the edge can return a labelled response seeded from safe cached context, or log a ticket for a person. The model face must return a typed error. Giving an agent a degraded prose string as if it were a real model answer can cause a refund or booking against stale information. Recovery also obeys residency and spend policy.</p>
+</section><section class="reading-section" id="latency"><h3>Three collisions inside the three-second target</h3>
+<p>The source estimates roughly 1 ms for the rule guard, 5 to 10 ms for cache, 200 to 400 ms for the router, 1 to 2 seconds for the main model and 1 ms for output rules. At the upper ends, 1 + 10 + 400 + 2,000 + 1 = 2,412 ms, or about 2.4 seconds. These are whiteboard durations rather than measured percentiles. Summing stage estimates does not establish an end-to-end p95.</p>
+<p>A risky-output LLM check adds 300 to 500 ms, reaching about 2.9 seconds. An additional serial input guard at an assumed 300 to 500 ms reaches about 3.4 seconds and breaks the target. Router and input guard read the same masked input, so they can run in parallel: their contribution becomes the slower duration. Skip the LLM input check only for policy-approved low-risk, previously seen patterns.</p>
+<p>Five sequential model calls at 1 to 2 seconds take 5 to 10 seconds. Because complex turns are 21% of traffic, p95 full-answer latency lands inside the slow population. Agree first-token measurement for agent turns. Parallelise independent read-only tool work, and send common intents through a one-call workflow or router where an agent adds no value.</p>
+<p>Backoff of 0.3, 0.6 and 1.2 seconds spends 2.1 seconds before attempt four even starts. Attempt timeouts make it worse. Give each interactive request a deadline, permit one retry only when enough time remains, then fail over. Once open, the breaker skips A immediately. The earliest affected callers still pay detection and timeout cost, bounded by the trip policy.</p>
+<p>Streaming creates another boundary: a validator cannot retract words already displayed. Run rule checks sentence by sentence before release. Buffer risky replies, including refunds or account data, until the LLM output check finishes. Reconcile that buffering with the first-token target rather than claiming both unconditional streaming and complete pre-display semantic review.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Sum</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Common path</td>
+<td>~1ms + ~10ms + ~400ms + ~2s + ~1ms</td>
+<td>About 2.4 s: fits</td>
+</tr>
+<tr>
+<td>Plus <abbr title="large language model: The model that reads text and writes text: GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.">LLM</abbr> output check</td>
+<td>+ 300-500ms</td>
+<td>About 2.9 s: tight</td>
+</tr>
+<tr>
+<td>Plus LLM input guard in series <em>(assumption: 300-500ms)</em></td>
+<td>+ 300-500ms</td>
+<td>About 3.4 s: breaks</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="tracing"><h3>Trace enough state without copying PII</h3>
+<p>Structured logs explain one request, metrics count outcomes across traffic, and traces identify the stage that caused a silent wrong answer. A successful HTTP status is insufficient evidence of a correct support response.</p>
+<p>Retain these source trace fields: tenant_id, feature, prompt_version, model, input_tokens, output_tokens, estimated_cost, latency breakdown, retrieval top-k, reranker used, cache status, tool calls, retries, timeout status and final outcome. Add the provider, guardrail decision and block reason. Retrieval fields apply when a request actually uses retrieval, rather than implying every gateway call does.</p>
+<p>Redact before writing. Copying raw prompts into logs duplicates PII outside the answer validator. Sample successes, keep every failure with safe redacted detail, assign retention and write asynchronously. Synchronous logging can cause a post-deploy latency jump. Restricted requests require equally restricted traces, including their storage backend.</p>
+<p>The dashboard has six signals: daily spend against the pacing line, p95 first-token latency, fallback rate by provider, breaker state, guard block rate by rule and cache hit rate. Spend changes start with route and prompt version. Hit-rate changes start with key/version/traffic/invalidation. Fallback changes start with provider health, quota and breaker decisions. The source points to Observability and Production Diagnosis for replay and cost-spike investigation. Those linked chapters were not captured here.</p>
+</section><section class="reading-section" id="residency"><h3>Constrain the provider pool before failover</h3>
+<p>The underlying tutorial explicitly leaves residency unresolved when no third-party provider can receive the customer's data. The captured gateway case develops its suggested in-VPC or self-hosted model path. A virtual private cloud (VPC) is the customer's isolated cloud network.</p>
+<p>At the edge, policy and PII findings assign a data class. Each class maps to an allowed pool before routing. Public content can use approved providers. Maskable PII must be masked before leaving the network. Region-bound data requires an in-region endpoint with contractual no-retention or a model in the customer's VPC. Data forbidden to leave the network stays on a self-hosted model there.</p>
+<p>Give each restricted pool its own recovery path: another in-region endpoint, another self-hosted replica set, or human handoff. Falling back to a global pool violates residency even if it restores an answer. Logs and traces follow the same boundary. The source notes that its worked tracing examples are hosted, leaving a self-hostable backend as implementation work.</p>
+<p>Self-hosting changes token spend into GPU-hour capacity. The source sizing formula is Replicas = ceil((QPS × Tokens_request) / (TokensPerSecond_replica × UtilizationTarget)). Queries per second multiplied by tokens per request gives token throughput demand. Divide by sustainable throughput per replica at the target utilisation, then round up. If the resulting count exceeds available hardware, reduce or reshape workload rather than assume more hardware exists.</p>
+<p>An in-network model may be weaker and slower than the frontier route. Complex work may need earlier handoff and the $500 ceiling becomes a GPU-hour budget. The source references LLM Inference Serving for batching and failover and the air-gapped case for disconnected environments. Those chapters are outside this capture.</p>
+<table>
+<thead>
+<tr>
+<th>Data class</th>
+<th>Allowed destination</th>
+<th>What the gateway does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>No PII, public content</td>
+<td>Any approved provider</td>
+<td>Normal routing and fallback</td>
+</tr>
+<tr>
+<td>PII that can be masked</td>
+<td>Any approved provider, after masking</td>
+<td>Mask before the request leaves the network, not only on output, as the source's <abbr title="Forward Deployed Engineer: An engineer who sits with the customer, figures out the real problem, and ships a working system in their environment.">FDE</abbr> track puts it</td>
+</tr>
+<tr>
+<td>PII bound to a region</td>
+<td>A provider endpoint in that region with contractual no-retention, or a model in the customer's VPC</td>
+<td>Route only to that region's pool</td>
+</tr>
+<tr>
+<td>Data that cannot leave the network</td>
+<td>A self-hosted model inside the customer's VPC</td>
+<td>Route only to the in-network pool</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="failure-review"><h3>Residual failure modes and next changes</h3>
+<p>Prepare five residual failures: an injection that defeats both guards, correlated provider degradation, hidden quality loss from pacing, stale cached answers and PII leaking through logs. Each needs its own observation and recovery, as the table shows.</p>
+<p>Extend output policy to tool calls and grant tools least privilege after an injection incident. Choose an independent third provider or an internal model for shared-upstream failures. Alert on pacer changes and compare resolution by route. Include versions and invalidation in cache policy. After a leak, audit response, cache, trace and log paths rather than checking the answer alone. None of these additions proves the next attack or outage impossible.</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Why the design misses it</th>
+<th>What to add next</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A rephrased injection passes both guards</td>
+<td>Both layers are probabilistic; the source calls injection defence "risk reduction, not a solved problem"</td>
+<td>Output-side policy checks on tool calls, least-privilege tools, a red-team suite that grows with every incident</td>
+</tr>
+<tr>
+<td>Both providers degrade together</td>
+<td>They share a region, a cloud or an upstream dependency</td>
+<td>A third, independent provider or an in-network model for the top intents</td>
+</tr>
+<tr>
+<td>The pacer degrades quality silently</td>
+<td>Routing tightens and nobody notices the answers got worse</td>
+<td>Alert on pacer state; track resolution rate by route</td>
+</tr>
+<tr>
+<td>A cached answer goes stale</td>
+<td>The key lacked a document or policy version</td>
+<td>Version-keyed cache with invalidation on document, <abbr title="access control list: The list of who is allowed to see or change a thing.">ACL</abbr> or metadata changes</td>
+</tr>
+<tr>
+<td><abbr title="personally identifiable information: Anything that identifies a person: name, email, phone, account number. It needs masking, access control and care in logs.">PII</abbr> leaks through logs, not responses</td>
+<td>Output validation never sees the log pipeline</td>
+<td>Redact at write time; audit logs, traces and cache after any leak, as the source's incident answer says</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="references"><h3>Evidence and source limits</h3>
+<p>The complete captured case is <a href="https://forwarddeployedprep.com/design/production-llm-gateway">Production LLM Gateway</a>, retrieved 15 November 2026. It attributes the mock prompt, rubric, reliability patterns and cost guidance to its production and operations tutorial. Its further cross-case references are contextual pointers, not independently imported worksheets or chapters.</p>
+<p>The source lists <a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a> and <a href="https://developers.openai.com/api/docs/guides/moderation">OpenAI moderation documentation</a>, checked by the source on 27 September 2026. The former supports its historical GPT-4o mini $0.15/$0.60 and GPT-4o $2.50/$10.00 per-million illustration. The latter explains category scores and the flagged field. This offline rewrite preserves those attributions without asserting current availability or pricing.</p>
+</section><div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="deep-dives" type="button">Mark deep dives as read</button><a class="btn primary" href="#practice">Apply the decisions</a></div></section>
+<section class="panel" data-title="Practice" id="practice"><div class="section-heading"><h2>Practice</h2><p>Attempt the case before revealing the worked reasoning.</p></div>
+<section class="reading-section" id="blank-page"><h3>Attempt the design before reading answers</h3>
+<p>Start from a blank page. Reproduce the four constraints, clarify both gateway faces and define the latency measurement. Price the 30,000-turn day before choosing a provider. Draw admission, recovery, validation, cache and telemetry boundaries. Then simulate a region-bound provider outage and an exhausted daily budget.</p>
+<p>The self-checks below come from the captured source. Each answer is native page content behind a reveal. The additional blank-page simulation above is authored practice. Reading progress records reading only. Mark practice attempts separately and use the rubric to assess reasoning.</p>
+</section><section class="reading-section" id="practice-answer"><h3>Work through your answer</h3>
+<p id="save-help">This local worksheet is a prototype addition. Notes save in this browser. Nothing is submitted or scored.</p><form id="practice-form">
+<label for="answer-design">Design both gateway faces<span>Show every paid call and every failure boundary.</span></label><textarea data-note="design" data-note-label="Design both gateway faces" id="answer-design" name="design" rows="4"></textarea>
+<label for="answer-cost">Price the day and respond to the pivot<span>Use cost per resolved conversation.</span></label><textarea data-note="cost" data-note-label="Price the day and respond to the pivot" id="answer-cost" name="cost" rows="4"></textarea>
+<div class="form-actions"><button class="btn primary" id="mark-attempted" type="submit">Mark practice as attempted</button><button class="btn secondary" id="export-notes" type="button">Export notes</button></div>
+<p class="form-status" id="notes-status" role="status">No notes yet.</p></form></section>
+<section class="reading-section" id="practice-rubric"><h3>Check your reasoning</h3><details class="answer-reveal"><summary>Reveal the self-assessment rubric</summary><div class="detail-body"><p>This checklist is an authored addition. Assess what you can explain without reopening the walkthrough.</p><div class="rubric-list">
+<label><input name="rubric" type="checkbox" value="check-1"/>Names retry inside breaker, allowed fallback and labelled degradation.</label>
+<label><input name="rubric" type="checkbox" value="check-2"/>Enforces cost before every paid call and distinguishes cap from pacer.</label>
+<label><input name="rubric" type="checkbox" value="check-3"/>Separates fast rules from paid intent checks in both directions.</label>
+<label><input name="rubric" type="checkbox" value="check-4"/>Preserves permission, freshness and residency across cache and fallback.</label>
+<label><input name="rubric" type="checkbox" value="check-5"/>Explains all three latency collisions with actual sums.</label>
+<label><input name="rubric" type="checkbox" value="check-6"/>Replays a failure without copying unauthorised PII.</label>
+<label><input name="rubric" type="checkbox" value="check-7"/>Volunteers a residual failure and its next control.</label>
+</div><p aria-live="polite" id="rubric-status">0 of 7 reasoning checks covered.</p></div></details></section><details class="answer-reveal reading-section" data-worked-answer="true" id="answer-1"><summary>Why must the gateway sit under the agent’s model calls, and not only in front of the customer’s message?</summary><p>The source estimates 5 to 20 sub-requests per agent turn. An edge-only gateway misses later paid calls and cannot retry or fail over them. Route every model and evaluator call through the model face, while the edge face screens customer-facing input and output.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-2"><summary>Price the day aloud.</summary><p>14,700 × $0.00045 = $6.615 for simple turns. 6,300 × $0.0375 = $236.25 for five-call complex turns. Router $1.05 plus guards $1.35 gives $245.265, or about $245. Complex spend divided by total is about 96%. All rates and mix are historical illustrations.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-3"><summary>What does the naive design cost?</summary><p>Without cache or routing, all 30,000 turns make five large-model calls. Each turn costs 5 × $0.0075 = $0.0375. Daily cost is 30,000 × $0.0375 = $1,125, which divided by $500 is 2.25.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-4"><summary>Why does the input guard run before the cache?</summary><p>It blocks known injection attempts and masks PII before lookup. The key therefore uses masked text. Output validation must also pass before writing a response, preventing a blocked answer from being reused.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-5"><summary>Why is a class named SemanticCache in the source not semantic?</summary><p>It hashes normalised text into exact keys. The two Python paraphrases have different hashes and miss. Semantic lookup needs embeddings, a similarity search and a tuned threshold, while still enforcing permission, version and freshness boundaries.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-6"><summary>What is the difference between a per-request cap and the pacer?</summary><p>The cap rejects one oversized call before spending. The pacer watches the day’s accumulated spend. At 80% it tightens expensive routing, at 95% it permits the small route and complex handoff, and at 100% it permits only cache and handoff. Provider usage reconciles the ledger after each admitted call.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-7"><summary>Order the resilience chain and say what each link handles.</summary><p>Retry handles a transient blip with deadline-bounded jittered backoff. A breaker wraps retried calls and remembers an unhealthy provider. Fallback chooses another policy-allowed provider. Degradation supplies labelled customer help or handoff after no provider remains. The model face returns a typed failure.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-8"><summary>Why does the model face return a typed error rather than a degraded string?</summary><p>An agent could treat an approximate degraded reply as reliable model state and issue a refund or booking at a stale price. The typed error forces the workflow to handle failure explicitly. A human can receive labelled degradation or a ticket handoff at the edge.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-9"><summary>Sum the common-path latency.</summary><p>Using upper estimates, 1 ms rule guard + 10 ms cache + 400 ms router + 2,000 ms model + 1 ms validator = 2,412 ms, about 2.4 s. A 300 to 500 ms output check raises this toward 2.9 s. These stage estimates require end-to-end measurement before making a p95 claim.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-10"><summary>Why can p95 full-answer latency never be under 3 s here?</summary><p>Under the stated five-sequential-call assumption, complex turns take 5 to 10 s and form 21% of all turns. The fastest 79% cannot cover the 95th percentile. Agree first-token measurement for multi-step turns, or change the workflow/mix rather than promise an impossible full-answer SLO.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-11"><summary>Why can’t a typical retry schedule run on the interactive path during an outage?</summary><p>The waits 0.3 + 0.6 + 1.2 total 2.1 s before attempt four, excluding failed-call timeouts. Use a request deadline, retry only with sufficient remaining time, and let an open breaker skip the failed primary. Failover must still fit within that deadline.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-12"><summary>A region-bound customer’s primary provider goes down. Where does traffic go?</summary><p>Choose another endpoint in the same allowed region or a permitted in-network replica pool. If neither can answer, hand off. The global pool remains forbidden. Apply the same restriction to traces, cache and logs.</p></details>
+<details class="answer-reveal reading-section" data-worked-answer="true" id="answer-13"><summary>What is the cost card’s 60-second line?</summary><p>Complex agent turns dominate spend at 96% of the illustrative total. Route fewer suitable turns there, cap agent steps and use a one-call workflow for common intents. Cache only safe answers. Measure cost per resolved conversation and resolution by route, since reducing per-request cost can increase failed or repeated conversations.</p></details>
+<section class="reading-section" id="rubric"><h3>Self-assessment and level calibration</h3>
+<p>Use the source's seven criteria in the first table. Each asks for an observable explanation: the concrete resilience chain, cost controls before calls, separate rule and LLM guards, both input and output checks, replayable telemetry, a latency sum and a volunteered failure mode. The second table distinguishes levels by how constraints interact.</p>
+<p>A senior answer supplies the mechanisms and prices the day. A staff answer resolves the five-call latency, deadline and streaming collisions, separates both faces and adds pacing. A principal answer constrains fallback by residency, plans the shared function-to-model layer and acknowledges the weaker internal model's GPU-hour budget. Real traffic, complexity mix and residency determine whether the illustrative ceiling remains valid.</p>
+<table>
+<thead>
+<tr>
+<th>Source rubric criterion</th>
+<th>Answered in</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Names a concrete resilience chain (retry → circuit breaker → fallback → graceful degradation), not just "add retries."</td>
+<td>Topics recovery</td>
+</tr>
+<tr>
+<td>Puts cost control <em>before</em> the model call (routing + cache + budget), not as an afterthought.</td>
+<td>Topics pricing, safe caching, metering</td>
+</tr>
+<tr>
+<td>Separates rule-based guardrails (fast, free, first) from an LLM-as-guardrail layer (slower, catches rephrased attacks).</td>
+<td>Topics guardrails</td>
+</tr>
+<tr>
+<td>Covers both input and output PII/injection checks, not just input.</td>
+<td>Topics guardrails</td>
+</tr>
+<tr>
+<td>Names what gets logged/traced and why (cost per request, which model answered, guardrail decisions); enough to debug a bad run after the fact.</td>
+<td>Topics tracing</td>
+</tr>
+<tr>
+<td>States a concrete latency budget breakdown, not just "keep it fast."</td>
+<td>Topics latency</td>
+</tr>
+<tr>
+<td>Volunteers the failure mode of their own design (what still breaks, and what they'd add next).</td>
+<td>Topics residency, failure review</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Sounds like</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Senior</td>
+<td>Names the full chain of retry inside a breaker, warm fallback and labelled degradation, runs rule-based guards before the LLM guard in both directions, and caps each request before the paid call. Prices the day at about $245 against $500 and sees complex turns carry 96% of spend.</td>
+<td>The collisions: a five-call agent path cannot finish in 3 s, retries overrun the budget during an outage, and the LLM output check fights streaming.</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>Splits the gateway into an edge face and a model face, holds agent turns to first token under 3 s, runs router and input guard in parallel, and gives retries a deadline instead of an attempt count. Adds a pacer that tightens routing at 80% and 95% of spend, version-keyed cache entries, and one trace per request with cost, model and guard decision.</td>
+<td>What happens when data cannot leave the region, and which other agents will route through this gateway next.</td>
+</tr>
+<tr>
+<td>Principal</td>
+<td>Makes residency a routing rule with its own in-region fallback pool, because a fallback across the boundary is a breach, not a recovery. Positions the gateway as the shared function-to-model layer for every agent, and says plainly that a self-hosted pool turns the $500 into a GPU-hour budget on a weaker model.</td>
+<td>The real traffic, complex-turn share and residency policy, which decide whether $500 still holds past about 61,000 turns a day.</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="rehearsal"><h3>Rehearse the 45-minute delivery</h3>
+<p>Use the source timing plan below. Spend the opening on scope and measurement, then show the dollar calculation before the architecture. Close by naming remaining failure modes. Rehearse with a timer rather than using reading progress as evidence of interview fluency.</p>
+<p>Spoken-answer example for the two-minute close: “I would put an edge face around customer input and output, and a model face under every agent call. Cheap rules and PII masking run first. A small-model guard checks surviving intent, and output validation protects what reaches the customer. Each paid call gets a token and daily-budget admission, then a capable route with retry inside a breaker and a warm, allowed fallback. Both providers down means labelled customer degradation or handoff, while the agent receives a typed failure. Under this case’s assumptions the day costs about $245, and complex turns account for about 96%. The common path fits the whiteboard latency sum, but the agent path needs first-token measurement and retries need a deadline. A trace records cost, model and guard decisions. Region restrictions constrain the fallback and telemetry too.”</p>
+<table>
+<thead>
+<tr>
+<th>Minutes</th>
+<th>What to say</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0 to 5</td>
+<td>The two faces; the five questions; state the assumptions</td>
+</tr>
+<tr>
+<td>5 to 10</td>
+<td>Requirements with numbers; what 3 s measures</td>
+</tr>
+<tr>
+<td>10 to 15</td>
+<td>Price the day: about $245, 96% on complex turns, ceiling near 61,000 turns</td>
+</tr>
+<tr>
+<td>15 to 25</td>
+<td>The diagram: screen, meter, route, recover</td>
+</tr>
+<tr>
+<td>25 to 30</td>
+<td>Guardrails both directions; cache keys</td>
+</tr>
+<tr>
+<td>30 to 37</td>
+<td>The resilience chain and the latency sums</td>
+</tr>
+<tr>
+<td>37 to 42</td>
+<td>Observability and residency</td>
+</tr>
+<tr>
+<td>42 to 45</td>
+<td>What still breaks, and the cost pivot</td>
+</tr>
+</tbody></table>
+</section><section class="reading-section" id="cost-pivot"><h3>Answer the over-budget pivot</h3>
+<p>For the source's ten-minute cost pivot, measure spend by route and prompt version before changing the entire fleet. The dominant driver is the five-call large-model path: 21% of turns and 96% of cost. Retries can add spend during incidents.</p>
+<p>Then route suitable work to the small model and common intents to deterministic one-call workflows. Bound steps, tokens and daily pacing. Cache safe FAQs with permission and version keys. Trim system prompts and history where evaluation permits. This sequence preserves high-value paths instead of downgrading every request indiscriminately.</p>
+<p>Prove savings with cost per resolved conversation, spend by route, complex share, hit rate and resolution by route. A cheap response that causes a failed support conversation or repeated attempts may increase total resolution cost. Never cache account-specific answers to improve the headline hit rate.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dominant driver</td>
+<td>The large-model agent path: 21% of turns and 96% of spend, then retries during incidents</td>
+</tr>
+<tr>
+<td>Cheapest lever first</td>
+<td>Tighten the router threshold on labelled traffic; send common intents to a one-call deterministic path; cap agent steps; cache safe FAQ answers; trim the system prompt and history</td>
+</tr>
+<tr>
+<td>Metric that proves it</td>
+<td>Cost per resolved conversation; spend by route; complex-turn share; cache hit rate; resolution rate by route</td>
+</tr>
+<tr>
+<td>Do not</td>
+<td>Downgrade every request to the small model, or cache account-specific answers to raise the hit rate</td>
+</tr>
+<tr>
+<td>60-second line</td>
+<td>Almost all the money is the complex agent path, so route fewer turns there, cap its steps, and send common intents down a one-call path. Cache only answers the key proves are safe. Prove it with cost per resolved conversation, not cost per request.</td>
+</tr>
+</tbody></table>
+</section><div class="section-end"><p>Return to the decisions you could not explain.</p><a class="btn primary" href="#quick-review">Review the essentials</a></div></section>
+<section class="panel" data-title="Quick review" id="quick-review"><div class="section-heading review-heading"><div><h2>Quick review</h2><p>Recall the decisions, failure responses, and closing answer.</p></div><button class="btn secondary" id="print-review" type="button">Print review</button></div>
+<section class="reading-section" id="review"><h3>Recall the admission and recovery boundaries</h3>
+<p>The edge face protects customer-facing input and output. The model face sees every one of an agent's 5 to 20 potential sub-requests. Screen, meter, route and recover, with a trace across every step.</p>
+<p>Under the captured assumptions, 30,000 turns become 9,000 cache hits, 14,700 small calls and 6,300 five-call large turns. Spend is about $245 against $500. Complex work consumes about 96%. A 40% complex miss share raises it to about $323, and the unchanged mix binds near 61,000 daily turns.</p>
+<p>Rules precede paid intent checks. Exact cache lookup starts with masked text and tenant, permission, document and prompt versions. Semantic lookup requires embeddings and a threshold. Validate outputs before cache writes. Admit calls before spending, pace at 80%, 95% and 100%, then reconcile usage.</p>
+<p>Retry handles a blip, a breaker remembers bad dependency health, fallback selects another permitted provider and degradation supplies the human-facing floor. Machines receive typed errors. The illustrative breaker trips at three failures, probes after five seconds and needs half-open recovery. Keep fallback prompts, tools and quota usable.</p>
+<p>The common-path sum is about 2.4 s, risky output about 2.9 s and serial input plus output checks about 3.4 s. Run independent input checks in parallel. Five-call turns need first-token measurement. Deadline-bound retries and buffered risky output prevent misleading latency claims.</p>
+<p>Trace cost, usage, actual model and provider, prompt version, guard reason, cache, tools, retries, timeouts and outcome. Redact before writing and retain within the same allowed region. Restricted pools need restricted fallback. In-network models turn token spend into GPU-hours and may need earlier handoff.</p>
+<p>Close the design by naming residual injection, correlated providers, pacing quality drift, stale caches and log leaks. For an over-budget pivot, measure, route, bound and cache safely. Validate the result with cost per resolved conversation.</p>
+</section><div class="section-end"><button aria-pressed="false" class="btn secondary" data-mark-read="quick-review" type="button">Mark quick review as read</button><a class="btn primary" href="#practice">Test your recall</a></div></section>
+</div>
+<aside aria-label="Your case progress" class="progress-rail">
+<div class="rail-sticky">
+<h2>Your progress</h2>
+<p class="progress-label" id="read-progress">0 of 3 reading sections</p>
+<progress aria-label="Reading sections completed" id="reading-progress" max="3" value="0">0 of 3</progress>
+<ul class="progress-list"><li><span>Walkthrough</span><span data-read-state="walkthrough">Unread</span></li><li><span>Deep dives</span><span data-read-state="deep-dives">Unread</span></li><li><span>Quick review</span><span data-read-state="quick-review">Unread</span></li></ul>
+<div class="practice-progress"><span>Practice</span><strong id="practice-state">Not attempted</strong></div>
+<p class="progress-help">Reading and practice are tracked separately. Both stay on this device.</p>
+<a class="practice-link" href="#practice">Attempt the case</a>
+<p class="storage-status" id="storage-status" role="status"></p>
+<noscript><p>Progress and saved notes need JavaScript. All reading sections remain available below.</p></noscript>
+</div>
+</aside>
+</div>

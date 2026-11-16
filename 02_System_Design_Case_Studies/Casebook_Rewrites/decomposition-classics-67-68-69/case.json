@@ -1,0 +1,1079 @@
+{
+  "title": "Decomposition Classics: 911, Bank Fraud, Medication Errors",
+  "slug": "decomposition-classics-67-68-69",
+  "subtitle": "Decompose emergency response, bank fraud and medication-safety prompts by mission, evidence and accountable decisions.",
+  "theme": "Product Judgement and Problem Decomposition",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/decomposition-classics-67-68-69",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "brief-scenario",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-source-navigation",
+    "guide-intro": "brief-scenario",
+    "guide-1-recognise-what-the-round-is-scoring": "brief-task",
+    "guide-2-run-the-six-steps-on-a-sixty-minute-clock": "walk-method",
+    "guide-3-map-every-input-before-naming-a-model": "walk-inputs",
+    "guide-4-sequence-workstreams-by-risk-not-by-interest": "walk-sequence",
+    "guide-5-decompose-the-911-problem-define-faster-before-touching-th": "dive-response",
+    "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day": "dive-fraud",
+    "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the": "dive-medication",
+    "guide-part-3-8-compare-the-three-side-by-side": "dive-comparison",
+    "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite": "practice-pivots",
+    "guide-part-3-10-open-each-case-in-two-minutes": "practice-openers",
+    "guide-part-3-11-answer-the-cost-pivot-in-ten-minutes": "dive-cost",
+    "guide-part-3-level-calibration": "practice-levels",
+    "guide-part-3-key-takeaways": "review-decisions",
+    "guide-part-3-check-yourself": "practice-checks",
+    "guide-part-3-references": "dive-sources",
+    "intro": "case-brief",
+    "guide": "walkthrough",
+    "guide-part-2": "walkthrough",
+    "guide-part-3": "walkthrough"
+  },
+  "practice_prompts": [
+    {
+      "id": "mission",
+      "label": "Mission, owners and guardrails",
+      "hint": "Name the hidden conflict, the north star and the guardrail that catches its harm."
+    },
+    {
+      "id": "inputs",
+      "label": "Input map and riskiest unknown",
+      "hint": "Fill shape, owner, freshness, what it can answer and quality risk; say which unknown goes first."
+    },
+    {
+      "id": "slice",
+      "label": "First slice, model and human boundary",
+      "hint": "Describe the walking skeleton, the model chosen last and where the human sits."
+    },
+    {
+      "id": "curveball",
+      "label": "Evaluation and the curveball",
+      "hint": "Backtest, shadow, matched pilot; then re-derive after losing GPS, system C or scanning data."
+    }
+  ],
+  "rubric": [
+    "I asked at least five clarifying questions whose answers changed the plan before drawing anything.",
+    "I named the mission's hidden conflict (equity, customer friction or alert fatigue) and a guardrail metric that would expose it.",
+    "My input map had owner and quality-risk columns, and I said what each source cannot prove.",
+    "I ordered workstreams by the unknown that could kill the project and justified the order.",
+    "My first slice delivered value without a new model (a segmentation report, a single queue, or retrospective reconciliation).",
+    "I kept the language model in a bounded, human-confirmed role on free text.",
+    "I staged evaluation as backtest, shadow and matched pilot with a held-out labelled set.",
+    "When the curveball came, I re-derived the plan and said what coverage was lost instead of defending the old plan.",
+    "I narrated my reasoning throughout and finished within the 60-minute clock."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Three open prompts with no hidden right architecture; mission before drawing",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening paragraph of brief-scenario names all three requests and keeps 'no hidden right architecture' and 'pin down the mission before you draw anything'. Previous version summarised this; now followed by the verbatim prompt table."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "The clock as the hard constraint: commit early enough to show progress, late enough that the mission chose it; round fails architecture-first and hand-waved evaluation",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the prompt table keeps the clock sentence and both failing answer types. Previous version dropped the clock line from the brief."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Six-step method summary and 'riskiest unknown is the data, LLM never the core'",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph before figure-1-0 lists the six steps in source order; the core-idea paragraph after it states data is the riskiest unknown in all three and the language model is never the core."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its six-node chain diagram (f1fbe2 light / 279c1d dark)",
+      "anchors": [
+        "brief-scenario",
+        "figure-1-0"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-1-0 keeps both hashed variants; alt text and caption were generic ('source figure 1') and now name every node read from the SVG: vague prompt, mission and owners, input map with quality risks, workstreams ordered by risk, walking skeleton, re-plan live. Core-idea sentence follows the figure."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI candidates facing an open, non-technical decomposition round",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 4 names the same audience and round type; previous version only said 'engineers preparing for a decomposition interview'."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: six steps in sixty minutes, decompose three cases, two-minute openers, probes and cost pivot",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 5 lists all four objectives. Previously missing."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Assumes no deep background; builds on Scoping to Deployed Agent and Logistics Exception Handling, named not repeated",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 4 links both source cases with their URLs and says which idea comes from each (scoping mechanics, evaluation-first habit). Previously missing."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: method first, run six steps before each case, practise openers aloud with a timer, revisit calibration the night before",
+      "anchors": [
+        "brief-task",
+        "brief-source-navigation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 6 keeps each instruction, retargeted to walkthrough, deep dives, Practice and Quick review. The old mark-as-read instruction sits in the labelled navigation note, since this reader uses its own toggles."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Sections table: one mandatory three-part Interview Guide",
+      "anchors": [
+        "brief-source-navigation"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The one-row navigation table is described in the 'Note on the original page's navigation' disclosure, with where each part now lives. Obsolete navigation, so not reproduced as a table."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Prompt table: exact wording of the 911, bank fraud and medication prompts and what each tests",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Restored as the 'three prompts' table in brief-scenario with all three quoted prompts and test columns verbatim. This table was entirely missing from the previous version."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Method taught once and run three times; scoping from Scoping to Deployed Agent, evaluation-first from Logistics",
+      "anchors": [
+        "brief-task",
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Covered by the brief-scenario method paragraph and the brief-task paragraph naming both prior cases."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "Framework and probes supplied with no worked answer; every number is an assumption; domain facts general knowledge",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The 'Every number is an assumption' callout in brief-scenario keeps all three points and gives examples (8 minutes, 90 days, three months). Each deep dive repeats the source's per-section assumption line."
+      }
+    },
+    {
+      "source_id": "guide-intro",
+      "teaching_item": "HITL glossary definition",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "HITL expanded on first use in the prompt table with the source definition in the abbr title."
+      }
+    },
+    {
+      "source_id": "guide-1-recognise-what-the-round-is-scoring",
+      "teaching_item": "Round format: 45-60 minutes, break into users, data, workflows, constraints and prioritised V1, out loud and collaboratively; no correct answer",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 1 keeps every element. Previous version had only the 45-60 minute length."
+      }
+    },
+    {
+      "source_id": "guide-1-recognise-what-the-round-is-scoring",
+      "teaching_item": "Two eliminating failure modes with the OpenAI FDE anecdote and the 'How do you know your AI system is actually working well?' probe",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 2 keeps both quotations verbatim and that the second is asked on purpose. Previously the second quote was missing and the anecdote was paraphrased in walk-mission."
+      }
+    },
+    {
+      "source_id": "guide-1-recognise-what-the-round-is-scoring",
+      "teaching_item": "Narration scoring: silent polished answer scores worse; unheard reasoning cannot be scored; goal first, data second, model last; no prompt asks which model",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "brief-task paragraph 3 keeps all four claims. Previously missing."
+      }
+    },
+    {
+      "source_id": "guide-1-recognise-what-the-round-is-scoring",
+      "teaching_item": "FDE glossary definition",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "FDE expanded with plain definition in prose and the source glossary in the abbr title."
+      }
+    },
+    {
+      "source_id": "guide-2-run-the-six-steps-on-a-sixty-minute-clock",
+      "teaching_item": "Six-step timing table with questions and board outputs",
+      "anchors": [
+        "walk-method"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged from source in walk-method, introduced by what it shows."
+      }
+    },
+    {
+      "source_id": "guide-2-run-the-six-steps-on-a-sixty-minute-clock",
+      "teaching_item": "Canonical curveball 'you lost access to the GPS feed'; re-derive rather than defend; scores adaptability; state unconfirmed assumptions and move on",
+      "anchors": [
+        "walk-method"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table keeps the quote and all three points. Previously the curveball quote and 'scores adaptability' were missing."
+      }
+    },
+    {
+      "source_id": "guide-2-run-the-six-steps-on-a-sixty-minute-clock",
+      "teaching_item": "Universal opener quotation",
+      "anchors": [
+        "walk-method"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Kept verbatim as a labelled spoken-version blockquote. Previously missing."
+      }
+    },
+    {
+      "source_id": "guide-2-run-the-six-steps-on-a-sixty-minute-clock",
+      "teaching_item": "Per-case floor: five questions, three to five workstreams, three metrics, two trade-offs, three failure modes, phased plan",
+      "anchors": [
+        "walk-method"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Final walk-method paragraph lists all six items; the previous version had dropped 'three to five workstreams'."
+      }
+    },
+    {
+      "source_id": "guide-2-run-the-six-steps-on-a-sixty-minute-clock",
+      "teaching_item": "MVP glossary definition",
+      "anchors": [
+        "walk-method",
+        "decomposition-check-2"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "MVP abbr in the timing table carries the source definition (an em-dash artefact rendered ' ,  ' was fixed to a semicolon); check 2 expands it in prose."
+      }
+    },
+    {
+      "source_id": "guide-3-map-every-input-before-naming-a-model",
+      "teaching_item": "Cannot choose a model before knowing its data; shape, owner, freshness first; data-oriented thinking is the edge",
+      "anchors": [
+        "walk-inputs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-inputs paragraph 1. Previously missing."
+      }
+    },
+    {
+      "source_id": "guide-3-map-every-input-before-naming-a-model",
+      "teaching_item": "Template adds 'what it can answer' and 'quality risk' columns; template table",
+      "anchors": [
+        "walk-inputs"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 2 explains both columns; template table kept."
+      }
+    },
+    {
+      "source_id": "guide-3-map-every-input-before-naming-a-model",
+      "teaching_item": "A quality problem without an owner stays a quality problem; first curveball lands in quality-risk column",
+      "anchors": [
+        "walk-inputs"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the table keeps both lines and adds where each case's plan turns on that column. Previously missing."
+      }
+    },
+    {
+      "source_id": "guide-4-sequence-workstreams-by-risk-not-by-interest",
+      "teaching_item": "Usual three workstreams; interesting one rarely the riskiest (source's first-person experience)",
+      "anchors": [
+        "walk-sequence"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "walk-sequence paragraph 1; the source's 'In my experience' is attributed to the source's author rather than voiced as ours. Previously missing."
+      }
+    },
+    {
+      "source_id": "guide-4-sequence-workstreams-by-risk-not-by-interest",
+      "teaching_item": "Order by the unknown that kills the project; later workstreams inherit its answer; in all three it is the data",
+      "anchors": [
+        "walk-sequence"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 2 keeps the rule and names each case's data unknown."
+      }
+    },
+    {
+      "source_id": "guide-4-sequence-workstreams-by-risk-not-by-interest",
+      "teaching_item": "Walking skeleton proves the integration story; mocked model with real data beats clever model on a spreadsheet",
+      "anchors": [
+        "walk-sequence"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 3, with a plain reason (joins, owners and access surface early). Term defined in brief-scenario."
+      }
+    },
+    {
+      "source_id": "guide-4-sequence-workstreams-by-risk-not-by-interest",
+      "teaching_item": "Scoping to Deployed Agent gate vocabulary: stage gates, named sign-off, no start without measurable success criteria",
+      "anchors": [
+        "walk-sequence"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph 4 keeps all three mechanics and points to the fraud plan as the worked example. Previously only 'named sign-off conditions' survived."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 mission: response time vs cost vs equity; citywide average can hide slower neighbourhoods",
+      "anchors": [
+        "dive-response",
+        "walk-mission"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-response 'Clarify the mission' paragraph and walk-mission paragraph 1."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 Ask/Assumed answer/Implication table incl. 8-minute 90th percentile, no new budget, dispatcher authority; no autonomous dispatch in V1",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table unchanged; the safety-boundary paragraph after it is kept."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 stakeholders, north star (P90 time to scene, priority-one, by district) and three guardrails",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Name stakeholders and metrics' keeps all four roles, the north star and the three guardrails, and adds a plain definition of a 90th percentile and EMS."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 input map; sensors thinnest where equity is judged so GPS is stronger ground truth for travel",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Inputs table kept; following paragraph restores the GPS-as-ground-truth conclusion, which the previous version omitted."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "Segment the interval first; triage-dominated delay makes routing the wrong project; risk-ordered workstream table",
+      "anchors": [
+        "dive-response",
+        "decomposition-check-4"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Sequence by risk' defines the four segments, keeps the triage warning and the four-row table."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "First slice is a report; assumed travel-dominated outer districts at night; second slice pre-positioning; regression, coverage optimisation, LLM only for triage notes",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Build the first slice' keeps each step and adds a one-line definition of coverage optimisation."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 architecture: two diagrams (6aca12/193771, 48b02d/241a2b) and component table",
+      "anchors": [
+        "dive-response",
+        "figure-12-0",
+        "figure-12-1"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Both figures now sit under 'Draw the architecture' with the component table, as in the source's 5.6. Previous alt/captions said 'source figure 1/2' and the component table was mislabelled 'failures and observable signals'; captions now name the SVG nodes and the table caption is 'architecture components'. A prose trace of the flow figure precedes it."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 evaluation: backtest replay, matched-district night pilot, two expansion gates, override-rate meaning",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Evaluate before anyone asks' keeps replay, both gates with the 'uncovers another' reason, and wrong-vs-untrusted override reading."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "911 failure-mode table",
+      "anchors": [
+        "dive-response"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; previously captioned 'tradeoffs', now 'failure modes, consequences and controls'. Added a plain gloss of 'fails closed'."
+      }
+    },
+    {
+      "source_id": "guide-5-decompose-the-911-problem-define-faster-before-touching-th",
+      "teaching_item": "GPS curveball: sensor estimates, dispatch status codes, outer-district degradation, wider error bars, sensor-rich pilot",
+      "anchors": [
+        "dive-response-gps",
+        "decomposition-check-6"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own h4 anchor dive-response-gps. Previous version added an unsourced line about 'equity claim'; replaced with source wording."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud mission: queue vs shared rules vs new model; only the queue fits 90 days; Ask table incl. regulator, shadow, label ownership",
+      "anchors": [
+        "dive-fraud",
+        "walk-mission"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Clarify the mission' paragraph and table unchanged."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud stakeholders incl. customers feeling false positives as declined cards; north star losses caught per investigator hour; three guardrails",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Name stakeholders and metrics' restores the declined-cards line (previously missing) and defines model risk."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud input map incl. ~120-day dispute window as general knowledge",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; note after it marks the 120-day window as general knowledge, matching the source's marking rule."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Two layers of inconsistent labels; training on the union learns three definitions",
+      "anchors": [
+        "dive-fraud",
+        "decomposition-check-7"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the inputs table states both layers with the A and B examples from the table. Previously compressed into one clause."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Riskiest unknown is whether one label can exist; label work from day one beside entity resolution; 90-day phase table with gates and signers",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Plan the ninety days' restores the riskiest-unknown sentence, defines entity resolution, keeps the five-phase table."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Honest 90-day deliverable; say so early as regulatory realism",
+      "anchors": [
+        "dive-fraud",
+        "decomposition-check-8"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the phase table. 'Say so early' was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Model last: queue value without a model; gradient-boosted classifier explainable to model risk; graph features for rings; bounded LLM on notes, human confirms labels",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Choose the model last' keeps every element; 'reviewers can follow its explanations' was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud architecture: two diagrams (8cd090/a0dc8b, c56030/206dfa) and component table",
+      "anchors": [
+        "dive-fraud",
+        "figure-13-0",
+        "figure-13-1"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figures placed under 'Draw the architecture' with prose trace and node-accurate captions; component table caption corrected from 'Fraud failure modes'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud evaluation: untouched relabelled holdout, fixed false-positive rate, chargebacks validate not train, summariser never a label source",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Evaluate against a label you trust' keeps all four."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "Fraud failure-mode table",
+      "anchors": [
+        "dive-fraud"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; caption corrected from 'tradeoffs'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-6-decompose-bank-fraud-scope-fraud-unification-in-ninety-day",
+      "teaching_item": "System C withheld 60 days: A+B queue, entity resolution ready for C, report two of three, no unification claim",
+      "anchors": [
+        "dive-fraud-system-c"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own h4 anchor; wording follows source."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Medication: numbers assumed, clinical practice general knowledge; narrow mission (flag, never change an order); Ask table",
+      "anchors": [
+        "dive-medication",
+        "walk-mission"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Opening note, 'Clarify the mission' paragraph and table kept."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Alert fatigue hides behind safety-first; ignored alert worse than none (source's opinion); precision is a safety property",
+      "anchors": [
+        "dive-medication",
+        "decomposition-check-9"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Paragraph after the Ask table, with the source's 'I'd argue' attributed to the source and precision defined. Previously only in check 9."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Medication stakeholders (nurses, pharmacists, CNO, safety leads, patients); north star errors per 1,000 administered doses; three guardrails",
+      "anchors": [
+        "dive-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Name stakeholders and metrics'. The five stakeholder roles were missing from the previous version."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Medication input map; gap between ordered/dispensed and administered; barcode scanning closes it, else reconcile against dispensing times",
+      "anchors": [
+        "dive-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Inputs table and the 'finding is the gap' paragraph."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Risk-ordered workstream table; schedule enters at step two as context; load or handover; never score nurses; surveillance loses honest reports",
+      "anchors": [
+        "dive-medication",
+        "decomposition-check-10"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Sequence by risk' table and paragraph, now linked to the AHRQ references that support the surveillance claim."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "First slice: three months, reconcile, flag late/missed/out-of-range, pharmacist-reviewed sample gives baseline and precision; rules, later risk score, LLM extraction with human confirm",
+      "anchors": [
+        "dive-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Build the first slice' two paragraphs; the previous version added 'under their approved definitions' and 'not an autonomous clinical action', which are kept in spirit but wording now follows source."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Medication architecture: two diagrams (330477/75283b, da347d/cdd65c) and component table",
+      "anchors": [
+        "dive-medication",
+        "figure-14-0",
+        "figure-14-1"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Figures under 'Draw the architecture' with a one-dose prose trace and node-accurate captions; component table caption corrected from 'failure modes'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Evaluation: precision, recall on known incidents, matched-ward error rate; alert ceiling; weekly override reading",
+      "anchors": [
+        "dive-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "'Evaluate for precision and harm, not accuracy'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "Medication failure-mode table",
+      "anchors": [
+        "dive-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; caption corrected from 'tradeoffs'."
+      }
+    },
+    {
+      "source_id": "guide-part-2-7-decompose-medication-errors-start-medication-safety-at-the",
+      "teaching_item": "No bedside scanning: measure ordered vs dispensed, wrong-patient/wrong-time invisible, recommend scanning; the 'is AI the right solution' judgement",
+      "anchors": [
+        "dive-medication-no-scanning"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own h4 anchor; the 'is AI the right solution' sentence was missing before."
+      }
+    },
+    {
+      "source_id": "guide-part-3-8-compare-the-three-side-by-side",
+      "teaching_item": "Method repeats; mission, riskiest input and human boundary change; eight-row comparison table; LLM never core; goal first, data second, model last",
+      "anchors": [
+        "dive-comparison"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-comparison intro, table and closing paragraph. The previous closing paragraph replaced the source's 'goal first, data second, model last' line; restored."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: when to route to HITL (always in V1; where the human sits in each case)",
+      "anchors": [
+        "probe-hitl"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Was one clause in a combined paragraph; now its own worked answer with all three human positions."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: logging drives HITL (override clusters; falling overrides on confirmed cases widen automation)",
+      "anchors": [
+        "probe-audit",
+        "walk-adapt"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own worked answer plus walk-adapt paragraph 1."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: metrics beyond task success (three guardrails)",
+      "anchors": [
+        "probe-metrics"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own worked answer listing all three guardrails."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: evaluation harness (backtest, shadow, matched pilot; relabelled vs pharmacist-reviewed holdouts)",
+      "anchors": [
+        "probe-harness",
+        "walk-adapt"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own worked answer with the per-case holdouts, which the previous combined paragraph dropped."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: graceful degradation (existing process primary; outage removes the addition)",
+      "anchors": [
+        "probe-degradation",
+        "walk-adapt"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own worked answer naming all three baselines."
+      }
+    },
+    {
+      "source_id": "guide-part-3-9-answer-the-follow-up-probes-these-cases-invite",
+      "teaching_item": "Probe: goal drift (fraud declines, optimiser abandons far districts)",
+      "anchors": [
+        "probe-drift"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Own worked answer with both examples."
+      }
+    },
+    {
+      "source_id": "guide-part-3-10-open-each-case-in-two-minutes",
+      "teaching_item": "911 two-minute opener",
+      "anchors": [
+        "opener-911"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full spoken text restored verbatim as worked answer opener-911; previously reduced to one clause."
+      }
+    },
+    {
+      "source_id": "guide-part-3-10-open-each-case-in-two-minutes",
+      "teaching_item": "Bank fraud two-minute opener",
+      "anchors": [
+        "opener-fraud"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full spoken text restored verbatim as opener-fraud."
+      }
+    },
+    {
+      "source_id": "guide-part-3-10-open-each-case-in-two-minutes",
+      "teaching_item": "Medication two-minute opener",
+      "anchors": [
+        "opener-medication"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Full spoken text restored verbatim as opener-medication; labelled as source spoken examples, not a deployment claim."
+      }
+    },
+    {
+      "source_id": "guide-part-3-11-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost card drivers (agent steps and tool calls; batch jobs and eval pipelines) and the pivot question",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost paragraph 1; previously missing. Also explains #67/#68/#69 as the catalogue numbers."
+      }
+    },
+    {
+      "source_id": "guide-part-3-11-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Cost table: dominant driver, cheapest lever, proving metric, do-not, 60-second line",
+      "anchors": [
+        "dive-cost"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept; its blank header cells (blank in the source too) now read Question/Answer."
+      }
+    },
+    {
+      "source_id": "guide-part-3-11-answer-the-cost-pivot-in-ten-minutes",
+      "teaching_item": "Four verbs: measure, route, bound, cache",
+      "anchors": [
+        "dive-cost",
+        "cost-pivot-answer"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cost paragraph after the table names the four verbs explicitly; cost-pivot-answer in Practice gives the worked spoken answer."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Levels split on reach: data and lever (Senior), owners and gates (Staff), long-term choices (Principal)",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "practice-levels intro paragraph; previously missing."
+      }
+    },
+    {
+      "source_id": "guide-part-3-level-calibration",
+      "teaching_item": "Three level tables (911, fraud, medication) with Sounds like / Missing",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All three tables unchanged, captions use the source case names."
+      }
+    },
+    {
+      "source_id": "guide-part-3-key-takeaways",
+      "teaching_item": "Eleven key takeaways",
+      "anchors": [
+        "review-decisions",
+        "review-cases",
+        "review-closing"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Quick review now carries every takeaway: method takeaways in review-decisions, the three case lines and side-by-side line in review-cases, openers and cost in review-closing. Previous Quick review had two paragraphs and omitted the openers, cost and input-map takeaways."
+      }
+    },
+    {
+      "source_id": "guide-part-3-check-yourself",
+      "teaching_item": "Twelve self-check questions with answers",
+      "anchors": [
+        "practice-checks",
+        "decomposition-check-1",
+        "decomposition-check-2",
+        "decomposition-check-3",
+        "decomposition-check-4",
+        "decomposition-check-5",
+        "decomposition-check-6",
+        "decomposition-check-7",
+        "decomposition-check-8",
+        "decomposition-check-9",
+        "decomposition-check-10",
+        "decomposition-check-11",
+        "decomposition-check-12"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "All twelve reveals keep their IDs; questions now use the source wording and answers follow the source (previous answers had drifted, e.g. check 12 lost 'people, not tokens')."
+      }
+    },
+    {
+      "source_id": "guide-part-3-references",
+      "teaching_item": "Three AHRQ PSNet references, checked 27 Sep 2026, with their supporting claims",
+      "anchors": [
+        "dive-sources"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "References keep the check date, links and each source's claim, which the previous list omitted; linked from the medication schedule paragraph."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Re-review on 16 Nov 2026: read all 23 captured sections (dumped to text) against the previous casebook item by item. The previous version kept every source table but thinned the teaching prose badly: the three verbatim prompts table was missing; section 1's narration scoring and second quote, the GPS curveball quote, the universal opener, the input-map 'owner' rationale, the riskiest-unknown sentence for fraud, customers' declined cards, the medication stakeholder list, the 'is AI the right solution' line, the cost-card drivers and the level-calibration framing were absent; the six probes and three two-minute openers were squeezed into two paragraphs; the Quick review dropped most takeaways. It also had wrong captions: in all three deep dives the component table was captioned as failure modes and the failure table as trade-offs, and all six case diagrams had generic 'source figure 1/2' alt text. I rebuilt casebook.md around the existing tables: brief now opens with the prompt table, assumption callout and term definitions, then what the round scores; walkthrough gains a separate sequencing step; each deep dive follows the source's 5.1-5.9 order under h4 headings with figures beside their component tables and prose traces read from the SVG labels; Practice has 22 worked reveals (12 checks, 6 probes, 3 openers, cost); Quick review carries all 11 takeaways. First-person source opinions ('In my experience', 'I'd argue') are attributed to the source. Unsourced additions from the previous rewrite (an 'equity claim' line, softened check answers) were replaced with source wording. Source oddity kept and explained: the cost table had blank headers in the source; given Question/Answer."
+  },
+  "required_answer_reveals": [
+    "decomposition-check-1",
+    "decomposition-check-2",
+    "decomposition-check-3",
+    "decomposition-check-4",
+    "decomposition-check-5",
+    "decomposition-check-6",
+    "decomposition-check-7",
+    "decomposition-check-8",
+    "decomposition-check-9",
+    "decomposition-check-10",
+    "decomposition-check-11",
+    "decomposition-check-12",
+    "probe-hitl",
+    "probe-audit",
+    "probe-metrics",
+    "probe-harness",
+    "probe-degradation",
+    "probe-drift",
+    "opener-911",
+    "opener-fraud",
+    "opener-medication",
+    "cost-pivot-answer"
+  ]
+}

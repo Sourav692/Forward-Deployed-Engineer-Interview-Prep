@@ -1,0 +1,655 @@
+{
+  "title": "Travel Agent: the 12-Part Framework Worked Through",
+  "slug": "travel-agent-worked-example",
+  "subtitle": "Critique a five-agent travel assistant whose draft pipeline does not match how agents run, then redraw it cache-first with agent-owned tools and a synthesiser.",
+  "theme": "Additional System Designs",
+  "kind": "Case study",
+  "level": "Foundation",
+  "author": "By Sourav Banerjee",
+  "source_url": "https://forwarddeployedprep.com/design/travel-agent-worked-example",
+  "updated": "Teaching rewrite, 16 November 2026",
+  "mode": "teach",
+  "markdown": "casebook.md",
+  "source_inventory": "source.json",
+  "aliases": {
+    "intro-overview": "brief-scenario",
+    "intro-the-core-idea": "figure-core-idea",
+    "intro-who-it-is-for": "brief-task",
+    "intro-objectives": "brief-task",
+    "intro-what-it-assumes": "brief-task",
+    "intro-how-to-use-it": "brief-task",
+    "intro-the-sections": "brief-task",
+    "worked-example": "walk-original",
+    "framework-overview": "dive-components",
+    "worked-example-intro": "brief-task",
+    "worked-example-why-this-matters": "walk-original",
+    "worked-example-the-original-and-what-was-wrong-with-it": "walk-original",
+    "worked-example-the-corrected-architecture": "walk-corrected",
+    "worked-example-components": "dive-components",
+    "worked-example-data-flow-in-order": "walk-data-flow",
+    "worked-example-non-functional-requirements": "walk-operations",
+    "worked-example-trade-offs-worth-naming-out-loud": "dive-retrieval",
+    "worked-example-a-mental-model-the-international-airport": "dive-analogy",
+    "worked-example-interview-lens": "walk-interview-lens",
+    "worked-example-checkpoint": "practice-checks",
+    "worked-example-key-takeaways": "review-takeaways",
+    "worked-example-level-calibration": "practice-levels",
+    "worked-example-sources-checked-27-sep-2026": "dive-sources",
+    "framework-overview-intro": "walk-original",
+    "framework-overview-what-changed-and-why": "walk-rate-limit",
+    "framework-overview-architecture": "walk-corrected",
+    "framework-overview-key-components": "dive-components",
+    "framework-overview-data-flow": "walk-data-flow",
+    "framework-overview-non-functional-requirements": "walk-operations",
+    "framework-overview-trade-offs-worth-naming-out-loud": "dive-retrieval",
+    "framework-overview-mental-model-an-international-airport": "dive-analogy",
+    "intro": "case-brief"
+  },
+  "practice_prompts": [
+    {
+      "id": "faults",
+      "label": "The five faults in the draft",
+      "hint": "Name each fault, where it sits in the draft and why it wastes or blocks work."
+    },
+    {
+      "id": "redraw",
+      "label": "Redraw and trace the corrected design",
+      "hint": "Trace one request through a cache hit and a miss: which agents run, which tools each calls, where Policy overrides Booking."
+    },
+    {
+      "id": "tradeoffs",
+      "label": "Defend the trade-offs",
+      "hint": "Shared or per-agent retrieval, regional or global stores, and when a new agent earns its cost."
+    },
+    {
+      "id": "open",
+      "label": "Gaps and customer questions",
+      "hint": "Cacheable queries, agent timeouts, ownership of shared services, and the targets only the customer can set."
+    }
+  ],
+  "rubric": [
+    "I placed rate limiting inside the API gateway and explained why a dead-end box is a policy, not a component.",
+    "I put the semantic cache before the supervisor spawns anything and wrote the synthesised reply back to it.",
+    "I let only the needed agents start, and made retrieval a tool each agent calls in its own loop (Search and Recommendation yes, Booking and Policy rarely).",
+    "I drew the LLM, MCP registry, external APIs and vector DBs as a shared backend each agent calls on demand, so Booking reaches Flight and Payment during its own work.",
+    "I named a synthesiser that settles conflicts, with Policy overriding Booking, and stated what it does when an agent fails or times out.",
+    "I defended shared versus per-agent retrieval and named drawing RAG as a peer of the agents as the real mistake.",
+    "I weighed regional against global stores without claiming regional stores equal GDPR compliance.",
+    "I left the cache hit-rate and p95 latency targets open until the customer supplies residency rules and traffic mix."
+  ],
+  "coverage": [
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Scenario: travel company, AMER/EMEA/APJ customers, five specialists (search, booking, pricing, recommendations, policy)",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 1 keeps the company, three regions and five specialists, and now expands AMER, EMEA and APJ, which the previous version and the source left as bare acronyms, and says what each specialist does."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Hard constraint: the diagram must match how agents run (own loop, own tools, own pace); a shared pipeline wastes work or holds it up",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 3 carries the constraint sentence and the 'wastes work or holds it up' consequence. The previous version had dropped the constraint wording and spoke only of 'order and ownership'. Paragraph 2 adds plain definitions of agent loop, supervisor, synthesiser and semantic cache before they are used."
+      }
+    },
+    {
+      "source_id": "intro-overview",
+      "teaching_item": "Draft order (shared cache, retrieval, LLM step, tool stage) and the redraw summary; LLM glossary definition",
+      "anchors": [
+        "brief-scenario",
+        "walk-original"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief paragraph 3 states the four shared stages in order; the redraw summary (gateway rate limiting, cache before agents, agent-owned retrieval and tools, synthesiser) is taught in walkthrough steps 2-6. The LLM abbr in brief paragraph 2 carries the source definition, with its em dash replaced by 'such as'."
+      }
+    },
+    {
+      "source_id": "intro-the-core-idea",
+      "teaching_item": "Core idea sentence and its diagram (Request, Gateway with rate limiting, Semantic cache, Reply, Supervisor starts only agents needed, Synthesiser)",
+      "anchors": [
+        "figure-core-idea"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The sentence is quoted before figure-core-idea (449976 light / c099b2 dark). The previous caption was generic ('check reusable work'); the new alt text and caption name every node from the source alt text, and a following paragraph explains what reading it left to right shows."
+      }
+    },
+    {
+      "source_id": "intro-who-it-is-for",
+      "teaching_item": "Audience: FDE, solutions and applied-AI interview candidates, critique or draw-under-time-pressure rounds",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 2 keeps the audience and both round types. The previous version omitted the audience entirely."
+      }
+    },
+    {
+      "source_id": "intro-objectives",
+      "teaching_item": "Objectives: name five faults and fixes; put the five questions to any diagram; defend shared/per-agent retrieval, regional/global stores, when another agent is worth it",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 1 lists the critique task and the three trade-offs; paragraph 2 keeps 'put the same five questions to any multi-agent diagram, your own included'. Previously only implied."
+      }
+    },
+    {
+      "source_id": "intro-what-it-assumes",
+      "teaching_item": "Prerequisites: agents, retrieval, tool calling; read Twelve-Part Design Framework and Design Principles as Tie-Breakers first",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 3 names both prerequisite documents and the Learn section, and says this case applies rather than reproduces them."
+      }
+    },
+    {
+      "source_id": "intro-how-to-use-it",
+      "teaching_item": "Reading guidance: spot each fault before its fix, redraw from memory, revisit level calibration the night before, optional framework write-up",
+      "anchors": [
+        "brief-task",
+        "walk-corrected"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task paragraph 4 keeps spot-the-fault-first, redraw-and-compare and the night-before calibration; walk-corrected ends with 'redraw it from memory'. The source's mark-as-read instruction is served by the reader's own reading toggles and is not repeated as prose."
+      }
+    },
+    {
+      "source_id": "intro-the-sections",
+      "teaching_item": "Old navigation: mandatory Worked Example and optional 12-Part Framework, with their contents",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Brief-task final paragraph describes both original parts, their contents and mandatory/optional status, and states how this casebook merges them; it is no longer a competing route."
+      }
+    },
+    {
+      "source_id": "worked-example-intro",
+      "teaching_item": "Before-this pointer to the two prerequisite documents",
+      "anchors": [
+        "brief-task"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the prerequisite paragraph of brief-task, which names the same two documents."
+      }
+    },
+    {
+      "source_id": "worked-example-why-this-matters",
+      "teaching_item": "Principles stay abstract until they repair a diagram; the habit of spotting faults matters more than the fixed diagram; most first sketches repeat the same five",
+      "anchors": [
+        "walk-original"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-original paragraphs 1 and 3 carry all three points. The previous version had dropped 'keep the habit; the fixed diagram matters less' and 'most first-pass sketches repeat the same five'."
+      }
+    },
+    {
+      "source_id": "worked-example-why-this-matters",
+      "teaching_item": "The brief: three regions and one specialist each for policy, pricing, search, booking and recommendation",
+      "anchors": [
+        "brief-scenario"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same brief as intro-overview, carried once in brief paragraph 1."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Draft as a rigid pipeline: five agents fan out then squeeze through one cache, retrieval, LLM and tool stage",
+      "anchors": [
+        "walk-original",
+        "figure-draft"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Walk-original paragraph 1 states the pipeline. The local reconstruction figure was redrawn: the old one omitted the load balancer and the dead-end rate limiter, so fault 1 was invisible; it now shows both and numbers all five faults, and stays labelled as a casebook illustration."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Fault 1: rate limiter off the load balancer with no exit; a separate box implies a component, rate limiting is a behaviour",
+      "anchors": [
+        "walk-rate-limit"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 2 has its own heading now (it was one sentence in the old step 1) and keeps 'no line left it', 'a rule, not a route' and 'a separate box implies a component'. Added: throttling defined, and that a separate rate-limit service may exist but enforcement must be on the gateway path."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Fault 2: cache behind the agents; must precede costly work; supervisor checks first; hit spawns nothing; short-circuiting; placement decides money or nothing",
+      "anchors": [
+        "walk-cache"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 3 keeps every clause including the 'short-circuiting' framework term, which the old version had lost, defines short-circuiting, and traces hit and miss with the brief's illustrative request."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Fault 3: compulsory retrieval after all agents; Search and Recommendation need regional content, Booking and Policy rarely; each agent retrieves in its own loop when needed",
+      "anchors": [
+        "walk-retrieval"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 4 keeps the agent split and the in-loop, only-when-needed fix, and adds a RAG definition and the Frankfurt trace (Search queries EMEA; Booking and Policy skip)."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Fault 4: shared LLM, tool and MCP boxes read as one turn; Booking calls Flight and Payment MCP servers during its own work; shared backend called on demand",
+      "anchors": [
+        "walk-agents"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 5 keeps the one-turn reading, the Booking/Flight/Payment example and the four backend members, and adds that 'shared' means many callers, not taking turns."
+      }
+    },
+    {
+      "source_id": "worked-example-the-original-and-what-was-wrong-with-it",
+      "teaching_item": "Fault 5: nothing explains how parallel results become one reply; named synthesiser settles clashes; Policy overriding Booking",
+      "anchors": [
+        "walk-synthesis"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 6 keeps 'carried on as one line', the synthesiser's duties and the Policy-over-Booking example, and spells out the hidden decisions (collect, notice disagreement, choose a winner)."
+      }
+    },
+    {
+      "source_id": "worked-example-the-corrected-architecture",
+      "teaching_item": "Corrected architecture diagram and its caption: hit replies with no agent; miss spawns only needed agents; each pulls only what it needs; synthesiser merges and saves to cache",
+      "anchors": [
+        "walk-corrected",
+        "figure-corrected"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "figure-corrected (8ee134 light / e3a21c dark) sits in step 7. Its alt text and caption now name every labelled box seen in the rendered SVG: gateway, cache, supervisor, five agents, the four backend services, the Synthesiser (Policy overrides Booking), Response to user with hit path and write-back, and Monitoring with cache hit rate. The paragraph after it carries the source caption's three rules. The old version showed this figure three times with generic captions; it now appears once beside its explanation."
+      }
+    },
+    {
+      "source_id": "worked-example-components",
+      "teaching_item": "Component table (client, auth with SSO/OIDC/JWT, load balancer, gateway, supervisor, cache, agents, regional vector DBs, MCP registry, external APIs, synthesiser, monitoring)",
+      "anchors": [
+        "dive-components"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with framework-overview-key-components into one table with a third 'Change' column, keeping every purpose cell and the SSO and JWT glossary definitions in abbr titles."
+      }
+    },
+    {
+      "source_id": "worked-example-data-flow-in-order",
+      "teaching_item": "Ten-step data flow in the corrected order",
+      "anchors": [
+        "walk-data-flow"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 is now a numbered ten-step list; the previous version had no ordered data flow, only prose spread over two steps. The paragraph after it says which steps are the short-circuit and which run inside each agent."
+      }
+    },
+    {
+      "source_id": "worked-example-non-functional-requirements",
+      "teaching_item": "NFR table: scalability, reliability, availability, performance, security, cost, observability, maintainability",
+      "anchors": [
+        "walk-operations"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the framework NFR table in step 9; the row wording follows the framework version, which adds 'Microservices' to maintainability (missing before). Glossary abbrs for CDN, RBAC and CI/CD kept; active-active and p95 defined in the paragraph after."
+      }
+    },
+    {
+      "source_id": "worked-example-trade-offs-worth-naming-out-loud",
+      "teaching_item": "Shared retrieval vs per-agent RAG; LangGraph/CrewAI; duplicate embedding stacks; real mistake is RAG as a peer agent",
+      "anchors": [
+        "dive-retrieval"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-retrieval explains each position under its own label before the verdict, defines residency, guardrails and embedding stack, and links the Staff level calibration. RAG glossary definition carried in walk-retrieval."
+      }
+    },
+    {
+      "source_id": "worked-example-trade-offs-worth-naming-out-loud",
+      "teaching_item": "Single vs multi-agent: coordination and synthesis cost; pay it when tools, guardrails or scaling differ; Booking and Policy",
+      "anchors": [
+        "dive-multi-agent"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-multi-agent keeps the condition and the Booking/Policy example, says why those two differ, and derives an admission rule for new agents, labelled as following from the source paragraph."
+      }
+    },
+    {
+      "source_id": "worked-example-trade-offs-worth-naming-out-loud",
+      "teaching_item": "Semantic vs traditional cache: exact repeat vs near-duplicate; skip the entire fan-out vs save one call",
+      "anchors": [
+        "dive-cache"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-cache paragraphs 1-2 define embeddings, contrast the two caches and add an illustrative paraphrase pair (FRA to SIN) that an exact cache would miss."
+      }
+    },
+    {
+      "source_id": "worked-example-trade-offs-worth-naming-out-loud",
+      "teaching_item": "Global vs regional vector DBs: residency and latency vs simpler operations and consistency",
+      "anchors": [
+        "dive-regions"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-regions gives each option its own paragraph with benefit and cost, then the GDPR Article 46 caveat from the sources list."
+      }
+    },
+    {
+      "source_id": "worked-example-a-mental-model-the-international-airport",
+      "teaching_item": "Airport analogy table (ten rows)",
+      "anchors": [
+        "dive-analogy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged with the framework's airport table into one ten-row table, using the framework's fuller wording (gateway with rate limiting inside, External APIs list, 'from every crew (added)'). A new paragraph maps the analogy back to the five faults."
+      }
+    },
+    {
+      "source_id": "worked-example-interview-lens",
+      "teaching_item": "Five review questions derived from the fixes",
+      "anchors": [
+        "walk-interview-lens",
+        "practice-lens"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 10 lists all five questions verbatim with the fault each comes from; practice-lens turns each into a worked reveal about the travel draft. Previously compressed into one sentence in Practice."
+      }
+    },
+    {
+      "source_id": "worked-example-checkpoint",
+      "teaching_item": "Checkpoint: list the five fixes",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveal travel-check-1 lists all five fixes in the order of walkthrough steps 2-6, with the shared-backend members named for fix 4."
+      }
+    },
+    {
+      "source_id": "worked-example-checkpoint",
+      "teaching_item": "Checkpoint: which principle from the last document each fix applies",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveal travel-check-principles is a separate question now (the old version merged it into Q1 and invented principle names). The answer says the principles document is not in this case, that the source names only short-circuiting, and labels the other four mappings as the reader's own wording to check."
+      }
+    },
+    {
+      "source_id": "worked-example-checkpoint",
+      "teaching_item": "Checkpoint: why cache position decides savings; which mistake matters in shared vs per-agent RAG; which synthesiser job is hidden; redraw without looking",
+      "anchors": [
+        "practice-checks"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Reveals travel-check-2 to travel-check-5, one per question; the source has no written answers, so each answer is drawn from the walkthrough and stated as such. The hidden-job answer now names conflict settling, matching the source wording."
+      }
+    },
+    {
+      "source_id": "worked-example-key-takeaways",
+      "teaching_item": "Fourteen key takeaways",
+      "anchors": [
+        "review-takeaways",
+        "review-tradeoffs",
+        "review-faults"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "review-takeaways keeps eight fault and flow takeaways, including 'not all five by default', reply write-back and 'cache hit rate' in monitoring; the four trade-off takeaways are in review-tradeoffs. The old Quick review compressed all fourteen into two paragraphs and lost the write-back and hit-rate points."
+      }
+    },
+    {
+      "source_id": "worked-example-level-calibration",
+      "teaching_item": "Level calibration table (Senior, Staff, Principal: sounds like and missing) and the framing sentence",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Table kept verbatim in practice-levels with its framing sentence. The old summary paragraph wrongly said Staff answers 'own cacheability, partial failure'; the table does not say that, and the new paragraph reads each row's Missing column as stated. Gaps are linked to follow-up drills and deep dives."
+      }
+    },
+    {
+      "source_id": "worked-example-level-calibration",
+      "teaching_item": "Next pointer: The 60-Minute Whiteboard Method",
+      "anchors": [
+        "practice-levels"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Last sentence of practice-levels names it as the source's next case."
+      }
+    },
+    {
+      "source_id": "worked-example-sources-checked-27-sep-2026",
+      "teaching_item": "Five sources with the claim each supports, checked 27 Sep 2026; OIDC and GDPR glossary",
+      "anchors": [
+        "dive-sources",
+        "dive-components",
+        "dive-regions",
+        "dive-mcp"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "dive-sources restores each source's supporting claim, which the old list dropped (links only). The claims are also taught where used: OIDC vs OAuth in dive-components, tools/list and list_changed in dive-mcp, LangCache in dive-cache, CrewAI tools list in dive-retrieval, Article 46 in dive-regions. OIDC and GDPR abbrs carry the source definitions."
+      }
+    },
+    {
+      "source_id": "framework-overview-intro",
+      "teaching_item": "System design definition; reference design for AMER/EMEA/APJ; four faults from an architecture review plus a fifth (synthesiser) from an independent blueprint; 'two later reviews'",
+      "anchors": [
+        "walk-original"
+      ],
+      "status": "expanded",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The last paragraph of walk-original states one account of where the faults came from: an architecture review found four and an independently written blueprint reached the same four and added the fifth (the synthesiser); the brief says two independent reviews found five. The worked example's looser 'a careful review found five' is folded into this account, with no reader-facing note about the difference."
+      }
+    },
+    {
+      "source_id": "framework-overview-what-changed-and-why",
+      "teaching_item": "Five fixes as restated in the framework (dead end, ahead of costly work, RAG owned per agent, Booking needs Payment and Flight while running, synthesiser)",
+      "anchors": [
+        "walk-rate-limit",
+        "walk-cache",
+        "walk-retrieval",
+        "walk-agents",
+        "walk-synthesis"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Same five fixes as the worked example; the framework-only phrasing ('It was a dead end', 'not after four unrelated agents have wrapped up') is kept in steps 2 and 5."
+      }
+    },
+    {
+      "source_id": "framework-overview-architecture",
+      "teaching_item": "Same components and regional footprint; structure changes (cheap hit, own loops, one accountable step); legend (solid, dashed, new synthesiser); three explanatory bullets",
+      "anchors": [
+        "walk-corrected"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 7 paragraphs 1-2 keep the 'components unchanged, structure changes' framing and the full legend, both missing before; the paragraph after the figure carries the three bullets."
+      }
+    },
+    {
+      "source_id": "framework-overview-key-components",
+      "teaching_item": "Framework component table with change tags (now holds rate limiting, refocused, now checked first, own their RAG and tools, added)",
+      "anchors": [
+        "dive-components"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "The change tags became the 'Change' column; framework-only purpose wording (the one way in, before any other step runs, to keep the service available, nothing passes through a single shared LLM step) is used in the merged cells."
+      }
+    },
+    {
+      "source_id": "framework-overview-data-flow",
+      "teaching_item": "Ten steps from the draft reordered so the cache check comes first, with the client and agent names",
+      "anchors": [
+        "walk-data-flow"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 8 uses the framework wording where it adds detail (web or mobile client, free API instance, agent names, API types) and states that the ten draft steps were reordered."
+      }
+    },
+    {
+      "source_id": "framework-overview-non-functional-requirements",
+      "teaching_item": "Same NFRs; the new order makes the cache-first row true in practice",
+      "anchors": [
+        "walk-operations"
+      ],
+      "status": "preserved",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Step 9 paragraph 1 keeps 'same as the first draft' and explains why the cache-first rows were untrue in the draft."
+      }
+    },
+    {
+      "source_id": "framework-overview-trade-offs-worth-naming-out-loud",
+      "teaching_item": "Framework restatement of the four trade-offs ('the contrasts an interviewer wants to hear')",
+      "anchors": [
+        "dive-retrieval",
+        "dive-multi-agent",
+        "dive-cache",
+        "dive-regions"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Identical claims to the worked-example trade-offs, each taught once in its own deep dive."
+      }
+    },
+    {
+      "source_id": "framework-overview-mental-model-an-international-airport",
+      "teaching_item": "Airport comparison stretched to the cache gate and synthesiser",
+      "anchors": [
+        "dive-analogy"
+      ],
+      "status": "consolidated",
+      "review": {
+        "status": "reviewed",
+        "evidence": "Merged into the single dive-analogy table, keeping the '(added)' mark on the dispatcher row and the framework's fuller cells."
+      }
+    }
+  ],
+  "editorial_review": {
+    "status": "reviewed",
+    "evidence": "Compared all 29 captured sections (7 intro, 14 Worked Example, 8 12-Part Framework) item by item with the previous casebook, which was 21 KB against 31 KB of source text and had compressed the five faults into two paragraphs. Restored: a heading per fault (rate limiter, cache, retrieval, shared turn, synthesiser) with the source's reasoning, the 'short-circuiting' term, the ten-step ordered data flow, the architecture legend, the audience, objectives and assumptions, 'Microservices' in the maintainability row, each reference's supporting claim, cache hit rate and reply write-back in the takeaways, and the interview lens as five questions with reveals. Fixed: the level paragraph that claimed Staff answers own cacheability (the table says no such thing); the checkpoint answer that invented principle names (now says the principles document is not in the case and only short-circuiting is named); the reconstruction figure, which omitted the dead-end rate limiter. The two source tracks repeat components, NFRs, trade-offs and the airport table, so each is merged into one table or deep dive with the framework-only wording kept. The brief now expands AMER/EMEA/APJ, defines agent loop, supervisor, synthesiser and semantic cache, and traces an illustrative Frankfurt-to-Singapore request through both drawings, since the source has no sample query. Cacheability rules, timeout handling, the agent-admission rule and the MCP authorisation caveat are labelled as this casebook's reasoning; follow-up drills are labelled as added. Source inconsistencies resolved in text (2026-11-16): worked example says 'a careful review found five' faults while the 12-Part Framework says an architecture review found four and an independent blueprint added the fifth \u2192 the framework's more specific account is used throughout (brief: 'two independent reviews found five'; walk-original states review-four plus blueprint-fifth as fact), since it is compatible with the worked example's total of five and names who found the synthesiser fault."
+  },
+  "required_answer_reveals": [
+    "travel-check-1",
+    "travel-check-principles",
+    "travel-check-2",
+    "travel-check-3",
+    "travel-check-4",
+    "travel-check-5",
+    "lens-component",
+    "lens-cache",
+    "lens-retrieval",
+    "lens-loops",
+    "lens-merge",
+    "follow-timeout",
+    "follow-cacheable",
+    "follow-new-agent",
+    "follow-residency",
+    "follow-ownership"
+  ],
+  "required_figures": [
+    {
+      "id": "figure-draft",
+      "path": "source-assets/reconstructed-original.svg",
+      "sha256": "90fef99a9c906a094a1e41f0540a36b0e7dbb9b00d5a868527519048be9eff8f"
+    }
+  ],
+  "required_anchors": [
+    "walk-rate-limit",
+    "walk-cache",
+    "walk-retrieval",
+    "walk-agents",
+    "walk-synthesis",
+    "walk-corrected",
+    "walk-data-flow",
+    "walk-interview-lens",
+    "practice-levels"
+  ]
+}
