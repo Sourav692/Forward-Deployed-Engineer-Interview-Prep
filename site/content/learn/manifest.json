@@ -7200,6 +7200,78 @@
       "updated": "2026-10-05"
     },
     {
+      "slug": "etl-elt-batch-or-stream",
+      "title": "ETL, ELT, Batch or Stream",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/01_ETL_ELT_Batch_or_Stream.md",
+      "estMinutes": 9,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/etl-elt-batch-or-stream",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "incremental-loads-and-watermarks",
+      "title": "Incremental Loads and Watermarks",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/02_Incremental_Loads_and_Watermarks.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/incremental-loads-and-watermarks",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "duplicates-and-entity-resolution",
+      "title": "Duplicates and Entity Resolution",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/03_Duplicates_and_Entity_Resolution.md",
+      "estMinutes": 9,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/duplicates-and-entity-resolution",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "schema-drift-and-late-data",
+      "title": "Schema Drift and Late Data",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/04_Schema_Drift_and_Late_Data.md",
+      "estMinutes": 9,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "backfills-while-live",
+      "title": "Backfills While Live",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-customer-data-pipelines",
+      "title": "Practise Customer Data Pipelines",
+      "track": "fde-building-in-the-estate",
+      "module": "customer-data-pipelines",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/06_Practise_Customer_Data_Pipelines.md",
+      "estMinutes": 5,
+      "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/practise-customer-data-pipelines",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",

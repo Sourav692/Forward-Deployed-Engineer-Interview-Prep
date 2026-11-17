@@ -1608,8 +1608,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T21.2",
     "title": "Data pipelines in the customer's estate",
     "track": "fde-building-in-the-estate",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "etl-elt-batch-or-stream",
+      "incremental-loads-and-watermarks",
+      "duplicates-and-entity-resolution",
+      "schema-drift-and-late-data",
+      "backfills-while-live",
+      "practise-customer-data-pipelines"
+    ],
+    "practiceMinutes": 240
   },
   {
     "slug": "building-for-operators",

@@ -468,7 +468,7 @@ export const NOT_ACRONYMS = new Set([
   // Shouted "as", the SQL keyword, and PCAOB audit-standard numbers (AS 2201)
   'AS',
   // Regions, well-known names and products, units, versions
-  'US', 'EU', 'APAC', 'EMEA', 'AMER', 'AWS', 'SAP', 'VIP', 'OS', 'IT', 'IP', 'KB', 'GB', 'MB', 'TB',
+  'US', 'UK', 'EU', 'APAC', 'EMEA', 'AMER', 'AWS', 'SAP', 'VIP', 'OS', 'IT', 'IP', 'KB', 'GB', 'MB', 'TB',
   'UI', 'UX', 'URL', 'HTTP', 'HTTPS', 'ASCII', 'SHA256', 'V1', 'V2', 'Q3', 'CD', 'CI', 'SOC',
   'DM',
   // A file name (README.md), not an acronym
