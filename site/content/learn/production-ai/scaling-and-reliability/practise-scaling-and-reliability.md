@@ -29,6 +29,9 @@ No. Caching moves the median. Timeouts, circuit breakers and fallback to a small
 **"Why not one shared index with a tenant filter?"**
 A big tenant's rebuild slows everyone, and one filter mistake exposes everyone. Per-tenant shards keep the blast radius to one tenant.
 
+**"A customer's backfill made live updates three hours late. How do you design the integration so that cannot happen?"**
+Separate lanes. Realtime updates and bulk work (backfills and reconciliation) each get their own queue, workers, share of the partner's rate limit and database connections. Size the realtime share above live peak. Let bulk borrow idle realtime capacity, but realtime always goes first. See [Capacity, Latency, and Cost at Scale](/learn/production-ai/scaling-and-reliability/capacity-latency-and-cost-at-scale).
+
 ## Answer the Reliability Questions
 
 **"What is the difference between a retry and a circuit breaker?"**

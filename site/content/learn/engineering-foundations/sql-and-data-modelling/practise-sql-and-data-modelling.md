@@ -13,6 +13,7 @@ Every customer and figure below is fictional.
 > - Designing an approval schema with an audit history.
 > - Choosing an index for a search screen.
 > - Moving value between records in one transaction, and diagnosing a pool that runs dry.
+> - Designing an integration's own state so a restart cannot apply a stale update.
 
 ## Queries
 
@@ -75,6 +76,19 @@ Taught in [transactions, locking and isolation](/learn/engineering-foundations/s
 
 </details>
 
+## Integration state
+
+Taught in [modelling the integration's own state](/learn/engineering-foundations/sql-and-data-modelling/modelling-the-integrations-own-state).
+
+<details>
+<summary>Practice question 6. Vane Travel syncs bookings from a hotel partner's API into its CRM. After a restart, some bookings show an older room type than the partner holds. Design the tables that stop it.</summary>
+
+- **Answer:** `booking_map`: partner, partner booking ID, CRM ID and last applied partner version, unique on partner and partner booking ID. `processed_events`: partner and event ID as the primary key. `feed_checkpoint`: one row per partner feed with its cursor. Apply an update with one conditional statement that sets the new version only where the stored version is lower. Zero rows changed means stale: write an audit row and skip the CRM. Commit the event, mapping version, checkpoint and audit row in one transaction, after the CRM write succeeds.
+- **Trade-off:** The version check discards a correction resent under an old version. Agree with the partner that corrections carry a new one.
+- **Follow-up to expect:** "The partner sends no version, only a modified time." Use it with an event-ID tie-break, and reconcile nightly against the partner's records.
+
+</details>
+
 ## Key takeaways
 
 - Describe a query as named steps with a clear grain, and check its totals.
@@ -82,6 +96,7 @@ Taught in [transactions, locking and isolation](/learn/engineering-foundations/s
 - Choose index column order from the query: equality, then sort, then optional filters.
 - Transfers lock in a fixed order, update conditionally and carry an identifier.
 - Pool exhaustion with fast queries means connections held between queries.
+- An integration's mapping row carries the last applied version, and only a newer one may change it.
 
 ## Check yourself
 

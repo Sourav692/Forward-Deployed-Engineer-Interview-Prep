@@ -60,6 +60,18 @@ Horizontal scaling helps less than expected when the provider's latency dominate
 
 Recognise the six shapes these controls assemble into. A real-time GenAI API needs a short critical path, routing, streaming, caching and strict timeouts. An async document pipeline needs queues, batching, autoscaled workers, budgets and retries. A RAG ingestion pipeline needs deduplication, incremental indexing, ACL metadata and an embedding cache. A multi-tenant platform needs tenant budgets, isolation, per-tenant metrics and a permission-aware cache. An agent service needs step limits, tool budgets, a trace store and deterministic routes. An evaluation pipeline needs sampled runs, cheaper judges and scheduled offline execution.
 
+## Give Backfills Their Own Lane
+
+An integration carries two kinds of traffic with different promises. Realtime traffic is live updates a user is waiting for, promised within minutes. Bulk traffic is backfills of history and reconciliation runs, promised within hours or days. When both share one queue, one worker pool and one partner rate limit, the bulk work sets the latency of the live work.
+
+A **lane** is a separate path for one class of traffic: its own queue, its own workers, its own share of the partner's rate limit and its own database connections. The [bulkhead](/learn/production-ai/scaling-and-reliability/retries-circuit-breakers-and-bulkheads) pattern is the general idea. Lanes apply it to traffic classes inside one integration.
+
+Morland Estates, a fictional property manager, connected a lettings system that allowed 100 requests per second. A new customer's backfill queued 1.2 million records into the shared queue at 08:00. Live tenancy updates now waited behind them. At 100 records per second the queue took about 12,000 seconds to drain, so live updates arrived more than three hours late, during the busiest morning of the month.
+
+With lanes, the realtime lane holds 70 of the 100 requests per second and live traffic peaks near 40. The backfill lane gets 30, so the same 1.2 million records take about 40,000 seconds, a little over 11 hours, overnight. Live updates never wait behind a backfill record. Reconciliation runs in the bulk lane too.
+
+The trade-off is idle capacity. A fixed split leaves 30 requests per second unused when there is no backfill, and the realtime lane has 30 spare even at its peak. Let the bulk lane borrow unused realtime capacity, but make realtime work always take precedence, and cap the borrowing so a spike in live traffic does not hit the partner's limit. The [backfills while live](/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live) lesson covers running a backfill alongside live data safely.
+
 ## Quote the Cost That Matters
 
 One number to have ready: embedding about 80 million chunks once, at about $0.0001 per 1,000 tokens with a small embedding model, costs roughly low-to-mid four figures in US dollars. It is real money, but manageable.
@@ -84,6 +96,7 @@ The cost discussion centres on generation per query, not the one-time embedding 
 - Caching moves the median; timeouts, circuit breakers and fallbacks move the tail.
 - Concurrency equals throughput times latency, so cutting latency cuts provisioned capacity.
 - Control the critical path with pooling, queue-depth scaling, tenant limits, backpressure and warm capacity, and know the six architecture shapes.
+- Give realtime traffic and backfills or reconciliation separate lanes, each with its own queue, workers and share of the partner's rate limit.
 - The one-time embedding cost is low-to-mid four figures; query-time generation times volume is the cost that dominates.
 
 ## Check Yourself
@@ -108,4 +121,8 @@ About 40, by Little's Law: concurrency equals throughput times latency.
 It is a one-time cost in the low-to-mid four figures. Query-time generation recurs with every query, so routing, filtering and caching matter more.
 
 </details>
+
+## References
+
+**Sources:** The lanes section (added 18 November 2026) is the author's own field experience, with a fictional customer, and draws on Microsoft's Azure architecture guidance, the [Bulkhead pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/bulkhead) and the [Priority Queue pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/priority-queue), both accessed 18 November 2026.
 

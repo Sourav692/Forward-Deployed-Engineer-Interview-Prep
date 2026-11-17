@@ -298,7 +298,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/01_SQL_for_Business_Questions.md",
       "estMinutes": 12,
       "href": "/learn/engineering-foundations/sql-and-data-modelling/sql-for-business-questions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "modelling-entities-keys-and-constraints",
@@ -310,7 +310,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/02_Modelling_Entities_Keys_and_Constraints.md",
       "estMinutes": 10,
       "href": "/learn/engineering-foundations/sql-and-data-modelling/modelling-entities-keys-and-constraints",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "indexes-and-query-plans",
@@ -322,7 +322,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/03_Indexes_and_Query_Plans.md",
       "estMinutes": 12,
       "href": "/learn/engineering-foundations/sql-and-data-modelling/indexes-and-query-plans",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "transactions-locking-and-isolation",
@@ -334,7 +334,19 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/04_Transactions_Locking_and_Isolation.md",
       "estMinutes": 11,
       "href": "/learn/engineering-foundations/sql-and-data-modelling/transactions-locking-and-isolation",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "modelling-the-integrations-own-state",
+      "title": "Modelling the Integration's Own State",
+      "track": "engineering-foundations",
+      "module": "sql-and-data-modelling",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/06_Modelling_the_Integrations_Own_State.md",
+      "estMinutes": 14,
+      "href": "/learn/engineering-foundations/sql-and-data-modelling/modelling-the-integrations-own-state",
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-sql-and-data-modelling",
@@ -344,9 +356,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/05_Practise_SQL_and_Data_Modelling.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/engineering-foundations/sql-and-data-modelling/practise-sql-and-data-modelling",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "python-and-data-toolkit-refresher-overview",
@@ -4691,6 +4703,18 @@
       "updated": "2026-11-12"
     },
     {
+      "slug": "connecting-a-customers-account-with-oauth",
+      "title": "Connecting a Customer's Account with OAuth",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/11_Connecting_a_Customers_Account_with_OAuth.md",
+      "estMinutes": 13,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/connecting-a-customers-account-with-oauth",
+      "updated": "2026-11-18"
+    },
+    {
       "slug": "practise-security-and-tenancy",
       "title": "Practise Security and Tenancy Interview Questions",
       "track": "production-ai",
@@ -4700,7 +4724,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/06_Practise_Security_and_Tenancy_Interview_Questions.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/practise-security-and-tenancy",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "logs-metrics-and-traces",
@@ -4736,9 +4760,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/03_Standard_Tracing_and_Customer_Facing_Dashboards.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/production-ai/observability-and-diagnosis/standard-tracing-and-customer-facing-dashboards",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "production-monitoring-metrics-drift-and-slos",
@@ -4750,9 +4774,9 @@
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/04_Production_Monitoring_Metrics_Drift_and_SLOs.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "diagnosing-production-incidents",
@@ -4766,7 +4790,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/05_Diagnosing_Production_Incidents.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/observability-and-diagnosis/diagnosing-production-incidents",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "define-working-with-slis-and-slos",
@@ -4790,9 +4814,9 @@
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/06_Practise_Observability_and_Diagnosis_Interview_Questions.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/production-ai/observability-and-diagnosis/practise-observability-and-diagnosis",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "why-cost-and-latency-decide-production",
@@ -4940,9 +4964,9 @@
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/03_Capacity_Latency_and_Cost_at_Scale.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/production-ai/scaling-and-reliability/capacity-latency-and-cost-at-scale",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "retries-circuit-breakers-and-bulkheads",
@@ -5026,7 +5050,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/06_Practise_Scaling_and_Reliability_Interview_Questions.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/scaling-and-reliability/practise-scaling-and-reliability",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "prompt-versioning-rollout-and-rollback",
@@ -7351,7 +7375,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/01_Stabilise_the_Customer_First.md",
-      "estMinutes": 11,
+      "estMinutes": 14,
       "href": "/learn/forward-deployed/debugging-customer-environment/stabilise-the-customer-first",
       "updated": "2026-11-18"
     },
@@ -7387,7 +7411,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/04_Collect_Evidence_and_Escalate.md",
-      "estMinutes": 11,
+      "estMinutes": 14,
       "href": "/learn/forward-deployed/debugging-customer-environment/collect-evidence-and-escalate",
       "updated": "2026-11-18"
     },
@@ -7413,7 +7437,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/08_Pilots_That_Predict_Production.md",
       "estMinutes": 14,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/pilots-that-predict-production",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "handover-and-ownership",
@@ -7425,7 +7449,19 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/09_Handover_and_Ownership.md",
       "estMinutes": 12,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/handover-and-ownership",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "onboarding-a-new-customer-integration",
+      "title": "Onboarding a New Customer Integration",
+      "track": "forward-deployed",
+      "module": "delivery-stages-and-gates",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/11_Onboarding_a_New_Customer_Integration.md",
+      "estMinutes": 11,
+      "href": "/learn/forward-deployed/delivery-stages-and-gates/onboarding-a-new-customer-integration",
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-pilots-and-handover",
@@ -7435,9 +7471,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/10_Practise_Pilots_and_Handover.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/practise-pilots-and-handover",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "training-and-champions",
@@ -7589,9 +7625,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.5_Adoption_and_Business_Impact/01_Rolling_Out_With_a_Way_Back.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/forward-deployed/adoption-and-impact/rolling-out-with-a-way-back",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "proving-business-impact",

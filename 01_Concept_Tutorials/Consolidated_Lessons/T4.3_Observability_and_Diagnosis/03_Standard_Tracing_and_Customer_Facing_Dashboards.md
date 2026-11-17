@@ -22,15 +22,15 @@ The problem appears when a customer wants their own monitoring tool to show the 
 
 The fix is OpenTelemetry-style spans. Every unit of work is a span with an ID, a parent ID and a start and end time. Parent IDs make the spans form a tree. Domain fields such as prompt version, retrieved document IDs and tokens ride along as attributes on the span. The captured data does not change; only the wire format does.
 
-```
- trace: one request (run_id, tenant, principal, prompt_version)
-   └─ span: authorise      attrs: filter_explanation
-   └─ span: retrieve       attrs: strategy, candidate_ids, retrieved_by
-   └─ span: enforce        attrs: allowed, denied, filter_disagreements
-   └─ span: rerank         attrs: model, tokens, cost_usd
-   └─ span: generate       attrs: cached, tokens, cost_usd
-        └─ span: tool_call attrs: tool, status, ms
-```
+| Span | Parent | Attributes |
+|---|---|---|
+| One request | None (root) | `run_id`, `tenant`, `principal`, `prompt_version` |
+| Authorise | Request | `filter_explanation` |
+| Retrieve | Request | `strategy`, `candidate_ids`, `retrieved_by` |
+| Enforce | Request | `allowed`, `denied`, `filter_disagreements` |
+| Rerank | Request | `model`, `tokens`, `cost_usd` |
+| Generate | Request | `cached`, `tokens`, `cost_usd` |
+| Tool call | Generate | `tool`, `status`, `ms` |
 
 ## Nest Requests Under Conversations
 
@@ -48,6 +48,26 @@ Be honest about the size of it. A per-tenant dashboard is a real frontend and BI
 
 > **Warning: a dashboard is a data path.** A tenant-scoped dashboard must apply the same tenant scoping as retrieval. An aggregation that forgets the tenant filter leaks one customer's cost or questions to another.
 
+## Return Errors a Partner Can Act On
+
+A dashboard shows a customer what happened. An error response tells a partner's developer what to do next, at the moment it happens. When the error says only "500 Internal Server Error" or "invalid request", the developer opens a ticket, and an engineer on your side reads traces to answer a question the response could have answered.
+
+An **actionable error** carries five things:
+
+| Field | Example | What it saves |
+|---|---|---|
+| A stable, machine-readable code | `employee_not_found` | The partner's code can branch on it without parsing text |
+| A message naming the fix | "Employee 4471 does not exist in this company. Create the employee first." | The developer fixes the call without asking |
+| The field at fault | `lines[3].employee_id` | No guessing which of 200 lines failed |
+| Whether to retry, and when | Do not retry, or retry after 30 seconds | Stops retry storms on errors that will never succeed |
+| The request ID | `req_7f3a…` | When a ticket is needed, it starts from one trace |
+
+The Internet Engineering Task Force's problem-details format, RFC 9457, gives a standard shape for these fields in an HTTP API, so a partner's tooling can read them without custom parsing.
+
+Coldharbour Payroll, a fictional payroll provider, took timesheet uploads from partners' HR systems. Its upload API returned "400 Bad Request" for any validation failure. Partner tickets about rejected uploads took about two hours of engineer time each, mostly finding which line failed and why. After the API returned the code, field and fix for each rejected line, most of those tickets stopped, and the per-tenant dashboard grouped rejections by code so a partner could see "38 lines rejected for unknown employee" without asking.
+
+The trade-off is disclosure. Detail that helps a trusted partner can help an attacker. Never put stack traces, internal host names or query text in an error. To a caller who is not yet authenticated, do not reveal whether an account exists. Give the detail after authentication, scoped to the caller's own data, and keep the internals in the trace behind the request ID.
+
 ## Worked Example: The Customer Who Runs Datadog
 
 A customer's platform team asks to see the assistant's activity in Datadog, next to their own services. With the bespoke JSON trace, that is a custom exporter and a mapping project.
@@ -63,6 +83,7 @@ Nothing about what was captured changed. Choosing the standard format turned an 
 - Emit traces as standard spans with IDs, parent IDs and timings, carrying domain fields as attributes rather than a new schema.
 - Nest request traces under a conversation trace and put tenant, principal, prompt version and run ID on every span.
 - Per-tenant dashboards are read-only, tenant-scoped aggregations over the trace store; name them as a requirement even when deferred.
+- Return errors a partner can act on: a stable code, a message naming the fix, the field at fault, retry guidance and the request ID.
 
 ## Check Yourself
 
@@ -77,4 +98,4 @@ Nothing about what was captured changed. Choosing the standard format turned an 
 
 ## References
 
-**Sources:** `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §1 standard tracing, §2 per-tenant dashboards. `02-observability-standards-and-failure-patterns.md` (Production and Platform Judgement): §1 and §2. `08_Observability.md` (FDE Handbook, enterprise RAG): "From here to production". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): §7 build versus buy, monitoring row.
+**Sources:** `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §1 standard tracing, §2 per-tenant dashboards. `02-observability-standards-and-failure-patterns.md` (Production and Platform Judgement): §1 and §2. `08_Observability.md` (FDE Handbook, enterprise RAG): "From here to production". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): §7 build versus buy, monitoring row. The partner-error section (added 18 November 2026) is the author's own field experience, with a fictional customer, and follows the Internet Engineering Task Force's [RFC 9457: Problem Details for HTTP APIs](https://datatracker.ietf.org/doc/html/rfc9457), accessed 18 November 2026.

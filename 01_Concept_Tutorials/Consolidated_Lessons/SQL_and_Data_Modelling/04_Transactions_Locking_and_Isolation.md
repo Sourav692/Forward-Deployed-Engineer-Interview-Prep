@@ -6,7 +6,7 @@ module_group: Data and systems
 module_code: T1.4
 module_name: SQL and data modelling for AI apps
 lesson: 4
-lessons: ["SQL for business questions", "Modelling entities, keys and constraints", "Indexes and query plans", "Transactions, locking and isolation", "Practise SQL and data modelling"]
+lessons: ["SQL for business questions", "Modelling entities, keys and constraints", "Indexes and query plans", "Transactions, locking and isolation", "Modelling the integration's own state", "Practise SQL and data modelling"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
