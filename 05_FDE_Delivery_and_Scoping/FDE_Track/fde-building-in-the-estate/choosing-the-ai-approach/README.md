@@ -2,15 +2,15 @@
 
 These files are the source of the module `choosing-the-ai-approach` in the `fde-building-in-the-estate` track (Building inside the customer's estate). The site publishes them at `/learn/fde-building-in-the-estate/choosing-the-ai-approach` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `rules-ml-or-an-llm` | Planned |
-| 2 | `picking-a-model-for-a-customer` | Planned |
-| 3 | `hosted-or-open-weight` | Planned |
-| 4 | `self-hosted-inference-capacity` | Planned |
-| 5 | `prompting-rag-or-fine-tuning` | Planned |
-| 6 | `workflow-or-agent` | Planned |
-| 7 | `practise-choosing-the-approach` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [01_Rules_ML_or_an_LLM.md](01_Rules_ML_or_an_LLM.md) | `rules-ml-or-an-llm` | Drafted |
+| 2 | [02_Picking_a_Model_for_a_Customer.md](02_Picking_a_Model_for_a_Customer.md) | `picking-a-model-for-a-customer` | Drafted |
+| 3 | [03_Hosted_or_Open_Weight.md](03_Hosted_or_Open_Weight.md) | `hosted-or-open-weight` | Drafted |
+| 4 | [04_Self_Hosted_Inference_Capacity.md](04_Self_Hosted_Inference_Capacity.md) | `self-hosted-inference-capacity` | Drafted |
+| 5 | [05_Prompting_RAG_or_Fine_Tuning.md](05_Prompting_RAG_or_Fine_Tuning.md) | `prompting-rag-or-fine-tuning` | Drafted |
+| 6 | [06_Workflow_or_Agent.md](06_Workflow_or_Agent.md) | `workflow-or-agent` | Drafted |
+| 7 | [07_Practise_Choosing_the_Approach.md](07_Practise_Choosing_the_Approach.md) | `practise-choosing-the-approach` | Drafted |
 
 ## Sources
 

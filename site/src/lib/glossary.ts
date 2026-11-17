@@ -72,6 +72,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'Models that learn patterns from data instead of following hand-written rules.' },
   { term: 'LLM', expansion: 'large language model', group: 'Models and AI',
     plain: 'The model that reads text and writes text — GPT, Claude, Llama. Powerful, but it will confidently make things up if you let it.' },
+  { term: 'NLP', expansion: 'natural language processing', group: 'Models and AI',
+    plain: 'The older field of teaching software to work with human language: classifiers, entity extraction, search. LLMs are its newest tool, not its only one.' },
   { term: 'GPT', group: 'Models and AI', expand: false,
     plain: "OpenAI's family of large language models. Often used loosely to mean any chat model." },
   { term: 'NL', expansion: 'natural language', group: 'Models and AI',

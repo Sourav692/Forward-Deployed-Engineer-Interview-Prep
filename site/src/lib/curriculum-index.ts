@@ -1631,8 +1631,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T21.4",
     "title": "Choosing the AI approach",
     "track": "fde-building-in-the-estate",
-    "lessons": [],
-    "estMinutes": 315
+    "lessons": [
+      "rules-ml-or-an-llm",
+      "picking-a-model-for-a-customer",
+      "hosted-or-open-weight",
+      "self-hosted-inference-capacity",
+      "prompting-rag-or-fine-tuning",
+      "workflow-or-agent",
+      "practise-choosing-the-approach"
+    ],
+    "practiceMinutes": 300
   },
   {
     "slug": "ai-delivery-in-customer-estates",
