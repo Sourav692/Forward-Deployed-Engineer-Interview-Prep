@@ -1772,8 +1772,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.6",
     "title": "Reliability, performance and cost in their estate",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 225
+    "lessons": [
+      "recovering-half-finished-work",
+      "latency-queues-and-load-tests",
+      "finding-the-real-bottleneck",
+      "ai-cost-per-successful-task",
+      "practise-reliability-performance-and-cost-1",
+      "practise-reliability-performance-and-cost-2"
+    ],
+    "practiceMinutes": 270
   },
   {
     "slug": "end-to-end-engagements",
