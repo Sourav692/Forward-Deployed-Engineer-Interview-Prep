@@ -8424,6 +8424,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "shipping-into-a-locked-down-network",
+      "title": "Shipping Into a Locked-down Network",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/06_Shipping_Into_a_Locked_Down_Network.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/shipping-into-a-locked-down-network",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "the-incident-with-two-suspects",
+      "title": "The Incident with Two Suspects",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/07_The_Incident_With_Two_Suspects.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/the-incident-with-two-suspects",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "prototype-to-production",
+      "title": "Prototype to Production",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/08_Prototype_to_Production.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/prototype-to-production",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "the-live-migration-cutover",
+      "title": "The Live Migration Cutover",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/09_The_Live_Migration_Cutover.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/the-live-migration-cutover",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "the-deployment-users-avoid",
+      "title": "The Deployment Users Avoid",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/10_The_Deployment_Users_Avoid.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/the-deployment-users-avoid",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
