@@ -1585,6 +1585,30 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 180
   },
   {
+    "slug": "framing-an-integration",
+    "code": "T22.2",
+    "title": "Framing an integration",
+    "track": "enterprise-integration",
+    "lessons": [
+      "owners-before-boxes",
+      "choosing-the-transport",
+      "practise-framing-an-integration"
+    ],
+    "practiceMinutes": 120
+  },
+  {
+    "slug": "partner-apis-and-bulk-transfer",
+    "code": "T22.3",
+    "title": "Partner APIs and bulk transfer",
+    "track": "enterprise-integration",
+    "lessons": [
+      "an-api-partners-build-against",
+      "moving-large-datasets",
+      "practise-partner-apis-and-bulk-transfer"
+    ],
+    "practiceMinutes": 120
+  },
+  {
     "slug": "fde-role-and-boundaries",
     "code": "T19.1",
     "title": "The FDE role and its boundaries",
@@ -2475,7 +2499,9 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     "code": "T22",
     "title": "Enterprise Integration",
     "modules": [
-      "connecting-enterprise-systems"
+      "connecting-enterprise-systems",
+      "framing-an-integration",
+      "partner-apis-and-bulk-transfer"
     ]
   },
   {

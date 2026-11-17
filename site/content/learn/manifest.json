@@ -8208,6 +8208,78 @@
       "updated": "2026-11-18"
     },
     {
+      "slug": "an-api-partners-build-against",
+      "title": "An API Partners Build Against",
+      "track": "enterprise-integration",
+      "module": "partner-apis-and-bulk-transfer",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/01_An_API_Partners_Build_Against.md",
+      "estMinutes": 13,
+      "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/an-api-partners-build-against",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "moving-large-datasets",
+      "title": "Moving Large Datasets",
+      "track": "enterprise-integration",
+      "module": "partner-apis-and-bulk-transfer",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/02_Moving_Large_Datasets.md",
+      "estMinutes": 14,
+      "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/moving-large-datasets",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "practise-partner-apis-and-bulk-transfer",
+      "title": "Practise Partner APIs and Bulk Transfer",
+      "track": "enterprise-integration",
+      "module": "partner-apis-and-bulk-transfer",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/03_Practise_Partner_APIs_and_Bulk_Transfer.md",
+      "estMinutes": 7,
+      "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/practise-partner-apis-and-bulk-transfer",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "owners-before-boxes",
+      "title": "Owners Before Boxes",
+      "track": "enterprise-integration",
+      "module": "framing-an-integration",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/framing-an-integration/01_Owners_Before_Boxes.md",
+      "estMinutes": 14,
+      "href": "/learn/enterprise-integration/framing-an-integration/owners-before-boxes",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "choosing-the-transport",
+      "title": "Choosing the Transport",
+      "track": "enterprise-integration",
+      "module": "framing-an-integration",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/framing-an-integration/02_Choosing_the_Transport.md",
+      "estMinutes": 13,
+      "href": "/learn/enterprise-integration/framing-an-integration/choosing-the-transport",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "practise-framing-an-integration",
+      "title": "Practise Framing an Integration",
+      "track": "enterprise-integration",
+      "module": "framing-an-integration",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/framing-an-integration/03_Practise_Framing_an_Integration.md",
+      "estMinutes": 8,
+      "href": "/learn/enterprise-integration/framing-an-integration/practise-framing-an-integration",
+      "updated": "2026-11-18"
+    },
+    {
       "slug": "saas-customer-cloud-or-on-prem",
       "title": "SaaS, Customer Cloud or On-premises",
       "track": "fde-deploying-in-the-estate",
