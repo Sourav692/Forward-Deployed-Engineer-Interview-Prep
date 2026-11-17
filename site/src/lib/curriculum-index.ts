@@ -1743,8 +1743,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.4",
     "title": "Releases, cutover and recovery",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "builds-you-can-reproduce-and-promote",
+      "safe-rollouts",
+      "migrating-live-data",
+      "cutover-and-rollback-decisions",
+      "backups-rto-rpo-and-restore-drills",
+      "practise-releases-and-cutover"
+    ],
+    "practiceMinutes": 270
   },
   {
     "slug": "operating-after-go-live",
