@@ -60,7 +60,7 @@ The cheaper build was the more expensive system. The running effort also lands o
 
 Ask three questions about running effort: who will patch and monitor it, who is woken when it fails, and what skills does that need? If the answers are "nobody yet", the option is not finished.
 
-## One design, three audiences
+## One decision, three audiences
 
 The same decision means different things to different readers. Explaining it the same way to everyone loses most of them. The switcher shows the Merrow decision explained three ways.
 

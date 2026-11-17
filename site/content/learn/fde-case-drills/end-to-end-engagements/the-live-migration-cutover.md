@@ -156,7 +156,8 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 1. Debezium, [Features](https://debezium.io/documentation/reference/stable/features.html), accessed 17 November 2026. Change data capture from database logs, used to keep a target in sync before cutover.
 2. Martin Fowler, [Blue Green Deployment](https://martinfowler.com/bliki/BlueGreenDeployment.html), accessed 17 November 2026. Switching between two environments and why the database makes the way back harder.
 3. The site's [backfills while live](/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live) lesson, for loading history while a system runs.
-4. The author's own field experience, the basis for the acceptance levels and the rollback triggers.
+4. The site's [migrating live data](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data) and [cutover and rollback decisions](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/cutover-and-rollback-decisions) lessons, for the sync and the go or no-go call.
+5. The author's own field experience, the basis for the acceptance levels and the rollback triggers.
 
 ## Key takeaways
 

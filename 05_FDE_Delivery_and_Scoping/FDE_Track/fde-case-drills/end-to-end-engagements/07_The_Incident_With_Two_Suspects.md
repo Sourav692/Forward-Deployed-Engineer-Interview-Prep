@@ -168,6 +168,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 2. Amazon Web Services, [Timeouts, retries and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/), accessed 17 November 2026. How retries amplify load on a struggling dependency.
 3. Google, [Site Reliability Engineering Workbook: Postmortem Culture](https://sre.google/workbook/postmortem-culture/), accessed 17 November 2026. Blameless postmortems with owned actions.
 4. The site's [observability and production diagnosis](../../../../02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/casebook.md) case and [retries, circuit breakers and bulkheads](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md) lesson.
+5. The site's [incidents with a customer watching](../../fde-deploying-in-the-estate/operating-after-go-live/03_Incidents_With_a_Customer_Watching.md) and [isolate the failing boundary](../../forward-deployed/debugging-customer-environment/03_Isolate_the_Failing_Boundary.md) lessons, for running the incident and separating the suspects.
 
 ## Key takeaways
 
