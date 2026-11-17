@@ -2,14 +2,14 @@
 
 These files are the source of the module `stakeholder-communication` in the `fde-in-the-field` track (The FDE role and leading in the field). The site publishes them at `/learn/fde-in-the-field/stakeholder-communication` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `one-design-three-audiences` | Planned |
-| 2 | `workshops-and-reviews-that-decide` | Planned |
-| 3 | `demos-that-tell-the-truth` | Planned |
-| 4 | `updates-decision-notes-and-bad-news` | Planned |
-| 5 | `negotiating-scope-and-deadlines` | Planned |
-| 6 | `practise-stakeholder-communication` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [One design, three audiences](01_One_Design_Three_Audiences.md) | `one-design-three-audiences` | Drafted |
+| 2 | [Workshops and reviews that decide](02_Workshops_and_Reviews_That_Decide.md) | `workshops-and-reviews-that-decide` | Drafted |
+| 3 | [Demos that tell the truth](03_Demos_That_Tell_the_Truth.md) | `demos-that-tell-the-truth` | Drafted |
+| 4 | [Updates, decision notes and bad news](04_Updates_Decision_Notes_and_Bad_News.md) | `updates-decision-notes-and-bad-news` | Drafted |
+| 5 | [Negotiating scope and deadlines](05_Negotiating_Scope_and_Deadlines.md) | `negotiating-scope-and-deadlines` | Drafted |
+| 6 | [Practise stakeholder communication](06_Practise_Stakeholder_Communication.md) | `practise-stakeholder-communication` | Drafted |
 
 ## Sources
 

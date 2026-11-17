@@ -1576,8 +1576,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T19.2",
     "title": "Stakeholder communication",
     "track": "fde-in-the-field",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "one-design-three-audiences",
+      "workshops-and-reviews-that-decide",
+      "demos-that-tell-the-truth",
+      "updates-decision-notes-and-bad-news",
+      "negotiating-scope-and-deadlines",
+      "practise-stakeholder-communication"
+    ],
+    "practiceMinutes": 270
   },
   {
     "slug": "field-to-product",
