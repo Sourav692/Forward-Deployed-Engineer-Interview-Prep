@@ -1607,8 +1607,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T21.1",
     "title": "Working in a customer's code",
     "track": "fde-building-in-the-estate",
-    "lessons": [],
-    "estMinutes": 315
+    "lessons": [
+      "reading-an-unfamiliar-codebase",
+      "choosing-the-language-and-keeping-code-maintainable",
+      "reproduce-isolate-fix",
+      "data-handling-for-real-exports",
+      "concurrency-without-surprises",
+      "reviewing-ai-generated-changes",
+      "practise-customer-code"
+    ],
+    "practiceMinutes": 300
   },
   {
     "slug": "customer-data-pipelines",
