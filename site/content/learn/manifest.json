@@ -7109,9 +7109,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/01_The_Discovery_Conversation.md",
-      "estMinutes": 7,
+      "estMinutes": 11,
       "href": "/learn/forward-deployed/customer-discovery/the-discovery-conversation",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "decomposing-a-solution-into-workstreams",
@@ -7121,9 +7121,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/02_Decomposing_a_Solution_Into_Workstreams.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/customer-discovery/decomposing-a-solution-into-workstreams",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "success-metrics-and-evaluation-data",
@@ -7133,9 +7133,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/03_Success_Metrics_and_Evaluation_Data.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "choosing-the-first-use-case",
@@ -7145,9 +7145,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/04_Choosing_the_First_Use_Case.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/customer-discovery/choosing-the-first-use-case",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-decomposition-interview-cases",
@@ -7157,9 +7157,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/05_Practise_Decomposition_Interview_Cases.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/forward-deployed/customer-discovery/practise-decomposition-interview-cases",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "observing-the-work",
@@ -7219,9 +7219,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/01_Problem_Goal_and_Definition_of_Done.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-system-behind-the-screens",
@@ -7233,9 +7233,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/02_The_System_Behind_the_Screens.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "estimating-ai-work-as-a-product",
@@ -7247,9 +7247,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/03_Estimating_AI_Work_as_a_Product.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/estimating-ai-work-as-a-product",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "shrinking-to-a-first-release",
@@ -7261,9 +7261,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/04_Shrinking_to_a_First_Release.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/forward-deployed/scoping-an-fde-project/shrinking-to-a-first-release",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "estimates-people-can-trust",
@@ -7275,9 +7275,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/05_Estimates_People_Can_Trust.md",
-      "estMinutes": 6,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/estimates-people-can-trust",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "from-estimate-to-build-plan",
@@ -7289,9 +7289,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/06_From_Estimate_to_Build_Plan.md",
-      "estMinutes": 6,
+      "estMinutes": 11,
       "href": "/learn/forward-deployed/scoping-an-fde-project/from-estimate-to-build-plan",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "scoping-in-practice",
@@ -7303,9 +7303,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/07_Scoping_in_Practice.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/forward-deployed/scoping-an-fde-project/scoping-in-practice",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "baselines-value-and-roi",
@@ -7591,9 +7591,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/01_Telling_a_Delivery_Story_in_Six_Stages.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/telling-a-delivery-story-in-six-stages",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "delivery-as-a-repeatable-process",
@@ -7605,9 +7605,9 @@
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/02_Delivery_as_a_Repeatable_Process.md",
-      "estMinutes": 8,
+      "estMinutes": 12,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/delivery-as-a-repeatable-process",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "role-gated-stage-gates",
@@ -7619,7 +7619,7 @@
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/03_Role_Gated_Stage_Gates.md",
-      "estMinutes": 9,
+      "estMinutes": 14,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/role-gated-stage-gates",
       "updated": "2026-11-18"
     },
@@ -7633,9 +7633,9 @@
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/04_Risk_Checks_and_Delivery_Metrics.md",
-      "estMinutes": 5,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/risk-checks-and-delivery-metrics",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "securing-the-delivery-process",
@@ -7645,9 +7645,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/05_Securing_the_Delivery_Process.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/securing-the-delivery-process",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "cross-team-ownership-and-cadence",
@@ -7657,9 +7657,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/06_Cross_Team_Ownership_and_Cadence.md",
-      "estMinutes": 6,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/cross-team-ownership-and-cadence",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-the-two-week-delivery-round",
@@ -7671,9 +7671,9 @@
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/07_Practise_the_Two_Week_Delivery_Round.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/practise-the-two-week-delivery-round",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "rolling-out-with-a-way-back",
@@ -7685,7 +7685,7 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.5_Adoption_and_Business_Impact/01_Rolling_Out_With_a_Way_Back.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/adoption-and-impact/rolling-out-with-a-way-back",
       "updated": "2026-11-18"
     },
@@ -7699,9 +7699,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words. Its delivery metrics build on the DevRev interview preparation guide's delivery-framework prompt.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.5_Adoption_and_Business_Impact/02_Proving_Business_Impact.md",
-      "estMinutes": 5,
+      "estMinutes": 9,
       "href": "/learn/forward-deployed/adoption-and-impact/proving-business-impact",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "diagnosing-low-adoption",
@@ -7711,9 +7711,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.5_Adoption_and_Business_Impact/03_Diagnosing_Low_Adoption.md",
-      "estMinutes": 4,
+      "estMinutes": 8,
       "href": "/learn/forward-deployed/adoption-and-impact/diagnosing-low-adoption",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "etl-elt-batch-or-stream",

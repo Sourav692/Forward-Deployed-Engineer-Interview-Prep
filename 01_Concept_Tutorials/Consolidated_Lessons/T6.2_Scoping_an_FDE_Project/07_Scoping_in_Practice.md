@@ -1,20 +1,35 @@
-# Scoping in Practice
-
-*Each new request feels unique, but the same scoping steps repeat every time, and judgement grows from running them on many requests rather than memorising one design.*
-
-◷ 9 min
-
-Two worked cases and one timed exercise show the whole method from [Problem, Goal, and Definition of Done](01_Problem_Goal_and_Definition_of_Done.md) onwards in one pass. A checklist closes the module: run it before giving anyone a date.
-
-**Objectives:**
-
-- scope a consumer product request from business question to staged estimate;
-- scope an AI support request by narrowing risk, separating data sources and earning autonomy;
-- run the 30-minute practice exercise and the pre-estimate checklist.
-
+---
+title: "Scoping in Practice"
+subtitle: "Each new request feels unique, but the same scoping steps repeat every time, and judgement grows from running them on many requests rather than memorising one design."
+track: Discovery, Scoping and Delivery
+module_group: Discovery and scoping
+module_code: T20.2
+module_name: Scoping an FDE project
+lesson: 9
+lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "The system behind the screens", "Estimating AI work as a product", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
+level: intermediate
+reading_time: "16 min"
+source: "Forward Deployed Engineering track"
+author: Sourav Banerjee
+last_updated: "17 November 2026"
+tags: [scoping, worked case, support copilot, estimation, autonomy, checklist]
 ---
 
-## Scope a Product Request: Class Booking
+## Start with the request that was three projects
+
+Rowan Home, a fictional homeware retailer, asked for an agent that "answers customers and completes common tasks". The team scoped it as one project with one estimate. Drafting replies went well. Then the agent was allowed to issue refunds, and a run of wrong refunds reached customers before anyone reviewed them.
+
+Drafting for an employee, sending to a customer and moving a customer's money carry three different risks. Call this **the one-project illusion**: scoping several risk levels under one request as if they were one.
+
+> **What you'll learn**
+>
+> - Scope a consumer product request from business question to staged estimate.
+> - Scope an AI support request by narrowing risk, separating data sources and earning autonomy.
+> - Run the 30-minute practice exercise and the pre-estimate checklist.
+
+Two worked cases and one timed exercise run the whole method from [Problem, Goal, and Definition of Done](01_Problem_Goal_and_Definition_of_Done.md) onwards in one pass. A checklist closes the module: run it before giving anyone a date.
+
+## Scope a product request: class booking
 
 The request: a class-booking product with web and mobile apps, payments, memberships, community features, movement feedback and automatic physical access. It sounds like a few screens and becomes scheduling, payments, operations and physical-world limits.
 
@@ -35,13 +50,15 @@ The request: a class-booking product with web and mobile apps, payments, members
 | Production pilot | 3 to 6 months | Admin, support, monitoring, refunds, mobile, reliability |
 | Full vision | 6 to 12+ months, with a team | Movement feedback, community, hardware, many locations |
 
-Say it so the team can act: the website is not the main effort; booking, payment, membership, operations, mobile and physical access are. Aim for six to ten weeks for a single-location web MVP, then re-estimate mobile, coaching and access after short spikes. The lesson: estimate the system behind the product, and keep the MVP apart from the long-term vision.
+*Table 1: The class-booking product estimated by stage.*
 
-## Scope an AI Request: A Support Copilot
+Say it so the team can act: the website is not the main effort. Booking, payment, membership, operations, mobile and physical access are. Aim for six to ten weeks for a single-location web MVP, then re-estimate mobile, coaching and access after short spikes. Estimate the system behind the product, and keep the MVP apart from the long-term vision.
 
-The request: too many tickets, so build an agent that answers customers and completes common tasks. Several projects hide here, each with a different risk. Drafting a reply for an employee is lowest. Sending straight to a customer is higher. Changing an order or refunding money is higher still. Treat each as a separate scope decision.
+## Scope an AI request: a support copilot
 
-**Sit with the current workflow.** Watch agents resolve real tickets; build against the real clicks, hand-offs, workarounds and exceptions, not the official diagram. Ask where tickets arrive, how they are sorted, which systems agents open, which steps need judgement, which are policy-driven, which categories are high-volume and low-risk, and which mistakes cause financial, legal or customer harm. Expect copy-pasting, missing data, hidden spreadsheets and manual approvals.
+The request is Rowan's: too many tickets, so build an agent that answers customers and completes common tasks. Several projects hide here. Drafting a reply for an employee is lowest risk. Sending straight to a customer is higher. Changing an order or refunding money is higher still. Treat each as a separate scope decision.
+
+**Sit with the current workflow.** Watch agents resolve real tickets, and build against the real clicks, hand-offs, workarounds and exceptions, not the official diagram. Ask where tickets arrive, how they are sorted, which systems agents open, which steps need judgement, which are policy-driven, which categories are high-volume and low-risk, and which mistakes cause financial, legal or customer harm. Expect copy-pasting, missing data, hidden spreadsheets and manual approvals.
 
 **Pick one low-risk, high-volume case.** If order-status questions are about 30 percent of volume, they are repetitive, measurable and read-only: a sensible pilot. Refunds and fraud are not. A target: draft a sourced reply for order-status tickets, cut handling time by 40 percent, and hold factual accuracy above 95 percent on an approved test set.
 
@@ -56,7 +73,20 @@ The request: too many tickets, so build an agent that answers customers and comp
 | Customer message | What the customer wants | Input to the AI | Unclear wording or embedded instructions |
 | Ticket history | Earlier contacts and promises | Background context | Too much personal data exposed |
 
-**Keep the escape hatch.** The flow runs: receive the ticket, find the intent, check eligibility, fetch order and policy, draft with sources, human review, send, log. Unsupported, low-confidence or rejected drafts return to the manual queue. A safe pilot keeps people involved and the old path alive.
+*Table 2: Four sources, used four ways. Each fails differently.*
+
+**Keep the escape hatch.** Figure 1 shows the flow. A safe pilot keeps people involved and the old path alive.
+
+```mermaid
+flowchart LR
+  T["Receive ticket"] --> I["Find intent"] --> E{"Eligible?"}
+  E -- "Yes" --> F["Fetch order and policy"] --> D["Draft with sources"] --> H{"Human review"}
+  H -- "Approve" --> S["Send"] --> L["Log"]
+  E -- "No or low confidence" --> Q["Manual queue"]
+  H -- "Reject" --> Q
+```
+
+*Figure 1: The pilot flow with its escape hatch. Unsupported, low-confidence or rejected drafts return to the manual queue.*
 
 **Build the test set before connecting anything.** Gather realistic tickets: routine ones, missing data, policy exceptions, angry wording, unsafe requests and must-escalate cases, with customer data protected. Judge six things: the right policy found, a factually correct draft, the right choice to answer, ask or escalate, rules followed, clarity and usefulness, and real time saved without extra review work.
 
@@ -71,13 +101,23 @@ The request: too many tickets, so build an agent that answers customers and comp
 | Support-platform integration | 1 to 2 weeks | The platform supports draft workflows |
 | Pilot rollout and monitoring | 1 week | A small group, with human review kept |
 
+*Table 3: The support-copilot pilot by workstream.*
+
 In total, about five to eight weeks for a small team. The biggest risks are customer data access, the support-platform integration and policy quality. Fully automatic actions are excluded and would need their own safety phase.
 
-**Earn autonomy in stages:** offline on past tickets; shadow, drafting while agents work normally; assisted, with a small group reviewing drafts; expanded, as quality and operations hold; and autonomous only for narrow, reversible actions with strong controls. The lesson: make the workflow clear, measurable, narrow and safe before making the agent powerful.
+**Earn autonomy in stages:**
 
-> **Warning: "answer customers and complete tasks" is three projects with three risk levels.** Scoping it as one hides the jump from drafting for an employee to moving a customer's money.
+1. **Offline**, on past tickets.
+2. **Shadow**, drafting while agents work normally.
+3. **Assisted**, with a small group reviewing drafts.
+4. **Expanded**, as quality and operations hold.
+5. **Autonomous**, only for narrow, reversible actions with strong controls.
 
-## Practise: A Delivery Model in 30 Minutes
+Make the workflow clear, measurable, narrow and safe before making the agent powerful.
+
+> **Pitfall:** "Answer customers and complete tasks" is three projects with three risk levels. Scoping it as one hides the jump from drafting for an employee to moving a customer's money.
+
+## Practise: a delivery model in 30 minutes
 
 A property-management company wants an assistant that answers tenant questions, schedules maintenance and flags urgent requests. Work on paper in six timed parts.
 
@@ -92,7 +132,7 @@ A short model answer: a staff-assisted pilot at one property, not a fully automa
 
 Keep practising by taking apart two products a week. Save the first scope and estimate, then revisit it after learning more.
 
-## Check Before Giving Any Date
+## Check before giving any date
 
 Run this list before a date reaches a team or a customer:
 
@@ -112,26 +152,64 @@ Run this list before a date reaches a team or a customer:
 
 The customer usually knows the outcome they want. The FDE's job is to turn it into a route that can be built.
 
----
+## Limits of this lesson
 
-## Key Takeaways
+- **Two cases are a sample.** Real requests mix product and AI work. Run both sets of steps where they overlap.
+- **Fictional data.** Rowan Home, the property company and all figures are illustrative.
+
+## Interview angle
+
+Each answer is an outline to say in about two minutes. Open each question and try it aloud before reading.
+
+<details>
+<summary>Interview question 1. A retailer wants an agent that answers customers and processes refunds. Where do you start?</summary>
+
+- **Answer:** Split it by risk: drafting for an employee, sending to customers, and moving money are separate scopes. Watch agents work, then pilot one high-volume, read-only case such as order status, with human approval and a manual-queue fallback. Build the test set first, and earn autonomy in stages before refunds are considered.
+- **Trade-off:** A drafting pilot looks modest. Starting with refunds risks real money on an unproven agent.
+- **Follow-up to expect:** "When would you allow refunds?" Only for narrow, reversible cases with strong controls.
+
+</details>
+
+<details>
+<summary>Interview question 2. You have five minutes to scope a product you have never seen. What do you say?</summary>
+
+- **Answer:** Restate the outcome, ask what the business is, and map the customer, operations and platform sides. Name the assumptions that could double the work, draw a hard line around version 1, and estimate by stage with the main assumption beside each range. Close with the first spike.
+- **Trade-off:** Five minutes forces rough ranges. Stating the assumptions keeps them honest.
+- **Follow-up to expect:** "What is the main effort?" Usually not the screens.
+
+</details>
+
+## References
+
+1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 6 "See the Method in Action" (Topics 6.1 to 6.3) and Module 8 "The Pre-Estimate Checklist", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+2. The site's [practise scoping and value questions](10_Practise_Scoping_and_Value_Questions.md) lesson, for timed drills.
+
+## Key takeaways
 
 - For a product request, find the real business, map the system, flag doubling assumptions, fence version 1, and estimate by stage.
 - For an AI request, split it by risk level, pick a read-only high-volume pilot, separate live data from reference knowledge, test first and earn autonomy.
 - Practise on a clock with six fixed parts, and revisit old estimates to build judgement.
 - Run the pre-estimate checklist before any date leaves the team.
 
-## Check Yourself
+## Check yourself
 
-1. **Why are order-status questions a good first pilot for a support copilot?**
-   They are high-volume, repetitive, measurable and read-only. Refunds and fraud carry far more risk.
+<details>
+<summary>1. Why are order-status questions a good first pilot for a support copilot?</summary>
 
-2. **Why keep the order system and the support policy as separate sources?**
-   One is live state needing exact lookup, the other is reference text needing search. They fail differently: a wrong or stale order versus an outdated passage.
+They are high-volume, repetitive, measurable and read-only. Refunds and fraud carry far more risk.
 
-3. **In the class-booking case, what should be re-estimated after short spikes?**
-   Mobile apps, AI coaching and automatic door access, once a single-location web MVP is scoped at six to ten weeks.
+</details>
 
-## References
+<details>
+<summary>2. Why keep the order system and the support policy as separate sources?</summary>
 
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 6 "See the Method in Action" (Topics 6.1 to 6.3) and Module 8 "The Pre-Estimate Checklist", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+One is live state needing exact lookup, the other is reference text needing search. They fail differently: a wrong or stale order against an outdated passage.
+
+</details>
+
+<details>
+<summary>3. In the class-booking case, what should be re-estimated after short spikes?</summary>
+
+Mobile apps, AI coaching and automatic door access, once a single-location web MVP is scoped at six to ten weeks.
+
+</details>

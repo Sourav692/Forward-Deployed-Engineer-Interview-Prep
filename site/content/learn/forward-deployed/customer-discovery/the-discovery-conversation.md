@@ -1,42 +1,56 @@
 # The Discovery Conversation
 
-*Asking questions first feels slow in a 45-minute round, but an architecture drawn before the user and outcome are known solves a problem nobody confirmed.*
 
-A vague prompt is not an invitation to draw a RAG diagram. It is a test of whether the candidate can turn an ambiguous ask into a user, an outcome and a set of constraints before proposing anything.
+## Start with the diagram drawn in minute two
 
-**Objectives:**
+A candidate in a mock decomposition round hears the prompt: "A large enterprise wants to use AI to improve customer support. How would you approach it?" Within two minutes they are drawing a vector store, an agent and three tools. The diagram is tidy and the components are reasonable.
 
-- open any decomposition case with a short, reusable framing statement;
-- ask the five families of questions that change the design: business, constraint, evaluation, architecture and rollout;
-- name the signals an interviewer listens for and the mistakes that lose the round.
+At minute thirty the interviewer asks one question: "How would the customer know in three months that this worked?" The candidate has no answer. They never asked who handles the tickets, which tickets take the most time, or whether the goal was deflection, speed or quality. Every box on the board was a guess, and nothing on it could be checked. Call this **the premature diagram**: a design drawn before anyone agreed what it was for.
 
----
+> **What you'll learn**
+>
+> - Open any decomposition case with a short, reusable framing statement.
+> - Ask the five families of questions that change the design: business, constraint, evaluation, architecture and rollout.
+> - Name the signals an interviewer listens for.
+> - Recognise the common mistakes that lose the round.
 
-## Start From the Prompt as Given
+## Start from the prompt as given
 
-A typical decomposition prompt is deliberately thin: "A large enterprise wants to use AI to improve customer support. How would you approach it?" Nothing in that sentence says who the user is, what is slow today, or how anyone would know the project worked.
+A vague prompt is not an invitation to draw a retrieval-augmented generation (RAG) diagram. It tests whether you can turn an ambiguous ask into a user, an outcome and a set of constraints before proposing anything. The customer-support prompt above is deliberately thin. Nothing in it says who the user is, what is slow today, or how anyone would know the project worked.
 
-A design cannot be judged against an outcome nobody stated. So the round is scored on the order of work as much as the answer. The question bank recommends seven steps:
+A design cannot be judged against an outcome nobody stated. So the round is scored on the order of work as much as on the answer. The question bank this module draws on recommends seven steps, shown in Figure 1.
 
-1. Clarify the business objective and the user.
-2. Define the current workflow and its pain points.
-3. Choose and prioritise the use case.
-4. Define success metrics and evaluation data.
-5. Decompose the solution into components.
-6. Discuss risks, trade-offs and failure modes.
-7. Explain the MVP and the production rollout plan.
+```mermaid
+flowchart TD
+  subgraph Framing["Framing: before any component"]
+    S1["1. Clarify the business objective and the user"] --> S2["2. Define the current workflow and its pain points"]
+    S2 --> S3["3. Choose and prioritise the use case"]
+    S3 --> S4["4. Define success metrics and evaluation data"]
+  end
+  subgraph Solution["Solution: checked against the framing"]
+    S5["5. Decompose the solution into components"] --> S6["6. Discuss risks, trade-offs and failure modes"]
+    S6 --> S7["7. Explain the MVP and the production rollout plan"]
+  end
+  S4 --> S5
+```
 
-The solution does not appear until step five. Four steps of framing come first, and they are what make the later steps checkable.
+*Figure 1: The seven steps of a decomposition round. The solution first appears at step five, after four framing steps that make it checkable.*
 
-## Open With One Framing Sentence
+The solution does not appear until step five. The four framing steps come first, and they are what make the later steps checkable.
 
-Say what will happen before doing it. The bank's reusable opening fits almost every case: clarify the business outcome, the primary user, the current workflow, the constraints and how success will be measured; make assumptions explicit where information is missing; then decompose into use-case selection, data and integrations, the AI workflow, evaluation, production architecture and rollout.
+## Open with one framing sentence
+
+Say what will happen before doing it. One reusable opening fits almost every case:
+
+- Clarify the business outcome, the primary user, the current workflow, the constraints and how success will be measured.
+- Make assumptions explicit where information is missing.
+- Then decompose into use-case selection, data and integrations, the AI workflow, evaluation, production architecture and rollout.
 
 That sentence buys time without looking evasive. It also tells the interviewer the shape of the next 40 minutes, so they can steer early instead of interrupting late.
 
-## Ask the Questions That Change the Design
+## Ask the questions that change the design
 
-A clarifying question is only worth asking if its answer changes something. The bank groups them into five families, and each family settles a different part of the design.
+A clarifying question is only worth asking if its answer changes something. The questions fall into five families, and each family settles a different part of the design.
 
 | What is still unknown | Questions to ask |
 |---|---|
@@ -46,41 +60,108 @@ A clarifying question is only worth asking if its answer changes something. The 
 | What has to be built? (architecture) | What are the inputs? What processing is needed? Where do retrieval, models, tools and business rules fit? What state must persist? How is the system monitored and rolled back? |
 | How does it reach users safely? (rollout) | What is the lowest-risk MVP? Which users or workflows get the pilot? What gates must pass before expansion? How will adoption and business impact be measured? |
 
+*Table 1: The five families of clarifying questions and the part of the design each one settles.*
+
 Five questions are usually enough to start. Pick the ones whose answers would move the design most, and state an assumption for the rest.
 
-> **Warning: "I would use RAG and agents" is the most common losing opening.** It names a technology before naming a user or an outcome. Every later choice then has nothing to be measured against, and the interviewer marks the answer as solution-first.
+> **Warning:** "I would use RAG and agents" is the most common losing opening. It names a technology before naming a user or an outcome. Every later choice then has nothing to be measured against, and the interviewer marks the answer as solution-first.
 
-## Listen for What the Interviewer Is Scoring
+## Listen for what the interviewer is scoring
 
-The bank lists the signals that public decomposition-interview guidance emphasises. They are worth reading as a checklist of behaviours, not topics:
+Public guidance on decomposition interviews emphasises a set of signals. Read them as a checklist of behaviours, not topics:
 
-- clarifying before solving;
-- finding the real user and the business outcome;
-- splitting the problem into clean workstreams;
-- making assumptions explicit;
-- defining measurable success;
-- naming risks and failure modes;
-- discussing trade-offs instead of asserting one best design;
-- moving from prototype to production;
-- communicating clearly while the problem changes.
+- Clarifying before solving.
+- Finding the real user and the business outcome.
+- Splitting the problem into clean workstreams.
+- Making assumptions explicit.
+- Defining measurable success.
+- Naming risks and failure modes.
+- Discussing trade-offs instead of asserting one best design.
+- Moving from prototype to production.
+- Communicating clearly while the problem changes.
 
 Only one of the nine is about the architecture itself. The rest are about judgement and communication.
 
-## Avoid the Ten Common Mistakes
+## Avoid the ten common mistakes
 
-The bank's list of mistakes mirrors the signals. Starting with "RAG and agents", never asking who the user is, and treating automation as the goal all skip the framing steps. Ignoring permissions and data governance, discussing accuracy with no evaluation defined, and designing only the happy path skip the risk steps. Forgetting human escalation, ignoring latency and cost, and treating a prototype as a production system skip the rollout steps. The last mistake sums up the rest: an impressive technical answer that never connects to business impact.
+The list of common mistakes mirrors the signals, and each mistake skips one kind of step:
 
-## Worked Example: Opening the Customer-Support Prompt
+- **Framing skipped.** Starting with "RAG and agents", never asking who the user is, and treating automation as the goal.
+- **Risk skipped.** Ignoring permissions and data governance, discussing accuracy with no evaluation defined, and designing only the happy path.
+- **Rollout skipped.** Forgetting human escalation, ignoring latency and cost, and treating a prototype as a production system.
 
-Take the vague prompt above. A strong first two minutes runs like this.
+The tenth mistake sums up the rest: an impressive technical answer that never connects to business impact.
 
-"Before proposing anything, I'd like to pin down the outcome and the user. Who handles these tickets today, and which ticket types take the most time? Is the goal to deflect tickets, speed up agents, or improve quality? What data can a system read: a knowledge base, past tickets, account records? Can it act on accounts, or only draft replies? And how would we know in three months that it worked: handling time, resolution rate, satisfaction?"
+## Worked example: opening the customer-support prompt
 
-Then state assumptions for anything unanswered: "I'll assume agents stay in the loop and the system starts read-only." Only now does decomposition begin. The opening has fixed the user, the success measure and the action boundary, and each later component can be judged against them.
+Take the vague prompt from the opening story. The switcher compares the two ways the first two minutes can go.
 
----
+<div class="learning-widget evidence-switcher" id="opening-switcher">
+<p class="widget-intro">The same customer-support prompt, opened two ways. Compare what each opening fixes before any component is drawn.</p>
+<div class="mode-controls" hidden role="group" aria-label="Opening style">
+<button type="button" data-mode="solution-first" aria-pressed="false" aria-controls="solution-first-result">Solution-first opening</button>
+<button type="button" data-mode="framed" aria-pressed="false" aria-controls="framed-result">Framed opening</button>
+</div>
+<section id="solution-first-result" class="mode-panel" data-announcement="Solution-first opening selected. Nothing is fixed."><h4>Solution-first opening</h4><p>"I'd use RAG over the knowledge base with an agent that can call the ticketing and account tools."</p><ul><li>User: unknown.</li><li>Success measure: unknown.</li><li>Action boundary: unknown, so the agent may write to accounts.</li></ul><p>Result: every later component is a guess, and the interviewer cannot judge any of it.</p></section>
+<section id="framed-result" class="mode-panel" data-announcement="Framed opening selected. User, measure and boundary are fixed."><h4>Framed opening</h4><p>"Before proposing anything, I'd like to pin down the outcome and the user. Who handles these tickets today, and which ticket types take the most time? Is the goal to deflect tickets, speed up agents, or improve quality? What data can a system read: a knowledge base, past tickets, account records? Can it act on accounts, or only draft replies? And how would we know in three months that it worked: handling time, resolution rate, satisfaction?"</p><p>For anything unanswered: "I'll assume agents stay in the loop and the system starts read-only."</p><p>Result: the user, the success measure and the action boundary are fixed, and each later component can be judged against them.</p></section>
+<p class="switch-status" aria-live="polite"></p>
+</div>
 
-## Key Takeaways
+Only after the framed opening does decomposition begin. The lesson on [decomposing a solution into workstreams](/learn/forward-deployed/customer-discovery/decomposing-a-solution-into-workstreams) picks up from there.
+
+## Limits of this lesson
+
+- **Interviews are not engagements.** A real discovery runs over days with many people. The round compresses it into minutes, so you state assumptions where a customer would give answers.
+- **The question families are a starting set.** Regulated or physical-world customers add their own constraints.
+- **Illustrative story.** The mock round in the opening is fictional.
+
+## Interview angle
+
+Each answer is an outline to say in about two minutes. Open each question and try it aloud before reading.
+
+<details>
+<summary>Interview question 1. You are given a one-sentence prompt about using AI in customer support. What do you do in the first two minutes?</summary>
+
+- **Answer:** Say the plan in one sentence: clarify the outcome, user, workflow, constraints and success measure, state assumptions, then decompose. Ask four or five questions that would change the design, such as who handles the tickets, which types take longest, whether the goal is deflection or speed, and whether the system may act on accounts. State an assumption for the rest.
+- **Trade-off:** Questions cost minutes in a 45-minute round. Skipping them costs the whole design, because nothing can be checked.
+- **Follow-up to expect:** "Skip the questions and give me an architecture." Give a sketch under stated assumptions, and name the one question that would change it most.
+
+</details>
+
+<details>
+<summary>Interview question 2. The interviewer declines to answer your clarifying question. How do you continue?</summary>
+
+- **Answer:** Replace the question with a stated assumption and carry on, for example "I'll assume the system starts read-only and agents stay in the loop." Say what would change if the assumption were wrong, so the interviewer sees the decision point.
+- **Trade-off:** Assumptions keep momentum but can lock in a wrong path. Naming the reversal point keeps the design open.
+- **Follow-up to expect:** "Now assume it can write to accounts." Add approval gates and per-user permissions before any write.
+
+</details>
+
+<details>
+<summary>Interview question 3. You may only ask five clarifying questions. How do you choose them?</summary>
+
+- **Answer:** Take one from each family where the answer moves the design: the user and the cost of the problem, what the system may do on its own, the human baseline, what state must persist, and which users get the pilot. Drop any question whose answer would not change a component.
+- **Trade-off:** One per family gives breadth. A case dominated by one risk, such as regulation, may deserve two constraint questions.
+- **Follow-up to expect:** "Which one matters most?" The user and outcome, because every other answer is judged against it.
+
+</details>
+
+<details>
+<summary>Interview question 4. What do you think the interviewer is scoring in a decomposition round?</summary>
+
+- **Answer:** Mostly judgement and communication. Clarifying before solving, finding the user and outcome, splitting into clean workstreams, explicit assumptions, measurable success, risks, trade-offs, the path from prototype to production, and clear communication as the problem shifts. Only one of those is the architecture itself.
+- **Trade-off:** Over-investing in framing can leave too little time for the design. Keep framing to the first ten minutes.
+- **Follow-up to expect:** "What loses the round?" An impressive technical answer with no link to business impact.
+
+</details>
+
+## References
+
+1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): "How the Round Typically Feels", "What the Interviewer Is Evaluating", "Reusable Answer Template" and "Biggest Mistakes to Avoid".
+2. The site's [observing the work](/learn/forward-deployed/customer-discovery/observing-the-work) lesson, for what interviews miss once a real engagement starts.
+3. The author's own field experience, the basis for the opening story.
+
+## Key takeaways
 
 - Decomposition rounds score the order of work: four framing steps come before any component.
 - One framing sentence tells the interviewer the plan and buys time to think.
@@ -88,7 +169,7 @@ Then state assumptions for anything unanswered: "I'll assume agents stay in the 
 - Most interviewer signals are about judgement and communication, not architecture.
 - The common mistakes each skip a framing, risk or rollout step.
 
-## Check Yourself
+## Check yourself
 
 <details>
 <summary>1. Why is "I would use RAG and agents" a weak opening even when RAG is the right answer?</summary>
@@ -110,4 +191,3 @@ Business: who is the user? Constraint: what may the system do on its own? Evalua
 Replace it with a stated assumption, such as "I'll assume the system starts read-only", and carry on.
 
 </details>
-
