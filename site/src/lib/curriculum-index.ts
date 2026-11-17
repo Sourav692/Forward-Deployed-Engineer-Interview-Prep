@@ -1584,8 +1584,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T20.3",
     "title": "Requirements and solution design",
     "track": "forward-deployed",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "requirements-you-can-test",
+      "managing-change-and-scope-creep",
+      "technical-readiness-before-you-commit",
+      "from-requirements-to-architecture",
+      "decision-records-and-design-reviews",
+      "practise-requirements-and-design-1",
+      "practise-requirements-and-design-2"
+    ],
+    "practiceMinutes": 270
   },
   {
     "slug": "working-in-customer-code",
