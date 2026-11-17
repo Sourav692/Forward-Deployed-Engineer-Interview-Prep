@@ -64,12 +64,15 @@ export const INDEX_MODULES: IndexModule[] = [
       "keep-the-request-path-free",
       "structure-the-service-and-decide-what-to-build",
       "define-the-api-contract-with-typed-schemas",
+      "pagination-filtering-and-versioning",
+      "authorise-every-object",
       "protect-the-endpoint-from-abuse-and-cost",
       "build-a-streaming-chat-endpoint",
+      "idempotent-writes-and-long-running-jobs",
       "cache-answers-without-serving-wrong-ones",
       "practise-api-and-backend"
     ],
-    "practiceMinutes": 255
+    "practiceMinutes": 345
   },
   {
     "slug": "cloud-containers-deployment",
@@ -92,8 +95,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T1.4",
     "title": "SQL and data modelling for AI apps",
     "track": "engineering-foundations",
-    "lessons": [],
-    "estMinutes": 300
+    "lessons": [
+      "sql-for-business-questions",
+      "modelling-entities-keys-and-constraints",
+      "indexes-and-query-plans",
+      "transactions-locking-and-isolation",
+      "practise-sql-and-data-modelling"
+    ],
+    "practiceMinutes": 240
   },
   {
     "slug": "distributed-systems-essentials",
