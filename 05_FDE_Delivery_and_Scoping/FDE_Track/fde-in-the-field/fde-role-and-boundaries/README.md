@@ -2,14 +2,15 @@
 
 These files are the source of the module `fde-role-and-boundaries` in the `fde-in-the-field` track (The FDE role and leading in the field). The site publishes them at `/learn/fde-in-the-field/fde-role-and-boundaries` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `what-an-fde-owns` | Planned |
-| 2 | `the-role-across-companies` | Planned |
-| 3 | `where-the-role-ends` | Planned |
-| 4 | `judgement-under-uncertainty` | Planned |
-| 5 | `escalate-pause-or-stop` | Planned |
-| 6 | `practise-the-role-questions` | Planned |
+| # | Site slug | Source | Status |
+|---|---|---|---|
+| 1 | `what-an-fde-owns` | [01_What_an_FDE_Owns.md](01_What_an_FDE_Owns.md) | Published |
+| 2 | `the-role-across-companies` | [02_The_Role_Across_Companies.md](02_The_Role_Across_Companies.md) | Published |
+| 3 | `where-the-role-ends` | [03_Where_the_Role_Ends.md](03_Where_the_Role_Ends.md) | Published |
+| 4 | `judgement-under-uncertainty` | [04_Judgement_Under_Uncertainty.md](04_Judgement_Under_Uncertainty.md) | Published |
+| 5 | `escalate-pause-or-stop` | [05_Escalate_Pause_or_Stop.md](05_Escalate_Pause_or_Stop.md) | Published |
+| 6 | `practise-the-role-questions` | [06_Practise_the_Role_Questions.md](06_Practise_the_Role_Questions.md) | Published |
+| 7 | `practise-fde-role-and-boundaries-decomposition` | [07_Practise_Breaking_Down_the_Unknown.md](07_Practise_Breaking_Down_the_Unknown.md) | Published |
 
 ## Sources
 

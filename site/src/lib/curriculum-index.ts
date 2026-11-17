@@ -1538,9 +1538,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "title": "The FDE role and its boundaries",
     "track": "fde-in-the-field",
     "lessons": [
-      "what-an-fde-owns"
+      "what-an-fde-owns",
+      "the-role-across-companies",
+      "where-the-role-ends",
+      "judgement-under-uncertainty",
+      "escalate-pause-or-stop",
+      "practise-the-role-questions",
+      "practise-fde-role-and-boundaries-decomposition"
     ],
-    "practiceMinutes": 30
+    "practiceMinutes": 60
   },
   {
     "slug": "stakeholder-communication",
