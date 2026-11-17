@@ -172,7 +172,8 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 1. OWASP, [Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html), accessed 17 November 2026. Central storage, per-environment secrets and rotation.
 2. Google, [Site Reliability Engineering: The Evolving SRE Engagement Model](https://sre.google/sre-book/evolving-sre-engagement-model/), accessed 17 November 2026. The production readiness review.
 3. The site's [scale a prototype to production](../../../../02_System_Design_Case_Studies/Casebook_Rewrites/scale-prototype-to-production/casebook.md) case, for the full system design.
-4. The author's own field experience, the basis for the shortcut table and the split launch.
+4. The site's [safe rollouts](../../fde-deploying-in-the-estate/releases-cutover-and-recovery/02_Safe_Rollouts.md) and [AI cost per successful task](../../fde-deploying-in-the-estate/reliability-performance-and-cost/04_AI_Cost_per_Successful_Task.md) lessons, for the launch and the cost checks.
+5. The author's own field experience, the basis for the shortcut table and the split launch.
 
 ## Key takeaways
 

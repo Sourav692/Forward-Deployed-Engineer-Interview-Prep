@@ -7317,7 +7317,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/requirements-and-solution-design/05_Decision_Records_and_Design_Reviews.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/requirements-and-solution-design/decision-records-and-design-reviews",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-requirements-and-design-1",
@@ -8589,7 +8589,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/07_The_Incident_With_Two_Suspects.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-incident-with-two-suspects",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "prototype-to-production",
@@ -8599,9 +8599,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/08_Prototype_to_Production.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/prototype-to-production",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-live-migration-cutover",
@@ -8613,7 +8613,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/09_The_Live_Migration_Cutover.md",
       "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-live-migration-cutover",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-deployment-users-avoid",
