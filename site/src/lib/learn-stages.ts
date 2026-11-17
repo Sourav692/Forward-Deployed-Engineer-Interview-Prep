@@ -71,7 +71,15 @@ export const LEARN_STAGES: LearnGroup[] = [
     slug: 'forward-deployed-engineering',
     title: 'Forward Deployed Engineering',
     summary: 'Scope the work with a customer, deliver it and get it adopted.',
-    tracks: ['forward-deployed'],
+    tracks: [
+      'fde-in-the-field',
+      'forward-deployed',
+      'fde-building-in-the-estate',
+      'enterprise-integration',
+      'fde-deploying-in-the-estate',
+      'fde-case-drills',
+      'fde-take-home',
+    ],
   },
   {
     slug: 'coding',
