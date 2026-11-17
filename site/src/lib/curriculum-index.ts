@@ -1695,8 +1695,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.1",
     "title": "Deployment models and environments",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 315
+    "lessons": [
+      "saas-customer-cloud-or-on-prem",
+      "tenancy-and-isolation",
+      "disconnected-and-hybrid-installs",
+      "linux-processes-permissions-and-limits",
+      "containers-and-persistent-data",
+      "config-compute-and-kubernetes-choices",
+      "practise-deployment-models"
+    ],
+    "practiceMinutes": 300
   },
   {
     "slug": "networks-and-identity",
