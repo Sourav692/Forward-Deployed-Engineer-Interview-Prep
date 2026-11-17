@@ -1824,8 +1824,12 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T24.2",
     "title": "Short case drills",
     "track": "fde-case-drills",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "practise-case-drills-1",
+      "practise-case-drills-2",
+      "practise-case-drills-3"
+    ],
+    "practiceMinutes": 180
   },
   {
     "slug": "telling-the-build-story",

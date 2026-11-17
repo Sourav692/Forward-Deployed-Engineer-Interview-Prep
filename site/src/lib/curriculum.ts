@@ -2140,8 +2140,8 @@ export const MODULES: CurriculumModule[] = [
     title: 'Short case drills',
     track: 'fde-case-drills',
     section: 'engagements-and-drills',
-    status: 'coming-soon',
-    estMinutes: 270,
+    status: 'ready',
+    practiceMinutes: 180,
     objective: 'Decompose, design and answer follow-ups in short timed cases',
     scope: 'Short drills; full cases live in the casebook',
     prerequisites: [],
@@ -2149,8 +2149,11 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Practice stage per drill',
     interviewProbe: 'Decompose this case in 20 minutes',
     commonMistakes: ['Running out of time before the design'],
-    lessons: [],
-    gapNote: 'Planned for the FDE tracks; lessons are being written.',
+    lessons: [
+      'practise-case-drills-1',
+      'practise-case-drills-2',
+      'practise-case-drills-3',
+    ],
     seeAlso: [],
   },
   {
@@ -2762,8 +2765,17 @@ export const INTERVIEW_ROUNDS: InterviewRound[] = [
       'scoping-an-fde-project',
       'judgement-cases',
       'end-to-end-engagements',
+      'case-drills',
     ],
     practise: [
+      {
+        title: 'Case drills',
+        lessons: [
+          'practise-case-drills-1',
+          'practise-case-drills-2',
+          'practise-case-drills-3',
+        ],
+      },
       {
         title: 'End-to-end engagements',
         lessons: [
@@ -6876,6 +6888,30 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Defending Your Engagement in the Interview',
     source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/15_Defending_Your_Engagement_in_the_Interview.md',
     home: 'end-to-end-engagements',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'practise-case-drills-1',
+    title: 'Practise Case Drills 1',
+    source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/01_Practise_Case_Drills_1.md',
+    home: 'case-drills',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'practise-case-drills-2',
+    title: 'Practise Case Drills 2',
+    source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/02_Practise_Case_Drills_2.md',
+    home: 'case-drills',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'practise-case-drills-3',
+    title: 'Practise Case Drills 3',
+    source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/03_Practise_Case_Drills_3.md',
+    home: 'case-drills',
     kind: 'sync',
     publish: 'own',
   },
