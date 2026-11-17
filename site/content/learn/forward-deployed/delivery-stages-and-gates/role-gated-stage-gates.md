@@ -105,6 +105,26 @@ The framework does not promise every engagement deploys in 14 days. It promises 
 
 The negative-control demonstration is the one to show anyone who doubts the gates are real. Intake refuses an unmeasurable request. The FDA is denied the security gate for wrong role. The SME is denied for no evidence. An out-of-order sign-off is denied. A stage skip has no code path to call. The day-3 escalation fires on its own. A demo of things being stopped proves more than a demo of things working.
 
+## Give Each Environment One Job
+
+The gates decide when work may move forward. The environments decide where it runs while it does. Each one answers a different question, and mixing them is how a demo ends up holding customer data.
+
+| Environment | What it is for | What it must not hold |
+|---|---|---|
+| Development | Building and breaking things quickly, with fake or synthetic data | Customer data or production credentials |
+| Staging | Rehearsing the release: the same configuration, network rules and versions as production, with masked or sampled data | Real users, or a configuration that has drifted from production |
+| Production | Serving the customer's real work | Experiments without a flag and a way back |
+
+The rollback-tested gate only means something if staging matches production. A rollback rehearsed against a different database version or network path proves little.
+
+Before the limited-production gate, three ownership questions need a named answer, not a team name:
+
+- **Who notices?** The alert or dashboard that fires, and the person it reaches at three in the morning.
+- **Who responds?** The first responder on each side, the customer's on-call and ours, and how they reach each other.
+- **How do we recover?** The rollback or workaround, who may trigger it, and how long it takes.
+
+An engagement that cannot answer all three is not ready for production, however good its evaluation results. For running the incident itself, see [incidents with a customer watching](/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching).
+
 ## Worked Example: Why Northwind Stalled on Day 3
 
 Someone asks why the Northwind Logistics engagement stalled at day 3. The event log answers it.
@@ -122,6 +142,7 @@ Each stall had a named rule and a reason. That is the difference between gates t
 - Security review and data access check different things, and so do golden set and evaluation baseline.
 - Stage order is encoded so no stage can be skipped and no override exists.
 - A stalled engagement names the gate that stopped it; no-go at day 14 is a legitimate outcome.
+- Development, staging and production each have one job, and production waits until someone is named to notice, respond and recover.
 
 ## Check Yourself
 
@@ -143,6 +164,20 @@ The golden-set sign-off certifies the test represents the customer's needs, sign
 <summary>3. What happens when the success metrics are not met by day 14?</summary>
 
 The go/no-go gate does not pass. No-go is a legitimate, first-class outcome, and the log shows exactly why.
+
+</details>
+
+<details>
+<summary>4. The rollback works in staging. Why might that prove little?</summary>
+
+Only if staging matches production in configuration, versions and network paths does the rehearsal predict production. A drifted staging tests a different system.
+
+</details>
+
+<details>
+<summary>5. Before limited production, which three questions must have named answers?</summary>
+
+Who notices a failure, who responds on each side, and how the system recovers, including who may trigger the rollback.
 
 </details>
 
