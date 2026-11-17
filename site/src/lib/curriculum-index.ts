@@ -1597,8 +1597,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T19.4",
     "title": "Staff FDE leadership",
     "track": "fde-in-the-field",
-    "lessons": [],
-    "estMinutes": 225
+    "lessons": [
+      "beyond-one-engagement",
+      "growing-other-fdes",
+      "platform-investment-from-field-evidence",
+      "career-growth-from-fde-to-staff",
+      "practise-staff-questions"
+    ],
+    "practiceMinutes": 225
   },
   {
     "slug": "requirements-and-solution-design",
