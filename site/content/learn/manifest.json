@@ -7812,6 +7812,30 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "practise-ai-engineering-in-the-field-1",
+      "title": "Practise AI Engineering in the Field, Part 1",
+      "track": "fde-building-in-the-estate",
+      "module": "ai-delivery-in-customer-estates",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/09_Practise_AI_Engineering_in_the_Field_1.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "practise-ai-engineering-in-the-field-2",
+      "title": "Practise AI Engineering in the Field, Part 2",
+      "track": "fde-building-in-the-estate",
+      "module": "ai-delivery-in-customer-estates",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/10_Practise_AI_Engineering_in_the_Field_2.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2",
+      "updated": "2026-11-18"
+    },
+    {
       "slug": "reading-an-unfamiliar-codebase",
       "title": "Reading an Unfamiliar Codebase",
       "track": "fde-building-in-the-estate",
