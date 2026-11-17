@@ -8052,6 +8052,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "crm-erp-and-ticketing-systems",
+      "title": "CRM, ERP and Ticketing Systems",
+      "track": "enterprise-integration",
+      "module": "connecting-enterprise-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/01_CRM_ERP_and_Ticketing_Systems.md",
+      "estMinutes": 10,
+      "href": "/learn/enterprise-integration/connecting-enterprise-systems/crm-erp-and-ticketing-systems",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "authenticating-as-whom",
+      "title": "Authenticating as Whom",
+      "track": "enterprise-integration",
+      "module": "connecting-enterprise-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/02_Authenticating_as_Whom.md",
+      "estMinutes": 11,
+      "href": "/learn/enterprise-integration/connecting-enterprise-systems/authenticating-as-whom",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "legacy-feeds-soap-sftp-and-csv",
+      "title": "Legacy Feeds: SOAP, SFTP and CSV",
+      "track": "enterprise-integration",
+      "module": "connecting-enterprise-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/03_Legacy_Feeds_SOAP_SFTP_and_CSV.md",
+      "estMinutes": 12,
+      "href": "/learn/enterprise-integration/connecting-enterprise-systems/legacy-feeds-soap-sftp-and-csv",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "rate-limits-backlogs-and-two-way-sync",
+      "title": "Rate Limits, Backlogs and Two-way Sync",
+      "track": "enterprise-integration",
+      "module": "connecting-enterprise-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md",
+      "estMinutes": 11,
+      "href": "/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "practise-connecting-enterprise-systems",
+      "title": "Practise Connecting Enterprise Systems",
+      "track": "enterprise-integration",
+      "module": "connecting-enterprise-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/05_Practise_Connecting_Enterprise_Systems.md",
+      "estMinutes": 7,
+      "href": "/learn/enterprise-integration/connecting-enterprise-systems/practise-connecting-enterprise-systems",
+      "updated": "2026-11-18"
+    },
+    {
       "slug": "saas-customer-cloud-or-on-prem",
       "title": "SaaS, Customer Cloud or On-premises",
       "track": "fde-deploying-in-the-estate",

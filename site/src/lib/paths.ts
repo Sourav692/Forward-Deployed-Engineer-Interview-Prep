@@ -207,6 +207,7 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'operating-after-go-live',
     'reliability-performance-and-cost',
   ],
+  'enterprise-integration': ['connecting-enterprise-systems'],
   'fde-case-drills': ['end-to-end-engagements', 'case-drills'],
   'communication-and-behavioural': ['telling-the-build-story', 'building-the-story-bank'],
   'interview-practice': [
@@ -260,6 +261,7 @@ const FDE_PUBLISHED = new Set<string>([
   'end-to-end-engagements',
   'case-drills',
   'debugging-customer-environment',
+  'connecting-enterprise-systems',
 ])
 const fdeGap = (track: string): string[] => TRACK_MODULES[track].filter((m) => !FDE_PUBLISHED.has(m))
 
@@ -272,6 +274,7 @@ export const GAP_MODULES: readonly string[] = [
   ...fdeGap('fde-in-the-field'),
   ...fdeGap('fde-building-in-the-estate'),
   ...fdeGap('fde-deploying-in-the-estate'),
+  ...fdeGap('enterprise-integration'),
   ...fdeGap('fde-case-drills'),
   ...TRACK_MODULES['production-ai'].slice(TRACK_MODULES['production-ai'].indexOf('the-evaluation-lifecycle')),
 ]
@@ -439,7 +442,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 352,
+    estHours: 356,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -484,7 +487,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 404,
+    estHours: 408,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -540,7 +543,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 353,
+    estHours: 357,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -584,7 +587,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 322,
+    estHours: 326,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -629,7 +632,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 489,
+    estHours: 493,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -644,7 +647,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 409,
+    estHours: 413,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -694,7 +697,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 441,
+    estHours: 445,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
