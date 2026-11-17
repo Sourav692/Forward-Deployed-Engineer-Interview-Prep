@@ -6670,6 +6670,78 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "the-role-across-companies",
+      "title": "The Role Across Companies",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/02_The_Role_Across_Companies.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/the-role-across-companies",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "where-the-role-ends",
+      "title": "Where the Role Ends",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/03_Where_the_Role_Ends.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/where-the-role-ends",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "judgement-under-uncertainty",
+      "title": "Judgement Under Uncertainty",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/04_Judgement_Under_Uncertainty.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "escalate-pause-or-stop",
+      "title": "Escalate, Pause or Stop",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/05_Escalate_Pause_or_Stop.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/escalate-pause-or-stop",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-the-role-questions",
+      "title": "Practise the Role Questions",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/06_Practise_the_Role_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/practise-the-role-questions",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-fde-role-and-boundaries-decomposition",
+      "title": "Practise Breaking Down the Unknown",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/07_Practise_Breaking_Down_the_Unknown.md",
+      "estMinutes": 5,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/practise-fde-role-and-boundaries-decomposition",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "the-discovery-conversation",
       "title": "The Discovery Conversation",
       "track": "forward-deployed",
