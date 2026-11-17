@@ -11,13 +11,14 @@ Work through them in order:
 2. Answer aloud with a real story of your own.
 3. Open the outline. Check your answer against the structure, not the example.
 
-The project deep dive and the method for building your stories stay in the Career track: [telling the build story](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) for presenting a project, and the [story bank](/practice/story-bank) for building a set of stories that covers these questions. Dunholme Systems, Sedbergh Health, Wigton Ports and every figure below are fictional.
+The full method for the project deep dive and for building your stories stays in the Career track: [telling the build story](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) for presenting a project, and the [story bank](/practice/story-bank) for building a set of stories that covers these questions. Dunholme Systems, Sedbergh Health, Wigton Ports, Brough Insurance and every figure below are fictional.
 
 > **What you'll practise**
 >
 > - Defending a team metric: how it was measured and what your part was.
 > - Telling an owned project and a failure with the parts interviewers look for.
 > - Explaining a trade-off made under pressure, and influence without authority.
+- Walking an interviewer through an engagement you led, at a steady pace.
 
 ## A metric under challenge
 
@@ -76,6 +77,19 @@ Taught in the Career worksheets [delivery under pressure](/practice/delivery-und
 
 </details>
 
+## The project deep dive
+
+Taught in [the timed deep dive](/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive).
+
+<details>
+<summary>Practice question 6. Walk me through an engagement you led.</summary>
+
+- **Answer:** Open with the situation in two sentences, then what you did, the result and what you would change. Spend most of the time on what you did, and stop at about 15 minutes so the interviewer can steer. Example: "Brough Insurance's claims team took two days to route new claims. I led a team of three for twelve weeks. I mapped the routing rules with the handlers, chose to suggest a queue for a handler to confirm rather than route automatically, and ran the evaluation with their senior handler. Routing time fell to four hours across about 6,000 claims a month. I would bring their IT team into the design in week one, not week six."
+- **Trade-off:** A tight structure leaves out detail you are proud of. Hold it back for the follow-ups, where it carries more weight.
+- **Follow-up to expect:** "What was the hardest decision?" Pick one, give the options and say why you chose.
+
+</details>
+
 ## References
 
 1. Will Larson, [Staying aligned with authority](https://staffeng.com/guides/staying-aligned-with-authority/), StaffEng, accessed 17 November 2026. Staff-plus authority as borrowed from the wider organisation, and the need to stay aligned with it.
@@ -89,6 +103,7 @@ Taught in the Career worksheets [delivery under pressure](/practice/delivery-und
 - An owned-project answer shows where your ownership ended and the parts that went badly.
 - A failure answer spends most of its time on what you missed and on what changed for good.
 - Influence without authority starts with the other team's goals and ends with a specific ask.
+- A project deep dive runs situation, what you did, result and what you would change, with most of the time on what you did.
 
 ## Check yourself
 

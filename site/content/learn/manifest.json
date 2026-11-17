@@ -6941,9 +6941,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/05_Practise_Staff_Questions.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/fde-in-the-field/staff-fde-leadership/practise-staff-questions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "one-design-three-audiences",
@@ -8287,9 +8287,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/05_Practise_Operating_After_Go_Live.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/practise-operating-after-go-live",
-      "updated": "2026-11-17"
+      "updated": "2026-11-18"
     },
     {
       "slug": "recovering-half-finished-work",
