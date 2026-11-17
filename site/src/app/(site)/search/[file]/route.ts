@@ -2,7 +2,7 @@ import { getSearchArea } from '@/lib/search-index'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS, type SearchArea } from '@/lib/search-areas'
 
 /**
- * The search index, one static JSON file per area (`/search/learn.json`,
+ * The search index, one static JSON file per area (`/search/learn-1.json`,
  * `/search/practice.json`, …), rendered at build time.
  *
  * A single file grew past a megabyte once the case studies and lessons were indexed, so
