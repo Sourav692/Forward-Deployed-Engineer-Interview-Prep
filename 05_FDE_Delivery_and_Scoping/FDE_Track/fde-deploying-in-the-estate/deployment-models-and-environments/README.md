@@ -2,15 +2,15 @@
 
 These files are the source of the module `deployment-models-and-environments` in the `fde-deploying-in-the-estate` track (Deploying and operating in the customer's estate). The site publishes them at `/learn/fde-deploying-in-the-estate/deployment-models-and-environments` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `saas-customer-cloud-or-on-prem` | Planned |
-| 2 | `tenancy-and-isolation` | Planned |
-| 3 | `disconnected-and-hybrid-installs` | Planned |
-| 4 | `linux-processes-permissions-and-limits` | Planned |
-| 5 | `containers-and-persistent-data` | Planned |
-| 6 | `config-compute-and-kubernetes-choices` | Planned |
-| 7 | `practise-deployment-models` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [SaaS, customer cloud or on-premises](01_SaaS_Customer_Cloud_or_On_Prem.md) | `saas-customer-cloud-or-on-prem` | Drafted |
+| 2 | [Tenancy and isolation](02_Tenancy_and_Isolation.md) | `tenancy-and-isolation` | Drafted |
+| 3 | [Disconnected and hybrid installs](03_Disconnected_and_Hybrid_Installs.md) | `disconnected-and-hybrid-installs` | Drafted |
+| 4 | [Linux processes, permissions and limits](04_Linux_Processes_Permissions_and_Limits.md) | `linux-processes-permissions-and-limits` | Drafted |
+| 5 | [Containers and persistent data](05_Containers_and_Persistent_Data.md) | `containers-and-persistent-data` | Drafted |
+| 6 | [Config, compute and Kubernetes choices](06_Config_Compute_and_Kubernetes_Choices.md) | `config-compute-and-kubernetes-choices` | Drafted |
+| 7 | [Practise deployment models](07_Practise_Deployment_Models.md) | `practise-deployment-models` | Drafted |
 
 ## Sources
 
