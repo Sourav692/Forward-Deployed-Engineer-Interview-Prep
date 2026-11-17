@@ -253,7 +253,6 @@ const fdeGap = (track: string): string[] => TRACK_MODULES[track].filter((m) => !
 
 export const GAP_MODULES: readonly string[] = [
   'python-for-ai-services',
-  'sql-and-data-modelling',
   'coding-interview-patterns',
   'company-loops',
   'coding-round-practice',
@@ -428,7 +427,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 277,
+    estHours: 284,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -683,7 +682,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 370,
+    estHours: 372,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
