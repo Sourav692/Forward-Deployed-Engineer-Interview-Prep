@@ -1704,9 +1704,11 @@ export const INDEX_MODULES: IndexModule[] = [
       "evaluating-on-the-customers-work",
       "untrusted-content-in-customer-data",
       "voice-and-multimodal-in-operations",
-      "practise-ai-delivery"
+      "practise-ai-delivery",
+      "practise-ai-engineering-in-the-field-1",
+      "practise-ai-engineering-in-the-field-2"
     ],
-    "practiceMinutes": 330
+    "practiceMinutes": 420
   },
   {
     "slug": "deployment-models-and-environments",

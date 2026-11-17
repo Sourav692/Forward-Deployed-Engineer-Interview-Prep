@@ -12,6 +12,8 @@ These files are the source of the module `ai-delivery-in-customer-estates` in th
 | 6 | [Untrusted content in customer data](06_Untrusted_Content_in_Customer_Data.md) | `untrusted-content-in-customer-data` | Drafted |
 | 7 | [Voice and multimodal in operations](07_Voice_and_Multimodal_in_Operations.md) | `voice-and-multimodal-in-operations` | Drafted |
 | 8 | [Practise AI delivery](08_Practise_AI_Delivery.md) | `practise-ai-delivery` | Drafted |
+| 9 | [Practise AI engineering in the field, part 1](09_Practise_AI_Engineering_in_the_Field_1.md) | `practise-ai-engineering-in-the-field-1` | Drafted |
+| 10 | [Practise AI engineering in the field, part 2](10_Practise_AI_Engineering_in_the_Field_2.md) | `practise-ai-engineering-in-the-field-2` | Drafted |
 
 ## Sources
 
