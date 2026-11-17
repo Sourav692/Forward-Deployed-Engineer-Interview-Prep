@@ -56,6 +56,22 @@ The bank flags five cases for candidates with a cloud data platform background. 
 
 > **Warning: do not over-index on generic LLM theory.** The bank's advice for a data-platform profile is to show the connection between enterprise data, architecture, evaluation, governance, production operations and customer outcomes. That connection is the differentiator, not model internals.
 
+## Practise the Discovery-First Cases
+
+These four cases test whether the candidate finds the real problem before decomposing a solution. The customers are fictional.
+
+**7. "Our legal team wants a chatbot that answers questions about our contracts."**
+Ask what goes wrong today before scoping a chatbot. Suppose staff turn out to draft from old contract templates because three versions sit in different folders. The problem is document versioning, not question answering. Workstreams: one approved template library with owners and version history, retirement of old copies, and a check at drafting time. A question-answering assistant can come later, grounded in the approved library only. Follow-up, "they still want the chatbot": scope it after the library exists, because a chatbot over three conflicting versions gives confident wrong answers. → [Observing the Work](06_Observing_the_Work.md)
+
+**8. "The head of operations wants one dashboard showing everything."**
+Ask which decisions they make each week and what they look at to make them. "Everything" usually hides three or four decisions, each needing a few numbers. Workstreams: a decision list with owners, the metrics behind each with their system of record, data quality checks, and a first screen for the most frequent decision. Follow-up, "every team wants its own tab": add tabs only when a named decision needs them. → [Stakeholder and Workflow Maps](07_Stakeholder_and_Workflow_Maps.md)
+
+**9. "Leadership has set aside budget for an AI pilot. Find us something to do with it."**
+Treat it as a search for a problem, not a technology placement. List candidate processes with their volume, cost and pain, rank them on value, risk and data readiness, and run short discovery on the top two. Recommend the one with a measurable baseline, even if the answer turns out to need little AI. Follow-up, "they want something visible": pick a visible process from the ranked list, not a visible model. → [Choosing the First Use Case](04_Choosing_the_First_Use_Case.md)
+
+**10. "Make our customer onboarding faster." Turn this into a problem statement and a metric.**
+Ask how long onboarding takes now, where customers wait and what "faster" means to the sponsor. Write the problem statement as who, what and cost: "Business customers wait a median of 12 working days from signed contract to first login, mostly for identity checks, and 9% cancel in that time." The metric follows: median days from contract to first login, and cancellations in that window. Follow-up, "nobody measures it": the first workstream is measuring the last 50 onboardings. → [Problem, Goal, and Definition of Done](../T6.2_Scoping_an_FDE_Project/01_Problem_Goal_and_Definition_of_Done.md)
+
 ## Worked Example: Scoring One Practice Run
 
 Take case 5, the prototype scaling to 100,000 users, and check a 45-minute attempt against the six outputs.
@@ -86,4 +102,4 @@ All six outputs are present. The run passes. If the metrics had been missing, th
 
 ## References
 
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 1, 7, 13, 14, 15 and 17, "Cases Especially Relevant to a Cloud Data Platform Background" (A to E) and "Recommended Preparation Plan". The ten customer-discovery worksheets in the Case Study Worksheets module are the written practice for this method.
+**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 1, 7, 13, 14, 15 and 17, "Cases Especially Relevant to a Cloud Data Platform Background" (A to E) and "Recommended Preparation Plan". Cases 7 to 10, the discovery-first cases, are the author's own. The ten customer-discovery worksheets in the Case Study Worksheets module are the written practice for this method.

@@ -1465,12 +1465,16 @@ export const INDEX_MODULES: IndexModule[] = [
     "track": "forward-deployed",
     "lessons": [
       "the-discovery-conversation",
+      "observing-the-work",
+      "stakeholder-and-workflow-maps",
       "decomposing-a-solution-into-workstreams",
       "success-metrics-and-evaluation-data",
       "choosing-the-first-use-case",
+      "practise-discovery-questions-1",
+      "practise-discovery-questions-2",
       "practise-decomposition-interview-cases"
     ],
-    "practiceMinutes": 210
+    "practiceMinutes": 270
   },
   {
     "slug": "scoping-an-fde-project",
@@ -1479,14 +1483,17 @@ export const INDEX_MODULES: IndexModule[] = [
     "track": "forward-deployed",
     "lessons": [
       "problem-goal-and-definition-of-done",
+      "baselines-value-and-roi",
+      "build-buy-configure-or-no-ai",
       "the-system-behind-the-screens",
       "estimating-ai-work-as-a-product",
       "shrinking-to-a-first-release",
       "estimates-people-can-trust",
       "from-estimate-to-build-plan",
-      "scoping-in-practice"
+      "scoping-in-practice",
+      "practise-scoping-and-value-questions"
     ],
-    "practiceMinutes": 135
+    "practiceMinutes": 180
   },
   {
     "slug": "judgement-cases",
