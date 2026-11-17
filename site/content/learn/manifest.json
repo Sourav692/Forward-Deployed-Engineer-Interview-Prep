@@ -6658,6 +6658,18 @@
       "updated": "2026-11-08"
     },
     {
+      "slug": "what-an-fde-owns",
+      "title": "What an FDE Owns",
+      "track": "fde-in-the-field",
+      "module": "fde-role-and-boundaries",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/01_What_an_FDE_Owns.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-in-the-field/fde-role-and-boundaries/what-an-fde-owns",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "the-discovery-conversation",
       "title": "The Discovery Conversation",
       "track": "forward-deployed",
