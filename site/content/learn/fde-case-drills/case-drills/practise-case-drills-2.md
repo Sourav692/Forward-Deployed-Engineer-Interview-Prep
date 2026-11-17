@@ -20,7 +20,7 @@ Open the outlines only after you have answered. Every customer, name and figure 
 
 ## Drill 3. An order-to-cash sync with the ERP
 
-Full case for after the drill: the reliable workflow orchestration casebook and the [three systems, one customer](/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer) simulation.
+Full case for after the drill: the reliable workflow orchestration casebook, the [three systems, one customer](/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer) simulation and the worked [retailer and marketplace integration](/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration), which takes the same sync problem through a full design.
 
 Brampton Engineering sells industrial pumps. Sales staff close orders in a customer relationship management (CRM) system, and a nightly spreadsheet export copies them into the enterprise resource planning (ERP) system, which schedules the build and raises the invoice. About 600 orders close each month. Some orders arrive twice, amended orders keep their old price, and finance spends two days at every month-end matching invoices to bank payments by hand.
 
