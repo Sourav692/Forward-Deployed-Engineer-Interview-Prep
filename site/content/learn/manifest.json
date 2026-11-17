@@ -7872,6 +7872,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "following-a-request-through-the-network",
+      "title": "Following a Request Through the Network",
+      "track": "fde-deploying-in-the-estate",
+      "module": "networks-and-identity",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/01_Following_a_Request_Through_the_Network.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/following-a-request-through-the-network",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "sso-oidc-and-tokens",
+      "title": "SSO, OIDC and Tokens",
+      "track": "fde-deploying-in-the-estate",
+      "module": "networks-and-identity",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/02_SSO_OIDC_and_Tokens.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/sso-oidc-and-tokens",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "service-accounts-and-least-privilege",
+      "title": "Service Accounts and Least Privilege",
+      "track": "fde-deploying-in-the-estate",
+      "module": "networks-and-identity",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/03_Service_Accounts_and_Least_Privilege.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/service-accounts-and-least-privilege",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "secrets-and-leaks",
+      "title": "Secrets and Leaks",
+      "track": "fde-deploying-in-the-estate",
+      "module": "networks-and-identity",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/04_Secrets_and_Leaks.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/secrets-and-leaks",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-networks-and-identity",
+      "title": "Practise Networks and Identity",
+      "track": "fde-deploying-in-the-estate",
+      "module": "networks-and-identity",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/05_Practise_Networks_and_Identity.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/practise-networks-and-identity",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",

@@ -1711,8 +1711,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.2",
     "title": "Customer networks and identity",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 225
+    "lessons": [
+      "following-a-request-through-the-network",
+      "sso-oidc-and-tokens",
+      "service-accounts-and-least-privilege",
+      "secrets-and-leaks",
+      "practise-networks-and-identity"
+    ],
+    "practiceMinutes": 240
   },
   {
     "slug": "security-reviews-and-compliance",
