@@ -1810,9 +1810,14 @@ export const INDEX_MODULES: IndexModule[] = [
       "the-incident-with-two-suspects",
       "prototype-to-production",
       "the-live-migration-cutover",
-      "the-deployment-users-avoid"
+      "the-deployment-users-avoid",
+      "one-platform-many-customers",
+      "the-engagement-that-is-failing",
+      "a-six-week-support-assistant",
+      "document-processing-in-a-legacy-estate",
+      "defending-your-engagement-in-the-interview"
     ],
-    "practiceMinutes": 600
+    "practiceMinutes": 900
   },
   {
     "slug": "case-drills",

@@ -8484,6 +8484,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "one-platform-many-customers",
+      "title": "One Platform, Many Customers",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/11_One_Platform_Many_Customers.md",
+      "estMinutes": 14,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/one-platform-many-customers",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "the-engagement-that-is-failing",
+      "title": "The Engagement That Is Failing",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/12_The_Engagement_That_Is_Failing.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/the-engagement-that-is-failing",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "a-six-week-support-assistant",
+      "title": "A Six-week Support Assistant",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/13_A_Six_Week_Support_Assistant.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/a-six-week-support-assistant",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "document-processing-in-a-legacy-estate",
+      "title": "Document Processing in a Legacy Estate",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/14_Document_Processing_in_a_Legacy_Estate.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/document-processing-in-a-legacy-estate",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "defending-your-engagement-in-the-interview",
+      "title": "Defending Your Engagement in the Interview",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/15_Defending_Your_Engagement_in_the_Interview.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/defending-your-engagement-in-the-interview",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
