@@ -1562,6 +1562,20 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 180
   },
   {
+    "slug": "connecting-enterprise-systems",
+    "code": "T22.1",
+    "title": "Connecting enterprise systems",
+    "track": "enterprise-integration",
+    "lessons": [
+      "crm-erp-and-ticketing-systems",
+      "authenticating-as-whom",
+      "legacy-feeds-soap-sftp-and-csv",
+      "rate-limits-backlogs-and-two-way-sync",
+      "practise-connecting-enterprise-systems"
+    ],
+    "practiceMinutes": 180
+  },
+  {
     "slug": "fde-role-and-boundaries",
     "code": "T19.1",
     "title": "The FDE role and its boundaries",
@@ -2451,7 +2465,9 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     "slug": "enterprise-integration",
     "code": "T22",
     "title": "Enterprise Integration",
-    "modules": []
+    "modules": [
+      "connecting-enterprise-systems"
+    ]
   },
   {
     "slug": "fde-deploying-in-the-estate",
