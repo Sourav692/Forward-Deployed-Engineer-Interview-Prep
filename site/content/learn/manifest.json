@@ -6838,6 +6838,54 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "reusable-need-or-one-off",
+      "title": "Reusable Need or One-Off",
+      "track": "fde-in-the-field",
+      "module": "field-to-product",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/01_Reusable_Need_or_One_Off.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-in-the-field/field-to-product/reusable-need-or-one-off",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "configure-template-or-custom",
+      "title": "Configure, Template or Custom",
+      "track": "fde-in-the-field",
+      "module": "field-to-product",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/02_Configure_Template_or_Custom.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-in-the-field/field-to-product/configure-template-or-custom",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "capacity-and-cross-team-delivery",
+      "title": "Capacity and Cross-Team Delivery",
+      "track": "fde-in-the-field",
+      "module": "field-to-product",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/03_Capacity_and_Cross_Team_Delivery.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-in-the-field/field-to-product/capacity-and-cross-team-delivery",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-field-to-product",
+      "title": "Practise From One Customer to Many",
+      "track": "fde-in-the-field",
+      "module": "field-to-product",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/04_Practise_From_One_Customer_to_Many.md",
+      "estMinutes": 8,
+      "href": "/learn/fde-in-the-field/field-to-product/practise-field-to-product",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "the-discovery-conversation",
       "title": "The Discovery Conversation",
       "track": "forward-deployed",
