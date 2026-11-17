@@ -1638,8 +1638,15 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T21.3",
     "title": "Building for the people who do the work",
     "track": "fde-building-in-the-estate",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "screens-built-around-decisions",
+      "honest-async-ux",
+      "human-review-and-approval",
+      "testing-what-the-customer-will-break",
+      "acceptance-with-the-customer",
+      "practise-building-for-operators"
+    ],
+    "practiceMinutes": 255
   },
   {
     "slug": "choosing-the-ai-approach",
