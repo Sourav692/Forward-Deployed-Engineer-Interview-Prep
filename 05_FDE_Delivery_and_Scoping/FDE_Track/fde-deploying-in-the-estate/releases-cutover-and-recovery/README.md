@@ -2,14 +2,14 @@
 
 These files are the source of the module `releases-cutover-and-recovery` in the `fde-deploying-in-the-estate` track (Deploying and operating in the customer's estate). The site publishes them at `/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `builds-you-can-reproduce-and-promote` | Planned |
-| 2 | `safe-rollouts` | Planned |
-| 3 | `migrating-live-data` | Planned |
-| 4 | `cutover-and-rollback-decisions` | Planned |
-| 5 | `backups-rto-rpo-and-restore-drills` | Planned |
-| 6 | `practise-releases-and-cutover` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Builds you can reproduce and promote](01_Builds_You_Can_Reproduce_and_Promote.md) | `builds-you-can-reproduce-and-promote` | Drafted |
+| 2 | [Safe rollouts](02_Safe_Rollouts.md) | `safe-rollouts` | Drafted |
+| 3 | [Migrating live data](03_Migrating_Live_Data.md) | `migrating-live-data` | Drafted |
+| 4 | [Cutover and rollback decisions](04_Cutover_and_Rollback_Decisions.md) | `cutover-and-rollback-decisions` | Drafted |
+| 5 | [Backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_Drills.md) | `backups-rto-rpo-and-restore-drills` | Drafted |
+| 6 | [Practise releases and cutover](06_Practise_Releases_and_Cutover.md) | `practise-releases-and-cutover` | Drafted |
 
 ## Sources
 
