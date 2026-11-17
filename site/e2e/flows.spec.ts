@@ -633,10 +633,11 @@ test('path page: modules in code order, gap modules flagged Later', async ({ pag
   expect(t1).toEqual([...t1].sort((a, b) => a.localeCompare(b, 'en', { numeric: true })))
   expect(t1.indexOf('T1.3')).toBeGreaterThan(-1)
   expect(t1.indexOf('T1.3')).toBeLessThan(t1.indexOf('T1.4'))
-  const sql = rows.filter({ has: page.getByText('T1.4', { exact: true }) })
+  // T1.1 Python for AI services has no lessons yet, so the path flags it Later.
+  const gap = rows.filter({ has: page.getByText('T1.1', { exact: true }) })
   // PathFlag renders "Flag:" for screen readers before the visible label.
-  await expect(sql).toContainText(/Flag:\s*Later/)
-  await expect(sql).not.toContainText(/Flag:\s*Required/)
+  await expect(gap).toContainText(/Flag:\s*Later/)
+  await expect(gap).not.toContainText(/Flag:\s*Required/)
 })
 
 // ON-03, ON-06, ON-07: the express lane, Frontier Lab hours and diagnostic links.
