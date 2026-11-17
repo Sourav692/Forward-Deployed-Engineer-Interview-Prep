@@ -20,6 +20,8 @@ The playbook's own framing is that the point is not memorised fixes. The point i
 
 The communication step is the same in every case. Acknowledge the impact. Show the measured cause. Give the immediate mitigation. Then explain the long-term prevention and the metric that will prove it worked.
 
+This lesson diagnoses quality and latency inside your own stack. When the fault sits in the customer's estate instead, such as their proxy, identity provider, data or pinned versions, the Debugging in the customer's environment module takes over: [stabilise the customer first](/learn/forward-deployed/debugging-customer-environment/stabilise-the-customer-first), [build the change timeline](/learn/forward-deployed/debugging-customer-environment/build-the-change-timeline), [isolate the failing boundary](/learn/forward-deployed/debugging-customer-environment/isolate-the-failing-boundary) and [collect evidence and escalate](/learn/forward-deployed/debugging-customer-environment/collect-evidence-and-escalate).
+
 ## Ask What Changed Before Asking What Broke
 
 Most incidents follow a change. The clarifying questions all ask what moved: retrieval, the reranker, the prompt version, the model, the provider, a tool dependency or the region.

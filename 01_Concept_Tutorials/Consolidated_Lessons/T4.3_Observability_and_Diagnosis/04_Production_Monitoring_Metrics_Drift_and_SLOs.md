@@ -76,6 +76,25 @@ Treat TTFT, TPOT and total time as three separate service-level objectives (SLOs
 
 Latency curves bend sharply past about 70 to 80% utilisation. A rising P99 with a flat P50 usually means queueing, not a slower model.
 
+## Alert on an Integration's Own Failure Signals
+
+An integration that moves records between a partner and your platform fails in ways a request dashboard misses. Nothing returns a 500. Work piles up, gets parked or quietly stops matching. Four alerts cover most of it.
+
+| Alert | What it catches | Why the obvious metric is not enough |
+|---|---|---|
+| Age of the oldest message, beside queue depth | A stuck consumer or one poison message holding a partition | Depth can sit at a normal 200 while the oldest item is six hours old |
+| Dead-letter queue growth | Records the integration gave up on | A dead-letter queue that grows slowly never trips an error-rate alert |
+| Authentication failures by connection | Expired, revoked or narrowed credentials | Each failure is retried and looks transient, until every sync for that customer has stopped |
+| Reconciliation drift | Records that differ between the partner and your copy | Every individual write succeeded, yet the totals no longer agree |
+
+**Oldest-message age** is the one teams skip. Queue depth tells you how much is waiting. Age tells you how long the oldest item has waited, which is what the customer feels. Alert when age passes the freshness the customer was promised, such as 15 minutes for timesheet updates.
+
+**Reconciliation drift** needs a scheduled job: count or checksum records per customer on both sides, by day, and alert when the difference passes a set threshold. It is the only alert here that catches a bug where every write reports success.
+
+A worked case shows why the pair matters. Coldharbour Payroll, a fictional payroll provider, synced timesheets from 300 customers' HR systems. One malformed record blocked a partition for a morning. Queue depth stayed near its usual 400 because other partitions kept flowing, so no alert fired. The oldest message was nine hours old when a customer phoned about missing overtime. An age alert at 15 minutes would have paged before the first payroll cut-off.
+
+The trade-off is alert volume. Per-connection authentication and drift alerts multiply with customers. Route them to the owning team as tickets, and page only when many connections fail at once or a customer's freshness promise is broken.
+
 ## Keep Monitoring Off the Hot Path
 
 Observability has its own cost. Synchronous logging is a listed cause of a latency jump after a deploy. Log asynchronously, sample where full tracing is too expensive, and prefer structured metrics over raw payloads. Set retention by privacy policy.
@@ -100,6 +119,7 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 - Track answer-to-context similarity, retrieval hit rate, tokens per query, and the "I don't know" rate, because each failure looks like success to an error counter.
 - Set TTFT, TPOT and total latency as separate SLOs, and track goodput, token-weighted cache hits, queue wait and utilisation.
 - Keep telemetry asynchronous and sampled so monitoring does not become the slowdown.
+- For integrations, alert on oldest-message age beside queue depth, dead-letter growth, authentication failures per connection and reconciliation drift.
 
 ## Check Yourself
 
@@ -114,4 +134,4 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 
 ## References
 
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (cost and latency playbook notes): §3 method (P95 and P99), §12 observability (metrics, five dashboards, trace event fields), §17 observability checklist. `ADDITIONS_BEYOND_PLAYBOOK.md`: §D metrics the playbook misses. `CORE_8_DRIVERS_MEMORIZE.md`: driver 7. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §3 drift and attribution. `06_Scaling_To_20M_Documents.md` (FDE Handbook): §9 drift detection. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §7 "Failure Pattern Detection", including the monitoring dashboard figures.
+**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (cost and latency playbook notes): §3 method (P95 and P99), §12 observability (metrics, five dashboards, trace event fields), §17 observability checklist. `ADDITIONS_BEYOND_PLAYBOOK.md`: §D metrics the playbook misses. `CORE_8_DRIVERS_MEMORIZE.md`: driver 7. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §3 drift and attribution. `06_Scaling_To_20M_Documents.md` (FDE Handbook): §9 drift detection. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §7 "Failure Pattern Detection", including the monitoring dashboard figures. The integration alert section (added 18 November 2026) is the author's own field experience, with a fictional customer, and draws on Google's *Site Reliability Engineering*, [Monitoring distributed systems](https://sre.google/sre-book/monitoring-distributed-systems/), and Amazon SQS's [available CloudWatch metrics](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-available-cloudwatch-metrics.html), which include the approximate age of the oldest message, both accessed 18 November 2026.

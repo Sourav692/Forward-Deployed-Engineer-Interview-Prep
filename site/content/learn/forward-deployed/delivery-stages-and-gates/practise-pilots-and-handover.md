@@ -13,6 +13,7 @@ Every customer and figure below is fictional.
 > - Deciding when a pilot may expand, and to whom.
 > - Writing gate criteria and an engagement plan.
 > - Turning a manual prototype into a supported service, and handing it over.
+> - Deciding whether a customer integration has finished onboarding.
 
 ## Designing and reading a pilot
 
@@ -119,6 +120,19 @@ Taught in [handover and ownership](/learn/forward-deployed/delivery-stages-and-g
 
 </details>
 
+## Onboarding an integration
+
+Taught in [onboarding a new customer integration](/learn/forward-deployed/delivery-stages-and-gates/onboarding-a-new-customer-integration).
+
+<details>
+<summary>Practice question 11. Ruddock Water's operations director wants its meter-reading integration live on Monday. The backfill finished on Friday, reconciliation shows 2% of meters differing, and alerts go to the team's shared inbox. What do you tell her, and what do you propose?</summary>
+
+- **Answer:** Two of the four criteria are not met. Reconciliation is not clean, since 2% of meters differ and nobody has explained why. Alerts are not wired, because a shared inbox is not a rota and no test alert has been acknowledged. The backfill is finished, and owners need confirming in the launch contract. Propose going live on Monday for the districts whose reconciliation is clean, with alerts routed to the on-call rota and tested by Friday. Fix the differing meters with her data owner, then add the remaining districts once three daily runs are clean.
+- **Trade-off:** A partial go-live is harder to explain than one date. It avoids billing customers from readings nobody has checked.
+- **Follow-up to expect:** "The 2% is probably old meters." Then prove it with a sample, and write the rule into the field map.
+
+</details>
+
 ## Key takeaways
 
 - A pilot design names representative users, a comparison group, a full business cycle and thresholds agreed in advance.
@@ -126,6 +140,7 @@ Taught in [handover and ownership](/learn/forward-deployed/delivery-stages-and-g
 - Split results by group, and expand in waves with a checklist.
 - Gates need criteria and named signers. A manual prototype in daily use needs hardening and an owner.
 - A handover checklist ends with the owners doing the work.
+- A customer integration is live only when backfill, reconciliation, alerts and owners all have evidence.
 
 ## Check yourself
 

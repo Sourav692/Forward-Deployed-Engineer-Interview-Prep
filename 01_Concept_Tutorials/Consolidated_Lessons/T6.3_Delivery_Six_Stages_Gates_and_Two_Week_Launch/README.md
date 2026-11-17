@@ -1,6 +1,6 @@
 # T20.5 Delivery: Six Stages, Gates, and Two-Week Launch: Consolidated Lessons
 
-These ten lessons are the site's teaching copy of module T20.5 "Delivery: six stages, gates, two-week launch". Each concept is taught once, in the house tutorial format, drawing only on nine repository sources. The site publishes them at `/learn/forward-deployed/delivery-stages-and-gates`.
+These eleven lessons are the site's teaching copy of module T20.5 "Delivery: six stages, gates, two-week launch". Each concept is taught once, in the house tutorial format, drawing only on nine repository sources. The site publishes them at `/learn/forward-deployed/delivery-stages-and-gates`.
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
@@ -14,6 +14,7 @@ These ten lessons are the site's teaching copy of module T20.5 "Delivery: six st
 | 8 | [Pilots That Predict Production](08_Pilots_That_Predict_Production.md) | `pilots-that-predict-production` | Drafted |
 | 9 | [Handover and Ownership](09_Handover_and_Ownership.md) | `handover-and-ownership` | Drafted |
 | 10 | [Practise Pilots and Handover](10_Practise_Pilots_and_Handover.md) | `practise-pilots-and-handover` | Drafted |
+| 11 | [Onboarding a New Customer Integration](11_Onboarding_a_New_Customer_Integration.md) | `onboarding-a-new-customer-integration` | Drafted |
 
 ## Sources
 
@@ -24,4 +25,4 @@ The source files stay in the repository unchanged. The site no longer publishes 
 
 Every claim, number and example in these lessons comes from the sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
 
-Lessons 8 to 10 were added for the Forward Deployed Engineering track on 17 November 2026. They are the author's own, with fictional customers, and do not draw on the sources above. The site orders the lessons by the module's `lessons` list in `site/src/lib/curriculum.ts`, not by file number.
+Lessons 8 to 10 were added for the Forward Deployed Engineering track on 17 November 2026. They are the author's own, with fictional customers, and do not draw on the sources above. Lesson 11, "Onboarding a new customer integration", was added for the Integration plan on 18 November 2026. It is the author's own, with fictional customers, and the practice lesson `10` gained one question for it. The site orders the lessons by the module's `lessons` list in `site/src/lib/curriculum.ts`, not by file number.

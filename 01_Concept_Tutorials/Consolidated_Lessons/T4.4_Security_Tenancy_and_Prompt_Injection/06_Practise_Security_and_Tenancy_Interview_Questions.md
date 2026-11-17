@@ -73,6 +73,9 @@ Through a tool description or result (tool poisoning), through text stored in me
 **15. "The refund limit is in the system prompt. Is that enough?"**
 No. The prompt makes good proposals likely, but the model can be persuaded and is not consistent. A policy engine outside the model decides on facts from trusted sources, versioned apart from the prompt, and returns a safe reason code. → [Policy Lives Outside the Prompt](10_Policy_Lives_Outside_the_Prompt.md)
 
+**16. "A customer clicked Disconnect on your connector. What has to happen before you show success?"**
+Revoke the refresh token at the provider, delete the tokens from the vault, stop scheduled and queued jobs for that connection, apply the contract's rule for data already synced, and audit each step. Jobs must read credentials only through the connection record, so removing it removes access. Treat an invalid-grant refresh as a disconnect started on the provider's side. → [Connecting a Customer's Account with OAuth](11_Connecting_a_Customers_Account_with_OAuth.md)
+
 ## Worked Example: Threat-Model a Multi-Tenant Agent Platform
 
 The prompt: *"Your platform runs support agents for many companies. It connects to their helpdesks and CRMs and can issue refunds and send email. Walk me through the threats."*
@@ -116,4 +119,4 @@ Every threat met a control outside the model. That is the shape of a strong answ
 
 ## References
 
-**Sources:** The "Interview lens", "Checkpoint" and quoted answer sections of `01_Identity_Secrets_Tenant_Fairness.md` and `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns); "What to say if asked directly" in `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement); and the §1 and §6 "Interview Answer Template" sections of `Cross_Cutting_System_Design_Quick_Reference_v2.md`. Every answer is rewritten and pointed at lessons 1 to 5 of this module.
+**Sources:** The "Interview lens", "Checkpoint" and quoted answer sections of `01_Identity_Secrets_Tenant_Fairness.md` and `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns); "What to say if asked directly" in `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement); and the §1 and §6 "Interview Answer Template" sections of `Cross_Cutting_System_Design_Quick_Reference_v2.md`. Every answer is rewritten and pointed at lessons 1 to 5 of this module. Questions 12 to 16 point at the lessons added in November 2026 and draw on their sources.

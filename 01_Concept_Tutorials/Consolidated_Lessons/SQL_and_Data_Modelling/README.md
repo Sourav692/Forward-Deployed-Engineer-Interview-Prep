@@ -8,9 +8,10 @@ These files are the source of the module `sql-and-data-modelling` in the `engine
 | 2 | [Modelling Entities, Keys and Constraints](02_Modelling_Entities_Keys_and_Constraints.md) | `modelling-entities-keys-and-constraints` | Drafted |
 | 3 | [Indexes and Query Plans](03_Indexes_and_Query_Plans.md) | `indexes-and-query-plans` | Drafted |
 | 4 | [Transactions, Locking and Isolation](04_Transactions_Locking_and_Isolation.md) | `transactions-locking-and-isolation` | Drafted |
-| 5 | [Practise SQL and Data Modelling](05_Practise_SQL_and_Data_Modelling.md) | `practise-sql-and-data-modelling` | Drafted |
+| 5 | [Modelling the Integration's Own State](06_Modelling_the_Integrations_Own_State.md) | `modelling-the-integrations-own-state` | Drafted |
+| 6 | [Practise SQL and Data Modelling](05_Practise_SQL_and_Data_Modelling.md) | `practise-sql-and-data-modelling` | Drafted |
 
-These lessons are the author's own, added for the FDE track on 17 November 2026, with fictional customers. The Integration plan's lesson "Modelling the integration's own state" will join this module later.
+These lessons are the author's own, added for the FDE track on 17 November 2026, with fictional customers. Lesson 5, "Modelling the integration's own state" (file `06`), was added for the Integration plan on 18 November 2026. It is the author's own, with a fictional customer, and the practice lesson gained one question for it. The site orders lessons by the module's `lessons` list in `site/src/lib/curriculum.ts`, not by file number.
 
 ## Sources
 

@@ -34,6 +34,9 @@ A self-hostable tracing backend inside their network. The repository only demons
 **"The customer wants an audit trail for compliance. How far do logs and traces get you?"**
 Most of the way: structured logs and traces record who asked, what the policy decided and what was returned. A real compliance trail also needs a retention policy and access controls on the trail itself, which the repository's notebooks do not cover.
 
+**"Partners keep opening tickets about rejected API calls. What do you change?"**
+The error responses. Return a stable machine-readable code, a message naming the fix, the field at fault, whether and when to retry, and the request ID, in a standard shape such as RFC 9457 problem details. Group rejections by code on the partner's dashboard. Keep stack traces and internal names out, and reveal detail only after authentication. See [Standard Tracing and Customer-Facing Dashboards](/learn/production-ai/observability-and-diagnosis/standard-tracing-and-customer-facing-dashboards).
+
 **"Why tally cost by purpose rather than only in total?"**
 A total cannot say what to change. A split by rewrite, rerank, grade, synthesis and so on shows, for example, that the reranker is 60% of the cost.
 
@@ -61,6 +64,9 @@ First-token, inter-token and total latency as separate targets at P95 or P99, pl
 
 **"How do you catch a problem before customers see it?"**
 Drift alerts on refusal rate, tool error rate and cost per run against a rolling baseline, plus a scheduled evaluation run. Sudden changes in those usually come before a visible incident.
+
+**"Which alerts would you put on a partner integration?"**
+Age of the oldest message beside queue depth, because depth can look normal while one partition is stuck for hours. Dead-letter queue growth, authentication failures per connection, and reconciliation drift from a scheduled count or checksum on both sides. Page on broken freshness promises or many connections failing at once, and send single-connection failures to the owning team as tickets. See [Production Monitoring](/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos).
 
 > **Warning: do not answer an incident question with a fix.** "I would switch to a bigger model" before any measurement is the weak answer in every playbook case. Clarify and measure first, even if you already suspect the cause.
 

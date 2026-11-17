@@ -30,6 +30,8 @@ Real use will show parts of the original plan were wrong. That is normal, and it
 
 The loop only works if failures become planned work rather than firefights. Each important failure should become a scheduled fix and, where it involves AI behaviour, a new test case, so the same failure is caught next time.
 
+When the first failure report arrives from a customer who calls you through an SDK or client library, support needs three facts before anyone debugs: the exact version, the runtime and the last known good request. See [Stabilise the Customer First](../../../05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/01_Stabilise_the_Customer_First.md).
+
 ## Classify the Failure Before Fixing It
 
 A failure report rarely names its cause. Before choosing a fix, sort it into one of eight kinds: product design, code, data, operations, search and retrieval, AI behaviour, documentation, or user training.

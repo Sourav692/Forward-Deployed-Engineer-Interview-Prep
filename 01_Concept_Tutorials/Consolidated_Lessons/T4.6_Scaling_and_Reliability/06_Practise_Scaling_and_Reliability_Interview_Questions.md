@@ -31,6 +31,9 @@ No. Caching moves the median. Timeouts, circuit breakers and fallback to a small
 **"Why not one shared index with a tenant filter?"**
 A big tenant's rebuild slows everyone, and one filter mistake exposes everyone. Per-tenant shards keep the blast radius to one tenant.
 
+**"A customer's backfill made live updates three hours late. How do you design the integration so that cannot happen?"**
+Separate lanes. Realtime updates and bulk work (backfills and reconciliation) each get their own queue, workers, share of the partner's rate limit and database connections. Size the realtime share above live peak. Let bulk borrow idle realtime capacity, but realtime always goes first. See [Capacity, Latency, and Cost at Scale](03_Capacity_Latency_and_Cost_at_Scale.md).
+
 ## Answer the Reliability Questions
 
 **"What is the difference between a retry and a circuit breaker?"**
@@ -121,4 +124,4 @@ A strong answer names the resilience chain. It puts cost control before the call
 
 ## References
 
-**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): Checkpoint and Interview lens. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook): Checkpoint. `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §5.2 questions 1 to 3, 6 and 8; §5.3 question 5; §6 mock system design (production LLM gateway); §7 self-check items 1 to 3 and 13 to 14.
+**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): Checkpoint and Interview lens. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook): Checkpoint. `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §5.2 questions 1 to 3, 6 and 8; §5.3 question 5; §6 mock system design (production LLM gateway); §7 self-check items 1 to 3 and 13 to 14. The backfill-lane question (added 18 November 2026) is the author's own.

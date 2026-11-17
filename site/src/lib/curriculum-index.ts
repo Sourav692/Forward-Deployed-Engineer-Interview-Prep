@@ -100,6 +100,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "modelling-entities-keys-and-constraints",
       "indexes-and-query-plans",
       "transactions-locking-and-isolation",
+      "modelling-the-integrations-own-state",
       "practise-sql-and-data-modelling"
     ],
     "practiceMinutes": 240
@@ -1156,6 +1157,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "delegated-authority-and-zero-ambient-authority",
       "tool-poisoning-memory-poisoning-and-the-supply-chain",
       "policy-lives-outside-the-prompt",
+      "connecting-a-customers-account-with-oauth",
       "practise-security-and-tenancy"
     ],
     "practiceMinutes": 210
@@ -1526,6 +1528,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "securing-the-delivery-process",
       "cross-team-ownership-and-cadence",
       "handover-and-ownership",
+      "onboarding-a-new-customer-integration",
       "practise-the-two-week-delivery-round",
       "practise-pilots-and-handover"
     ],

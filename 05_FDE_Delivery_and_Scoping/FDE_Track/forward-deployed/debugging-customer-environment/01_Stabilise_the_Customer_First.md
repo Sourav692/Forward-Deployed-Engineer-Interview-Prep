@@ -32,6 +32,7 @@ Call this **the defensive first reply**: the first message argued about whose fa
 > - Why the first promise is a time for the next update, not a fix.
 > - How to contain harm while the cause is still unknown.
 > - Why software that works in your environment fails in the customer's, and where to look first.
+> - Which three facts support needs when a customer calls through your SDK.
 
 ## Acknowledge before you diagnose
 
@@ -145,6 +146,18 @@ flowchart TB
 
 Selwood's 40 failing branches sat behind a newer branch proxy that blocked the assistant's API host. Head office used the old proxy. The first check in the network row, one call from a failing branch, would have shown it within minutes. The [following a request through the network](../../fde-deploying-in-the-estate/networks-and-identity/01_Following_a_Request_Through_the_Network.md) lesson covers proxies, DNS and TLS in depth.
 
+### Three questions when the customer calls through your SDK
+
+When the customer reaches your service through an SDK or client library you ship, the versions row in Table 2 becomes three questions support must be able to answer within minutes:
+
+- **Which exact SDK version?** Not "the latest": the version string, such as 4.2.1, from the failing host.
+- **Which runtime?** The language runtime, its version and the operating system, such as Node.js 18 on Windows Server 2019.
+- **What was the last known good request?** The request ID and time of the last call from that client that succeeded.
+
+The first two say whether the customer runs something you test. The third brackets the fault in time, ready for the [change timeline](02_Build_the_Change_Timeline.md). Support can answer all three only if the SDK reports its version and runtime on every request, for example in the user-agent header, and the service logs it beside the request ID. The trade-off is a little more data per request against hours of asking the customer to look. Report versions, not hostnames or user details.
+
+At Selwood the cause was the network, not a version. Had the 40 failing branches run an older client library instead, those three answers would have shown it in the first call.
+
 ## Limits of this lesson
 
 - **Contracts set response duties.** Your support agreement may fix response times and who leads. Read it before go-live.
@@ -165,12 +178,22 @@ Each answer is an outline to say in about two minutes. Open the question and try
 
 </details>
 
+<details>
+<summary>Interview question 2. A customer reports errors from your SDK. What must support be able to tell within five minutes, and how do you make that possible?</summary>
+
+- **Answer:** The exact SDK version on the failing host, the runtime and operating system, and the last known good request from that client, with its request ID and time. Version and runtime say whether they run something you test. The last good request brackets the fault for the change timeline. Make it possible by having the SDK send its version and runtime on every request, logged beside the request ID, so support reads it instead of asking.
+- **Trade-off:** More metadata on every call. Keep it to versions, never hostnames or user details.
+- **Follow-up to expect:** "They run an SDK version from two years ago." Say which versions you support, and reproduce on theirs before asking them to upgrade.
+
+</details>
+
 ## References
 
 1. Google, [Effective troubleshooting](https://sre.google/sre-book/effective-troubleshooting/), Site Reliability Engineering, accessed 17 November 2026. Triage before diagnosis, and asking what touched the system last.
 2. Google, [Managing incidents](https://sre.google/sre-book/managing-incidents/), Site Reliability Engineering, accessed 17 November 2026. A single owner and regular updates during an incident.
 3. The Twelve-Factor App, [Dev/prod parity](https://12factor.net/dev-prod-parity), accessed 17 November 2026. The gaps between development and production environments.
-4. The author's own field experience, the basis for the first-reply comparison and the impact questions.
+4. Semantic Versioning, [Semantic Versioning 2.0.0](https://semver.org/), accessed 18 November 2026. Exact version strings and what a change in each part promises.
+5. The author's own field experience, the basis for the first-reply comparison, the impact questions and the three SDK questions.
 
 ## Key takeaways
 
@@ -179,6 +202,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 - Promise a time for the next update, then keep it even when nothing has changed.
 - Contain harm with reversible steps inside the customer's rules.
 - When it works for you and fails for them, search the gaps: network, identity, data, versions and configuration.
+- For an SDK, support must know the exact version, the runtime and the last known good request.
 
 ## Check yourself
 

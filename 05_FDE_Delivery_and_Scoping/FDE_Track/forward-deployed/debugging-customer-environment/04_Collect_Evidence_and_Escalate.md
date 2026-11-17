@@ -30,6 +30,7 @@ Call this **the escalation that bounced**: evidence asked for in ways the custom
 > - How to plan the investigation of an upload that hangs without an error.
 > - What a privacy-safe evidence packet holds, and what never goes in it.
 > - Which workarounds to refuse, and what to offer instead.
+> - How to work through a failed partner API call from its request ID.
 > - How to write an escalation that the next team can act on at once.
 > - What goes in the first customer update.
 
@@ -96,6 +97,22 @@ Under pressure, someone will suggest a shortcut that restores service and breaks
 
 Work inside the customer's controls, even when it is slower. A fix that breaks a control becomes a security incident, and you own it.
 
+## A failed partner call, from the request ID
+
+Many faults are one failed call to a partner's API. A **request ID** identifies one call, set by your service, the partner or both. It joins your logs, traces and the partner's logs while holding no personal data.
+
+When Salcombe's bookings through a partner's scheduling API began failing, the screen showed "Booking failed (ref 9c41e2)". Work from that reference in this order.
+
+1. **Find the call.** Search your logs and traces for the request ID. Note the UTC time, endpoint, attempt number and the partner's own ID.
+2. **Read what came back.** Status, the partner's error code and any retry-after header. No response points at a timeout or the network path, covered in [isolate the failing boundary](03_Isolate_the_Failing_Boundary.md).
+3. **Check the credential.** Did the token expire, and do its granted scopes cover this endpoint? A 401 or 403 usually ends here.
+4. **Check what you sent.** Compare it with a successful call: payload shape, API version, field formats.
+5. **Check limits and the partner's status.** A 429, exhausted rate-limit headers or a partner incident.
+6. **Check what happened next.** Was it retried, could a retry have duplicated it, and did it land in a dead-letter queue?
+7. **Escalate with both IDs.** Send the partner your request ID, theirs, the UTC time, the endpoint, the response and what you ruled out.
+
+Salcombe's call stopped at step 3: a 403 with the code `scope_missing`, after the partner split booking into a new scope. The trade-off is what you keep. Logging IDs and codes for every partner call is cheap. Full bodies would find faults faster but put patient data in your logs, so record only their shape.
+
 ## The escalation packet
 
 Sooner or later you need another team: your product engineers, a vendor or the customer's network team. What you send decides whether they start work or start asking questions. Write it so a stranger could act on it without replying.
@@ -146,12 +163,22 @@ Each answer is an outline to say in about two minutes. Open the question and try
 
 </details>
 
+<details>
+<summary>Interview question 2. A user's screen says "Booking failed" with a reference number. The booking goes through a partner's API. Walk me through your first fifteen minutes.</summary>
+
+- **Answer:** The reference should be the request ID. Find the call: UTC time, endpoint, attempt and the partner's own ID. Read the response: status, error code, retry-after. No response points at a timeout or the network. Then check the credential's scopes, compare with a successful request, check rate limits and partner status, and whether a retry duplicated anything. Escalate with both IDs, the time, the response and what you ruled out.
+- **Trade-off:** Logging only IDs and codes keeps personal data out of logs, but you may need the partner's logs to see the body.
+- **Follow-up to expect:** "The screen showed no reference." Then the first fix is to show one on every failure.
+
+</details>
+
 ## References
 
 1. OWASP, [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html), accessed 17 November 2026. Data that should never be logged, such as session identifiers and passwords.
 2. nginx, [Module ngx_http_core_module](https://nginx.org/en/docs/http/ngx_http_core_module.html), accessed 17 November 2026. Request body size limits and body timeouts on a proxy, such as client_max_body_size and client_body_timeout.
 3. Google, [Effective troubleshooting](https://sre.google/sre-book/effective-troubleshooting/), Site Reliability Engineering, accessed 17 November 2026. Reporting problems with the observed and expected behaviour and steps to reproduce.
-4. The author's own field experience, the basis for the evidence packet and the escalation packet.
+4. W3C, [Trace Context](https://www.w3.org/TR/trace-context/), accessed 18 November 2026. Propagating one trace identifier across services, including to a partner.
+5. The author's own field experience, the basis for the evidence packet, the partner-call checklist and the escalation packet.
 
 ## Key takeaways
 
@@ -160,6 +187,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 - Every network call needs a timeout and an error a user can read.
 - Ask for metadata that locates the fault. Never ask for secrets, sessions or personal data.
 - Refuse workarounds that break the customer's controls, and offer a safe alternative at once.
+- Debug a failed partner call from its request ID: find it, read the response, then check credential, payload, limits and retries.
 - Escalate with summary, impact, timeline, environment, reproduction, evidence, what you ruled out and one ask.
 
 ## Check yourself
