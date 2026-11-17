@@ -1584,8 +1584,13 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T19.3",
     "title": "From one customer to many",
     "track": "fde-in-the-field",
-    "lessons": [],
-    "estMinutes": 180
+    "lessons": [
+      "reusable-need-or-one-off",
+      "configure-template-or-custom",
+      "capacity-and-cross-team-delivery",
+      "practise-field-to-product"
+    ],
+    "practiceMinutes": 180
   },
   {
     "slug": "staff-fde-leadership",

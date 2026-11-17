@@ -2,12 +2,12 @@
 
 These files are the source of the module `field-to-product` in the `fde-in-the-field` track (The FDE role and leading in the field). The site publishes them at `/learn/fde-in-the-field/field-to-product` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `reusable-need-or-one-off` | Planned |
-| 2 | `configure-template-or-custom` | Planned |
-| 3 | `capacity-and-cross-team-delivery` | Planned |
-| 4 | `practise-field-to-product` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Reusable need or one-off](01_Reusable_Need_or_One_Off.md) | `reusable-need-or-one-off` | Drafted |
+| 2 | [Configure, template or custom](02_Configure_Template_or_Custom.md) | `configure-template-or-custom` | Drafted |
+| 3 | [Capacity and cross-team delivery](03_Capacity_and_Cross_Team_Delivery.md) | `capacity-and-cross-team-delivery` | Drafted |
+| 4 | [Practise from one customer to many](04_Practise_From_One_Customer_to_Many.md) | `practise-field-to-product` | Drafted |
 
 ## Sources
 
