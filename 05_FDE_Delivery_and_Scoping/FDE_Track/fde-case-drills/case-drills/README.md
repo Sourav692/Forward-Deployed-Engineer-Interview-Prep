@@ -2,9 +2,13 @@
 
 These files are the source of the module `case-drills` in the `fde-case-drills` track (End-to-end engagements). The site publishes them at `/learn/fde-case-drills/case-drills` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 to 6 | Six short drills, each run as decompose, design, then follow-up questions (slugs set when written) | Planned |
+Six short drills, two per lesson, each run as decompose, design, then follow-up questions in 20 minutes. Each drill links to its full casebook case or end-to-end simulation. The practice lessons sit in the `decomposition` interview round.
+
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Practise case drills 1](01_Practise_Case_Drills_1.md) (billing codes from clinical notes; a health-data hub) | `practise-case-drills-1` | Drafted |
+| 2 | [Practise case drills 2](02_Practise_Case_Drills_2.md) (an order-to-cash sync with the ERP; shipment exceptions) | `practise-case-drills-2` | Drafted |
+| 3 | [Practise case drills 3](03_Practise_Case_Drills_3.md) (an assistant on a multi-customer platform; thirty AI ideas, one first build) | `practise-case-drills-3` | Drafted |
 
 ## Sources
 
