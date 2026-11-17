@@ -60,10 +60,11 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
 })
 
 /**
- * The case studies are too large for one file, so they are dealt into two: whole case
- * studies alternate between `design-1` and `design-2`, keeping each page's sections together.
+ * The case studies and the Learn lessons are each too large for one file, so each is dealt
+ * into two: whole pages alternate between the halves (`design-1` and `design-2`,
+ * `learn-1` and `learn-2`), keeping each page's sections together.
  */
-function splitDesign(entries: SearchEntry[]): [SearchEntry[], SearchEntry[]] {
+function splitByPage(entries: SearchEntry[]): [SearchEntry[], SearchEntry[]] {
   const halves: [SearchEntry[], SearchEntry[]] = [[], []]
   const caseIndex = new Map<string, number>()
   for (const entry of entries) {
@@ -76,9 +77,10 @@ function splitDesign(entries: SearchEntry[]): [SearchEntry[], SearchEntry[]] {
 
 /** The entries for one `/search/{area}.json` file. */
 export async function getSearchArea(area: SearchArea): Promise<SearchEntry[]> {
-  if (area === 'learn') return getLearnSearchEntries()
+  if (area === 'learn-1') return splitByPage(await getLearnSearchEntries())[0]
+  if (area === 'learn-2') return splitByPage(await getLearnSearchEntries())[1]
   const content = await getContentSearchEntries()
-  if (area === 'design-1') return splitDesign(content.design)[0]
-  if (area === 'design-2') return splitDesign(content.design)[1]
+  if (area === 'design-1') return splitByPage(content.design)[0]
+  if (area === 'design-2') return splitByPage(content.design)[1]
   return content[area]
 }
