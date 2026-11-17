@@ -192,6 +192,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'Tools that stop sensitive data leaving where it should stay.' },
   { term: 'DLS', expansion: 'document-level security', group: 'Security and compliance',
     plain: 'A search index that filters results per document by who is asking, so a user only ever matches what they may read.' },
+  { term: 'VPN', expansion: 'virtual private network', group: 'Security and compliance',
+    plain: 'An encrypted tunnel that joins two networks, or a laptop to a network, over the internet, so traffic behaves as if it were on the private network.' },
   { term: 'TLS', expansion: 'Transport Layer Security', group: 'Security and compliance',
     plain: 'The encryption that protects data in transit, the S in HTTPS. mTLS makes both sides prove who they are.' },
   { term: 'HMAC', expansion: 'hash-based message authentication code', group: 'Security and compliance',
