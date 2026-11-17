@@ -1805,9 +1805,14 @@ export const INDEX_MODULES: IndexModule[] = [
       "three-systems-one-customer",
       "spreadsheets-to-an-approvals-app",
       "a-permission-aware-knowledge-assistant",
-      "an-agent-that-changes-accounts"
+      "an-agent-that-changes-accounts",
+      "shipping-into-a-locked-down-network",
+      "the-incident-with-two-suspects",
+      "prototype-to-production",
+      "the-live-migration-cutover",
+      "the-deployment-users-avoid"
     ],
-    "practiceMinutes": 300
+    "practiceMinutes": 600
   },
   {
     "slug": "case-drills",
