@@ -1730,8 +1730,13 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.3",
     "title": "Passing the customer's security review",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 180
+    "lessons": [
+      "threat-modelling-a-deployment",
+      "encryption-keys-and-audit-evidence",
+      "residency-retention-and-deletion",
+      "practise-the-security-review"
+    ],
+    "practiceMinutes": 180
   },
   {
     "slug": "releases-cutover-and-recovery",

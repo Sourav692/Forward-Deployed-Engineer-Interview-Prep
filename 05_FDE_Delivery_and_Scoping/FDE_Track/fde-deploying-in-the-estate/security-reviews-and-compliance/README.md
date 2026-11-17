@@ -2,12 +2,12 @@
 
 These files are the source of the module `security-reviews-and-compliance` in the `fde-deploying-in-the-estate` track (Deploying and operating in the customer's estate). The site publishes them at `/learn/fde-deploying-in-the-estate/security-reviews-and-compliance` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `threat-modelling-a-deployment` | Planned |
-| 2 | `encryption-keys-and-audit-evidence` | Planned |
-| 3 | `residency-retention-and-deletion` | Planned |
-| 4 | `practise-the-security-review` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Threat modelling a deployment](01_Threat_Modelling_a_Deployment.md) | `threat-modelling-a-deployment` | Drafted |
+| 2 | [Encryption, keys and audit evidence](02_Encryption_Keys_and_Audit_Evidence.md) | `encryption-keys-and-audit-evidence` | Drafted |
+| 3 | [Residency, retention and deletion](03_Residency_Retention_and_Deletion.md) | `residency-retention-and-deletion` | Drafted |
+| 4 | [Practise the security review](04_Practise_the_Security_Review.md) | `practise-the-security-review` | Drafted |
 
 ## Sources
 
