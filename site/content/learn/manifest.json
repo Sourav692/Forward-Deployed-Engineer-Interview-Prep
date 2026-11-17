@@ -7620,6 +7620,78 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "screens-built-around-decisions",
+      "title": "Screens Built Around Decisions",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/01_Screens_Built_Around_Decisions.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/screens-built-around-decisions",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "honest-async-ux",
+      "title": "Honest Async Interfaces",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/02_Honest_Async_Interfaces.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/honest-async-ux",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "human-review-and-approval",
+      "title": "Human Review and Approval",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/03_Human_Review_and_Approval.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "testing-what-the-customer-will-break",
+      "title": "Testing What the Customer Will Break",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/04_Testing_What_the_Customer_Will_Break.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/testing-what-the-customer-will-break",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "acceptance-with-the-customer",
+      "title": "Acceptance with the Customer",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/05_Acceptance_with_the_Customer.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/acceptance-with-the-customer",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-building-for-operators",
+      "title": "Practise Building for Operators",
+      "track": "fde-building-in-the-estate",
+      "module": "building-for-operators",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/06_Practise_Building_for_Operators.md",
+      "estMinutes": 6,
+      "href": "/learn/fde-building-in-the-estate/building-for-operators/practise-building-for-operators",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
