@@ -1460,7 +1460,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "customer-discovery",
-    "code": "T19.1",
+    "code": "T20.1",
     "title": "Customer discovery and problem decomposition",
     "track": "forward-deployed",
     "lessons": [
@@ -1474,7 +1474,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scoping-an-fde-project",
-    "code": "T19.2",
+    "code": "T20.2",
     "title": "Scoping an FDE project",
     "track": "forward-deployed",
     "lessons": [
@@ -1490,7 +1490,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "judgement-cases",
-    "code": "T19.3",
+    "code": "T20.4",
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
@@ -1498,7 +1498,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "delivery-stages-and-gates",
-    "code": "T19.4",
+    "code": "T20.5",
     "title": "Delivery: six stages, gates, two-week launch",
     "track": "forward-deployed",
     "lessons": [
@@ -1514,7 +1514,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adoption-and-impact",
-    "code": "T19.5",
+    "code": "T20.6",
     "title": "Adoption, change management and business impact",
     "track": "forward-deployed",
     "lessons": [
@@ -1526,15 +1526,159 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "debugging-customer-environment",
-    "code": "T19.6",
+    "code": "T20.7",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
     "lessons": [],
     "estMinutes": 180
   },
   {
+    "slug": "fde-role-and-boundaries",
+    "code": "T19.1",
+    "title": "The FDE role and its boundaries",
+    "track": "fde-in-the-field",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "stakeholder-communication",
+    "code": "T19.2",
+    "title": "Stakeholder communication",
+    "track": "fde-in-the-field",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "field-to-product",
+    "code": "T19.3",
+    "title": "From one customer to many",
+    "track": "fde-in-the-field",
+    "lessons": [],
+    "estMinutes": 180
+  },
+  {
+    "slug": "staff-fde-leadership",
+    "code": "T19.4",
+    "title": "Staff FDE leadership",
+    "track": "fde-in-the-field",
+    "lessons": [],
+    "estMinutes": 225
+  },
+  {
+    "slug": "requirements-and-solution-design",
+    "code": "T20.3",
+    "title": "Requirements and solution design",
+    "track": "forward-deployed",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "working-in-customer-code",
+    "code": "T21.1",
+    "title": "Working in a customer's code",
+    "track": "fde-building-in-the-estate",
+    "lessons": [],
+    "estMinutes": 315
+  },
+  {
+    "slug": "customer-data-pipelines",
+    "code": "T21.2",
+    "title": "Data pipelines in the customer's estate",
+    "track": "fde-building-in-the-estate",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "building-for-operators",
+    "code": "T21.3",
+    "title": "Building for the people who do the work",
+    "track": "fde-building-in-the-estate",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "choosing-the-ai-approach",
+    "code": "T21.4",
+    "title": "Choosing the AI approach",
+    "track": "fde-building-in-the-estate",
+    "lessons": [],
+    "estMinutes": 315
+  },
+  {
+    "slug": "ai-delivery-in-customer-estates",
+    "code": "T21.5",
+    "title": "Shipping RAG and agents into a customer's estate",
+    "track": "fde-building-in-the-estate",
+    "lessons": [],
+    "estMinutes": 360
+  },
+  {
+    "slug": "deployment-models-and-environments",
+    "code": "T23.1",
+    "title": "Deployment models and environments",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 315
+  },
+  {
+    "slug": "networks-and-identity",
+    "code": "T23.2",
+    "title": "Customer networks and identity",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 225
+  },
+  {
+    "slug": "security-reviews-and-compliance",
+    "code": "T23.3",
+    "title": "Passing the customer's security review",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 180
+  },
+  {
+    "slug": "releases-cutover-and-recovery",
+    "code": "T23.4",
+    "title": "Releases, cutover and recovery",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
+    "slug": "operating-after-go-live",
+    "code": "T23.5",
+    "title": "Running it after go-live",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 225
+  },
+  {
+    "slug": "reliability-performance-and-cost",
+    "code": "T23.6",
+    "title": "Reliability, performance and cost in their estate",
+    "track": "fde-deploying-in-the-estate",
+    "lessons": [],
+    "estMinutes": 225
+  },
+  {
+    "slug": "end-to-end-engagements",
+    "code": "T24.1",
+    "title": "End-to-end engagements",
+    "track": "fde-case-drills",
+    "lessons": [],
+    "estMinutes": 900
+  },
+  {
+    "slug": "case-drills",
+    "code": "T24.2",
+    "title": "Short case drills",
+    "track": "fde-case-drills",
+    "lessons": [],
+    "estMinutes": 270
+  },
+  {
     "slug": "telling-the-build-story",
-    "code": "T20.1",
+    "code": "T26.1",
     "title": "Telling the build story",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1549,7 +1693,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-the-story-bank",
-    "code": "T20.2",
+    "code": "T26.2",
     "title": "The behavioural round",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1677,7 +1821,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "capstone-build",
-    "code": "T21.1",
+    "code": "T27.1",
     "title": "Capstone build",
     "track": "capstone-and-portfolio",
     "lessons": [
@@ -1688,7 +1832,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "portfolio-write-up",
-    "code": "T21.2",
+    "code": "T27.2",
     "title": "Portfolio write-up and presentation",
     "track": "capstone-and-portfolio",
     "lessons": [],
@@ -2104,12 +2248,24 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     ]
   },
   {
-    "slug": "forward-deployed",
+    "slug": "fde-in-the-field",
     "code": "T19",
-    "title": "Forward Deployed Engineering",
+    "title": "The FDE Role and Leading in the Field",
+    "modules": [
+      "fde-role-and-boundaries",
+      "stakeholder-communication",
+      "field-to-product",
+      "staff-fde-leadership"
+    ]
+  },
+  {
+    "slug": "forward-deployed",
+    "code": "T20",
+    "title": "Discovery, Scoping and Delivery",
     "modules": [
       "customer-discovery",
       "scoping-an-fde-project",
+      "requirements-and-solution-design",
       "judgement-cases",
       "delivery-stages-and-gates",
       "adoption-and-impact",
@@ -2117,8 +2273,54 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     ]
   },
   {
+    "slug": "fde-building-in-the-estate",
+    "code": "T21",
+    "title": "Building Inside the Customer's Estate",
+    "modules": [
+      "working-in-customer-code",
+      "customer-data-pipelines",
+      "building-for-operators",
+      "choosing-the-ai-approach",
+      "ai-delivery-in-customer-estates"
+    ]
+  },
+  {
+    "slug": "enterprise-integration",
+    "code": "T22",
+    "title": "Enterprise Integration",
+    "modules": []
+  },
+  {
+    "slug": "fde-deploying-in-the-estate",
+    "code": "T23",
+    "title": "Deploying and Operating in the Customer's Estate",
+    "modules": [
+      "deployment-models-and-environments",
+      "networks-and-identity",
+      "security-reviews-and-compliance",
+      "releases-cutover-and-recovery",
+      "operating-after-go-live",
+      "reliability-performance-and-cost"
+    ]
+  },
+  {
+    "slug": "fde-case-drills",
+    "code": "T24",
+    "title": "End-to-End Engagements",
+    "modules": [
+      "end-to-end-engagements",
+      "case-drills"
+    ]
+  },
+  {
+    "slug": "fde-take-home",
+    "code": "T25",
+    "title": "The Take-Home",
+    "modules": []
+  },
+  {
     "slug": "communication-and-behavioural",
-    "code": "T20",
+    "code": "T26",
     "title": "Communication and Behavioural",
     "modules": [
       "telling-the-build-story",
@@ -2139,7 +2341,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "capstone-and-portfolio",
-    "code": "T21",
+    "code": "T27",
     "title": "Capstone and Portfolio",
     "modules": [
       "capstone-build",

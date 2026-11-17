@@ -182,14 +182,32 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'production-evaluation-capstone',
   ],
   'ai-systems-design': ['design-framework', 'sixty-minute-whiteboard', 'architecture-patterns', 'classic-ai-designs'],
+  'fde-in-the-field': ['fde-role-and-boundaries', 'stakeholder-communication', 'field-to-product', 'staff-fde-leadership'],
   'forward-deployed': [
     'customer-discovery',
     'scoping-an-fde-project',
+    'requirements-and-solution-design',
     'judgement-cases',
     'delivery-stages-and-gates',
     'adoption-and-impact',
     'debugging-customer-environment',
   ],
+  'fde-building-in-the-estate': [
+    'working-in-customer-code',
+    'customer-data-pipelines',
+    'building-for-operators',
+    'choosing-the-ai-approach',
+    'ai-delivery-in-customer-estates',
+  ],
+  'fde-deploying-in-the-estate': [
+    'deployment-models-and-environments',
+    'networks-and-identity',
+    'security-reviews-and-compliance',
+    'releases-cutover-and-recovery',
+    'operating-after-go-live',
+    'reliability-performance-and-cost',
+  ],
+  'fde-case-drills': ['end-to-end-engagements', 'case-drills'],
   'communication-and-behavioural': ['telling-the-build-story', 'building-the-story-bank'],
   'interview-practice': [
     'case-study-worksheets',
@@ -228,6 +246,12 @@ export const GAP_MODULES: readonly string[] = [
   'coding-interview-patterns',
   'company-loops',
   'coding-round-practice',
+  'requirements-and-solution-design',
+  // The FDE tracks added in November 2026 are Coming soon until their lessons land.
+  ...TRACK_MODULES['fde-in-the-field'],
+  ...TRACK_MODULES['fde-building-in-the-estate'],
+  ...TRACK_MODULES['fde-deploying-in-the-estate'],
+  ...TRACK_MODULES['fde-case-drills'],
   ...TRACK_MODULES['production-ai'].slice(TRACK_MODULES['production-ai'].indexOf('the-evaluation-lifecycle')),
 ]
 
@@ -636,7 +660,7 @@ export const PATHS: LearningPath[] = [
       'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
-      // T19 Forward Deployed Engineering and T16.7 Evaluation and release gates.
+      // T20 Discovery, Scoping and Delivery and T16.7 Evaluation and release gates.
       'customer-discovery': 'required',
       'scoping-an-fde-project': 'required',
       'judgement-cases': 'required',
