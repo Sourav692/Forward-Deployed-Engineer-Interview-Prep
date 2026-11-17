@@ -1800,8 +1800,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T24.1",
     "title": "End-to-end engagements",
     "track": "fde-case-drills",
-    "lessons": [],
-    "estMinutes": 900
+    "lessons": [
+      "the-vague-ai-for-operations-request",
+      "three-systems-one-customer",
+      "spreadsheets-to-an-approvals-app",
+      "a-permission-aware-knowledge-assistant",
+      "an-agent-that-changes-accounts"
+    ],
+    "practiceMinutes": 300
   },
   {
     "slug": "case-drills",

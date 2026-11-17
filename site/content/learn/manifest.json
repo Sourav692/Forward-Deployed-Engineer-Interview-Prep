@@ -8364,6 +8364,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "the-vague-ai-for-operations-request",
+      "title": "The Vague AI for Operations Request",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/01_The_Vague_AI_for_Operations_Request.md",
+      "estMinutes": 14,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/the-vague-ai-for-operations-request",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "three-systems-one-customer",
+      "title": "Three Systems, One Customer",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/02_Three_Systems_One_Customer.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "spreadsheets-to-an-approvals-app",
+      "title": "Spreadsheets to an Approvals App",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/03_Spreadsheets_to_an_Approvals_App.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/spreadsheets-to-an-approvals-app",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "a-permission-aware-knowledge-assistant",
+      "title": "A Permission-aware Knowledge Assistant",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/04_A_Permission_Aware_Knowledge_Assistant.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/a-permission-aware-knowledge-assistant",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "an-agent-that-changes-accounts",
+      "title": "An Agent That Changes Accounts",
+      "track": "fde-case-drills",
+      "module": "end-to-end-engagements",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/05_An_Agent_That_Changes_Accounts.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-case-drills/end-to-end-engagements/an-agent-that-changes-accounts",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
