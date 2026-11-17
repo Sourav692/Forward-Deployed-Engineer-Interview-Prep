@@ -1758,8 +1758,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T23.5",
     "title": "Running it after go-live",
     "track": "fde-deploying-in-the-estate",
-    "lessons": [],
-    "estMinutes": 225
+    "lessons": [
+      "telemetry-the-customer-can-use",
+      "slos-and-alerts-that-match-impact",
+      "incidents-with-a-customer-watching",
+      "maintenance-and-drift",
+      "practise-operating-after-go-live"
+    ],
+    "practiceMinutes": 225
   },
   {
     "slug": "reliability-performance-and-cost",

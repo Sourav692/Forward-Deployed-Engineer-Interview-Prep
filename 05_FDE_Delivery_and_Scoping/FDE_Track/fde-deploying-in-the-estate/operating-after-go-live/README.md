@@ -2,13 +2,13 @@
 
 These files are the source of the module `operating-after-go-live` in the `fde-deploying-in-the-estate` track (Deploying and operating in the customer's estate). The site publishes them at `/learn/fde-deploying-in-the-estate/operating-after-go-live` once they are written and wired in `site/src/lib/curriculum.ts`.
 
-| # | Site slug | Status |
-|---|---|---|
-| 1 | `telemetry-the-customer-can-use` | Planned |
-| 2 | `slos-and-alerts-that-match-impact` | Planned |
-| 3 | `incidents-with-a-customer-watching` | Planned |
-| 4 | `maintenance-and-drift` | Planned |
-| 5 | `practise-operating-after-go-live` | Planned |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Telemetry the customer can use](01_Telemetry_the_Customer_Can_Use.md) | `telemetry-the-customer-can-use` | Drafted |
+| 2 | [SLOs and alerts that match impact](02_SLOs_and_Alerts_That_Match_Impact.md) | `slos-and-alerts-that-match-impact` | Drafted |
+| 3 | [Incidents with a customer watching](03_Incidents_With_a_Customer_Watching.md) | `incidents-with-a-customer-watching` | Drafted |
+| 4 | [Maintenance and drift](04_Maintenance_and_Drift.md) | `maintenance-and-drift` | Drafted |
+| 5 | [Practise operating after go-live](05_Practise_Operating_After_Go_Live.md) | `practise-operating-after-go-live` | Drafted |
 
 ## Sources
 

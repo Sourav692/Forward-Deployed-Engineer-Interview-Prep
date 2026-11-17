@@ -8100,6 +8100,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "telemetry-the-customer-can-use",
+      "title": "Telemetry the Customer Can Use",
+      "track": "fde-deploying-in-the-estate",
+      "module": "operating-after-go-live",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/01_Telemetry_the_Customer_Can_Use.md",
+      "estMinutes": 14,
+      "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/telemetry-the-customer-can-use",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "slos-and-alerts-that-match-impact",
+      "title": "SLOs and Alerts that Match Impact",
+      "track": "fde-deploying-in-the-estate",
+      "module": "operating-after-go-live",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/02_SLOs_and_Alerts_That_Match_Impact.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/slos-and-alerts-that-match-impact",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "incidents-with-a-customer-watching",
+      "title": "Incidents with a Customer Watching",
+      "track": "fde-deploying-in-the-estate",
+      "module": "operating-after-go-live",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/03_Incidents_With_a_Customer_Watching.md",
+      "estMinutes": 14,
+      "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "maintenance-and-drift",
+      "title": "Maintenance and Drift",
+      "track": "fde-deploying-in-the-estate",
+      "module": "operating-after-go-live",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/04_Maintenance_and_Drift.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/maintenance-and-drift",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-operating-after-go-live",
+      "title": "Practise Operating After Go-live",
+      "track": "fde-deploying-in-the-estate",
+      "module": "operating-after-go-live",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/05_Practise_Operating_After_Go_Live.md",
+      "estMinutes": 9,
+      "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/practise-operating-after-go-live",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
