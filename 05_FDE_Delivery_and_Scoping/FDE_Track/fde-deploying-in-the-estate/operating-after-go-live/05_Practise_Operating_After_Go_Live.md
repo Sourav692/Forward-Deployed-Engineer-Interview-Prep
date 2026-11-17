@@ -1,6 +1,6 @@
 ---
 title: "Practise operating after go-live"
-subtitle: "Nine practice questions on broken traces, leaked log data, stale dashboards, telemetry and dashboard design, incident rehearsals, customer updates, postmortems and data-drift checks."
+subtitle: "Ten practice questions on broken traces, leaked log data, stale dashboards, telemetry and dashboard design, incident rehearsals, customer updates, postmortems, restarts and data-drift checks."
 track: "Deploying and Operating in the Customer's Estate"
 module_group: Release and operate
 module_code: T23.5
@@ -27,6 +27,7 @@ Every customer and figure below is fictional.
 > - Spotting dashboards that look current over stale data.
 > - Designing telemetry and dashboards for a workflow with many hops.
 > - Rehearsing incidents, updating customers and writing postmortems.
+- Treating a restart as a way to buy time, not as the fix.
 > - Monitoring a customer's data feed for freshness and schema drift.
 
 ## Telemetry in the field
@@ -109,12 +110,21 @@ Taught in [incidents with a customer watching](03_Incidents_With_a_Customer_Watc
 
 </details>
 
+<details>
+<summary>Practice question 9. Caister Water's meter-reading service hangs every four or five days. Each time, on-call restarts it, readings flow again and the ticket is closed. Caister's operations lead asks whether the problem is fixed. What do you tell her, and what do you do?</summary>
+
+- **Answer:** Tell her no. The restart restores service, but the cause is still there, which is why it keeps coming back. Next time, capture evidence before restarting: thread dumps, memory and connection-pool figures, recent logs and the time of the last good reading. Restart within an agreed limit if readings are backing up. Then track down the cause, perhaps a leaked connection or a stuck lock, fix it and confirm the hangs stop. Give her the plan, and keep one ticket open until the fix is proven.
+- **Trade-off:** Capturing evidence delays service by a few minutes. Agree a time limit, so on-call never holds an outage open to gather data.
+- **Follow-up to expect:** "Can we schedule a nightly restart?" Only as a stated stopgap with an end date, while the fix is found.
+
+</details>
+
 ## Data drift
 
 Taught in [maintenance and drift](04_Maintenance_and_Drift.md).
 
 <details>
-<summary>Practice question 9. Ravensworth sends a nightly policy feed that the triage system uses to check cover. Design its freshness and schema-drift monitoring.</summary>
+<summary>Practice question 10. Ravensworth sends a nightly policy feed that the triage system uses to check cover. Design its freshness and schema-drift monitoring.</summary>
 
 - **Answer:** Freshness: alert if the newest policy record is older than 26 hours, allowing for a late feed. Completeness: compare the feed's row count with the source system's count and with the last seven nights, and alert on a gap above 2%. Reconcile policy IDs weekly. Schema: check required fields, types and allowed values, such as cover codes, on every load. Ignore added fields. Quarantine rows that fail a required field, alert the feed's owner, and show triage users the feed's age.
 - **Trade-off:** Strict checks block a load for one bad row. Quarantining rows keeps the rest flowing.
@@ -132,6 +142,7 @@ Taught in [maintenance and drift](04_Maintenance_and_Drift.md).
 - On sensitive data in logs, revoke credentials first, restrict access, then remove every copy.
 - Show the age of the data, not the page, and alert on it.
 - Rehearse incidents with the customer, send updates on the clock and close every postmortem action.
+- A restart buys time. Capture evidence first, then find and fix the cause.
 - Monitor each source for freshness, completeness and schema, and quarantine what fails.
 
 ## Check yourself
@@ -144,7 +155,7 @@ A batch consumer handles many messages in one span. A span can have only one par
 </details>
 
 <details>
-<summary>2. In practice question 9, why compare the row count with the last seven nights as well as the source?</summary>
+<summary>2. In practice question 10, why compare the row count with the last seven nights as well as the source?</summary>
 
 The source count may be unavailable or wrong on the same night. The recent pattern catches a sudden drop even when no source figure exists.
 
