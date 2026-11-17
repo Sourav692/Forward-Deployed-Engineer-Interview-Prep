@@ -1512,12 +1512,15 @@ export const INDEX_MODULES: IndexModule[] = [
       "telling-a-delivery-story-in-six-stages",
       "delivery-as-a-repeatable-process",
       "role-gated-stage-gates",
+      "pilots-that-predict-production",
       "risk-checks-and-delivery-metrics",
       "securing-the-delivery-process",
       "cross-team-ownership-and-cadence",
-      "practise-the-two-week-delivery-round"
+      "handover-and-ownership",
+      "practise-the-two-week-delivery-round",
+      "practise-pilots-and-handover"
     ],
-    "practiceMinutes": 135
+    "practiceMinutes": 180
   },
   {
     "slug": "adoption-and-impact",
@@ -1526,10 +1529,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "track": "forward-deployed",
     "lessons": [
       "rolling-out-with-a-way-back",
+      "training-and-champions",
+      "measuring-trust-and-overrides",
+      "diagnosing-low-adoption",
       "proving-business-impact",
-      "diagnosing-low-adoption"
+      "realised-versus-estimated-value",
+      "practise-adoption-and-value"
     ],
-    "practiceMinutes": 165
+    "practiceMinutes": 225
   },
   {
     "slug": "debugging-customer-environment",

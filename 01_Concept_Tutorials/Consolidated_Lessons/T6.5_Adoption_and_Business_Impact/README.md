@@ -1,12 +1,16 @@
 # T20.6 Adoption and Business Impact: Consolidated Lessons
 
-These three lessons are the site's teaching copy of module T20.6 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
+These seven lessons are the site's teaching copy of module T20.6 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
 
-| # | Lesson | Site slug |
-|---|---|---|
-| 1 | [Rolling Out With a Way Back](01_Rolling_Out_With_a_Way_Back.md) | `rolling-out-with-a-way-back` |
-| 2 | [Proving Business Impact](02_Proving_Business_Impact.md) | `proving-business-impact` |
-| 3 | [Diagnosing Low Adoption](03_Diagnosing_Low_Adoption.md) | `diagnosing-low-adoption` |
+| # | Lesson | Site slug | Status |
+|---|---|---|---|
+| 1 | [Rolling Out With a Way Back](01_Rolling_Out_With_a_Way_Back.md) | `rolling-out-with-a-way-back` | Published |
+| 2 | [Proving Business Impact](02_Proving_Business_Impact.md) | `proving-business-impact` | Published |
+| 3 | [Diagnosing Low Adoption](03_Diagnosing_Low_Adoption.md) | `diagnosing-low-adoption` | Published |
+| 4 | [Training and Champions](04_Training_and_Champions.md) | `training-and-champions` | Drafted |
+| 5 | [Measuring Trust and Overrides](05_Measuring_Trust_and_Overrides.md) | `measuring-trust-and-overrides` | Drafted |
+| 6 | [Realised Versus Estimated Value](06_Realised_Versus_Estimated_Value.md) | `realised-versus-estimated-value` | Drafted |
+| 7 | [Practise Adoption and Value](07_Practise_Adoption_and_Value.md) | `practise-adoption-and-value` | Drafted |
 
 ## Sources
 
@@ -16,3 +20,5 @@ These three lessons are the site's teaching copy of module T20.6 "Adoption, chan
 - `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, case 17's adoption follow-up, case 4 and the rollout questions (lesson 3, own material).
 
 The source files stay in the repository unchanged. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+
+Lessons 4 to 7 were added for the Forward Deployed Engineering track on 17 November 2026. They are the author's own, with fictional customers, and do not draw on the sources above. They add the change-management coverage (training, champions, trust and realised value) the module lacked. The site orders the lessons by the module's `lessons` list in `site/src/lib/curriculum.ts`, not by file number.
