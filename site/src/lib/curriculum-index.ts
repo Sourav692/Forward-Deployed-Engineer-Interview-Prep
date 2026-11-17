@@ -1609,6 +1609,28 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 120
   },
   {
+    "slug": "receiving-webhooks-safely",
+    "code": "T22.4",
+    "title": "Receiving webhooks safely",
+    "track": "enterprise-integration",
+    "lessons": [
+      "the-webhook-receiver",
+      "practise-receiving-webhooks"
+    ],
+    "practiceMinutes": 60
+  },
+  {
+    "slug": "a-worked-partner-integration",
+    "code": "T22.5",
+    "title": "A worked partner integration",
+    "track": "enterprise-integration",
+    "lessons": [
+      "designing-a-retailer-marketplace-integration",
+      "the-integration-design-interview"
+    ],
+    "practiceMinutes": 90
+  },
+  {
     "slug": "fde-role-and-boundaries",
     "code": "T19.1",
     "title": "The FDE role and its boundaries",
@@ -2501,7 +2523,9 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     "modules": [
       "connecting-enterprise-systems",
       "framing-an-integration",
-      "partner-apis-and-bulk-transfer"
+      "partner-apis-and-bulk-transfer",
+      "receiving-webhooks-safely",
+      "a-worked-partner-integration"
     ]
   },
   {
