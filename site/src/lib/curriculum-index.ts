@@ -1537,8 +1537,10 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T19.1",
     "title": "The FDE role and its boundaries",
     "track": "fde-in-the-field",
-    "lessons": [],
-    "estMinutes": 270
+    "lessons": [
+      "what-an-fde-owns"
+    ],
+    "practiceMinutes": 30
   },
   {
     "slug": "stakeholder-communication",
