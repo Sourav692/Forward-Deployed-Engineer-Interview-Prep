@@ -1552,8 +1552,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T20.7",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
-    "lessons": [],
-    "estMinutes": 180
+    "lessons": [
+      "stabilise-the-customer-first",
+      "build-the-change-timeline",
+      "isolate-the-failing-boundary",
+      "collect-evidence-and-escalate",
+      "practise-debugging-customer-environment"
+    ],
+    "practiceMinutes": 180
   },
   {
     "slug": "fde-role-and-boundaries",
