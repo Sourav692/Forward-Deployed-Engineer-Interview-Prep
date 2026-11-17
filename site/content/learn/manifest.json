@@ -7980,6 +7980,54 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "threat-modelling-a-deployment",
+      "title": "Threat Modelling a Deployment",
+      "track": "fde-deploying-in-the-estate",
+      "module": "security-reviews-and-compliance",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "encryption-keys-and-audit-evidence",
+      "title": "Encryption, Keys and Audit Evidence",
+      "track": "fde-deploying-in-the-estate",
+      "module": "security-reviews-and-compliance",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/02_Encryption_Keys_and_Audit_Evidence.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/encryption-keys-and-audit-evidence",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "residency-retention-and-deletion",
+      "title": "Residency, Retention and Deletion",
+      "track": "fde-deploying-in-the-estate",
+      "module": "security-reviews-and-compliance",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/03_Residency_Retention_and_Deletion.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/residency-retention-and-deletion",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-the-security-review",
+      "title": "Practise the Security Review",
+      "track": "fde-deploying-in-the-estate",
+      "module": "security-reviews-and-compliance",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/04_Practise_the_Security_Review.md",
+      "estMinutes": 5,
+      "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/practise-the-security-review",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "three-formats-for-one-project",
       "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
