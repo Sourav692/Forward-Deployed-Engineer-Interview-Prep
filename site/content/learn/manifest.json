@@ -253,6 +253,66 @@
       "updated": "2026-10-05"
     },
     {
+      "slug": "queues-topics-and-acknowledgements",
+      "title": "Queues, Topics and Acknowledgements",
+      "track": "engineering-foundations",
+      "module": "distributed-systems-essentials",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/01_Queues_Topics_and_Acknowledgements.md",
+      "estMinutes": 11,
+      "href": "/learn/engineering-foundations/distributed-systems-essentials/queues-topics-and-acknowledgements",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "duplicates-in-both-directions",
+      "title": "Duplicates in Both Directions",
+      "track": "engineering-foundations",
+      "module": "distributed-systems-essentials",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/02_Duplicates_in_Both_Directions.md",
+      "estMinutes": 11,
+      "href": "/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "keeping-a-message-pipeline-healthy",
+      "title": "Keeping a Message Pipeline Healthy",
+      "track": "engineering-foundations",
+      "module": "distributed-systems-essentials",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/03_Keeping_a_Message_Pipeline_Healthy.md",
+      "estMinutes": 11,
+      "href": "/learn/engineering-foundations/distributed-systems-essentials/keeping-a-message-pipeline-healthy",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "recoverable-data-syncs",
+      "title": "Recoverable Data Syncs",
+      "track": "engineering-foundations",
+      "module": "distributed-systems-essentials",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md",
+      "estMinutes": 11,
+      "href": "/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs",
+      "updated": "2026-11-18"
+    },
+    {
+      "slug": "practise-distributed-systems-interview-questions",
+      "title": "Practise Distributed Systems Interview Questions",
+      "track": "engineering-foundations",
+      "module": "distributed-systems-essentials",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/05_Practise_Distributed_Systems_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/engineering-foundations/distributed-systems-essentials/practise-distributed-systems-interview-questions",
+      "updated": "2026-11-18"
+    },
+    {
       "slug": "pagination-filtering-and-versioning",
       "title": "Pagination, Filtering and Versioning",
       "track": "engineering-foundations",

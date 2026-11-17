@@ -110,8 +110,14 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T1.5",
     "title": "Distributed systems essentials",
     "track": "engineering-foundations",
-    "lessons": [],
-    "estMinutes": 300
+    "lessons": [
+      "queues-topics-and-acknowledgements",
+      "duplicates-in-both-directions",
+      "keeping-a-message-pipeline-healthy",
+      "recoverable-data-syncs",
+      "practise-distributed-systems-interview-questions"
+    ],
+    "practiceMinutes": 120
   },
   {
     "slug": "coding-interview-patterns",
