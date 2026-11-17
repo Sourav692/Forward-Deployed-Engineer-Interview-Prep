@@ -1647,8 +1647,17 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T21.5",
     "title": "Shipping RAG and agents into a customer's estate",
     "track": "fde-building-in-the-estate",
-    "lessons": [],
-    "estMinutes": 360
+    "lessons": [
+      "inputs-as-they-really-arrive",
+      "extraction-you-can-trust",
+      "permissions-deletions-and-citations",
+      "agents-that-touch-business-systems",
+      "evaluating-on-the-customers-work",
+      "untrusted-content-in-customer-data",
+      "voice-and-multimodal-in-operations",
+      "practise-ai-delivery"
+    ],
+    "practiceMinutes": 330
   },
   {
     "slug": "deployment-models-and-environments",
