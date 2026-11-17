@@ -6886,6 +6886,66 @@
       "updated": "2026-11-17"
     },
     {
+      "slug": "beyond-one-engagement",
+      "title": "Beyond One Engagement",
+      "track": "fde-in-the-field",
+      "module": "staff-fde-leadership",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/01_Beyond_One_Engagement.md",
+      "estMinutes": 13,
+      "href": "/learn/fde-in-the-field/staff-fde-leadership/beyond-one-engagement",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "growing-other-fdes",
+      "title": "Growing Other FDEs",
+      "track": "fde-in-the-field",
+      "module": "staff-fde-leadership",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/02_Growing_Other_FDEs.md",
+      "estMinutes": 12,
+      "href": "/learn/fde-in-the-field/staff-fde-leadership/growing-other-fdes",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "platform-investment-from-field-evidence",
+      "title": "Platform Investment from Field Evidence",
+      "track": "fde-in-the-field",
+      "module": "staff-fde-leadership",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/03_Platform_Investment_from_Field_Evidence.md",
+      "estMinutes": 11,
+      "href": "/learn/fde-in-the-field/staff-fde-leadership/platform-investment-from-field-evidence",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "career-growth-from-fde-to-staff",
+      "title": "Career Growth from FDE to Staff",
+      "track": "fde-in-the-field",
+      "module": "staff-fde-leadership",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/04_Career_Growth_from_FDE_to_Staff.md",
+      "estMinutes": 10,
+      "href": "/learn/fde-in-the-field/staff-fde-leadership/career-growth-from-fde-to-staff",
+      "updated": "2026-11-17"
+    },
+    {
+      "slug": "practise-staff-questions",
+      "title": "Practise Staff Questions",
+      "track": "fde-in-the-field",
+      "module": "staff-fde-leadership",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/05_Practise_Staff_Questions.md",
+      "estMinutes": 8,
+      "href": "/learn/fde-in-the-field/staff-fde-leadership/practise-staff-questions",
+      "updated": "2026-11-17"
+    },
+    {
       "slug": "the-discovery-conversation",
       "title": "The Discovery Conversation",
       "track": "forward-deployed",

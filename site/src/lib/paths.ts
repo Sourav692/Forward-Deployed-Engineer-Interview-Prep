@@ -255,6 +255,7 @@ const FDE_PUBLISHED = new Set<string>([
   'releases-cutover-and-recovery',
   'operating-after-go-live',
   'reliability-performance-and-cost',
+  'staff-fde-leadership',
 ])
 const fdeGap = (track: string): string[] => TRACK_MODULES[track].filter((m) => !FDE_PUBLISHED.has(m))
 
@@ -434,7 +435,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 318,
+    estHours: 323,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -479,7 +480,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 369,
+    estHours: 374,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -535,7 +536,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 319,
+    estHours: 324,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -579,7 +580,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 287,
+    estHours: 292,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -624,7 +625,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 454,
+    estHours: 459,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -639,7 +640,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 374,
+    estHours: 379,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -689,7 +690,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 406,
+    estHours: 411,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
