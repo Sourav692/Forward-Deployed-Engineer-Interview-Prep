@@ -1631,6 +1631,22 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 90
   },
   {
+    "slug": "take-home-assignments",
+    "code": "T25.1",
+    "title": "Take-home assignments",
+    "track": "fde-take-home",
+    "lessons": [
+      "how-take-homes-are-scored",
+      "scoping-the-brief",
+      "building-under-the-clock",
+      "delivering-the-submission",
+      "defending-your-take-home",
+      "practise-take-home-brief-1",
+      "practise-take-home-brief-2"
+    ],
+    "practiceMinutes": 240
+  },
+  {
     "slug": "fde-role-and-boundaries",
     "code": "T19.1",
     "title": "The FDE role and its boundaries",
@@ -2554,7 +2570,9 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     "slug": "fde-take-home",
     "code": "T25",
     "title": "The Take-Home",
-    "modules": []
+    "modules": [
+      "take-home-assignments"
+    ]
   },
   {
     "slug": "communication-and-behavioural",

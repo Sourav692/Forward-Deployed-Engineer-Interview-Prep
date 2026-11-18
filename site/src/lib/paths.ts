@@ -209,6 +209,7 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
   ],
   'enterprise-integration': ['connecting-enterprise-systems', 'framing-an-integration', 'partner-apis-and-bulk-transfer', 'receiving-webhooks-safely', 'a-worked-partner-integration'],
   'fde-case-drills': ['end-to-end-engagements', 'case-drills'],
+  'fde-take-home': ['take-home-assignments'],
   'communication-and-behavioural': ['telling-the-build-story', 'building-the-story-bank'],
   'interview-practice': [
     'case-study-worksheets',
@@ -266,6 +267,7 @@ const FDE_PUBLISHED = new Set<string>([
   'partner-apis-and-bulk-transfer',
   'receiving-webhooks-safely',
   'a-worked-partner-integration',
+  'take-home-assignments',
 ])
 const fdeGap = (track: string): string[] => TRACK_MODULES[track].filter((m) => !FDE_PUBLISHED.has(m))
 
@@ -280,6 +282,7 @@ export const GAP_MODULES: readonly string[] = [
   ...fdeGap('fde-deploying-in-the-estate'),
   ...fdeGap('enterprise-integration'),
   ...fdeGap('fde-case-drills'),
+  ...fdeGap('fde-take-home'),
   ...TRACK_MODULES['production-ai'].slice(TRACK_MODULES['production-ai'].indexOf('the-evaluation-lifecycle')),
 ]
 
@@ -387,6 +390,7 @@ const FDE_FLAGS = flags('recommended', {
     'enterprise-integration',
     'fde-deploying-in-the-estate',
     'fde-case-drills',
+    'fde-take-home',
     'communication-and-behavioural',
     'interview-practice',
   ],
@@ -451,7 +455,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 363,
+    estHours: 368,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -496,7 +500,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 418,
+    estHours: 424,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -552,7 +556,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 366,
+    estHours: 371,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -596,7 +600,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 336,
+    estHours: 341,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -641,7 +645,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 503,
+    estHours: 508,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -656,7 +660,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 423,
+    estHours: 429,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -706,7 +710,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 455,
+    estHours: 461,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
