@@ -6,11 +6,11 @@
 
 An embedding model is not a setting to tune casually. Pick it with real queries, watch it for drift, and treat a model change as a migration, building on [Embeddings and Similarity Search](01_Embeddings_and_Similarity_Search.md).
 
-**Objectives:**
-
-- choose an embedding model on domain fit, language, latency and cost, then test it on your own data;
-- tell embedding drift apart from data drift and detect each;
-- plan a model change that does not break retrieval halfway through.
+> **What you'll learn**
+>
+> - Choose an embedding model on domain fit, language, latency and cost, then test it on your own data.
+> - Tell embedding drift apart from data drift and detect each.
+> - Plan a model change that does not break retrieval halfway through.
 
 ---
 

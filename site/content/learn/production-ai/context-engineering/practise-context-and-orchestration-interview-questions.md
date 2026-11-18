@@ -4,11 +4,11 @@
 
 Interviewers rarely ask for a definition here; they describe a symptom or a cost and wait for a mechanism. Answer each prompt out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common orchestration and context prompts in under a minute each;
-- lead diagnosis answers with "reconstruct what the model saw";
-- defend a pattern's extra cost with the failure it prevents.
+> **What you'll learn**
+>
+> - Answer the common orchestration and context prompts in under a minute each.
+> - Lead diagnosis answers with "reconstruct what the model saw".
+> - Defend a pattern's extra cost with the failure it prevents.
 
 ---
 

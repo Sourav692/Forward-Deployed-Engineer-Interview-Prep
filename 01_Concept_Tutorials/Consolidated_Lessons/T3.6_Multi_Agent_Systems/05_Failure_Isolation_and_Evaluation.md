@@ -6,11 +6,11 @@
 
 A multi-agent system promises that one agent's failure degrades the others rather than crashing them, and that a wrong answer can be traced to the agent that caused it. Neither promise holds by accident, so build the limits and the per-agent evaluation that [Handoffs and Permission Scope](04_Handoffs_and_Permission_Scope.md) assumed.
 
-**Objectives:**
-
-- name three failure-isolation mechanisms and the failure each prevents;
-- decide in advance what a parallel run returns when one agent fails;
-- evaluate each agent, each handoff, and the trajectory, not only the final answer.
+> **What you'll learn**
+>
+> - Name three failure-isolation mechanisms and the failure each prevents.
+> - Decide in advance what a parallel run returns when one agent fails.
+> - Evaluate each agent, each handoff, and the trajectory, not only the final answer.
 
 ---
 

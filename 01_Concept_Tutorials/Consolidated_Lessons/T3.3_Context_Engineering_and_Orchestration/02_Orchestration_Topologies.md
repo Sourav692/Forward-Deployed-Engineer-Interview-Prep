@@ -6,11 +6,11 @@
 
 No single orchestration shape fits a whole production system. Learn the six shapes, then compose them, placing each decision as [Control Placement](01_Control_Placement.md) describes.
 
-**Objectives:**
-
-- choose among six orchestration topologies by when each fits, its latency and its main risk;
-- describe a composed production shape and why it escalates only once;
-- explain router drift and how to make it visible.
+> **What you'll learn**
+>
+> - Choose among six orchestration topologies by when each fits, its latency and its main risk.
+> - Describe a composed production shape and why it escalates only once.
+> - Explain router drift and how to make it visible.
 
 ---
 
@@ -31,9 +31,9 @@ The bounded loop is the tool-calling agent loop. The hierarchical shape is where
 
 ## Know the Workflow Patterns by Their Other Names
 
-The interview tutorial names the deterministic end of this space differently. **Routing** is one model call whose only job is to classify and dispatch. **Prompt chaining** is a fixed sequence of model calls with a validation gate between steps. **Evaluator-optimizer** pairs a generator with a separate evaluator. The evaluator grades the output against a rubric and sends feedback back until it passes or a round cap is hit.
+The interview tutorial names the deterministic end of this space differently. **Routing** is one model call whose only job is to classify and dispatch. **Prompt chaining** is a fixed sequence of model calls with a validation gate between steps. **Evaluator-optimiser** pairs a generator with a separate evaluator. The evaluator grades the output against a rubric and sends feedback back until it passes or a round cap is hit.
 
-The two sources use different vocabularies for overlapping ideas. Routing matches the router topology. Prompt chaining is a sequential topology with gates. Evaluator-optimizer is a small bounded loop with a grading step. Say which vocabulary you are using in an interview.
+The two sources use different vocabularies for overlapping ideas. Routing matches the router topology. Prompt chaining is a sequential topology with gates. Evaluator-optimiser is a small bounded loop with a grading step. Say which vocabulary you are using in an interview.
 
 ## Fan Out When the Worker Count Is Decided at Runtime
 
@@ -72,7 +72,7 @@ A month later, the dashboard shows the loop's share of traffic has doubled. No t
 ## Key Takeaways
 
 - Six shapes, sequential, router, parallel fan-out, bounded loop, hierarchical and event-driven, each fit one kind of work and carry one main risk.
-- Routing, prompt chaining and evaluator-optimizer are the tutorial's names for the deterministic end of the same space.
+- Routing, prompt chaining and evaluator-optimiser are the tutorial's names for the deterministic end of the same space.
 - Use orchestrator-worker fan-out when the worker count comes from a runtime decision, and decide up front what a partial failure returns.
 - Production systems compose shapes, and a failed workflow escalates to the loop only once.
 - Record routing decisions as a metric dimension so router drift shows up as a trend.

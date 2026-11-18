@@ -6,11 +6,11 @@
 
 Two questions decide whether an agent platform is safe to point at real money: what happens when the orchestrator restarts mid-run, and what happens when a refund step is retried. Answer both with one loop and one key per action, after reading [Determinism Over Free Text](03_Determinism_Over_Free_Text.md) for the step list the loop walks.
 
-**Objectives:**
-
-- draw the orchestrator loop with its checkpoint, its exits, and its crash-and-resume edge;
-- explain why the idempotency key sits on the action rather than the run;
-- tell the two idempotency bugs and the lesson each teaches.
+> **What you'll learn**
+>
+> - Draw the orchestrator loop with its checkpoint, its exits, and its crash-and-resume edge.
+> - Explain why the idempotency key sits on the action rather than the run.
+> - Tell the two idempotency bugs and the lesson each teaches.
 
 ---
 

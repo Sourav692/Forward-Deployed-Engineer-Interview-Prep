@@ -6,11 +6,11 @@
 
 A senior FDE is not "a better AI engineer"; the three roles are judged on different questions. Learn the unit of work and the question for each role here, then read [The Three Lenses of FDE Work](02_The_Three_Lenses_of_FDE_Work.md) for how the FDE role splits its time.
 
-**Objectives:**
-
-- name the unit of work and the deciding question for each of the three roles;
-- explain why each outer role contains the inner one;
-- ask the three roles' questions about one system.
+> **What you'll learn**
+>
+> - Name the unit of work and the deciding question for each of the three roles.
+> - Explain why each outer role contains the inner one.
+> - Ask the three roles' questions about one system.
 
 ---
 

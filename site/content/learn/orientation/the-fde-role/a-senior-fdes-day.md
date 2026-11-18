@@ -4,11 +4,11 @@
 
 A senior FDE's day does not start with their own tickets. Walk through the five parts of one day below, each tied to a lens from [The Three Lenses of FDE Work](/learn/orientation/the-fde-role/the-three-lenses-of-fde-work).
 
-**Objectives:**
-
-- describe what happens in each part of the day and which lens leads it;
-- explain why unblocking comes before personal work;
-- say why reviewing designs before code is cheaper than after.
+> **What you'll learn**
+>
+> - Describe what happens in each part of the day and which lens leads it.
+> - Explain why unblocking comes before personal work.
+> - Say why reviewing designs before code is cheaper than after.
 
 ---
 

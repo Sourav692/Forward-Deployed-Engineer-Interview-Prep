@@ -6,11 +6,11 @@
 
 The user's question is only one guess at a search string, and often a poor one. Rewrite, expand, split or route it before retrieval, but only when [Measuring and Diagnosing Retrieval](01_Measuring_and_Diagnosing_Retrieval.md) shows the wording gap is the real bottleneck.
 
-**Objectives:**
-
-- rewrite a vague or follow-up question into a self-contained one, and bound the cost;
-- choose between multi-query, step-back, HyDE, HyPE and decomposition by the mismatch each fixes;
-- route a query to the right retriever, and turn constraints like "after 2020" into metadata filters.
+> **What you'll learn**
+>
+> - Rewrite a vague or follow-up question into a self-contained one, and bound the cost.
+> - Choose between multi-query, step-back, HyDE, HyPE and decomposition by the mismatch each fixes.
+> - Route a query to the right retriever, and turn constraints like "after 2020" into metadata filters.
 
 ---
 

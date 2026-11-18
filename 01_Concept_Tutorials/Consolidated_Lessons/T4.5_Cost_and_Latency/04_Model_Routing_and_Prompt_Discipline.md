@@ -6,11 +6,11 @@
 
 The senior question is not "which model is best?" but "which is the weakest model that is reliable for this task, risk level, latency target and budget?" Route requests by that answer, and treat every prompt as a versioned production artefact whose size is a cost.
 
-**Objectives:**
-
-- route requests to models by task complexity and risk, and know what cascades cost;
-- quantify what routing saves using a price table, without trusting stale digits;
-- trim prompts and roll prompt changes out with a cost-impact check.
+> **What you'll learn**
+>
+> - Route requests to models by task complexity and risk, and know what cascades cost.
+> - Quantify what routing saves using a price table, without trusting stale digits.
+> - Trim prompts and roll prompt changes out with a cost-impact check.
 
 ---
 

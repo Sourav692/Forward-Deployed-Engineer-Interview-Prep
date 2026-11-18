@@ -4,11 +4,11 @@
 
 RAG cost is not a vector-database tuning problem, and agent cost is not a model problem. Both are pipelines, so control them stage by stage, using the drivers from [The Eight Cost and Latency Drivers](/learn/production-ai/cost-and-latency/the-eight-cost-and-latency-drivers).
 
-**Objectives:**
-
-- apply the RAG levers in the order the ingestion and query paths run;
-- tune the knobs that actually move retrieval latency and reranker cost;
-- turn an open-ended agent into a budgeted execution graph, and keep batch and evaluation spend visible.
+> **What you'll learn**
+>
+> - Apply the RAG levers in the order the ingestion and query paths run.
+> - Tune the knobs that actually move retrieval latency and reranker cost.
+> - Turn an open-ended agent into a budgeted execution graph, and keep batch and evaluation spend visible.
 
 ---
 

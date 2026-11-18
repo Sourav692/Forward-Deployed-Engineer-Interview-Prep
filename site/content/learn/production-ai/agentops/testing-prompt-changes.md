@@ -4,11 +4,11 @@
 
 Evaluation is not one gate run once. Layer fast deterministic tests in front of the expensive suite, compare live versions with enough samples to trust the result, and rerun the suite nightly because the model can change without a commit.
 
-**Objectives:**
-
-- test prompts and LLM-calling code with fast, deterministic checks;
-- run A/B tests on prompts, retrieval and models with statistical discipline;
-- schedule regression runs and token-budget checks that catch changes nobody committed.
+> **What you'll learn**
+>
+> - Test prompts and LLM-calling code with fast, deterministic checks.
+> - Run A/B tests on prompts, retrieval and models with statistical discipline.
+> - Schedule regression runs and token-budget checks that catch changes nobody committed.
 
 ---
 

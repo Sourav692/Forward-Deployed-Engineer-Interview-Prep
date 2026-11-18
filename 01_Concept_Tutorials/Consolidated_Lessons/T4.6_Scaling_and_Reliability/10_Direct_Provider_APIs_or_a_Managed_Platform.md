@@ -6,12 +6,12 @@
 
 Many enterprises can call a model either through its maker's API or through a managed platform in their existing cloud account, such as Amazon Bedrock, Google Cloud Vertex AI or Azure AI Foundry. Customers often have a strong preference before you arrive, and the reasons are rarely about model quality. This lesson compares the two paths on what usually decides it, using Bedrock as the worked example.
 
-**Objectives:**
-
-- compare direct APIs and managed platforms on identity, networking, data handling and operations;
-- explain feature lag and how to check for it;
-- plan for regions, quotas and version pinning on either path;
-- run both paths behind one gateway and choose per workload.
+> **What you'll learn**
+>
+> - Compare direct APIs and managed platforms on identity, networking, data handling and operations.
+> - Explain feature lag and how to check for it.
+> - Plan for regions, quotas and version pinning on either path.
+> - Run both paths behind one gateway and choose per workload.
 
 ---
 

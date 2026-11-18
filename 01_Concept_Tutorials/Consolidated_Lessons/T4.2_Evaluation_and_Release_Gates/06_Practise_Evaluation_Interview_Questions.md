@@ -6,11 +6,11 @@
 
 "How do you know it works?" is rarely a request for metric names. Interviewers want layers, a gate and a sample size. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common evaluation prompts in under a minute each;
-- lead every answer with what gates and what only informs;
-- work through a full evaluation plan for an enterprise RAG system.
+> **What you'll learn**
+>
+> - Answer the common evaluation prompts in under a minute each.
+> - Lead every answer with what gates and what only informs.
+> - Work through a full evaluation plan for an enterprise RAG system.
 
 ---
 

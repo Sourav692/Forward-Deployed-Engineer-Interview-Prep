@@ -6,11 +6,11 @@
 
 Most multi-agent questions test judgement before mechanics: interviewers want the simpler design named first. Answer each prompt below out loud, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common multi-agent prompts in under a minute each;
-- lead every answer with the justification for the split, or the refusal to split;
-- work through a full multi-agent design against a scoring checklist.
+> **What you'll learn**
+>
+> - Answer the common multi-agent prompts in under a minute each.
+> - Lead every answer with the justification for the split, or the refusal to split.
+> - Work through a full multi-agent design against a scoring checklist.
 
 ---
 
@@ -93,7 +93,7 @@ Account first, by agent and by hop. Then collapse pass-through agents, send only
 ## Practise the Case-Study Questions
 
 **21. "Is a search, summarise, write, and critique loop multi-agent?"**
-Name the definition in use. By the FDE Handbook's test, it is a pipeline with a loop and a gate that shares one context and tool set. The coordination-patterns guide would call the generator and Critic an evaluator-optimizer pair. What justifies the split is the Critic's independent judgement and the bounded retry. → [Anatomy of a Deployed Multi-Agent Platform](07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md)
+Name the definition in use. By the FDE Handbook's test, it is a pipeline with a loop and a gate that shares one context and tool set. The coordination-patterns guide would call the generator and Critic an evaluator-optimiser pair. What justifies the split is the Critic's independent judgement and the bounded retry. → [Anatomy of a Deployed Multi-Agent Platform](07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md)
 
 **22. "Why centralise data-asset resolution at the supervisor?"**
 Independent retrieval per specialist could resolve one question to different tables. One extra hop buys a single, auditable source of truth. → [From Supervisor to Deep Agent](06_From_Supervisor_to_Deep_Agent.md)

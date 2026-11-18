@@ -6,11 +6,11 @@
 
 Per-run traces do not answer "is the system getting worse?" Aggregate the fields from [The Run Trace](02_The_Run_Trace.md) into metrics, compare them to a baseline, and set targets that page someone before a customer notices.
 
-**Objectives:**
-
-- choose the metrics, dashboards and trace fields a production GenAI system needs;
-- alert on drift against a rolling baseline and attribute cost by tenant, workflow and model;
-- write latency and quality targets on percentiles, with first-token, inter-token and total time as separate SLOs.
+> **What you'll learn**
+>
+> - Choose the metrics, dashboards and trace fields a production GenAI system needs.
+> - Alert on drift against a rolling baseline and attribute cost by tenant, workflow and model.
+> - Write latency and quality targets on percentiles, with first-token, inter-token and total time as separate SLOs.
 
 ---
 

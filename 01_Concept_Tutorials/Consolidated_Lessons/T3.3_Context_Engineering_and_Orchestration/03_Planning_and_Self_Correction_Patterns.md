@@ -6,11 +6,11 @@
 
 ReAct is the default loop, not the only one. Add a plan, a verifier or a critique step only when the task's shape asks for it, and keep the loop guards from [Control Placement](01_Control_Placement.md) in every variant.
 
-**Objectives:**
-
-- choose between ReAct and plan-and-execute for a given task;
-- explain what a verifier step catches that a plain planner and executor miss;
-- tell Reflection from Reflexion and say when each is worth building.
+> **What you'll learn**
+>
+> - Choose between ReAct and plan-and-execute for a given task.
+> - Explain what a verifier step catches that a plain planner and executor miss.
+> - Tell Reflection from Reflexion and say when each is worth building.
 
 ---
 

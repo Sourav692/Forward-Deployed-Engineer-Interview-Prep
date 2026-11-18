@@ -6,11 +6,11 @@
 
 Correct retrieval is not enough to make an answer honest. A model given six authorised passages can still answer beyond them, cite a document it never saw, or refuse in a way that reveals what it was not shown. Add three checks on the way out, one rule for refusing, and one deliberate absence.
 
-**Objectives:**
-
-- explain the three sufficiency verdicts and why the middle one prevents over-refusal;
-- say why citations are re-checked against the policy after `enforce` already ran;
-- write a refusal that does not leak, and explain why there is no prompt-injection filter.
+> **What you'll learn**
+>
+> - Explain the three sufficiency verdicts and why the middle one prevents over-refusal.
+> - Say why citations are re-checked against the policy after `enforce` already ran.
+> - Write a refusal that does not leak, and explain why there is no prompt-injection filter.
 
 ---
 

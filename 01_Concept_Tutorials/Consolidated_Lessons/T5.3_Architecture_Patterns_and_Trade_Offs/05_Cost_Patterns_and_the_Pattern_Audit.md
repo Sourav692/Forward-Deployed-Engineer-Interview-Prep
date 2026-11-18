@@ -6,11 +6,11 @@
 
 Agent workloads compound token use over long trajectories, so cost needs governing patterns of its own, and quality needs checking in production, not only offline. Learn the cost and evaluation patterns, then audit every pattern in a system against the metric that motivated it and the incident it prevented.
 
-**Objectives:**
-
-- choose cost patterns that cut input tokens, route by difficulty and bound the worst case;
-- choose evaluation patterns that assert properties and catch regressions offline testing misses;
-- compose patterns into a system and remove the ones with no metric and no prevented incident.
+> **What you'll learn**
+>
+> - Choose cost patterns that cut input tokens, route by difficulty and bound the worst case.
+> - Choose evaluation patterns that assert properties and catch regressions offline testing misses.
+> - Compose patterns into a system and remove the ones with no metric and no prevented incident.
 
 ---
 

@@ -4,11 +4,11 @@
 
 In a multi-step agent run, partial failure is the normal operating condition, and prompt-level instructions cannot stop injection or exfiltration. Turn compounding failure into bounded, recoverable steps with reliability patterns, and enforce security with architecture rather than by asking the model to behave.
 
-**Objectives:**
-
-- design a degradation ladder and a circuit breaker that trips on the right signal;
-- make retries, long runs and irreversible actions recoverable;
-- enforce safety with privilege separation, provenance, the trifecta guard, egress control, approval gates and grounded refusal.
+> **What you'll learn**
+>
+> - Design a degradation ladder and a circuit breaker that trips on the right signal.
+> - Make retries, long runs and irreversible actions recoverable.
+> - Enforce safety with privilege separation, provenance, the trifecta guard, egress control, approval gates and grounded refusal.
 
 ---
 

@@ -6,12 +6,12 @@
 
 Retrieval hands the model evidence; generation decides whether the model uses it. Write the prompt as a contract and refuse before calling the model when evidence is missing. Check the answer against its sources after, using the budget rules in [Context Windows, Temperature, and Token Limits](/learn/llm-and-retrieval/how-llms-behave).
 
-**Objectives:**
-
-- build a RAG prompt template from its four parts;
-- stop hallucinations at the prompt, the retriever and after generation;
-- handle redundant and contradictory chunks;
-- recognise prompt injection through retrieved documents.
+> **What you'll learn**
+>
+> - Build a RAG prompt template from its four parts.
+> - Stop hallucinations at the prompt, the retriever and after generation.
+> - Handle redundant and contradictory chunks.
+> - Recognise prompt injection through retrieved documents.
 
 ---
 

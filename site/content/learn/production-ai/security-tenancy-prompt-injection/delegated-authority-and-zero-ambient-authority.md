@@ -4,12 +4,12 @@
 
 Identity tells you who sent the request. Authority decides what the system may do while serving it. In most agent platforms the two drift apart: the user is verified carefully, then the agent acts with a broad service account that ignores who the user is. This lesson shows how to carry the user's authority through every hop, so that the agent can never do more than the person it is working for.
 
-**Objectives:**
-
-- distinguish authentication, authorisation and delegation in an agent request;
-- explain ambient authority and why it turns injection into damage;
-- scope an agent's credentials to one user, one tenant and one task;
-- handle agent-to-agent delegation without passing on the caller's full rights.
+> **What you'll learn**
+>
+> - Distinguish authentication, authorisation and delegation in an agent request.
+> - Explain ambient authority and why it turns injection into damage.
+> - Scope an agent's credentials to one user, one tenant and one task.
+> - Handle agent-to-agent delegation without passing on the caller's full rights.
 
 ---
 

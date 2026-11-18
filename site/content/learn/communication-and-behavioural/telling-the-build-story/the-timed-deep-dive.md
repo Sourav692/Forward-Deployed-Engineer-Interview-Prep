@@ -4,11 +4,11 @@
 
 A deep-dive is not a lecture with questions at the end. It is the [story kit](/learn/communication-and-behavioural/telling-the-build-story/building-the-story-kit) laid out against a timing budget, with two passes at the hard part and appendices that are never read aloud. Read [Three Formats for One Project](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) first for when to choose it.
 
-**Objectives:**
-
-- give the timing budget and say which segment is weighted heaviest, and why;
-- deliver the Action beat in two passes and decide when to give the second;
-- cut the right segments when time runs short.
+> **What you'll learn**
+>
+> - Give the timing budget and say which segment is weighted heaviest, and why.
+> - Deliver the Action beat in two passes and decide when to give the second.
+> - Cut the right segments when time runs short.
 
 ---
 

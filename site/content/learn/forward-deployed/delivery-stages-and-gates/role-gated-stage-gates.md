@@ -204,7 +204,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. NIST CSRC, [Glossary: separation of duty](https://csrc.nist.gov/glossary/term/separation_of_duty), accessed 18 November 2026. No user should hold enough privileges to misuse the system alone, the principle behind role-gated sign-off.
 2. The Twelve-Factor App, [Dev/prod parity](https://12factor.net/dev-prod-parity), accessed 18 November 2026. Keeping environments as similar as possible.
-3. Sources in this repository, the author's own material: `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (§B.3), `docs/02-architecture-end-to-end.md` (§2), `README.md` ("The six decision gates"), `INTERVIEW_SCRIPT.md` (Steps 3, 4A and 5), and `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md`. The gate model builds on the DevRev interview preparation guide's delivery-framework prompt, summarised in our own words.
+3. Sources in this repository, the author's own material: *Theory* (§B.3), *Architecture End to End* (§2), overview ("The six decision gates"), interview script (Steps 3, 4A and 5), and *Scoping to Production in Two Weeks* and *Gates, Risks and Metrics*. The gate model builds on the DevRev interview preparation guide's delivery-framework prompt, summarised in our own words.
 4. The author's own field experience, the basis for the environment rules and the three ownership questions.
 
 ## Key takeaways

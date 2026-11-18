@@ -6,11 +6,11 @@
 
 An agent platform is not hard because a model has to pick a tool; that was solved years ago. Spend the design on trust, and read [Canonical Events and Routing](02_Canonical_Events_and_Routing.md) for the first of the three layers that deliver it.
 
-**Objectives:**
-
-- restate the agent-platform prompt in plain words, phrase by phrase;
-- name the three layers of a strong answer and the incident each prevents;
-- list the six guarantees behind a "refund anything under $50" automation.
+> **What you'll learn**
+>
+> - Restate the agent-platform prompt in plain words, phrase by phrase.
+> - Name the three layers of a strong answer and the incident each prevents.
+> - List the six guarantees behind a "refund anything under $50" automation.
 
 ---
 

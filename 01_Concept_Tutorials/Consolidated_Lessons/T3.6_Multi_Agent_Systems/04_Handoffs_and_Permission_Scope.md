@@ -6,11 +6,11 @@
 
 The handoff, not the choice of specialists, is the hard part of multi-agent design. Pass a small, defined package that carries its permission scope, and treat each handoff as a durable step, building on the patterns in [Multi-Agent Coordination Patterns](02_Multi_Agent_Coordination_Patterns.md).
 
-**Objectives:**
-
-- sketch a reference architecture of triage plus specialists, and say why each agent is separate;
-- list the fields of a good handoff package;
-- explain why permission scope is carried rather than re-derived, and why a handoff must be replayable.
+> **What you'll learn**
+>
+> - Sketch a reference architecture of triage plus specialists, and say why each agent is separate.
+> - List the fields of a good handoff package.
+> - Explain why permission scope is carried rather than re-derived, and why a handoff must be replayable.
 
 ---
 

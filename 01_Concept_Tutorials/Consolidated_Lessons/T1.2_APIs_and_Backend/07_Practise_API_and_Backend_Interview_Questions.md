@@ -6,11 +6,11 @@
 
 Interviewers rarely ask what `Depends()` does; they ask you to design the API for an LLM feature and listen for where cost, failure and latency are handled. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common backend prompts for an LLM feature in under a minute each;
-- lead every answer with the risk the design controls;
-- talk through a full API design for an LLM feature.
+> **What you'll learn**
+>
+> - Answer the common backend prompts for an LLM feature in under a minute each.
+> - Lead every answer with the risk the design controls.
+> - Talk through a full API design for an LLM feature.
 
 ---
 

@@ -6,11 +6,11 @@
 
 A circuit breaker knows when to stop calling a provider, but not where to go instead. Plan the next rung down before the outage, label every answer that came from it, and keep one blunt control that stops everything when no rung is safe.
 
-**Objectives:**
-
-- build a degradation ladder from retry to fallback to a labelled degraded answer;
-- design multi-provider failover that tells the user and respects the customer's preference;
-- tell a kill switch apart from a staged rollout, and know when degradation is dangerous.
+> **What you'll learn**
+>
+> - Build a degradation ladder from retry to fallback to a labelled degraded answer.
+> - Design multi-provider failover that tells the user and respects the customer's preference.
+> - Tell a kill switch apart from a staged rollout, and know when degradation is dangerous.
 
 ---
 

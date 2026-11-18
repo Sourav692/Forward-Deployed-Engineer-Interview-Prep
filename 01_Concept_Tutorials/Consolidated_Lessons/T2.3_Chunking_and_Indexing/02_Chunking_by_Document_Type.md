@@ -6,12 +6,12 @@
 
 No single splitter suits every document. Route each document to a splitter that cuts only at that type's safe boundaries, using the size and overlap ideas from [Why Retrieval Needs Chunks](01_Why_Retrieval_Needs_Chunks.md).
 
-**Objectives:**
-
-- name the safe boundary for prose, Markdown, code, PDFs, HTML, tables, and chat logs;
-- explain why a structure-aware splitter produces variable chunk sizes, and why that is correct;
-- choose between fixed-size, structure-aware, and semantic chunking for a given corpus;
-- detect broken boundaries in production without reading chunks by hand.
+> **What you'll learn**
+>
+> - Name the safe boundary for prose, Markdown, code, PDFs, HTML, tables, and chat logs.
+> - Explain why a structure-aware splitter produces variable chunk sizes, and why that is correct.
+> - Choose between fixed-size, structure-aware, and semantic chunking for a given corpus.
+> - Detect broken boundaries in production without reading chunks by hand.
 
 ---
 

@@ -4,11 +4,11 @@
 
 Every production run with an outcome is a potential training or evaluation example. Pass traces through three gates before they become a dataset, and when an offline gain looks surprisingly large, suspect leakage before celebrating.
 
-**Objectives:**
-
-- turn production traces into a dataset through deduplication, a proper split and human adjudication;
-- document every dataset so its numbers can be trusted later;
-- diagnose an offline gain that collapses in production.
+> **What you'll learn**
+>
+> - Turn production traces into a dataset through deduplication, a proper split and human adjudication.
+> - Document every dataset so its numbers can be trusted later.
+> - Diagnose an offline gain that collapses in production.
 
 ---
 

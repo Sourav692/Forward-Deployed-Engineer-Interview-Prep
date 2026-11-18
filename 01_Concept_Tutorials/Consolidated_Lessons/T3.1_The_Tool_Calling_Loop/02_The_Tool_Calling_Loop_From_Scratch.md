@@ -6,12 +6,12 @@
 
 Ten framework lines build an agent, and none of them explain a failure in a design review. Write the ReAct loop in plain Python here, with every moving part explicit, after reading [What an Agent Is](01_What_an_Agent_Is.md) for the three components.
 
-**Objectives:**
-
-- write `Agent.run` from memory, including all three of its endings;
-- say what the `Session` holds and why each field lives there rather than on the agent;
-- trace a two-step run through the loop, with and without approval;
-- explain why retries, caching and logging live outside the loop.
+> **What you'll learn**
+>
+> - Write `Agent.run` from memory, including all three of its endings.
+> - Say what the `Session` holds and why each field lives there rather than on the agent.
+> - Trace a two-step run through the loop, with and without approval.
+> - Explain why retries, caching and logging live outside the loop.
 
 ---
 

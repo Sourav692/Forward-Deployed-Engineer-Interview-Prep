@@ -6,11 +6,11 @@
 
 Orchestration is not about which framework runs the agent. It is about where each "what happens next?" decision lives, so audit those decisions before choosing a topology in [Orchestration Topologies](02_Orchestration_Topologies.md).
 
-**Objectives:**
-
-- name the three places a control decision can live, and what each costs;
-- apply the "one level down" test to every decision in a design;
-- explain why the least autonomous option that works is the default.
+> **What you'll learn**
+>
+> - Name the three places a control decision can live, and what each costs.
+> - Apply the "one level down" test to every decision in a design.
+> - Explain why the least autonomous option that works is the default.
 
 ---
 
@@ -36,7 +36,7 @@ The fix is a habit. Walk through every decision in the design and ask: could thi
 
 ## Pick the Least Autonomous Option That Works
 
-The interview tutorial frames the same idea as a choice between a workflow and an agent. A workflow wires the control flow in advance: routing, prompt chaining, or an evaluator-optimizer loop. An agent lets the model decide what to do next.
+The interview tutorial frames the same idea as a choice between a workflow and an agent. A workflow wires the control flow in advance: routing, prompt chaining, or an evaluator-optimiser loop. An agent lets the model decide what to do next.
 
 A workflow cannot cope with cases outside its wired paths. In return it is predictable, cheap to trace and cheap to test. An agent handles open-ended tasks. In return its step count is unpredictable, its cost and latency are hard to bound, and it needs loop guards.
 

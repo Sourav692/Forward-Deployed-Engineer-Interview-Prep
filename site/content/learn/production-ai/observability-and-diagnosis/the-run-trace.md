@@ -4,11 +4,11 @@
 
 A per-step trace is a debugging aid; a run trace is the system's record of what it did. Build one replayable record per request, on top of the signals from [Logs, Metrics, and Traces](/learn/production-ai/observability-and-diagnosis/logs-metrics-and-traces), and treat a run without one as a run that did not happen.
 
-**Objectives:**
-
-- design one trace record that serves the engineer, the auditor and finance;
-- attribute cost by purpose, not only in total;
-- read the security and degradation fields as alerts, and keep sensitive payloads out of the trace.
+> **What you'll learn**
+>
+> - Design one trace record that serves the engineer, the auditor and finance.
+> - Attribute cost by purpose, not only in total.
+> - Read the security and degradation fields as alerts, and keep sensitive payloads out of the trace.
 
 ---
 

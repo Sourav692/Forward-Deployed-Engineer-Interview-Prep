@@ -151,7 +151,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 4 "Turn the Estimate Into a Build Plan" (Topics 4.1 to 4.5) and Module 7 "Run the Project Day to Day" (Topics 7.1 to 7.3 and 7.5 to 7.7), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 4 "Turn the Estimate Into a Build Plan" (Topics 4.1 to 4.5) and Module 7 "Run the Project Day to Day" (Topics 7.1 to 7.3 and 7.5 to 7.7), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [cross-team ownership and cadence](/learn/forward-deployed/delivery-stages-and-gates/cross-team-ownership-and-cadence) lesson, for running the plan once delivery starts.
 
 ## Key takeaways

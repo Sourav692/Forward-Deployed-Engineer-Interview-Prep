@@ -154,7 +154,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 1. OWASP GenAI Security Project, [LLM01: Prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/), accessed 18 November 2026. The adversarial tests a security review should cover.
 2. OWASP Cheat Sheet Series, [Secrets management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html), accessed 18 November 2026. Storing, scoping and revoking credentials.
 3. OWASP Cheat Sheet Series, [Multi-tenant security](https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html), accessed 18 November 2026. Tenant isolation choices.
-4. Sources in this repository, the author's own material: `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` (all sections) and `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md` ("Where the design is honest about its own weakness" and "Interview lens").
+4. Sources in this repository, the author's own material: *Security Gate Depth and Tenant Scale* (all sections) and *Gates, Risks and Metrics* ("Where the design is honest about its own weakness" and "Interview lens").
 
 ## Key takeaways
 

@@ -4,11 +4,11 @@
 
 Production identity is not a bigger lookup table; it is a verification problem. Verify the token before any permission logic runs, then hand a trusted principal to the access rules from [The Seven Access Rules](/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules).
 
-**Objectives:**
-
-- explain why real identity is a verification problem rather than a lookup;
-- list the checks a token must pass before any permission logic runs;
-- describe group mapping drift and just-in-time provisioning.
+> **What you'll learn**
+>
+> - Explain why real identity is a verification problem rather than a lookup.
+> - List the checks a token must pass before any permission logic runs.
+> - Describe group mapping drift and just-in-time provisioning.
 
 ---
 

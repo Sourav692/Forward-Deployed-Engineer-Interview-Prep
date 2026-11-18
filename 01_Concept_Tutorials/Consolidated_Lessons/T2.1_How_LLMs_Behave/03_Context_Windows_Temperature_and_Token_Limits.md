@@ -6,11 +6,11 @@
 
 A bigger context window is not a licence to send everything. Budget the window, set randomness for the job, and cap the answer, because these three settings decide much of what the model does with the text it receives.
 
-**Objectives:**
-
-- budget a context window across system prompt, retrieved text, chat history and question;
-- explain the "lost in the middle" effect and what it means for ordering;
-- set temperature and the answer-length cap for factual answers.
+> **What you'll learn**
+>
+> - Budget a context window across system prompt, retrieved text, chat history and question.
+> - Explain the "lost in the middle" effect and what it means for ordering.
+> - Set temperature and the answer-length cap for factual answers.
 
 ---
 

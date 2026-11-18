@@ -6,11 +6,11 @@
 
 A cache in a GenAI system is not a performance detail; it is a security and correctness decision. Cache what is expensive and stable, key it on everything that could change the answer, and clear it the moment the source changes.
 
-**Objectives:**
-
-- estimate what caching saves and decide which requests are safe to cache;
-- choose between exact-match, semantic and provider prompt caching, and know each one's failure;
-- build a cache key and an invalidation plan that respect tenants, permissions and versions.
+> **What you'll learn**
+>
+> - Estimate what caching saves and decide which requests are safe to cache.
+> - Choose between exact-match, semantic and provider prompt caching, and know each one's failure.
+> - Build a cache key and an invalidation plan that respect tenants, permissions and versions.
 
 ---
 

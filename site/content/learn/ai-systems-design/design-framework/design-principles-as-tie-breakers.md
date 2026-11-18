@@ -4,11 +4,11 @@
 
 The framework says what to cover; principles decide what to choose inside each part. Learn the fifteen through their AI-system applications, then narrate them inside the decisions made while walking [The Twelve-Part Design Framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework).
 
-**Objectives:**
-
-- give the AI-system application of each of the fifteen principles;
-- hold the principles in memory with the SCALED mnemonic and its outer ring;
-- narrate a decision so the principle is implicit, and work the eight evaluation lenses in order.
+> **What you'll learn**
+>
+> - Give the AI-system application of each of the fifteen principles.
+> - Hold the principles in memory with the SCALED mnemonic and its outer ring.
+> - Narrate a decision so the principle is implicit, and work the eight evaluation lenses in order.
 
 ---
 

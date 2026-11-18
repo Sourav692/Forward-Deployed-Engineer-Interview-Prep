@@ -102,7 +102,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Google People + AI Research, [People + AI Guidebook: user needs and defining success](https://pair.withgoogle.com/chapter/user-needs/), accessed 18 November 2026. Starting from a real user need before deciding what AI should do.
 2. Kerry Rodden, Hilary Hutchinson and Xin Fu, Google Research, [Measuring the User Experience on a Large Scale](https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/), accessed 18 November 2026. Adoption and task success as metrics set alongside product goals.
-3. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: case 17 "Scale a Successful AI Prototype to Production" (its adoption follow-up), case 4 "AI-Powered Sales or Account-Research Assistant" and "Rollout questions".
+3. *FDE Problem Decomposition Question Bank*: case 17 "Scale a Successful AI Prototype to Production" (its adoption follow-up), case 4 "AI-Powered Sales or Account-Research Assistant" and "Rollout questions".
 4. The site's [measuring trust and overrides](/learn/forward-deployed/adoption-and-impact/measuring-trust-and-overrides) lesson, for spot checks and work finishing outside the tool.
 
 ## Key takeaways

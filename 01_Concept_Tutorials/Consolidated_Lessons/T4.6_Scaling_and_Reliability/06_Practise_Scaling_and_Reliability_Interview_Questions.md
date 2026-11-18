@@ -6,11 +6,11 @@
 
 "What breaks at 100 times the load?" and "your provider is down" are the two shapes of this round. Answer each question aloud first, then compare; every answer uses only concepts from the earlier lessons in this module.
 
-**Objectives:**
-
-- answer scaling questions with the three problems, the arithmetic and the proven-or-verbal label;
-- answer reliability questions by naming the pattern and what it protects against;
-- design a production gateway that meets availability, safety, cost and latency targets together.
+> **What you'll learn**
+>
+> - Answer scaling questions with the three problems, the arithmetic and the proven-or-verbal label.
+> - Answer reliability questions by naming the pattern and what it protects against.
+> - Design a production gateway that meets availability, safety, cost and latency targets together.
 
 ---
 

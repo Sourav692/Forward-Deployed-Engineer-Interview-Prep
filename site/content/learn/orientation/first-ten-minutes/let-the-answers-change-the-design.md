@@ -4,11 +4,11 @@
 
 The question count is not the signal; the adaptation is. Ask three or four of the questions from [Ask Before You Architect](/learn/orientation/first-ten-minutes/ask-before-you-architect), then say out loud how each answer changes the drawing.
 
-**Objectives:**
-
-- adapt the design out loud in response to an answer;
-- map each question area to the part of the design it decides;
-- place the opening routine inside a 60-minute round.
+> **What you'll learn**
+>
+> - Adapt the design out loud in response to an answer.
+> - Map each question area to the part of the design it decides.
+> - Place the opening routine inside a 60-minute round.
 
 ---
 

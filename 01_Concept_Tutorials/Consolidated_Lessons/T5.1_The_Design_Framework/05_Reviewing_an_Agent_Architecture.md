@@ -6,11 +6,11 @@
 
 The framework and principles stay abstract until they correct a real diagram. Spotting structural mistakes in a first-draft agent architecture is worth more than memorising a corrected one, because the same five mistakes appear in most drafts, including ones drawn under time pressure.
 
-**Objectives:**
-
-- find five structural mistakes in a published multi-agent travel-assistant diagram;
-- rebuild it with the cache first, per-agent retrieval and tools, and a synthesiser;
-- ask five review questions of any agent architecture, including your own.
+> **What you'll learn**
+>
+> - Find five structural mistakes in a published multi-agent travel-assistant diagram.
+> - Rebuild it with the cache first, per-agent retrieval and tools, and a synthesiser.
+> - Ask five review questions of any agent architecture, including your own.
 
 ---
 

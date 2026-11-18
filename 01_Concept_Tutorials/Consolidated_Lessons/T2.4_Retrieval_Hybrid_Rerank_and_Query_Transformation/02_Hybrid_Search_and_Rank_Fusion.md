@@ -6,11 +6,11 @@
 
 Dense search is not "the modern option" and keyword search "the legacy one". Run both, merge them by rank, and tune the merge on labelled queries, using the failure map in [Measuring and Diagnosing Retrieval](01_Measuring_and_Diagnosing_Retrieval.md) to decide when this is the fix.
 
-**Objectives:**
-
-- explain why dense search misses exact identifiers and why BM25 misses paraphrase;
-- compute a reciprocal rank fusion result by hand and say what its constant `k` controls;
-- choose between rank fusion and weighted score blending, and name the cost of each.
+> **What you'll learn**
+>
+> - Explain why dense search misses exact identifiers and why BM25 misses paraphrase.
+> - Compute a reciprocal rank fusion result by hand and say what its constant `k` controls.
+> - Choose between rank fusion and weighted score blending, and name the cost of each.
 
 ---
 

@@ -130,7 +130,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 1 "Understand the Request Before You Build Anything" (Topics 1.1 and 1.2), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 1 "Understand the Request Before You Build Anything" (Topics 1.1 and 1.2), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data) lesson, for choosing a metric the customer recognises.
 3. The site's [baselines, value and ROI](/learn/forward-deployed/scoping-an-fde-project/baselines-value-and-roi) lesson, for measuring the number in the goal before the change.
 

@@ -6,11 +6,11 @@
 
 The order of a prompt is not cosmetic. Assemble each step's context in fixed sections with fixed budgets, and apply the four operations from [The Four Context Operations](04_The_Four_Context_Operations.md) inside those sections only.
 
-**Objectives:**
-
-- lay out a sectioned context with a budget per section;
-- explain what a fixed order buys for caching and debugging;
-- trim an overflowing section without losing instructions.
+> **What you'll learn**
+>
+> - Lay out a sectioned context with a budget per section.
+> - Explain what a fixed order buys for caching and debugging.
+> - Trim an overflowing section without losing instructions.
 
 ---
 

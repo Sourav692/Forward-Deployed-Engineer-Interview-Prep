@@ -6,12 +6,12 @@
 
 Run a mock interview as timed practice. Answer under a timer first, then compare, then score against a rubric with evidence. Five scenario mocks follow this lesson, and each one uses the same arc, answer moves and rubric taught here.
 
-**Objectives:**
-
-- choose between the short round and the full round, and run each under time;
-- name the stages of the interviewer's arc and what each one tests;
-- reuse the answer moves that hold in every scenario;
-- score a round with the six-dimension rubric and debrief it.
+> **What you'll learn**
+>
+> - Choose between the short round and the full round, and run each under time.
+> - Name the stages of the interviewer's arc and what each one tests.
+> - Reuse the answer moves that hold in every scenario.
+> - Score a round with the six-dimension rubric and debrief it.
 
 ---
 

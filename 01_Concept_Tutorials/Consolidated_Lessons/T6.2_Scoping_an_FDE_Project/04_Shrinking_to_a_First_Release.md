@@ -136,7 +136,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 3 Topic 3.2 "Cut scope without losing the outcome", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 3 Topic 3.2 "Cut scope without losing the outcome", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [choosing the first use case](../T6.1_Customer_Discovery_and_Problem_Decomposition/04_Choosing_the_First_Use_Case.md) lesson, for picking the workflow the first release serves.
 
 ## Key takeaways

@@ -6,11 +6,11 @@
 
 LlamaIndex is not a second LangChain. It is specialised for organising documents and retrieving from them. LangChain is a general application framework where RAG is one use case, and [What a Framework Buys You](01_What_a_Framework_Buys_You.md) places the two side by side.
 
-**Objectives:**
-
-- describe how LlamaIndex turns documents into linked nodes;
-- choose an index type for a retrieval need;
-- explain hierarchical retrieval and the built-in query engines.
+> **What you'll learn**
+>
+> - Describe how LlamaIndex turns documents into linked nodes.
+> - Choose an index type for a retrieval need.
+> - Explain hierarchical retrieval and the built-in query engines.
 
 ---
 

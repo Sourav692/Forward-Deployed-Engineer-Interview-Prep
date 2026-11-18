@@ -6,11 +6,11 @@
 
 A system can score well on every quality evaluation and still ship with an exploitable policy hole. Red teaming asks a different question from evaluation: not "is the output good?" but "can the system be made to misbehave on purpose before an attacker does it?"
 
-**Objectives:**
-
-- explain why each architectural attack on an access-controlled RAG system fails;
-- run continuous adversarial testing that counts as evidence, not theatre;
-- layer cheap rule-based checks before LLM guards, on both input and output.
+> **What you'll learn**
+>
+> - Explain why each architectural attack on an access-controlled RAG system fails.
+> - Run continuous adversarial testing that counts as evidence, not theatre.
+> - Layer cheap rule-based checks before LLM guards, on both input and output.
 
 ---
 

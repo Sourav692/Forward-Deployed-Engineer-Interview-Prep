@@ -6,11 +6,11 @@
 
 "Walk me through a typical week" is not a request for a calendar. Answer each prompt below out loud first, pick the three or four lines that fit, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common role questions in under a minute each;
-- lead with the interdependence of the three lenses;
-- avoid reciting a script when only part of it fits the question.
+> **What you'll learn**
+>
+> - Answer the common role questions in under a minute each.
+> - Lead with the interdependence of the three lenses.
+> - Avoid reciting a script when only part of it fits the question.
 
 ---
 

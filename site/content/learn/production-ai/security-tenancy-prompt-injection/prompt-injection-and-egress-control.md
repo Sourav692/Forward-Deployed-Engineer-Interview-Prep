@@ -4,11 +4,11 @@
 
 A system that only reads can defend prompt injection by never holding the secret; a system that acts cannot. Keep untrusted text out of the instruction channel, let trusted fields supply tool arguments, and check where data may go as well as whether a tool may run.
 
-**Objectives:**
-
-- explain why the read-only defence is not enough once an agent can act;
-- name the three architectural fixes for injection and give the refund-amount example;
-- distinguish an action allow-list from a destination allow-list.
+> **What you'll learn**
+>
+> - Explain why the read-only defence is not enough once an agent can act.
+> - Name the three architectural fixes for injection and give the refund-amount example.
+> - Distinguish an action allow-list from a destination allow-list.
 
 ---
 

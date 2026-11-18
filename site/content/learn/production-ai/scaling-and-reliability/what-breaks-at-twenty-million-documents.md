@@ -4,11 +4,11 @@
 
 "What if the customer has 20 million documents?" is not one scaling question. It is three: ingestion throughput, query-time latency and per-tenant isolation overhead, so name what breaks first in each before proposing fixes.
 
-**Objectives:**
-
-- walk the pipeline and name the first symptom of failure at each stage;
-- scale ingestion with parallel, batched, resumable jobs, and do the throughput arithmetic out loud;
-- separate what a small build proves from what is only correct on a whiteboard.
+> **What you'll learn**
+>
+> - Walk the pipeline and name the first symptom of failure at each stage.
+> - Scale ingestion with parallel, batched, resumable jobs, and do the throughput arithmetic out loud.
+> - Separate what a small build proves from what is only correct on a whiteboard.
 
 ---
 

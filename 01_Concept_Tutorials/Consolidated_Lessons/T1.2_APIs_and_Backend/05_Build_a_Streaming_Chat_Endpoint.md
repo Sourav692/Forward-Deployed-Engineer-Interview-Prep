@@ -6,11 +6,11 @@
 
 Streaming fixes perceived latency, not total latency: generation takes exactly as long either way. Decide whether to answer before the first token, carry errors inside the stream, and keep the conversation on the server, using the contract from [Define the API Contract With Typed Schemas](03_Define_the_API_Contract_With_Typed_Schemas.md).
 
-**Objectives:**
-
-- choose between Server-Sent Events and WebSockets for a chat feature;
-- build a streaming endpoint that reports errors and survives a proxy;
-- keep multi-turn conversation state on the server within a context budget.
+> **What you'll learn**
+>
+> - Choose between Server-Sent Events and WebSockets for a chat feature.
+> - Build a streaming endpoint that reports errors and survives a proxy.
+> - Keep multi-turn conversation state on the server within a context budget.
 
 ---
 

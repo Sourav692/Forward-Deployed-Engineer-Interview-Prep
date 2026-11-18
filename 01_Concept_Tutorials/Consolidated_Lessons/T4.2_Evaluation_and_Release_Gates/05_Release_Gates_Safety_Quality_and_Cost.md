@@ -6,11 +6,11 @@
 
 Every layer of evaluation ends in one decision: does this change ship? Gate safety absolutely, quality against a baseline per segment, and cost as a visible trade. The gate draws on the sets and judges from [Golden Sets and Sample Size](03_Golden_Sets_and_Sample_Size.md) and [Validating LLM Judges](04_Validating_LLM_Judges.md).
 
-**Objectives:**
-
-- explain why security is a gate rather than a score, and what counts as a leak;
-- decide which checks should block a release and which should only advise;
-- gate quality per stratum, and read a canary result against sample-size arithmetic.
+> **What you'll learn**
+>
+> - Explain why security is a gate rather than a score, and what counts as a leak.
+> - Decide which checks should block a release and which should only advise.
+> - Gate quality per stratum, and read a canary result against sample-size arithmetic.
 
 ---
 

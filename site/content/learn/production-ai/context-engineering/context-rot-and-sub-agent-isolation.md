@@ -4,11 +4,11 @@
 
 A fuller window is not a better-informed model. Keep the parent's context small by isolating subtasks, and keep their traces so nothing becomes unexplainable; [Deterministic Context Assembly](/learn/production-ai/context-engineering/deterministic-context-assembly) covers the layout this protects.
 
-**Objectives:**
-
-- explain context rot and why the middle of the window suffers most;
-- decide when to isolate a subtask and when to share context;
-- name what isolation costs and how to pay for it.
+> **What you'll learn**
+>
+> - Explain context rot and why the middle of the window suffers most.
+> - Decide when to isolate a subtask and when to share context.
+> - Name what isolation costs and how to pay for it.
 
 ---
 

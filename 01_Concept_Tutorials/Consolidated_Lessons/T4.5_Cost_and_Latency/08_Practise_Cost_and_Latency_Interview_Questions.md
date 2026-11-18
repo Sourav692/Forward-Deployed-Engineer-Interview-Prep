@@ -6,11 +6,11 @@
 
 Cost and latency questions come as incidents ("it got slow") and as design cases ("build it under a budget"). Answer each one below aloud, then compare; every answer uses only the concepts from the earlier lessons in this module.
 
-**Objectives:**
-
-- answer any cost or latency incident with the same debugging sequence;
-- spot the weak move and the strong move in a design case;
-- state the fix, its risk and the metric that proves it, in under a minute.
+> **What you'll learn**
+>
+> - Answer any cost or latency incident with the same debugging sequence.
+> - Spot the weak move and the strong move in a design case.
+> - State the fix, its risk and the metric that proves it, in under a minute.
 
 ---
 

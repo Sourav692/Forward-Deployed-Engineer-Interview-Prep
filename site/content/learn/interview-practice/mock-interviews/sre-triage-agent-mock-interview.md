@@ -4,11 +4,11 @@
 
 Design the incident copilot to show evidence and hypotheses instead of fixing things itself, read-only by default, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
-**Objectives:**
-
-- design an evidence-first copilot that never claims root cause without telemetry;
-- keep remediation approval-gated, with blast-radius and change-risk checks;
-- state the time-to-first-summary target and the read-only rollout order.
+> **What you'll learn**
+>
+> - Design an evidence-first copilot that never claims root cause without telemetry.
+> - Keep remediation approval-gated, with blast-radius and change-risk checks.
+> - State the time-to-first-summary target and the read-only rollout order.
 
 ---
 

@@ -6,12 +6,12 @@
 
 A prototype keeps everything in one place: the conversation list in memory, maybe a vector index on disk. A production system spreads state across several stores with different jobs, lifetimes and owners. When nobody has listed them, three things go wrong. Retries create duplicate actions, a deletion request misses half the copies, and an incident review cannot reconstruct what happened. This lesson gives you the list and the questions to ask about each store.
 
-**Objectives:**
-
-- name the five kinds of state a production AI system keeps;
-- separate the operational state that drives the system from the context shown to the model;
-- tell an authoritative record from a derived one, and say why it matters;
-- link every store with stable IDs so a run can be traced, retried and deleted.
+> **What you'll learn**
+>
+> - Name the five kinds of state a production AI system keeps.
+> - Separate the operational state that drives the system from the context shown to the model.
+> - Tell an authoritative record from a derived one, and say why it matters.
+> - Link every store with stable IDs so a run can be traced, retried and deleted.
 
 ---
 

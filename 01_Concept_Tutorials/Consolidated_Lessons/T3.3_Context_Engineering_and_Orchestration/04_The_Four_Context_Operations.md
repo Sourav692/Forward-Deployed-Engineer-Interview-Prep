@@ -6,11 +6,11 @@
 
 Context engineering is not about writing a better prompt. It is about deciding what enters the model's window at each step, under a fixed token budget, and every technique for that reduces to four operations.
 
-**Objectives:**
-
-- define context engineering and say why it displaced prompt engineering;
-- name the four context operations and the rule for each;
-- explain why compression must be visible to the people running the system.
+> **What you'll learn**
+>
+> - Define context engineering and say why it displaced prompt engineering.
+> - Name the four context operations and the rule for each.
+> - Explain why compression must be visible to the people running the system.
 
 ---
 

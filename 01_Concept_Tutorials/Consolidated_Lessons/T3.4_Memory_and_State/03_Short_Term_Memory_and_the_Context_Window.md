@@ -6,11 +6,11 @@
 
 Short-term memory is not a store; it is what reaches the model on the next call. Persist the thread with a checkpointer, as set up in [Why Agents Need State](01_Why_Agents_Need_State.md), then decide separately how much of it the model sees.
 
-**Objectives:**
-
-- keep a long conversation inside the context window without losing what matters;
-- tell trimming what the model sees apart from removing what is stored;
-- choose between full history, a sliding window and summarisation, and between an in-memory and a durable checkpointer.
+> **What you'll learn**
+>
+> - Keep a long conversation inside the context window without losing what matters.
+> - Tell trimming what the model sees apart from removing what is stored.
+> - Choose between full history, a sliding window and summarisation, and between an in-memory and a durable checkpointer.
 
 ---
 

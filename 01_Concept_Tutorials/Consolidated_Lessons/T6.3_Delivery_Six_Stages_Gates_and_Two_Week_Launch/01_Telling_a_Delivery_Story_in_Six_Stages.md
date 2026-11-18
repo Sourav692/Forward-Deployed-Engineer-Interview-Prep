@@ -175,7 +175,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Google for Developers, [Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml), accessed 18 November 2026. Monitoring model freshness and the production side of a machine learning system.
 2. Wikipedia, [Concept drift](https://en.wikipedia.org/wiki/Concept_drift), accessed 18 November 2026. Why a deployed model degrades without monitoring and retraining.
-3. Sources in this repository: `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/02_End_To_End_AI_Delivery_Six_Stages.md` (all sections), the author's own material.
+3. Sources in this repository: *End-to-End AI Delivery in Six Stages* (all sections), the author's own material.
 4. The author's own field experience, the basis for the mock-round story and the senior bar.
 
 ## Key takeaways

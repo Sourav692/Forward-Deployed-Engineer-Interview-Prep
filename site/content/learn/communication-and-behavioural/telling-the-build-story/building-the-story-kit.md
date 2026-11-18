@@ -4,11 +4,11 @@
 
 The unit of preparation is not the speech. It is a small kit of pieces written once per project and reused in every format. Build it after [Proof versus Knowledge](/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge), because the kit's honesty pieces come from there.
 
-**Objectives:**
-
-- translate each technical term in the breath that introduces it, using four bridge phrases;
-- write a cold open and five stand-alone beats, each with a bridge;
-- prepare one follow-up map and a closing line for each likely thread.
+> **What you'll learn**
+>
+> - Translate each technical term in the breath that introduces it, using four bridge phrases.
+> - Write a cold open and five stand-alone beats, each with a bridge.
+> - Prepare one follow-up map and a closing line for each likely thread.
 
 ---
 

@@ -6,11 +6,11 @@
 
 "Long-term memory" is not one thing. Sort every remembered item by what it is for, then give each kind its own write rule and store, building on the scopes in [Why Agents Need State](01_Why_Agents_Need_State.md).
 
-**Objectives:**
-
-- name four kinds of memory and the write rule, store and failure that go with each;
-- explain why enterprise knowledge is retrieval, not memory;
-- translate between the vocabularies used by the four source documents.
+> **What you'll learn**
+>
+> - Name four kinds of memory and the write rule, store and failure that go with each.
+> - Explain why enterprise knowledge is retrieval, not memory.
+> - Translate between the vocabularies used by the four source documents.
 
 ---
 

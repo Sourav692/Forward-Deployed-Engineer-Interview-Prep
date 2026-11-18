@@ -6,11 +6,11 @@
 
 Interviewers rarely ask how the model picks a tool; they ask what happens on a retry, a restart, or an oversized refund. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common agent-platform prompts in under a minute each;
-- lead every answer with the layer and the mechanism, not the model;
-- work through a full approvals design against a checklist.
+> **What you'll learn**
+>
+> - Answer the common agent-platform prompts in under a minute each.
+> - Lead every answer with the layer and the mechanism, not the model.
+> - Work through a full approvals design against a checklist.
 
 ---
 

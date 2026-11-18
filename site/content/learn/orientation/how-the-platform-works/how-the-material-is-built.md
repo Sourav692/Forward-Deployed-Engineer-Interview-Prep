@@ -4,11 +4,11 @@
 
 If you have not picked a path yet, start at [Choose your path](/start); this lesson explains what you will find once you do. It covers the three principles behind the material, the nine topic groups that hold the Learn tracks, and the fixed shape every lesson follows. The path marks which modules are required, recommended or optional for your background and interview date.
 
-**Objectives:**
-
-- name the three principles behind the material and what breaks if each is dropped;
-- place a topic in one of the nine topic groups, and know where to practise it;
-- use the fixed shape of a lesson to find what you need quickly.
+> **What you'll learn**
+>
+> - Name the three principles behind the material and what breaks if each is dropped.
+> - Place a topic in one of the nine topic groups, and know where to practise it.
+> - Use the fixed shape of a lesson to find what you need quickly.
 
 ---
 

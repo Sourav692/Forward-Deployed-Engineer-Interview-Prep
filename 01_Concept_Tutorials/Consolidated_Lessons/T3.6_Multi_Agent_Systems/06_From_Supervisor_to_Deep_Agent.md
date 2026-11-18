@@ -6,11 +6,11 @@
 
 This case study is the judgement from [When Multi-Agent Is Justified](01_When_Multi_Agent_Is_Justified.md) exercised twice in production. Read it as an architecture that evolved, and note that each pivot had a different, named cause.
 
-**Objectives:**
-
-- trace the three stages of the insurer's data assistant and the cause of each pivot;
-- explain why asset resolution was centralised at the supervisor;
-- compare the supervisor and deep-agent shapes, and say what each costs.
+> **What you'll learn**
+>
+> - Trace the three stages of the insurer's data assistant and the cause of each pivot.
+> - Explain why asset resolution was centralised at the supervisor.
+> - Compare the supervisor and deep-agent shapes, and say what each costs.
 
 ---
 

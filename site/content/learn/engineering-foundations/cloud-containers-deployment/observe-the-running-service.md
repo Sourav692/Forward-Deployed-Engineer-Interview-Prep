@@ -4,12 +4,12 @@
 
 A running process is not proof of a healthy service. Log the structure of every request, measure quality and cost beside latency, and probe the dependencies the service cannot work without.
 
-**Objectives:**
-
-- log prompts and answers without leaking private data;
-- choose the metrics and alerts for a FastAPI LLM service;
-- design separate liveness and readiness probes;
-- find the cause of a latency spike.
+> **What you'll learn**
+>
+> - Log prompts and answers without leaking private data.
+> - Choose the metrics and alerts for a FastAPI LLM service.
+> - Design separate liveness and readiness probes.
+> - Find the cause of a latency spike.
 
 ---
 

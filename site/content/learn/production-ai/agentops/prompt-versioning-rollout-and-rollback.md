@@ -4,11 +4,11 @@
 
 A prompt change is not a config tweak; it changes the behaviour of a system that may move money or answer contractual questions. Version every prompt, gate it on the same bar as a full release, stage it through shadow and canary, and keep rollback a pointer flip.
 
-**Objectives:**
-
-- treat prompts and their configuration as immutable, versioned artefacts;
-- gate a new version on safety and quality against a named baseline;
-- stage a rollout through shadow and canary, and roll back instantly.
+> **What you'll learn**
+>
+> - Treat prompts and their configuration as immutable, versioned artefacts.
+> - Gate a new version on safety and quality against a named baseline.
+> - Stage a rollout through shadow and canary, and roll back instantly.
 
 ---
 

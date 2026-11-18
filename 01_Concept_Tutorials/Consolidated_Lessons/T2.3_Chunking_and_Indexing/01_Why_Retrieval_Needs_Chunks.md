@@ -6,12 +6,12 @@
 
 A retriever can only return what a single chunk contains, so chunking decides what the system can possibly find. This lesson explains why documents are split, what goes wrong at each end of the size dial, and the few rules that matter more than the exact number. It assumes the pipeline from [T5.1 RAG from first principles](/learn/llm-and-retrieval/rag-from-first-principles).
 
-**Objectives:**
-
-- explain why whole documents are not indexed as single units;
-- describe what breaks when chunks are too small or too large;
-- apply four chunking rules that matter more than chunk size;
-- validate a chunking choice with measurements instead of guesses.
+> **What you'll learn**
+>
+> - Explain why whole documents are not indexed as single units.
+> - Describe what breaks when chunks are too small or too large.
+> - Apply four chunking rules that matter more than chunk size.
+> - Validate a chunking choice with measurements instead of guesses.
 
 ---
 

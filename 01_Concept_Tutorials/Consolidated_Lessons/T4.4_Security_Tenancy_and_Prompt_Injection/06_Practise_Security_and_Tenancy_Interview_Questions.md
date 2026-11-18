@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is OIDC?"; they ask how prompt injection is stopped, or what happens when storage is breached, and wait for a mechanism. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common security and tenancy prompts in under a minute each;
-- name the enforcement point in every answer;
-- walk a full threat model for a multi-tenant AI platform.
+> **What you'll learn**
+>
+> - Answer the common security and tenancy prompts in under a minute each.
+> - Name the enforcement point in every answer.
+> - Walk a full threat model for a multi-tenant AI platform.
 
 ---
 

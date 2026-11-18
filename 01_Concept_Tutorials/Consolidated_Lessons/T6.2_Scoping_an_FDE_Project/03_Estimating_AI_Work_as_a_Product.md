@@ -158,7 +158,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 3 Topic 3.1 "Estimate AI as a product, not a single API call", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 3 Topic 3.1 "Estimate AI as a product, not a single API call", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [golden sets and sample size](../T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md) lesson, for building the test set.
 3. The site's [evaluating retrieval and generation separately](../T2.2_RAG_from_First_Principles/05_Evaluating_Retrieval_and_Generation_Separately.md) lesson, for testing document lookup.
 

@@ -6,11 +6,11 @@
 
 "It works on my question" is not evidence, and a single success rate is barely more. Measure each layer of the system on its own, cheapest first, and keep quality and security in separate columns; [Component and Trajectory Metrics](02_Component_and_Trajectory_Metrics.md) then names the metric for each layer.
 
-**Objectives:**
-
-- explain why a single accuracy figure cannot localise a regression;
-- describe the six layers of the evaluation pyramid and how cost and volume change up it;
-- name the three families an enterprise RAG harness scores, and why they are never averaged.
+> **What you'll learn**
+>
+> - Explain why a single accuracy figure cannot localise a regression.
+> - Describe the six layers of the evaluation pyramid and how cost and volume change up it.
+> - Name the three families an enterprise RAG harness scores, and why they are never averaged.
 
 ---
 

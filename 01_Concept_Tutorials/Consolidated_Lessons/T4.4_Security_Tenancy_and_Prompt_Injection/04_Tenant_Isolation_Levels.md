@@ -6,11 +6,11 @@
 
 Every multi-tenant platform is asked how strongly tenants are isolated, and "we filter by tenant id" is not an answer. Pick a level, make the data layer enforce it, and know how a regulated customer moves up.
 
-**Objectives:**
-
-- state the three isolation levels and the default to defend;
-- explain why the data layer, not application code, must enforce the tenant;
-- describe the escalation path for a regulated customer.
+> **What you'll learn**
+>
+> - State the three isolation levels and the default to defend.
+> - Explain why the data layer, not application code, must enforce the tenant.
+> - Describe the escalation path for a regulated customer.
 
 ---
 

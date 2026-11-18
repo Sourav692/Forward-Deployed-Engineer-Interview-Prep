@@ -6,11 +6,11 @@
 
 Most AI backends do not need microservices or home-grown infrastructure. Give each layer one job, create shared clients once, and spend engineering time only on what is specific to the customer; [Keep the Request Path Free](01_Keep_the_Request_Path_Free.md) covers what runs where at request time.
 
-**Objectives:**
-
-- lay out the layers of a FastAPI service and say what each one owns;
-- wire expensive clients through a lifespan handler and dependency functions;
-- decide when to split a modular monolith, and apply the build-or-buy question.
+> **What you'll learn**
+>
+> - Lay out the layers of a FastAPI service and say what each one owns.
+> - Wire expensive clients through a lifespan handler and dependency functions.
+> - Decide when to split a modular monolith, and apply the build-or-buy question.
 
 ---
 

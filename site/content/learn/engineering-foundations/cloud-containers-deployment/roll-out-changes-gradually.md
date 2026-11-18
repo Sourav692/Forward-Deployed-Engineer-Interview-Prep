@@ -4,11 +4,11 @@
 
 A bad GenAI release rarely crashes; it gives worse answers. Pin every model version, expose a new one to a small, measured share of users first, and keep the old version one switch away.
 
-**Objectives:**
-
-- explain why a model version must be pinned exactly;
-- run a model upgrade in stages with a fast rollback;
-- compare blue-green and canary deployments, and automate the canary decision.
+> **What you'll learn**
+>
+> - Explain why a model version must be pinned exactly.
+> - Run a model upgrade in stages with a fast rollback.
+> - Compare blue-green and canary deployments, and automate the canary decision.
 
 ---
 

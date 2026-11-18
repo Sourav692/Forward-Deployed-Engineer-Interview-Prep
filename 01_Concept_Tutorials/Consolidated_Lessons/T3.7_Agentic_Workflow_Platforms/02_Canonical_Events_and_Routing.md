@@ -6,11 +6,11 @@
 
 Channel handling is not a feature to spread through the system; it is a translation to finish at the edge. Normalise each payload into one event, then choose exactly one workflow with two independent checks, building on the layers named in [Why Workflow Automation Is a Trust Problem](01_Why_Workflow_Automation_Is_a_Trust_Problem.md).
 
-**Objectives:**
-
-- name the fields of the canonical event and what each one is for;
-- explain how matching, priority, and the entity lock choose one workflow;
-- argue why priority and the lock are two mechanisms, not one.
+> **What you'll learn**
+>
+> - Name the fields of the canonical event and what each one is for.
+> - Explain how matching, priority, and the entity lock choose one workflow.
+> - Argue why priority and the lock are two mechanisms, not one.
 
 ---
 

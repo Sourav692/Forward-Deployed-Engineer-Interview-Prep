@@ -6,11 +6,11 @@
 
 Real systems rarely use one retrieval strategy alone. Compose hybrid search, reranking and optional rewriting into one pipeline, keep the strategies swappable, and make every model-dependent step degrade instead of failing.
 
-**Objectives:**
-
-- assemble a composite retriever and size each stage's pool;
-- keep strategies interchangeable behind one interface so an evaluation harness can compare them;
-- set a latency budget, degrade gracefully on partial failure, and estimate cost per query.
+> **What you'll learn**
+>
+> - Assemble a composite retriever and size each stage's pool.
+> - Keep strategies interchangeable behind one interface so an evaluation harness can compare them.
+> - Set a latency budget, degrade gracefully on partial failure, and estimate cost per query.
 
 ---
 

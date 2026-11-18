@@ -6,11 +6,11 @@
 
 In a deployed multi-agent system the agents are one layer of nine, and most of the engineering sits around them. Read the platform one layer at a time, asking what each does and why, as [Failure Isolation and Evaluation](05_Failure_Isolation_and_Evaluation.md) did per agent.
 
-**Objectives:**
-
-- trace one request through the nine layers of a deployed research platform;
-- explain the three similarity thresholds in front of the agent pipeline;
-- argue whether the platform's agent pipeline is multi-agent, and name what the platform lacks.
+> **What you'll learn**
+>
+> - Trace one request through the nine layers of a deployed research platform.
+> - Explain the three similarity thresholds in front of the agent pipeline.
+> - Argue whether the platform's agent pipeline is multi-agent, and name what the platform lacks.
 
 ---
 
@@ -91,7 +91,7 @@ A "no" while under `agent_max_iterations` routes back to Search. A "yes", or an 
 
 Why split the work at all? A single "write a good research report" prompt produces shallow, unverified output. Narrow agents produce better output. They also give the system a natural place for a quality gate, the Critic, and for a bounded retry loop.
 
-Is this multi-agent? The sources disagree. By the strict definition, where each agent has its own responsibility, tools and failure mode, it is a pipeline with a loop and a gate. Its agents share one context and one tool set, so it sits closer to a single agent with several steps. What earns the split is the Critic's independent judgement and the bounded retry. The coordination-patterns guide, by contrast, treats a generator and a separate evaluator as their own multi-agent pattern, evaluator-optimizer. Both readings are defensible. In an interview, name the definition in use and describe the shape exactly.
+Is this multi-agent? The sources disagree. By the strict definition, where each agent has its own responsibility, tools and failure mode, it is a pipeline with a loop and a gate. Its agents share one context and one tool set, so it sits closer to a single agent with several steps. What earns the split is the Critic's independent judgement and the bounded retry. The coordination-patterns guide, by contrast, treats a generator and a separate evaluator as their own multi-agent pattern, evaluator-optimiser. Both readings are defensible. In an interview, name the definition in use and describe the shape exactly.
 
 ## Put One Gateway in Front of Every Model Call
 
@@ -155,4 +155,4 @@ The two paths show the platform's priorities. Smart lookup spends nothing when t
 
 ## References
 
-**Sources:** `04_Case_Study_Research_Platform.md` (FDE Handbook, Multi-Agent Systems): "The nine layers" and its nine subsections, "One request, end to end", and "What to take from it". `01_When_Multi_Agent_Is_Justified.md`: "What actually makes something multi-agent". `multi_agent_coordination_patterns.md`: "Evaluator-Optimizer Pattern".
+**Sources:** `04_Case_Study_Research_Platform.md` (FDE Handbook, Multi-Agent Systems): "The nine layers" and its nine subsections, "One request, end to end", and "What to take from it". `01_When_Multi_Agent_Is_Justified.md`: "What actually makes something multi-agent". `multi_agent_coordination_patterns.md`: "Evaluator-Optimiser Pattern".

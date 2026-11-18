@@ -6,11 +6,11 @@
 
 The pilot refunded the wrong order and trusted a stale event, so practise separating proposal from execution, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
-**Objectives:**
-
-- split a support agent into classification, evidence, drafting and guarded execution;
-- put refund decisions in a policy engine with thresholds and approval;
-- state the latency budget and the shadow-mode rollout for this case.
+> **What you'll learn**
+>
+> - Split a support agent into classification, evidence, drafting and guarded execution.
+> - Put refund decisions in a policy engine with thresholds and approval.
+> - State the latency budget and the shadow-mode rollout for this case.
 
 ---
 

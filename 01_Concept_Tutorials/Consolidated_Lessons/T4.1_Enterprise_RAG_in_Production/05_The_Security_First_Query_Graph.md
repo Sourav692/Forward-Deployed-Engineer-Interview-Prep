@@ -6,11 +6,11 @@
 
 The per-request pipeline is not a chain of helper calls but a state machine whose edges enforce security. Draw its nodes from memory, then learn how each failure degrades rather than crashes.
 
-**Objectives:**
-
-- draw the query graph and say what each node does;
-- explain why access enforcement runs before reranking and why the response-cache key includes surviving chunk ids;
-- recite the degradation table, including the one failure that fails closed.
+> **What you'll learn**
+>
+> - Draw the query graph and say what each node does.
+> - Explain why access enforcement runs before reranking and why the response-cache key includes surviving chunk ids.
+> - Recite the degradation table, including the one failure that fails closed.
 
 ---
 

@@ -4,11 +4,11 @@
 
 An FDE's work is not three jobs stapled together. Weigh the three lenses here, then follow them through one day in [A Senior FDE's Day](/learn/orientation/the-fde-role/a-senior-fdes-day).
 
-**Objectives:**
-
-- name the three lenses and what each is for;
-- explain why the lenses are weighted rather than sequential;
-- state the interdependence line that separates senior from mid-level.
+> **What you'll learn**
+>
+> - Name the three lenses and what each is for.
+> - Explain why the lenses are weighted rather than sequential.
+> - State the interdependence line that separates senior from mid-level.
 
 ---
 

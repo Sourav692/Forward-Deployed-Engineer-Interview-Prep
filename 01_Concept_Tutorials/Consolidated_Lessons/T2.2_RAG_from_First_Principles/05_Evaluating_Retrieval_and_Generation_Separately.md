@@ -6,11 +6,11 @@
 
 A RAG system has two boxes, so it needs two report cards. Score retrieval with labelled chunks and generation against the context it received. Only then trust an end-to-end number, keeping the two-box picture from [What RAG Is and When to Use It](01_What_RAG_Is_and_When_to_Use_It.md).
 
-**Objectives:**
-
-- explain why retrieval and generation must be evaluated apart;
-- pick retrieval metrics and generation metrics, and say what each measures;
-- design a small offline evaluation set and a production check for hallucination and drift.
+> **What you'll learn**
+>
+> - Explain why retrieval and generation must be evaluated apart.
+> - Pick retrieval metrics and generation metrics, and say what each measures.
+> - Design a small offline evaluation set and a production check for hallucination and drift.
 
 ---
 

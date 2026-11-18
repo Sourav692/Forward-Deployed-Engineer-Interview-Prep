@@ -6,11 +6,11 @@
 
 A project story is not one speech. Prepare the material once, then pick the shape from the room.
 
-**Objectives:**
-
-- explain why preparation comes before any format;
-- name the three formats and what each one is for;
-- choose a format from the interview situation.
+> **What you'll learn**
+>
+> - Explain why preparation comes before any format.
+> - Name the three formats and what each one is for.
+> - Choose a format from the interview situation.
 
 ---
 

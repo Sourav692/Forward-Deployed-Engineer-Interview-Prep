@@ -4,11 +4,11 @@
 
 A guardrail that runs only when someone remembers to call it is not a guardrail. Run one decision on every step of every run, with deny overriding allow, and pair it with [Staged Rollout](/learn/production-ai/agentic-workflow-platforms/staged-rollout), which decides whether a workflow may act at all.
 
-**Objectives:**
-
-- list the five deny rules in order and the two ways a destructive step is allowed;
-- explain why the step budget and the spend cap are different quantities;
-- say why an autonomous workflow can still be stopped.
+> **What you'll learn**
+>
+> - List the five deny rules in order and the two ways a destructive step is allowed.
+> - Explain why the step budget and the spend cap are different quantities.
+> - Say why an autonomous workflow can still be stopped.
 
 ---
 

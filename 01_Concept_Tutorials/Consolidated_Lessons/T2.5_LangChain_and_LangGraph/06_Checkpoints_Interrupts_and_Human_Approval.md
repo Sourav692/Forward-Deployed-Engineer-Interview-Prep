@@ -6,11 +6,11 @@
 
 A pause is only as good as the state it can resume from. A checkpointer lets a graph stop, wait for a person or a restart, and continue. This lesson applies it to the graphs from [Modelling Workflows as State Graphs](04_Modelling_Workflows_as_State_Graphs.md) and [The Tool-Calling Loop in LangGraph](05_The_Tool_Calling_Loop_in_LangGraph.md).
 
-**Objectives:**
-
-- explain what a checkpoint holds and how a thread scopes it;
-- pause a graph for human approval and resume it correctly;
-- keep a resumed run from repeating a side effect.
+> **What you'll learn**
+>
+> - Explain what a checkpoint holds and how a thread scopes it.
+> - Pause a graph for human approval and resume it correctly.
+> - Keep a resumed run from repeating a side effect.
 
 ---
 

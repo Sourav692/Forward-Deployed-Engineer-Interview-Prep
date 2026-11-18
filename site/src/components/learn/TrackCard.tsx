@@ -30,7 +30,9 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
       <p className="cb-entry-body">{track.objective}</p>
       <p className="cb-entry-facts">
         {SHOW_STUDY_TIME && <span>About {trackHours(track)} h</span>}
-        <span>{modules.length} modules</span>
+        <span>
+          {modules.length} {modules.length === 1 ? 'module' : 'modules'}
+        </span>
         {trackNotebooks(track) > 0 && (
           <span>
             {trackNotebooks(track)} {trackNotebooks(track) === 1 ? 'notebook' : 'notebooks'}

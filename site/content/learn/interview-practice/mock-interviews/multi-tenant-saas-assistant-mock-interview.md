@@ -4,11 +4,11 @@
 
 Treat tenant isolation as a system invariant carried by every query, cache key and log, never as a prompt instruction, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
-**Objectives:**
-
-- treat tenant isolation as a hard system invariant, not a prompt instruction;
-- partition caches by tenant and permission, and keep public docs separate;
-- state the degradation path and the tenant-by-tenant rollout for this case.
+> **What you'll learn**
+>
+> - Treat tenant isolation as a hard system invariant, not a prompt instruction.
+> - Partition caches by tenant and permission, and keep public docs separate.
+> - State the degradation path and the tenant-by-tenant rollout for this case.
 
 ---
 

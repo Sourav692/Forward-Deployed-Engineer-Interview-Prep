@@ -6,12 +6,12 @@
 
 An agent is not a framework, a model or a clever prompt; it is a loop with a stopping rule. Learn the three parts of that loop here, then build it line by line in [The Tool-Calling Loop From Scratch](02_The_Tool_Calling_Loop_From_Scratch.md).
 
-**Objectives:**
-
-- name the three components of an agent and draw the think, act and observe loop;
-- explain why a one-step decision function produces multi-step behaviour;
-- say why the hard part of an agent is trust, not tool selection;
-- decide when a fixed workflow beats an agent.
+> **What you'll learn**
+>
+> - Name the three components of an agent and draw the think, act and observe loop.
+> - Explain why a one-step decision function produces multi-step behaviour.
+> - Say why the hard part of an agent is trust, not tool selection.
+> - Decide when a fixed workflow beats an agent.
 
 ---
 
@@ -115,7 +115,7 @@ An agent is a button that can refund real money, send a real email or close a re
 
 ## Choose the Least Autonomous Shape That Works
 
-Not every task needs an agent. Below an agent on the autonomy spectrum sit fixed workflows. Routing is one model call that classifies and dispatches. Prompt chaining is a fixed sequence of calls with checks between them. Evaluator-optimizer pairs a generator with a grader that triggers regeneration.
+Not every task needs an agent. Below an agent on the autonomy spectrum sit fixed workflows. Routing is one model call that classifies and dispatches. Prompt chaining is a fixed sequence of calls with checks between them. Evaluator-optimiser pairs a generator with a grader that triggers regeneration.
 
 | Option | Costs | Buys | Pick when |
 |---|---|---|---|

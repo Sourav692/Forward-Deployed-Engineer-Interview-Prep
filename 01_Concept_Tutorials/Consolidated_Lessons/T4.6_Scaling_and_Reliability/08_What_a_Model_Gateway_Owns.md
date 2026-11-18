@@ -6,12 +6,12 @@
 
 A model gateway is the single service every application uses to reach a model. The practise lesson for this module designs one for a single support agent: guardrails, cache, router, retries, fallback. This lesson steps back to the platform view. It covers what the gateway is responsible for across many teams, and the stable internal contract that lets applications stop caring which provider answers.
 
-**Objectives:**
-
-- list the duties a model gateway takes off application teams;
-- explain why direct provider calls per team cause drift and incidents;
-- design a stable internal request that names the task, not the provider;
-- use capability negotiation so missing features fail loudly instead of silently.
+> **What you'll learn**
+>
+> - List the duties a model gateway takes off application teams.
+> - Explain why direct provider calls per team cause drift and incidents.
+> - Design a stable internal request that names the task, not the provider.
+> - Use capability negotiation so missing features fail loudly instead of silently.
 
 ---
 

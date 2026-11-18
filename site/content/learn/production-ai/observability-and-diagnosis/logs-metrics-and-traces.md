@@ -4,11 +4,11 @@
 
 Observability is not one log file. A log answers "what happened to this request", a metric answers "how often does it happen", and a trace answers "why, step by step".
 
-**Objectives:**
-
-- tell logs, metrics and traces apart by the question each one answers;
-- add structured logging and a metrics collector to an unmonitored service;
-- use callback hooks and a tracer to make a multi-step chain debuggable after the fact.
+> **What you'll learn**
+>
+> - Tell logs, metrics and traces apart by the question each one answers.
+> - Add structured logging and a metrics collector to an unmonitored service.
+> - Use callback hooks and a tracer to make a multi-step chain debuggable after the fact.
 
 ---
 

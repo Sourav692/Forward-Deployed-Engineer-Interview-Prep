@@ -6,11 +6,11 @@
 
 Interviewers are not testing whether a candidate can design a system; they are testing whether the candidate would spend three months building the wrong one. Question five areas before touching the whiteboard, then read [Let the Answers Change the Design](02_Let_the_Answers_Change_the_Design.md) for how to use what you hear.
 
-**Objectives:**
-
-- name the five question areas and give one question for each from memory;
-- say which design decision each area settles;
-- identify the question most often forgotten and what forgetting it costs.
+> **What you'll learn**
+>
+> - Name the five question areas and give one question for each from memory.
+> - Say which design decision each area settles.
+> - Identify the question most often forgotten and what forgetting it costs.
 
 ---
 

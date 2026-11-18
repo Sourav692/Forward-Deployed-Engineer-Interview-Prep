@@ -6,11 +6,11 @@
 
 No single runtime suits every part of an AI backend. Choose the runtime per workload, scale each on the signal that actually measures its load, and place the vector database and load balancer around it with the same care as the API from [Package the Service and Keep Secrets Out](01_Package_the_Service_and_Keep_Secrets_Out.md).
 
-**Objectives:**
-
-- choose between serverless and containers for a given AI workload, with the numbers that decide it;
-- scale CPU and GPU workloads in Kubernetes on the right signal;
-- host a vector database and configure a load balancer so neither becomes the bottleneck.
+> **What you'll learn**
+>
+> - Choose between serverless and containers for a given AI workload, with the numbers that decide it.
+> - Scale CPU and GPU workloads in Kubernetes on the right signal.
+> - Host a vector database and configure a load balancer so neither becomes the bottleneck.
 
 ---
 

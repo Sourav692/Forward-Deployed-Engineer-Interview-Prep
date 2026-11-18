@@ -6,11 +6,11 @@
 
 An agent turn is stateless in isolation; a conversation is not. Name the scope of each piece of state before choosing where to store it, then read [Types of Memory](02_Types_of_Memory.md) for what belongs inside each scope.
 
-**Objectives:**
-
-- name the three scopes of state, their lifetimes, and where each lives in production;
-- say what a checkpointer gives you that a plain session store does not;
-- choose between a sliding and a fixed expiry for time-limited session memory.
+> **What you'll learn**
+>
+> - Name the three scopes of state, their lifetimes, and where each lives in production.
+> - Say what a checkpointer gives you that a plain session store does not.
+> - Choose between a sliding and a fixed expiry for time-limited session memory.
 
 ---
 

@@ -6,11 +6,11 @@
 
 A model deciding to call a tool is a proposal, never an authorisation. Check every proposed call at several independent points in one pipeline, then use [Practise Robust Agent Interview Questions](06_Practise_Robust_Agent_Interview_Questions.md) to say it out loud.
 
-**Objectives:**
-
-- name all eight checks and the failure each prevents;
-- place each check in one pipeline, in order;
-- explain why no check can be dropped because another seems to cover it.
+> **What you'll learn**
+>
+> - Name all eight checks and the failure each prevents.
+> - Place each check in one pipeline, in order.
+> - Explain why no check can be dropped because another seems to cover it.
 
 ---
 

@@ -6,11 +6,11 @@
 
 The dataset, not the harness, decides what an evaluation number means. Label each case so security and quality failures cannot be confused. Shape the set like real traffic, and size it for the smallest change it must detect; [Validating LLM Judges](04_Validating_LLM_Judges.md) then covers the cases no label can score.
 
-**Objectives:**
-
-- describe the fields of a golden-set case and what each one gates;
-- explain how a mislabelled case produced a false security alarm, and the fix;
-- estimate how many cases a suite needs to detect a given improvement.
+> **What you'll learn**
+>
+> - Describe the fields of a golden-set case and what each one gates.
+> - Explain how a mislabelled case produced a false security alarm, and the fix.
+> - Estimate how many cases a suite needs to detect a given improvement.
 
 ---
 

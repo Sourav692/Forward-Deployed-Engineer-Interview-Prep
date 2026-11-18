@@ -4,12 +4,12 @@
 
 Teams often write business rules into the system prompt: "never refund more than £200", "never show salary data to non-managers". The model usually obeys. "Usually" is the problem. A model reads instructions from many places at once, weighs them by wording it cannot verify, and can be argued out of any of them. This lesson separates what the prompt is for from where policy must actually be decided, and shows how to version the two apart.
 
-**Objectives:**
-
-- explain why the model cannot be a policy enforcement point;
-- describe the layers of instruction a model receives and how they rank;
-- design a policy decision path that runs outside the model;
-- version policy separately from prompts and return safe reason codes.
+> **What you'll learn**
+>
+> - Explain why the model cannot be a policy enforcement point.
+> - Describe the layers of instruction a model receives and how they rank.
+> - Design a policy decision path that runs outside the model.
+> - Version policy separately from prompts and return safe reason codes.
 
 ---
 

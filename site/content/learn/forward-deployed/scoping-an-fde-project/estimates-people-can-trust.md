@@ -151,7 +151,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 2 Topic 2.2 ("Do not hide uncertainty behind confidence"), Module 3 Topic 3.3 "Turn scope into an estimate people can trust" and Module 7 Topic 7.4 "How to speak clearly when you are not certain", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 2 Topic 2.2 ("Do not hide uncertainty behind confidence"), Module 3 Topic 3.3 "Turn scope into an estimate people can trust" and Module 7 Topic 7.4 "How to speak clearly when you are not certain", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [from estimate to build plan](/learn/forward-deployed/scoping-an-fde-project/from-estimate-to-build-plan) lesson, for turning the range into milestones.
 
 ## Key takeaways

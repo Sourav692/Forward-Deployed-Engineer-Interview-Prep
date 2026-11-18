@@ -6,12 +6,12 @@
 
 Generic threat lists ("prompt injection, data leakage, jailbreaks") are a starting vocabulary, not a design. A useful threat model follows one request from the moment it enters the system to the moment something changes in the world, and asks the same four questions at every hop. This lesson gives you those questions and a way to write the answers down so that each threat ends in a named control.
 
-**Objectives:**
-
-- trace a request path and mark every point where untrusted content enters;
-- describe a threat by attacker, asset, entry point and authority boundary;
-- turn each threat into a control that lives outside the model;
-- run the exercise in an interview without drifting into a generic checklist.
+> **What you'll learn**
+>
+> - Trace a request path and mark every point where untrusted content enters.
+> - Describe a threat by attacker, asset, entry point and authority boundary.
+> - Turn each threat into a control that lives outside the model.
+> - Run the exercise in an interview without drifting into a generic checklist.
 
 ---
 

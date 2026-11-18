@@ -6,11 +6,11 @@
 
 RAG fundamentals questions are rarely about the definition. They probe whether a candidate can locate a failure, respect a customer's constraints, and prove a change helped, using lessons 1 to 5 of this module.
 
-**Objectives:**
-
-- answer the common RAG fundamentals questions with a decision, not a definition;
-- handle customer-constraint questions as a forward-deployed engineer would;
-- describe two take-home builds that demonstrate the skills.
+> **What you'll learn**
+>
+> - Answer the common RAG fundamentals questions with a decision, not a definition.
+> - Handle customer-constraint questions as a forward-deployed engineer would.
+> - Describe two take-home builds that demonstrate the skills.
 
 ---
 

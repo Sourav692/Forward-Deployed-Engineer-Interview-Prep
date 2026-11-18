@@ -4,12 +4,12 @@
 
 Passing tests do not prove a GenAI release is safe. Add an evaluation stage to the pipeline, then stack cheaper and broader checks around it so each kind of regression meets the gate that catches it.
 
-**Objectives:**
-
-- lay out a five-stage CI/CD pipeline with a GenAI evaluation stage;
-- order the four rungs of the testing ladder from cheapest to most expensive;
-- explain why a scheduled evaluation run is needed even when nothing in your code changed;
-- run an A/B comparison with enough examples to trust the result.
+> **What you'll learn**
+>
+> - Lay out a five-stage CI/CD pipeline with a GenAI evaluation stage.
+> - Order the four rungs of the testing ladder from cheapest to most expensive.
+> - Explain why a scheduled evaluation run is needed even when nothing in your code changed.
+> - Run an A/B comparison with enough examples to trust the result.
 
 ---
 

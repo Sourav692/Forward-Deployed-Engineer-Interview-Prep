@@ -157,7 +157,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): "How the Round Typically Feels", "What the Interviewer Is Evaluating", "Reusable Answer Template" and "Biggest Mistakes to Avoid".
+1. *FDE Problem Decomposition Question Bank* (the author's own question bank): "How the Round Typically Feels", "What the Interviewer Is Evaluating", "Reusable Answer Template" and "Biggest Mistakes to Avoid".
 2. The site's [observing the work](/learn/forward-deployed/customer-discovery/observing-the-work) lesson, for what interviews miss once a real engagement starts.
 3. The author's own field experience, the basis for the opening story.
 

@@ -4,11 +4,11 @@
 
 Going from 22 documents to 20 million does not require re-architecting security. It requires swapping the storage and index layer underneath it, while the mechanisms that made the small system correct carry over.
 
-**Objectives:**
-
-- choose a vector index for tens of millions of vectors and the mechanisms any choice needs;
-- explain which access-control costs stay flat as the corpus grows, and which need new work;
-- plan index migrations, tenancy and monitoring that hold at scale.
+> **What you'll learn**
+>
+> - Choose a vector index for tens of millions of vectors and the mechanisms any choice needs.
+> - Explain which access-control costs stay flat as the corpus grows, and which need new work.
+> - Plan index migrations, tenancy and monitoring that hold at scale.
 
 ---
 

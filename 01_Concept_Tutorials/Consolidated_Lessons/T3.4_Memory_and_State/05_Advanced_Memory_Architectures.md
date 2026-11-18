@@ -6,11 +6,11 @@
 
 A fixed window and a key-value store cover most agents; these four architectures earn their cost only on specific questions. Learn each by the question it answers, building on the write and read rules in [Long-Term Memory: Write, Retrieve, and Forget](04_Long_Term_Memory_Write_Retrieve_Forget.md).
 
-**Objectives:**
-
-- explain MemGPT-style tiered memory, graph memory, skill libraries and Agent Workflow Memory in a sentence each;
-- name the trade-off each makes against a simpler design;
-- pick the right one for a given failure.
+> **What you'll learn**
+>
+> - Explain MemGPT-style tiered memory, graph memory, skill libraries and Agent Workflow Memory in a sentence each.
+> - Name the trade-off each makes against a simpler design.
+> - Pick the right one for a given failure.
 
 ---
 

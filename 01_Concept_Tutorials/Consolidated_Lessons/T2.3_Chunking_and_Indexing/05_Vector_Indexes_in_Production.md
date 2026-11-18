@@ -6,12 +6,12 @@
 
 Most vector index failures in production raise no error; answers just get worse. This lesson covers how to keep an index fresh as documents change, what breaks as it grows, and which silent failures to watch for, after the store choice in [Choosing a Database and Vector Store](04_Choosing_a_Database_and_Vector_Store.md).
 
-**Objectives:**
-
-- re-ingest changed documents so queries never see two versions at once;
-- explain why updates are deletes plus inserts, and why indexes need compaction;
-- plan for memory, build time, and schema change at 100 million vectors and beyond;
-- name the silent failures of a vector index and the signal that catches each.
+> **What you'll learn**
+>
+> - Re-ingest changed documents so queries never see two versions at once.
+> - Explain why updates are deletes plus inserts, and why indexes need compaction.
+> - Plan for memory, build time, and schema change at 100 million vectors and beyond.
+> - Name the silent failures of a vector index and the signal that catches each.
 
 ---
 

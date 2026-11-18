@@ -4,11 +4,11 @@
 
 At scale, the median and the tail have different causes. Move the median with routing, early filtering and caching; bound the tail with timeouts and fallbacks; and size capacity from throughput and latency together.
 
-**Objectives:**
-
-- apply five levers to P95 latency at scale and say which percentile each one moves;
-- size concurrency with Little's Law and choose infrastructure controls for the critical path;
-- state the cost number that matters at 20 million documents.
+> **What you'll learn**
+>
+> - Apply five levers to P95 latency at scale and say which percentile each one moves.
+> - Size concurrency with Little's Law and choose infrastructure controls for the critical path.
+> - State the cost number that matters at 20 million documents.
 
 ---
 

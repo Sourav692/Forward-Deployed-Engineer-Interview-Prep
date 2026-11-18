@@ -6,11 +6,11 @@
 
 A failed tool call is not one kind of event. Classify the failure first, retry only what is transient and only a bounded number of times, then fall back or escalate; [The Confirmation Gate and Memoization](01_The_Confirmation_Gate_and_Memoization.md) covers the checks that run before any of this.
 
-**Objectives:**
-
-- tell a retryable failure from a permanent one and say what to do with each;
-- explain why the retry budget and the growing delay both exist;
-- describe what a fallback must and must not be allowed to bypass.
+> **What you'll learn**
+>
+> - Tell a retryable failure from a permanent one and say what to do with each.
+> - Explain why the retry budget and the growing delay both exist.
+> - Describe what a fallback must and must not be allowed to bypass.
 
 ---
 

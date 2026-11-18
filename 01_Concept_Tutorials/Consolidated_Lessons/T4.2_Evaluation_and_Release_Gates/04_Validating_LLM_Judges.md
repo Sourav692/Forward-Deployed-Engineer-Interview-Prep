@@ -6,11 +6,11 @@
 
 An LLM judge is a classifier, and an unvalidated classifier is not ground truth. Design the rubric so the judge must show its evidence. Then calibrate it against human labels before trusting any score; the gate in [Release Gates: Safety, Quality, and Cost](05_Release_Gates_Safety_Quality_and_Cost.md) depends on it.
 
-**Objectives:**
-
-- design a judge rubric with separate criteria, anchored levels and quoted evidence;
-- validate a judge with Cohen's kappa and a position-bias check;
-- explain why a judge must never grade its own model's answers.
+> **What you'll learn**
+>
+> - Design a judge rubric with separate criteria, anchored levels and quoted evidence.
+> - Validate a judge with Cohen's kappa and a position-bias check.
+> - Explain why a judge must never grade its own model's answers.
 
 ---
 
