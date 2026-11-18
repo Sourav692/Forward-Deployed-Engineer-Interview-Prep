@@ -1,11 +1,11 @@
 # The Discovery Conversation
 
 
-## Start with the diagram drawn in minute two
+## Start with the diagram drawn at the kickoff
 
-A candidate in a mock decomposition round hears the prompt: "A large enterprise wants to use AI to improve customer support. How would you approach it?" Within two minutes they are drawing a vector store, an agent and three tools. The diagram is tidy and the components are reasonable.
+A regional insurer's head of customer service opens the kickoff with one line: "We want AI to improve support." The FDE, keen to show momentum, has a retrieval index, an agent and three tools on the whiteboard before the coffee is cold. Three weeks later the sponsor asks how they will know in three months whether it worked. Nobody can answer, because nobody asked who handles the tickets, which ones take longest, or whether the goal was deflection, speed or quality. Call this **the premature diagram**: a design drawn before anyone agreed what it was for.
 
-At minute thirty the interviewer asks one question: "How would the customer know in three months that this worked?" The candidate has no answer. They never asked who handles the tickets, which tickets take the most time, or whether the goal was deflection, speed or quality. Every box on the board was a guess, and nothing on it could be checked. Call this **the premature diagram**: a design drawn before anyone agreed what it was for.
+A decomposition round replays this meeting in 45 minutes, and interviewers score the same mistake.
 
 > **What you'll learn**
 >
@@ -16,7 +16,7 @@ At minute thirty the interviewer asks one question: "How would the customer know
 
 ## Start from the prompt as given
 
-A vague prompt is not an invitation to draw a retrieval-augmented generation (RAG) diagram. It tests whether you can turn an ambiguous ask into a user, an outcome and a set of constraints before proposing anything. The customer-support prompt above is deliberately thin. Nothing in it says who the user is, what is slow today, or how anyone would know the project worked.
+The interview version of that kickoff is a one-line prompt: "A large enterprise wants to use AI to improve customer support. How would you approach it?" It is not an invitation to draw a retrieval-augmented generation (RAG) diagram. It tests whether you can turn an ambiguous ask into a user, an outcome and a set of constraints before proposing anything. Like the sponsor's line, it says nothing about who the user is, what is slow today, or how anyone would know the project worked.
 
 A design cannot be judged against an outcome nobody stated. So the round is scored on the order of work as much as on the answer. The question bank this module draws on recommends seven steps, shown in Figure 1.
 
@@ -94,7 +94,7 @@ The tenth mistake sums up the rest: an impressive technical answer that never co
 
 ## Worked example: opening the customer-support prompt
 
-Take the vague prompt from the opening story. The switcher compares the two ways the first two minutes can go.
+Take the support prompt from the opening story. The switcher compares the two ways the first two minutes can go.
 
 <div class="learning-widget evidence-switcher" id="opening-switcher">
 <p class="widget-intro">The same customer-support prompt, opened two ways. Compare what each opening fixes before any component is drawn.</p>
@@ -107,13 +107,13 @@ Take the vague prompt from the opening story. The switcher compares the two ways
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-Only after the framed opening does decomposition begin. The lesson on [decomposing a solution into workstreams](/learn/forward-deployed/customer-discovery/decomposing-a-solution-into-workstreams) picks up from there.
+In a real engagement the framed questions are only the start. The next lesson, [observing the work](/learn/forward-deployed/customer-discovery/observing-the-work), covers what no meeting shows you.
 
 ## Limits of this lesson
 
 - **Interviews are not engagements.** A real discovery runs over days with many people. The round compresses it into minutes, so you state assumptions where a customer would give answers.
 - **The question families are a starting set.** Regulated or physical-world customers add their own constraints.
-- **Illustrative story.** The mock round in the opening is fictional.
+- **Illustrative story.** The insurer in the opening is a composite of several engagements, not a real customer.
 
 ## Interview angle
 

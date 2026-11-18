@@ -6,26 +6,18 @@ module_group: Discovery and scoping
 module_code: T20.1
 module_name: Customer discovery and problem decomposition
 lesson: 2
-lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Decomposing a solution into workstreams", "Success metrics and evaluation data", "Choosing the first use case", "Practise discovery questions, part 1", "Practise discovery questions, part 2", "Practise decomposition interview cases"]
+lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Choosing the first use case", "Success metrics and evaluation data", "Decomposing a solution into workstreams", "Practise discovery questions", "Practise decomposition interview cases"]
 level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [discovery, observation, workflow, exceptions, bottlenecks]
 ---
 
 ## Start with the invoices nobody was waiting on
 
-Redfern Health, a fictional group of three hospitals, asked for AI to read supplier invoices. The finance director explained the problem in the first meeting: the accounts payable team keyed 3,000 invoices a month by hand, and late payments were costing the group penalty fees.
-
-The FDE asked to sit with the team for a morning before agreeing anything. Three things showed up that no meeting had mentioned:
-
-- Keying an invoice took about two minutes. Most of an invoice's ten days in the system went on waiting for a budget holder to approve it.
-- About 6% of invoices did not match their purchase order, on price or quantity. Each one took around 25 minutes of emails and phone calls to settle.
-- Almost every penalty fee came from those mismatched invoices, because they sat in someone's inbox past the due date.
-
-AI that read invoices faster would have saved some of the 100 hours a month spent keying. It would have saved none of the penalties. The real problem was a slow approval step and a small group of exceptions. Call this gap between the described work and the done work **the stated pain**.
+Redfern Health, a group of three hospitals, brought in an FDE to put AI on supplier invoices. The finance director's brief was clear: accounts payable keys 3,000 invoices a month by hand, and late payments are costing the group penalty fees. The FDE asked to sit with the team for a morning before agreeing anything. Keying an invoice took about two minutes, yet invoices were spending ten days in the system, and the penalties did not line up with the keying at all. Call this gap between the described work and the done work **the stated pain**.
 
 > **What you'll learn**
 >
@@ -89,7 +81,7 @@ Every minute a case spends in a process falls into one of four kinds. Keep them 
 
 *Table 1: The four kinds of elapsed time. AI mostly helps with active work, which is often the smallest share.*
 
-Figure 1 shows how Redfern's ten days split across the four kinds, averaged over a month of invoices. The figures are illustrative.
+At Redfern, most of an invoice's ten days went on waiting for a budget holder to approve it. Figure 1 shows how the ten days split across the four kinds, averaged over a month of invoices. The figures are illustrative.
 
 ```mermaid
 pie showData
@@ -108,7 +100,7 @@ pie showData
 
 Exceptions are easy to dismiss because they are rare. Count them by cost, not by frequency. A simple product does the work: how often an exception happens, multiplied by what each one costs in staff time, penalties or customer harm.
 
-At Redfern, mismatches were 6% of invoices, about 180 a month. At 25 minutes each, they took 75 hours of staff time, close to the 100 hours spent on keying. They also caused nearly all the penalty fees. A small group of cases held most of the loss.
+At Redfern, about 6% of invoices did not match their purchase order on price or quantity, about 180 a month. Each took around 25 minutes of emails and calls to settle: 75 hours of staff time, close to the 100 hours spent on keying. Because they sat in inboxes past the due date, they also caused nearly all the penalty fees. A small group of cases held most of the loss.
 
 The switcher compares the problem as Redfern described it with the problem the FDE observed.
 
@@ -134,13 +126,13 @@ Observation usually turns up more problems than one engagement can fix. Rank eac
 - **Can the engagement change it?** A delay caused by a supplier you cannot reach is a poor first target.
 - **Does the data exist to measure it?** Without a baseline you cannot show the fix worked.
 
-The best first target is frequent or costly, within reach, and measurable. The lesson on [choosing the first use case](04_Choosing_the_First_Use_Case.md) adds risk and data readiness to this ranking.
+The best first target is frequent or costly, within reach, and measurable. This ranking picks which problem to work on. [Choosing the first use case](04_Choosing_the_First_Use_Case.md) then ranks the possible solutions to it, adding risk, data readiness and evaluation difficulty.
 
 ## Limits of this lesson
 
 - **Observation changes behaviour.** People work more carefully when watched. Check what you saw against the system records.
 - **A morning is a sample.** Month-end, holidays and seasonal peaks look different. Ask what a bad week looks like.
-- **Fictional data.** Redfern Health and its figures are illustrative.
+- **Composite engagement.** Redfern Health and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

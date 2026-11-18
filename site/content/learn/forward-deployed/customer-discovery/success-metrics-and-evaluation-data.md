@@ -3,9 +3,7 @@
 
 ## Start with the score nobody felt
 
-Marlow Freight, a fictional logistics firm, piloted an assistant that drafted replies to shipment queries. The vendor reported that the model scored highly on a public question-answering benchmark, and the project team repeated the figure in every status update.
-
-Six weeks in, the dispatchers had stopped opening it. Replies arrived too slowly to use during a call. Answers about delayed shipments quoted an old tracking status, because the retrieval index refreshed overnight. The benchmark measured none of this. It scored the model on someone else's questions, while the dispatchers judged the whole workflow on their own. Call this **the borrowed score**: a quality number that measures the model on data the customer never sees.
+Marlow Freight, a logistics firm, called in an FDE to rescue a stalled pilot: an assistant that drafted replies to shipment queries. Every status update quoted the vendor's figure, a high score on a public question-answering benchmark. Six weeks in, the dispatchers had stopped opening the assistant. Replies arrived too slowly to use during a call, and answers about delayed shipments quoted an old tracking status. Call this **the borrowed score**: a quality number that measures the model on data the customer never sees.
 
 > **What you'll learn**
 >
@@ -16,7 +14,7 @@ Six weeks in, the dispatchers had stopped opening it. Replies arrived too slowly
 
 ## Measure the application, not the model
 
-Accuracy is not a success metric until someone has said accurate at what, on which data, compared with whom. Define the metrics and the evaluation set during discovery, straight after [the discovery conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation), because they decide what the decomposition must produce.
+Accuracy is not a success metric until someone has said accurate at what, on which data, compared with whom. Define the metrics and the evaluation set during discovery, as soon as [the first use case](/learn/forward-deployed/customer-discovery/choosing-the-first-use-case) is chosen, because they decide what the decomposition must produce.
 
 Model quality is not the same as application quality. A model can answer well while the application fails because retrieval missed the document, a tool call broke, a business rule was ignored, or the answer arrived too slowly to be useful.
 
@@ -37,7 +35,7 @@ flowchart LR
 
 *Figure 1: A model-only metric looks at one stage. Application evaluation covers retrieval, tools, business rules, user interaction, operational performance and the business outcome.*
 
-A metric that stops at the model's output cannot see five of those six.
+A metric that stops at the model's output cannot see five of those six. At Marlow, the benchmark saw none of the failures. The FDE replaced it with two application measures the dispatchers recognised: time to a usable reply during a live call, and how often the quoted tracking status matched the carrier's current one. Both were failing. The second traced back to a retrieval index that refreshed only overnight.
 
 ## Pick metrics the customer would recognise
 
@@ -103,7 +101,7 @@ An insurer wants to automate claims processing from documents, emails and histor
 
 - **Metrics need a baseline.** If the customer never measured the current process, the first work is measuring it.
 - **Graders disagree.** Human labels carry noise too. Report agreement alongside scores.
-- **Illustrative story.** Marlow Freight is fictional.
+- **Composite engagement.** Marlow Freight is illustrative, not a real customer.
 
 ## Interview angle
 
@@ -149,7 +147,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. *FDE Problem Decomposition Question Bank* (the author's own question bank): cases 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 8 "The Model Got Worse After an Upgrade", 11 "Build an Evaluation Strategy for an AI Application" and 15 "AI Assistant for Sales or Customer-Service Calls", and "Recommended Preparation Plan".
 2. Zheng et al., [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685), arXiv 2306.05685, accessed 17 November 2026. Measuring how often an LLM judge agrees with human preferences, and the biases it shows.
-3. The site's [choosing the first use case](/learn/forward-deployed/customer-discovery/choosing-the-first-use-case) lesson, which uses these metrics to rank candidates.
+3. The site's [choosing the first use case](/learn/forward-deployed/customer-discovery/choosing-the-first-use-case) lesson, which picks the use case these metrics measure.
 
 ## Key takeaways
 

@@ -3,9 +3,7 @@
 
 ## Start with the box labelled "the AI"
 
-Castlegate Retail, a fictional online retailer, approved a support assistant from a one-page plan. The plan had three boxes: the customer, "the AI" and the order system. The team estimated six weeks.
-
-Week four showed what the middle box hid. Nobody owned customer authentication. Nobody had planned how a conversation summary reached the CRM. When the order system timed out, the assistant retried and issued the same refund twice, because no step checked whether the first call had already succeeded. Each gap was a component that was never drawn, so it never got an owner, an estimate or a test. Call this **the one-box design**: a plan that names the model and hides the work around it.
+Castlegate Retail, an online retailer, signed off a support assistant from a one-page plan with three boxes: the customer, "the AI" and the order system. The FDE on the engagement estimated six weeks. By week four the middle box had come apart. Nobody owned customer authentication, nobody had planned how a conversation summary reached the CRM, and when the order system timed out, the assistant retried and issued the same refund twice. Call this **the one-box design**: a plan that names the model and hides the work around it.
 
 > **What you'll learn**
 >
@@ -64,15 +62,7 @@ The design principle for workflow agents is plain: assume the model will sometim
 
 ## Split a complaint into layers
 
-Decomposition is also how to debug. A complaint such as "answers are unreliable" or "responses are slow" covers several distinct failures. Each layer needs its own measurement.
-
-For a RAG assistant with poor answers, separate seven failure layers: retrieval, context assembly, reasoning or synthesis, prompt or instruction, output format, evaluation, and user experience. Measure them separately:
-
-- **Did the right passages come back?** Recall@k and precision@k.
-- **Did they rank high?** Mean reciprocal rank (MRR) or normalised discounted cumulative gain (nDCG).
-- **Was the answer sound?** Citation correctness, context sufficiency, answer faithfulness, answer relevance, abstention quality and end-to-end task success.
-
-For a latency complaint, first ask which latency: time to first token, time between tokens, total completion time, or what the user perceives. Then split the path into client and network, authentication, middleware, retrieval, prompt construction, model prefill, token generation, tool calls, post-processing and streaming. Check token counts, retrieval p95 and p99, retry rates, rate-limit throttling, traffic patterns, model version, prompt changes, cache hit rates and regional routing.
+Decomposition is also how to debug. "Answers are unreliable" or "responses are slow" each cover several distinct failures, and each layer needs its own measurement. For a RAG assistant, separate retrieval, context assembly, synthesis, prompt, output format, evaluation and user experience, and measure retrieval first (recall@k, precision@k) before judging the answer. For latency, first ask which latency (time to first token, between tokens, total or perceived), then time each hop on the request path. [Component and trajectory metrics](/learn/production-ai/evaluation-and-release-gates/component-and-trajectory-metrics) and [latency: prefill, decode, streaming and the tail](/learn/production-ai/cost-and-latency/latency-prefill-decode-streaming-and-the-tail) teach each layer in depth.
 
 ## Name the kind of problem before the fix
 
@@ -102,11 +92,13 @@ A customer wants an agent that reads incoming requests and acts across Salesforc
 
 The refund answer came from the decomposition rather than from instinct. Step 3 had already placed every write behind a gate.
 
+Castlegate's three gaps map onto Figure 1 the same way. Customer authentication becomes its own component with an owner. The CRM summary becomes a drawn step with an estimate. The refund becomes an idempotent write behind the approval gate: after a timeout, the retry checks for the first refund before acting.
+
 ## Limits of this lesson
 
 - **A decomposition is a draft.** Discovery and observation will move components, so revise it as facts arrive.
 - **Metric names vary.** Retrieval and faithfulness metrics are defined differently across tools. Agree the definitions with the customer before reporting them.
-- **Illustrative story.** Castlegate Retail is fictional.
+- **Composite engagement.** Castlegate Retail is illustrative, not a real customer.
 
 ## Interview angle
 

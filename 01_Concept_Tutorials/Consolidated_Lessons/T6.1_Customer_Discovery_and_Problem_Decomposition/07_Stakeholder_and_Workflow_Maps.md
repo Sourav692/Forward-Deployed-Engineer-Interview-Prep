@@ -6,22 +6,18 @@ module_group: Discovery and scoping
 module_code: T20.1
 module_name: Customer discovery and problem decomposition
 lesson: 3
-lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Decomposing a solution into workstreams", "Success metrics and evaluation data", "Choosing the first use case", "Practise discovery questions, part 1", "Practise discovery questions, part 2", "Practise decomposition interview cases"]
+lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Choosing the first use case", "Success metrics and evaluation data", "Decomposing a solution into workstreams", "Practise discovery questions", "Practise decomposition interview cases"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [discovery, stakeholders, workflow maps, ownership, source of truth]
 ---
 
 ## Start with the step that looked redundant
 
-Halden Council, a fictional local authority, pays small-business grants. An FDE team was asked to cut the time from application to payment, then six weeks.
-
-The workflow had a legal review for every grant above £25,000. Legal had approved every one of the last 200 such grants without change. The team proposed removing the step, and the grants manager agreed. Two days before the change went live, the council's finance officer stopped it. The grants were part-funded by a national scheme whose conditions required a legal check above that value. Skipping it would have put the council's funding at risk.
-
-Nobody had lied. The grants manager owned the process but not that rule, and nobody had asked who did. Call this **the invisible owner**: a person or rule with authority over a step, missing from the map.
+Halden Council, a local authority, brought in an FDE to cut the time from small-business grant application to payment, then six weeks. Every grant above £25,000 went through a legal review, and legal had approved the last 200 without a change. The FDE proposed removing the step and the grants manager agreed. Two days before go-live, the council's finance officer stopped it: a national funding scheme required that legal check, and skipping it would have put the council's funding at risk. The grants manager owned the process but not that rule, and nobody had asked who did. Call this **the invisible owner**: a person or rule with authority over a step, missing from the map.
 
 > **What you'll learn**
 >
@@ -93,7 +89,7 @@ Most delays sit at handoffs, because each team owns its own lane and nobody owns
 
 When the process has no owner at all, which is common in work that grew across teams, do not appoint one yourself. Name the gap to the sponsor, propose an interim owner for the engagement, and make a permanent owner part of the handover.
 
-The walkthrough shows how the Halden team could have built the map in four short sessions.
+The walkthrough shows how the FDE could have built Halden's map in four short sessions.
 
 <div class="walkthrough learning-widget" id="map-walkthrough">
 <p class="widget-intro">Build Halden's map before proposing any change. Each step shows the session, who joins and what it catches.</p>
@@ -135,7 +131,7 @@ An approval that always says yes looks like waste. Before proposing to remove it
 
 - **Maps age.** A process changes after go-live. Keep the map with the runbook and update it.
 - **Politics is real.** A map that shows a team causing delays can feel like blame. Show waits as system facts, not personal ones.
-- **Fictional data.** Halden Council and its figures are illustrative.
+- **Composite engagement.** Halden Council and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
