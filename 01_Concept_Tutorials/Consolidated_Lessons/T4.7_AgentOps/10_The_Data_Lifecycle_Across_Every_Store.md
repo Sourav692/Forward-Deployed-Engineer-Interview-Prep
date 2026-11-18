@@ -6,12 +6,12 @@
 
 Data in an AI system does not stay where it landed. A customer's message is stored, summarised, embedded, written into memory, sent to a model provider and quoted in a log. Each copy has its own lifetime and its own way of being found. A data lifecycle policy decides, for every copy, how long it lives, where it may go and how it is removed. This lesson walks through the policy and the deletion path that proves it works.
 
-**Objectives:**
-
-- trace where one piece of user data travels in an AI system;
-- set retention by store, including chat history;
-- check what model providers keep and for how long;
-- design deletion that reaches every copy, and test it.
+> **What you'll learn**
+>
+> - Trace where one piece of user data travels in an AI system.
+> - Set retention by store, including chat history.
+> - Check what model providers keep and for how long.
+> - Design deletion that reaches every copy, and test it.
 
 ---
 

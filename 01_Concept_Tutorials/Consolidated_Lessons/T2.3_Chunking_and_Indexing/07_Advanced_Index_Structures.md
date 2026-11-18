@@ -6,12 +6,12 @@
 
 A flat index of equal chunks answers questions whose answer sits inside one chunk; some questions do not. This lesson covers the index structures that add levels, links, or images, and how to tell when a corpus has earned one, building on [Retrieve Small, Return Large](06_Retrieve_Small_Return_Large.md).
 
-**Objectives:**
-
-- describe hierarchical indices and when a summary layer helps;
-- explain how RAPTOR builds a tree of cluster summaries, and when it degenerates;
-- explain how GraphRAG answers questions that join facts across documents;
-- choose between captioning and direct visual embedding for figures and charts.
+> **What you'll learn**
+>
+> - Describe hierarchical indices and when a summary layer helps.
+> - Explain how RAPTOR builds a tree of cluster summaries, and when it degenerates.
+> - Explain how GraphRAG answers questions that join facts across documents.
+> - Choose between captioning and direct visual embedding for figures and charts.
 
 ---
 

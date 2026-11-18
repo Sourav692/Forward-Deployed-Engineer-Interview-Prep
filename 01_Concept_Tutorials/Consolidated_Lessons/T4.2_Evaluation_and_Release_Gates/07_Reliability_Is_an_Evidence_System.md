@@ -6,12 +6,12 @@
 
 Traditional software is reliable when the same input gives the same correct output and the service stays up. An AI system adds a probabilistic core: the same input can give different outputs, some good and some not. You cannot prove such a system correct by trying it a few times. You can only collect enough evidence, from enough places, to say how it behaves and how it fails. This lesson frames reliability that way and shows where each piece of evidence comes from.
 
-**Objectives:**
-
-- explain why one good output is not evidence of reliability;
-- define reliability targets from the user's outcome, set by the cost of failure;
-- list the evidence sources that together support a reliability claim;
-- treat reliability as continuous rather than a launch milestone.
+> **What you'll learn**
+>
+> - Explain why one good output is not evidence of reliability.
+> - Define reliability targets from the user's outcome, set by the cost of failure.
+> - List the evidence sources that together support a reliability claim.
+> - Treat reliability as continuous rather than a launch milestone.
 
 ---
 

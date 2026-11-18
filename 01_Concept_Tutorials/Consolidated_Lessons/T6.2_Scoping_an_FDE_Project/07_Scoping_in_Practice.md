@@ -181,7 +181,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 6 "See the Method in Action" (Topics 6.1 to 6.3) and Module 8 "The Pre-Estimate Checklist", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 6 "See the Method in Action" (Topics 6.1 to 6.3) and Module 8 "The Pre-Estimate Checklist", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [practise scoping and value questions](10_Practise_Scoping_and_Value_Questions.md) lesson, for timed drills.
 
 ## Key takeaways

@@ -6,11 +6,11 @@
 
 A failing tool call is rarely the model's fault. Fix the surface the agent sees before touching the model, and read [Tool Schema Design](02_Tool_Schema_Design.md) for the concrete rules.
 
-**Objectives:**
-
-- define the agent-computer interface and say why it caps an agent's reliability;
-- name the five reasons a tool call fails, and which one is a model problem;
-- explain why a tool's description and its `destructive` flag are design decisions, not details.
+> **What you'll learn**
+>
+> - Define the agent-computer interface and say why it caps an agent's reliability.
+> - Name the five reasons a tool call fails, and which one is a model problem.
+> - Explain why a tool's description and its `destructive` flag are design decisions, not details.
 
 ---
 

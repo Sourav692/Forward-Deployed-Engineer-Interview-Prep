@@ -4,11 +4,11 @@
 
 An incident answer is scored on its sequence, not on the fix it lands on. Clarify, measure, isolate, mitigate, prevent and communicate, using the traces and metrics from [Production Monitoring](/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos) as evidence.
 
-**Objectives:**
-
-- walk any production incident through one fixed set of steps;
-- start diagnosis from a trace waterfall rather than a guess about the model;
-- separate a quality drop, a latency jump and a provider problem by what each changes in the data.
+> **What you'll learn**
+>
+> - Walk any production incident through one fixed set of steps.
+> - Start diagnosis from a trace waterfall rather than a guess about the model.
+> - Separate a quality drop, a latency jump and a provider problem by what each changes in the data.
 
 ---
 

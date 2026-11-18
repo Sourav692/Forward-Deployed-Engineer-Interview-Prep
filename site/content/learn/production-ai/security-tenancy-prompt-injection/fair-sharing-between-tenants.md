@@ -4,11 +4,11 @@
 
 A rate limit does not make a shared platform fair; it only stops a tenant exceeding its own budget. Add a fair queue for ordering under load, then spend caps, timeouts and per-tenant cost attribution so one tenant's runaway work cannot starve the rest.
 
-**Objectives:**
-
-- distinguish a rate limit from a fair queue in one sentence each;
-- describe per-tenant quotas, circuit breakers, timeouts and spend caps;
-- explain how per-tenant cost attribution supports all of them.
+> **What you'll learn**
+>
+> - Distinguish a rate limit from a fair queue in one sentence each.
+> - Describe per-tenant quotas, circuit breakers, timeouts and spend caps.
+> - Explain how per-tenant cost attribution supports all of them.
 
 ---
 

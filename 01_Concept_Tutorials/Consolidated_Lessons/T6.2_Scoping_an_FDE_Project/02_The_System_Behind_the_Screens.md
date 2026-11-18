@@ -156,7 +156,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. The repository's scoping guide, `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 2 "Figure Out What You Are Really Building" (Topics 2.1 to 2.3), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 2 "Figure Out What You Are Really Building" (Topics 2.1 to 2.3), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [stakeholder and workflow maps](../T6.1_Customer_Discovery_and_Problem_Decomposition/07_Stakeholder_and_Workflow_Maps.md) lesson, for tracing real workflows and their exceptions.
 
 ## Key takeaways

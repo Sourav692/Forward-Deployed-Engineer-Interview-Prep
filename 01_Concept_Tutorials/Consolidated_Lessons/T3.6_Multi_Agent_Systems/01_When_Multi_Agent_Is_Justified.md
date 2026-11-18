@@ -6,11 +6,11 @@
 
 Multi-agent is an escalation, not a mark of a complete design. Start with one agent and a tight tool set, and split only when a named trigger has fired; [Multi-Agent Coordination Patterns](02_Multi_Agent_Coordination_Patterns.md) covers what to build once it has.
 
-**Objectives:**
-
-- tell a single agent with several steps apart from a true multi-agent system;
-- name the triggers that justify a split, and say where the sources disagree on them;
-- route simple requests past the planner, and know when to collapse agents back into one.
+> **What you'll learn**
+>
+> - Tell a single agent with several steps apart from a true multi-agent system.
+> - Name the triggers that justify a split, and say where the sources disagree on them.
+> - Route simple requests past the planner, and know when to collapse agents back into one.
 
 ---
 

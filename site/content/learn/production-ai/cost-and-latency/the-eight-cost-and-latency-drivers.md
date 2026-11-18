@@ -4,11 +4,11 @@
 
 The playbook lists 18 cost drivers and 17 latency drivers, but only a few deserve memory. Seven appear on both lists, and one more runs silently in the background; learn those eight in the order a request travels, as set out in [Why Cost and Latency Decide Production](/learn/production-ai/cost-and-latency/why-cost-and-latency-decide-production).
 
-**Objectives:**
-
-- recite the eight drivers in request-path order and derive them live;
-- name, for each driver, the signal that exposes it and the fix that controls it;
-- state the risk each fix carries before an interviewer asks.
+> **What you'll learn**
+>
+> - Recite the eight drivers in request-path order and derive them live.
+> - Name, for each driver, the signal that exposes it and the fix that controls it.
+> - State the risk each fix carries before an interviewer asks.
 
 ---
 

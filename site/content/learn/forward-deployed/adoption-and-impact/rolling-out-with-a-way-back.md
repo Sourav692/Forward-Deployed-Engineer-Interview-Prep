@@ -124,7 +124,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Pete Hodgson on martinfowler.com, [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html), accessed 18 November 2026. Release toggles and ops toggles as a way to switch features on and off without a deployment.
 2. Google SRE, [Canarying Releases](https://sre.google/workbook/canarying-releases/), accessed 18 November 2026. Exposing a change to a small part of traffic first and rolling back quickly.
-3. `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 5 Topics 5.1 "Choose first users and a way back", 5.3 "Turn production failures into planned work" and the pilot example in 5.4, summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+3. *Scoping an FDE Project: Complete Guide*, Module 5 Topics 5.1 "Choose first users and a way back", 5.3 "Turn production failures into planned work" and the pilot example in 5.4, summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 4. The site's [Delivery as a Repeatable Process](/learn/forward-deployed/delivery-stages-and-gates/delivery-as-a-repeatable-process) and [Stabilise the Customer First](/learn/forward-deployed/debugging-customer-environment/stabilise-the-customer-first) lessons.
 
 ## Key takeaways

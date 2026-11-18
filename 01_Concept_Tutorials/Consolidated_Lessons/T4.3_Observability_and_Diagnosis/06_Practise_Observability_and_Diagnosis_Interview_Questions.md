@@ -6,11 +6,11 @@
 
 Interviewers probe observability through incidents, not definitions. Answer each question below aloud first, then compare with the answer, which uses only the concepts from the earlier lessons in this module.
 
-**Objectives:**
-
-- answer the common observability and diagnosis questions in under a minute each;
-- tie every answer to a specific signal, field or metric;
-- volunteer the gap or trade-off before the interviewer asks.
+> **What you'll learn**
+>
+> - Answer the common observability and diagnosis questions in under a minute each.
+> - Tie every answer to a specific signal, field or metric.
+> - Volunteer the gap or trade-off before the interviewer asks.
 
 ---
 

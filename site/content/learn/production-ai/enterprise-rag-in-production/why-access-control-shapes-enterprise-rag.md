@@ -4,11 +4,11 @@
 
 Enterprise RAG is not ordinary RAG with a permissions check bolted on. Decide where the permission check runs relative to retrieval first, because that one choice fixes the shape of everything after it.
 
-**Objectives:**
-
-- state the access requirement as a table of who asks and what each person should get;
-- name the two failures of filtering after retrieval;
-- explain why the design partitions by tenant, pre-filters inside the partition, and still re-checks after retrieval.
+> **What you'll learn**
+>
+> - State the access requirement as a table of who asks and what each person should get.
+> - Name the two failures of filtering after retrieval.
+> - Explain why the design partitions by tenant, pre-filters inside the partition, and still re-checks after retrieval.
 
 ---
 

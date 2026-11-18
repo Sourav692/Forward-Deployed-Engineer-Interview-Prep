@@ -4,11 +4,11 @@
 
 Ingestion is the offline half of RAG, and it is where enterprise RAG leaks are born. Refuse what cannot be classified, and keep permissions and content in separate stores, because they change for different reasons.
 
-**Objectives:**
-
-- trace a document from two separate feeds to a vector index and an access catalog;
-- explain why the catalog, not the index, is the authority for access;
-- describe incremental sync and the two real reset bugs it exposed.
+> **What you'll learn**
+>
+> - Trace a document from two separate feeds to a vector index and an access catalog.
+> - Explain why the catalog, not the index, is the authority for access.
+> - Describe incremental sync and the two real reset bugs it exposed.
 
 ---
 

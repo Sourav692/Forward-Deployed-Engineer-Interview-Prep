@@ -6,11 +6,11 @@
 
 Plain RAG trusts whatever retrieval returns. Wrap a control loop around retrieval only when it fixes a failure the system actually has, because stacking loops by default just stacks latency.
 
-**Objectives:**
-
-- describe Self-RAG, Corrective RAG and Adaptive RAG, and match each to the failure it fixes;
-- explain what makes agentic RAG "agentic" when the retriever itself does not change;
-- bound every loop so it terminates, fails safely and stays debuggable.
+> **What you'll learn**
+>
+> - Describe Self-RAG, Corrective RAG and Adaptive RAG, and match each to the failure it fixes.
+> - Explain what makes agentic RAG "agentic" when the retriever itself does not change.
+> - Bound every loop so it terminates, fails safely and stays debuggable.
 
 ---
 

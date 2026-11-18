@@ -6,11 +6,11 @@
 
 A better embedding model is the weak answer to "how would you improve retrieval?". Name the failure first, measure it, and only then pick the technique that targets it; the pipeline itself is covered in [RAG from first principles](/learn/llm-and-retrieval/rag-from-first-principles).
 
-**Objectives:**
-
-- define precision, recall, recall@k and mean reciprocal rank, and say what top-k does to each;
-- isolate a bad answer to retrieval or to generation in a few steps;
-- map each common retrieval failure to the technique in this module that fixes it.
+> **What you'll learn**
+>
+> - Define precision, recall, recall@k and mean reciprocal rank, and say what top-k does to each.
+> - Isolate a bad answer to retrieval or to generation in a few steps.
+> - Map each common retrieval failure to the technique in this module that fixes it.
 
 ---
 

@@ -6,11 +6,11 @@
 
 Reading everything in order is one path, not the only one. Pick linear, by role, or by question, using the levels from [How the Material Is Built](01_How_the_Material_Is_Built.md) as the map.
 
-**Objectives:**
-
-- choose between the linear, by-role and by-question paths;
-- say why the FDE path reaches system design and delivery before deep technical topics;
-- check what to bring before starting.
+> **What you'll learn**
+>
+> - Choose between the linear, by-role and by-question paths.
+> - Say why the FDE path reaches system design and delivery before deep technical topics.
+> - Check what to bring before starting.
 
 ---
 

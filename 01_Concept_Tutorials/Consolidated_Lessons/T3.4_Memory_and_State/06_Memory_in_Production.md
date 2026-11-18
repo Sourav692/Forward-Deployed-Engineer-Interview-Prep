@@ -6,11 +6,11 @@
 
 Most memory incidents are not model failures; they are namespace and lifecycle bugs. Design isolation, deletion and audit into the memory store from day one, using the scopes from [Why Agents Need State](01_Why_Agents_Need_State.md) and the write path from [Long-Term Memory: Write, Retrieve, and Forget](04_Long_Term_Memory_Write_Retrieve_Forget.md).
 
-**Objectives:**
-
-- scope every memory read and write to one user and tenant, enforced below the application;
-- design deletion that reaches every copy, and an audit trail for what the agent knows;
-- split shared from private memory across agents, and spot the common production gotchas.
+> **What you'll learn**
+>
+> - Scope every memory read and write to one user and tenant, enforced below the application.
+> - Design deletion that reaches every copy, and an audit trail for what the agent knows.
+> - Split shared from private memory across agents, and spot the common production gotchas.
 
 ---
 

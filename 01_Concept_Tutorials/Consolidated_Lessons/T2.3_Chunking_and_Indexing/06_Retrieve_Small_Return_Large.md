@@ -6,13 +6,13 @@
 
 When the best unit to search and the best unit to read disagree in size, stop compromising on one chunk size and decouple them. This lesson covers parent document retrieval and its relatives, which resolve the size dial from [Why Retrieval Needs Chunks](01_Why_Retrieval_Needs_Chunks.md) instead of tuning it.
 
-**Objectives:**
-
-- explain the "small-to-big" pattern and why it beats one chunk size;
-- choose between child-only and two-splitter parent retrieval;
-- describe the docstore and how it differs from the vector index;
-- compare multi-representation indexing, the context enrichment window, and contextual retrieval;
-- avoid the duplicate-parent and store-drift failures.
+> **What you'll learn**
+>
+> - Explain the "small-to-big" pattern and why it beats one chunk size.
+> - Choose between child-only and two-splitter parent retrieval.
+> - Describe the docstore and how it differs from the vector index.
+> - Compare multi-representation indexing, the context enrichment window, and contextual retrieval.
+> - Avoid the duplicate-parent and store-drift failures.
 
 ---
 

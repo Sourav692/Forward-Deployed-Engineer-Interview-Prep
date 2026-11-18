@@ -4,11 +4,11 @@
 
 An agent that improves over months is not necessarily being retrained. Improvement can live in four places, so try the cheap ones first and reach for model weights last.
 
-**Objectives:**
-
-- name the four places an agentic system can learn, and compare their cost and reversibility;
-- choose examples per request instead of hard-coding them;
-- run Reflexion-style retries only when an external signal can judge the attempt.
+> **What you'll learn**
+>
+> - Name the four places an agentic system can learn, and compare their cost and reversibility.
+> - Choose examples per request instead of hard-coding them.
+> - Run Reflexion-style retries only when an external signal can judge the attempt.
 
 ---
 

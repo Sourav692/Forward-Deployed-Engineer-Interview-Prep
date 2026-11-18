@@ -4,11 +4,11 @@
 
 Most GenAI pilots that fail in production do not fail on quality. They fail because the bill and the wait grew faster than anyone planned, so measure the whole workflow and remove its largest bottleneck before touching the model.
 
-**Objectives:**
-
-- explain why a working demo hides the cost and latency of production;
-- write cost and latency as sums of components along the request path;
-- translate an executive's concern into the engineering control that answers it.
+> **What you'll learn**
+>
+> - Explain why a working demo hides the cost and latency of production.
+> - Write cost and latency as sums of components along the request path.
+> - Translate an executive's concern into the engineering control that answers it.
 
 ---
 

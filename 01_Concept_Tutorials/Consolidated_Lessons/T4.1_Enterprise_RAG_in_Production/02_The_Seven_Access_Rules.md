@@ -6,11 +6,11 @@
 
 Role-based access control cannot say "EU engineers on the vuln-response team may read restricted advisories, but only after the embargo lifts." Attribute-based access control (ABAC) says it in one rule, so learn the attributes, the seven rules in order, and the obligations that ride on an allow.
 
-**Objectives:**
-
-- list the resource and principal attributes and the rule each one feeds;
-- walk the seven checks in order and explain why the first deny wins;
-- say what an obligation is and why it is not a filter.
+> **What you'll learn**
+>
+> - List the resource and principal attributes and the rule each one feeds.
+> - Walk the seven checks in order and explain why the first deny wins.
+> - Say what an obligation is and why it is not a filter.
 
 ---
 

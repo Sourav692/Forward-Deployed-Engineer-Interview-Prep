@@ -4,11 +4,11 @@
 
 An agent whose actions cannot be explained is a liability, not a product. Log every tool call with its arguments, status and latency, one status per executor branch, so the trace is complete by construction; [The Eight Guard Checks](/learn/production-ai/robust-agents/the-eight-guard-checks) shows where this check sits among the others.
 
-**Objectives:**
-
-- list the fields of a tool-call record and the five statuses;
-- read a short trace and answer the debugging, cost and audit questions from it;
-- describe the trace and span hierarchy used in production.
+> **What you'll learn**
+>
+> - List the fields of a tool-call record and the five statuses.
+> - Read a short trace and answer the debugging, cost and audit questions from it.
+> - Describe the trace and span hierarchy used in production.
 
 ---
 

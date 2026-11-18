@@ -6,11 +6,11 @@
 
 A trace that only one project's code can read stops being useful the moment it leaves the laptop. Keep the fields of [The Run Trace](02_The_Run_Trace.md) and change only the wire format, then give each customer a scoped view of the same data.
 
-**Objectives:**
-
-- explain why the format of a trace matters more than its contents once a customer is involved;
-- describe a trace as a tree of spans with domain fields as attributes;
-- scope dashboards per tenant and name them as a real, deferrable requirement.
+> **What you'll learn**
+>
+> - Explain why the format of a trace matters more than its contents once a customer is involved.
+> - Describe a trace as a tree of spans with domain fields as attributes.
+> - Scope dashboards per tenant and name them as a real, deferrable requirement.
 
 ---
 

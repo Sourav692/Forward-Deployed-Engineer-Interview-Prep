@@ -4,11 +4,11 @@
 
 Chat, team messaging, email and a raw API are not the same problem in different clothes, but they do not need different systems. Keep one core pipeline behind a thin adapter, and make "escalate to a human" a concrete workflow rather than a message shown before the user gives up.
 
-**Objectives:**
-
-- say exactly what a channel adapter may change and what it must never change;
-- design escalation as five concrete obligations;
-- turn escalation outcomes into evaluation data.
+> **What you'll learn**
+>
+> - Say exactly what a channel adapter may change and what it must never change.
+> - Design escalation as five concrete obligations.
+> - Turn escalation outcomes into evaluation data.
 
 ---
 

@@ -59,7 +59,7 @@ export default async function DesignPage() {
           <h2 id="cases-heading" className="cb-section-head">
             Cases by theme
           </h2>
-          <p className="cb-label text-[0.9375rem] text-muted">Filter by theme, level or reading time.</p>
+          <p className="cb-label text-[0.9375rem] text-muted">Filter by theme or level.</p>
         </div>
         <Suspense
           fallback={

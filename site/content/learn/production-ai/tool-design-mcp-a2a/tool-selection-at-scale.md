@@ -4,11 +4,11 @@
 
 More tools do not make an agent more capable past a point. Collapse and filter the tool surface first, and add retrieval only once the surface is still too large.
 
-**Objectives:**
-
-- explain why tool accuracy falls as the tool count rises;
-- choose between filtering, namespacing, retrieval and hierarchical routing;
-- answer the "200 tools" design question in the right order.
+> **What you'll learn**
+>
+> - Explain why tool accuracy falls as the tool count rises.
+> - Choose between filtering, namespacing, retrieval and hierarchical routing.
+> - Answer the "200 tools" design question in the right order.
 
 ---
 

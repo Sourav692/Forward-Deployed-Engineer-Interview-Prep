@@ -12,6 +12,30 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-18',
+    title: 'Audit fixes: one lesson opening, cleaner references and counts',
+    summary:
+      'Every lesson now opens its goals the same way, under "What you\'ll learn". Forward Deployed lessons name their sources by title instead of repository file paths. The home page says how many Learn modules are planned and marked Coming soon, so its module count matches the path pages. Track cards say "1 module" when there is one, module cards no longer repeat their lesson count, and the casebook no longer offers a reading-time filter that was removed with study times. A few American spellings became British.',
+  },
+  {
+    date: '2026-11-18',
+    title: 'Forward Deployed Engineering grows to seven tracks',
+    summary:
+      'The Forward Deployed Engineering group now runs from T19 to T25: The FDE Role and Leading in the Field, Discovery, Scoping and Delivery, Building Inside the Customer\'s Estate, Enterprise Integration, Deploying and Operating in the Customer\'s Estate, End-to-End Engagements and The Take-Home. New lessons cover stakeholder communication, staff-level leadership, working in customer code and data, choosing the AI approach, connecting enterprise systems, partner APIs and webhooks, deployment models, security reviews, releases and recovery, running a system after go-live and debugging in the customer\'s environment. End-to-End Engagements has 15 simulations and short case drills, and The Take-Home covers take-home assignments. The older delivery lessons were rewritten in the same format. AI Engineering Foundations gained distributed systems, API and SQL lessons, and the FDE learning path now requires all seven tracks. Links and saved progress are unchanged.',
+  },
+  {
+    date: '2026-11-16',
+    title: 'The 33 designs become casebooks',
+    summary:
+      'Every design under /design was rewritten as a five-part casebook: case brief, design walkthrough, technical deep dives, practice and quick review. Old case addresses and saved progress still work.',
+  },
+  {
+    date: '2026-11-12',
+    title: 'More Production AI Engineering lessons',
+    summary:
+      'Production AI Engineering gained lessons on security, governance and data lifecycle, reliability evidence and readiness reviews, SLIs and SLOs, model gateways and providers, and where an AI system keeps its state, plus new sections in existing lessons.',
+  },
+  {
     date: '2026-11-08',
     title: 'Production AI Engineering becomes its own Learn group',
     summary:

@@ -6,11 +6,11 @@
 
 Retrieval questions rarely ask for a definition. They describe a symptom and wait to see whether the answer starts from the failure or from a favourite technique. Each answer below is short enough to say aloud and points at the lesson that teaches it.
 
-**Objectives:**
-
-- answer diagnosis, hybrid, query, reranking and control-loop questions in a sentence or two each;
-- work a full retrieval design prompt against a scoring rubric;
-- rehearse the follow-ups a sceptical staff engineer is likely to ask.
+> **What you'll learn**
+>
+> - Answer diagnosis, hybrid, query, reranking and control-loop questions in a sentence or two each.
+> - Work a full retrieval design prompt against a scoring rubric.
+> - Rehearse the follow-ups a sceptical staff engineer is likely to ask.
 
 ---
 

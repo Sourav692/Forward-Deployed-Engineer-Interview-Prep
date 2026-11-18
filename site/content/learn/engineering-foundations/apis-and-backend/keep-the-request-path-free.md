@@ -4,11 +4,11 @@
 
 A FastAPI service in front of a model spends most of its time waiting, not computing. Decide where each kind of work runs before writing the first endpoint, then read [Structure the Service and Decide What to Build](/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build) for how the pieces fit together.
 
-**Objectives:**
-
-- choose between `async def` and plain `def` for an endpoint;
-- say where self-hosted inference should run, and why not inside the API;
-- move a minutes-long job out of the request and report its progress.
+> **What you'll learn**
+>
+> - Choose between `async def` and plain `def` for an endpoint.
+> - Say where self-hosted inference should run, and why not inside the API.
+> - Move a minutes-long job out of the request and report its progress.
 
 ---
 

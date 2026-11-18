@@ -6,11 +6,11 @@
 
 The twelve-part framework is complete but not timed, and a 60-minute round punishes completeness without priority. Write a six-step budget on the board before speaking, then use the first twenty minutes to frame, anchor and draw, as this lesson shows, so that [the deep dive and the close](02_Deep_Dive_Failure_Modes_and_the_Close.md) get the time they need.
 
-**Objectives:**
-
-- write the six steps and their minute ranges from memory;
-- open a round with one framing sentence, explicit scope and a concrete anchor case;
-- narrate the happy path before drawing, and draw two labelled flows in eight minutes.
+> **What you'll learn**
+>
+> - Write the six steps and their minute ranges from memory.
+> - Open a round with one framing sentence, explicit scope and a concrete anchor case.
+> - Narrate the happy path before drawing, and draw two labelled flows in eight minutes.
 
 ---
 

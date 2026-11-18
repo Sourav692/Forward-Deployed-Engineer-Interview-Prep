@@ -25,12 +25,13 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
             </Link>
           </h3>
         </div>
-        {/* A scaffold module (Coming soon, no estimate) has no time to show. */}
-        {(SHOW_STUDY_TIME ? moduleTime(mod).total > 0 : input.reading.length > 0) && (
+        {/* A scaffold module (Coming soon, no estimate) has no time to show. The lesson count
+            appears here only when the progress bar (which shows it) does not. */}
+        {(SHOW_STUDY_TIME ? moduleTime(mod).total > 0 : gap && input.reading.length > 0) && (
           <p className="mt-0.5 pl-11 text-xs text-muted">
             {[
               ...(SHOW_STUDY_TIME ? [formatMinutes(moduleTime(mod).total)] : []),
-              ...(input.reading.length > 0 ? [`${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`] : []),
+              ...(gap && input.reading.length > 0 ? [`${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`] : []),
             ].join(', ')}
           </p>
         )}

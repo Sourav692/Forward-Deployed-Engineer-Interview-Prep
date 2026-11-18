@@ -6,12 +6,12 @@
 
 On a lakehouse, most of a hand-built enterprise RAG system becomes platform primitives, while the permission policy stays yours. Buy the undifferentiated layers, build the customer-specific logic, and design around the one fact the platform will not do for you: the vector index does not enforce row-level security.
 
-**Objectives:**
-
-- decide what to build and what to buy across an AI platform stack;
-- explain the two Vector Search facts and the forced two-object design they create;
-- enforce access in two layers, with on-behalf-of-user identity making the second one real;
-- test the enforcement point with a SQL assertion and name the honest trade-offs.
+> **What you'll learn**
+>
+> - Decide what to build and what to buy across an AI platform stack.
+> - Explain the two Vector Search facts and the forced two-object design they create.
+> - Enforce access in two layers, with on-behalf-of-user identity making the second one real.
+> - Test the enforcement point with a SQL assertion and name the honest trade-offs.
 
 ---
 

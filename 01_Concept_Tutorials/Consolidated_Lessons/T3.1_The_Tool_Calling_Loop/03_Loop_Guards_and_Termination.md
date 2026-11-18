@@ -6,12 +6,12 @@
 
 "The model will figure out when it is done" is not a stopping rule. Give every run explicit budgets and a named ending for each way it can stop, building on the max-iteration guard from [The Tool-Calling Loop From Scratch](02_The_Tool_Calling_Loop_From_Scratch.md).
 
-**Objectives:**
-
-- list the budgets that stop an agent from looping forever;
-- draw the agent's run as a state machine with every path to termination;
-- diagnose a loop guard that allows one more attempt than intended;
-- explain why a vague tool error causes identical retries.
+> **What you'll learn**
+>
+> - List the budgets that stop an agent from looping forever.
+> - Draw the agent's run as a state machine with every path to termination.
+> - Diagnose a loop guard that allows one more attempt than intended.
+> - Explain why a vague tool error causes identical retries.
 
 ---
 

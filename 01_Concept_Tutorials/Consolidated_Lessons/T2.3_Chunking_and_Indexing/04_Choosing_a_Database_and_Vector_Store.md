@@ -6,13 +6,13 @@
 
 There is no single "RAG database". A GenAI system usually needs several stores, each for its own job, and the vector store is only one of them. This lesson builds on the index families from [How Vector Search Works](03_How_Vector_Search_Works.md).
 
-**Objectives:**
-
-- assign relational, document, vector, and object stores to their jobs in a RAG system;
-- decide when PostgreSQL with pgvector is enough;
-- compare FAISS, Pinecone, Weaviate, and Milvus, and choose managed or self-hosted;
-- lay out the ingestion tables that make re-embedding and access filtering possible;
-- benchmark candidate stores on the team's own data.
+> **What you'll learn**
+>
+> - Assign relational, document, vector, and object stores to their jobs in a RAG system.
+> - Decide when PostgreSQL with pgvector is enough.
+> - Compare FAISS, Pinecone, Weaviate, and Milvus, and choose managed or self-hosted.
+> - Lay out the ingestion tables that make re-embedding and access filtering possible.
+> - Benchmark candidate stores on the team's own data.
 
 ---
 

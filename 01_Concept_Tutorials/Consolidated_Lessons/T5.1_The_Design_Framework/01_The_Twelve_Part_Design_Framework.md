@@ -6,11 +6,11 @@
 
 A design round is not a drawing exercise; it is a sequence of questions the interviewer asks silently. Learn the twelve questions in order, then answer the first four before drawing anything, because they decide every later choice.
 
-**Objectives:**
-
-- name the twelve parts of a design answer and the silent question behind each;
-- turn a vague prompt into a problem statement, a short functional list and quantified quality targets;
-- estimate users, traffic, storage and bandwidth well enough to justify the architecture.
+> **What you'll learn**
+>
+> - Name the twelve parts of a design answer and the silent question behind each.
+> - Turn a vague prompt into a problem statement, a short functional list and quantified quality targets.
+> - Estimate users, traffic, storage and bandwidth well enough to justify the architecture.
 
 ---
 

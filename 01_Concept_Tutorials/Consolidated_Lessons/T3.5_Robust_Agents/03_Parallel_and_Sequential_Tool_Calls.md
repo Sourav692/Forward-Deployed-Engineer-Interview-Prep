@@ -6,11 +6,11 @@
 
 Parallelism is a decision the system makes, not one the model makes alone. Fan out only independent reads, keep dependent steps and writes sequential, and route every branch through the executor from [Retries and Fallbacks](02_Retries_and_Fallbacks.md).
 
-**Objectives:**
-
-- compute the latency of a sequential and a parallel set of calls;
-- say which calls may run in parallel and which must not;
-- name the three things a fan-out policy checks before it runs.
+> **What you'll learn**
+>
+> - Compute the latency of a sequential and a parallel set of calls.
+> - Say which calls may run in parallel and which must not.
+> - Name the three things a fan-out policy checks before it runs.
 
 ---
 

@@ -6,11 +6,11 @@
 
 The six passages the model sees should be the six best, not merely the six nearest. Over-fetch candidates with the searches in [Hybrid Search and Rank Fusion](02_Hybrid_Search_and_Rank_Fusion.md), then rerank, diversify, filter and trim them before generation.
 
-**Objectives:**
-
-- explain why a cross-encoder judges relevance better than the embedding search that found the candidates;
-- size the candidate pool and the final cut, and choose between a cross-encoder and an LLM reranker;
-- remove near-duplicates with MMR and trim noise with thresholds, compression, segment extraction and filters.
+> **What you'll learn**
+>
+> - Explain why a cross-encoder judges relevance better than the embedding search that found the candidates.
+> - Size the candidate pool and the final cut, and choose between a cross-encoder and an LLM reranker.
+> - Remove near-duplicates with MMR and trim noise with thresholds, compression, segment extraction and filters.
 
 ---
 

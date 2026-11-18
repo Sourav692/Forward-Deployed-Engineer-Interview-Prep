@@ -6,10 +6,10 @@
 
 AgentOps questions test whether a candidate has shipped changes to a live AI system, not just built one. Answer each question aloud first, then compare; every answer uses only concepts from the earlier lessons in this module.
 
-**Objectives:**
-
-- walk a prompt change from edit to monitoring and name every gate;
-- answer the channel, escalation, red-teaming and infrastructure follow-ups.
+> **What you'll learn**
+>
+> - Walk a prompt change from edit to monitoring and name every gate.
+> - Answer the channel, escalation, red-teaming and infrastructure follow-ups.
 
 ---
 

@@ -6,11 +6,11 @@
 
 Everything the earlier lessons describe runs somewhere, and every new version has to get there. Make the environment a reviewable text file, make every change flow through automatic gates, and make every stop and rollback automatic.
 
-**Objectives:**
-
-- explain what infrastructure as code and a CI/CD pipeline buy an AI system;
-- set up an environment in the right dependency order, with secrets read at startup;
-- assemble the AI-specific release pipeline from code change to weekly red team.
+> **What you'll learn**
+>
+> - Explain what infrastructure as code and a CI/CD pipeline buy an AI system.
+> - Set up an environment in the right dependency order, with secrets read at startup.
+> - Assemble the AI-specific release pipeline from code change to weekly red team.
 
 ---
 

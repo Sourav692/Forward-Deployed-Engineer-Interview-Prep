@@ -10,7 +10,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/01_How_the_Material_Is_Built.md",
       "estMinutes": 7,
       "href": "/learn/orientation/how-the-platform-works/how-the-material-is-built",
-      "updated": "2026-11-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "three-roles-three-questions",
@@ -22,7 +22,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/01_Three_Roles_Three_Questions.md",
       "estMinutes": 6,
       "href": "/learn/orientation/the-fde-role/three-roles-three-questions",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-three-lenses-of-fde-work",
@@ -34,7 +34,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/02_The_Three_Lenses_of_FDE_Work.md",
       "estMinutes": 4,
       "href": "/learn/orientation/the-fde-role/the-three-lenses-of-fde-work",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "a-senior-fdes-day",
@@ -46,7 +46,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/03_A_Senior_FDEs_Day.md",
       "estMinutes": 5,
       "href": "/learn/orientation/the-fde-role/a-senior-fdes-day",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-fde-role",
@@ -58,7 +58,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/04_Practise_FDE_Role_Interview_Questions.md",
       "estMinutes": 5,
       "href": "/learn/orientation/the-fde-role/practise-fde-role",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "ask-before-you-architect",
@@ -70,7 +70,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/01_Ask_Before_You_Architect.md",
       "estMinutes": 6,
       "href": "/learn/orientation/first-ten-minutes/ask-before-you-architect",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "let-the-answers-change-the-design",
@@ -82,7 +82,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/02_Let_the_Answers_Change_the_Design.md",
       "estMinutes": 4,
       "href": "/learn/orientation/first-ten-minutes/let-the-answers-change-the-design",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "package-the-service-and-keep-secrets-out",
@@ -94,7 +94,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/01_Package_the_Service_and_Keep_Secrets_Out.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/package-the-service-and-keep-secrets-out",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "choose-a-runtime-and-scale-it",
@@ -106,7 +106,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/02_Choose_a_Runtime_and_Scale_It.md",
       "estMinutes": 7,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/choose-a-runtime-and-scale-it",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "gate-releases-on-quality",
@@ -118,7 +118,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/03_Gate_Releases_on_Quality.md",
       "estMinutes": 6,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/gate-releases-on-quality",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "roll-out-changes-gradually",
@@ -130,7 +130,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/04_Roll_Out_Changes_Gradually.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/roll-out-changes-gradually",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "observe-the-running-service",
@@ -142,7 +142,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/05_Observe_the_Running_Service.md",
       "estMinutes": 6,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/observe-the-running-service",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "degrade-gracefully-and-load-test",
@@ -154,7 +154,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/degrade-gracefully-and-load-test",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-deployment",
@@ -166,7 +166,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/07_Practise_Deployment_Interview_Questions.md",
       "estMinutes": 8,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/practise-deployment",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "keep-the-request-path-free",
@@ -178,7 +178,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/01_Keep_the_Request_Path_Free.md",
       "estMinutes": 6,
       "href": "/learn/engineering-foundations/apis-and-backend/keep-the-request-path-free",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "structure-the-service-and-decide-what-to-build",
@@ -190,7 +190,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/02_Structure_the_Service_and_Decide_What_to_Build.md",
       "estMinutes": 6,
       "href": "/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "define-the-api-contract-with-typed-schemas",
@@ -202,7 +202,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/03_Define_the_API_Contract_With_Typed_Schemas.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/apis-and-backend/define-the-api-contract-with-typed-schemas",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "protect-the-endpoint-from-abuse-and-cost",
@@ -214,7 +214,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/04_Protect_the_Endpoint_From_Abuse_and_Cost.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/apis-and-backend/protect-the-endpoint-from-abuse-and-cost",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "build-a-streaming-chat-endpoint",
@@ -226,7 +226,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/05_Build_a_Streaming_Chat_Endpoint.md",
       "estMinutes": 6,
       "href": "/learn/engineering-foundations/apis-and-backend/build-a-streaming-chat-endpoint",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "cache-answers-without-serving-wrong-ones",
@@ -238,7 +238,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/06_Cache_Answers_Without_Serving_Wrong_Ones.md",
       "estMinutes": 5,
       "href": "/learn/engineering-foundations/apis-and-backend/cache-answers-without-serving-wrong-ones",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-api-and-backend",
@@ -250,7 +250,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/07_Practise_API_and_Backend_Interview_Questions.md",
       "estMinutes": 7,
       "href": "/learn/engineering-foundations/apis-and-backend/practise-api-and-backend",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "queues-topics-and-acknowledgements",
@@ -4164,7 +4164,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/01_The_Agent_Computer_Interface.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/tool-design-mcp-a2a/the-agent-computer-interface",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "tool-schema-design",
@@ -4178,7 +4178,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/02_Tool_Schema_Design.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/tool-design-mcp-a2a/tool-schema-design",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "typed-tool-results-and-teachable-errors",
@@ -4192,7 +4192,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/03_Typed_Tool_Results_and_Teachable_Errors.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-tool-gateway-and-code-sandboxing",
@@ -4206,7 +4206,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/04_The_Tool_Gateway_and_Code_Sandboxing.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/tool-design-mcp-a2a/the-tool-gateway-and-code-sandboxing",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "tool-selection-at-scale",
@@ -4220,7 +4220,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/06_Tool_Selection_at_Scale.md",
       "estMinutes": 4,
       "href": "/learn/production-ai/tool-design-mcp-a2a/tool-selection-at-scale",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-tool-design-interview-questions",
@@ -4234,7 +4234,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/07_Practise_Tool_Design_Interview_Questions.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/tool-design-mcp-a2a/practise-tool-design-interview-questions",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "control-placement",
@@ -4248,7 +4248,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/01_Control_Placement.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/context-engineering/control-placement",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-four-context-operations",
@@ -4262,7 +4262,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/04_The_Four_Context_Operations.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/context-engineering/the-four-context-operations",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "deterministic-context-assembly",
@@ -4276,7 +4276,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/05_Deterministic_Context_Assembly.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/context-engineering/deterministic-context-assembly",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "context-rot-and-sub-agent-isolation",
@@ -4290,7 +4290,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/06_Context_Rot_and_Sub_Agent_Isolation.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/context-engineering/context-rot-and-sub-agent-isolation",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-context-and-orchestration-interview-questions",
@@ -4304,7 +4304,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/07_Practise_Context_and_Orchestration_Interview_Questions.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/context-engineering/practise-context-and-orchestration-interview-questions",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-confirmation-gate-and-memoization",
@@ -4316,7 +4316,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/robust-agents/the-confirmation-gate-and-memoization",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "retries-and-fallbacks",
@@ -4328,7 +4328,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/02_Retries_and_Fallbacks.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/robust-agents/retries-and-fallbacks",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "observability-for-tool-calls",
@@ -4340,7 +4340,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/04_Observability_for_Tool_Calls.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/robust-agents/observability-for-tool-calls",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-eight-guard-checks",
@@ -4352,7 +4352,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/05_The_Eight_Guard_Checks.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/robust-agents/the-eight-guard-checks",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-robust-agents",
@@ -4364,7 +4364,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/06_Practise_Robust_Agent_Interview_Questions.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/robust-agents/practise-robust-agents",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "anatomy-of-a-deployed-multi-agent-platform",
@@ -4376,7 +4376,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md",
       "estMinutes": 11,
       "href": "/learn/production-ai/agentops/anatomy-of-a-deployed-multi-agent-platform",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "why-workflow-automation-is-a-trust-problem",
@@ -4388,7 +4388,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/01_Why_Workflow_Automation_Is_a_Trust_Problem.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/agentic-workflow-platforms/why-workflow-automation-is-a-trust-problem",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "canonical-events-and-routing",
@@ -4400,7 +4400,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/02_Canonical_Events_and_Routing.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/agentic-workflow-platforms/canonical-events-and-routing",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "determinism-over-free-text",
@@ -4412,7 +4412,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/03_Determinism_Over_Free_Text.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/agentic-workflow-platforms/determinism-over-free-text",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "durability-and-idempotency",
@@ -4424,7 +4424,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "approvals-and-spend-caps",
@@ -4436,7 +4436,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/05_Approvals_and_Spend_Caps.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentic-workflow-platforms/approvals-and-spend-caps",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "staged-rollout",
@@ -4448,7 +4448,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/06_Staged_Rollout.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentic-workflow-platforms/staged-rollout",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-agentic-workflow-platforms",
@@ -4460,7 +4460,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/07_Practise_Agentic_Workflow_Platform_Interview_Questions.md",
       "estMinutes": 10,
       "href": "/learn/production-ai/agentic-workflow-platforms/practise-agentic-workflow-platforms",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "why-access-control-shapes-enterprise-rag",
@@ -4472,7 +4472,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/enterprise-rag-in-production/why-access-control-shapes-enterprise-rag",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-seven-access-rules",
@@ -4484,7 +4484,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/02_The_Seven_Access_Rules.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "pushing-policy-into-the-index",
@@ -4496,7 +4496,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/03_Pushing_Policy_Into_the_Index.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/enterprise-rag-in-production/pushing-policy-into-the-index",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "permission-aware-ingestion",
@@ -4508,7 +4508,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-security-first-query-graph",
@@ -4520,7 +4520,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/05_The_Security_First_Query_Graph.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/the-security-first-query-graph",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "output-guardrails-and-refusals",
@@ -4532,7 +4532,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-enterprise-rag",
@@ -4544,7 +4544,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/07_Practise_Enterprise_RAG_Interview_Questions.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/practise-enterprise-rag",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-evaluation-pyramid",
@@ -4558,7 +4558,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/01_The_Evaluation_Pyramid.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/evaluation-and-release-gates/the-evaluation-pyramid",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "component-and-trajectory-metrics",
@@ -4572,7 +4572,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/02_Component_and_Trajectory_Metrics.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/evaluation-and-release-gates/component-and-trajectory-metrics",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "golden-sets-and-sample-size",
@@ -4586,7 +4586,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "validating-llm-judges",
@@ -4600,7 +4600,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/04_Validating_LLM_Judges.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/evaluation-and-release-gates/validating-llm-judges",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "release-gates-safety-quality-and-cost",
@@ -4614,7 +4614,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/05_Release_Gates_Safety_Quality_and_Cost.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/evaluation-and-release-gates/release-gates-safety-quality-and-cost",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "reliability-is-an-evidence-system",
@@ -4626,7 +4626,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/07_Reliability_Is_an_Evidence_System.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/evaluation-and-release-gates/reliability-is-an-evidence-system",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "run-a-readiness-review",
@@ -4638,7 +4638,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/08_Run_a_Readiness_Review.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/evaluation-and-release-gates/run-a-readiness-review",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-evaluation-and-release-gates",
@@ -4652,7 +4652,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/evaluation-and-release-gates/practise-evaluation-and-release-gates",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "identity-verification-with-sso-and-oidc",
@@ -4664,7 +4664,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/01_Identity_Verification_with_SSO_and_OIDC.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "secrets-and-per-tenant-encryption-keys",
@@ -4676,7 +4676,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/secrets-and-per-tenant-encryption-keys",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "prompt-injection-and-egress-control",
@@ -4688,7 +4688,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/03_Prompt_Injection_and_Egress_Control.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-and-egress-control",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "tenant-isolation-levels",
@@ -4700,7 +4700,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/tenant-isolation-levels",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "fair-sharing-between-tenants",
@@ -4712,7 +4712,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/05_Fair_Sharing_Between_Tenants.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/fair-sharing-between-tenants",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "threat-model-each-request-path",
@@ -4724,7 +4724,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/07_Threat_Model_Each_Request_Path.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/threat-model-each-request-path",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "delegated-authority-and-zero-ambient-authority",
@@ -4736,7 +4736,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "tool-poisoning-memory-poisoning-and-the-supply-chain",
@@ -4748,7 +4748,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/09_Tool_Poisoning_Memory_Poisoning_and_the_Supply_Chain.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/tool-poisoning-memory-poisoning-and-the-supply-chain",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "policy-lives-outside-the-prompt",
@@ -4760,7 +4760,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/10_Policy_Lives_Outside_the_Prompt.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/policy-lives-outside-the-prompt",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "connecting-a-customers-account-with-oauth",
@@ -4796,7 +4796,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/01_Logs_Metrics_and_Traces.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/observability-and-diagnosis/logs-metrics-and-traces",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-run-trace",
@@ -4810,7 +4810,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/02_The_Run_Trace.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/observability-and-diagnosis/the-run-trace",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "standard-tracing-and-customer-facing-dashboards",
@@ -4862,7 +4862,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/07_Define_Working_With_SLIs_and_SLOs.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/observability-and-diagnosis/define-working-with-slis-and-slos",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-observability-and-diagnosis",
@@ -4890,7 +4890,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/01_Why_Cost_and_Latency_Decide_Production.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/cost-and-latency/why-cost-and-latency-decide-production",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-eight-cost-and-latency-drivers",
@@ -4904,7 +4904,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/02_The_Eight_Cost_and_Latency_Drivers.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/the-eight-cost-and-latency-drivers",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "latency-prefill-decode-streaming-and-the-tail",
@@ -4918,7 +4918,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/03_Latency_Prefill_Decode_Streaming_and_the_Tail.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/latency-prefill-decode-streaming-and-the-tail",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "model-routing-and-prompt-discipline",
@@ -4932,7 +4932,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/04_Model_Routing_and_Prompt_Discipline.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/model-routing-and-prompt-discipline",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "caching-in-genai-systems",
@@ -4946,7 +4946,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/05_Caching_in_GenAI_Systems.md",
       "estMinutes": 10,
       "href": "/learn/production-ai/cost-and-latency/caching-in-genai-systems",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "rag-and-agent-cost-controls",
@@ -4960,7 +4960,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/06_RAG_and_Agent_Cost_Controls.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/rag-and-agent-cost-controls",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "budgets-and-spend-guardrails",
@@ -4974,7 +4974,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/07_Budgets_and_Spend_Guardrails.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/budgets-and-spend-guardrails",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-cost-and-latency",
@@ -4988,7 +4988,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/08_Practise_Cost_and_Latency_Interview_Questions.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/cost-and-latency/practise-cost-and-latency",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "what-breaks-at-twenty-million-documents",
@@ -5000,7 +5000,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/01_What_Breaks_at_Twenty_Million_Documents.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/what-breaks-at-twenty-million-documents",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "scaling-the-index-and-access-control",
@@ -5012,7 +5012,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/02_Scaling_the_Index_and_Access_Control.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/scaling-the-index-and-access-control",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "capacity-latency-and-cost-at-scale",
@@ -5038,7 +5038,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/retries-circuit-breakers-and-bulkheads",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "failover-graceful-degradation-and-kill-switches",
@@ -5050,7 +5050,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/05_Failover_Graceful_Degradation_and_Kill_Switches.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/scaling-and-reliability/failover-graceful-degradation-and-kill-switches",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "know-every-store-you-run",
@@ -5062,7 +5062,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/07_Know_Every_Store_You_Run.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/know-every-store-you-run",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "what-a-model-gateway-owns",
@@ -5074,7 +5074,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/08_What_a_Model_Gateway_Owns.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/what-a-model-gateway-owns",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "route-from-evidence-and-fall-back-with-care",
@@ -5086,7 +5086,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/09_Route_From_Evidence_and_Fall_Back_With_Care.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/route-from-evidence-and-fall-back-with-care",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "direct-provider-apis-or-a-managed-platform",
@@ -5098,7 +5098,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/10_Direct_Provider_APIs_or_a_Managed_Platform.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/direct-provider-apis-or-a-managed-platform",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-scaling-and-reliability",
@@ -5122,7 +5122,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/01_Prompt_Versioning_Rollout_and_Rollback.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/agentops/prompt-versioning-rollout-and-rollback",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "testing-prompt-changes",
@@ -5136,7 +5136,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/02_Testing_Prompt_Changes.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentops/testing-prompt-changes",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "channel-adapters-and-human-escalation",
@@ -5148,7 +5148,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/05_Channel_Adapters_and_Human_Escalation.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/agentops/channel-adapters-and-human-escalation",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "red-teaming-and-layered-guardrails",
@@ -5160,7 +5160,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/06_Red_Teaming_and_Layered_Guardrails.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/agentops/red-teaming-and-layered-guardrails",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "infrastructure-as-code-and-the-release-pipeline",
@@ -5172,7 +5172,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/07_Infrastructure_as_Code_and_the_Release_Pipeline.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/agentops/infrastructure-as-code-and-the-release-pipeline",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "govern-ai-systems-by-risk-tier",
@@ -5184,7 +5184,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/09_Govern_AI_Systems_by_Risk_Tier.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentops/govern-ai-systems-by-risk-tier",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-data-lifecycle-across-every-store",
@@ -5196,7 +5196,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/10_The_Data_Lifecycle_Across_Every_Store.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentops/the-data-lifecycle-across-every-store",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "practise-agentops",
@@ -5208,7 +5208,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/08_Practise_AgentOps_Interview_Questions.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/agentops/practise-agentops",
-      "updated": "2026-11-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "four-learning-surfaces",
@@ -5222,7 +5222,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.8_Model_Adaptation_and_Serving/01_Four_Learning_Surfaces.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/model-adaptation-and-serving/four-learning-surfaces",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-skill-library-and-its-promotion-gate",
@@ -5236,7 +5236,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.8_Model_Adaptation_and_Serving/02_The_Skill_Library_and_Its_Promotion_Gate.md",
       "estMinutes": 4,
       "href": "/learn/production-ai/model-adaptation-and-serving/the-skill-library-and-its-promotion-gate",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "when-fine-tuning-earns-its-cost",
@@ -5250,7 +5250,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.8_Model_Adaptation_and_Serving/03_When_Fine_Tuning_Earns_Its_Cost.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/model-adaptation-and-serving/when-fine-tuning-earns-its-cost",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-data-flywheel",
@@ -5264,7 +5264,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.8_Model_Adaptation_and_Serving/04_The_Data_Flywheel.md",
       "estMinutes": 4,
       "href": "/learn/production-ai/model-adaptation-and-serving/the-data-flywheel",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "g13-evaluation-and-release-gating",
@@ -5364,7 +5364,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md",
       "estMinutes": 8,
       "href": "/learn/ai-systems-design/design-framework/the-twelve-part-design-framework",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "architecture-data-and-request-flow",
@@ -5376,7 +5376,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/02_Architecture_Data_and_Request_Flow.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/design-framework/architecture-data-and-request-flow",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "scale-reliability-and-security",
@@ -5388,7 +5388,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/03_Scale_Reliability_and_Security.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/design-framework/scale-reliability-and-security",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "design-principles-as-tie-breakers",
@@ -5400,7 +5400,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md",
       "estMinutes": 9,
       "href": "/learn/ai-systems-design/design-framework/design-principles-as-tie-breakers",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "reviewing-an-agent-architecture",
@@ -5412,7 +5412,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/05_Reviewing_an_Agent_Architecture.md",
       "estMinutes": 8,
       "href": "/learn/ai-systems-design/design-framework/reviewing-an-agent-architecture",
-      "updated": "2026-11-02"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-six-step-whiteboard-clock",
@@ -5424,7 +5424,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock",
-      "updated": "2026-10-12"
+      "updated": "2026-11-18"
     },
     {
       "slug": "deep-dive-failure-modes-and-the-close",
@@ -5436,7 +5436,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/02_Deep_Dive_Failure_Modes_and_the_Close.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/sixty-minute-whiteboard/deep-dive-failure-modes-and-the-close",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "monoliths-microservices-and-the-evolution-model",
@@ -5448,7 +5448,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/01_Monoliths_Microservices_and_the_Evolution_Model.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/architecture-patterns/monoliths-microservices-and-the-evolution-model",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "orchestration-patterns-for-agents",
@@ -5462,7 +5462,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/02_Orchestration_Patterns_for_Agents.md",
       "estMinutes": 6,
       "href": "/learn/ai-systems-design/architecture-patterns/orchestration-patterns-for-agents",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "context-memory-and-tool-patterns",
@@ -5476,7 +5476,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/03_Context_Memory_and_Tool_Patterns.md",
       "estMinutes": 6,
       "href": "/learn/ai-systems-design/architecture-patterns/context-memory-and-tool-patterns",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "reliability-and-safety-patterns",
@@ -5490,7 +5490,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/04_Reliability_and_Safety_Patterns.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/architecture-patterns/reliability-and-safety-patterns",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "cost-patterns-and-the-pattern-audit",
@@ -5504,7 +5504,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/05_Cost_Patterns_and_the_Pattern_Audit.md",
       "estMinutes": 6,
       "href": "/learn/ai-systems-design/architecture-patterns/cost-patterns-and-the-pattern-audit",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "enterprise-ai-assistant-integration-layers-at-scale",
@@ -7591,7 +7591,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/01_Telling_a_Delivery_Story_in_Six_Stages.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/telling-a-delivery-story-in-six-stages",
       "updated": "2026-11-18"
     },
@@ -9033,7 +9033,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md",
       "estMinutes": 4,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project",
-      "updated": "2026-10-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-timed-deep-dive",
@@ -9045,7 +9045,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Timed_Deep_Dive.md",
       "estMinutes": 6,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive",
-      "updated": "2026-10-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-open-ended-conversation",
@@ -9057,7 +9057,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_The_Open_Ended_Conversation.md",
       "estMinutes": 4,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-open-ended-conversation",
-      "updated": "2026-10-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "the-technical-implementation-flow",
@@ -9069,7 +9069,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_The_Technical_Implementation_Flow.md",
       "estMinutes": 10,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-technical-implementation-flow",
-      "updated": "2026-10-29"
+      "updated": "2026-11-18"
     },
     {
       "slug": "proof-versus-knowledge",
@@ -9081,7 +9081,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_Proof_versus_Knowledge.md",
       "estMinutes": 9,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge",
-      "updated": "2026-10-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "building-the-story-kit",
@@ -9093,7 +9093,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_Building_the_Story_Kit.md",
       "estMinutes": 8,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/building-the-story-kit",
-      "updated": "2026-10-08"
+      "updated": "2026-11-18"
     },
     {
       "slug": "story-bank",
@@ -9447,7 +9447,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/01_Running_and_Scoring_a_Mock_Interview.md",
       "estMinutes": 12,
       "href": "/interview/mock-interviews/running-and-scoring-a-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "internal-knowledge-assistant-mock-interview",
@@ -9459,7 +9459,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/internal-knowledge-assistant-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "agentic-support-workflow-mock-interview",
@@ -9471,7 +9471,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/agentic-support-workflow-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "financial-compliance-and-red-team-mock-interview",
@@ -9483,7 +9483,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/04_Financial_Compliance_and_Red_Team_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/financial-compliance-and-red-team-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "sre-triage-agent-mock-interview",
@@ -9495,7 +9495,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/sre-triage-agent-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "multi-tenant-saas-assistant-mock-interview",
@@ -9507,7 +9507,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/multi-tenant-saas-assistant-mock-interview",
-      "updated": "2026-10-28"
+      "updated": "2026-11-18"
     },
     {
       "slug": "bank-policy-assistant-client-simulation",
@@ -9783,7 +9783,7 @@
       "source": "07_Last_Day_Revision/module-14-release-and-change-management.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-14-release-and-change-management",
-      "updated": "2026-11-03"
+      "updated": "2026-11-18"
     },
     {
       "slug": "module-15-observability-and-production-operations",
@@ -9843,7 +9843,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/01_Choose_a_Capstone_Project.md",
       "estMinutes": 3,
       "href": "/learn/capstone-and-portfolio/capstone-build/choose-a-capstone-project",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     },
     {
       "slug": "build-from-a-pinned-revision",
@@ -9855,7 +9855,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/02_Build_From_a_Pinned_Revision.md",
       "estMinutes": 4,
       "href": "/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision",
-      "updated": "2026-10-05"
+      "updated": "2026-11-18"
     }
   ]
 }

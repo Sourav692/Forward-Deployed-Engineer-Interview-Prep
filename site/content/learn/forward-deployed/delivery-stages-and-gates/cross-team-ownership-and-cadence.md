@@ -146,7 +146,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Wikipedia, [Responsibility assignment matrix](https://en.wikipedia.org/wiki/Responsibility_assignment_matrix), accessed 18 November 2026. The RACI roles and the rule of one accountable person per task.
 2. Martin Fowler, [Consumer-driven contracts: a service evolution pattern](https://martinfowler.com/articles/consumerDrivenContracts.html), accessed 18 November 2026. Agreeing interfaces between producer and consumer teams.
-3. Sources in this repository, the author's own material: `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/05_Cross_Team_Collaboration.md` (all sections).
+3. Sources in this repository, the author's own material: *Cross-Team Collaboration* (all sections).
 4. The author's own field experience, the basis for the platform example.
 
 ## Key takeaways

@@ -6,11 +6,11 @@
 
 Most tool failures are fixed in the schema, not the prompt. Apply eight rules to every tool, building on [The Agent-Computer Interface](01_The_Agent_Computer_Interface.md), and let structure do the work that instructions cannot guarantee.
 
-**Objectives:**
-
-- apply the eight schema rules to a real tool;
-- explain why an enum or a bound beats an instruction in the description;
-- say why schema-constrained output is safer than parsing free text.
+> **What you'll learn**
+>
+> - Apply the eight schema rules to a real tool.
+> - Explain why an enum or a bound beats an instruction in the description.
+> - Say why schema-constrained output is safer than parsing free text.
 
 ---
 

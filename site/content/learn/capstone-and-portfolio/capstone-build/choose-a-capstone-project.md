@@ -4,11 +4,11 @@
 
 This repository teaches the theory; the runnable systems live in a separate companion repository. Pick one of its seven projects as the capstone base. Then read [Build From a Pinned Revision](/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision) before writing any code.
 
-**Objectives:**
-
-- match an FDE topic to the companion project that implements it;
-- choose one capstone by the interview area you need to prove;
-- say what this module does and does not yet provide.
+> **What you'll learn**
+>
+> - Match an FDE topic to the companion project that implements it.
+> - Choose one capstone by the interview area you need to prove.
+> - Say what this module does and does not yet provide.
 
 ---
 

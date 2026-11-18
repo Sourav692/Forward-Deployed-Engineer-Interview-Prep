@@ -150,7 +150,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): cases 2 "Customer-Support Agent", 5 "Enterprise Document-Processing Platform", 6 "AI Agent for Enterprise Workflow Automation", 9 "Latency Regression in an LLM Application" and 10 "RAG System with Poor Answer Quality".
+1. *FDE Problem Decomposition Question Bank* (the author's own question bank): cases 2 "Customer-Support Agent", 5 "Enterprise Document-Processing Platform", 6 "AI Agent for Enterprise Workflow Automation", 9 "Latency Regression in an LLM Application" and 10 "RAG System with Poor Answer Quality".
 2. OWASP Gen AI Security Project, [LLM01: Prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/), accessed 17 November 2026. Indirect prompt injection through external content such as websites or files, the risk behind treating retrieved email as untrusted.
 3. The site's [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data) lesson, for building the labelled set each layer needs.
 

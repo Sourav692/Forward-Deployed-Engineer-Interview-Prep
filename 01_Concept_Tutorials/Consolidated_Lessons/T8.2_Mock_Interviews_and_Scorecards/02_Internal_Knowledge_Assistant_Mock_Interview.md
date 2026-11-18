@@ -6,11 +6,11 @@
 
 The demo failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
-**Objectives:**
-
-- narrow "all company knowledge" into one measurable support workflow;
-- place access control in retrieval, not in the prompt;
-- state the latency target, cost levers and rollout slice for this case.
+> **What you'll learn**
+>
+> - Narrow "all company knowledge" into one measurable support workflow.
+> - Place access control in retrieval, not in the prompt.
+> - State the latency target, cost levers and rollout slice for this case.
 
 ---
 

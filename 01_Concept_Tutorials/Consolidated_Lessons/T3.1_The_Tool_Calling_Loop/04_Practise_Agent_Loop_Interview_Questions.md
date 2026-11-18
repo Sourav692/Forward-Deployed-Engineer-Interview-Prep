@@ -6,11 +6,11 @@
 
 "What is an agent?" is asked to see whether a candidate reaches for a framework name or for the mechanism. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common agent-loop prompts in under a minute each;
-- lead every answer with the mechanism: components, loop, guard;
-- say where a human approves, and how the run pauses for it.
+> **What you'll learn**
+>
+> - Answer the common agent-loop prompts in under a minute each.
+> - Lead every answer with the mechanism: components, loop, guard.
+> - Say where a human approves, and how the run pauses for it.
 
 ---
 

@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is episodic memory?"; they describe a symptom and wait for a scope, a key and a bound. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common memory and state prompts in under a minute each;
-- lead every answer with the scope and the isolation key;
-- work through a full memory design against a scoring rubric.
+> **What you'll learn**
+>
+> - Answer the common memory and state prompts in under a minute each.
+> - Lead every answer with the scope and the isolation key.
+> - Work through a full memory design against a scoring rubric.
 
 ---
 

@@ -6,11 +6,11 @@
 
 Most teams start long-term memory at the vector index; start at the write policy instead. This lesson follows a fact through its life, written, read and eventually forgotten, using the memory kinds from [Types of Memory](02_Types_of_Memory.md).
 
-**Objectives:**
-
-- decide what earns a long-term write, and key it so it updates instead of duplicating;
-- design a bounded, scoped, attributable read path;
-- plan decay, consolidation and time-aware lookups so old facts fade or stay correct.
+> **What you'll learn**
+>
+> - Decide what earns a long-term write, and key it so it updates instead of duplicating.
+> - Design a bounded, scoped, attributable read path.
+> - Plan decay, consolidation and time-aware lookups so old facts fade or stay correct.
 
 ---
 

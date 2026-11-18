@@ -6,11 +6,11 @@
 
 Request counts are the wrong unit for an LLM API, because one huge request can cost as much as fifty small ones. Layer authentication, token-aware limits and abuse checks on top of the contract from [Define the API Contract With Typed Schemas](03_Define_the_API_Contract_With_Typed_Schemas.md), and keep every counter where all instances can see it.
 
-**Objectives:**
-
-- list the defensive layers of a public LLM endpoint;
-- design rate limits on requests, tokens and daily cost, with tiers and useful headers;
-- enforce concurrency caps that hold across many API instances.
+> **What you'll learn**
+>
+> - List the defensive layers of a public LLM endpoint.
+> - Design rate limits on requests, tokens and daily cost, with tiers and useful headers.
+> - Enforce concurrency caps that hold across many API instances.
 
 ---
 

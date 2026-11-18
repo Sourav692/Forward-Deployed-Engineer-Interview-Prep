@@ -4,12 +4,12 @@
 
 Most injection defences watch the request: the ticket, the user's message, the retrieved document. Three attack classes come in through doors that are open before any request arrives. A tool description can carry instructions. A memory written last week can carry them into next week's session. A package the coding assistant invented can carry someone else's code into your build. Each needs its own control, and none of them is fixed by better prompt wording.
 
-**Objectives:**
-
-- explain how a tool description or tool result can steer an agent;
-- describe memory poisoning and why it outlives the session that caused it;
-- explain slopsquatting and the controls that stop invented dependencies;
-- place each control where the model cannot route around it.
+> **What you'll learn**
+>
+> - Explain how a tool description or tool result can steer an agent.
+> - Describe memory poisoning and why it outlives the session that caused it.
+> - Explain slopsquatting and the controls that stop invented dependencies.
+> - Place each control where the model cannot route around it.
 
 ---
 

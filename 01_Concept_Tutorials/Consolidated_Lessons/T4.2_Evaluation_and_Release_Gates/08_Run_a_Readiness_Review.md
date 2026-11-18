@@ -6,12 +6,12 @@
 
 Gates check numbers on every change. Before a significant release (a new system, a new tool that acts, a new customer segment) teams need a wider check: is the system ready to run in production, not just to pass its tests? A readiness review collects the evidence in one pack, reads it as a failure exercise, and ends in a recorded decision. Gaps that remain become explicit release decisions with an owner and an expiry date, instead of risks nobody remembers accepting.
 
-**Objectives:**
-
-- assemble a minimum evidence pack tied to one release version;
-- run a readiness checklist across reliability, operability, AI quality, data and release;
-- review each scenario as a failure exercise: prevention, detection, user impact, recovery;
-- record remaining gaps as release decisions with an owner and an expiry date.
+> **What you'll learn**
+>
+> - Assemble a minimum evidence pack tied to one release version.
+> - Run a readiness checklist across reliability, operability, AI quality, data and release.
+> - Review each scenario as a failure exercise: prevention, detection, user impact, recovery.
+> - Record remaining gaps as release decisions with an owner and an expiry date.
 
 ---
 

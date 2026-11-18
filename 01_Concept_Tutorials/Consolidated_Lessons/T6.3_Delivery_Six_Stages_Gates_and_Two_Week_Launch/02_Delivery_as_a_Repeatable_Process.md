@@ -178,7 +178,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Martin Fowler, [Dark Launching](https://martinfowler.com/bliki/DarkLaunching.html), accessed 18 November 2026. Running a new feature on real traffic without the user seeing it, the idea behind shadow mode.
 2. Wikipedia, [Phase–gate model](https://en.wikipedia.org/wiki/Phase%E2%80%93gate_model), accessed 18 November 2026. Stages separated by decision gates.
-3. Sources in this repository, the author's own material: `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (Part A and §B.1–B.2), `docs/02-architecture-end-to-end.md` (§1 and §3), `README.md`, `INTERVIEW_SCRIPT.md` (the Northwind case study) and `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` (all sections).
+3. Sources in this repository, the author's own material: *Theory* (Part A and §B.1–B.2), *Architecture End to End* (§1 and §3), overview, interview script (the Northwind case study) and *Scoping to Production in Two Weeks* (all sections).
 4. The problem prompt is from the DevRev interview preparation guide. Its framing is summarised in our own words.
 
 ## Key takeaways

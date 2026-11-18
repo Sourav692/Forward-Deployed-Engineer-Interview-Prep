@@ -147,7 +147,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): cases 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 8 "The Model Got Worse After an Upgrade", 11 "Build an Evaluation Strategy for an AI Application" and 15 "AI Assistant for Sales or Customer-Service Calls", and "Recommended Preparation Plan".
+1. *FDE Problem Decomposition Question Bank* (the author's own question bank): cases 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 8 "The Model Got Worse After an Upgrade", 11 "Build an Evaluation Strategy for an AI Application" and 15 "AI Assistant for Sales or Customer-Service Calls", and "Recommended Preparation Plan".
 2. Zheng et al., [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685), arXiv 2306.05685, accessed 17 November 2026. Measuring how often an LLM judge agrees with human preferences, and the biases it shows.
 3. The site's [choosing the first use case](/learn/forward-deployed/customer-discovery/choosing-the-first-use-case) lesson, which uses these metrics to rank candidates.
 

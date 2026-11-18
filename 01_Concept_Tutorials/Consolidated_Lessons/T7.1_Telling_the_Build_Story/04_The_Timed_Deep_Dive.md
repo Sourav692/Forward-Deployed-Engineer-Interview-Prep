@@ -6,11 +6,11 @@
 
 A deep-dive is not a lecture with questions at the end. It is the [story kit](03_Building_the_Story_Kit.md) laid out against a timing budget, with two passes at the hard part and appendices that are never read aloud. Read [Three Formats for One Project](01_Three_Formats_for_One_Project.md) first for when to choose it.
 
-**Objectives:**
-
-- give the timing budget and say which segment is weighted heaviest, and why;
-- deliver the Action beat in two passes and decide when to give the second;
-- cut the right segments when time runs short.
+> **What you'll learn**
+>
+> - Give the timing budget and say which segment is weighted heaviest, and why.
+> - Deliver the Action beat in two passes and decide when to give the second.
+> - Cut the right segments when time runs short.
 
 ---
 

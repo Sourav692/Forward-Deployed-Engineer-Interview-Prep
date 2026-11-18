@@ -4,11 +4,11 @@
 
 Safety that depends on the model choosing well is not safety. Route every tool call through one gateway that enforces the checks in a fixed order, and isolate any tool that runs code, because no check can predict what code will do.
 
-**Objectives:**
-
-- list the gateway's checks in order and say why authorisation comes before validation;
-- build an idempotency key and say what it prevents;
-- name the six controls of a code sandbox and why validation is not one of them.
+> **What you'll learn**
+>
+> - List the gateway's checks in order and say why authorisation comes before validation.
+> - Build an idempotency key and say what it prevents.
+> - Name the six controls of a code sandbox and why validation is not one of them.
 
 ---
 

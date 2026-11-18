@@ -6,11 +6,11 @@
 
 The Model Context Protocol (MCP) is not just "a way to plug in tools". Explain it by who controls each kind of capability, then check the two ways it quietly weakens security.
 
-**Objectives:**
-
-- explain why a shared protocol turns multiplication into addition;
-- name MCP's three primitives by who controls them;
-- choose a transport, and name the confused-deputy and cross-server risks.
+> **What you'll learn**
+>
+> - Explain why a shared protocol turns multiplication into addition.
+> - Name MCP's three primitives by who controls them.
+> - Choose a transport, and name the confused-deputy and cross-server risks.
 
 ---
 

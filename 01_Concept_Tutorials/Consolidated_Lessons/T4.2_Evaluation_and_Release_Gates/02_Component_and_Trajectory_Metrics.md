@@ -6,11 +6,11 @@
 
 A correct final answer is not proof of a healthy system. Score each component with a metric that points at one subsystem, then assert properties of the path the agent took, building on the layers in [The Evaluation Pyramid](01_The_Evaluation_Pyramid.md).
 
-**Objectives:**
-
-- match each component metric to the subsystem it localises;
-- explain why groundedness and correctness are different measurements;
-- write trajectory assertions instead of a single reference path, safety assertions first.
+> **What you'll learn**
+>
+> - Match each component metric to the subsystem it localises.
+> - Explain why groundedness and correctness are different measurements.
+> - Write trajectory assertions instead of a single reference path, safety assertions first.
 
 ---
 

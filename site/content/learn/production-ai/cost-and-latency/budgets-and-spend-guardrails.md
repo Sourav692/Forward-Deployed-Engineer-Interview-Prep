@@ -4,11 +4,11 @@
 
 Treat spend as an engineering constraint, not a monthly surprise. Put limits at every level where money can run away, check them before the paid call, and explain them to the customer as predictability rather than restriction.
 
-**Objectives:**
-
-- layer budgets by user, tenant, feature, request and agent run;
-- enforce a token cap before the call with a real token count;
-- handle a spend incident and explain cost trade-offs to an executive.
+> **What you'll learn**
+>
+> - Layer budgets by user, tenant, feature, request and agent run.
+> - Enforce a token cap before the call with a real token count.
+> - Handle a spend incident and explain cost trade-offs to an executive.
 
 ---
 

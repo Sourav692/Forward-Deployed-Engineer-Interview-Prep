@@ -6,11 +6,11 @@
 
 Interviewers ask about tools to see whether a candidate blames the model or the interface. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common tool-design prompts in under a minute each;
-- lead every answer with a mechanism, not a product name;
-- connect each answer to the failure it prevents.
+> **What you'll learn**
+>
+> - Answer the common tool-design prompts in under a minute each.
+> - Lead every answer with a mechanism, not a product name.
+> - Connect each answer to the failure it prevents.
 
 ---
 

@@ -4,11 +4,11 @@
 
 Honesty about a project is not modesty. It is a set of written habits. They separate what has been shown running from what is merely known, and they put the limits first. Build them before scripting anything, so every format in [Three Formats for One Project](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) carries claims that survive one hard question.
 
-**Objectives:**
-
-- state the distinction between proof and knowledge, and the failure;
-- prepare a coverage map, an honest numbers paragraph and a "does not do" list;
-- offer the limitation first, and tell a war story in four parts.
+> **What you'll learn**
+>
+> - State the distinction between proof and knowledge, and the failure.
+> - Prepare a coverage map, an honest numbers paragraph and a "does not do" list.
+> - Offer the limitation first, and tell a war story in four parts.
 
 ---
 

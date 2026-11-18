@@ -6,11 +6,11 @@
 
 A pipeline that works once in a notebook is not a production pipeline. Both frameworks ship primitives for retries, fallbacks, parallel work and streaming, and each has one trap that the sources demonstrate on purpose.
 
-**Objectives:**
-
-- scope retries and fallbacks to the failures they can fix;
-- fan out work and decide what happens when one branch fails;
-- stream output at the right granularity, and trace it.
+> **What you'll learn**
+>
+> - Scope retries and fallbacks to the failures they can fix.
+> - Fan out work and decide what happens when one branch fails.
+> - Stream output at the right granularity, and trace it.
 
 ---
 

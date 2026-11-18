@@ -6,11 +6,11 @@
 
 The middle of a design answer is not a box diagram; it is proof that the boxes interact. Draw the request path, choose a store per access pattern, give each service an owner, and then trace one real request through all of it, as set up in [The Twelve-Part Design Framework](01_The_Twelve_Part_Design_Framework.md).
 
-**Objectives:**
-
-- draw the traditional request path and say the one detail per block that shows judgement;
-- add the AI-specific components and explain where each sits and what it risks;
-- decide SQL versus NoSQL with one question, and trace a request end to end.
+> **What you'll learn**
+>
+> - Draw the traditional request path and say the one detail per block that shows judgement.
+> - Add the AI-specific components and explain where each sits and what it risks.
+> - Decide SQL versus NoSQL with one question, and trace a request end to end.
 
 ---
 

@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is Kubernetes?"; they ask how the system just designed would ship and run. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common deployment and operations prompts in under a minute each;
-- lead every answer with how a failure is detected and reversed;
-- walk through a full deployment plan against a scoring rubric.
+> **What you'll learn**
+>
+> - Answer the common deployment and operations prompts in under a minute each.
+> - Lead every answer with how a failure is detected and reversed.
+> - Walk through a full deployment plan against a scoring rubric.
 
 ---
 

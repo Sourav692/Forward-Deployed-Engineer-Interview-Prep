@@ -6,11 +6,11 @@
 
 The deep dive is not a tour of every component; it is twenty minutes on the hardest part, announced in advance. Spend steps 4 to 6 of [the six-step clock](01_The_Six_Step_Whiteboard_Clock.md) on one marked insight, unprompted cross-cutting concerns and a deliberate close.
 
-**Objectives:**
-
-- run a deep dive in four moves, ending with an unfakeable detail;
-- raise multi-tenancy, security, observability, evaluation, failure and scale without being asked;
-- close with a thesis, three trade-offs with what would change your mind, and the forward-deployed close.
+> **What you'll learn**
+>
+> - Run a deep dive in four moves, ending with an unfakeable detail.
+> - Raise multi-tenancy, security, observability, evaluation, failure and scale without being asked.
+> - Close with a thesis, three trade-offs with what would change your mind, and the forward-deployed close.
 
 ---
 

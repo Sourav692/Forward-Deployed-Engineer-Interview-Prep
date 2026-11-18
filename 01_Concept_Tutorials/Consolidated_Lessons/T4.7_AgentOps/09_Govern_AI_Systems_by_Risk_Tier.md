@@ -6,12 +6,12 @@
 
 A company with one chatbot can review it by hand. A company with forty AI features, some internal summarisers and some agents that move money, cannot give each the same treatment. Governance that works sorts systems by risk, attaches controls to each tier, and makes sure every system has a person who answers for it. This lesson shows how to build that structure without turning it into paperwork nobody reads.
 
-**Objectives:**
-
-- keep an inventory of every production AI system with the fields that matter;
-- assign each system a risk tier and map tiers to required controls;
-- name the human owners, including who can switch a system off;
-- give affected users transparency and a way to get a decision corrected.
+> **What you'll learn**
+>
+> - Keep an inventory of every production AI system with the fields that matter.
+> - Assign each system a risk tier and map tiers to required controls.
+> - Name the human owners, including who can switch a system off.
+> - Give affected users transparency and a way to get a decision corrected.
 
 ---
 

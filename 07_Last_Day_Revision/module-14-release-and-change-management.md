@@ -317,7 +317,7 @@ flowchart TD
 | “Two pilot tenants” | Scoped flag/canary |
 | “Regression after rollout” | Stop expansion, compare versions, rollback |
 | “Unsafe action” | Disable execution with kill switch |
-| “Long tasks from old version” | State/behavior compatibility |
+| “Long tasks from old version” | State/behaviour compatibility |
 
 ### Do Not Confuse
 

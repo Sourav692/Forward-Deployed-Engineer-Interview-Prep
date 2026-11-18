@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is ABAC?"; they say "users are seeing documents they shouldn't" and wait. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common enterprise RAG prompts in under a minute each;
-- lead every answer with where the access check runs and who decides it;
-- walk a full whiteboard design against the requirement table.
+> **What you'll learn**
+>
+> - Answer the common enterprise RAG prompts in under a minute each.
+> - Lead every answer with where the access check runs and who decides it.
+> - Walk a full whiteboard design against the requirement table.
 
 ---
 

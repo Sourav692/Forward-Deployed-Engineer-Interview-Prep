@@ -6,11 +6,11 @@
 
 RAG is not a clever model trick. It is two boxes, find then answer, and the enterprise version is hard because different people may read different documents.
 
-**Objectives:**
-
-- draw retrieval-augmented generation as two boxes and say what each one does;
-- choose between prompting, RAG and fine-tuning for a knowledge gap;
-- explain why access control shapes the retrieval path in an enterprise.
+> **What you'll learn**
+>
+> - Draw retrieval-augmented generation as two boxes and say what each one does.
+> - Choose between prompting, RAG and fine-tuning for a knowledge gap.
+> - Explain why access control shapes the retrieval path in an enterprise.
 
 ---
 

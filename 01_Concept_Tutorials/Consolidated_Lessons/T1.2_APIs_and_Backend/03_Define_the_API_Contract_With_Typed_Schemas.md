@@ -6,11 +6,11 @@
 
 Validation is not politeness; it is the cheapest cost control an LLM API has. Check the shape and size of every request before it reaches the model, and promise clients one response shape, building on the `models/schemas` layer from [Structure the Service and Decide What to Build](02_Structure_the_Service_and_Decide_What_to_Build.md).
 
-**Objectives:**
-
-- validate prompts and uploaded files with Pydantic before any model call;
-- enforce request size, input tokens and output tokens with the right HTTP status;
-- design one response schema that carries text, citations, tool results and metadata.
+> **What you'll learn**
+>
+> - Validate prompts and uploaded files with Pydantic before any model call.
+> - Enforce request size, input tokens and output tokens with the right HTTP status.
+> - Design one response schema that carries text, citations, tool results and metadata.
 
 ---
 

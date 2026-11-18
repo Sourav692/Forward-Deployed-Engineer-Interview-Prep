@@ -195,7 +195,7 @@ All six outputs are present, so the run passes. If the metrics had been missing,
 
 ## References
 
-1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): cases 1, 7, 13, 14, 15 and 17, "Cases Especially Relevant to a Cloud Data Platform Background" (A to E) and "Recommended Preparation Plan". Cases 7 to 10 here, the discovery-first cases, are the author's own.
+1. *FDE Problem Decomposition Question Bank* (the author's own question bank): cases 1, 7, 13, 14, 15 and 17, "Cases Especially Relevant to a Cloud Data Platform Background" (A to E) and "Recommended Preparation Plan". Cases 7 to 10 here, the discovery-first cases, are the author's own.
 2. The ten customer-discovery worksheets in the Case Study Worksheets module, the written practice for this method.
 3. The lessons linked under each heading in this module.
 

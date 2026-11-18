@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is chunking?"; they describe a broken system and watch how the candidate isolates the stage that failed. These questions are grouped by the lesson that teaches each idea, with a model answer for each.
 
-**Objectives:**
-
-- answer the common chunking, vector search, and parent retrieval questions in a few sentences each;
-- debug a retrieval failure by isolating chunking, search, and generation in order;
-- outline a full indexing design against a scoring rubric.
+> **What you'll learn**
+>
+> - Answer the common chunking, vector search, and parent retrieval questions in a few sentences each.
+> - Debug a retrieval failure by isolating chunking, search, and generation in order.
+> - Outline a full indexing design against a scoring rubric.
 
 ---
 

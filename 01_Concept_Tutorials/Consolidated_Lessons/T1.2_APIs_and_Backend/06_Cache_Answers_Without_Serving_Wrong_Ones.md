@@ -6,11 +6,11 @@
 
 A cache that misses is slow; a cache that hits wrongly is worse, because it serves a confident wrong answer. Start with exact-match caching, move to semantic caching only when the hit rate justifies the risk, and place either one in front of the expensive path.
 
-**Objectives:**
-
-- explain what an exact-match response cache keys on and why it is safe;
-- name the correctness risk a semantic cache adds, and the constraint that contains it;
-- say why invalidation is harder for a semantic cache and where any cache must sit.
+> **What you'll learn**
+>
+> - Explain what an exact-match response cache keys on and why it is safe.
+> - Name the correctness risk a semantic cache adds, and the constraint that contains it.
+> - Say why invalidation is harder for a semantic cache and where any cache must sit.
 
 ---
 

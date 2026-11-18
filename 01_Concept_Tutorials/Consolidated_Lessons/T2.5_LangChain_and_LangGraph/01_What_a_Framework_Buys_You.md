@@ -6,11 +6,11 @@
 
 "Everyone uses it" is not a reason to adopt LangChain or LangGraph. Name what the framework adds, name what stays application code, and decide per pipeline whether the trade is worth it.
 
-**Objectives:**
-
-- say what LangChain, LlamaIndex and LangGraph are each for, in one line each;
-- list what a framework gives you and what it never gives you;
-- decide when to stay with a framework and when to write the pipeline yourself.
+> **What you'll learn**
+>
+> - Say what LangChain, LlamaIndex and LangGraph are each for, in one line each.
+> - List what a framework gives you and what it never gives you.
+> - Decide when to stay with a framework and when to write the pipeline yourself.
 
 ---
 

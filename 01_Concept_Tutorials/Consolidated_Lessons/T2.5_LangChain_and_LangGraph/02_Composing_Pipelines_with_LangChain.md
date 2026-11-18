@@ -6,11 +6,11 @@
 
 LangChain's value is not the pipe symbol. It is that every part of a pipeline answers the same calls, so a model, a retriever or a parser can be swapped, batched, streamed or retried without special cases. This lesson builds on [What a Framework Buys You](01_What_a_Framework_Buys_You.md).
 
-**Objectives:**
-
-- trace one RAG request through LangChain's parts;
-- explain the `Runnable` interface and LCEL composition;
-- choose between parsing output and constraining it, and between routing and fan-out.
+> **What you'll learn**
+>
+> - Trace one RAG request through LangChain's parts.
+> - Explain the `Runnable` interface and LCEL composition.
+> - Choose between parsing output and constraining it, and between routing and fan-out.
 
 ---
 
@@ -109,7 +109,7 @@ flowchart TD
 
 The orchestrator decides N at runtime, and `.map()` runs the worker once per task.
 
-Two more patterns reuse the same pieces. An evaluator-optimizer loop drafts, grades the draft with structured output, and feeds the feedback back in, always under a hard iteration cap such as `MAX_ITERATIONS = 5`. Map-reduce summarisation splits text that does not fit one context window, summarises each chunk with `.batch()`, then summarises the summaries. "Stuff" summarisation, one call over everything, is simpler and breaks once the text exceeds the window.
+Two more patterns reuse the same pieces. An evaluator-optimiser loop drafts, grades the draft with structured output, and feeds the feedback back in, always under a hard iteration cap such as `MAX_ITERATIONS = 5`. Map-reduce summarisation splits text that does not fit one context window, summarises each chunk with `.batch()`, then summarises the summaries. "Stuff" summarisation, one call over everything, is simpler and breaks once the text exceeds the window.
 
 > **Warning: `RunnableBranch` is not a loop.** It runs exactly one matched branch, once, whatever the input contains. A plan whose length is only known at runtime needs `.map()`, not a branch with a length check.
 

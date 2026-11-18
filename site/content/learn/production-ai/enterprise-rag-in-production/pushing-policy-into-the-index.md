@@ -4,11 +4,11 @@
 
 A filter inside the vector search is not the access control; it is an optimisation that is allowed to overshoot. Split the seven rules from [The Seven Access Rules](/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules) by what the store can express, and treat the post-retrieval check as the authority.
 
-**Objectives:**
-
-- keep the "physical versus logical" split apart from the "Layer 1 versus Layer 2" split;
-- say which checks can be pushed into the index and which four cannot;
-- explain why disagreement between the layers is a security signal and why the model is never the enforcement point.
+> **What you'll learn**
+>
+> - Keep the "physical versus logical" split apart from the "Layer 1 versus Layer 2" split.
+> - Say which checks can be pushed into the index and which four cannot.
+> - Explain why disagreement between the layers is a security signal and why the model is never the enforcement point.
 
 ---
 

@@ -6,11 +6,11 @@
 
 A workflow does not earn trust by being written carefully; it earns it by answering one question at a time. Move it through four gates, each promoted by someone other than its author, with the per-step guardrail from [Approvals and Spend Caps](05_Approvals_and_Spend_Caps.md) still applying at every stage.
 
-**Objectives:**
-
-- name the five statuses and the one question each gate answers;
-- argue why there are four gates, not fewer and not more;
-- explain what `promote` denies and why separation of duties matters.
+> **What you'll learn**
+>
+> - Name the five statuses and the one question each gate answers.
+> - Argue why there are four gates, not fewer and not more.
+> - Explain what `promote` denies and why separation of duties matters.
 
 ---
 

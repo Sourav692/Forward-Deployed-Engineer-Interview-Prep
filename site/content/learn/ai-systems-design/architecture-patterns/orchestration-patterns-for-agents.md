@@ -4,11 +4,11 @@
 
 Naming a pattern is not the senior signal; naming it together with the number that proves it is working is. Learn the eight orchestration patterns as answers to a shape of work, each paired with one measurement, before the context, tool and reliability patterns in the lessons that follow.
 
-**Objectives:**
-
-- explain why a named pattern plus its measurement beats a description;
-- choose among router, bounded loop, plan-then-execute, reflection, supervisor, pipeline, blackboard and event-driven designs;
-- state the cost and the deciding metric of each.
+> **What you'll learn**
+>
+> - Explain why a named pattern plus its measurement beats a description.
+> - Choose among router, bounded loop, plan-then-execute, reflection, supervisor, pipeline, blackboard and event-driven designs.
+> - State the cost and the deciding metric of each.
 
 ---
 

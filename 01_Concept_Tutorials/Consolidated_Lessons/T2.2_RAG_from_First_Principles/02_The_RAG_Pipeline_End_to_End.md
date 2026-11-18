@@ -6,11 +6,11 @@
 
 RAG is two flows that run at different times, not one script. Learn both, and the positions in the query flow that carry its security, building on [What RAG Is and When to Use It](01_What_RAG_Is_and_When_to_Use_It.md).
 
-**Objectives:**
-
-- draw the naive RAG pipeline and say which stage each later technique improves;
-- separate the ingestion flow from the query flow and explain why the timing matters;
-- place the two security positions, authorise and enforce, in the query flow.
+> **What you'll learn**
+>
+> - Draw the naive RAG pipeline and say which stage each later technique improves.
+> - Separate the ingestion flow from the query flow and explain why the timing matters.
+> - Place the two security positions, authorise and enforce, in the query flow.
 
 ---
 

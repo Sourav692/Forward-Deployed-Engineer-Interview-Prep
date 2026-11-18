@@ -6,11 +6,11 @@
 
 Agents in a graph do not call each other; they read and write one shared state, and the graph decides who runs next. Make the merge rules, the routing choice, and the stop condition explicit values in that state, using the patterns from [Multi-Agent Coordination Patterns](02_Multi_Agent_Coordination_Patterns.md).
 
-**Objectives:**
-
-- explain why shared state is the communication channel, and why written keys need reducers;
-- build a supervisor router that cannot pick an agent that does not exist;
-- stop a multi-agent run with three combined defences.
+> **What you'll learn**
+>
+> - Explain why shared state is the communication channel, and why written keys need reducers.
+> - Build a supervisor router that cannot pick an agent that does not exist.
+> - Stop a multi-agent run with three combined defences.
 
 ---
 

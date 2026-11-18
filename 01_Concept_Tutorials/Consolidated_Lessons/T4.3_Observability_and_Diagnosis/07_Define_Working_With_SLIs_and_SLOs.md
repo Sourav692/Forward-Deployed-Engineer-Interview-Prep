@@ -6,12 +6,12 @@
 
 [Production Monitoring: Metrics, Drift, and SLOs](04_Production_Monitoring_Metrics_Drift_and_SLOs.md) sets latency targets on the right percentiles. Latency is one layer of "working". For an AI system, working also means the integration calls succeed, the workflow finishes, the user gets what they came for, and the answer is grounded and safe. This lesson defines objectives across all of those layers, ties them to an error budget that changes behaviour, and links them back to the offline evaluations that predicted them.
 
-**Objectives:**
-
-- distinguish an SLI, an SLO and an SLA;
-- choose indicators across five layers, from infrastructure to AI quality;
-- set outcome-based objectives such as task completion and unsafe-action rate;
-- write an error-budget policy and link production signals to offline evaluation.
+> **What you'll learn**
+>
+> - Distinguish an SLI, an SLO and an SLA.
+> - Choose indicators across five layers, from infrastructure to AI quality.
+> - Set outcome-based objectives such as task completion and unsafe-action rate.
+> - Write an error-budget policy and link production signals to offline evaluation.
 
 ---
 

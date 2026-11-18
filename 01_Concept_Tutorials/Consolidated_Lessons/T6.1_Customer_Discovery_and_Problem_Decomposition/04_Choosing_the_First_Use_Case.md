@@ -164,7 +164,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 ## References
 
-1. `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` (the author's own question bank): cases 2 "Customer-Support Agent" (trade-offs and the 80% follow-up), 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 12 "Deploying AI in a Highly Regulated Industry", 14 "AI-Powered Operations or Incident-Response Assistant", 16 on prioritising AI use cases for a large enterprise, and 18 "Build an AI System When the Customer's Data Is Poor".
+1. *FDE Problem Decomposition Question Bank* (the author's own question bank): cases 2 "Customer-Support Agent" (trade-offs and the 80% follow-up), 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 12 "Deploying AI in a Highly Regulated Industry", 14 "AI-Powered Operations or Incident-Response Assistant", 16 on prioritising AI use cases for a large enterprise, and 18 "Build an AI System When the Customer's Data Is Poor".
 2. NIST, [AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework), accessed 17 November 2026. A voluntary framework for managing AI risk across design, development and use.
 3. The site's [observing the work](06_Observing_the_Work.md) lesson, for ranking bottlenecks by frequency, cost and reach.
 

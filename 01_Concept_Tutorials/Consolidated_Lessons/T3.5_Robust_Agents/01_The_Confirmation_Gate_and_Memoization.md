@@ -6,11 +6,11 @@
 
 A tool call is not a black box the loop can trust; it is where a toy loop becomes a real agent. Put the confirmation gate in front of everything else, then add a memo behind it, and read [Retries and Fallbacks](02_Retries_and_Fallbacks.md) for what happens when the call itself fails.
 
-**Objectives:**
-
-- name the four mechanisms inside a safe tool executor and the incident each prevents;
-- explain the three properties that make a confirmation gate reliable;
-- say why the gate must run before the cache, and what goes wrong if the order flips.
+> **What you'll learn**
+>
+> - Name the four mechanisms inside a safe tool executor and the incident each prevents.
+> - Explain the three properties that make a confirmation gate reliable.
+> - Say why the gate must run before the cache, and what goes wrong if the order flips.
 
 ---
 

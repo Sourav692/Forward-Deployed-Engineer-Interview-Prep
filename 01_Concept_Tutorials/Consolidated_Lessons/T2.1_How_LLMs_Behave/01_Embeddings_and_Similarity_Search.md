@@ -6,11 +6,11 @@
 
 Keyword search cannot see that two sentences mean the same thing. An embedding can, so learn what it is, how two embeddings are compared, and what silently breaks the comparison.
 
-**Objectives:**
-
-- explain what an embedding is and why similar meanings land close together;
-- describe how cosine similarity ranks chunks at query time;
-- name the two configuration slips that corrupt similarity scores without raising an error.
+> **What you'll learn**
+>
+> - Explain what an embedding is and why similar meanings land close together.
+> - Describe how cosine similarity ranks chunks at query time.
+> - Name the two configuration slips that corrupt similarity scores without raising an error.
 
 ---
 

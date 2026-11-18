@@ -4,11 +4,11 @@
 
 "It is slow" names at least three different problems. A frozen screen, an answer that starts and then drags, and a multi-step agent with an awful worst case each have a different cause and a different fix.
 
-**Objectives:**
-
-- tell time to first token from completion time, and tie each to input or output size;
-- explain why tail latency compounds across agent steps;
-- use streaming as a perceived-latency tool, decide when it is hiding a real problem, and cancel work nobody will read.
+> **What you'll learn**
+>
+> - Tell time to first token from completion time, and tie each to input or output size.
+> - Explain why tail latency compounds across agent steps.
+> - Use streaming as a perceived-latency tool, decide when it is hiding a real problem, and cancel work nobody will read.
 
 ---
 

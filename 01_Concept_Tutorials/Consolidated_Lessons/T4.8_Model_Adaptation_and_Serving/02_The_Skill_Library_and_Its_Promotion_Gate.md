@@ -6,11 +6,11 @@
 
 A skill is a learned procedure, the third of the [Four Learning Surfaces](01_Four_Learning_Surfaces.md). The whole design problem is the gate between "a run succeeded once" and "this is now a trusted skill", and the gate has to work in both directions.
 
-**Objectives:**
-
-- define a skill precisely enough to evaluate it;
-- promote a candidate only after held-out evaluation and a shadow period;
-- demote a skill automatically when its live success falls.
+> **What you'll learn**
+>
+> - Define a skill precisely enough to evaluate it.
+> - Promote a candidate only after held-out evaluation and a shadow period.
+> - Demote a skill automatically when its live success falls.
 
 ---
 

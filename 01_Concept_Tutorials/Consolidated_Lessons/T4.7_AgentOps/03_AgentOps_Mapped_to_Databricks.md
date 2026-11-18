@@ -6,11 +6,11 @@
 
 "Have you actually done this?" is a different question from "how would you design it?" Answer the design in generic terms, as in [Prompt Versioning, Rollout, and Rollback](01_Prompt_Versioning_Rollout_and_Rollback.md), then map each step to the Databricks mechanism that implements it.
 
-**Objectives:**
-
-- map versioning, gating, canary, rollback, tracing, drift, cost and audit to Databricks primitives;
-- explain aliases and why application code references them;
-- avoid the half-done rollback that leaves the alias and the endpoint out of step.
+> **What you'll learn**
+>
+> - Map versioning, gating, canary, rollback, tracing, drift, cost and audit to Databricks primitives.
+> - Explain aliases and why application code references them.
+> - Avoid the half-done rollback that leaves the alias and the endpoint out of step.
 
 ---
 

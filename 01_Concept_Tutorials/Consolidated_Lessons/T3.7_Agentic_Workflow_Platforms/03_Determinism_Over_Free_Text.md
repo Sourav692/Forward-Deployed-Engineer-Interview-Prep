@@ -6,11 +6,11 @@
 
 The signal the agent-platform prompt tests is not clever reasoning; it is whether deterministic control flow is split from probabilistic reasoning. Make the workflow a document the orchestrator walks, and read [Canonical Events and Routing](02_Canonical_Events_and_Routing.md) first for how a run is chosen.
 
-**Objectives:**
-
-- state the five determinism controls and what each prevents;
-- explain why a declarative workflow spec is the right artefact for a non-technical user to review;
-- say which non-technical-user constraints are built and which are named gaps.
+> **What you'll learn**
+>
+> - State the five determinism controls and what each prevents.
+> - Explain why a declarative workflow spec is the right artefact for a non-technical user to review.
+> - Say which non-technical-user constraints are built and which are named gaps.
 
 ---
 

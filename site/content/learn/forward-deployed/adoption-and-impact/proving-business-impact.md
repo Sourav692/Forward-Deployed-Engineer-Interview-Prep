@@ -113,8 +113,8 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 1. Google SRE, [Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/), accessed 18 November 2026. The four golden signals of latency, traffic, errors and saturation, the technical layer of Table 1.
 2. Kerry Rodden, Hilary Hutchinson and Xin Fu, Google Research, [Measuring the User Experience on a Large Scale: User-Centered Metrics for Web Applications](https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/), accessed 18 November 2026. The HEART framework for mapping product goals to user-centred metrics, the product layer.
-3. `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 5 Topics 5.2 "Watch the workflow, not just the servers" and 5.4 "Report what changed, not only what shipped", and Module 1 Topic 1.2 (the 12-to-under-5 goal), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
-4. `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`, "The five metrics", and `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`, the Northwind success metrics. Taught on the site in [Risk Checks and Delivery Metrics](/learn/forward-deployed/delivery-stages-and-gates/risk-checks-and-delivery-metrics).
+3. *Scoping an FDE Project: Complete Guide*, Module 5 Topics 5.2 "Watch the workflow, not just the servers" and 5.4 "Report what changed, not only what shipped", and Module 1 Topic 1.2 (the 12-to-under-5 goal), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+4. *Gates, Risks and Metrics*, "The five metrics", and interview script, the Northwind success metrics. Taught on the site in [Risk Checks and Delivery Metrics](/learn/forward-deployed/delivery-stages-and-gates/risk-checks-and-delivery-metrics).
 
 ## Key takeaways
 

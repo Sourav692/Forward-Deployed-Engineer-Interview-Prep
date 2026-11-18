@@ -6,11 +6,11 @@
 
 Interviewers rarely ask what a class is called. They describe a symptom, such as a slow chat, a runaway loop or a refund sent twice, and listen for the mechanism. Every answer below points back to the lesson that teaches it.
 
-**Objectives:**
-
-- answer the common LangChain and LangGraph production questions in two or three sentences each;
-- recognise which lesson's mechanism a symptom points to;
-- structure a full design answer for a human-gated support agent.
+> **What you'll learn**
+>
+> - Answer the common LangChain and LangGraph production questions in two or three sentences each.
+> - Recognise which lesson's mechanism a symptom points to.
+> - Structure a full design answer for a human-gated support agent.
 
 ---
 

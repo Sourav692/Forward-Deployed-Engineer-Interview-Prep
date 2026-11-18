@@ -4,11 +4,11 @@
 
 Fine-tuning is proposed far more often than it is the right call. Use it in three specific situations, never to fill a knowledge gap, and compare it against prompting and RAG on real traffic and total cost before committing.
 
-**Objectives:**
-
-- recognise the three situations where changing weights beats cheaper surfaces;
-- explain why fine-tuning does not fix missing knowledge;
-- weigh hosting and operating a tuned model against a managed API.
+> **What you'll learn**
+>
+> - Recognise the three situations where changing weights beats cheaper surfaces.
+> - Explain why fine-tuning does not fix missing knowledge.
+> - Weigh hosting and operating a tuned model against a managed API.
 
 ---
 

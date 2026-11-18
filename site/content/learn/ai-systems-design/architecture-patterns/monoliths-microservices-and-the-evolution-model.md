@@ -4,11 +4,11 @@
 
 "Monolith or microservices?" is not a loyalty test; it is a sequencing question. Start as a modular monolith and extract a service only when a named pressure justifies it, the same restraint the simplicity principle asks for in [Design Principles as Tie-Breakers](/learn/ai-systems-design/design-framework/design-principles-as-tie-breakers).
 
-**Objectives:**
-
-- list what a monolith gives for free and what it costs as it grows;
-- list what microservices buy and the infrastructure they demand;
-- apply the same trade-off to an AI platform and name the pressures that justify extracting a service.
+> **What you'll learn**
+>
+> - List what a monolith gives for free and what it costs as it grows.
+> - List what microservices buy and the infrastructure they demand.
+> - Apply the same trade-off to an AI platform and name the pressures that justify extracting a service.
 
 ---
 

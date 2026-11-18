@@ -6,13 +6,13 @@
 
 Vector search is not keyword matching; it ranks stored chunks by how close their meaning sits to the question. This lesson follows a query from embedding to top-k result, through the index structures that make it fast and the filters that keep it scoped. What an embedding is and why similar meanings land close together is taught in [T6.3 How LLMs behave](/learn/llm-and-retrieval/how-llms-behave).
 
-**Objectives:**
-
-- describe dense search from query embedding to ranked result;
-- explain why exact search does not scale and what approximate search gives up;
-- compare HNSW, IVF, product quantisation, and DiskANN, and name their tuning knobs;
-- choose between pre-filtering, post-filtering, and filter-aware search;
-- name what dense search is bad at, and where hybrid search comes in.
+> **What you'll learn**
+>
+> - Describe dense search from query embedding to ranked result.
+> - Explain why exact search does not scale and what approximate search gives up.
+> - Compare HNSW, IVF, product quantisation, and DiskANN, and name their tuning knobs.
+> - Choose between pre-filtering, post-filtering, and filter-aware search.
+> - Name what dense search is bad at, and where hybrid search comes in.
 
 ---
 

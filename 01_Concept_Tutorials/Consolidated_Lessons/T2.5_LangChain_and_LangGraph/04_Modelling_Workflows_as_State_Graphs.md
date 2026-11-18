@@ -6,11 +6,11 @@
 
 A chain is a straight line, and real workflows are not. LangGraph replaces an implicit call stack with an explicit data structure of state, nodes and edges; [What a Framework Buys You](01_What_a_Framework_Buys_You.md) covers when that trade is worth making.
 
-**Objectives:**
-
-- build a graph from state, nodes and edges;
-- choose a reducer per state field and a schema style per graph;
-- route with conditional edges and guard every cycle.
+> **What you'll learn**
+>
+> - Build a graph from state, nodes and edges.
+> - Choose a reducer per state field and a schema style per graph.
+> - Route with conditional edges and guard every cycle.
 
 ---
 

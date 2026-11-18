@@ -4,11 +4,11 @@
 
 A technical peer does not want the pitch. They want the evolution: what was tried, why it broke, and why each tool won. Tell the build as a sequence of stages and pivots, not as a finished diagram, and keep the results honest in the way [Proof versus Knowledge](/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge) describes.
 
-**Objectives:**
-
-- give the eight-part structure of an implementation flow;
-- tell a forced pivot apart from planned scope, and say which is which;
-- fill in all eight parts from one real project, including the parts it does not document.
+> **What you'll learn**
+>
+> - Give the eight-part structure of an implementation flow.
+> - Tell a forced pivot apart from planned scope, and say which is which.
+> - Fill in all eight parts from one real project, including the parts it does not document.
 
 ---
 

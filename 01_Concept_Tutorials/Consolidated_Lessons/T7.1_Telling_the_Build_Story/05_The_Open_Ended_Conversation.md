@@ -6,11 +6,11 @@
 
 An open-ended conversation is not a deep-dive delivered in pieces. It is the [story kit](03_Building_the_Story_Kit.md) deployed in whatever order the listener steers, so the kit's beats, bridges, follow-up map and closing lines all come from there.
 
-**Objectives:**
-
-- deliver the cold open and know when to stop after it;
-- let the listener's questions choose the beats;
-- read the room's signals and respond to each one.
+> **What you'll learn**
+>
+> - Deliver the cold open and know when to stop after it.
+> - Let the listener's questions choose the beats.
+> - Read the room's signals and respond to each one.
 
 ---
 

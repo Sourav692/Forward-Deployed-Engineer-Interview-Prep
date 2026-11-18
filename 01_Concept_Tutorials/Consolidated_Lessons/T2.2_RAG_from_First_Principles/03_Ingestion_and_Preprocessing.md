@@ -6,12 +6,12 @@
 
 Retrieval quality is decided before the first query, because garbage in means garbage out. Build ingestion as a resilient pipeline and clean text for the search it will face. Record enough about every chunk to trace an answer back, following the offline flow in [The RAG Pipeline End to End](02_The_RAG_Pipeline_End_to_End.md).
 
-**Objectives:**
-
-- design an ingestion pipeline that survives millions of documents, duplicates and bad files;
-- choose a parser per file type and the metadata every chunk must carry;
-- decide how much to clean, normalise or preserve for a given domain and search style;
-- detect drift in what arrives and respond before retrieval degrades.
+> **What you'll learn**
+>
+> - Design an ingestion pipeline that survives millions of documents, duplicates and bad files.
+> - Choose a parser per file type and the metadata every chunk must carry.
+> - Decide how much to clean, normalise or preserve for a given domain and search style.
+> - Detect drift in what arrives and respond before retrieval degrades.
 
 ---
 

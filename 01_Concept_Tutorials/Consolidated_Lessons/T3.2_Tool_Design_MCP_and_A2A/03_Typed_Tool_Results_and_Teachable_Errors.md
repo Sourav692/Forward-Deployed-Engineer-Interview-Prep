@@ -6,11 +6,11 @@
 
 A tool that returns a bare string forces the agent to guess what happened. Return one of five typed states instead, write errors that change the agent's next move, and keep [Tool Schema Design](02_Tool_Schema_Design.md) rule 7 in mind throughout.
 
-**Objectives:**
-
-- name the five result states and the failure caused by confusing each pair;
-- explain why a denial should be a dead end for the model;
-- write an error message that makes the next action different from the last.
+> **What you'll learn**
+>
+> - Name the five result states and the failure caused by confusing each pair.
+> - Explain why a denial should be a dead end for the model.
+> - Write an error message that makes the next action different from the last.
 
 ---
 

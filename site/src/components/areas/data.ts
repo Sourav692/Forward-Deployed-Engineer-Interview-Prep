@@ -91,6 +91,8 @@ export type SiteCounts = {
   /** Modules listed in Learn tracks (Coming soon scaffolds not counted), how many are ready, and the lesson pages they hold (links to other areas not counted). */
   learnModules: number
   learnReady: number
+  /** Planned Learn modules marked Coming soon: listed on paths, left out of `learnModules`. */
+  learnComingSoon: number
   learnLessons: number
   worksheets: number
   /** Worksheets by set: customer discovery and system design. */
@@ -126,6 +128,7 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
     learnNotebooks: notebookCount(learn),
     learnModules: learnModules.length,
     learnReady: learnModules.filter((m) => m.status === 'ready').length,
+    learnComingSoon: CURRICULUM_MODULES.filter((m) => listed.has(m.slug) && isLearnTrack(m.track) && m.status === 'coming-soon').length,
     learnLessons: getLearnManifest().filter((l) => l.kind === 'sync' && isLearnTrack(l.track)).length,
     worksheets: count(LIVE.worksheets),
     discoveryWorksheets: inTrack(LIVE.worksheets, 'core'),

@@ -6,11 +6,11 @@
 
 Interviewers rarely ask "what is memoization?"; they ask what stops the agent doing damage, and wait for an order and a reason. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
-**Objectives:**
-
-- answer the common robustness prompts in under a minute each;
-- lead every answer with the order of checks and the failure each prevents;
-- walk a failing call through the whole executor without notes.
+> **What you'll learn**
+>
+> - Answer the common robustness prompts in under a minute each.
+> - Lead every answer with the order of checks and the failure each prevents.
+> - Walk a failing call through the whole executor without notes.
 
 ---
 

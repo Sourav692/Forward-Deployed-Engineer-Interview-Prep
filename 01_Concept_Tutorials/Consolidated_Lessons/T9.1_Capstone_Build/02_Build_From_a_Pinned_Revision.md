@@ -6,11 +6,11 @@
 
 A link to a branch is a promise that the code behind it will not change; branches break that promise. Build from the verified revision recorded below, and use the legacy revision only to trace where a lesson came from.
 
-**Objectives:**
-
-- name the verified revision and why work starts from it;
-- tell the current implementation links from the legacy provenance links;
-- update the pinned revision deliberately when the code is revalidated.
+> **What you'll learn**
+>
+> - Name the verified revision and why work starts from it.
+> - Tell the current implementation links from the legacy provenance links.
+> - Update the pinned revision deliberately when the code is revalidated.
 
 ---
 

@@ -6,11 +6,11 @@
 
 The last four parts of a design are not a list of best practices; they are answers to "what breaks first?" and "what happens when it fails?". Name the bottleneck before the technique, assume every dependency fails, and close every choice with its trade, building on [Architecture, Data, and Request Flow](02_Architecture_Data_and_Request_Flow.md).
 
-**Objectives:**
-
-- match each scaling technique to the bottleneck it removes and the cost it adds;
-- explain circuit breakers, and tell reliability apart from availability;
-- name the security controls an AI system adds, and phrase every choice as a trade-off.
+> **What you'll learn**
+>
+> - Match each scaling technique to the bottleneck it removes and the cost it adds.
+> - Explain circuit breakers, and tell reliability apart from availability.
+> - Name the security controls an AI system adds, and phrase every choice as a trade-off.
 
 ---
 

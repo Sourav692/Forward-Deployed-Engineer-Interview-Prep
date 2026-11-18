@@ -6,11 +6,11 @@
 
 "Store secrets in a vault" is the right instinct but not yet an answer. Hold references rather than values, wrap keys in keys, and give every tenant its own data key so a breach stops at one customer.
 
-**Objectives:**
-
-- state the four principles of secrets management;
-- explain envelope encryption and the operational problem it solves;
-- say what per-tenant encryption keys buy when storage is compromised.
+> **What you'll learn**
+>
+> - State the four principles of secrets management.
+> - Explain envelope encryption and the operational problem it solves.
+> - Say what per-tenant encryption keys buy when storage is compromised.
 
 ---
 

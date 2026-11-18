@@ -4,11 +4,11 @@
 
 The context window is a scarce resource that degrades sharply when overloaded, and the boundary between a probabilistic model and deterministic systems is where most damage happens. Budget the window with context and memory patterns, then put every action behind tool patterns, after choosing a shape from [Orchestration Patterns for Agents](/learn/ai-systems-design/architecture-patterns/orchestration-patterns-for-agents).
 
-**Objectives:**
-
-- keep context deterministic and small with assembly, isolation and typed compaction;
-- choose memory patterns that avoid duplicate retrieval and stale contradictions;
-- put tool calls behind a gateway with typed results, projection, idempotency, tool retrieval and an action selector.
+> **What you'll learn**
+>
+> - Keep context deterministic and small with assembly, isolation and typed compaction.
+> - Choose memory patterns that avoid duplicate retrieval and stale contradictions.
+> - Put tool calls behind a gateway with typed results, projection, idempotency, tool retrieval and an action selector.
 
 ---
 

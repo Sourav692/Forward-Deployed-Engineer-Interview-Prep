@@ -6,11 +6,11 @@
 
 Every AI backend depends on services it does not control. Decide in advance what the service does when one of them fails, then load test to learn the load at which it stops meeting its targets.
 
-**Objectives:**
-
-- protect the service from a failing dependency with a circuit breaker and a fallback;
-- design three tiers of graceful degradation;
-- plan a load test that separates your infrastructure's limits from the provider's.
+> **What you'll learn**
+>
+> - Protect the service from a failing dependency with a circuit breaker and a fallback.
+> - Design three tiers of graceful degradation.
+> - Plan a load test that separates your infrastructure's limits from the provider's.
 
 ---
 

@@ -6,12 +6,12 @@
 
 [Model Routing and Prompt Discipline](../T4.5_Cost_and_Latency/04_Model_Routing_and_Prompt_Discipline.md) shows how to send easy requests to cheaper models. This lesson covers how a gateway decides those routes from evidence, how it handles each kind of provider failure, and why the model you fall back to must pass the same tests as the one it replaces.
 
-**Objectives:**
-
-- set a quality bar per task class and route only to models that pass it;
-- re-evaluate routes when a provider, model version or traffic mix changes;
-- classify provider failures and respond to each class differently;
-- test fallback models against the same acceptance criteria as primaries.
+> **What you'll learn**
+>
+> - Set a quality bar per task class and route only to models that pass it.
+> - Re-evaluate routes when a provider, model version or traffic mix changes.
+> - Classify provider failures and respond to each class differently.
+> - Test fallback models against the same acceptance criteria as primaries.
 
 ---
 

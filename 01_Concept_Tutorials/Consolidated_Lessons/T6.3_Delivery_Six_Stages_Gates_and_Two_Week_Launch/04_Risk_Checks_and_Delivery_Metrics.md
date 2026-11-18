@@ -145,7 +145,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 ## References
 
 1. DORA, [DORA's software delivery performance metrics](https://dora.dev/guides/dora-metrics-four-keys/), accessed 18 November 2026. Measuring a delivery process by throughput and instability rather than by activity.
-2. Sources in this repository, the author's own material: `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (§B.4–B.5), `INTERVIEW_SCRIPT.md` (Step 4A automatic escalation, Step 4B "What the library is honestly not", the Step 5 risk table and Step 6 summary), and `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md` ("Risk mitigations are checks, not reminders" and "The five metrics").
+2. Sources in this repository, the author's own material: *Theory* (§B.4–B.5), interview script (Step 4A automatic escalation, Step 4B "What the library is honestly not", the Step 5 risk table and Step 6 summary), and *Gates, Risks and Metrics* ("Risk mitigations are checks, not reminders" and "The five metrics").
 3. The risks and metrics come from the DevRev interview preparation guide's delivery-framework prompt, summarised in our own words.
 4. The author's own field experience, the basis for the opening story and the limits.
 

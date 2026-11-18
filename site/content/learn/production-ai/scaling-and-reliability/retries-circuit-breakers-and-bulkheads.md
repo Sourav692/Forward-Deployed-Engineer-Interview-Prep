@@ -4,11 +4,11 @@
 
 A retry decides about one call; a circuit breaker remembers the last hundred. Use retries for transient failures, a breaker for a dependency that is down, and a bulkhead for one that is merely slow, and know which is which.
 
-**Objectives:**
-
-- retry transient failures with bounded exponential backoff and jitter;
-- implement the three-state circuit breaker and place it around the retried call;
-- tell a bulkhead from a circuit breaker by what each protects against.
+> **What you'll learn**
+>
+> - Retry transient failures with bounded exponential backoff and jitter.
+> - Implement the three-state circuit breaker and place it around the retried call.
+> - Tell a bulkhead from a circuit breaker by what each protects against.
 
 ---
 

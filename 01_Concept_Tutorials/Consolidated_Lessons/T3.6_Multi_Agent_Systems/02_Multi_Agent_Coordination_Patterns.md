@@ -6,11 +6,11 @@
 
 Every coordination pattern answers one question: who decides which agent runs next. Pick the pattern from the shape of the work, after [When Multi-Agent Is Justified](01_When_Multi_Agent_Is_Justified.md) has confirmed that a split is worth it at all.
 
-**Objectives:**
-
-- name seven coordination patterns and who decides the next step in each;
-- state the cost each pattern adds, per hop or per level;
-- choose a pattern from the shape of the task, not from the framework.
+> **What you'll learn**
+>
+> - Name seven coordination patterns and who decides the next step in each.
+> - State the cost each pattern adds, per hop or per level.
+> - Choose a pattern from the shape of the task, not from the framework.
 
 ---
 
@@ -78,17 +78,17 @@ Parallel agents turn the latency of a run from the sum of the agents into the ti
 
 Sequential agents cost more time but let later agents see earlier results. Choose parallel only when no agent needs another's output. Otherwise the system pays for concurrency it cannot use. [Shared State, Routing, and Termination](03_Shared_State_Routing_and_Termination.md) covers the merge rules that make parallel writes safe.
 
-## Add Orchestrator-Workers and Evaluator-Optimizer
+## Add Orchestrator-Workers and Evaluator-Optimiser
 
 The coordination-patterns guide adds two more shapes.
 
 In **orchestrator-workers**, one orchestrator inspects the task and decides at runtime how many subtasks it needs. It dispatches each to a generic worker, in parallel or in sequence. Each worker gets only its own task-scoped payload: not the conversation history and not the other workers' outputs. The orchestrator then merges the results, resolving conflicts and duplicates. It may check the merged result and send follow-up work for any gaps. Workers have no lasting identity; they are created for one narrow task and discarded.
 
-In **evaluator-optimizer**, a generator produces a draft and an evaluator scores it against explicit criteria. A failed draft goes back to the generator with specific, structured feedback. The generator revises the flagged parts instead of starting over. The loop ends on a pass or at an iteration cap.
+In **evaluator-optimiser**, a generator produces a draft and an evaluator scores it against explicit criteria. A failed draft goes back to the generator with specific, structured feedback. The generator revises the flagged parts instead of starting over. The loop ends on a pass or at an iteration cap.
 
 The guide's comparison sets these beside the supervisor.
 
-| Question | Orchestrator-workers | Supervisor | Evaluator-optimizer |
+| Question | Orchestrator-workers | Supervisor | Evaluator-optimiser |
 |---|---|---|---|
 | How many roles? | One orchestrator plus N generic workers | Fixed specialists plus one router | Two fixed roles |
 | When is the work split? | At runtime | At design time | Not split; one task refined in a loop |
@@ -96,7 +96,7 @@ The guide's comparison sets these beside the supervisor.
 | How does it loop? | Fan out and fan in, usually once | Route, act, route again | Generate, evaluate, revise |
 | Best fit | Task size or shape is unpredictable | Known domains that need deep specialisation | Quality criteria are objective and checkable |
 
-Orchestrator-workers fits when the decomposition cannot be known in advance. Evaluator-optimizer fits when a second reasoning pass can check a rubric better than the generator can check itself in one shot.
+Orchestrator-workers fits when the decomposition cannot be known in advance. Evaluator-optimiser fits when a second reasoning pass can check a rubric better than the generator can check itself in one shot.
 
 ## Use a Blackboard When the Next Contributor Depends on the Board
 
@@ -157,7 +157,7 @@ A supervisor fits because the three domains are known in advance, and each needs
 - A supervisor costs one model call per hop and buys an auditable central plan; a handoff is cheaper but holds no plan.
 - A hierarchy keeps each routing decision small, at one routing call per level.
 - Parallel agents cut latency to the slowest agent only when the subtasks are independent.
-- Orchestrator-workers splits work at runtime; evaluator-optimizer refines one draft against a checkable rubric.
+- Orchestrator-workers splits work at runtime; evaluator-optimiser refines one draft against a checkable rubric.
 - A blackboard pays a controller call per contribution to handle data-dependent order; a swarm trades the central audit trail for speed.
 - The sources disagree on full shared history versus a defined package, so choose what each agent sees on purpose.
 - Match the pattern to the task: fixed domains suit a supervisor, and unpredictable decomposition suits orchestrator-workers.
@@ -178,4 +178,4 @@ A supervisor fits because the three domains are known in advance, and each needs
 
 ## References
 
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: "The one idea: agents are nodes, coordination is edges", §1.2 on supervisor cost, §1.3, §1.5, the §2 gotcha "Hierarchy multiplies routing cost invisibly", §3 "Supervisor versus handoff", "Parallel versus sequential" and "Flat versus hierarchical", and §4 question 7 on hardcoding a predictable decomposition. `multi_agent_coordination_patterns.md`: "Orchestrator-Workers Pattern", "Multi-Agent Supervisor Pattern", "Evaluator-Optimizer Pattern", and "Cross-Pattern Comparison Summary". `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "The handoff is the hard part". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.6 "Multi-agent topology", §1.7 "Blackboard coordination", and §3 "Supervisor vs. swarm topology".
+**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: "The one idea: agents are nodes, coordination is edges", §1.2 on supervisor cost, §1.3, §1.5, the §2 gotcha "Hierarchy multiplies routing cost invisibly", §3 "Supervisor versus handoff", "Parallel versus sequential" and "Flat versus hierarchical", and §4 question 7 on hardcoding a predictable decomposition. `multi_agent_coordination_patterns.md`: "Orchestrator-Workers Pattern", "Multi-Agent Supervisor Pattern", "Evaluator-Optimiser Pattern", and "Cross-Pattern Comparison Summary". `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "The handoff is the hard part". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.6 "Multi-agent topology", §1.7 "Blackboard coordination", and §3 "Supervisor vs. swarm topology".

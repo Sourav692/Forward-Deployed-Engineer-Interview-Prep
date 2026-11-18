@@ -6,11 +6,11 @@
 
 A working service on a laptop is not a deployable artefact. Package it as a small, safe image first, then read [Choose a Runtime and Scale It](02_Choose_a_Runtime_and_Scale_It.md) for where that image runs.
 
-**Objectives:**
-
-- describe a multi-stage Docker build for a FastAPI GenAI service and why each choice is there;
-- explain why no secret belongs in an image, and where secrets come from instead;
-- set up typed settings that differ per environment while the code stays identical.
+> **What you'll learn**
+>
+> - Describe a multi-stage Docker build for a FastAPI GenAI service and why each choice is there.
+> - Explain why no secret belongs in an image, and where secrets come from instead.
+> - Set up typed settings that differ per environment while the code stays identical.
 
 ---
 

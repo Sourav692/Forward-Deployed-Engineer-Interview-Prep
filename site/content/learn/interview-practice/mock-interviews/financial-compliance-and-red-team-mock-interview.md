@@ -4,11 +4,11 @@
 
 Frame compliance review as regulated decision support with an audit trail rather than a classification task handed to a model, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
-**Objectives:**
-
-- frame the system as decision support, not autonomous compliance judgement;
-- balance recall on severe violations against analyst review burden;
-- defend against instructions embedded in the messages under review.
+> **What you'll learn**
+>
+> - Frame the system as decision support, not autonomous compliance judgement.
+> - Balance recall on severe violations against analyst review burden.
+> - Defend against instructions embedded in the messages under review.
 
 ---
 

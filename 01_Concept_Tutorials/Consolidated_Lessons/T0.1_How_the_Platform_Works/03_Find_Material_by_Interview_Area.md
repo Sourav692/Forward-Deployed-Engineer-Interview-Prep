@@ -6,11 +6,11 @@
 
 Folders are grouped by the kind of material they hold, not by where it came from. Use the coverage table below to go from an interview area to a study folder and a practice folder, after choosing a route in [Choose a Reading Path](02_Choose_a_Reading_Path.md).
 
-**Objectives:**
-
-- say what each numbered folder contributes to interview preparation;
-- go from an interview area to the folders where you study and practise it;
-- name the known gaps in the repository.
+> **What you'll learn**
+>
+> - Say what each numbered folder contributes to interview preparation.
+> - Go from an interview area to the folders where you study and practise it.
+> - Name the known gaps in the repository.
 
 ---
 
