@@ -5,13 +5,13 @@ track: Discovery, Scoping and Delivery
 module_group: Discovery and scoping
 module_code: T20.1
 module_name: Customer discovery and problem decomposition
-lesson: 9
-lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Decomposing a solution into workstreams", "Success metrics and evaluation data", "Choosing the first use case", "Practise discovery questions, part 1", "Practise discovery questions, part 2", "Practise decomposition interview cases"]
+lesson: 8
+lessons: ["The discovery conversation", "Observing the work", "Stakeholder and workflow maps", "Choosing the first use case", "Success metrics and evaluation data", "Decomposing a solution into workstreams", "Practise discovery questions", "Practise decomposition interview cases"]
 level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [practice, interview, decomposition, case study, data platform]
 ---
 
@@ -120,8 +120,8 @@ Five cases suit candidates with a cloud data platform background. Each one tests
 
 | Case | What to connect |
 |---|---|
-| An enterprise AI data platform for structured, unstructured and streaming data | Lakehouse, batch and streaming ingestion, metadata and lineage, data quality, feature or retrieval pipelines, governance, evaluation datasets, production monitoring |
-| A reusable RAG platform for many business units | Multi-tenant architecture, document ingestion, Delta-based processing, metadata, vector and keyword retrieval, ACL propagation, an evaluation framework, cost isolation, model and embedding versioning |
+| An enterprise AI data platform for structured, unstructured and streaming data | A governed data platform, batch and streaming ingestion, metadata and lineage, data quality, feature or retrieval pipelines, governance, evaluation datasets, production monitoring |
+| A reusable RAG platform for many business units | Multi-tenant architecture, document ingestion, versioned table processing, metadata, vector and keyword retrieval, ACL propagation, an evaluation framework, cost isolation, model and embedding versioning |
 | Near-real-time fraud or anomaly detection with explanations | Streaming ingestion, feature freshness, detection versus investigation, alert prioritisation, human feedback, false positives, explainability, backtesting, online monitoring, drift |
 | A copilot that diagnoses pipeline and data-quality issues | Catalog and lineage, pipeline logs, quality checks, schema evolution, incident history, natural-language investigation, safe remediation suggestions, read versus write, auditability |
 | Productionising a notebook prototype | Reproducibility, CI/CD, evaluation gates, model and prompt versioning, secrets, monitoring, cost controls, security, SLAs, rollback, ownership and support |

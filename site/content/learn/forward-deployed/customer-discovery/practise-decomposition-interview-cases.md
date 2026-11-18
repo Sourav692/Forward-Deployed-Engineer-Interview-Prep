@@ -106,8 +106,8 @@ Five cases suit candidates with a cloud data platform background. Each one tests
 
 | Case | What to connect |
 |---|---|
-| An enterprise AI data platform for structured, unstructured and streaming data | Lakehouse, batch and streaming ingestion, metadata and lineage, data quality, feature or retrieval pipelines, governance, evaluation datasets, production monitoring |
-| A reusable RAG platform for many business units | Multi-tenant architecture, document ingestion, Delta-based processing, metadata, vector and keyword retrieval, ACL propagation, an evaluation framework, cost isolation, model and embedding versioning |
+| An enterprise AI data platform for structured, unstructured and streaming data | A governed data platform, batch and streaming ingestion, metadata and lineage, data quality, feature or retrieval pipelines, governance, evaluation datasets, production monitoring |
+| A reusable RAG platform for many business units | Multi-tenant architecture, document ingestion, versioned table processing, metadata, vector and keyword retrieval, ACL propagation, an evaluation framework, cost isolation, model and embedding versioning |
 | Near-real-time fraud or anomaly detection with explanations | Streaming ingestion, feature freshness, detection versus investigation, alert prioritisation, human feedback, false positives, explainability, backtesting, online monitoring, drift |
 | A copilot that diagnoses pipeline and data-quality issues | Catalog and lineage, pipeline logs, quality checks, schema evolution, incident history, natural-language investigation, safe remediation suggestions, read versus write, auditability |
 | Productionising a notebook prototype | Reproducibility, CI/CD, evaluation gates, model and prompt versioning, secrets, monitoring, cost controls, security, SLAs, rollback, ownership and support |

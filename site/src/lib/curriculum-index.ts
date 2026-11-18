@@ -1484,11 +1484,10 @@ export const INDEX_MODULES: IndexModule[] = [
       "the-discovery-conversation",
       "observing-the-work",
       "stakeholder-and-workflow-maps",
-      "decomposing-a-solution-into-workstreams",
-      "success-metrics-and-evaluation-data",
       "choosing-the-first-use-case",
+      "success-metrics-and-evaluation-data",
+      "decomposing-a-solution-into-workstreams",
       "practise-discovery-questions-1",
-      "practise-discovery-questions-2",
       "practise-decomposition-interview-cases"
     ],
     "practiceMinutes": 270
@@ -2775,6 +2774,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "classic-ai-designs/agent-platform-for-non-technical-users": "classic-ai-designs/safe-workflow-automation-for-non-technical-users",
   "classic-ai-designs/scoping-doc-to-deployed-agent-in-two-weeks": "classic-ai-designs/delivering-an-agent-in-two-weeks-with-enforced-gates",
   "customer-discovery/fde-problem-decomposition-question-bank": "customer-discovery/the-discovery-conversation",
+  "customer-discovery/practise-discovery-questions-2": "customer-discovery/practise-discovery-questions-1",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",
   "delivery-stages-and-gates/readme": "delivery-stages-and-gates/delivery-as-a-repeatable-process",
   "delivery-stages-and-gates/theory": "delivery-stages-and-gates/delivery-as-a-repeatable-process",

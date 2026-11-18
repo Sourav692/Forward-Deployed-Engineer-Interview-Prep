@@ -3,9 +3,7 @@
 
 ## Start with the demo that never shipped
 
-Penhallow Bank, a fictional retail bank, ran an internal competition for AI ideas. The winning demo was an agent that read a complaint, decided on compensation and paid it into the customer's account. The board loved it, and it became the first project.
-
-It spent five months in review. Risk wanted evidence on decisions that moved money. Legal wanted an audit trail that did not exist. The data team found that a third of past complaints had no recorded outcome to evaluate against. Meanwhile a dull runner-up, an assistant that summarised complaint histories for case handlers, could have been live in weeks with a person reading every output. Call this **the demo-first pick**: choosing the first use case by how impressive it looks rather than by whether it can ship.
+Penhallow Bank, a retail bank, ran an internal competition for AI ideas and brought in an FDE to build the winner: an agent that read a customer complaint, decided the compensation and paid it into the account. The board loved the demo. Five months later it was still in review. Risk wanted evidence on decisions that moved money, legal wanted an audit trail that did not exist, and a third of past complaints had no recorded outcome to evaluate against. Call this **the demo-first pick**: choosing the first use case by how impressive it looks rather than by whether it can ship.
 
 > **What you'll learn**
 >
@@ -16,7 +14,7 @@ It spent five months in review. Risk wanted evidence on decisions that moved mon
 
 ## Rank use cases on more than value
 
-The first use case is not the most impressive demo on the list. It is the one with a measurable outcome, available data and a risk the customer can live with, chosen after the metrics in [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data) are clear.
+The first use case is not the most impressive demo on the list. It is the one with a measurable outcome, available data and a risk the customer can live with. Ranking only asks whether an outcome can be measured. The next lesson, [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data), defines how to measure the one you choose.
 
 An executive hands over 30 possible AI use cases and asks which to build first. Use a prioritisation matrix with ten columns:
 
@@ -74,19 +72,19 @@ That investigation has its own checklist:
 
 Keep open the possibility that AI is not the right solution.
 
-## Worked example: choosing between three candidates
+## Worked example: re-ranking Penhallow's shortlist
 
-Suppose three of the executive's 30 ideas survive a first pass. Score them on the matrix. The switcher shows how each one scores and what happens to it.
+Go back to Penhallow. Three ideas from the competition survive a first pass on data and risk. Score them on the matrix. The switcher shows how each one scores and what happens to it.
 
 <div class="learning-widget evidence-switcher" id="candidate-switcher">
 <p class="widget-intro">Three candidates survive the first pass. Compare how each scores on the matrix and what the decision is.</p>
 <div class="mode-controls" hidden role="group" aria-label="Candidate use case">
-<button type="button" data-mode="refund" aria-pressed="false" aria-controls="refund-result">Autonomous refund agent</button>
-<button type="button" data-mode="brief" aria-pressed="false" aria-controls="brief-result">Account-brief assistant</button>
+<button type="button" data-mode="refund" aria-pressed="false" aria-controls="refund-result">Complaint-compensation agent</button>
+<button type="button" data-mode="brief" aria-pressed="false" aria-controls="brief-result">Complaint-history summariser</button>
 <button type="button" data-mode="incident" aria-pressed="false" aria-controls="incident-result">Incident-diagnosis assistant</button>
 </div>
-<section id="refund-result" class="mode-panel" data-announcement="Refund agent selected. Narrowed, not dropped."><h4>Autonomous refund agent</h4><ul><li>Value: high.</li><li>Risk: high, because it writes money.</li></ul><p>Decision: not dropped. Narrowed to suggesting refunds for human approval, on one product line, in shadow mode, with a go/no-go gate before it acts.</p></section>
-<section id="brief-result" class="mode-panel" data-announcement="Account-brief assistant selected. Goes first."><h4>Account-brief assistant</h4><ul><li>Data: reads CRM, email, usage and support data.</li><li>Metrics: clear, such as preparation time and brief accuracy.</li><li>Risk: errors are caught by a seller before a meeting.</li></ul><p>Decision: goes first. Measurable outcome, available data, manageable risk and a reader in the loop.</p></section>
+<section id="refund-result" class="mode-panel" data-announcement="Compensation agent selected. Narrowed, not dropped."><h4>Complaint-compensation agent</h4><ul><li>Value: high.</li><li>Risk: high, because it pays money out.</li><li>Data: a third of past complaints have no recorded outcome to evaluate against.</li></ul><p>Decision: not dropped. Narrowed to suggesting compensation for a handler to approve, on one complaint type, in shadow mode, with a go/no-go gate before it acts.</p></section>
+<section id="brief-result" class="mode-panel" data-announcement="Complaint-history summariser selected. Goes first."><h4>Complaint-history summariser</h4><ul><li>Data: reads the complaint record, call notes and past letters, all already stored.</li><li>Metrics: clear, such as handler preparation time and summary accuracy.</li><li>Risk: a handler reads every summary before acting.</li></ul><p>Decision: goes first. Measurable outcome, available data, manageable risk and a person in the loop. It could be live in weeks.</p></section>
 <section id="incident-result" class="mode-panel" data-announcement="Incident assistant selected. Strong value, heavy integration."><h4>Incident-diagnosis assistant</h4><ul><li>Value: strong.</li><li>Integration: needs logs, traces and topology joined across many systems.</li></ul><p>Decision: not first. The integration path is the longest of the three.</p></section>
 <p class="switch-status" aria-live="polite"></p>
 </div>
@@ -97,7 +95,7 @@ The matrix chose the order, and the narrowing levers kept the high-value idea al
 
 - **Scores are judgements.** A matrix makes the reasoning visible. It does not make it objective, so record who scored each column.
 - **Priorities move.** A new regulation or a failed integration can reorder the list. Re-score at each gate.
-- **Illustrative story.** Penhallow Bank is fictional.
+- **Composite engagement.** Penhallow Bank is illustrative, not a real customer.
 
 ## Interview angle
 
