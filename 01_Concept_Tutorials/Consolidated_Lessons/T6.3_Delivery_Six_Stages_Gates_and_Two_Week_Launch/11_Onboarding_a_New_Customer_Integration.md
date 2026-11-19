@@ -5,25 +5,19 @@ track: Discovery, Scoping and Delivery
 module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
-lesson: 9
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lesson: 8
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [onboarding, integration, launch, reconciliation, ownership]
 ---
 
 ## Start with the launch with no finish line
 
-Lydford Housing, a fictional housing association with 24,000 homes, signed up for your platform's repairs integration. It copies repair jobs from Lydford's housing system to the scheduling platform its contractors use, and sends completion notes back.
-
-The go-live date was fixed in the contract, so the team switched on live sync that morning. The backfill of 10,200 open jobs was 60% done. Nobody had compared the two systems. The new alerts sent email to the engineer who built the connector, who moved to another customer the next week. Lydford's IT team assumed the vendor owned the integration. The vendor assumed Lydford did.
-
-Three weeks later a tenant complained that a reported leak had never been booked. Lydford found 4,080 open repair jobs that the contractors could not see. The backfill had stopped that morning at a record with a missing postcode. An alert had fired, to an inbox nobody read.
-
-Call this **the launch with no finish line**: an integration declared live on a date, with no agreed test of whether it was finished.
+Lydford Housing, a housing association with 24,000 homes, signed up for a repairs integration that copies repair jobs from its housing system to the platform its contractors schedule from, and the vendor's FDE ran the onboarding. The go-live date was fixed in the contract, so the FDE switched on live sync that morning. The backfill of 10,200 open jobs was 60% done, nobody had compared the two systems, and alerts went to the engineer who built the connector, who moved to another customer the next week. Lydford's IT team assumed the vendor owned the integration, and the vendor assumed Lydford did. Three weeks later a tenant reported a leak that had never been booked, and Lydford found 4,080 open jobs the contractors could not see. The backfill had stopped at a record with a missing postcode, and its alert had gone to an inbox nobody read. Call this **the launch with no finish line**: an integration declared live on a date, with no agreed test of whether it was finished.
 
 > **What you'll learn**
 >
@@ -115,7 +109,7 @@ The [handover and ownership](09_Handover_and_Ownership.md) lesson covers handing
 
 - **One-way feeds are simpler.** An integration that only reads may not need a launch contract as long as this one, but it still needs the four criteria.
 - **Thresholds are judgement.** The right drift threshold and number of clean days depend on what a mismatch costs the customer.
-- **Fictional data.** Lydford Housing, its systems and figures are illustrative.
+- **Composite engagement.** Lydford Housing, its systems and figures are illustrative, not a real customer.
 
 ## Interview angle
 

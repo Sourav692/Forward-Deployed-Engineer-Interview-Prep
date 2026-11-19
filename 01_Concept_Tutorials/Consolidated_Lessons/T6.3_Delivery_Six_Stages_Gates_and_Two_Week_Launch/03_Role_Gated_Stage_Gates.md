@@ -6,22 +6,18 @@ module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
 lesson: 3
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [stage gates, sign-off, separation of duties, environments, escalation, go/no-go]
 ---
 
 ## Start with the director who signed
 
-A fictional insurance customer was two days behind on an agent that drafted claim letters. The delivery director, the most senior person on the engagement, signed the "rollback tested" gate himself to save a day. The rollback had been written down but never run.
-
-On the second day of limited production the agent sent 40 letters with the wrong policy dates. The team reached for the rollback. It failed on a configuration step nobody had rehearsed, and the letters kept going out for three more hours.
-
-Letting the most senior person sign anything keeps an engagement moving. A gate only means something if the wrong role cannot pass it, however senior they are. Call this **the senior override**: a gate that the person under the most deadline pressure can wave through.
+An FDE's engagement with an insurer was two days behind on an agent that drafted claim letters. The FDE had written the rollback plan but never run it. To save a day, the delivery director, the most senior person on the engagement, signed the "rollback tested" gate himself. On the second day of limited production the agent sent 40 letters with the wrong policy dates. The rollback failed on a configuration step nobody had rehearsed, and letters kept going out for three more hours. Call this **the senior override**: a gate that the person under the most deadline pressure can wave through.
 
 > **What you'll learn**
 >
@@ -172,7 +168,7 @@ An engagement that cannot answer all three is not ready for production, however 
 
 - **Small teams compress gates.** A one-person delivery team cannot separate every role. The gates then compress, with a second reviewer from outside the team, rather than disappear.
 - **Day ranges are the framework's plan.** The stage days come from the two-week framework and change with the engagement.
-- **Illustrative cases.** Northwind Logistics and the insurance customer are illustrative.
+- **Composite engagement.** Northwind Logistics and the insurer are illustrative, not real customers.
 
 ## Interview angle
 

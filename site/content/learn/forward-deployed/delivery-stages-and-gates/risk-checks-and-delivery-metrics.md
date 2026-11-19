@@ -3,9 +3,7 @@
 
 ## Start with the line in the plan
 
-A fictional retail customer's delivery plan had a risk register with a sensible line: "Data access delays. Mitigation: delivery lead escalates on day 3." On day 3 the delivery lead was at another customer's go-live. Nobody chased the access request. It was granted on day 8, and the two-week date slipped by a week.
-
-Nobody had ignored the risk. The mitigation depended on one person's calendar in the busiest week of the month. Call this **the reminder mitigation**: a risk response that works only if someone remembers it at the moment they are busiest.
+An FDE's two-week plan for a retailer had a sensible line in its risk register: "Data access delays. Mitigation: delivery lead escalates on day 3." On day 3 the delivery lead was at another customer's go-live, and the FDE, deep in the build, assumed someone was chasing the access request. Nobody was. Access arrived on day 8, and the date slipped by a week. Call this **the reminder mitigation**: a risk response that works only if someone remembers it at the moment they are busiest.
 
 > **What you'll learn**
 >
@@ -86,7 +84,7 @@ Saying that out loud is stronger than presenting 0.83 as a result. An interviewe
 
 - **Four risks, not all risks.** The framework names four. Real engagements add others, such as a key person leaving, and each still needs a mechanism.
 - **One run.** The Northwind numbers come from one scripted engagement and prove the mechanism, not the outcome.
-- **Illustrative cases.** Northwind Logistics and the retail customer are illustrative.
+- **Composite engagement.** Northwind Logistics and the retailer are illustrative, not real customers.
 
 ## Interview angle
 

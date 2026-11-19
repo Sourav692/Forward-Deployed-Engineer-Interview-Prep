@@ -3,11 +3,7 @@
 
 ## Start with the queue nobody watched
 
-Dunmore Pharmacy, a fictional chain of 40 pharmacies, had an FDE team build an assistant that sorts repeat-prescription requests from its website and drafts replies for pharmacists to approve. After twelve weeks the system worked well, the sponsor signed off and the FDE team moved to another customer. The handover was a 90-minute call and a wiki page.
-
-Six weeks later a doctors' practice system changed the format of one field. The assistant could no longer read those requests and put them in an "unclassified" queue. Nobody watched that queue. About 210 requests a day landed there, and it was nine days before a pharmacist noticed the phones ringing about late prescriptions. By then about 1,900 requests were waiting.
-
-When the operations director asked who owned the system, pharmacy operations said IT did, IT said the business did, and the vendor's support desk said the field mapping was customer configuration. Each answer was partly right. Call this **the orphaned system**: a working system with no single person accountable for keeping it working.
+Dunmore Pharmacy, a chain of 40 pharmacies, had an FDE build an assistant that sorts repeat-prescription requests and drafts replies for pharmacists to approve. After twelve weeks the sponsor signed off, and the FDE moved to another customer after a 90-minute handover call and a wiki page. Six weeks later a doctors' practice system changed one field's format, and the assistant began putting those requests in an "unclassified" queue nobody watched. About 210 a day landed there, and nine days passed before a pharmacist noticed the phones ringing about late prescriptions. Asked who owned the system, pharmacy operations said IT, IT said the business, and the vendor said the field mapping was customer configuration. Call this **the orphaned system**: a working system with no single person accountable for keeping it working.
 
 > **What you'll learn**
 >
@@ -104,7 +100,7 @@ Record the sponsor's decision. If they accept the risk, the record shows it was 
 
 - **Contracts vary.** Some engagements include managed support, which changes who holds the technical owner role. The checklist still applies.
 - **Small customers.** One person may hold both owner roles. Name a deputy anyway.
-- **Fictional data.** Dunmore Pharmacy and its figures are illustrative.
+- **Composite engagement.** Dunmore Pharmacy and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

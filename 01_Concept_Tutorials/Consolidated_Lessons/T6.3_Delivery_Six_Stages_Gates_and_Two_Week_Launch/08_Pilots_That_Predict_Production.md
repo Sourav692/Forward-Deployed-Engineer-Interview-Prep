@@ -5,25 +5,19 @@ track: Discovery, Scoping and Delivery
 module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
-lesson: 4
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lesson: 7
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [pilot, prototype, proof of concept, scorecard, expansion, rollout]
 ---
 
 ## Start with the ten friendly dispatchers
 
-Caverly Logistics, a fictional parcel carrier, asked an FDE team for an assistant that drafts the fix for a failed delivery: a wrong address, a closed business, a damaged parcel. Dispatchers handled about 1,200 of these exceptions a day across three depots.
-
-The team ran a three-week pilot with ten day-shift dispatchers at the main depot. All ten had volunteered. Median handling time fell from 9 minutes to 5. The dispatchers liked the tool, and the sponsor approved a rollout to all three depots, day and night shifts, about 60 people.
-
-Two weeks later the operations director called a meeting. Exceptions reopened within a week had risen from 6% to 14%. The night shift, mostly agency staff, had stopped using the tool. Nobody had measured reopened exceptions in the pilot, and nobody from the night shift had taken part.
-
-The pilot had answered the question "can keen people use this?" The sponsor had heard "will this work for everyone?" Call this **the friendly-room pilot**: a pilot whose users and measures were chosen, without meaning to, so that it would succeed.
+Caverly Logistics, a parcel carrier, asked its FDE for an assistant that drafts the fix for a failed delivery, such as a wrong address or a damaged parcel. Dispatchers handled about 1,200 of these exceptions a day across three depots. The FDE ran a three-week pilot with ten volunteer day-shift dispatchers at the main depot, and median handling time fell from 9 minutes to 5. The sponsor approved a rollout to all three depots, day and night shifts, about 60 people. Two weeks later, exceptions reopened within a week had risen from 6% to 14%, and the night shift, mostly agency staff, had stopped using the tool. The pilot had answered "can keen people use this?" while the sponsor heard "will this work for everyone?" Call this **the friendly-room pilot**: a pilot whose users and measures were chosen, without meaning to, so that it would succeed.
 
 > **What you'll learn**
 >
@@ -146,7 +140,7 @@ The site's [rolling out with a way back](../T6.5_Adoption_and_Business_Impact/01
 
 - **Ranges, not rules.** Stage lengths and thresholds depend on the work. A weekly process needs a longer pilot than an hourly one.
 - **Comparison groups are imperfect.** Two depots never match exactly. Report the differences with the result.
-- **Fictional data.** Caverly Logistics and its figures are illustrative.
+- **Composite engagement.** Caverly Logistics and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
