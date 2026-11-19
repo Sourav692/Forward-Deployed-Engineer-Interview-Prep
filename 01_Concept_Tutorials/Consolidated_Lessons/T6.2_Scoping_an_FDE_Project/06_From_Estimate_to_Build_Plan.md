@@ -65,7 +65,7 @@ Ownership for the lead is not controlling every file. Agree interfaces early, gi
 
 ## Price every scope change
 
-Change is normal. Silent change breaks plans. When scope rises, time rises, the team grows, or quality and risk shift. Nothing else stays fixed. Say it in those terms: it can be added, but it needs a later date, more people, or something removed.
+Change is normal. Silent change breaks plans. When scope rises, time rises, the team grows, or quality and risk shift. Nothing else stays fixed. Say it in those terms: it can be added, but it needs a later date, more people, or something removed. The lesson on [managing change and scope creep](../../../05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/requirements-and-solution-design/02_Managing_Change_and_Scope_Creep.md) covers the change-impact note and the logs behind it.
 
 Keep a short decision log for choices that change the shape of the project: hosted against custom, manual against automated, one customer against broad rollout, data design, safety limits. A few sentences of reasoning per decision is enough.
 

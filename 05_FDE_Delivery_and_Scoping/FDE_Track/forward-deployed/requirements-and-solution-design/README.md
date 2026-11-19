@@ -9,8 +9,9 @@ These files are the source of the module `requirements-and-solution-design` in t
 | 3 | [Technical readiness before you commit](03_Technical_Readiness_Before_You_Commit.md) | `technical-readiness-before-you-commit` | Published |
 | 4 | [From requirements to architecture](04_From_Requirements_to_Architecture.md) | `from-requirements-to-architecture` | Published |
 | 5 | [Decision records and design reviews](05_Decision_Records_and_Design_Reviews.md) | `decision-records-and-design-reviews` | Published |
-| 6 | [Practise requirements and design, part 1](06_Practise_Requirements_and_Design_1.md) | `practise-requirements-and-design-1` | Published |
-| 7 | [Practise requirements and design, part 2](07_Practise_Requirements_and_Design_2.md) | `practise-requirements-and-design-2` | Published |
+| 6 | [Practise requirements and design](06_Practise_Requirements_and_Design.md) | `practise-requirements-and-design-1` | Published |
+
+On 19 November 2026 the two practice parts merged into one page of 20 questions. It keeps the part 1 slug, and `practise-requirements-and-design-2` redirects to it.
 
 ## Sources
 

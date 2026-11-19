@@ -3,11 +3,7 @@
 
 ## Start with nine o'clock
 
-Ansel Travel, a fictional travel agency, built a service that let customers change flight bookings online. Each change called an airline's booking API. In testing, with a few requests a second, it worked.
-
-On the first Monday, customers arrived at 09:00 as the agency's email went out. Requests jumped from about 5 a second to 50 a second for ten minutes. The airline's API allowed 20 requests a second and rejected the rest with an error. About 18,000 change requests failed in ten minutes. Many customers retried, which made it worse, and the call centre took the overflow.
-
-The requirements had said "handle peak load". Nobody had written down the peak, the airline's limit, or what should happen to a request the airline could not take yet. Call this **the unsized peak**.
+Ansel Travel, a travel agency, had its FDE build a service that let customers change flight bookings online. Each change called an airline's booking API, and in testing, at a few requests a second, it worked. On the first Monday the agency's 09:00 email went out, and requests jumped from about 5 a second to 50 a second for ten minutes. The airline's API allowed 20 a second and rejected the rest. About 18,000 changes failed in ten minutes, retries made it worse, and the call centre took the overflow. The requirements had said "handle peak load". Nobody had written down the peak, the airline's limit, or what should happen to a request the airline could not take yet. Call this **the unsized peak**.
 
 > **What you'll learn**
 >
@@ -82,7 +78,7 @@ The law holds for averages over a stable period. For a spike, apply it to the sp
 
 Daily averages hide the hours that matter. Ansel averaged about 5 requests a second over the day. Sizing for that would have failed every morning. Ask for traffic by hour, find the peak, and design for it:
 
-- **Find the ratio.** Ansel's peak was about ten times the daily average, typical of anything triggered by a scheduled email or the start of a working day.
+- **Find the ratio.** Ansel's peak was about ten times the daily average. Peaks like this follow a scheduled email or the start of a working day.
 - **Decide what may be slow.** Fee lookups must stay fast. Submitted changes can wait minutes if the customer is told.
 - **Scale what must be fast.** Web servers and caches for the synchronous path, scaled ahead of 09:00 on a schedule if auto-scaling reacts too slowly.
 - **Queue what can wait.** The queue absorbs the spike for the rate-limited path.
@@ -109,7 +105,7 @@ The deeper treatment of queues, back-pressure and retries sits in the site's sys
 
 - **Little's law needs a stable system.** If arrivals exceed capacity for long, the queue grows without limit and averages stop meaning anything.
 - **Queues move problems.** Messages can fail after acceptance. Plan dead-letter handling and tell users the real status.
-- **Fictional data.** Ansel Travel and its figures are illustrative.
+- **Composite engagement.** Ansel Travel and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

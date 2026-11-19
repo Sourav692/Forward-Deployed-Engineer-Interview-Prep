@@ -6,22 +6,18 @@ module_group: Discovery and scoping
 module_code: T20.3
 module_name: Requirements and solution design
 lesson: 2
-lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design, part 1", "Practise requirements and design, part 2"]
+lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design"]
 level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [scope, change control, assumptions, dependencies, go/no-go]
 ---
 
 ## Start with nine small requests
 
-Ellery Logistics, a fictional parcel carrier, agreed a six-week build of a route-planning dashboard for its depot managers. In week two, a manager asked for a column showing driver breaks. In week three, another asked to export the plan to a spreadsheet. Then a mobile view, a print layout, two more filters, a colour for late routes, a second depot's time zone and a weekly summary email.
-
-Each request took between half a day and two days. Each was reasonable, and each was agreed in a corridor. By week five the team had added about three weeks of work, the six-week date had gone, and the sponsor asked why nobody had told her.
-
-Nobody had decided to grow the project. It grew one small yes at a time. Call this **death by small must-haves**.
+Ellery Logistics, a parcel carrier, agreed a six-week build of a route-planning dashboard for its depot managers, led by an FDE. In week two a manager asked the FDE for a column showing driver breaks. In week three another wanted a spreadsheet export. Then came a mobile view, a print layout, two more filters, a colour for late routes, a second depot's time zone and a weekly summary email. Each took between half a day and two days, each was reasonable, and the FDE agreed each one in a corridor. By week five about three weeks of work had been added, the six-week date had gone, and the sponsor asked why nobody had told her. Call this **death by small must-haves**: a project that grows one small yes at a time, with nobody deciding the trade.
 
 > **What you'll learn**
 >
@@ -124,7 +120,7 @@ On the day, walk the list. If a must-pass item fails, the answer is no-go or a s
 
 - **Process can feel bureaucratic.** On a two-week prototype, one shared list and a daily check with the sponsor may be enough. Scale the logs to the engagement.
 - **Contracts vary.** Fixed-price and time-and-materials engagements treat changes differently. Know which you are in.
-- **Fictional data.** Ellery Logistics and its figures are illustrative.
+- **Composite engagement.** Ellery Logistics and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

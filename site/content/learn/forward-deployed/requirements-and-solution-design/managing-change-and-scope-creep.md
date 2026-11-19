@@ -3,11 +3,7 @@
 
 ## Start with nine small requests
 
-Ellery Logistics, a fictional parcel carrier, agreed a six-week build of a route-planning dashboard for its depot managers. In week two, a manager asked for a column showing driver breaks. In week three, another asked to export the plan to a spreadsheet. Then a mobile view, a print layout, two more filters, a colour for late routes, a second depot's time zone and a weekly summary email.
-
-Each request took between half a day and two days. Each was reasonable, and each was agreed in a corridor. By week five the team had added about three weeks of work, the six-week date had gone, and the sponsor asked why nobody had told her.
-
-Nobody had decided to grow the project. It grew one small yes at a time. Call this **death by small must-haves**.
+Ellery Logistics, a parcel carrier, agreed a six-week build of a route-planning dashboard for its depot managers, led by an FDE. In week two a manager asked the FDE for a column showing driver breaks. In week three another wanted a spreadsheet export. Then came a mobile view, a print layout, two more filters, a colour for late routes, a second depot's time zone and a weekly summary email. Each took between half a day and two days, each was reasonable, and the FDE agreed each one in a corridor. By week five about three weeks of work had been added, the six-week date had gone, and the sponsor asked why nobody had told her. Call this **death by small must-haves**: a project that grows one small yes at a time, with nobody deciding the trade.
 
 > **What you'll learn**
 >
@@ -110,7 +106,7 @@ On the day, walk the list. If a must-pass item fails, the answer is no-go or a s
 
 - **Process can feel bureaucratic.** On a two-week prototype, one shared list and a daily check with the sponsor may be enough. Scale the logs to the engagement.
 - **Contracts vary.** Fixed-price and time-and-materials engagements treat changes differently. Know which you are in.
-- **Fictional data.** Ellery Logistics and its figures are illustrative.
+- **Composite engagement.** Ellery Logistics and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

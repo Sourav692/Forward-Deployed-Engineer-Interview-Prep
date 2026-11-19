@@ -6,22 +6,18 @@ module_group: Discovery and scoping
 module_code: T20.3
 module_name: Requirements and solution design
 lesson: 3
-lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design, part 1", "Practise requirements and design, part 2"]
+lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [technical readiness, data profiling, access, legacy systems, feasibility]
 ---
 
 ## Start with the sandbox that lied
 
-Bramwell Manufacturing, a fictional maker of pumps, wanted a tool that predicted which machines would need repair, built on its maintenance work orders. The team was given a sandbox with 5,000 work orders and built a working prototype in two weeks. Every record had a machine ID, a fault code and a closing date.
-
-Then production access arrived. The real extract held 410,000 work orders over twelve years. A third had no fault code, because technicians typed the fault into a free-text note instead. Machine IDs had changed format in 2019. The legacy work-order system allowed one export a night, and its only administrator worked there two days a week. The prototype's design survived. The date did not: the data work alone took six more weeks.
-
-The sandbox was not wrong, only unrepresentative. Someone had picked clean records to make the demo easy. Call this **the clean sample**.
+Bramwell Manufacturing, a pump maker, wanted a tool that predicted which machines would need repair, built on its maintenance work orders. Its FDE was given a sandbox of 5,000 work orders, each with a machine ID, a fault code and a closing date, and had a working prototype in two weeks. Then production access arrived: 410,000 work orders over twelve years. A third had no fault code, because technicians typed the fault into a free-text note. Machine IDs had changed format in 2019. The legacy work-order system allowed one export a night, and its only administrator worked there two days a week. The prototype's design survived, but the date did not: the data work alone took six more weeks. Someone had picked clean records to make the demo easy. Call this **the clean sample**.
 
 > **What you'll learn**
 >
@@ -69,11 +65,11 @@ The switcher compares Bramwell's sandbox profile with its production profile.
 
 Ask for the production extract, or a random sample of it, in week one. If the data owner refuses, profile it inside their environment with them, and record the delay as a risk to the date.
 
-> **Pitfall:** Building on a curated sample. Ask who chose the sample and how. "The good ones" is the most common answer.
+> **Pitfall:** Building on a curated sample. Ask who chose the sample and how. The answer is often "the good ones".
 
 ## Access, permissions and limits
 
-Access is the most common reason FDE work stalls, and it usually needs approvals from several teams. Confirm every item in week one, with a working test, not a promise:
+Access often stalls FDE work, because it needs approvals from several teams. Confirm every item in week one, with a working test, not a promise:
 
 - **Credentials and accounts** for each system, including service accounts for automated jobs.
 - **Permissions** at the right level: read only where possible, and the specific tables or APIs needed.
@@ -120,7 +116,7 @@ Test usability alongside feasibility where you can. Show the experiment's output
 
 - **Readiness costs time.** One to two weeks of audit and experiments can feel slow to a sponsor who wants a date. Show what each check protects.
 - **You will still miss things.** An audit lowers the risk. It does not remove it. Keep contingency in the plan.
-- **Fictional data.** Bramwell Manufacturing and its figures are illustrative.
+- **Composite engagement.** Bramwell Manufacturing and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
