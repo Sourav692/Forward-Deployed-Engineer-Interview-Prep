@@ -94,7 +94,7 @@ Pelham uses both. The lease keeps two handlers apart in normal work, and the ver
 
 ## Approval bound to the exact version
 
-An approval is a decision about specific content. Record it as "Ben approved version 8 of claim 55210, payout £2,400", never as a flag on whatever the claim says later. If anything changes after approval, the approval no longer applies and the claim returns for review.
+An approval is a decision about specific content. Record it as "Ben approved version 8 of claim 55210, payout £2,400", never as a flag on whatever the claim says later. If anything changes after approval, the approval no longer applies and the claim returns for review. An agent's tool call needs the same binding, by a hash of its arguments, as [agents that touch business systems](../ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md) shows.
 
 Two further rules protect money and reputations:
 

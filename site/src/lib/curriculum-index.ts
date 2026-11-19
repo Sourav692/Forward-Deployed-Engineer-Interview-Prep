@@ -1794,8 +1794,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "untrusted-content-in-customer-data",
       "voice-and-multimodal-in-operations",
       "practise-ai-delivery",
-      "practise-ai-engineering-in-the-field-1",
-      "practise-ai-engineering-in-the-field-2"
+      "practise-ai-engineering-in-the-field-1"
     ],
     "practiceMinutes": 420
   },
@@ -2776,6 +2775,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "customer-discovery/practise-discovery-questions-2": "customer-discovery/practise-discovery-questions-1",
   "scoping-an-fde-project/estimating-ai-work-as-a-product": "scoping-an-fde-project/the-system-behind-the-screens",
   "requirements-and-solution-design/practise-requirements-and-design-2": "requirements-and-solution-design/practise-requirements-and-design-1",
+  "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2": "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1",
   "adoption-and-impact/realised-versus-estimated-value": "adoption-and-impact/proving-business-impact",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",
   "delivery-stages-and-gates/readme": "delivery-stages-and-gates/delivery-as-a-repeatable-process",

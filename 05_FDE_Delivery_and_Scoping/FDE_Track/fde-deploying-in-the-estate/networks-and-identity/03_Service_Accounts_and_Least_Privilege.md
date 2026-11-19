@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [service accounts, least privilege, RBAC, ABAC, provisioning, access]
 ---
 
@@ -44,7 +44,7 @@ Every call your system makes runs as some identity. There are two kinds:
 
 *Table 1: Delegated and service access. Most systems need both, for different calls.*
 
-The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md) lesson covers the agent case in depth.
+The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md) lesson covers the agent case in depth, and [agents that touch business systems](../../fde-building-in-the-estate/ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md) applies it to an MCP server.
 
 ## Roles first, then attributes
 

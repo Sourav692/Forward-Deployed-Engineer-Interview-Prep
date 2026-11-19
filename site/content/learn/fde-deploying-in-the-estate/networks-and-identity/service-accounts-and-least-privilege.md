@@ -30,7 +30,7 @@ Every call your system makes runs as some identity. There are two kinds:
 
 *Table 1: Delegated and service access. Most systems need both, for different calls.*
 
-The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority) lesson covers the agent case in depth.
+The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority) lesson covers the agent case in depth, and [agents that touch business systems](/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/agents-that-touch-business-systems) applies it to an MCP server.
 
 ## Roles first, then attributes
 

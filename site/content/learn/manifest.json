@@ -7843,7 +7843,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/01_Inputs_as_They_Really_Arrive.md",
       "estMinutes": 12,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/inputs-as-they-really-arrive",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "extraction-you-can-trust",
@@ -7855,7 +7855,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/02_Extraction_You_Can_Trust.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/extraction-you-can-trust",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "permissions-deletions-and-citations",
@@ -7865,9 +7865,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/03_Permissions_Deletions_and_Citations.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/permissions-deletions-and-citations",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "agents-that-touch-business-systems",
@@ -7891,7 +7891,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/05_Evaluating_on_the_Customers_Work.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/evaluating-on-the-customers-work",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "untrusted-content-in-customer-data",
@@ -7903,7 +7903,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/06_Untrusted_Content_in_Customer_Data.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/untrusted-content-in-customer-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "voice-and-multimodal-in-operations",
@@ -7915,7 +7915,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/07_Voice_and_Multimodal_in_Operations.md",
       "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/voice-and-multimodal-in-operations",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-ai-delivery",
@@ -7925,33 +7925,21 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/08_Practise_AI_Delivery.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/practise-ai-delivery",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-ai-engineering-in-the-field-1",
-      "title": "Practise AI Engineering in the Field, Part 1",
+      "title": "Practise AI Engineering in the Field",
       "track": "fde-building-in-the-estate",
       "module": "ai-delivery-in-customer-estates",
       "kind": "sync",
       "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/09_Practise_AI_Engineering_in_the_Field_1.md",
-      "estMinutes": 12,
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/09_Practise_AI_Engineering_in_the_Field.md",
+      "estMinutes": 22,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1",
-      "updated": "2026-11-18"
-    },
-    {
-      "slug": "practise-ai-engineering-in-the-field-2",
-      "title": "Practise AI Engineering in the Field, Part 2",
-      "track": "fde-building-in-the-estate",
-      "module": "ai-delivery-in-customer-estates",
-      "kind": "sync",
-      "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/10_Practise_AI_Engineering_in_the_Field_2.md",
-      "estMinutes": 11,
-      "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "reading-an-unfamiliar-codebase",
@@ -8407,7 +8395,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/03_Service_Accounts_and_Least_Privilege.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/service-accounts-and-least-privilege",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "secrets-and-leaks",
@@ -8467,7 +8455,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/03_Residency_Retention_and_Deletion.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/residency-retention-and-deletion",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-the-security-review",

@@ -3,11 +3,7 @@
 
 ## Start with the total that added up to nothing
 
-Penwith Insurance, a fictional motor insurer, receives about 6,000 repair invoices a month from garages. A model now reads each invoice and returns structured output: garage, claim number, line items and total. Invoices under £2,000 with a valid claim number are paid without review.
-
-The output always matched the schema. Every field had the right type, and every total was a number. In its third month, an auditor found an invoice whose line items summed to £1,480 while the extracted total read £1,840. The model had swapped two digits from a smudged scan. It was paid without review, and a search found 37 more like it.
-
-The schema had done its job. It checked that a total existed and was a number, not that it was the right number. Call this **the well-formed wrong number**.
+Penwith Insurance, a motor insurer, receives about 6,000 repair invoices a month from garages. Chloe, the forward deployed engineer, built the extractor: a model reads each invoice and returns garage, claim number, line items and total, and invoices under £2,000 with a valid claim number are paid without review. The output always matched the schema. In its third month, an auditor found an invoice whose line items summed to £1,480 while the extracted total read £1,840, two digits swapped from a smudged scan. It had been paid, and a search found 37 more like it. The schema checked that a total existed and was a number, not that it was the right number. Call this **the well-formed wrong number**.
 
 > **What you'll learn**
 >
@@ -90,7 +86,7 @@ Prompt wording reduces mistakes but does not stop a determined injection. The ch
 
 ## Review thresholds from measured error
 
-How many records should a person see? Answer it with numbers. Penwith's team labelled 500 invoices by hand and measured the extraction against them. Counting an invoice as wrong when any field was wrong, the error rate was 3.2%. Two reviewers can each check about 40 invoices a day, which over 21 working days is 1,680 a month.
+How many records should a person see? Answer it with numbers. Penwith's team labelled 500 invoices by hand and measured the extraction against them. Counting an invoice as wrong when any field was wrong, the error rate was 3.2%. Two reviewers can each check about 40 invoices a day, which over 21 working days is 1,680 a month. What those reviewers see, and how their corrections feed back, is the subject of the site's [human review and approval](/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval) lesson.
 
 The switcher compares three review policies on 6,000 invoices a month.
 
@@ -113,7 +109,7 @@ The rule behind the choice: measure error per field on a labelled sample, list t
 
 - **Confidence scores vary.** Some models give no usable confidence. Then rely on checks and sampling.
 - **Labelled samples age.** New garages and invoice formats change the error rate.
-- **Fictional data.** Penwith Insurance and its figures are illustrative.
+- **Composite engagement.** Penwith Insurance, Chloe and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

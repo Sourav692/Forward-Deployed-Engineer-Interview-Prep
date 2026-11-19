@@ -3,11 +3,7 @@
 
 ## Start with the fifty that was fifteen
 
-Tarrow Retail, a fictional furniture and homeware chain, runs a trade counter for builders and fitters. It added a voice agent to the trade phone line so customers could place repeat orders without waiting for staff.
-
-A fitter called from a van on a busy road and ordered "fifteen boxes of the grey oak floor tiles". The speech recogniser heard "fifty". The agent placed the order, the warehouse picked 50 boxes, and the van delivered them the next morning. Returning the extra 35 boxes, at £42 each, meant £1,470 of stock going back through the warehouse and an annoyed customer.
-
-The agent did exactly what it heard. Nobody checked what it heard. Call this **the fifty that was fifteen**.
+Tarrow Retail runs a trade counter for builders and fitters, and Martha, the forward deployed engineer, added a voice agent to the trade phone line so customers could place repeat orders without waiting for staff. A fitter called from a van on a busy road and ordered "fifteen boxes of the grey oak floor tiles". The speech recogniser heard "fifty", the agent placed the order, and the warehouse delivered 50 boxes the next morning. Returning the extra 35 boxes at £42 each sent £1,470 of stock back through the warehouse and left an annoyed customer. Call this **the fifty that was fifteen**: the agent did exactly what it heard, and nobody checked what it heard.
 
 > **What you'll learn**
 >
@@ -107,7 +103,7 @@ Each stage produces the evidence for the next: transcripts with labels, error ra
 
 - **Recognition varies by line and caller.** Measure on the customer's own recorded calls, with consent and their retention rules.
 - **Confirmations annoy regular callers.** Tune what is read back by risk, but keep it for actions that are costly to reverse.
-- **Fictional data.** Tarrow Retail and its figures are illustrative.
+- **Composite engagement.** Tarrow Retail, Martha and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

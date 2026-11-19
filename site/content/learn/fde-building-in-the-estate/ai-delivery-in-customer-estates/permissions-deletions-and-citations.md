@@ -3,11 +3,7 @@
 
 ## Start with the answer that stayed
 
-Hallam Clinic, a fictional group of private clinics, gave its staff an assistant over 9,000 documents: clinical protocols, rotas, HR policies and management papers. Retrieval filtered by the user's groups, and the team tested that filter carefully.
-
-To save cost, the team also cached answers for 24 hours, keyed by the question text. On a Tuesday, a clinic manager asked about the status of a restructuring proposal and got a summary drawn from a confidential board paper she could read. That afternoon, a receptionist asked the same question in the same words. The cache returned the stored answer without any retrieval, and with it the board paper's contents.
-
-The retrieval filter worked every time it ran. The cache meant it did not run. Call this **the answer that outlived its permission**.
+Hallam Clinic, a group of private clinics, gave its staff an assistant over 9,000 documents: clinical protocols, rotas, HR policies and management papers. Dev, the forward deployed engineer, filtered retrieval by the user's groups and tested that filter carefully, then cached answers for 24 hours, keyed by the question text, to save cost. On a Tuesday a clinic manager asked about a restructuring proposal and got a summary drawn from a confidential board paper she could read. That afternoon a receptionist asked the same question in the same words, and the cache returned the stored answer without running retrieval. The filter worked every time it ran; the cache meant it did not run. Call this **the answer that outlived its permission**.
 
 > **What you'll learn**
 >
@@ -72,7 +68,7 @@ Three rules keep this honest:
 - **Prefer events, keep a sweep.** Subscribe to the source's change events where it has them. Run a nightly job that compares document IDs and access lists between source and index, because events get lost.
 - **Measure the lag.** Record the time from source change to index change, and alert when it passes the agreed limit.
 
-Deletion has legal weight when it follows a person's request to erase their data. The [data lifecycle across every store](/learn/production-ai/agentops/the-data-lifecycle-across-every-store) lesson covers that.
+Deletion has legal weight when it follows a person's request to erase their data. The [data lifecycle across every store](/learn/production-ai/agentops/the-data-lifecycle-across-every-store) lesson covers that, and [residency, retention and deletion](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/residency-retention-and-deletion) shows how to prove to the customer that every copy is gone, backups and logs included.
 
 ## Exact codes and natural language
 
@@ -101,7 +97,7 @@ A decline is a correct answer when the documents do not hold one. Count declines
 
 - **Source permissions can be wrong.** Retrieval inherits the source's mistakes. A document shared too widely in the source is shared too widely in answers.
 - **Reconciliation costs.** Comparing access lists for millions of documents nightly needs paging and incremental checks.
-- **Fictional data.** Hallam Clinic and its figures are illustrative.
+- **Composite engagement.** Hallam Clinic, Dev and their figures are illustrative, not a real customer.
 
 ## Interview angle
 
