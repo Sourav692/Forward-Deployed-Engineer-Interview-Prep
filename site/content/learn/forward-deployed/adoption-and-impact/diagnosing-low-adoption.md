@@ -3,11 +3,7 @@
 
 ## Start with the better model
 
-Corrin Tools, a fictional hardware distributor, gave its trade-counter staff an assistant that finds a part from a customer's description. Six weeks after launch, staff used it on fewer than one order in ten. The team spent the next month on a larger model and better search. Accuracy rose from 88% to 94%. Use did not move.
-
-When someone finally stood at the counter, the reason was plain. Staff took orders standing at a till, and the assistant ran on a desktop in the back office. The model was never the problem.
-
-A technically ready system invites more technical fixes. When nobody uses it, the cause is usually workflow, trust or incentives. Call this **the model reflex**: answering an adoption problem with a quality fix.
+Corrin Tools, a hardware distributor, had its FDE build its trade-counter staff an assistant that finds a part from a customer's description. Six weeks after launch, staff used it on fewer than one order in ten. The FDE spent the next month on a larger model and better search, and accuracy rose from 88% to 94%. Use did not move. When the FDE finally stood at the counter, the reason was plain: staff took orders standing at a till, and the assistant ran on a desktop in the back office. Call this **the model reflex**: answering an adoption problem with a quality fix.
 
 > **What you'll learn**
 >
@@ -64,8 +60,8 @@ The diagnosis is fit and friction, not quality. The next steps are to surface br
 ## Limits of this lesson
 
 - **The nine causes are a starting list, not a complete one.** Policy, union agreements or a manager's instruction can also block use. Ask the users.
-- **Low use is sometimes the right answer.** If the problem was not worth solving, the honest outcome is to stop, as [realised versus estimated value](/learn/forward-deployed/adoption-and-impact/realised-versus-estimated-value) covers.
-- **Corrin Tools and the worked example's findings are illustrative.**
+- **Low use is sometimes the right answer.** If the problem was not worth solving, the honest outcome is to stop, as [proving business impact](/learn/forward-deployed/adoption-and-impact/proving-business-impact) covers.
+- **Composite engagement.** Corrin Tools and the worked example's findings are illustrative, not a real customer.
 
 ## Interview angle
 

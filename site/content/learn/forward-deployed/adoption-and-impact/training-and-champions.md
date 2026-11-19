@@ -3,13 +3,7 @@
 
 ## Start with the well-rated course
 
-Elstree Council, a fictional local authority, added an assistant to its housing repairs contact centre. While an adviser takes a call, the assistant suggests the repair category, the priority and the trade to send. The goal was fewer jobs sent to the wrong trade, which cost a wasted visit each time.
-
-All 45 advisers attended one two-hour classroom session. They rated it 4.6 out of 5. Four weeks later, advisers accepted or edited the suggestion on only 30% of calls. On the rest they typed into the old free-text box, as before. The late shift and the Saturday team had watched a recording instead of attending.
-
-In week six the one team leader who had championed the tool, Priya, left for another council. Use on her team fell from 70% of calls to 35% within a fortnight.
-
-The training had measured whether people enjoyed it, not whether they changed what they did. Call this **the well-rated course**: training judged by the room's reaction while the work stays the same.
+Elstree Council, a local authority, had its FDE add an assistant to its housing repairs contact centre that suggests the repair category, priority and trade while an adviser takes a call. The goal was fewer jobs sent to the wrong trade, which cost a wasted visit each time. All 45 advisers attended one two-hour classroom session the FDE ran, and rated it 4.6 out of 5. Four weeks later, advisers accepted or edited the suggestion on only 30% of calls and typed into the old free-text box on the rest. The late shift and the Saturday team had watched a recording instead of attending. In week six Priya, the one team leader who had championed the tool, left for another council, and use on her team fell from 70% of calls to 35% within a fortnight. Call this **the well-rated course**: training judged by the room's reaction while the work stays the same.
 
 > **What you'll learn**
 >
@@ -98,7 +92,7 @@ Change-management frameworks give this plan a wider frame. Prosci's ADKAR model,
 
 - **Training cannot fix a poor tool.** If the suggestions are often wrong, better training makes people reject them faster. See the site's [diagnosing low adoption](/learn/forward-deployed/adoption-and-impact/diagnosing-low-adoption) lesson.
 - **Union and policy rules.** Changes to how work is measured may need consultation. Ask the process owner early.
-- **Fictional data.** Elstree Council and its figures are illustrative.
+- **Composite engagement.** Elstree Council and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

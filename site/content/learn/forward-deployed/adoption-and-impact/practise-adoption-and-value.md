@@ -80,7 +80,7 @@ Taught in [diagnosing low adoption](/learn/forward-deployed/adoption-and-impact/
 
 ## Proving and reporting value
 
-Taught in [realised versus estimated value](/learn/forward-deployed/adoption-and-impact/realised-versus-estimated-value).
+Taught in [proving business impact](/learn/forward-deployed/adoption-and-impact/proving-business-impact).
 
 <details>
 <summary>Practice question 7. Finance asks you to prove the assistant caused the savings. How do you set that up?</summary>

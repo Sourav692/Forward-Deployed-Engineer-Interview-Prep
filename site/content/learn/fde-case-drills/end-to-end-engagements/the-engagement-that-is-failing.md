@@ -152,7 +152,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 - **Answer:** Check the claim per month and per unit of work, splitting running cost into model, hosting and human review. Review time is often the largest cost when outputs are poor. Then find changes that move both sides: rules for simple cases, better input data, routing only hard cases to the model. Project net value and payback, and set a gate to confirm them on actual figures.
 - **Trade-off:** Cutting model cost alone can lower quality and raise review time.
 - **Follow-up to expect:** "Payback is 11 months." Say so plainly and let the sponsor decide.
-- **Go deeper:** [Realised versus estimated value](/learn/forward-deployed/adoption-and-impact/realised-versus-estimated-value).
+- **Go deeper:** [Proving business impact](/learn/forward-deployed/adoption-and-impact/proving-business-impact).
 
 </details>
 
