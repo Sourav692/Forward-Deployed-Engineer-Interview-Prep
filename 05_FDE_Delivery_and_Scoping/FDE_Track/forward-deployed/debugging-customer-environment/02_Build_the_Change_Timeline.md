@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [debugging, timelines, change management, configuration drift, hypotheses]
 ---
 
 ## Start with the dead end of "nothing changed"
 
-Coniston Housing, a fictional housing association with 18,000 homes, uses an assistant your team built to sort tenants' repair requests by trade and urgency. It ran for two months without trouble. Then, on a Tuesday, it began sending every request to the "general" queue. Plumbers and electricians stopped getting work. Supervisors sorted requests by hand.
-
-Your engineer asked Coniston's IT team what had changed. "Nothing," they said, and they believed it. Your own release log showed no deployment that week either. With both sides sure that nothing had changed, the team spent two days reading code that had worked for two months.
-
-On the third day someone noticed that the assistant's build had pulled a new minor version of an SDK when its container image was rebuilt for a routine security patch. The new version changed how it parsed one field in the model's response, and the classifier's output fell through to its default. Nobody had released anything. Something had still changed.
-
-Call this **the dead end of "nothing changed"**: two honest teams, each sure of their side, and no timeline to test the claim against.
+Coniston Housing, a housing association with 18,000 homes, runs an assistant its FDE built to sort tenants' repair requests by trade and urgency. After two clean months it began, one Tuesday, sending every request to the "general" queue, and supervisors sorted requests by hand. The FDE asked Coniston's IT team what had changed. "Nothing," they said, and they believed it. The FDE's own release log showed no deployment that week either, so two days went on reading code that had worked for two months. On the third day the FDE noticed that a routine security rebuild of the container image had pulled a new minor version of an SDK, which parsed one field of the model's response differently. Nobody had released anything, and something had still changed. Call this **the dead end of "nothing changed"**: two honest teams, each sure of their side, and no timeline to test the claim against.
 
 > **What you'll learn**
 >
@@ -139,7 +133,7 @@ The [maintenance and drift](../../fde-deploying-in-the-estate/operating-after-go
 
 - **Timelines need logs.** If a system keeps no timestamps, you can only bracket from the systems around it.
 - **Customer change calendars vary.** Some organisations record every change, others very few. Ask early, before you need it.
-- **Fictional data.** Coniston Housing, its systems and times are illustrative.
+- **Composite engagement.** Coniston Housing, its systems and times are illustrative, not a real customer.
 
 ## Interview angle
 

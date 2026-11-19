@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [debugging, evidence, escalation, privacy, uploads]
 ---
 
 ## Start with the escalation that bounced
 
-Salcombe Clinics, a fictional group of outpatient clinics, uses an assistant your team built to read scanned referral letters and draft appointment requests. Staff upload each letter as a PDF. One week, some uploads started to hang. The progress bar reached the end and the spinner kept turning. No error appeared, in the browser or in your service's logs.
-
-Your engineer wanted to see it for himself. He asked Salcombe's IT team for a browser network capture of a failing upload, a copy of a patient's letter and the password of a staff account, "so I can log in and try". He also suggested they switch off their proxy's TLS inspection for an hour to rule it out.
-
-Salcombe's information governance lead refused all four. The capture would hold session cookies and patient details. The letter was health data. The password was not his to share. The proxy setting was a security control. Meanwhile your engineer escalated to your product team with one line: "Uploads hanging at Salcombe, please look." The product team replied with eleven questions. It took two days to answer them.
-
-Call this **the escalation that bounced**: evidence asked for in ways the customer could not allow, and an escalation that carried none of it.
+Salcombe Clinics, a group of outpatient clinics, runs an assistant its FDE built to read scanned referral letters and draft appointment requests. One week some PDF uploads started to hang: the progress bar reached the end and the spinner kept turning, with no error in the browser or the service's logs. The FDE asked Salcombe's IT team for a browser network capture of a failing upload, a copy of a patient's letter and a staff password "so I can log in and try", and suggested switching off the proxy's TLS inspection for an hour. Salcombe's information governance lead refused all four. Meanwhile the FDE escalated to the product team with one line, "Uploads hanging at Salcombe, please look." Answering the product team's eleven questions took two days. Call this **the escalation that bounced**: evidence asked for in ways the customer could not allow, and an escalation that carried none of it.
 
 > **What you'll learn**
 >
@@ -148,7 +142,7 @@ Naming what you will not ask for builds trust with the customer's security and g
 
 - **Regulated data has its own rules.** Health, payment and government data may carry legal limits on who sees what. The customer's governance team decides.
 - **Contracts set escalation paths.** Vendor support tiers and response times differ. Follow the contract.
-- **Fictional data.** Salcombe Clinics, its systems and figures are illustrative.
+- **Composite engagement.** Salcombe Clinics, its systems and figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -7397,9 +7397,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/01_Stabilise_the_Customer_First.md",
-      "estMinutes": 14,
+      "estMinutes": 13,
       "href": "/learn/forward-deployed/debugging-customer-environment/stabilise-the-customer-first",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "build-the-change-timeline",
@@ -7411,7 +7411,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/02_Build_the_Change_Timeline.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/debugging-customer-environment/build-the-change-timeline",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "isolate-the-failing-boundary",
@@ -7423,7 +7423,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/03_Isolate_the_Failing_Boundary.md",
       "estMinutes": 12,
       "href": "/learn/forward-deployed/debugging-customer-environment/isolate-the-failing-boundary",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "collect-evidence-and-escalate",
@@ -7435,7 +7435,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/debugging-customer-environment/04_Collect_Evidence_and_Escalate.md",
       "estMinutes": 14,
       "href": "/learn/forward-deployed/debugging-customer-environment/collect-evidence-and-escalate",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "practise-debugging-customer-environment",

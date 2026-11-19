@@ -3,13 +3,7 @@
 
 ## Start with the defensive first reply
 
-Selwood Pharmacy, a fictional chain of 120 pharmacies, uses an assistant your team built. It reads a patient's repeat prescriptions and drafts a short summary for the pharmacist. It passed every test in your staging environment, and it ran cleanly on your engineer's laptop against a copy of the service.
-
-On the first Monday after go-live, pharmacists in 40 branches saw "Summary unavailable" on every patient. Selwood's IT manager emailed at 08:50. Your engineer checked your dashboards, saw green, and replied at 09:05: "Our service is healthy. This looks like a problem on your network." Then he went quiet and started debugging.
-
-Nobody at Selwood heard anything for three hours. Pharmacists fell back to reading the full record, and queues formed at the counters. At 12:10 Selwood's operations director phoned your vice president. The cause turned out to be a proxy rule in the customer's branch network, so the engineer was half right. It did not matter. The customer remembered the reply, not the root cause.
-
-Call this **the defensive first reply**: the first message argued about whose fault it was, before anyone knew, and promised nothing.
+Selwood Pharmacy, a chain of 120 pharmacies, runs an assistant its FDE built that drafts a short summary of a patient's repeat prescriptions for the pharmacist. It passed every staging test. On the first Monday after go-live, pharmacists in 40 branches saw "Summary unavailable" on every patient, and Selwood's IT manager emailed at 08:50. The FDE checked the dashboards, saw green, and replied at 09:05: "Our service is healthy. This looks like a problem on your network." Then the FDE went quiet and started debugging. Nobody at Selwood heard anything for three hours while queues formed at the counters, and at 12:10 Selwood's operations director phoned the vendor's vice president. The cause was a proxy rule in the branch network, so the FDE was half right, but the customer remembered the reply, not the root cause. Call this **the defensive first reply**: a first message that argued about whose fault it was, before anyone knew, and promised nothing.
 
 > **What you'll learn**
 >
@@ -148,7 +142,7 @@ At Selwood the cause was the network, not a version. Had the 40 failing branches
 
 - **Contracts set response duties.** Your support agreement may fix response times and who leads. Read it before go-live.
 - **Regulated harm changes the order.** Where a fault could hurt a patient, follow the customer's safety process first.
-- **Fictional data.** Selwood Pharmacy, its branches and figures are illustrative.
+- **Composite engagement.** Selwood Pharmacy, its branches and figures are illustrative, not a real customer.
 
 ## Interview angle
 
