@@ -3,13 +3,7 @@
 
 ## Start with the three-change fix
 
-Brancaster Freight, a fictional freight forwarder, uses a service your team built to extract fields from customs documents. Six worker instances run in Brancaster's private cloud, behind a load balancer. Each worker calls a hosted extraction API through Brancaster's outbound proxy.
-
-One week, about one document in six began failing with "connection reset". The failures looked random. Under pressure, the team made three changes in one release: a longer timeout, a newer SDK and three attempts instead of one. Failures fell to about one in 200. Everyone called it fixed.
-
-Nobody knew which change had helped. Two weeks later, during a month-end peak, the retries tripled traffic to the proxy and failures climbed again. The cause, found the following week, was one worker built by hand without the certificate for Brancaster's proxy. Every request that worker sent failed. Retries hid it, because a retried request usually landed on a different worker: the chance of three attempts all hitting the same bad worker was one in 216.
-
-Call this **the three-change fix**: several changes at once, a symptom that fades and a cause that stays.
+Brancaster Freight, a freight forwarder, runs a service its FDE built to extract fields from customs documents. Six workers sit behind a load balancer in Brancaster's private cloud, and each calls a hosted extraction API through Brancaster's outbound proxy. One week about one document in six began failing with "connection reset", apparently at random. Under pressure the FDE shipped three changes in one release, a longer timeout, a newer SDK and three attempts instead of one, and failures fell to about one in 200. Nobody knew which change had helped. Two weeks later, at the month-end peak, the retries tripled traffic to the proxy and failures climbed again. The cause was one worker built by hand without the proxy's certificate, and retries had hidden it by landing on other workers. Call this **the three-change fix**: several changes at once, a symptom that fades and a cause that stays.
 
 > **What you'll learn**
 >
@@ -115,7 +109,7 @@ Each gap you close either reproduces the fault or rules out that gap. Either res
 
 - **Access decides the method.** In some estates you cannot run commands on their hosts. Then you design experiments their staff can run, with clear steps.
 - **Some faults need load.** A race or pool exhaustion may only appear under real concurrency, which needs a load test.
-- **Fictional data.** Brancaster Freight, its workers and figures are illustrative.
+- **Composite engagement.** Brancaster Freight, its workers and figures are illustrative, not a real customer.
 
 ## Interview angle
 
