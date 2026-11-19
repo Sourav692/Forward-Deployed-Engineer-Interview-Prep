@@ -3,11 +3,7 @@
 
 ## Start with the deadline shortcut
 
-Jessop Engineering, a fictional manufacturer, asked for a nightly import that matched customer order lines against its parts catalogue. Marta, the forward deployed engineer, had one week. She wrote it in Python, tested it on a sample of 500 order lines, and it finished in about 6 seconds.
-
-The first real night had 40,000 order lines. For each line, the code scanned a list of 250,000 parts to find a match. The sample needed about 62 million comparisons. The real file needed about 5 billion, eighty times more, and took about 8 minutes. The job had a 5-minute timeout, so it failed every night.
-
-The same week, the order form's TypeScript check accepted part codes in lower case, while the Python import rejected them. Two copies of one rule had drifted apart. Call both problems **the deadline shortcut**: code that passes on small samples and one happy path, and breaks on the customer's real data.
+Jessop Engineering asked for a nightly import that matched customer order lines against its parts catalogue. Marta, the forward deployed engineer, had one week. She wrote it in Python and tested it on 500 order lines, where it finished in about 6 seconds. The first real night had 40,000 lines against 250,000 parts, and the job took about 8 minutes against a 5-minute timeout, so it failed every night. The same week, the order form's TypeScript check accepted lower-case part codes that the Python import rejected: two copies of one rule had drifted apart. Call both problems **the deadline shortcut**: code that passes on small samples and one happy path, and breaks on the customer's real data.
 
 > **What you'll learn**
 >
@@ -45,7 +41,7 @@ Jessop's import was slow because of one data structure, not because of Python. C
 - **Grouping.** Use a dictionary of lists, keyed by the group.
 - **Data larger than memory.** Stream it record by record with a generator, covered in [data handling for real exports](/learn/fde-building-in-the-estate/working-in-customer-code/data-handling-for-real-exports).
 
-Then estimate the cost before running on real data. Marta's list scan did about 125,000 comparisons per line on average, half the catalogue. Across 40,000 lines that is 5 billion. A dictionary built once from 250,000 parts, then 40,000 lookups, does about 290,000 operations. The fix was three lines, and the job dropped to under a second.
+Then estimate the cost before running on real data. For each order line, Marta's import scanned the list of 250,000 parts. The 500-line sample needed about 62 million comparisons, small enough to hide the problem. Her list scan did about 125,000 comparisons per line on average, half the catalogue. Across 40,000 lines that is 5 billion. A dictionary built once from 250,000 parts, then 40,000 lookups, does about 290,000 operations. The fix was three lines, and the job dropped to under a second.
 
 ```mermaid
 flowchart TD
@@ -109,7 +105,7 @@ The difference is who pays and when. The first list costs your team some tidying
 
 - **Complexity estimates are rough.** Constant factors, caching and the library underneath change real timings. Measure on realistic data.
 - **Language choice is often made for you.** In an established estate, the decision is usually to match it, and that is fine.
-- **Fictional data.** Jessop Engineering, its staff and its figures are illustrative.
+- **Composite engagement.** Jessop Engineering, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

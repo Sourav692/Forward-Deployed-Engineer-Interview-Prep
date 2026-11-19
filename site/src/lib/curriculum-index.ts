@@ -1725,8 +1725,8 @@ export const INDEX_MODULES: IndexModule[] = [
     "track": "fde-building-in-the-estate",
     "lessons": [
       "reading-an-unfamiliar-codebase",
-      "choosing-the-language-and-keeping-code-maintainable",
       "reproduce-isolate-fix",
+      "choosing-the-language-and-keeping-code-maintainable",
       "data-handling-for-real-exports",
       "concurrency-without-surprises",
       "reviewing-ai-generated-changes",

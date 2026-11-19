@@ -3,11 +3,7 @@
 
 ## Start with the default-config blind spot
 
-Islay Bank, a fictional bank, runs a statement-export product that a software vendor installs at several banks. Each night the export writes a file of 210,000 account balances for the bank's reconciliation system. One October morning, reconciliation flagged 37 accounts with impossible balances. The next night it happened again, with a different 41.
-
-The vendor's support team ran the export on their test environment, with the product's default settings, and every row came out right. They closed the ticket as "cannot reproduce". Islay reopened it. Support closed it again a week later.
-
-Nadia, the vendor's forward deployed engineer for Islay, asked for the bank's configuration file. It differed from the default in 14 settings. Two of them, set years earlier for an old mainframe reader, turned off quoting and changed the separator from the default pipe to a comma. Every broken row had an account name containing a comma. Call this **the default-config blind spot**: testing the product as you ship it, when the customer runs it as they configured it.
+Islay Bank runs a statement-export product that a software vendor installs at several banks. Each night the export writes 210,000 account balances for the bank's reconciliation system. One October morning reconciliation flagged 37 accounts with impossible balances, and the next night 41 different ones. The vendor's support team ran the export on their test environment with the product's default settings, saw every row come out right and closed the ticket as "cannot reproduce". Nadia, the vendor's forward deployed engineer for Islay, asked for the bank's configuration file instead. It differed from the default in 14 settings, and two of them, set years earlier for an old mainframe reader, turned quoting off and changed the separator to a comma. Every broken row had an account name containing a comma. Call this **the default-config blind spot**: testing the product as you ship it, when the customer runs it as they configured it.
 
 > **What you'll learn**
 >
@@ -18,7 +14,7 @@ Nadia, the vendor's forward deployed engineer for Islay, asked for the bank's co
 
 ## Reproduce before you reason
 
-Theories are cheap and most of them are wrong. A reproduction is the first piece of evidence that you are looking at the same failure as the customer. Until you have one, every fix is a guess.
+Theories are cheap, and without a reproduction you cannot tell which one is right. A reproduction is the first piece of evidence that you are looking at the same failure as the customer. Until you have one, every fix is a guess.
 
 A failure depends on four inputs. Capture all four before trying anything:
 
@@ -41,6 +37,8 @@ Once the failure reproduces, find which difference causes it. Changing one thing
 - **Data.** Run the first half of the input file. With 210,000 rows and no idea which row fails, about 18 halvings find a single failing row, because 2 to the power 18 is more than 262,000.
 - **Code history.** When the failure started after an upgrade, `git bisect` checks out the commit halfway between a known good and a known bad version, and you mark each one until it names the first bad commit.
 - **Environment.** Swap one component at a time: time zone, locale, database version.
+
+When a failure crosses the customer's network or identity layers instead of your code, change one variable per experiment and write the prediction first, as in [isolate the failing boundary](/learn/forward-deployed/debugging-customer-environment/isolate-the-failing-boundary).
 
 Halving assumes one cause. When two settings fail only together, as at Islay, resetting either one alone makes the failure disappear. That is a clue, not a dead end: test the pair.
 
@@ -85,9 +83,9 @@ The site's [diagnosing production incidents](/learn/production-ai/observability-
 
 ## Limits of this lesson
 
-- **Some failures resist reproduction.** Race conditions and load-dependent bugs may need logs, traces and many runs instead of one setup.
+- **Some failures resist reproduction.** Race conditions and load-dependent bugs may need logs, traces and many runs instead of one setup. See [concurrency without surprises](/learn/fde-building-in-the-estate/working-in-customer-code/concurrency-without-surprises) and [diagnosing production incidents](/learn/production-ai/observability-and-diagnosis/diagnosing-production-incidents). When the fault depends on the customer's network path, identity or scale, [isolate the failing boundary](/learn/forward-deployed/debugging-customer-environment/isolate-the-failing-boundary) lists the gaps to close.
 - **Customers cannot always share data.** Then you run scripts in their environment and reason from what they report.
-- **Fictional data.** Islay Bank, the vendor, its staff and its figures are illustrative.
+- **Composite engagement.** Islay Bank, the vendor, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

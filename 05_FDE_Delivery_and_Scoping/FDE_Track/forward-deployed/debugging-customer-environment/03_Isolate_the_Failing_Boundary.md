@@ -117,7 +117,7 @@ When you cannot reproduce a fault in your own environment, you have learned some
 - **Their data.** With permission, use one real failing input, or a synthetic one with the same size, encoding and fields.
 - **Their versions and scale.** Match runtime, SDK and concurrency.
 
-Each gap you close either reproduces the fault or rules out that gap. Either result moves you forward. At Brancaster, the fault would not reproduce on your laptop because your laptop did not go through their proxy. It reproduced at once from worker 4. The site's [diagnosing production incidents](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/05_Diagnosing_Production_Incidents.md) lesson covers reading traces once you can see the failing request.
+Each gap you close either reproduces the fault or rules out that gap. Either result moves you forward. At Brancaster, the fault would not reproduce on your laptop because your laptop did not go through their proxy. It reproduced at once from worker 4. The site's [diagnosing production incidents](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/05_Diagnosing_Production_Incidents.md) lesson covers reading traces once you can see the failing request. When the gap turns out to be the customer's configuration or data inside your own product, [reproduce, isolate, fix](../../fde-building-in-the-estate/working-in-customer-code/03_Reproduce_Isolate_Fix.md) shrinks it to a minimal reproduction.
 
 ## Limits of this lesson
 

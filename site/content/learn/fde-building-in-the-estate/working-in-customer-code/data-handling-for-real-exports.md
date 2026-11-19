@@ -3,11 +3,7 @@
 
 ## Start with the load-it-all import
 
-Hythe Shipping, a fictional freight company, exports every shipment status event as one CSV file each night. During the pilot the file held one month of history and weighed 300 MB. Owen, the forward deployed engineer, wrote an import that read the whole file into memory, checked it, and loaded it into the reporting database. It ran in four minutes.
-
-At go-live, Hythe switched the export to twelve months of history. The file grew to 9 GB and 38 million rows. The import ran in a container with a 4 GB memory limit, and the container was killed halfway through reading the file.
-
-Owen raised the limit and tried again. Forty minutes in, at row 6.2 million, one row held the date "31/02/2026". The parser raised an error, the import stopped, and nothing was loaded. Call this **the load-it-all import**: code that assumes the whole file fits in memory and every row is clean.
+Hythe Shipping exports every shipment status event as one CSV file each night. During the pilot the file held one month of history, 300 MB, and Owen, the forward deployed engineer, wrote an import that read it all into memory, checked it and loaded it into the reporting database in four minutes. At go-live Hythe switched the export to twelve months: 9 GB and 38 million rows. The import ran in a container with a 4 GB memory limit, and the container was killed halfway through reading the file. Owen raised the limit. Forty minutes in, at row 6.2 million, one row held the date "31/02/2026", the parser raised an error and nothing was loaded. Call this **the load-it-all import**: code that assumes the whole file fits in memory and every row is clean.
 
 > **What you'll learn**
 >
@@ -96,7 +92,7 @@ Streaming handles it with a dictionary keyed by shipment ID. For each valid row,
 Two details decide whether the result is right:
 
 - **Ties.** Two events for one shipment can share a timestamp. Break ties with a sequence number from the source if it has one. If not, agree a rule with the customer, such as a status order where delivered beats arrived.
-- **Late arrivals.** An event can appear in tomorrow's file with an older timestamp. Compare event times, never arrival order, so a late "departed" cannot overwrite "delivered".
+- **Late arrivals.** An event can appear in tomorrow's file with an older timestamp. Compare event times, never arrival order, so a late "departed" cannot overwrite "delivered". When late data must also reopen totals already reported, that is a pipeline problem: see [schema drift and late data](/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data).
 
 When the distinct keys do not fit in memory, move the comparison into the database: upsert each batch with a condition that only replaces a row when the incoming event time is newer. PostgreSQL's `INSERT ... ON CONFLICT DO UPDATE` with a `WHERE` clause does this in one statement.
 
@@ -104,7 +100,7 @@ When the distinct keys do not fit in memory, move the comparison into the databa
 
 - **Some formats resist streaming.** A single huge JSON array or a spreadsheet may need a streaming parser for that format, or a conversion first.
 - **Thresholds are judgement.** The right quarantine threshold depends on what the data feeds. Agree it with the people who use the reports.
-- **Fictional data.** Hythe Shipping, its staff and its figures are illustrative.
+- **Composite engagement.** Hythe Shipping, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

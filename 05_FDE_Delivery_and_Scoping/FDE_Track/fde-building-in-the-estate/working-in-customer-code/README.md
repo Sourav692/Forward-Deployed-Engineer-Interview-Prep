@@ -4,13 +4,15 @@ These files are the source of the module `working-in-customer-code` in the `fde-
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
-| 1 | [Reading an unfamiliar codebase](01_Reading_an_Unfamiliar_Codebase.md) | `reading-an-unfamiliar-codebase` | Drafted |
-| 2 | [Choosing the language and keeping code maintainable](02_Choosing_the_Language_and_Keeping_Code_Maintainable.md) | `choosing-the-language-and-keeping-code-maintainable` | Drafted |
-| 3 | [Reproduce, isolate, fix](03_Reproduce_Isolate_Fix.md) | `reproduce-isolate-fix` | Drafted |
-| 4 | [Data handling for real exports](04_Data_Handling_for_Real_Exports.md) | `data-handling-for-real-exports` | Drafted |
-| 5 | [Concurrency without surprises](05_Concurrency_Without_Surprises.md) | `concurrency-without-surprises` | Drafted |
-| 6 | [Reviewing AI-generated changes](06_Reviewing_AI_Generated_Changes.md) | `reviewing-ai-generated-changes` | Drafted |
-| 7 | [Practise working in customer code](07_Practise_Customer_Code.md) | `practise-customer-code` | Drafted |
+| 1 | [Reading an unfamiliar codebase](01_Reading_an_Unfamiliar_Codebase.md) | `reading-an-unfamiliar-codebase` | Published |
+| 2 | [Reproduce, isolate, fix](03_Reproduce_Isolate_Fix.md) | `reproduce-isolate-fix` | Published |
+| 3 | [Choosing the language and keeping code maintainable](02_Choosing_the_Language_and_Keeping_Code_Maintainable.md) | `choosing-the-language-and-keeping-code-maintainable` | Published |
+| 4 | [Data handling for real exports](04_Data_Handling_for_Real_Exports.md) | `data-handling-for-real-exports` | Published |
+| 5 | [Concurrency without surprises](05_Concurrency_Without_Surprises.md) | `concurrency-without-surprises` | Published |
+| 6 | [Reviewing AI-generated changes](06_Reviewing_AI_Generated_Changes.md) | `reviewing-ai-generated-changes` | Published |
+| 7 | [Practise working in customer code](07_Practise_Customer_Code.md) | `practise-customer-code` | Published |
+
+Lessons are listed in teaching order. File prefixes keep their original numbers, so `02_` is lesson 3 and `03_` is lesson 2.
 
 ## Sources
 

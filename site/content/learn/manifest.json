@@ -7711,7 +7711,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/03_Duplicates_and_Entity_Resolution.md",
       "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/duplicates-and-entity-resolution",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "schema-drift-and-late-data",
@@ -7963,7 +7963,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/01_Reading_an_Unfamiliar_Codebase.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/reading-an-unfamiliar-codebase",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "choosing-the-language-and-keeping-code-maintainable",
@@ -7975,7 +7975,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/02_Choosing_the_Language_and_Keeping_Code_Maintainable.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/choosing-the-language-and-keeping-code-maintainable",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "reproduce-isolate-fix",
@@ -7987,7 +7987,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/03_Reproduce_Isolate_Fix.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/reproduce-isolate-fix",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "data-handling-for-real-exports",
@@ -7999,7 +7999,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/04_Data_Handling_for_Real_Exports.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/data-handling-for-real-exports",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "concurrency-without-surprises",
@@ -8011,7 +8011,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/05_Concurrency_Without_Surprises.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/concurrency-without-surprises",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "reviewing-ai-generated-changes",
@@ -8023,7 +8023,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/06_Reviewing_AI_Generated_Changes.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/reviewing-ai-generated-changes",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "practise-customer-code",
@@ -8035,7 +8035,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/working-in-customer-code/07_Practise_Customer_Code.md",
       "estMinutes": 8,
       "href": "/learn/fde-building-in-the-estate/working-in-customer-code/practise-customer-code",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "screens-built-around-decisions",

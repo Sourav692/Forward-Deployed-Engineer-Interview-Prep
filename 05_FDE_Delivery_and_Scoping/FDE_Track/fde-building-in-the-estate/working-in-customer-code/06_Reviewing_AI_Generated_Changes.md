@@ -6,22 +6,18 @@ module_group: Software and data
 module_code: T21.1
 module_name: Working in a customer's code
 lesson: 6
-lessons: ["Reading an unfamiliar codebase", "Choosing the language and keeping code maintainable", "Reproduce, isolate, fix", "Data handling for real exports", "Concurrency without surprises", "Reviewing AI-generated changes", "Practise working in customer code"]
+lessons: ["Reading an unfamiliar codebase", "Reproduce, isolate, fix", "Choosing the language and keeping code maintainable", "Data handling for real exports", "Concurrency without surprises", "Reviewing AI-generated changes", "Practise working in customer code"]
 level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [code review, AI coding assistants, error handling, dependencies, backward compatibility, supply chain]
 ---
 
 ## Start with the plausible patch
 
-Islay Bank, a fictional bank, sends a payments file to its clearing provider every afternoon. The upload sometimes failed on network blips. Callum, the forward deployed engineer, asked an AI coding assistant to add retries. The patch looked tidy. It added a retry library, wrapped the upload in a retry loop, and passed every test.
-
-Three things in it went unread. The upload was wrapped in a handler that caught every exception, logged it at debug level and returned nothing. The default timeout dropped from 30 seconds to 5. A field in the job's status output was renamed from `batchId` to `batch_id`.
-
-Two weeks later the bank's client certificate expired. The upload failed with an authentication error, the handler swallowed it, and the job reported success. 312 supplier payments missed that day's clearing. The status dashboard, which read `batchId`, had shown blanks since the release, and nobody connected the two. Call this **the plausible patch**: a change that reads fluently, passes its tests and hides what it changed.
+Islay Bank sends a payments file to its clearing provider every afternoon, and the upload sometimes failed on network blips. Callum, the forward deployed engineer, asked an AI coding assistant to add retries. The patch looked tidy: a retry library, a retry loop, every test passing. Three things in it went unread. A handler caught every exception, logged it at debug level and returned nothing. The default timeout dropped from 30 seconds to 5. A status field was renamed from `batchId` to `batch_id`, and the dashboard that read it had shown blanks since the release. Two weeks later the bank's client certificate expired, the handler swallowed the authentication error, the job reported success, and 312 supplier payments missed that day's clearing. Call this **the plausible patch**: a change that reads fluently, passes its tests and hides what it changed.
 
 > **What you'll learn**
 >
@@ -110,7 +106,7 @@ Before merging, search for consumers: other repositories, scheduled reports, das
 
 - **Review cannot catch everything.** Tests for failure paths, contract tests and monitoring catch what reviewers miss.
 - **Policies differ.** Each customer has its own rules for dependencies and AI-generated code. Follow theirs.
-- **Fictional data.** Islay Bank, its staff and its figures are illustrative.
+- **Composite engagement.** Islay Bank, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
