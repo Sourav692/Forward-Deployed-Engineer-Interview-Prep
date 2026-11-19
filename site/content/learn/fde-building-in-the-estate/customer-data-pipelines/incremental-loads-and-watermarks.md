@@ -3,13 +3,7 @@
 
 ## Start with the orders that never arrived
 
-Lowther Grocers, a fictional supermarket chain, synced its online orders into a warehouse every 15 minutes. A substitution assistant used them to suggest replacements for out-of-stock items.
-
-The sync was one query: read every order whose `updated_at` was later than the last value seen, then store the newest `updated_at` as the **watermark** for the next run. It looked correct and passed every test.
-
-A month later, a weekly comparison with the order system found 0.3% of orders stale in the warehouse. The cause was a long transaction. A batch job updated 1,200 orders, stamped them 10:00:04 and committed at 10:00:09. The sync ran at 10:00:06, saw rows up to 10:00:05 and moved its watermark there. When the 1,200 rows became visible, their timestamp was already behind the watermark. No later run would ever read them.
-
-The watermark moved past rows that did not yet exist for any reader. Call this **the watermark that skipped**.
+Lowther Grocers, a supermarket chain, synced its online orders into a warehouse every 15 minutes for a substitution assistant that suggests replacements for out-of-stock items. Daniel, the forward deployed engineer, wrote the sync as one query: read every order whose `updated_at` is later than the last value seen, then store the newest `updated_at` as the **watermark** for the next run. It passed every test. A month later a weekly comparison with the order system found 0.3% of orders stale. A batch job had stamped 1,200 orders 10:00:04 and committed at 10:00:09. The sync ran at 10:00:06, saw rows up to 10:00:05 and moved its watermark there. When the 1,200 rows became visible, their timestamp was already behind it, and no later run would read them. Call this **the watermark that skipped**: a watermark that moves past rows no reader could see yet.
 
 > **What you'll learn**
 >
@@ -82,7 +76,7 @@ The walkthrough follows one Lowther run that crashes in the gap.
 <div class="step-footer" hidden><button type="button" data-walk="previous">Previous</button><p class="step-status" aria-live="polite"></p><button type="button" data-walk="next">Next step</button></div>
 </div>
 
-The walkthrough is a scripted illustration. Checkpoint storage, replay and reconciliation are taught in depth in the [distributed systems essentials](/learn/engineering-foundations/distributed-systems-essentials) module, and idempotent writes in [durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency).
+The walkthrough is a scripted illustration. Checkpoint storage, replay and reconciliation are taught in [recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs), which feeds incremental reads, events and reconciliation into one idempotent processor, and idempotent writes in [durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency).
 
 ## What incremental tracking cannot see
 
@@ -99,7 +93,7 @@ None of these raise an error. Catch them with a regular **reconciliation**: comp
 
 - **Database details vary.** Timestamp precision, transaction behaviour and CDC options differ by engine. Check the customer's version.
 - **Lookback is a guess.** It covers transactions up to its length. A longer one still slips through, which reconciliation must catch.
-- **Fictional data.** Lowther Grocers and its figures are illustrative.
+- **Composite engagement.** Lowther Grocers, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

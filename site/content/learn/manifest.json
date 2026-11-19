@@ -298,7 +298,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md",
       "estMinutes": 11,
       "href": "/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-distributed-systems-interview-questions",
@@ -7687,7 +7687,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/01_ETL_ELT_Batch_or_Stream.md",
       "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/etl-elt-batch-or-stream",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "incremental-loads-and-watermarks",
@@ -7699,7 +7699,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/02_Incremental_Loads_and_Watermarks.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/incremental-loads-and-watermarks",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "duplicates-and-entity-resolution",
@@ -7711,7 +7711,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/03_Duplicates_and_Entity_Resolution.md",
       "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/duplicates-and-entity-resolution",
-      "updated": "2026-11-19"
+      "updated": "2026-11-20"
     },
     {
       "slug": "schema-drift-and-late-data",
@@ -7723,7 +7723,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/04_Schema_Drift_and_Late_Data.md",
       "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "backfills-while-live",
@@ -7733,9 +7733,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-customer-data-pipelines",
@@ -7747,7 +7747,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/06_Practise_Customer_Data_Pipelines.md",
       "estMinutes": 5,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/practise-customer-data-pipelines",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "rules-ml-or-an-llm",

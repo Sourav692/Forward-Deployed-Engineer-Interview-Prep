@@ -61,6 +61,8 @@ An **incremental read** asks the source for records changed since a saved point.
 
 Lowick's billing system was a vendor's software as a service, with no database access. Lowick added a five-minute incremental read by modified time, using the pair cursor and the overlap. It would have caught the Sunday gap within five minutes of the sender's maintenance ending.
 
+Sizing the overlap, pages that end inside a tied second and the changes a cursor never sees are taught in [incremental loads and watermarks](/learn/fde-building-in-the-estate/customer-data-pipelines/incremental-loads-and-watermarks).
+
 ## Checkpoints advance only after commit
 
 A **checkpoint** is the saved point an incremental read or a stream consumer resumes from: a timestamp and ID, a log position or a broker offset. The rule is the same as for acknowledgements in [queues, topics and acknowledgements](/learn/engineering-foundations/distributed-systems-essentials/queues-topics-and-acknowledgements). Move the checkpoint only after the records it covers are committed to the copy.

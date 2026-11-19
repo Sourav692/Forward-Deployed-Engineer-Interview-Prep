@@ -3,13 +3,7 @@
 
 ## Start with the day that counted twice
 
-Kilbride Energy, the fictional supplier from the first lesson, moved its meter files to a new storage location. For 90 days the provider kept writing to the old one. The daily batch, reading the new location, loaded nothing for those days and raised no alarm.
-
-When the gap was found, the files were safe in the old location. An engineer wrote a backfill job: read every file from the start of the gap to the latest one, and insert the readings. He started it on a Tuesday afternoon.
-
-Three things went wrong. The job ran into Wednesday's 06:00 daily load, and both read Tuesday's file, so Tuesday counted twice. The backfill took most of the warehouse's capacity, so the daily load finished five hours late and the billing assistant showed stale data all morning. And for three of the 90 days the provider had later sent corrected files, which the backfill ignored in favour of the originals.
-
-The backfill and the daily load wrote to the same tables with no agreed boundary. Call this **the backfill that fought the daily load**.
+Kilbride Energy, the supplier from the first lesson, moved its meter files to a new storage location, and for 90 days the provider kept writing to the old one. The daily batch read the new location, loaded nothing for those days and raised no alarm. The files were safe, so Joel, the forward deployed engineer, wrote a backfill that read every file from the start of the gap to the latest and inserted the readings, and started it on a Tuesday afternoon. It ran into Wednesday's 06:00 daily load and both read Tuesday's file, so Tuesday counted twice. It took most of the warehouse's capacity, so the daily load finished five hours late and the billing assistant showed stale data all morning. And for three of the 90 days the provider had later sent corrected files, which the backfill ignored in favour of the originals. Call this **the backfill that fought the daily load**: two jobs writing the same tables with no agreed boundary.
 
 > **What you'll learn**
 >
@@ -76,7 +70,7 @@ The walkthrough follows one backfilled day from file to the billing view.
 <div class="step-footer" hidden><button type="button" data-walk="previous">Previous</button><p class="step-status" aria-live="polite"></p><button type="button" data-walk="next">Next step</button></div>
 </div>
 
-The walkthrough is a scripted illustration. Reconciliation as a standing check, not only during a backfill, is taught in the [distributed systems essentials](/learn/engineering-foundations/distributed-systems-essentials) module.
+The walkthrough is a scripted illustration. Reconciliation as a standing check, not only during a backfill, is taught in [recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs).
 
 ## Lineage so people trust the numbers
 
@@ -95,7 +89,7 @@ With that in place, the billing assistant could say "readings for 4 January were
 
 - **Partitions by event date assume late data is handled.** If readings for a day keep arriving, combine this with the open-period rules in [schema drift and late data](/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data).
 - **Some sources cannot be re-read.** If the history exists only in a system that limits extracts, the backfill may take weeks. Measure the rate before promising a date.
-- **Fictional data.** Kilbride Energy and its figures are illustrative.
+- **Composite engagement.** Kilbride Energy, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
