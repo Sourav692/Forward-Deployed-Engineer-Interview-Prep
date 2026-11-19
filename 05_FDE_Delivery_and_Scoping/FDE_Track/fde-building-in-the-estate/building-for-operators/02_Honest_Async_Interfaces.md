@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [operator UI, loading states, error states, idempotency, long-running jobs, progress]
 ---
 
 ## Start with the second click
 
-Quorn Logistics, a fictional parcel carrier, plans the next day's delivery routes each evening. A planner presses "Plan routes" for a depot, and the planning service works out routes for about 2,000 parcels across 40 vans. It takes about four minutes.
-
-The button called the service and waited. A proxy in Quorn's network closed any request after 60 seconds. After a minute, the screen showed "Something went wrong. Please try again." The planner, Tom, tried again. Then twice more. The planning service had never stopped: it received four requests and ran four plans. The last two to finish wrote different route sheets. Some drivers printed one version and some the other, and 130 parcels went out on two vans.
-
-The error message was false. Nothing had gone wrong except the wait, and the screen told Tom to repeat an action that was still running. Call this **the second click**.
+Quorn Logistics, a parcel carrier, plans the next day's delivery routes each evening, and Lena, the forward deployed engineer, wired its "Plan routes" button straight to the planning service, which takes about four minutes to route 2,000 parcels across 40 vans. A proxy in Quorn's network closed any request after 60 seconds, so after a minute the screen showed "Something went wrong. Please try again." Tom, the planner, tried again, then twice more. The planning service had never stopped: it ran four plans, and the last two to finish wrote different route sheets. Some drivers printed one version and some the other, and 130 parcels went out on two vans. Nothing had gone wrong except the wait, and the screen told Tom to repeat an action that was still running. Call this **the second click**.
 
 > **What you'll learn**
 >
@@ -91,7 +87,7 @@ sequenceDiagram
 
 *Figure 1: An idempotent start for a long job. The retry carries the same key, so the service returns the existing job instead of starting a second plan.*
 
-Two details matter in practice. Store the key and the job record in the same transaction. A crash then cannot record one without the other. And decide how long keys live: long enough to cover any realistic retry, such as 24 hours for an evening plan. The site's [durability and idempotency](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md) lesson covers the mechanism in more depth.
+Two details matter in practice. Store the key and the job record in the same transaction. A crash then cannot record one without the other. And decide how long keys live: long enough to cover any realistic retry, such as 24 hours for an evening plan. The site's [idempotent writes and long-running jobs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md) lesson covers the server side: key storage, two requests with the same key at once, and the job's status endpoint.
 
 ## Long-running work as a job
 
@@ -118,9 +114,9 @@ The walkthrough is a scripted illustration. One plan runs, and every message on 
 
 ## Limits of this lesson
 
-- **The server mechanics are outlined.** Job queues, workers and key storage belong to backend design. This lesson covers what the operator sees and what makes it true.
+- **The server mechanics are outlined.** This lesson covers what the operator sees and what makes it true. Key storage and job endpoints are in [idempotent writes and long-running jobs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md), and task queues in [keep the request path free](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/01_Keep_the_Request_Path_Free.md).
 - **Idempotency keys need a stable intent.** If the operator changes the inputs, that is a new action with a new key.
-- **Fictional data.** Quorn Logistics and its figures are illustrative.
+- **Composite engagement.** Quorn Logistics and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

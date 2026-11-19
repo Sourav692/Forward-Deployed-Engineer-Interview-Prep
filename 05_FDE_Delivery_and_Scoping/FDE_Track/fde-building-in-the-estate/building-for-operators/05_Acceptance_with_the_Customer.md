@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [user acceptance testing, UAT, release checklist, sign-off, test data]
 ---
 
 ## Start with the demo sign-off
 
-Orwell Housing, the fictional housing association from the first lesson in this module, commissioned a new repairs scheduling screen. When it was ready, the delivery team showed it to the repairs manager, Gareth. They used 50 tidy test jobs created by the team. Every search worked and every assignment saved. Gareth replied to the email: "Looks good, happy to go live."
-
-On Monday morning, the schedulers used it on real work. Searching for a tenant called O'Neill returned nothing, because the apostrophe broke the search. The job history migrated from the old system held 1,100 duplicate jobs. Nobody had written down how to go back to the old screen. Orwell scheduled from spreadsheets for three days while the team fixed it.
-
-Gareth had accepted a demonstration, not the system. No scheduler had tried it, no real data had passed through it and nothing on the release list had evidence behind it. Call this **the demo sign-off**.
+Orwell Housing, the housing association from the first lesson in this module, commissioned a new repairs scheduling screen, and Kofi, the forward deployed engineer, demonstrated it to the repairs manager, Gareth, on 50 tidy test jobs. Every search worked and every assignment saved, and Gareth replied: "Looks good, happy to go live." On Monday the schedulers used it on real work. A search for a tenant called O'Neill returned nothing, because the apostrophe broke the search, the migrated job history held 1,100 duplicate jobs, and nobody had written down how to go back to the old screen. Orwell scheduled from spreadsheets for three days. Gareth had accepted a demonstration, not the system: no scheduler had tried it, no real data had passed through it and nothing on the release list had evidence behind it. Call this **the demo sign-off**.
 
 > **What you'll learn**
 >
@@ -134,7 +130,7 @@ An email saying "looks good" fails every line. Gareth's later sign-off named bui
 
 - **Contracts may define acceptance.** Some engagements tie payment to acceptance with its own terms. Follow the contract, and involve the account team.
 - **UAT does not replace your testing.** Customers find what they need. They should not be finding crashes.
-- **Fictional data.** Orwell Housing, its staff and its figures are illustrative.
+- **Composite engagement.** Orwell Housing, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -10,6 +10,7 @@ Every customer and figure below is fictional.
 > **What you'll practise**
 >
 > - Designing a review app around the decisions its users make.
+> - Making a slow action safe to press twice.
 > - Planning tests and fixtures for a customer integration.
 > - Planning failure injection and user acceptance for a go-live.
 
@@ -26,12 +27,25 @@ Taught in [screens built around decisions](/learn/fde-building-in-the-estate/bui
 
 </details>
 
+## Honest async interfaces
+
+Taught in [honest async interfaces](/learn/fde-building-in-the-estate/building-for-operators/honest-async-ux).
+
+<details>
+<summary>Practice question 2. Pelham's handlers press "Pay" on an approved claim. The payment system sometimes takes 90 seconds to answer, and a proxy cuts requests at 30. Design what the screen and the service do.</summary>
+
+- **Answer:** Run the payment as a job. The screen generates an idempotency key for "pay claim C-1043, version 7" and sends it with the request. The service records the key and the job in one transaction and replies 202 with the job ID within a second. The screen says "Payment sent. Waiting for confirmation, usually under 2 minutes. You can leave this page." If the connection drops, the screen says the payment is still in progress, not that it failed, and a second press returns the existing job. When the job ends, the screen shows "Paid £2,400, reference P-88213" or "Payment rejected: bank details invalid. Nothing was paid." The claim list marks payments in progress, so nobody pays again from another tab.
+- **Trade-off:** A job adds a job store and a status endpoint to an action that usually takes seconds. Without them, every slow answer invites a second payment.
+- **Follow-up to expect:** "The handler changes the amount and presses again." Different inputs are a new intent with a new key, so the service also refuses a second payment for a claim while one is still running.
+
+</details>
+
 ## Testing
 
 Taught in [testing what the customer will break](/learn/fde-building-in-the-estate/building-for-operators/testing-what-the-customer-will-break).
 
 <details>
-<summary>Practice question 2. Quorn Logistics imports proof-of-delivery records from its van handsets and updates customer orders in its order system. Write the test plan.</summary>
+<summary>Practice question 3. Quorn Logistics imports proof-of-delivery records from its van handsets and updates customer orders in its order system. Write the test plan.</summary>
 
 - **Answer:** Unit tests for parsing a delivery record and the rules: a delivery with no signature or photo is "left safe" only where the customer allowed it. Integration tests with a real database: each record updates one order once, even when sent twice. Contract tests for the handset feed and the order system's API, run daily against their test environments. Two end-to-end tests: a delivery reaches the customer's tracking page, and a failed delivery creates a redelivery. Fixtures from real handset exports, and an injected order-system outage.
 - **Trade-off:** Contract tests against two other teams' systems need their cooperation. Without them, changes surface in production.
@@ -40,7 +54,7 @@ Taught in [testing what the customer will break](/learn/fde-building-in-the-esta
 </details>
 
 <details>
-<summary>Practice question 3. Orwell Housing will send a CSV export of 14,000 tenancies for import. List the fixtures you build and what each test checks.</summary>
+<summary>Practice question 4. Orwell Housing will send a CSV export of 14,000 tenancies for import. List the fixtures you build and what each test checks.</summary>
 
 - **Answer:** Duplicate tenancy IDs from transfers between homes: keep the latest by start date and report the rest. Names with apostrophes, accents and Welsh letters, and a file in the wrong encoding with a byte-order mark: names survive intact and search finds them. Invalid dates such as 31/02/2025 and a tenancy ending before it starts: quarantined with a reason. Empty postcodes, extra columns and a blank last line: valid rows load, bad rows are counted. A file where 40% of rows fail: the import stops and alerts.
 - **Trade-off:** Fixtures from a real sample need anonymising first. Invented fixtures miss the mess you have not imagined.
@@ -49,7 +63,7 @@ Taught in [testing what the customer will break](/learn/fde-building-in-the-esta
 </details>
 
 <details>
-<summary>Practice question 4. Quorn's route planner calls an external mapping service for travel times. Plan a failure-injection exercise for it.</summary>
+<summary>Practice question 5. Quorn's route planner calls an external mapping service for travel times. Plan a failure-injection exercise for it.</summary>
 
 - **Answer:** Pick three failures from the design: the mapping service times out, returns errors for ten minutes, and answers in 20 seconds instead of 300 milliseconds. For each, state the expected behaviour: plans fall back to cached travel times marked as estimates, the circuit breaker opens after 5 failures, the planner screen says "using estimated times", and no plan is written twice. Inject each through a proxy in the test environment during a planning run. Compare, fix gaps, then repeat on a schedule before peak season.
 - **Trade-off:** Exercises take a day of team time. A first outage on the busiest evening costs far more.
@@ -62,7 +76,7 @@ Taught in [testing what the customer will break](/learn/fde-building-in-the-esta
 Taught in [acceptance with the customer](/learn/fde-building-in-the-estate/building-for-operators/acceptance-with-the-customer).
 
 <details>
-<summary>Practice question 5. Pelham's claims review app goes live in three weeks. Plan the user acceptance testing and write the release checklist.</summary>
+<summary>Practice question 6. Pelham's claims review app goes live in three weeks. Plan the user acceptance testing and write the release checklist.</summary>
 
 - **Answer:** UAT over five days with three handlers and a team lead, on an anonymised copy of last month's 2,000 claims. Ten scenarios: a clean claim, a corrected payout, two handlers on one claim, an over-limit escalation, a failed model extraction and a document that will not open. Daily triage with blocker, major, minor and cosmetic severity, and exit criteria agreed on day one. Checklist with evidence and owners: test run for the release build, signed acceptance naming the build, accessibility check, load test at Monday volume, roles reviewed by security, audit history checked, rollback tested, handlers trained, alerts live.
 - **Trade-off:** Taking handlers off live claims for UAT slows the queue for a week. Skipping it moves their discoveries to go-live.
@@ -72,13 +86,15 @@ Taught in [acceptance with the customer](/learn/fde-building-in-the-estate/build
 
 ## References
 
-1. The site's [human review and approval](/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval) lesson, for leases, version checks and audit history.
-2. The site's [testing what the customer will break](/learn/fde-building-in-the-estate/building-for-operators/testing-what-the-customer-will-break) lesson, for test types, fixtures and failure injection.
-3. The site's [acceptance with the customer](/learn/fde-building-in-the-estate/building-for-operators/acceptance-with-the-customer) lesson, for UAT and release evidence.
+1. The site's [honest async interfaces](/learn/fde-building-in-the-estate/building-for-operators/honest-async-ux) lesson, for idempotency keys and jobs.
+2. The site's [human review and approval](/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval) lesson, for leases, version checks and audit history.
+3. The site's [testing what the customer will break](/learn/fde-building-in-the-estate/building-for-operators/testing-what-the-customer-will-break) lesson, for test types, fixtures and failure injection.
+4. The site's [acceptance with the customer](/learn/fde-building-in-the-estate/building-for-operators/acceptance-with-the-customer) lesson, for UAT and release evidence.
 
 ## Key takeaways
 
 - Design each screen in a review app from the decision its user makes.
+- A slow action runs as a job with an idempotency key, so a second press is safe.
 - A test plan places each failure in the cheapest test that catches it.
 - Fixtures come from the customer's real, anonymised data.
 - Failure injection starts with a stated expectation for each failure.

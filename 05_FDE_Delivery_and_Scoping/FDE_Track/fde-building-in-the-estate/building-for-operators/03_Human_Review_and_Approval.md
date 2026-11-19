@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [review queue, approval, optimistic concurrency, audit history, human in the loop]
 ---
 
 ## Start with the overpaid claim
 
-Pelham Insurance, a fictional home insurer, uses a model to read claim documents and fill in the claim: policy number, cause of loss, items and the proposed payout. Claims handlers review each one before payment.
-
-One morning, a water-damage claim arrived with a proposed payout of £4,200. Two handlers opened it within a minute of each other. Aisha spotted that the model had missed the £400 excess and the depreciation on a five-year-old carpet, corrected the payout to £2,400 and saved at 10:14:02. Ben, looking at the version he had loaded earlier, still saw £4,200. He checked the documents, agreed with what he saw and pressed approve at 10:14:09.
-
-The system saved whatever arrived last. Ben's approval wrote the whole record back, £4,200 included, over Aisha's correction. Pelham paid £1,800 too much. When finance asked what happened, the record showed only "last modified by Ben". Aisha's correction had left no trace. Call this **the silent overwrite**.
+Pelham Insurance, a home insurer, reviews every claim a model has read before paying it, on a review screen that Marcus, the forward deployed engineer, built to save whatever arrived last. One morning a water-damage claim arrived with a proposed payout of £4,200, and two handlers opened it within a minute of each other. Aisha spotted that the model had missed the £400 excess and the depreciation on a five-year-old carpet, corrected the payout to £2,400 and saved at 10:14:02. Ben, still looking at the version he had loaded earlier, approved at 10:14:09. His approval wrote the whole record back, £4,200 included, over Aisha's correction, and Pelham paid £1,800 too much. The record showed only "last modified by Ben", so Aisha's correction left no trace. Call this **the silent overwrite**.
 
 > **What you'll learn**
 >
@@ -121,7 +117,7 @@ With this in place, finance's question has an answer in seconds: the model propo
 
 - **Retention rules vary.** How long to keep audit history depends on the customer's regulators and contracts. Ask their compliance lead.
 - **Merging edits is out of scope.** Some systems merge non-conflicting changes field by field. That is harder to get right and rarely needed for review queues.
-- **Fictional data.** Pelham Insurance, its handlers and its figures are illustrative.
+- **Composite engagement.** Pelham Insurance, its handlers and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
