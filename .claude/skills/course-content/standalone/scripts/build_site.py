@@ -19,8 +19,39 @@ from pathlib import Path
 import markdown
 import mimetypes
 from urllib.parse import urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
+import ipaddress, socket
 import yaml
+
+MAX_IMAGE_BYTES = 15 * 1024 * 1024
+
+
+def check_public_https(url: str) -> None:
+    """Refuse anything but https to a public address, so a lesson cannot pull internal services into its HTML."""
+    parts = urlparse(url)
+    if parts.scheme != "https" or not parts.hostname:
+        raise ValueError("Remote images must use https: " + url)
+    # ponytail: checks DNS once before connecting; a rebinding server could still switch addresses. Pin the IP if that matters.
+    for info in socket.getaddrinfo(parts.hostname, parts.port or 443):
+        ip = ipaddress.ip_address(info[4][0])
+        if not ip.is_global:
+            raise ValueError("Remote image resolves to a non-public address: " + url)
+
+
+class CheckedRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        check_public_https(newurl)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def fetch_image(url: str):
+    check_public_https(url)
+    opener = build_opener(CheckedRedirect)
+    with opener.open(Request(url, headers={"User-Agent": "CourseContentRenderer/1.0"}), timeout=30) as response:
+        payload = response.read(MAX_IMAGE_BYTES + 1)
+        if len(payload) > MAX_IMAGE_BYTES:
+            raise ValueError("Remote image is larger than 15 MB: " + url)
+        return payload, response.headers.get_content_type()
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
@@ -136,26 +167,22 @@ def main():
         if uri.startswith("data:"):
             return match.group(0)
         if uri.startswith(("http://", "https://")):
-            request = Request(uri, headers={"User-Agent": "CourseContentRenderer/1.0"})
-            with urlopen(request, timeout=30) as response:
-                payload = response.read()
-                mime = response.headers.get_content_type()
+            payload, mime = fetch_image(uri)
         else:
             if uri.startswith("/"):
                 if not g("source_url"):
                     raise ValueError("Root-relative image needs source_url frontmatter: " + uri)
-                remote = urljoin(g("source_url"), uri)
-                with urlopen(Request(remote, headers={"User-Agent": "CourseContentRenderer/1.0"}), timeout=30) as response:
-                    payload, mime = response.read(), response.headers.get_content_type()
+                payload, mime = fetch_image(urljoin(g("source_url"), uri))
             else:
-                asset = (md_path.parent / uri).resolve()
+                lesson_dir = md_path.parent.resolve()
+                asset = (lesson_dir / uri).resolve()
+                if not asset.is_relative_to(lesson_dir):
+                    raise ValueError("Local image must sit inside the lesson's folder: " + uri)
                 if asset.exists():
                     payload = asset.read_bytes()
                     mime = mimetypes.guess_type(str(asset))[0] or "application/octet-stream"
                 elif g("source_url"):
-                    remote = urljoin(g("source_url"), uri)
-                    with urlopen(Request(remote, headers={"User-Agent": "CourseContentRenderer/1.0"}), timeout=30) as response:
-                        payload, mime = response.read(), response.headers.get_content_type()
+                    payload, mime = fetch_image(urljoin(g("source_url"), uri))
                 else:
                     raise FileNotFoundError("Local image missing; supply the asset or source_url: " + uri)
         if not mime.startswith("image/"):
