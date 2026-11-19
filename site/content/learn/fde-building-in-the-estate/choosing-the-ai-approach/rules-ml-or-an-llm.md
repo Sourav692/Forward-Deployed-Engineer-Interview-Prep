@@ -3,11 +3,7 @@
 
 ## Start with the inbox nobody measured
 
-Brookmere Water, a fictional regional utility, asks for "AI to sort the customer inbox". About 9,000 messages arrive each month. Agents read each one and move it to one of six queues: billing, meter readings, payment plans, moving home, complaints, and supply and leaks.
-
-A previous vendor shipped an LLM classifier in two weeks. It looked accurate in the demo. Three months later a burst-main report sat in the billing queue for a day, and nobody could say whether the old process would have caught it. Nobody had measured the old process.
-
-That failure has a name worth reusing: **AI before baseline**. A model arrived before anyone knew what it had to beat.
+Brookmere Water, a regional utility, asks for "AI to sort the customer inbox": about 9,000 messages a month that agents move into six queues (billing, meter readings, payment plans, moving home, complaints, and supply and leaks). A previous vendor's LLM classifier looked accurate in the demo, then a burst-main report sat in the billing queue for a day. When Priya, the forward deployed engineer brought in to replace it, asks whether the old process would have caught that report, nobody can say, because nobody had measured the old process. Call this **AI before baseline**: a model arrived before anyone knew what it had to beat.
 
 > **What you'll learn**
 >
@@ -74,6 +70,8 @@ Two findings stand out. The pilot LLM is slightly worse than the agents overall 
 The second finding is a failure mode of its own: the **averaged-away category**. An overall accuracy of 90% says nothing about 24 messages that matter more than the other 576 put together.
 
 > **Pitfall:** A single accuracy number hides the rare category with the worst consequences. Report recall for that category on its own line, every time.
+
+Agreeing which metric and which bar count as success is a discovery question; the site's [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data) lesson covers it.
 
 ## Split the request by decision type
 
@@ -171,7 +169,7 @@ At Brookmere, the account lookup in step 3 needed no AI at all. A customer who h
 
 ## Limits of this lesson
 
-- **Fictional data.** Brookmere, its 600-message sample and every figure in Table 2 and the switcher are illustrative. They show the method, not expected results for any real inbox.
+- **Composite engagement.** Brookmere, Priya, the 600-message sample and every figure in Table 2 and the switcher are illustrative, not a real customer. They show the method, not expected results for any real inbox.
 - **One sample.** A single quarter can miss seasonal mail, such as winter burst pipes. Re-measure after a season changes.
 - **Agent baseline.** The reassignment log undercounts errors that agents never corrected.
 

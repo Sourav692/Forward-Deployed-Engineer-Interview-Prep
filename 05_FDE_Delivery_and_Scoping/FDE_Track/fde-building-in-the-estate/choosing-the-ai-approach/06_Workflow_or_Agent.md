@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [agents, workflows, autonomy, approvals, budgets]
 ---
 
 ## Start with autonomy by default
 
-Arden Bank, a fictional retail bank, handles about 8,000 card disputes a month. A customer says a payment was wrong, and a case handler investigates, contacts the merchant if needed, and may give the customer a provisional credit while the case is open.
-
-A delivery team built an agent for the whole job. It had 14 tools, from reading statements to issuing credits, and it decided each next step itself. In a pilot on 500 disputes, a credit call timed out and the agent retried it. Six customers received the same provisional credit twice. On another dispute, the agent called the statement tool 40 times in a loop before anyone noticed.
-
-The process had fixed steps that the bank already followed. Only one step, the investigation, needed a model to choose its own path. Call this **autonomy by default**: giving a model control of a whole process when most of it could be drawn in advance.
+Arden Bank handles about 8,000 card disputes a month: a case handler investigates, contacts the merchant if needed, and may give a provisional credit while the case is open. Grace, the forward deployed engineer, built one agent for the whole job, with 14 tools from reading statements to issuing credits, deciding each next step itself. In a 500-dispute pilot, a credit call timed out and the agent retried it, so six customers got the same credit twice; on another dispute it called the statement tool 40 times in a loop. Only one step, the investigation, needed a model to choose its own path. Call this **autonomy by default**: giving a model a whole process when most of it could be drawn in advance.
 
 > **What you'll learn**
 >
@@ -98,7 +94,7 @@ Four rules make up the boundary:
 - **Write once.** Every write carries an idempotency key, so a retry after a timeout cannot credit twice. That one rule would have stopped Arden's duplicate credits.
 - **Checkpoint every step.** Save state after each step. A crash then resumes where it stopped instead of repeating a write.
 
-The site's [confirmation gate and memoization](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md) lesson builds these in code.
+The site's [confirmation gate and memoization](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md) lesson builds these in code. Once the agent writes to a customer's systems, [agents that touch business systems](../ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md) covers acting as the user, approvals bound to the exact action and timeouts with an unknown outcome.
 
 ## Budgets and stopping
 
@@ -128,7 +124,7 @@ The bounded design costs less because code runs the fixed steps without a model,
 
 ## Limits of this lesson
 
-- **Fictional figures.** Arden Bank and every pilot figure are illustrative. They show the method, not expected results.
+- **Composite engagement.** Arden Bank, Grace and every pilot figure are illustrative, not a real customer. They show the method, not expected results.
 - **Approvals wear out.** Approvers who see hundreds of requests a day stop reading them. Track how often they reject, and sample approved actions for review.
 - **One process.** Some tasks, such as open research across many sources, need more autonomy than a dispute. The scale still applies: choose the lowest level that works.
 

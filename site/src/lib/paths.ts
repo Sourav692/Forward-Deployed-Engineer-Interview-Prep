@@ -710,7 +710,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 460,
+    estHours: 461,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
