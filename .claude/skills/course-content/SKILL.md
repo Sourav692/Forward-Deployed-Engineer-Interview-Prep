@@ -16,6 +16,7 @@ Use the approved page as the visual and teaching reference for other forwarddepl
 2. [Source fidelity](references/source-fidelity.md): inventory concepts, facts, diagrams, comparisons, caveats and checks across every user-supplied reference.
 3. [Editorial explanation](references/editorial-explainer.md) and [Voice](references/voice.md): the teaching sequence and theory-only prose.
 4. [Components](references/components.md) when a stepper or comparison earns its place. [Validation](references/validation.md) before delivery.
+5. [Technical content review](../technical-content-review/SKILL.md): read before drafting to establish the original baseline or fresh-content objectives, then apply its mandatory review-and-repair gate before delivery.
 
 Inspect `standalone/references/example-lesson.html` visually and read its paired Markdown. This is the approved target, including both edge-versus-node comparison diagrams restored at the user's request. It replaces the older example lesson. Do not substitute a theme, an earlier adaptation or the unmodified live source page for this target.
 
@@ -64,6 +65,8 @@ After rewriting any module or lesson belonging to this course, update `/Users/so
 Use `scripts/tracker.py`, never hand-edit the tracker table. Follow [Course repository, step 8](references/course-repository.md#8-update-the-tracker-then-report) for the command and status mapping. Record which lessons were rewritten, artifact paths, validation results and remaining work in the note. Read back the affected row and include its status in the final report. If updating fails, report the failure and do not claim tracking is complete. Unrelated standalone topics have no module row to update.
 
 ## Delivery gate
+
+Apply the sibling `technical-content-review` skill in this same run before final delivery. Pass the operation (REWRITE, CREATE, or EXPAND), original source baseline, draft, existing manifest, objectives, output paths, and this lesson's format constraints. Reuse the existing inventory and add the applicable source or curriculum audit without changing manifest schema. Repair identified gaps, rebuild after edits, and rerun affected validation. Deliver its audit report alongside the lesson. Do not recursively restart course-content, require a second user request, or bypass this gate if the sibling skill is missing; report an unavailable review dependency instead. An explicit review-only request limits this step to findings. Keep this skill's draft/export versus source-edit authorisation, word limit, theory-only format, and tracker requirements.
 
 Before delivery, compare source coverage and the approved component pattern. Confirm every inventoried diagram remains, especially a pair that distinguishes alternatives. Test every stage/mode, keyboard use, disabled controls, internal links, mobile/light/dark, offline assets and the no-script fallback. Inspect every figure. Do not call a deterministic rebuild an independent test of newly authored prose.
 
