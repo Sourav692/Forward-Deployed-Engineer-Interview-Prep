@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [data pipelines, ETL, ELT, batch, streaming, freshness]
 ---
 
 ## Start with the missing half-hours
 
-Kilbride Energy, a fictional energy supplier, asked for an assistant that helps billing agents answer "why is my bill so high?". The answers needed each customer's meter readings.
-
-The team built what they had built before. A streaming pipeline read every reading as it arrived, converted the 48 half-hourly readings per meter into one daily total, and loaded only the totals. The raw half-hourly values were discarded to save space.
-
-Two problems surfaced within three months. The meter data provider delivered readings once a day, in a file at 06:00. The streaming pipeline sat idle for 23 hours and paged an engineer whenever the file came late. Then Kilbride launched a time-of-use tariff, and agents needed to know how much each customer used between 16:00 and 19:00. The daily totals could not answer that. The provider took six weeks to resend 13 months of files.
-
-The pipeline's shape came from the team's last project, not from Kilbride's workflow. Call this **the shape chosen by habit**.
+Kilbride Energy, an energy supplier, asked for an assistant that helps billing agents answer "why is my bill so high?" from each customer's meter readings. Aisha, the forward deployed engineer, built what her last project had used: a streaming pipeline that read every reading as it arrived, turned the 48 half-hourly readings per meter into one daily total and discarded the raw half-hours to save space. Within three months two problems surfaced. The meter data provider delivered readings once a day, in a file at 06:00, so the pipeline sat idle for 23 hours and paged an engineer whenever the file came late. Then Kilbride launched a time-of-use tariff, agents needed each customer's use between 16:00 and 19:00, and the daily totals could not answer. The provider took six weeks to resend 13 months of files. Call this **the shape chosen by habit**: a pipeline shaped by the last project, not by the customer's workflow and source.
 
 > **What you'll learn**
 >
@@ -121,13 +115,13 @@ The switcher applies it to Kilbride's billing assistant.
 
 Kilbride's final design used two shapes: daily batch ELT for billing, and streaming for the power-lost feed that drives outage alerts. One customer, two workflows, two shapes.
 
-Whatever the shape, a pipeline must survive a failed run. Checkpoints, replay and reconciliation are taught in the [distributed systems essentials](/learn/engineering-foundations/distributed-systems-essentials) module, and the idempotent writes they rely on in [durability and idempotency](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md). The rest of this module assumes them.
+Whatever the shape, a pipeline must survive a failed run. Checkpoints, replay and reconciliation are taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md), and the idempotent writes they rely on in [durability and idempotency](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md). The rest of this module assumes them.
 
 ## Limits of this lesson
 
 - **Categories blur.** Many tools run streaming code in micro-batches. Choose by the freshness and effort, not the label.
 - **Raw copies carry risk.** A raw zone holds every sensitive field. It needs access control and a retention rule agreed with the customer.
-- **Fictional data.** Kilbride Energy and its figures are illustrative.
+- **Composite engagement.** Kilbride Energy, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [data pipelines, deduplication, entity resolution, record linkage, data quality]
 ---
 
 ## Start with the merged father and son
 
-Maddox Health, a fictional group of private clinics, wanted one view of each patient for its reception assistant. Patients lived in two systems with no shared identifier: the booking system held 410,000 records and the billing system 380,000.
-
-The team matched records with a rule: if two of name, postcode and home phone agree, they are the same person. It merged about 290,000 pairs in one night. Reception staff liked the single view.
-
-Six weeks later, a receptionist read out a penicillin allergy to a patient who had none. The record belonged to his son. Father and son shared a name, a home address and a landline. The rule saw three agreements and merged them. Their dates of birth differed by 30 years, and the rule never looked.
-
-The rule counted agreements and ignored a disagreement that should have stopped it. Call this **the confident merge**.
+Maddox Health, a group of private clinics, wanted one view of each patient for its reception assistant. Patients lived in two systems with no shared identifier: 410,000 records in booking and 380,000 in billing. Ruth, the forward deployed engineer, matched them with a rule: if two of name, postcode and home phone agree, the records are the same person. It merged about 290,000 pairs in one night. Six weeks later a receptionist read out a penicillin allergy to a patient who had none. The record belonged to his son, who shared his name, address and landline. Their dates of birth differed by 30 years, and the rule never looked. Call this **the confident merge**: counting agreements and ignoring a disagreement that should have stopped the match.
 
 > **What you'll learn**
 >
@@ -44,7 +38,7 @@ An **exact duplicate** is the same record delivered more than once. Pipelines cr
 
 *Table 1: Exact duplicates. Each cause has a key, and each key has a rule for which copy survives.*
 
-Deduplicate as early as the key allows, in the cleaned layer, and keep the raw copies. The [incremental loads](02_Incremental_Loads_and_Watermarks.md) lesson shows how upserts absorb re-reads, which removes one cause at the write. When one import file holds many versions of each record, [data handling for real exports](../working-in-customer-code/04_Data_Handling_for_Real_Exports.md) keeps the latest per key while streaming.
+Duplicate messages from webhooks and retried API calls, deduplicated by event ID on the way in and by an idempotency key on the way out, are taught in [duplicates in both directions](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/02_Duplicates_in_Both_Directions.md). Deduplicate as early as the key allows, in the cleaned layer, and keep the raw copies. The [incremental loads](02_Incremental_Loads_and_Watermarks.md) lesson shows how upserts absorb re-reads, which removes one cause at the write. When one import file holds many versions of each record, [data handling for real exports](../working-in-customer-code/04_Data_Handling_for_Real_Exports.md) keeps the latest per key while streaming.
 
 Exact deduplication cannot help Maddox. The father and son are two real people with two records each, and the booking and billing records for one patient share no key. That is a different problem.
 
@@ -122,7 +116,7 @@ Maddox found 37 more father-and-son merges once the new scoring ran over the old
 
 - **Weights here are hand-set.** Real weights come from the customer's data and change with it. Re-measure precision when sources change.
 - **Some matches need a person.** No threshold removes the review band. Plan staff time for it.
-- **Fictional data.** Maddox Health, its patients and its figures are illustrative.
+- **Composite engagement.** Maddox Health, its staff, its patients and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

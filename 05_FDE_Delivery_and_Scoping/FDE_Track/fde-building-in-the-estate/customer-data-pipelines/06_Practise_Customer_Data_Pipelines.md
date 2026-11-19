@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "8 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [practice, interview, data pipelines, incremental loads, entity resolution, late data]
 ---
 

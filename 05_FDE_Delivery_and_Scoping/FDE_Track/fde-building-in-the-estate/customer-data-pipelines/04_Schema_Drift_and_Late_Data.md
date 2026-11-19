@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [data pipelines, schema drift, data contracts, late data, event time]
 ---
 
 ## Start with the fares that shrank
 
-Norland Rail, a fictional train operator, loaded ticket sales from the machines at its 180 stations every night. A revenue assistant answered managers' questions from the result.
-
-One Tuesday, the machine vendor shipped an update. The `fare` field changed from whole pence, such as `1250`, to pounds as text, such as `"12.50"`. The pipeline converted the text to a number and kept treating it as pence. Daily revenue fell from about £184,000 to about £1,840. Nobody was paged, because every row loaded without error.
-
-The same update renamed `railcard_code` to `discount_card`. The old field arrived empty, and the pipeline read an empty value as "no discount". Railcard use dropped to zero in every report.
-
-Finance spotted the revenue three days later. The vendor had mentioned the change in release notes nobody on the data team received. Call this **the quiet contract change**.
+Norland Rail, a train operator, loaded ticket sales from the machines at its 180 stations every night, and a revenue assistant answered managers' questions from the result. Femi, the forward deployed engineer, had built the pipeline against the vendor's file format. One Tuesday the vendor shipped an update. The `fare` field changed from whole pence, such as `1250`, to pounds as text, such as `"12.50"`, and the pipeline kept treating the number as pence: daily revenue fell from about £184,000 to about £1,840. The same update renamed `railcard_code` to `discount_card`, the old field arrived empty, and railcard use dropped to zero in every report. Every row loaded without error, so nobody was paged. Finance spotted it three days later, and the change had been in release notes nobody on the data team received. Call this **the quiet contract change**: a source that changes shape or meaning without telling the pipeline.
 
 > **What you'll learn**
 >
@@ -106,13 +100,13 @@ Late uploads bring a second problem. A machine that loses its connection mid-upl
 
 The rule: **the deduplication window must cover the lateness window.** Norland deduplicates on machine ID plus the machine's transaction number, against every transaction with an event time in the last seven days. That covers the two-day lateness with room to spare. The [duplicates and entity resolution](03_Duplicates_and_Entity_Resolution.md) lesson covers choosing the key.
 
-Replays and checkpoint recovery are taught in the [distributed systems essentials](/learn/engineering-foundations/distributed-systems-essentials) module.
+Replays and checkpoint recovery are taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md).
 
 ## Limits of this lesson
 
 - **Contracts need owners on both sides.** A contract the vendor never agreed to catches drift but does not prevent it.
 - **Thresholds need tuning.** A bank holiday can move totals by more than 50%. Expect some false alarms and adjust.
-- **Fictional data.** Norland Rail and its figures are illustrative.
+- **Composite engagement.** Norland Rail, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
