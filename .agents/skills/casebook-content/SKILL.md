@@ -16,6 +16,7 @@ Build a complete casebook in the format approved for Enterprise Knowledge Assist
 - [Batch work](references/batch.md) when the user requests several cases or all 33.
 - [Validation](references/validation.md) before delivery.
 - [Project tracker](references/tracker.md) when creating or updating project casebooks. Update the rewrite tracker after each rewrite or review, including partial work, before delivery.
+- [Technical content review](../technical-content-review/SKILL.md) before drafting for the source baseline or fresh-content objectives, and again as the mandatory review-and-repair gate before delivery.
 
 Use Hallmark and No AI Slop when available. Preserve the approved casebook shell; do not deal a new theme. If course-content is installed, its current editorial-explainer and voice references may clarify the shared teaching style. This package includes the relevant guidance and works without that installation. Do not invoke its whole lesson workflow.
 
@@ -56,6 +57,8 @@ Author `casebook.md` and `case.json` using [Authoring and tools](references/auth
 When the live site repository is supplied, update its maintained content and shared template pipeline within the authorised scope. Preserve routing, importer contracts, real navigation, and protected assets. The standalone renderer supplies a reviewable offline bundle, not permission to replace the site's framework.
 
 ## Delivery gate
+
+Apply the sibling `technical-content-review` skill in this same run before final delivery. Pass the operation (REWRITE, CREATE, or EXPAND), teach or faithful-migration mode, original baseline, draft, `case.json`, objectives, output paths, and this casebook's format constraints. Reuse existing coverage entries and write the applicable source or curriculum audit without changing the metadata schema. Repair gaps within the authorised scope, rebuild after edits, and rerun affected validation. Deliver its audit report alongside the casebook. Do not recursively restart casebook-content, require a second user request, or bypass this gate if the sibling skill is missing; report an unavailable review dependency instead. Preserve all five primary sections, faithful-mode text, protected assets, output permissions, and tracker rules. An explicit review-only request produces findings without a rewrite. Do not inherit the course word limit or theory-only restrictions.
 
 Review the opening before delivery for clarity and relevance. Apply only the opening criteria that help explain this case; missing optional subsections are not validation failures. Check the [opening criteria](references/validation.md#case-brief-clarity).
 
