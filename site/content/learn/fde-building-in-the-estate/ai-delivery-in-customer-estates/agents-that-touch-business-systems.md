@@ -69,6 +69,8 @@ An agent can call `get_order` and `get_customer` in turn for ever, each result p
 - **Cost budget.** A token and spend ceiling per task.
 - **Escalation.** On any limit, hand the case to a person with the trace attached.
 
+Set each limit from the measured distribution on real tasks, as [workflow or agent](/learn/fde-building-in-the-estate/choosing-the-ai-approach/workflow-or-agent) shows.
+
 ## Answers apart from policy decisions
 
 Tarrow's agent invented the £130 goodwill credit. Policy lived in the prompt as prose, and the model interpreted it. Move decisions into code:

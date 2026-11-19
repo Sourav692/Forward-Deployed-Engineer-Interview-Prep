@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [model selection, evaluation, latency, token cost, privacy]
 ---
 
 ## Start with the leaderboard pick
 
-Arden Bank, a fictional retail bank, receives about 120,000 written complaints a month. Regulators expect each one to be logged with three facts: what went wrong, what the customer asks for, and the date the bank must reply by. Case handlers write those summaries by hand.
-
-The delivery team chose a model from the top of a public leaderboard and built a summariser in four weeks. In week five the bank's security team asked where the prompts were processed. The provider's endpoint ran outside the region Arden's policy allows for customer data. The work stopped.
-
-While the team waited, a case handler checked 50 summaries against the original letters. The leaderboard model often missed what the customer was asking for when a letter raised two problems at once. Nobody had tested it on Arden's letters before choosing it. Call this **the leaderboard pick**: a model chosen on someone else's test, before the customer's limits were written down.
+Arden Bank, a retail bank, receives about 120,000 written complaints a month, and regulators expect each one logged with three facts: what went wrong, what the customer asks for, and the date the bank must reply by. Tom, the forward deployed engineer, picked a model from the top of a public leaderboard and built a summariser in four weeks. In week five the bank's security team found the provider's endpoint ran outside the region Arden allows for customer data, and the work stopped. While it waited, a case handler checked 50 summaries against the letters: the model often missed the customer's request when a letter raised two problems. Call this **the leaderboard pick**: a model chosen on someone else's test, before the customer's limits were written down.
 
 > **What you'll learn**
 >
@@ -76,7 +72,7 @@ Four habits keep the test fair:
 - **Count tokens with each model's own counter.** Tokenisers differ. The same letter can cost a different number of tokens on each model.
 - **Measure latency at the expected volume,** not from one call at a quiet hour.
 
-Anthropic's guidance on building evaluations and OpenAI's evals guide describe the same pattern: task-specific cases, a clear grading rule and reruns after every change.
+Anthropic's guidance on building evaluations and OpenAI's evals guide describe the same pattern: task-specific cases, a clear grading rule and reruns after every change. [Evaluating on the customer's work](../ai-delivery-in-customer-estates/05_Evaluating_on_the_Customers_Work.md) covers how to sample and label the set, and [golden sets and sample size](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md) how many cases a given confidence needs.
 
 ## A cheaper model against a stronger one
 
@@ -114,6 +110,8 @@ The routed design wins on Arden's numbers, though not by much on quality. If the
 
 > **Key distinction:** The cheaper model is not the cheaper design if it fails the bar. Compare designs that pass, then pick on cost.
 
+Routing between models in production, with fallbacks and prompt discipline, is covered in [model routing and prompt discipline](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/04_Model_Routing_and_Prompt_Discipline.md).
+
 ## Cost a workload from token counts
 
 Model prices are quoted per million tokens, with input and output priced separately. Output usually costs several times more than input. To cost a workload, you need four numbers: requests a month, input tokens per request, output tokens per request and the two prices.
@@ -143,7 +141,7 @@ Adding 10% for retries and evaluation runs takes Large only to about $1,089 a mo
 
 ## Limits of this lesson
 
-- **Fictional figures.** Arden Bank, its 400-letter sample, the two models and every price are illustrative. They show the method, not real model prices or results.
+- **Composite engagement.** Arden Bank, Tom, the 400-letter sample, the two models and every price are illustrative, not a real customer. They show the method, not real model prices or results.
 - **One sample.** A quarter's letters may miss seasonal complaints, such as a fee change in January. Re-test when the input mix changes.
 - **Models change.** Providers update and retire models. A result from this quarter needs rerunning when a model version changes.
 

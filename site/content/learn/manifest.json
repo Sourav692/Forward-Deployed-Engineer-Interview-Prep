@@ -7759,7 +7759,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/01_Rules_ML_or_an_LLM.md",
       "estMinutes": 13,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/rules-ml-or-an-llm",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "picking-a-model-for-a-customer",
@@ -7771,7 +7771,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/02_Picking_a_Model_for_a_Customer.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/picking-a-model-for-a-customer",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "hosted-or-open-weight",
@@ -7783,7 +7783,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/03_Hosted_or_Open_Weight.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/hosted-or-open-weight",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "self-hosted-inference-capacity",
@@ -7795,7 +7795,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/04_Self_Hosted_Inference_Capacity.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/self-hosted-inference-capacity",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "prompting-rag-or-fine-tuning",
@@ -7807,7 +7807,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/05_Prompting_RAG_or_Fine_Tuning.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/prompting-rag-or-fine-tuning",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "workflow-or-agent",
@@ -7819,7 +7819,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/06_Workflow_or_Agent.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/workflow-or-agent",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-choosing-the-approach",
@@ -7829,9 +7829,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/choosing-the-ai-approach/07_Practise_Choosing_the_Approach.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/choosing-the-ai-approach/practise-choosing-the-approach",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "inputs-as-they-really-arrive",
@@ -7879,7 +7879,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md",
       "estMinutes": 12,
       "href": "/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/agents-that-touch-business-systems",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "evaluating-on-the-customers-work",

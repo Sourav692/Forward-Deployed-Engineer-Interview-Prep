@@ -3,11 +3,7 @@
 
 ## Start with facts baked into weights
 
-Oakham Legal, a fictional law firm, wanted a tool that answers its associates' questions about the firm's employment practice notes. Partners cared about two things: the answer must reflect the current notes, and it must read like the firm's own advice.
-
-A contractor fine-tuned a model on 3,000 past advice notes. The partners liked the tone at once. In January, the firm revised its guidance on notice periods. The tool kept giving the old guidance, with confidence and in perfect house style. It cited nothing. Associates could not check it. Updating it meant collecting new examples and retraining.
-
-The contractor had used training to supply facts that change. Call this **facts baked into weights**: knowledge put into the model's parameters where nobody can update or check it between training runs.
+Oakham Legal, a law firm, wanted a tool that answers associates' questions from its employment practice notes, current and in the firm's own voice. Noor, the forward deployed engineer, fine-tuned a model on 3,000 past advice notes, and the partners liked the tone at once. In January the firm revised its notice-period guidance, and the tool kept giving the old answer, confidently, in house style, citing nothing that associates could check. Updating it meant new examples and a new training run. Call this **facts baked into weights**: knowledge put into the model's parameters, where nobody can update or check it between training runs.
 
 > **What you'll learn**
 >
@@ -117,7 +113,7 @@ Examples in the prompt were enough for Oakham. If style had stayed below the bar
 
 ## Limits of this lesson
 
-- **Fictional figures.** Oakham Legal and every result in the switcher are illustrative. They show the method, not expected scores.
+- **Composite engagement.** Oakham Legal, Noor and every result in the switcher are illustrative, not a real customer. They show the method, not expected scores.
 - **Rubrics need care.** A style score depends on who grades and how. Agree the rubric with the partners and check that two graders agree.
 - **Not legal advice.** The practice-note example is a teaching device, not guidance on any law.
 

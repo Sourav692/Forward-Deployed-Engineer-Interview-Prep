@@ -3,11 +3,7 @@
 
 ## Start with the boundary found late
 
-Mirelle Pharma, a fictional drug maker, receives about 30,000 adverse-event reports a month from doctors, patients and partners. Each one must be read, coded and checked for seriousness within strict deadlines. Mirelle asked for a model to draft the coding and flag serious cases for its safety team.
-
-The delivery team built a prototype against a public model API in six weeks, using synthetic reports. It worked well. Then the team asked to send the first real report. Mirelle's data-protection officer, Ilse, said no. Reports contain patient health data, and Mirelle's policy keeps that data inside its own cloud account. The public API was outside it. The team spent the next month rebuilding the prototype for a different deployment.
-
-Nobody had asked where the data could go. Call this **the boundary found late**: a deployment choice made by default and discovered by the customer's data owner after the build.
+Mirelle Pharma, a drug maker, receives about 30,000 adverse-event reports a month and wants a model to draft their coding and flag serious cases. Hana, the forward deployed engineer, built a prototype on a public model API in six weeks, using synthetic reports, and it worked well. When she asked to send the first real report, Ilse, the data-protection officer, said no: reports hold patient health data, and Mirelle's policy keeps that data inside its own cloud account. The rebuild for a different deployment took a month. Call this **the boundary found late**: a deployment choice made by default and found by the customer's data owner after the build.
 
 > **What you'll learn**
 >
@@ -60,6 +56,8 @@ The boundary is a policy written by the customer, so read the policy itself, not
 
 At Mirelle, the answers were: health data, processed only in Mirelle's cloud account in one European region, by processors already under contract, no retention, sign-off by Ilse. A public API failed question 2. The managed service in Mirelle's own account could pass, if the model they needed was offered in that region.
 
+The model is one part of the deployment. [SaaS, customer cloud or on-premises](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/saas-customer-cloud-or-on-prem) covers where the rest of the system runs and who operates it, and [residency, retention and deletion](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/residency-retention-and-deletion) covers keeping every copy of the data in its region.
+
 ## What moving inside the boundary costs
 
 Running an open-weight model inside the boundary keeps every prompt on the customer's machines. It also hands their team every job the provider used to do. Count both the money and the work.
@@ -106,7 +104,7 @@ The stepper is a scripted illustration. Its figures come from Table 2 and are il
 
 ## Limits of this lesson
 
-- **Fictional customer.** Mirelle Pharma, Ilse and every figure are illustrative. Real policies, prices and validation periods vary.
+- **Composite engagement.** Mirelle Pharma, Hana, Ilse and every figure are illustrative, not a real customer. Real policies, prices and validation periods vary.
 - **Provider terms change.** Retention, training and regional availability are set by each provider's current terms. Read them at the time of the decision, with the customer's legal team.
 - **Licences.** Open-weight models come under different licences, and some restrict commercial use. The customer's legal team must review the licence before deployment.
 

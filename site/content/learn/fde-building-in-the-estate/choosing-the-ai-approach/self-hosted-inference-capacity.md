@@ -3,11 +3,7 @@
 
 ## Start with the four-user load test
 
-Kestrel Telecom, a fictional mobile operator, runs an open-weight model on its own graphics processing units (GPUs) to summarise support chats. When a chat ends, the agent clicks a button and the summary goes into the customer record. About 90,000 chats a month go through it.
-
-Before launch, the team tested the service with four people clicking at once on short chats. Every summary came back in about 4 seconds. At go-live, the evening shift ended with 60 agents summarising long chats in the same few minutes. The server held about half of them. The rest waited in its queue, and the slowest summaries took 48 seconds. Agents gave up and wrote the notes by hand.
-
-The test had checked that the model worked, not how many requests one GPU could hold at once. Call this **the four-user load test**.
+Kestrel Telecom, a mobile operator, runs an open-weight model on its own graphics processing units (GPUs) to summarise about 90,000 support chats a month into the customer record. Ravi, the forward deployed engineer, load-tested it with four people clicking at once on short chats, and every summary came back in about 4 seconds. At go-live, 60 agents summarised long chats in the same few minutes at the end of the evening shift. The server held about half of them, the slowest summaries took 48 seconds, and agents went back to writing notes by hand. The test had checked that the model worked, not how many requests one GPU could hold at once. Call this **the four-user load test**.
 
 > **What you'll learn**
 >
@@ -111,12 +107,12 @@ Three kinds of signal can feed the threshold:
 - **The model's own label.** Ask for "unsure" as an allowed answer. Research on verbalised confidence finds models tend to be overconfident. Never trust the label alone.
 - **Token probabilities.** Many self-hosted servers return the probability of each output token. A low probability on the flag is a useful signal.
 
-Set the threshold on labelled data. Kestrel labelled 500 chats. The model was wrong about the discount flag on 40. Sending the least confident 10% to review caught 28 of those 40. At 90,000 chats a month, 10% is 9,000 reviews. At 30 seconds each, that is 75 hours a month of review, which the customer agreed to fund. Keep the reviewers' corrections as new labelled examples.
+Set the threshold on labelled data. Kestrel labelled 500 chats. The model was wrong about the discount flag on 40. Sending the least confident 10% to review caught 28 of those 40. At 90,000 chats a month, 10% is 9,000 reviews. At 30 seconds each, that is 75 hours a month of review, which the customer agreed to fund. Keep the reviewers' corrections as new labelled examples. [Human review and approval](/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval) covers the review queue itself: what reviewers see, corrections kept as data, and locks so two reviewers never overwrite each other.
 
 ## Limits of this lesson
 
-- **Illustrative arithmetic.** The model shape, memory budget, latencies and review figures are fictional, and Kestrel is a fictional customer. Real servers add overheads this lesson leaves out.
-- **Throughput is a separate question.** This lesson sizes memory for concurrent requests. Tokens per second per GPU, batching and scheduling are deep-dive topics for the Inference Engineering group.
+- **Composite engagement.** Kestrel, Ravi, the model shape, memory budget, latencies and review figures are illustrative, not a real customer. Real servers add overheads this lesson leaves out.
+- **Throughput is a separate question.** This lesson sizes memory for concurrent requests. Tokens per second per GPU, batching and scheduling are not covered here. For the latency side, see [latency: prefill, decode, streaming and the tail](/learn/production-ai/cost-and-latency/latency-prefill-decode-streaming-and-the-tail).
 - **Threshold drift.** A threshold set on last quarter's chats can drift. Recheck it against reviewers' corrections each month.
 
 ## Interview angle
