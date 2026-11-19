@@ -3,11 +3,7 @@
 
 ## Start with the approved refund that grew
 
-Tarrow Retail, a fictional furniture and homeware chain, gave its customer-service team an agent that could look up orders and issue refunds through a Model Context Protocol (MCP) server in front of the order system. Refunds over £50 needed a supervisor's approval.
-
-A customer complained about a damaged lamp worth £64. The agent asked a supervisor: "Approve refund for order 88213?" The supervisor clicked approve. Before executing, the agent read the customer's next message about a late delivery, added the £18 delivery charge and a £130 goodwill credit it believed was policy, and sent a refund of £212. The approval record showed a yes for order 88213. Nobody had approved £212.
-
-The approval was real. It approved a description, and the action changed underneath it. Call this **the blank-cheque approval**.
+Tarrow Retail, a furniture and homeware chain, gave its customer-service team an agent that looks up orders and issues refunds through a Model Context Protocol (MCP) server in front of the order system. Martha, the forward deployed engineer, required a supervisor's approval for refunds over £50. A customer complained about a damaged £64 lamp, and a supervisor approved the request "Approve refund for order 88213?". Before executing, the agent read the customer's next message about a late delivery, added the £18 delivery charge and a £130 goodwill credit it believed was policy, and refunded £212. The approval record showed a yes for order 88213; nobody had approved £212. Call this **the blank-cheque approval**: the approval was for a description, and the action changed underneath it.
 
 > **What you'll learn**
 >
@@ -27,7 +23,7 @@ Pass the user's identity through instead. The MCP specification describes OAuth-
 - **The system enforces its own rules.** A new starter's refund limit applies to the agent's calls as it does to their clicks.
 - **The audit log names the person.** Every refund records the user, the agent session and the tool call.
 
-When the business system has no per-user API access, enforce the user's rights inside the server, log both identities, and record the gap as a risk with the customer's security team. The site's [delegated authority and zero ambient authority](/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority) lesson covers the model in depth.
+When the business system has no per-user API access, enforce the user's rights inside the server, log both identities, and record the gap as a risk with the customer's security team. The site's [delegated authority and zero ambient authority](/learn/production-ai/security-tenancy-prompt-injection/delegated-authority-and-zero-ambient-authority) lesson covers the model in depth, and [service accounts and least privilege](/learn/fde-deploying-in-the-estate/networks-and-identity/service-accounts-and-least-privilege) covers the same choice for any integration.
 
 ## Approvals bound to the exact action
 
@@ -37,7 +33,7 @@ An approval must cover one exact action. At Tarrow the fix had three parts:
 - **Show it whole.** The supervisor sees the customer, order, amount, method, the policy rule that applies and the agent's reason, with anything unusual highlighted.
 - **Check at execution.** The approval stores a hash of the frozen call. The executor recomputes the hash and refuses any call that differs. A changed amount needs a new approval.
 
-Approvals also expire, after 30 minutes at Tarrow, because prices and order states move. See [the confirmation gate lesson](/learn/production-ai/robust-agents/the-confirmation-gate-and-memoization).
+Approvals also expire, after 30 minutes at Tarrow, because prices and order states move. See [the confirmation gate lesson](/learn/production-ai/robust-agents/the-confirmation-gate-and-memoization). The same rule for a person approving a record, rather than an agent's call, is in [human review and approval](/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval).
 
 ## Crashes and timeouts with unknown outcomes
 
@@ -100,7 +96,7 @@ The site's [policy lives outside the prompt](/learn/production-ai/security-tenan
 
 - **Not every system offers idempotency keys.** Then use a status query before each retry, or keep the action manual.
 - **Hashes need stable arguments.** Normalise amounts, dates and order of fields before hashing.
-- **Fictional data.** Tarrow Retail and its figures are illustrative.
+- **Composite engagement.** Tarrow Retail, Martha and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

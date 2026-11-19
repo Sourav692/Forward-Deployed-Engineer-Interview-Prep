@@ -83,7 +83,7 @@ Encryption with a key held in the region helps, but it does not change where the
 
 ## Deleting across every copy
 
-Deletion is a process across stores, with an end date. Backups are the hard part. They are designed to be unchanged, and editing one to remove a single matter is rarely possible. Two approaches work. Let backups expire on a schedule shorter than the promised deadline. Or encrypt each client's data with its own key and destroy the key, which makes every copy unreadable, including backups. NIST SP 800-88 calls this cryptographic erase.
+Deletion is a process across stores, with an end date. Backups are the hard part. They are designed to be unchanged, and editing one to remove a single matter is rarely possible. Two approaches work. Let backups expire on a schedule shorter than the promised deadline. Or encrypt each client's data with its own key and destroy the key, which makes every copy unreadable, including backups. NIST SP 800-88 calls this cryptographic erase. A revoked permission travels the same path through an assistant's index and caches, as [permissions, deletions and citations](/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/permissions-deletions-and-citations) shows.
 
 The walkthrough follows Thirlby's next deletion request after the fix.
 

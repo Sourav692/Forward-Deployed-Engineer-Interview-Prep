@@ -3,11 +3,7 @@
 
 ## Start with the tidy old tariff
 
-Brisco Utilities, a fictional energy and water supplier, gave its contact-centre agents an assistant that answered tariff and policy questions from 4,200 internal documents. In testing it scored well on questions the project team wrote.
-
-In April, the new standing charges took effect. The new tariff schedule existed only as a scanned PDF. The ingestion step read it with plain text extraction, which found no text layer and stored a near-empty page. The previous year's schedule was a Word file that parsed cleanly. For two weeks the assistant quoted last year's charge with a confident citation, and 310 customers were given the wrong figure before a team leader noticed.
-
-Nothing in the model was wrong. The current document was unreadable and the old one was easy to read. Call this **the tidy stale answer**.
+Brisco Utilities, an energy and water supplier, gave its contact-centre agents an assistant that answered tariff and policy questions from 4,200 internal documents. Imran, the forward deployed engineer, built the ingestion, and the assistant scored well on questions the project team wrote. In April new standing charges took effect, but the new tariff schedule existed only as a scanned PDF: plain text extraction found no text layer and stored a near-empty page, while last year's Word schedule parsed cleanly. For two weeks the assistant quoted last year's charge with a confident citation, and 310 customers were given the wrong figure before a team leader noticed. Nothing in the model was wrong. Call this **the tidy stale answer**: the current document was unreadable and the old one was easy to read.
 
 > **What you'll learn**
 >
@@ -100,7 +96,7 @@ The site's retrieval-augmented generation (RAG) course covers parsers and splitt
 
 - **Sampling misses rare types.** A 50-document sample can miss a format that holds a critical answer. Ask owners which documents they consult most.
 - **Metadata needs owners.** Effective dates extracted by a parser are guesses until an owner confirms them.
-- **Fictional data.** Brisco Utilities and its figures are illustrative.
+- **Composite engagement.** Brisco Utilities, Imran and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

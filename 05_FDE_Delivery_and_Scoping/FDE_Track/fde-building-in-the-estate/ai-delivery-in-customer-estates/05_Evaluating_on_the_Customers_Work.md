@@ -6,22 +6,18 @@ module_group: AI delivery
 module_code: T21.5
 module_name: Shipping RAG and agents into a customer's estate
 lesson: 5
-lessons: ["Inputs as they really arrive", "Extraction you can trust", "Permissions, deletions and citations", "Agents that touch business systems", "Evaluating on the customer's work", "Untrusted content in customer data", "Voice and multimodal in operations", "Practise AI delivery"]
+lessons: ["Inputs as they really arrive", "Extraction you can trust", "Permissions, deletions and citations", "Agents that touch business systems", "Evaluating on the customer's work", "Untrusted content in customer data", "Voice and multimodal in operations", "Practise AI delivery", "Practise AI engineering in the field"]
 level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [evaluation, golden sets, LLM judges, regression, retrieval metrics, attribution]
 ---
 
 ## Start with the exam the team wrote
 
-Brisco Utilities, a fictional energy and water supplier, built an assistant that helps contact-centre agents answer billing questions. The project team wrote 300 test questions, each with one clear answer in one document. The assistant scored 92%, and the sponsor approved the rollout.
-
-Within a month, agents rated it poorly and many stopped using it. Their real questions were nothing like the test set. They were long, had several parts, mixed two accounts, or concerned a disputed bill where the answer depended on the customer's history. A sample of 200 real questions scored 64%.
-
-The test set measured what the team expected people to ask. Call this **the exam the team wrote for itself**.
+Brisco Utilities built an assistant that helps contact-centre agents answer billing questions. Imran, the forward deployed engineer, and the project team wrote 300 test questions, each with one clear answer in one document; the assistant scored 92%, and the sponsor approved the rollout. Within a month agents rated it poorly and many stopped using it. Their real questions were long, had several parts, mixed two accounts or concerned a disputed bill where the answer depended on the customer's history, and a sample of 200 of them scored 64%. Call this **the exam the team wrote for itself**: the test set measured what the team expected people to ask.
 
 > **What you'll learn**
 >
@@ -41,7 +37,7 @@ An evaluation set should look like the work the system will do. Build it from th
 - **Have experts label.** Brisco's team leaders wrote the expected answer and the source passage for each case. A smaller set with expert labels beats a larger one with guessed labels.
 - **Freeze a test split.** Keep a set you never tune against, and a separate development set you look at freely.
 
-For a policy assistant the same steps apply, with two additions: include questions whose answer changed when a policy was updated, and questions the policies do not answer, where the right response is to decline. The site's [golden sets and sample size](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md) lesson covers how many cases a given confidence needs.
+For a policy assistant the same steps apply, with two additions: include questions whose answer changed when a policy was updated, and questions the policies do not answer, where the right response is to decline. The site's [golden sets and sample size](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md) lesson covers how many cases a given confidence needs. The same set can pick the model, as in [picking a model for a customer](../choosing-the-ai-approach/02_Picking_a_Model_for_a_Customer.md).
 
 ## Three levels of success
 
@@ -54,6 +50,8 @@ A system can produce good answers and still fail the business. Measure at three 
 | Business outcome | Average handling time, repeat calls | Contact-centre reports | Monthly |
 
 *Table 1: Three levels of success at Brisco. The sponsor signed for the third.*
+
+Agreeing these measures and their bars with the sponsor is discovery work, covered in [success metrics and evaluation data](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/03_Success_Metrics_and_Evaluation_Data.md).
 
 When output quality rises and the business outcome does not move, look outside the model. At Brisco, agents re-checked every answer in the billing system because early answers had been wrong. Handling time fell only after trust returned.
 
@@ -122,7 +120,7 @@ Make the rule explicit: a release gate checks each tagged slice on its own, with
 
 - **Labels drift.** When a policy changes, old expected answers become wrong. Date every label.
 - **Small slices are noisy.** With 25 cases, one case is four points. Repeat runs and read the range.
-- **Fictional data.** Brisco Utilities and its figures are illustrative.
+- **Composite engagement.** Brisco Utilities, Imran and their figures are illustrative, not a real customer.
 
 ## Interview angle
 
