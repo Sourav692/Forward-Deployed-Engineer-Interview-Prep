@@ -7390,6 +7390,18 @@
       "updated": "2026-11-19"
     },
     {
+      "slug": "practise-judgement-calls",
+      "title": "Practise Judgement Calls",
+      "track": "forward-deployed",
+      "module": "judgement-cases",
+      "kind": "sync",
+      "publish": "own",
+      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/judgement-cases/01_Practise_Judgement_Calls.md",
+      "estMinutes": 14,
+      "href": "/learn/forward-deployed/judgement-cases/practise-judgement-calls",
+      "updated": "2026-11-19"
+    },
+    {
       "slug": "stabilise-the-customer-first",
       "title": "Stabilise the Customer First",
       "track": "forward-deployed",

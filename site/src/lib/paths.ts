@@ -660,7 +660,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 429,
+    estHours: 428,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -710,7 +710,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 461,
+    estHours: 460,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,

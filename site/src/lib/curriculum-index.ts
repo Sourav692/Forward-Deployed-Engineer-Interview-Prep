@@ -1515,8 +1515,10 @@ export const INDEX_MODULES: IndexModule[] = [
     "code": "T20.4",
     "title": "Judgement cases",
     "track": "forward-deployed",
-    "lessons": [],
-    "estMinutes": 150
+    "lessons": [
+      "practise-judgement-calls"
+    ],
+    "practiceMinutes": 120
   },
   {
     "slug": "delivery-stages-and-gates",
