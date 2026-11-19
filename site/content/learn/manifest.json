@@ -7209,35 +7209,21 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/01_Problem_Goal_and_Definition_of_Done.md",
       "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "the-system-behind-the-screens",
-      "title": "The System Behind the Screens",
+      "title": "Sizing the Work a Demo Hides",
       "track": "forward-deployed",
       "module": "scoping-an-fde-project",
       "kind": "sync",
       "publish": "credited",
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/02_The_System_Behind_the_Screens.md",
-      "estMinutes": 9,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/02_Sizing_the_Work_a_Demo_Hides.md",
+      "estMinutes": 15,
       "href": "/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens",
-      "updated": "2026-11-18"
-    },
-    {
-      "slug": "estimating-ai-work-as-a-product",
-      "title": "Estimating AI Work as a Product",
-      "track": "forward-deployed",
-      "module": "scoping-an-fde-project",
-      "kind": "sync",
-      "publish": "credited",
-      "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
-      "rights": "permitted",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/03_Estimating_AI_Work_as_a_Product.md",
-      "estMinutes": 9,
-      "href": "/learn/forward-deployed/scoping-an-fde-project/estimating-ai-work-as-a-product",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "shrinking-to-a-first-release",
@@ -7251,7 +7237,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/04_Shrinking_to_a_First_Release.md",
       "estMinutes": 8,
       "href": "/learn/forward-deployed/scoping-an-fde-project/shrinking-to-a-first-release",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "estimates-people-can-trust",
@@ -7265,7 +7251,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/05_Estimates_People_Can_Trust.md",
       "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/estimates-people-can-trust",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "from-estimate-to-build-plan",
@@ -7277,9 +7263,9 @@
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words.",
       "rights": "permitted",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/06_From_Estimate_to_Build_Plan.md",
-      "estMinutes": 11,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/scoping-an-fde-project/from-estimate-to-build-plan",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "scoping-in-practice",
@@ -7293,7 +7279,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/07_Scoping_in_Practice.md",
       "estMinutes": 12,
       "href": "/learn/forward-deployed/scoping-an-fde-project/scoping-in-practice",
-      "updated": "2026-11-18"
+      "updated": "2026-11-19"
     },
     {
       "slug": "baselines-value-and-roi",
@@ -7305,7 +7291,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/08_Baselines_Value_and_ROI.md",
       "estMinutes": 12,
       "href": "/learn/forward-deployed/scoping-an-fde-project/baselines-value-and-roi",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "build-buy-configure-or-no-ai",
@@ -7317,7 +7303,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/09_Build_Buy_Configure_or_No_AI.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/scoping-an-fde-project/build-buy-configure-or-no-ai",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "practise-scoping-and-value-questions",
@@ -7329,7 +7315,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/10_Practise_Scoping_and_Value_Questions.md",
       "estMinutes": 8,
       "href": "/learn/forward-deployed/scoping-an-fde-project/practise-scoping-and-value-questions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-19"
     },
     {
       "slug": "requirements-you-can-test",

@@ -1,21 +1,23 @@
-# The System Behind the Screens
+# Sizing the Work a Demo Hides
 
 
-## Start with the six-screen estimate
+## Start with the afternoon demo
 
-Tempo Studios, a fictional chain of fitness studios, wanted a class-booking product. The team counted six screens: schedule, class detail, booking, checkout, account and an admin page. At two or three days a screen, they quoted three weeks.
-
-Week two found the waitlist. Week three found refunds, two people taking the last seat at once, and an instructor cancelling an hour before class. Support could not cancel a booking without a developer. The six screens were finished on time, and the product could not run. Call this **the screen-count estimate**: sizing a system by what people see instead of by what changes underneath.
+Lantern Learning, a training company, asked its FDE for an AI mock-interview assistant. The FDE wired one chat screen to a model in an afternoon, and it gave sensible feedback on three test answers. The sponsor left the demo with "two weeks to launch". Two weeks later nobody could say whether the feedback was good: the same answer got praise one day and criticism the next, learners were shown stale course material, and support could not reset a learner's session without a developer. Call this **the demo-sized estimate**: sizing a product by what the demo shows instead of by what sits underneath it.
 
 > **What you'll learn**
 >
-> - Work down from surfaces to entities, states and workflows.
+> - Work down from surfaces to entities, states and workflows, then break the workflows on purpose.
 > - Spot the properties that make a project hard regardless of its size.
-> - List the hidden work a demo never shows before committing to a date.
+> - List the operational work a demo never shows.
+> - Tell predictable logic from judgement and answer the seven questions every AI estimate must cover.
+> - Plan document lookup and the test set as work of their own.
 
-A page count is a poor proxy for effort. A small booking flow can be harder than a large content site. Once the goal and level of done are set, as in [Problem, Goal, and Definition of Done](/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done), dig below the screens to find the real system.
+A demo shows two things: the surface and, for AI, the first model call. The project is everything beneath them. Once the goal and level of done are set, as in [Problem, Goal, and Definition of Done](/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done), dig through the product first and then through the AI.
 
 ## Dig from surfaces down to workflows
+
+Tempo Studios, a chain of fitness studios, shows the product half of the problem. Its team counted six screens for a class-booking product (schedule, class detail, booking, checkout, account and admin) and quoted three weeks at two or three days a screen. The screens were finished on time. The product could not run, because the waitlist, refunds and cancellations lived underneath them.
 
 Work through four layers, top to bottom. The walkthrough takes Tempo's booking product through each one.
 
@@ -41,7 +43,7 @@ flowchart LR
 
 ## Judge complexity by interaction, not size
 
-A project is hard when many rules, systems and failure paths interact. The scoping guide compares a content platform with a booking platform to show it.
+A page count is a poor proxy for effort. A project is hard when many rules, systems and failure paths interact. A content platform and a booking platform of similar size show the difference.
 
 | Question | Content platform | Booking platform |
 |---|---|---|
@@ -53,7 +55,7 @@ A project is hard when many rules, systems and failure paths interact. The scopi
 
 *Table 1: Two platforms of similar size. The booking platform is harder on every row.*
 
-Several properties quietly inflate an estimate:
+Six properties quietly inflate an estimate:
 
 - **Concurrency.** Many users editing the same thing at once.
 - **Money.** It brings refunds, reconciliation and audit trails.
@@ -61,8 +63,6 @@ Several properties quietly inflate an estimate:
 - **Physical-world state.** Software that must match a room, a shipment or a person's calendar.
 - **Outside systems.** Dependence on systems outside the team's control.
 - **Irreversible actions.** Actions that cannot be undone.
-
-The guide's heading promises five of these but lists six. All six are worth checking.
 
 ## Count the work the demo hides
 
@@ -84,11 +84,68 @@ Before committing to a date, check:
 
 > **Pitfall:** A feature support staff cannot operate is not finished. If customers can book a class but support cannot cancel it, refund it, change capacity or see why a confirmation failed, the service does not work in practice, however good the customer screen looks.
 
+## Separate predictable logic from judgement
+
+Everything above applies to an AI product too. AI then adds two jobs that ordinary software estimates leave out: keeping unpredictable behaviour within bounds, and proving that behaviour is good enough. "The model can do it" marks the start of that work, not its end.
+
+Two kinds of logic sit in an AI product:
+
+- **Predictable logic** gives the same output for the same input. When a payment succeeds, mark the booking paid.
+- **Judgement-based logic** has several reasonable outputs. Decide whether an interview answer is strong.
+
+Judgement cannot be tested by checking one expected value. Something has to measure quality across many cases. That measurement is the extra work, and it is why Lantern's demo, which worked on three examples, said little about the project.
+
+## Answer the seven questions before sizing
+
+An AI estimate is incomplete until it can answer seven questions:
+
+1. What exactly should the AI decide or write?
+2. What information does it need, and where does it come from?
+3. Which actions may it take?
+4. Which of those need human approval first?
+5. How many mistakes are acceptable?
+6. How will quality be measured before and after launch?
+7. What happens when the AI is unsure, slow, unavailable or too expensive?
+
+Each answer adds work. Data access, action boundaries, a human fallback, tracing, cost control, failure handling and a way to improve bad answers all surround the model call.
+
+The three levels of done from lesson 1 sit further apart for AI than for ordinary software. Lantern's assistant as a prototype (one screen, one prompt, a fixed flow) is a few days. As an MVP, with login, saved sessions, document lookup and a scoring guide, it is several weeks. In production, with a test set, tracing, versioned prompts, regression tests, cost controls and a fallback, it is one to several months. The model call is the same at all three levels. The jump is the work of controlling and proving behaviour.
+
+## Treat document lookup as data work
+
+Retrieval quality is bounded by source quality. Plan time for:
+
+- cleaning documents
+- applying access rules
+- labelling
+- splitting into chunks
+- keeping content fresh
+- showing sources
+- testing search
+
+If nobody owns updates, the system drifts out of date without anyone noticing. That is how Lantern's learners ended up reading stale course material. For the retrieval side in depth, see [evaluating retrieval and generation separately](/learn/llm-and-retrieval/rag-from-first-principles/the-rag-lifecycle-and-a-measured-baseline).
+
+## Write the tests before the pilot
+
+Agree sample cases and expected behaviour before real users arrive. Include clean examples, unclear requests, missing information, unsafe requests and cases that should go to a human. After launch, turn each important failure into a new test. AI quality comes from the loop in Figure 2, not from a perfect prompt.
+
+```mermaid
+flowchart LR
+  B["Build"] --> E["Evaluate on the test set"] --> O["Observe real use"]
+  O --> F["Collect failures"] --> I["Improve"] --> B
+  F -. "each important failure" .-> T["New test case"]
+  T --> E
+```
+
+*Figure 2: The quality loop. Every important failure becomes a test, so the test set grows with the product.*
+
+> **Pitfall:** An AI demo with no test set is a project with no definition of good. It can look excellent on the day and still have no way to show it is improving or regressing.
+
+Which measures belong in that test set is covered in [success metrics and evaluation data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data). For how big it must be, see [golden sets and sample size](/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size).
+
 ## Worked example: the resume-feedback page
 
-A manager asks for a page where people upload a resume and receive AI feedback. It looks like one screen and one model call.
-
-List what the screen hides:
+A manager asks for a page where people upload a resume and receive AI feedback. It looks like one screen and one model call. Dig under it with both halves of this lesson.
 
 | Area | Hidden work |
 |---|---|
@@ -96,18 +153,23 @@ List what the screen hides:
 | Storage | Store it, delete it later, protect the personal data |
 | Access | User login |
 | The AI call | Failure handling, content-safety checks, usage and cost limits |
+| Quality | A rubric for good feedback, a test set of real resumes, regression tests |
 | History | Save past feedback |
-| Running it | Analytics, support tools, monitoring, tests |
+| Running it | Analytics, support tools, monitoring |
 
 *Table 2: The work behind one upload button.*
 
-That is more than a dozen tasks behind a single upload button. The estimate must be built from this list, not from the screen. [Estimating AI Work as a Product](/learn/forward-deployed/scoping-an-fde-project/estimating-ai-work-as-a-product) adds the work the AI call itself brings.
+That is more than a dozen tasks behind a single upload button, and the estimate must be built from this list, not from the screen.
+
+Lantern's three surprises map onto the same list. Feedback that changed from day to day was judgement with no test set. Stale course material was document lookup with no owner. A session support could not reset was admin tooling nobody counted. An honest first answer would have asked which level of done the sponsor wanted, then sized that level from the list.
 
 ## Limits of this lesson
 
 - **Layers are a checklist, not a design.** They find the work. Architecture choices come later.
 - **Size still matters.** Interaction drives difficulty, but a large surface still takes time to build and test.
-- **Fictional data.** Tempo Studios and its figures are illustrative.
+- **Sizes are rough.** "A few days" and "several months" assume one small team and a well-defined use case. Your ranges depend on data and integrations.
+- **The seven questions are a floor.** Regulated domains add review, audit and approval work on top.
+- **Composite engagement.** Lantern Learning, Tempo Studios and their figures are illustrative, not real customers.
 
 ## Interview angle
 
@@ -140,24 +202,55 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 </details>
 
+<details>
+<summary>Interview question 4. The prototype took an afternoon. Why do you estimate months for production?</summary>
+
+- **Answer:** The afternoon bought the model call. Production adds the work of controlling and proving behaviour: a test set, regression tests, tracing, versioned prompts, cost controls, a fallback and analytics. Judgement-based output has no single expected value, so quality must be measured across many cases, and that measurement is the bulk of the work.
+- **Trade-off:** A long estimate can lose the room. A short one sets up a launch nobody can defend.
+- **Follow-up to expect:** "What can we ship sooner?" An MVP for a small group, with the test set started.
+
+</details>
+
+<details>
+<summary>Interview question 5. What do you need to know before you can size an AI feature?</summary>
+
+- **Answer:** Seven things: what the AI decides or writes, the data it needs and where that lives, the actions it may take, which actions need approval, the acceptable error rate, how quality is measured before and after launch, and what happens when it is unsure, slow, down or too expensive. Each answer adds work around the model call.
+- **Trade-off:** Seven questions slow the first conversation. Skipping them hides most of the effort.
+- **Follow-up to expect:** "Which answer moves the estimate most?" Usually the actions and approvals.
+
+</details>
+
+<details>
+<summary>Interview question 6. The customer wants the assistant to search their documents. What do you add to the plan?</summary>
+
+- **Answer:** Treat it as data work: cleaning documents, applying access rules, labelling, chunking, keeping content fresh, showing sources and testing search. Name an owner for updates, or the content drifts out of date unnoticed. Retrieval quality is bounded by source quality, so I check the documents before promising answer quality.
+- **Trade-off:** Data work is invisible in a demo. Without it, answers are confident and wrong.
+- **Follow-up to expect:** "The documents are a mess." Then cleaning them is the first workstream.
+
+</details>
+
 ## References
 
-1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 2 "Figure Out What You Are Really Building" (Topics 2.1 to 2.3), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
+1. The repository's scoping guide, *Scoping an FDE Project: Complete Guide*, Module 2 "Figure Out What You Are Really Building" (Topics 2.1 to 2.3) and Module 3 Topic 3.1 "Estimate AI as a product, not a single API call", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.
 2. The site's [stakeholder and workflow maps](/learn/forward-deployed/customer-discovery/stakeholder-and-workflow-maps) lesson, for tracing real workflows and their exceptions.
+3. The site's [golden sets and sample size](/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size) lesson, for building the test set.
+4. The site's [evaluating retrieval and generation separately](/learn/llm-and-retrieval/rag-from-first-principles/the-rag-lifecycle-and-a-measured-baseline) lesson, for testing document lookup.
 
 ## Key takeaways
 
 - Work down from surfaces to entities, states and workflows, then break the workflows on purpose.
 - Complexity comes from interacting states, systems and failure paths, not from page count.
-- Concurrency, money, permissions, physical-world state, outside systems and irreversible actions all inflate estimates.
 - Hidden operational work decides whether a system is trustworthy. Count it before giving a date.
+- Judgement-based logic needs a way to measure quality. That is the extra AI work.
+- Answer the seven questions before sizing an AI feature. Each answer adds work around the model call.
+- Document lookup is data work, and it decays without an owner. Write the tests before the pilot.
 
 ## Check yourself
 
 <details>
 <summary>1. Why can a small booking flow be harder than a large content site?</summary>
 
-It has many states, real-time constraints, several external integrations and costly failures such as double charges. The content site has few of these.
+It has many states, real-time constraints, several outside integrations and costly failures such as double charges. The content site has few of these.
 
 </details>
 
@@ -169,8 +262,15 @@ Two users take the last seat at once. Payment succeeds but the booking save fail
 </details>
 
 <details>
-<summary>3. Name six items of hidden work to check before committing to a date.</summary>
+<summary>3. Why does a working AI demo say little about the size of the project?</summary>
 
-Any six of: login and recovery, permissions, admin tools, data migration, analytics, logging and alerts, safe retries, abuse limits, security review, testing and staging, rollout and rollback, support and incident response.
+It shows the model call, which is cheap. It does not show data access, action limits, evaluation, fallbacks, cost control or the improvement loop.
+
+</details>
+
+<details>
+<summary>4. What should a pre-pilot test set include?</summary>
+
+Clean examples, unclear requests, missing information, unsafe requests and cases that should be handed to a human.
 
 </details>

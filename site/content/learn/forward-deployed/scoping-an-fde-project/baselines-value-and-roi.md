@@ -3,9 +3,9 @@
 
 ## Start with the savings nobody could find
 
-Wexford Retail, a fictional online retailer, handles 20,000 return requests a month. A proposal for an AI assistant promised to save four minutes on each one: 80,000 minutes, or about 1,333 staff hours a month, which the proposal valued at £26,000.
+Wexford Retail, an online retailer, handles 20,000 return requests a month. A proposal for an AI assistant promised to save four minutes on each one: 80,000 minutes, or about 1,333 staff hours a month, which the proposal valued at £26,000.
 
-The finance director asked one question: which budget line goes down? Nobody could answer. The returns team was salaried and would stay the same size. Nobody had timed a return. The four minutes was a guess. The £26,000 described time, not money.
+The FDE inherited the proposal. At the first review the finance director asked one question: which budget line goes down? Nobody could answer. The returns team was salaried and would stay the same size. Nobody had timed a return. The four minutes was a guess. The £26,000 described time, not money.
 
 The FDE's job is to turn a claim like this into a number the customer can check. Call the gap between minutes saved and money saved **the phantom saving**.
 
@@ -125,7 +125,7 @@ Some business cases work only if volume grows. Present those honestly:
 
 - **Payback ignores timing and risk.** Finance teams may prefer a discounted measure such as net present value. Ask which they use.
 - **Some value resists money.** Fewer errors in a safety process matter even when the cash case is weak. Report them in their own unit.
-- **Fictional data.** Wexford Retail and its figures are illustrative.
+- **Composite engagement.** Wexford Retail and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

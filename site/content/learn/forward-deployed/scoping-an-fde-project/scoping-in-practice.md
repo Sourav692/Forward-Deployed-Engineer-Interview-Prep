@@ -3,9 +3,7 @@
 
 ## Start with the request that was three projects
 
-Rowan Home, a fictional homeware retailer, asked for an agent that "answers customers and completes common tasks". The team scoped it as one project with one estimate. Drafting replies went well. Then the agent was allowed to issue refunds, and a run of wrong refunds reached customers before anyone reviewed them.
-
-Drafting for an employee, sending to a customer and moving a customer's money carry three different risks. Call this **the one-project illusion**: scoping several risk levels under one request as if they were one.
+Rowan Home, a homeware retailer, asked its FDE for an agent that "answers customers and completes common tasks". The FDE scoped it as one project with one estimate. Drafting replies went well. Then the agent was allowed to issue refunds, and a run of wrong refunds reached customers before anyone reviewed them. Call this **the one-project illusion**: one request that hides several levels of risk, scoped as if it were one.
 
 > **What you'll learn**
 >
@@ -44,7 +42,7 @@ Say it so the team can act: the website is not the main effort. Booking, payment
 
 The request is Rowan's: too many tickets, so build an agent that answers customers and completes common tasks. Several projects hide here. Drafting a reply for an employee is lowest risk. Sending straight to a customer is higher. Changing an order or refunding money is higher still. Treat each as a separate scope decision.
 
-**Sit with the current workflow.** Watch agents resolve real tickets, and build against the real clicks, hand-offs, workarounds and exceptions, not the official diagram. Ask where tickets arrive, how they are sorted, which systems agents open, which steps need judgement, which are policy-driven, which categories are high-volume and low-risk, and which mistakes cause financial, legal or customer harm. Expect copy-pasting, missing data, hidden spreadsheets and manual approvals.
+**Sit with the current workflow.** Watch agents resolve real tickets before designing anything. [Observing the work](/learn/forward-deployed/customer-discovery/observing-the-work) covers how. For this case, find which ticket categories are high-volume and low-risk, and which mistakes cause financial, legal or customer harm.
 
 **Pick one low-risk, high-volume case.** If order-status questions are about 30 percent of volume, they are repetitive, measurable and read-only: a sensible pilot. Refunds and fraud are not. A target: draft a sourced reply for order-status tickets, cut handling time by 40 percent, and hold factual accuracy above 95 percent on an approved test set.
 
@@ -91,13 +89,7 @@ flowchart LR
 
 In total, about five to eight weeks for a small team. The biggest risks are customer data access, the support-platform integration and policy quality. Fully automatic actions are excluded and would need their own safety phase.
 
-**Earn autonomy in stages:**
-
-1. **Offline**, on past tickets.
-2. **Shadow**, drafting while agents work normally.
-3. **Assisted**, with a small group reviewing drafts.
-4. **Expanded**, as quality and operations hold.
-5. **Autonomous**, only for narrow, reversible actions with strong controls.
+**Earn autonomy in stages.** Test offline on past tickets, then draft in shadow while agents work normally, then let a small group review drafts, then expand as quality holds. Act on its own only for narrow, reversible actions with strong controls. [Choosing the first use case](/learn/forward-deployed/customer-discovery/choosing-the-first-use-case) teaches this ladder in full.
 
 Make the workflow clear, measurable, narrow and safe before making the agent powerful.
 
@@ -141,7 +133,7 @@ The customer usually knows the outcome they want. The FDE's job is to turn it in
 ## Limits of this lesson
 
 - **Two cases are a sample.** Real requests mix product and AI work. Run both sets of steps where they overlap.
-- **Fictional data.** Rowan Home, the property company and all figures are illustrative.
+- **Composite engagement.** Rowan Home, the property company and all figures are illustrative, not real customers.
 
 ## Interview angle
 

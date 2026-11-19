@@ -3,15 +3,15 @@
 
 ## Start with the emails that were really meter readings
 
-Linden Water, a fictional water company, receives 9,000 customer emails a month. Staff read each one and route it to billing, metering, leaks or complaints. Linden asked for an AI model to classify and route the emails.
+Linden Water, a water company, receives 9,000 customer emails a month. Staff read each one and route it to billing, metering, leaks or complaints. Linden asked its FDE for an AI model to classify and route the emails.
 
-Discovery showed three things:
+The FDE's first week of discovery turned up three things:
 
 - About 60% of the emails were customers sending a meter reading, typed in many different ways.
 - Linden's customer relationship management system already had routing rules that could send a web form to the right queue. Nobody had switched them on.
 - The remaining emails were varied: complaints, questions and reports of leaks, some urgent.
 
-The first release added a meter-reading form to the website and a link in every bill, then turned on the existing routing rules for the form. Email volume fell by more than half within two months. A classifier for the remaining emails went into the second phase, sized for 3,600 emails instead of 9,000. Call this **the cheaper first move**: the option that removes most of the problem before anything is built.
+Call this **the AI-shaped request**: a problem that arrives asking for a model when most of it needs none.
 
 > **What you'll learn**
 >
@@ -60,6 +60,8 @@ Typical signs that a simpler option fits:
 - **Search.** People ask for "an AI assistant" but describe looking for a policy, a form or a past case.
 - **Automation.** Staff copy the same fields between two systems. An integration removes the copying.
 - **Process change.** The input arrives in free text because nobody gave customers a structured way to send it, as at Linden.
+
+Linden's first release added a meter-reading form to the website and a link in every bill, then switched on the existing routing rules for the form. Email volume fell by more than half within two months. A classifier for the remaining emails moved to the second phase, sized for 3,600 emails instead of 9,000.
 
 > **Pitfall:** Treating "the customer asked for AI" as a requirement. The requirement is the outcome. AI is one way to reach it.
 
@@ -117,7 +119,7 @@ Telling a customer who asked for AI that they do not need it feels risky. Make i
 
 - **Option costs vary.** Licence prices and build costs differ by market. Use the customer's quotes, not general figures.
 - **Rules have limits too.** Many rules interacting can become harder to maintain than a model. Watch the rule count.
-- **Fictional data.** Linden Water and its figures are illustrative.
+- **Composite engagement.** Linden Water and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

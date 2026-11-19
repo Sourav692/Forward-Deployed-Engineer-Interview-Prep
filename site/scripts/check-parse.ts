@@ -20,6 +20,7 @@ import { parseDocument } from '../src/lib/parse.ts'
 import type { Block } from '../src/lib/parse.ts'
 import { ANSWER_KEY_MAP } from '../src/lib/mapping.ts'
 import { parseReading } from '../src/lib/reading.ts'
+import { groupOfTrack } from '../src/lib/learn-stages.ts'
 import {
   FAMILY_META,
   CLASSIC_DESIGN_CASE,
@@ -824,15 +825,18 @@ rows.push(`\n  editorial: ${pages.size} pages with metadata, ${cited.size} cited
 // No page or case tab over WORD_LIMIT words (audit check PQ-12): past that, readers lose
 // their place, and the page is hard to use on a phone. Words count as reading time counts
 // them (`wordCount`). Answer keys are listed but not held to the limit: a worksheet shows
-// them one question at a time, behind "Show the model answer".
+// them one question at a time, behind "Show the model answer". Forward Deployed Engineering
+// lessons are listed but exempt too: the owner lifted the limit for that group on
+// 19 Nov 2026, so a lesson there keeps one topic whole instead of splitting it.
 const WORD_LIMIT = 2500
+const NO_LIMIT_GROUP = 'forward-deployed-engineering'
 const LONG_PAGE_IS_ERROR = true
 {
   const sizes: { label: string; words: number; key: boolean }[] = []
   for (const file of await listMarkdown(CONTENT)) {
     const rel = relative(CONTENT, file).split(sep)
     const name = rel.at(-1)!.replace(/\.md$/, '')
-    const key = rel.includes('answer-keys')
+    const key = rel.includes('answer-keys') || (rel[0] === 'learn' && groupOfTrack(rel[1])?.slug === NO_LIMIT_GROUP)
     const label =
       rel[0] === 'learn'
         ? `lesson ${rel.slice(1).join('/').replace(/\.md$/, '')}`
@@ -859,7 +863,7 @@ const LONG_PAGE_IS_ERROR = true
   const pagesOver = over.filter((s) => !s.key)
   rows.push(
     `\n  page length: ${sizes.length} pages and tabs, ${pagesOver.length} over ${WORD_LIMIT.toLocaleString('en-GB')} words` +
-      ` (${over.length - pagesOver.length} answer keys over, not held to the limit)`,
+      ` (${over.length - pagesOver.length} answer keys or FDE lessons over, not held to the limit)`,
   )
   for (const s of over) rows.push(`    ${s.key ? '·' : '⚠'} ${s.words.toLocaleString('en-GB')}  ${s.label}`)
   if (LONG_PAGE_IS_ERROR) {
