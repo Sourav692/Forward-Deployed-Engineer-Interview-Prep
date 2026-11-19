@@ -6,22 +6,18 @@ module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
 lesson: 2
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "11 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [delivery framework, two-week delivery, operating model, intake, accelerator library, reuse rate]
 ---
 
 ## Start with the second customer
 
-An FDE team delivered a support agent for its first customer in twelve days. Two engineers worked evenings, wrote three connectors from scratch and hand-tuned every prompt. The sponsor was delighted, and sales promised the same two weeks to the next customer.
-
-The second customer had a different ticketing tool and a different knowledge base. Nothing from the first build fitted without rework. The same two engineers were now also supporting the first customer. Day 14 passed with the connectors half written and no agreed success metric.
-
-Working faster can rescue one engagement. Two weeks is only repeatable when most of each stage already exists before the customer arrives. Call this **the heroic first delivery**: a schedule met once by effort, and promised again as if it were a process.
+An FDE delivered a support agent for a first customer in twelve days, working evenings with one other engineer, writing three connectors from scratch and hand-tuning every prompt. The sponsor was delighted, and sales promised the same two weeks to the next customer. The second customer had a different ticketing tool and a different knowledge base, and nothing from the first build fitted without rework. The same two engineers were still supporting the first customer. Day 14 passed with the connectors half written and no agreed success metric. Call this **the heroic first delivery**: a schedule met once by effort, and promised again as if it were a process.
 
 > **What you'll learn**
 >
@@ -132,7 +128,7 @@ The schedule held because almost everything was assembled. Every stage boundary 
 
 - **Proven types only.** The library speeds up the tenth customer of a known type. A new type of agent needs more bespoke work and a longer schedule.
 - **Day ranges are a plan.** The fourteen days are the framework's target, not a promise. Some engagements should not be two weeks.
-- **Illustrative case.** Northwind Logistics and its figures are illustrative.
+- **Composite engagement.** The two customers in the opening, Northwind Logistics and their figures are illustrative, not real customers.
 
 ## Interview angle
 

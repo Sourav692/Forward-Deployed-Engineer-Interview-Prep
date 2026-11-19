@@ -5,21 +5,19 @@ track: Discovery, Scoping and Delivery
 module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
-lesson: 5
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lesson: 4
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "9 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [risk register, mitigation, escalation, delivery metrics, reuse rate, override rate]
 ---
 
 ## Start with the line in the plan
 
-A fictional retail customer's delivery plan had a risk register with a sensible line: "Data access delays. Mitigation: delivery lead escalates on day 3." On day 3 the delivery lead was at another customer's go-live. Nobody chased the access request. It was granted on day 8, and the two-week date slipped by a week.
-
-Nobody had ignored the risk. The mitigation depended on one person's calendar in the busiest week of the month. Call this **the reminder mitigation**: a risk response that works only if someone remembers it at the moment they are busiest.
+An FDE's two-week plan for a retailer had a sensible line in its risk register: "Data access delays. Mitigation: delivery lead escalates on day 3." On day 3 the delivery lead was at another customer's go-live, and the FDE, deep in the build, assumed someone was chasing the access request. Nobody was. Access arrived on day 8, and the date slipped by a week. Call this **the reminder mitigation**: a risk response that works only if someone remembers it at the moment they are busiest.
 
 > **What you'll learn**
 >
@@ -100,7 +98,7 @@ Saying that out loud is stronger than presenting 0.83 as a result. An interviewe
 
 - **Four risks, not all risks.** The framework names four. Real engagements add others, such as a key person leaving, and each still needs a mechanism.
 - **One run.** The Northwind numbers come from one scripted engagement and prove the mechanism, not the outcome.
-- **Illustrative cases.** Northwind Logistics and the retail customer are illustrative.
+- **Composite engagement.** Northwind Logistics and the retailer are illustrative, not real customers.
 
 ## Interview angle
 

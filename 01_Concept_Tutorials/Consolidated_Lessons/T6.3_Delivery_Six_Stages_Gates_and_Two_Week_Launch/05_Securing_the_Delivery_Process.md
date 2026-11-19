@@ -5,23 +5,19 @@ track: Discovery, Scoping and Delivery
 module_group: Delivery and adoption
 module_code: T20.5
 module_name: "Delivery: six stages, gates, two-week launch"
-lesson: 6
-lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Pilots that predict production", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Handover and ownership", "Onboarding a new customer integration", "Practise the two-week delivery round", "Practise pilots and handover"]
+lesson: 5
+lessons: ["Telling a delivery story in six stages", "Delivery as a repeatable process", "Role-gated stage gates", "Risk checks and delivery metrics", "Securing the delivery process", "Cross-team ownership and cadence", "Pilots that predict production", "Onboarding a new customer integration", "Handover and ownership", "Practise the two-week delivery round", "Practise pilots and handover"]
 level: intermediate
 reading_time: "10 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [security review, gate evidence, credentials, data residency, multi-tenancy, golden set]
 ---
 
 ## Start with the signature that said "reviewed"
 
-A fictional bank's delivery passed its security gate on day 2. The right person signed: the bank's security reviewer. The evidence field said "Reviewed, looks fine."
-
-Six weeks after go-live, a penetration tester pasted an instruction into a customer message and the agent revealed another customer's account notes. Nobody could say whether prompt-injection tests had ever been run before the gate. The signature was real. What it attested to was unknown.
-
-Security attention goes to the system being deployed. The process that deploys it holds live credentials and real customer data first, and its gates need evidence that shows what was checked. Call this **the rubber-stamp gate**: the right signer with evidence that cannot prove anything.
+An FDE's agent for a bank passed its security gate on day 2. The right person signed, the bank's security reviewer, and the evidence field said "Reviewed, looks fine." Six weeks after go-live a penetration tester pasted an instruction into a customer message, and the agent revealed another customer's account notes. When the bank asked whether prompt-injection tests had run before the gate, the FDE could not say. The signature was real, but nobody knew what it attested to. Call this **the rubber-stamp gate**: the right signer with evidence that cannot prove anything.
 
 > **What you'll learn**
 >
@@ -107,7 +103,7 @@ The gate's role check was already right. These changes make its signature mean s
 
 - **A checklist is a floor.** It proves named tests ran, not that they were good tests. The reviewer's skill still matters.
 - **Controls vary by customer.** Regulated customers will add their own requirements on top of these.
-- **Illustrative cases.** Northwind Logistics and the bank are illustrative.
+- **Composite engagement.** Northwind Logistics and the bank are illustrative, not real customers.
 
 ## Interview angle
 

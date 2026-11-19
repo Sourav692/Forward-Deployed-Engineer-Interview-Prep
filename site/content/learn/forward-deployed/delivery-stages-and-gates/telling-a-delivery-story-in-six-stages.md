@@ -3,11 +3,9 @@
 
 ## Start with the eleven-minute model
 
-A candidate in a mock round was asked, "Walk me through an end-to-end AI project you delivered." The project was a churn model for a subscription business. The candidate spent eleven of the fifteen minutes on feature engineering and why gradient boosting beat logistic regression.
+Six months after go-live, a subscription business's new chief operating officer asked the FDE who had delivered its churn model to walk through the project. The FDE spent eleven of the fifteen minutes on feature engineering and why gradient boosting beat logistic regression. Asked how the scores reached the marketing team, the FDE said "through an API". Asked what had changed for the business, the FDE guessed. The new COO left unsure the project had been worth funding. Call this **the model lecture**: an end-to-end question answered as an algorithm talk.
 
-When the interviewer asked how the model reached the marketing team, the candidate said "through an API". Asked what happened three months later, the candidate did not know. Asked what changed for the business, the candidate guessed.
-
-The model is the most interesting part to talk about. A story that lingers there leaves out the five stages that show ownership. Call this **the model lecture**: an end-to-end question answered as an algorithm talk.
+Interviewers ask the same question as "Walk me through an end-to-end AI project you delivered", and they score the same mistake.
 
 > **What you'll learn**
 >
@@ -114,7 +112,7 @@ The modelling stage gives the recall gain as +22% and the impact stage as about 
 ## Limits of this lesson
 
 - **One question shape.** The six stages fit "walk me through a project". Behavioural questions about conflict or failure need a different structure.
-- **Illustrative figures.** The churn project and the mock round are illustrative. Use your own project's numbers, and only numbers you can defend.
+- **Composite engagement.** The churn project and the subscription business are illustrative, not a real customer. Use your own project's numbers, and only numbers you can defend.
 - **Time budgets vary.** Some interviewers want a two-minute summary first. Read the room and compress the stages, never drop production and impact.
 
 ## Interview angle
@@ -162,7 +160,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 1. Google for Developers, [Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml), accessed 18 November 2026. Monitoring model freshness and the production side of a machine learning system.
 2. Wikipedia, [Concept drift](https://en.wikipedia.org/wiki/Concept_drift), accessed 18 November 2026. Why a deployed model degrades without monitoring and retraining.
 3. Sources in this repository: *End-to-End AI Delivery in Six Stages* (all sections), the author's own material.
-4. The author's own field experience, the basis for the mock-round story and the senior bar.
+4. The author's own field experience, the basis for the opening story and the senior bar.
 
 ## Key takeaways
 

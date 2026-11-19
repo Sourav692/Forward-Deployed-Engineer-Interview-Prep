@@ -3,11 +3,7 @@
 
 ## Start with the signature that said "reviewed"
 
-A fictional bank's delivery passed its security gate on day 2. The right person signed: the bank's security reviewer. The evidence field said "Reviewed, looks fine."
-
-Six weeks after go-live, a penetration tester pasted an instruction into a customer message and the agent revealed another customer's account notes. Nobody could say whether prompt-injection tests had ever been run before the gate. The signature was real. What it attested to was unknown.
-
-Security attention goes to the system being deployed. The process that deploys it holds live credentials and real customer data first, and its gates need evidence that shows what was checked. Call this **the rubber-stamp gate**: the right signer with evidence that cannot prove anything.
+An FDE's agent for a bank passed its security gate on day 2. The right person signed, the bank's security reviewer, and the evidence field said "Reviewed, looks fine." Six weeks after go-live a penetration tester pasted an instruction into a customer message, and the agent revealed another customer's account notes. When the bank asked whether prompt-injection tests had run before the gate, the FDE could not say. The signature was real, but nobody knew what it attested to. Call this **the rubber-stamp gate**: the right signer with evidence that cannot prove anything.
 
 > **What you'll learn**
 >
@@ -93,7 +89,7 @@ The gate's role check was already right. These changes make its signature mean s
 
 - **A checklist is a floor.** It proves named tests ran, not that they were good tests. The reviewer's skill still matters.
 - **Controls vary by customer.** Regulated customers will add their own requirements on top of these.
-- **Illustrative cases.** Northwind Logistics and the bank are illustrative.
+- **Composite engagement.** Northwind Logistics and the bank are illustrative, not real customers.
 
 ## Interview angle
 

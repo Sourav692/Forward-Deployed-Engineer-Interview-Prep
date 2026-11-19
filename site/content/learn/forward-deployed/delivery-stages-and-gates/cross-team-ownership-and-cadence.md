@@ -3,11 +3,7 @@
 
 ## Start with the fourth weekly sync
 
-A fictional retailer's forecasting platform had five teams and, by month two, four recurring meetings a week. Each meeting opened with every team reading out its status. The ingestion team's schema change came up in the third meeting, after the forecasting team had already trained on the old schema.
-
-Nobody owned the decision to change the schema. Everyone had been informed, in a meeting, after the fact. The forecast release slipped three weeks.
-
-More meetings feel like more alignment. Coupled teams stay aligned through clear ownership, a tiered cadence and interfaces, not through volume of contact. Call this **the status-meeting spiral**: adding meetings to fix a problem that comes from unclear ownership.
+An FDE joined a retailer's forecasting platform in month two, when five teams were meeting four times a week. Each meeting opened with every team reading out its status. The ingestion team's schema change came up in the third meeting, after the forecasting team the FDE worked with had already trained on the old schema. Nobody owned the decision to change the schema. Everyone had been told, in a meeting, after the fact, and the forecast release slipped three weeks. Call this **the status-meeting spiral**: adding meetings to fix a problem that comes from unclear ownership.
 
 > **What you'll learn**
 >
@@ -100,7 +96,7 @@ The prompt: "Tell me about a time you led a cross-team data or AI project with m
 
 - **One programme's shape.** Five groups and three tiers fitted this platform. A smaller project may need two tiers, and a larger one a programme board.
 - **A RACI is a start.** It names owners. It does not make them act, so the cadence and escalation rules still matter.
-- **Illustrative story.** The retailer in the opening story is illustrative. The platform example is drawn from the author's own experience.
+- **Composite engagement.** The retailer in the opening story is illustrative, not a real customer. The platform example is drawn from the author's own experience.
 
 ## Interview angle
 
