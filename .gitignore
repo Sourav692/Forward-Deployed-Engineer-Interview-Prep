@@ -40,3 +40,6 @@ fdehandbook_learn/
 
 # Casebook offline bundles and check reports (built from 02_System_Design_Case_Studies/Casebook_Rewrites)
 /.casebook-build/
+
+# Local brainstorming notes and Q&A on the FDE track (not published)
+/FDE_Brainstorm/
