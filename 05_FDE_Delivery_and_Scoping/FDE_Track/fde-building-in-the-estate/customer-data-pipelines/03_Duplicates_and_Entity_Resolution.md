@@ -44,7 +44,7 @@ An **exact duplicate** is the same record delivered more than once. Pipelines cr
 
 *Table 1: Exact duplicates. Each cause has a key, and each key has a rule for which copy survives.*
 
-Deduplicate as early as the key allows, in the cleaned layer, and keep the raw copies. The [incremental loads](02_Incremental_Loads_and_Watermarks.md) lesson shows how upserts absorb re-reads, which removes one cause at the write.
+Deduplicate as early as the key allows, in the cleaned layer, and keep the raw copies. The [incremental loads](02_Incremental_Loads_and_Watermarks.md) lesson shows how upserts absorb re-reads, which removes one cause at the write. When one import file holds many versions of each record, [data handling for real exports](../working-in-customer-code/04_Data_Handling_for_Real_Exports.md) keeps the latest per key while streaming.
 
 Exact deduplication cannot help Maddox. The father and son are two real people with two records each, and the booking and billing records for one patient share no key. That is a different problem.
 

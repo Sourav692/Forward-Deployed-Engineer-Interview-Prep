@@ -6,12 +6,12 @@ module_group: Software and data
 module_code: T21.1
 module_name: Working in a customer's code
 lesson: 7
-lessons: ["Reading an unfamiliar codebase", "Choosing the language and keeping code maintainable", "Reproduce, isolate, fix", "Data handling for real exports", "Concurrency without surprises", "Reviewing AI-generated changes", "Practise working in customer code"]
+lessons: ["Reading an unfamiliar codebase", "Reproduce, isolate, fix", "Choosing the language and keeping code maintainable", "Data handling for real exports", "Concurrency without surprises", "Reviewing AI-generated changes", "Practise working in customer code"]
 level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [practice, interview, debugging, validation, concurrency, code review]
 ---
 
@@ -41,29 +41,29 @@ Taught in [reading an unfamiliar codebase](01_Reading_an_Unfamiliar_Codebase.md)
 
 </details>
 
-## One contract in two languages
-
-Taught in [choosing the language and keeping code maintainable](02_Choosing_the_Language_and_Keeping_Code_Maintainable.md).
-
-<details>
-<summary>Practice question 2. Hythe Shipping's booking form and booking API must apply the same rules: container ID of four letters and seven digits, gross weight from 1 to 30,480 kg, a departure date not in the past, and a known port. Write them in TypeScript and Python and keep them in step.</summary>
-
-- **Answer:** Write the rules once as a JSON Schema, or as a Pydantic model that exports one, and generate or check the Zod schema in TypeScript from it in CI. Use one error shape on both sides: field, code, message. Load the port list from the API rather than hard-coding it in the form. Define "not in the past" against one clock, such as the departure port's local date, and say which. Add a file of about 30 examples marked valid or invalid, and run it in both test suites. The API's check stays authoritative.
-- **Trade-off:** Generation needs a build step both teams accept. Shared examples are lighter but cover only the cases listed.
-- **Follow-up to expect:** "The rules differ by customer." Keep the rules as data in one place, never as branches copied into each side.
-
-</details>
-
 ## Minimal reproductions
 
 Taught in [reproduce, isolate, fix](03_Reproduce_Isolate_Fix.md).
 
 <details>
-<summary>Practice question 3. Garrow Software's invoice export fails for one account out of 3,000 with a character-encoding error. Build a minimal reproduction.</summary>
+<summary>Practice question 2. Garrow Software's invoice export fails for one account out of 3,000 with a character-encoding error. Build a minimal reproduction.</summary>
 
 - **Answer:** Capture the four inputs: the account's export settings, its data, the version and the environment. The settings show the export encoding set to Windows-1252 for an old accounting system. Take the failing invoice, anonymised with the unusual characters kept. Halve its 64 lines until one remains, about six runs. Strip fields until one is left: a product description containing an emoji, which Windows-1252 cannot represent. The reproduction is one invoice, one line, that character and that setting. It becomes the regression test.
 - **Trade-off:** Halving costs a few runs. Guessing at encoding bugs without it often fixes the wrong field.
 - **Follow-up to expect:** "What is the fix?" Agree a policy with the customer: replace unrepresentable characters and report them, or reject with a clear message.
+
+</details>
+
+## One contract in two languages
+
+Taught in [choosing the language and keeping code maintainable](02_Choosing_the_Language_and_Keeping_Code_Maintainable.md).
+
+<details>
+<summary>Practice question 3. Hythe Shipping's booking form and booking API must apply the same rules: container ID of four letters and seven digits, gross weight from 1 to 30,480 kg, a departure date not in the past, and a known port. Write them in TypeScript and Python and keep them in step.</summary>
+
+- **Answer:** Write the rules once as a JSON Schema, or as a Pydantic model that exports one, and generate or check the Zod schema in TypeScript from it in CI. Use one error shape on both sides: field, code, message. Load the port list from the API rather than hard-coding it in the form. Define "not in the past" against one clock, such as the departure port's local date, and say which. Add a file of about 30 examples marked valid or invalid, and run it in both test suites. The API's check stays authoritative.
+- **Trade-off:** Generation needs a build step both teams accept. Shared examples are lighter but cover only the cases listed.
+- **Follow-up to expect:** "The rules differ by customer." Keep the rules as data in one place, never as branches copied into each side.
 
 </details>
 
@@ -122,7 +122,7 @@ Taught in [reviewing AI-generated changes](06_Reviewing_AI_Generated_Changes.md)
 ## Check yourself
 
 <details>
-<summary>1. In practice question 3, why does halving 64 lines take about six runs?</summary>
+<summary>1. In practice question 2, why does halving 64 lines take about six runs?</summary>
 
 Each run halves the lines that might contain the cause: 64, 32, 16, 8, 4, 2, then 1. Two to the power six is 64.
 

@@ -3,11 +3,7 @@
 
 ## Start with the frozen event loop
 
-Garrow Software, a fictional billing company, runs its invoicing API as an async Python service: four worker processes, each with one event loop. Before month end, Garrow added a tax calculation to every invoice, using a tax vendor's Python software development kit (SDK). The SDK made ordinary blocking HTTP calls that took about 300 milliseconds each.
-
-In testing, with a handful of requests, nothing looked wrong. On the last day of the month, traffic reached 40 invoice requests a second. Each blocking call froze its whole event loop for 300 milliseconds, so each process handled about three requests a second, and the service about 13 in total. Requests queued. Health checks waited behind them, passed their 2-second timeout, and the load balancer restarted instances in the middle of invoicing.
-
-Nothing in the code was wrong line by line. A blocking call sat in a place that assumed nothing blocks. Call this **the frozen event loop**.
+Garrow Software runs its invoicing API as an async Python service: four worker processes, each with one event loop. Before month end, Tomasz, the forward deployed engineer on the account, added a tax calculation to every invoice using a tax vendor's Python software development kit (SDK). The SDK made ordinary blocking HTTP calls that took about 300 milliseconds each. With a handful of test requests nothing looked wrong. On the last day of the month traffic reached 40 invoice requests a second, while each process could handle only about three. Requests queued, health checks waited behind them past their 2-second timeout, and the load balancer restarted instances in the middle of invoicing. No line of the code was wrong on its own: a blocking call sat in a place that assumed nothing blocks. Call this **the frozen event loop**.
 
 > **What you'll learn**
 >
@@ -28,7 +24,7 @@ Concurrency means making progress on several tasks over the same period. The rig
 
 *Table 1: Three concurrency tools. Waiting on the network suits async or threads. Computing suits processes.*
 
-Most field code waits: on databases, partner APIs and files. Async handles thousands of such waits cheaply, but only if every library on the path cooperates with the loop. Threads work with any library, blocking or not, at a higher cost per task. Processes are for work that keeps a CPU busy, because in standard Python only separate processes run Python code in parallel.
+Most field code waits: on databases, partner APIs and files. Async handles thousands of such waits cheaply, but only if every library on the path cooperates with the loop. Threads work with any library, blocking or not, at a higher cost per task. Processes are for work that keeps a CPU busy, because in standard Python only separate processes run Python code in parallel. For the async and sync basics in a service you design yourself, see [keep the request path free](/learn/engineering-foundations/apis-and-backend/keep-the-request-path-free). This lesson covers the harder case: a customer's service you did not design, with libraries you cannot change.
 
 Resources follow the same choice. Every concurrent task can hold a connection, a file handle or memory. Open them with context managers so they close on errors, and share pools, such as one HTTP client or one database pool per process, instead of opening one per task.
 
@@ -97,7 +93,7 @@ For retry policy, circuit breakers and bulkheads around a flaky dependency, see 
 
 - **Python specifics.** The examples use Python's asyncio and its interpreter lock. Other runtimes differ in detail, though the ideas carry over.
 - **Bounds drift.** Upstream limits and latencies change. Watch rejections and timeouts, and revisit the numbers.
-- **Fictional data.** Garrow Software, its vendors and its figures are illustrative.
+- **Composite engagement.** Garrow Software, its vendors and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

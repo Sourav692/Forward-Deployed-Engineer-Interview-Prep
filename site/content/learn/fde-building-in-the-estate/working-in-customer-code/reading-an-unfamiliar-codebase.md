@@ -3,11 +3,7 @@
 
 ## Start with the cover-to-cover read
 
-Garrow Software, a fictional company, sells a subscription-billing product. Its finance team reported that the October revenue dashboard showed £48,200, while the finance ledger said £51,700. Tomasz, the forward deployed engineer on the account, had never seen the code. It was a Python backend with a TypeScript frontend, about 180,000 lines in one repository.
-
-Tomasz started with the README, then read the backend package by package, building notes on each module. Two days later he understood the folder layout well and still had not found the bug. Bea, Garrow's backend developer, found it in forty minutes the next morning. She opened the dashboard, looked at the request it sent, searched for that route, and followed it to a query.
-
-The gap was £3,500, exactly the 14 invoices issued on 31 October. The frontend sent the end date as the last day of the month. The backend treated it as exclusive and stopped at the end of 30 October. Call this **the cover-to-cover read**: studying a codebase in general when the task needs one path through it.
+Garrow Software's finance team reported that the October revenue dashboard showed £48,200 while the finance ledger said £51,700. Tomasz, the forward deployed engineer on the account, had never seen the code: a Python backend and a TypeScript frontend, about 180,000 lines in one repository. He started with the README and read the backend package by package, making notes on each module. Two days later he knew the folder layout well and still had not found the bug. Bea, Garrow's backend developer, found it the next morning in forty minutes, by a different route. Call this **the cover-to-cover read**: studying a codebase in general when the task needs one path through it.
 
 > **What you'll learn**
 >
@@ -101,9 +97,9 @@ Keep the note in the customer's repository or wiki, not in your own files, so th
 
 ## Limits of this lesson
 
-- **Some bugs have no single request.** Race conditions, scheduled jobs and data written by another system need other entry points, covered in [reproduce, isolate, fix](/learn/fde-building-in-the-estate/working-in-customer-code/reproduce-isolate-fix).
+- **Some bugs have no single request.** Scheduled jobs and data written by another system need other entry points, covered in [reproduce, isolate, fix](/learn/fde-building-in-the-estate/working-in-customer-code/reproduce-isolate-fix). Race conditions depend on timing, not on one path: see [concurrency without surprises](/learn/fde-building-in-the-estate/working-in-customer-code/concurrency-without-surprises) and [diagnosing production incidents](/learn/production-ai/observability-and-diagnosis/diagnosing-production-incidents).
 - **Production access varies.** You may only see logs, not run queries. Ask early for read access to a copy of the data.
-- **Fictional data.** Garrow Software, its staff and its figures are illustrative.
+- **Composite engagement.** Garrow Software, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
