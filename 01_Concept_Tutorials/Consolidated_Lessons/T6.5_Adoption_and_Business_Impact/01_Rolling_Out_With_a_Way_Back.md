@@ -6,20 +6,18 @@ module_group: Delivery and adoption
 module_code: T20.6
 module_name: "Adoption, change management and business impact"
 lesson: 1
-lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Realised versus estimated value", "Practise adoption and value"]
+lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Practise adoption and value"]
 level: intermediate
 reading_time: "7 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [rollout, feature flags, rollback, production failures, delivery loop]
 ---
 
 ## Start with the untested switch
 
-Wrenfield Mutual, a fictional insurer, switched on a claims assistant for all 300 of its handlers on a Monday. The runbook said the feature could be turned off. Nobody had tried it. On Wednesday the assistant began quoting an excess figure from last year's policy wording. Turning it off took most of the day, because the setting lived in a deployment file and the only person who knew that was on leave. Every handler saw the bad answers in the meantime.
-
-Launching to everyone at once is the fastest route to value. Without chosen first users and a tested way back, the first real failure becomes an incident. Call this **the one-way launch**: a rollout that can only go forward.
+Wrenfield Mutual, an insurer, had its FDE switch on a claims assistant for all 300 of its handlers on a Monday. The runbook said the feature could be turned off, and nobody had tried it. On Wednesday the assistant began quoting an excess figure from last year's policy wording. Turning it off took most of the day, because the setting lived in a deployment file and the only person who knew that was on leave. Every handler saw the bad answers in the meantime. Call this **the one-way launch**: a rollout that can only go forward.
 
 > **What you'll learn**
 >
@@ -101,7 +99,7 @@ In the first weeks, the most common failure is an answer built on an outdated po
 
 - **The rollback trigger and responders are illustrative.** Set real margins from the baseline you measured before launch.
 - **Some changes cannot be switched off.** A flag hides a feature, but it does not undo data the feature already wrote or messages it already sent. Plan the way back for those separately.
-- **Wrenfield Mutual is fictional.** Its figures are illustrative.
+- **Composite engagement.** Wrenfield Mutual and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

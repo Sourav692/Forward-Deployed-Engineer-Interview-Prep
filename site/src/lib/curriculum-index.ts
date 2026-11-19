@@ -1549,7 +1549,6 @@ export const INDEX_MODULES: IndexModule[] = [
       "measuring-trust-and-overrides",
       "diagnosing-low-adoption",
       "proving-business-impact",
-      "realised-versus-estimated-value",
       "practise-adoption-and-value"
     ],
     "practiceMinutes": 225
@@ -2775,6 +2774,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "customer-discovery/practise-discovery-questions-2": "customer-discovery/practise-discovery-questions-1",
   "scoping-an-fde-project/estimating-ai-work-as-a-product": "scoping-an-fde-project/the-system-behind-the-screens",
   "requirements-and-solution-design/practise-requirements-and-design-2": "requirements-and-solution-design/practise-requirements-and-design-1",
+  "adoption-and-impact/realised-versus-estimated-value": "adoption-and-impact/proving-business-impact",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",
   "delivery-stages-and-gates/readme": "delivery-stages-and-gates/delivery-as-a-repeatable-process",
   "delivery-stages-and-gates/theory": "delivery-stages-and-gates/delivery-as-a-repeatable-process",

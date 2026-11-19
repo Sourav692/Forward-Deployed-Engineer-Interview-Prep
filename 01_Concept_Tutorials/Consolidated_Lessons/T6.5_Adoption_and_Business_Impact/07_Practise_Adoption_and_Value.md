@@ -5,13 +5,13 @@ track: Discovery, Scoping and Delivery
 module_group: Delivery and adoption
 module_code: T20.6
 module_name: "Adoption, change management and business impact"
-lesson: 7
-lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Realised versus estimated value", "Practise adoption and value"]
+lesson: 6
+lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Practise adoption and value"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [practice, interview, adoption, business value, customer scenario]
 ---
 
@@ -94,7 +94,7 @@ Taught in [diagnosing low adoption](03_Diagnosing_Low_Adoption.md) and [measurin
 
 ## Proving and reporting value
 
-Taught in [realised versus estimated value](06_Realised_Versus_Estimated_Value.md).
+Taught in [proving business impact](02_Proving_Business_Impact.md).
 
 <details>
 <summary>Practice question 7. Finance asks you to prove the assistant caused the savings. How do you set that up?</summary>

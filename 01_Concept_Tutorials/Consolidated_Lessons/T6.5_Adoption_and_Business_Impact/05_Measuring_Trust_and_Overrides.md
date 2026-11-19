@@ -6,24 +6,18 @@ module_group: Delivery and adoption
 module_code: T20.6
 module_name: "Adoption, change management and business impact"
 lesson: 3
-lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Realised versus estimated value", "Practise adoption and value"]
+lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Practise adoption and value"]
 level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [adoption, trust, overrides, spot checks, telemetry, scorecard]
 ---
 
 ## Start with the two per cent
 
-Fallow Foods, a fictional food wholesaler, receives claims from restaurants for short or damaged deliveries. An FDE team built an assistant that recommends whether to approve each claim and for how much. Credit controllers review the recommendation and record the decision.
-
-At the end of the first month the dashboard showed an override rate of 2%. Controllers changed the recommendation on only 12 of 620 decisions. The sponsor read it as a sign of trust and asked about expanding to a second team.
-
-A senior controller then checked 200 accepted recommendations by hand. She found 23 wrong, 11.5%, most of them paying in full on claims with no photo of the damage. Median time to accept a recommendation was 8 seconds. The finance ledger also showed 1,000 credit notes that month, while the tool had recorded 620 decisions. The other 380 had been finished in a spreadsheet.
-
-The low override rate was not trust. It was agreement without checking, from the people who still used the tool. Call this **the quiet agreement**: a low override rate read as success when nobody measured whether the accepted answers were right.
+Fallow Foods, a food wholesaler, had its FDE build an assistant that recommends whether to approve each restaurant claim for a short or damaged delivery, and for how much. Credit controllers review the recommendation and record the decision. After a month the dashboard showed an override rate of 2%, 12 changes in 620 decisions, and the sponsor asked about a second team. A senior controller then checked 200 accepted recommendations by hand and found 23 wrong, 11.5%, most of them paying in full on claims with no photo of the damage. Median time to accept was 8 seconds, and the finance ledger showed 1,000 credit notes that month against the tool's 620 decisions. The other 380 had been finished in a spreadsheet. Call this **the quiet agreement**: a low override rate read as success when nobody measured whether the accepted answers were right.
 
 > **What you'll learn**
 >
@@ -120,7 +114,7 @@ Close with actions, owners and dates. Fallow's were: flag claims without photos,
 
 - **Spot checks cost expert time.** Size the sample to the decision's risk. A low-value, reversible decision needs fewer checks.
 - **Ground truth can be uncertain.** Two experts may disagree. Measure their agreement on a shared sample first.
-- **Fictional data.** Fallow Foods and its figures are illustrative.
+- **Composite engagement.** Fallow Foods and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

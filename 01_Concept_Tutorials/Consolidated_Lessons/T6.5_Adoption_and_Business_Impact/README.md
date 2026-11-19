@@ -1,6 +1,6 @@
 # T20.6 Adoption and Business Impact: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T20.6 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
+These six lessons are the site's teaching copy of module T20.6 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
@@ -9,8 +9,9 @@ These seven lessons are the site's teaching copy of module T20.6 "Adoption, chan
 | 3 | [Diagnosing Low Adoption](03_Diagnosing_Low_Adoption.md) | `diagnosing-low-adoption` | Published |
 | 4 | [Training and Champions](04_Training_and_Champions.md) | `training-and-champions` | Drafted |
 | 5 | [Measuring Trust and Overrides](05_Measuring_Trust_and_Overrides.md) | `measuring-trust-and-overrides` | Drafted |
-| 6 | [Realised Versus Estimated Value](06_Realised_Versus_Estimated_Value.md) | `realised-versus-estimated-value` | Drafted |
-| 7 | [Practise Adoption and Value](07_Practise_Adoption_and_Value.md) | `practise-adoption-and-value` | Drafted |
+| 6 | [Practise Adoption and Value](07_Practise_Adoption_and_Value.md) | `practise-adoption-and-value` | Drafted |
+
+On 19 November 2026 "Realised Versus Estimated Value" merged into "Proving Business Impact", which keeps its slug. `realised-versus-estimated-value` redirects to it.
 
 ## Sources
 

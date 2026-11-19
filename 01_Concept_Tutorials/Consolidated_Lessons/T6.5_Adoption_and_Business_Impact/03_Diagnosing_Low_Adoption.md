@@ -6,22 +6,18 @@ module_group: Delivery and adoption
 module_code: T20.6
 module_name: "Adoption, change management and business impact"
 lesson: 4
-lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Realised versus estimated value", "Practise adoption and value"]
+lessons: ["Rolling out with a way back", "Training and champions", "Measuring trust and overrides", "Diagnosing low adoption", "Proving business impact", "Practise adoption and value"]
 level: intermediate
 reading_time: "7 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "18 November 2026"
+last_updated: "19 November 2026"
 tags: [adoption, workflow fit, integration friction, incentives, adoption measurement]
 ---
 
 ## Start with the better model
 
-Corrin Tools, a fictional hardware distributor, gave its trade-counter staff an assistant that finds a part from a customer's description. Six weeks after launch, staff used it on fewer than one order in ten. The team spent the next month on a larger model and better search. Accuracy rose from 88% to 94%. Use did not move.
-
-When someone finally stood at the counter, the reason was plain. Staff took orders standing at a till, and the assistant ran on a desktop in the back office. The model was never the problem.
-
-A technically ready system invites more technical fixes. When nobody uses it, the cause is usually workflow, trust or incentives. Call this **the model reflex**: answering an adoption problem with a quality fix.
+Corrin Tools, a hardware distributor, had its FDE build its trade-counter staff an assistant that finds a part from a customer's description. Six weeks after launch, staff used it on fewer than one order in ten. The FDE spent the next month on a larger model and better search, and accuracy rose from 88% to 94%. Use did not move. When the FDE finally stood at the counter, the reason was plain: staff took orders standing at a till, and the assistant ran on a desktop in the back office. Call this **the model reflex**: answering an adoption problem with a quality fix.
 
 > **What you'll learn**
 >
@@ -78,8 +74,8 @@ The diagnosis is fit and friction, not quality. The next steps are to surface br
 ## Limits of this lesson
 
 - **The nine causes are a starting list, not a complete one.** Policy, union agreements or a manager's instruction can also block use. Ask the users.
-- **Low use is sometimes the right answer.** If the problem was not worth solving, the honest outcome is to stop, as [realised versus estimated value](06_Realised_Versus_Estimated_Value.md) covers.
-- **Corrin Tools and the worked example's findings are illustrative.**
+- **Low use is sometimes the right answer.** If the problem was not worth solving, the honest outcome is to stop, as [proving business impact](02_Proving_Business_Impact.md) covers.
+- **Composite engagement.** Corrin Tools and the worked example's findings are illustrative, not a real customer.
 
 ## Interview angle
 

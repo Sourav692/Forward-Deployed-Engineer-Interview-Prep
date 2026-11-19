@@ -15,6 +15,8 @@ export const RENAMED_T6: Record<string, string | null> = {
   // T20.3 practice: parts 1 and 2 merged into one page (19 Nov 2026); part 1 keeps its slug.
   'requirements-and-solution-design/practise-requirements-and-design-2':
     'requirements-and-solution-design/practise-requirements-and-design-1',
+  // T20.6: Realised Versus Estimated Value merged into Proving Business Impact (19 Nov 2026).
+  'adoption-and-impact/realised-versus-estimated-value': 'adoption-and-impact/proving-business-impact',
   // T6.2 consolidated into seven lessons; Module 5 of the guide moved to T6.5.
   'scoping-an-fde-project/scoping-an-fde-project-complete-guide':
     'scoping-an-fde-project/problem-goal-and-definition-of-done',
