@@ -3,11 +3,7 @@
 
 ## Start with the design the sponsor approved
 
-Merrow Housing, a fictional housing association, wanted tenant repair requests sent automatically to its contractors' job system. The FDE team proposed a small integration service on a virtual machine: quick to build, and the team knew the tools. The sponsor approved it in a steering meeting in week two.
-
-In week four, the design went to Merrow's platform engineering team for a security review. They rejected it. Every integration at Merrow ran on a managed integration platform the team supported. A standalone virtual machine meant patching, monitoring and on-call duty that nobody had agreed to take. The team had to rebuild on the platform, and two weeks were lost.
-
-The design was sound and the approval was real. The people who would run it had not been asked. Call this **approval from the wrong room**.
+Merrow Housing, a housing association, wanted tenant repair requests sent automatically to its contractors' job system. Its FDE proposed a small integration service on a virtual machine: quick to build, on familiar tools. The sponsor approved it in a steering meeting in week two. In week four, Merrow's platform engineering team rejected it at security review. Every integration at Merrow ran on a managed integration platform they supported, and a standalone virtual machine meant patching, monitoring and on-call duty nobody had agreed to take. The FDE rebuilt on the platform, and two weeks were lost. The design was sound and the approval was real, but the people who would run the system had not been asked. Call this **approval from the wrong room**.
 
 > **What you'll learn**
 >
@@ -105,7 +101,7 @@ Never route around the engineers by escalating to get the original design forced
 
 - **Not every decision needs an ADR.** Reserve them for choices that are hard to reverse, cross teams or will puzzle someone later.
 - **Reviews can stall.** Set a decision date for each review, and take open points to the sponsor when it passes.
-- **Fictional data.** Merrow Housing and its figures are illustrative.
+- **Composite engagement.** Merrow Housing and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

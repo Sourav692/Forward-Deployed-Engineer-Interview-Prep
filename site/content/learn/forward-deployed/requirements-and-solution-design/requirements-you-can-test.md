@@ -3,11 +3,7 @@
 
 ## Start with three words nobody could test
 
-Corran Insurance, a fictional insurer, wanted a new online claims form. The requirements document had one line on quality: the form must be "fast, secure and always available".
-
-The team built it, and the arguments started at the first demo. The claims director timed a submission at four seconds and called it slow. The security team asked whether claim photos were scanned for malware, which nobody had planned. Operations asked why the form showed an error every night between 01:00 and 03:00. The form did exactly what the document said, because the document said nothing anyone could check.
-
-Each of those three words hid a decision: how fast, for whom, at what load; secure against what; available when, and measured how. Call this **the untestable adjective**: a word that sounds like a requirement and settles nothing.
+Corran Insurance asked its FDE for a new online claims form. The requirements document had one line on quality: the form must be "fast, secure and always available". The FDE built to that line, and the arguments started at the first demo. The claims director timed a submission at four seconds and called it slow. Security asked whether claim photos were scanned for malware, which nobody had planned. Operations asked why the form failed every night between 01:00 and 03:00. The form did exactly what the document said, and the document said nothing anyone could check. Call this **the untestable adjective**: a word that sounds like a requirement and settles nothing.
 
 > **What you'll learn**
 >
@@ -110,7 +106,7 @@ The next lesson, on [managing change and scope creep](/learn/forward-deployed/re
 
 - **Not every requirement needs a number on day one.** Early discovery can use ranges. Fix the numbers before the build plan depends on them.
 - **Targets cost money.** Higher availability and lower latency need more engineering and more infrastructure. The sponsor must see that cost.
-- **Fictional data.** Corran Insurance and its figures are illustrative.
+- **Composite engagement.** Corran Insurance and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

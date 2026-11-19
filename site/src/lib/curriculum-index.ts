@@ -1713,8 +1713,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "technical-readiness-before-you-commit",
       "from-requirements-to-architecture",
       "decision-records-and-design-reviews",
-      "practise-requirements-and-design-1",
-      "practise-requirements-and-design-2"
+      "practise-requirements-and-design-1"
     ],
     "practiceMinutes": 270
   },
@@ -2775,6 +2774,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "customer-discovery/fde-problem-decomposition-question-bank": "customer-discovery/the-discovery-conversation",
   "customer-discovery/practise-discovery-questions-2": "customer-discovery/practise-discovery-questions-1",
   "scoping-an-fde-project/estimating-ai-work-as-a-product": "scoping-an-fde-project/the-system-behind-the-screens",
+  "requirements-and-solution-design/practise-requirements-and-design-2": "requirements-and-solution-design/practise-requirements-and-design-1",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",
   "delivery-stages-and-gates/readme": "delivery-stages-and-gates/delivery-as-a-repeatable-process",
   "delivery-stages-and-gates/theory": "delivery-stages-and-gates/delivery-as-a-repeatable-process",

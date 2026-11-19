@@ -6,22 +6,18 @@ module_group: Discovery and scoping
 module_code: T20.3
 module_name: Requirements and solution design
 lesson: 1
-lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design, part 1", "Practise requirements and design, part 2"]
+lessons: ["Requirements you can test", "Managing change and scope creep", "Technical readiness before you commit", "From requirements to architecture", "Decision records and design reviews", "Practise requirements and design"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [requirements, user stories, acceptance criteria, non-functional requirements, SLO]
 ---
 
 ## Start with three words nobody could test
 
-Corran Insurance, a fictional insurer, wanted a new online claims form. The requirements document had one line on quality: the form must be "fast, secure and always available".
-
-The team built it, and the arguments started at the first demo. The claims director timed a submission at four seconds and called it slow. The security team asked whether claim photos were scanned for malware, which nobody had planned. Operations asked why the form showed an error every night between 01:00 and 03:00. The form did exactly what the document said, because the document said nothing anyone could check.
-
-Each of those three words hid a decision: how fast, for whom, at what load; secure against what; available when, and measured how. Call this **the untestable adjective**: a word that sounds like a requirement and settles nothing.
+Corran Insurance asked its FDE for a new online claims form. The requirements document had one line on quality: the form must be "fast, secure and always available". The FDE built to that line, and the arguments started at the first demo. The claims director timed a submission at four seconds and called it slow. Security asked whether claim photos were scanned for malware, which nobody had planned. Operations asked why the form failed every night between 01:00 and 03:00. The form did exactly what the document said, and the document said nothing anyone could check. Call this **the untestable adjective**: a word that sounds like a requirement and settles nothing.
 
 > **What you'll learn**
 >
@@ -124,7 +120,7 @@ The next lesson, on [managing change and scope creep](02_Managing_Change_and_Sco
 
 - **Not every requirement needs a number on day one.** Early discovery can use ranges. Fix the numbers before the build plan depends on them.
 - **Targets cost money.** Higher availability and lower latency need more engineering and more infrastructure. The sponsor must see that cost.
-- **Fictional data.** Corran Insurance and its figures are illustrative.
+- **Composite engagement.** Corran Insurance and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
