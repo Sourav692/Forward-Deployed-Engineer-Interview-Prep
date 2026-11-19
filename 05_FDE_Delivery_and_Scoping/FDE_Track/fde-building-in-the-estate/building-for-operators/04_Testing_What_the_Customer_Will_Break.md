@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [testing, contract tests, fixtures, mocks, failure injection, test data]
 ---
 
 ## Start with the green mock
 
-Rydal Water, a fictional water company, reads 210,000 smart meters through a vendor's platform. An FDE team built an import that pulls daily readings and flags likely leaks: a home whose use jumps far above its normal pattern gets a text message and a call from the leaks team.
-
-The team wrote 340 tests, and all of them passed. Most called a mock of the vendor's API, written from the vendor's documentation in March. In September, the vendor rolled out a new meter model that reported use in litres instead of cubic metres, and added a `unit` field to say so. The mock had no `unit` field and always returned cubic metres. The import read 1,240 litres as 1,240 cubic metres. Overnight, 3,100 households received a text warning them of a major leak.
-
-The tests were green because they tested the code against a picture of the vendor that had stopped being true. Call this **the green mock**.
+Rydal Water, a water company, reads 210,000 smart meters through a vendor's platform. Sana, the forward deployed engineer, built an import that pulls daily readings and texts any home whose use jumps far above its normal pattern, and wrote 340 tests for it, all green. Most called a mock of the vendor's API written from the vendor's documentation in March. In September, the vendor rolled out a meter model that reported litres instead of cubic metres, with a new `unit` field to say so. The mock had no `unit` field, the import read 1,240 litres as 1,240 cubic metres, and overnight 3,100 households were warned of a major leak. The tests had checked the code against a picture of the vendor that had stopped being true. Call this **the green mock**.
 
 > **What you'll learn**
 >
@@ -84,7 +80,7 @@ Three habits keep a mock honest:
 
 - **Contract tests.** Write down what your code expects from the vendor, field by field, and check that both the mock and the real service meet it. In consumer-driven contract testing, as the Pact tools support, the consumer publishes its expectations and the provider's build verifies them. With an external vendor who will not run your checks, run them yourself against their sandbox.
 - **Scheduled checks against the real service.** Once a day, call the vendor's sandbox or a read-only production endpoint and compare responses with the contract. Fowler's note on contract tests describes this: test doubles stay fast, and a separate, less frequent test checks they still match reality.
-- **Checks in production.** Validate every response at runtime against the contract. An unknown field or unit should stop the batch and alert the team before anyone is texted.
+- **Checks in production.** Validate every response at runtime against the contract. An unknown field or unit should stop the batch and alert the team before anyone is texted. A new `unit` field is schema drift, and [schema drift and late data](../customer-data-pipelines/04_Schema_Drift_and_Late_Data.md) covers how a pipeline detects and handles it.
 
 The switcher replays Rydal's September change under each level of protection.
 
@@ -105,7 +101,7 @@ The switcher replays Rydal's September change under each level of protection.
 
 Two failures arrive in every real integration, and both deserve tests of their own.
 
-**Malformed rows.** One bad row should not block 200,000 good ones. Validate each row, load the valid ones and **quarantine** the rest: store them with the reason they failed, count them, and show the count to an operator who can fix or dismiss them. Set a limit too. If more than 2% of a file fails, stop and alert, because that usually means the format changed, not that the data got worse. Test both sides: a file with 3 bad rows loads with 3 in quarantine, and a file with 30% bad rows stops.
+**Malformed rows.** One bad row should not block 200,000 good ones. Validate each row, load the valid ones and **quarantine** the rest: store them with the reason they failed, count them, and show the count to an operator who can fix or dismiss them. Set a limit too. If more than 2% of a file fails, stop and alert, because that usually means the format changed, not that the data got worse. Test both sides: a file with 3 bad rows loads with 3 in quarantine, and a file with 30% bad rows stops. The code for per-row validation and quarantine is in [data handling for real exports](../working-in-customer-code/04_Data_Handling_for_Real_Exports.md).
 
 **An unavailable service.** The vendor's API will time out, return errors and go down for maintenance. Test that the import:
 
@@ -132,7 +128,7 @@ The Principles of Chaos Engineering describe the same loop for production system
 
 - **Test tooling is not covered.** Frameworks and proxies differ by stack. The choices here apply whichever tools the customer uses.
 - **Evaluating AI output is a separate subject.** Testing a model's answers needs evaluation sets, covered in the site's [evaluation pyramid](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/01_The_Evaluation_Pyramid.md) lesson.
-- **Fictional data.** Rydal Water, its vendor and its figures are illustrative.
+- **Composite engagement.** Rydal Water, its vendor and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -346,7 +346,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md",
       "estMinutes": 14,
       "href": "/learn/engineering-foundations/apis-and-backend/idempotent-writes-and-long-running-jobs",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "sql-for-business-questions",
@@ -8047,7 +8047,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/01_Screens_Built_Around_Decisions.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/screens-built-around-decisions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "honest-async-ux",
@@ -8059,7 +8059,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/02_Honest_Async_Interfaces.md",
       "estMinutes": 11,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/honest-async-ux",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "human-review-and-approval",
@@ -8071,7 +8071,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/03_Human_Review_and_Approval.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/human-review-and-approval",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "testing-what-the-customer-will-break",
@@ -8083,7 +8083,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/04_Testing_What_the_Customer_Will_Break.md",
       "estMinutes": 13,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/testing-what-the-customer-will-break",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "acceptance-with-the-customer",
@@ -8095,7 +8095,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/05_Acceptance_with_the_Customer.md",
       "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/acceptance-with-the-customer",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-building-for-operators",
@@ -8105,9 +8105,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/building-for-operators/06_Practise_Building_for_Operators.md",
-      "estMinutes": 6,
+      "estMinutes": 8,
       "href": "/learn/fde-building-in-the-estate/building-for-operators/practise-building-for-operators",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "crm-erp-and-ticketing-systems",

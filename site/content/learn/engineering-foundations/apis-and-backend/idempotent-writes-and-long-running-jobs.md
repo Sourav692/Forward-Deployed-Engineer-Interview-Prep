@@ -115,6 +115,8 @@ The client can learn about progress in three ways:
 
 *Table 3: Three ways to report job progress. Many APIs offer polling as the baseline and add one of the others.*
 
+The operator's screen is in [honest async interfaces](/learn/fde-building-in-the-estate/building-for-operators/honest-async-ux).
+
 ## When a stream drops halfway
 
 A streamed chat answer is a short job whose result arrives in pieces, and sometimes the provider drops halfway. [Build a Streaming Chat Endpoint](/learn/engineering-foundations/apis-and-backend/build-a-streaming-chat-endpoint) explains why the error must travel as an event inside the stream.

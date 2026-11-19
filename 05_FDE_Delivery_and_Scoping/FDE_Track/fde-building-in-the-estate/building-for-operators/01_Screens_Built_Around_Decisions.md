@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [operator UI, dashboards, tables, forms, role-based views, accessibility]
 ---
 
 ## Start with page three
 
-Orwell Housing, a fictional housing association, manages 14,000 homes. Its repairs team asked for "one dashboard for everything", and the delivery team built it: 22 charts, a map, and a table of every open repair job, sorted by the date the job was created.
-
-On a cold Monday in January, a tenant reported no heating. She was 84 and lived alone, which made the job an emergency under Orwell's own policy. The job was row 61 in the table. The scheduler, Priya, worked from the top of the list and filled the day's engineer slots with older routine jobs. The emergency sat on page three until the tenant's daughter phoned at 16:00.
-
-Every fact Priya needed was on the screen. None of it was arranged around the decision she was making: which jobs go to which engineers today. Call this **the dashboard of everything**.
+Orwell Housing, a housing association with 14,000 homes, asked for "one dashboard for everything", and Kofi, the forward deployed engineer, built it: 22 charts, a map and a table of every open repair job, sorted by the date the job was created. On a cold Monday in January, an 84-year-old tenant who lived alone reported no heating, which made the job an emergency under Orwell's own policy. It was row 61. Priya, the scheduler, worked from the top of the list and filled the day's engineer slots with older routine jobs, and the emergency sat on page three until the tenant's daughter phoned at 16:00. Every fact Priya needed was on the screen, and none of it was arranged around the decision she was making: which jobs go to which engineers today. Call this **the dashboard of everything**.
 
 > **What you'll learn**
 >
@@ -129,9 +125,9 @@ Test with a keyboard and a screen reader before user acceptance, not after. Fixe
 ## Limits of this lesson
 
 - **Visual design is out of scope.** This lesson covers what goes on a screen and in what order, not typography or visual style.
-- **Access control is taught in outline.** Enforcement on the server, roles and permissions belong to the backend design, covered in the T1 foundations.
+- **Access control is taught in outline.** Where each permission check belongs on the server is in the site's [authorise every object](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/09_Authorise_Every_Object.md) lesson.
 - **Accessibility law varies by country.** Check the customer's obligations with their legal or accessibility lead.
-- **Fictional data.** Orwell Housing, its tenant and its figures are illustrative.
+- **Composite engagement.** Orwell Housing, its tenant and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
