@@ -6,20 +6,20 @@ module_group: Discovery and scoping
 module_code: T20.2
 module_name: Scoping an FDE project
 lesson: 2
-lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "The system behind the screens", "Estimating AI work as a product", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
+lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "Sizing the work a demo hides", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [scoping, baseline, value, ROI, payback, sensitivity]
 ---
 
 ## Start with the savings nobody could find
 
-Wexford Retail, a fictional online retailer, handles 20,000 return requests a month. A proposal for an AI assistant promised to save four minutes on each one: 80,000 minutes, or about 1,333 staff hours a month, which the proposal valued at £26,000.
+Wexford Retail, an online retailer, handles 20,000 return requests a month. A proposal for an AI assistant promised to save four minutes on each one: 80,000 minutes, or about 1,333 staff hours a month, which the proposal valued at £26,000.
 
-The finance director asked one question: which budget line goes down? Nobody could answer. The returns team was salaried and would stay the same size. Nobody had timed a return. The four minutes was a guess. The £26,000 described time, not money.
+The FDE inherited the proposal. At the first review the finance director asked one question: which budget line goes down? Nobody could answer. The returns team was salaried and would stay the same size. Nobody had timed a return. The four minutes was a guess. The £26,000 described time, not money.
 
 The FDE's job is to turn a claim like this into a number the customer can check. Call the gap between minutes saved and money saved **the phantom saving**.
 
@@ -139,7 +139,7 @@ Some business cases work only if volume grows. Present those honestly:
 
 - **Payback ignores timing and risk.** Finance teams may prefer a discounted measure such as net present value. Ask which they use.
 - **Some value resists money.** Fewer errors in a safety process matter even when the cash case is weak. Report them in their own unit.
-- **Fictional data.** Wexford Retail and its figures are illustrative.
+- **Composite engagement.** Wexford Retail and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

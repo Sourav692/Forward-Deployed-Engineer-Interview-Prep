@@ -6,20 +6,20 @@ module_group: Discovery and scoping
 module_code: T20.2
 module_name: Scoping an FDE project
 lesson: 1
-lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "The system behind the screens", "Estimating AI work as a product", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
+lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "Sizing the work a demo hides", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
 level: intermediate
 reading_time: "10 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [scoping, problem statement, goals, definition of done, MVP]
 ---
 
 ## Start with the project nobody could finish
 
-Ashby Mutual, a fictional insurer, asked for "an AI support agent". The team started coding the happy path on the first day. In week three a rule surfaced that nobody had mentioned: some policy changes need a second approver. The account-system integration turned out harder than expected. The date slipped.
+Ashby Mutual, an insurer, asked its FDE for "an AI support agent", and the FDE's team started coding the happy path on day one. In week three a rule surfaced that nobody had mentioned: some policy changes need a second approver. The account-system integration turned out harder than expected, and the date slipped.
 
-At the review, the sponsor asked why customers could not use it yet. The team said the pilot was done. The sponsor had been pricing a full release. Nobody had been careless. They had never agreed what the work was. Call this **the moving finish line**: a project whose end was never written down, so every party measures it against a different one.
+At the review the FDE reported the pilot done. The sponsor asked why customers could not use it yet, because the sponsor had been pricing a full release. Nobody had been careless. They had never agreed what the work was. Call this **the moving finish line**: a project whose end was never written down, so every party measures it against a different one.
 
 > **What you'll learn**
 >
@@ -109,7 +109,7 @@ One sentence of request became a measurable goal and a defined level of done, be
 
 - **A map is not a contract.** It records today's understanding and changes as facts arrive. Date each version.
 - **Some goals resist one number.** Safety or compliance outcomes may need a threshold and a review rather than a single target.
-- **Fictional data.** Ashby Mutual and its figures are illustrative.
+- **Composite engagement.** Ashby Mutual and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

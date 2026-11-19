@@ -3,7 +3,7 @@
 
 ## Start with the integration saved for last
 
-Pellar Logistics, a fictional freight company, approved a six-week plan for a dispatch dashboard. The plan was a tidy ticket list. Screens came first because they were easy to show. The connection to Pellar's ageing route-planning system sat in week six.
+Pellar Logistics, a freight company, approved its FDE's six-week plan for a dispatch dashboard. The plan was a tidy ticket list. Screens came first because they were easy to show. The connection to Pellar's ageing route-planning system sat in week six.
 
 In week six the route system turned out to accept updates only in nightly batches. Every screen built on live updates needed rework. The date moved by a month, and nobody had seen it coming, because nothing in the first five weeks had touched the risk. Call this **the last-week integration**: a plan ordered by what is easy to show instead of by what could break it.
 
@@ -77,16 +77,7 @@ Keep the brief to one page. It names the project and owner, the problem and who 
 - **Open question:** whether ticket history is reachable through the existing API.
 - **Checkpoint:** Thursday, after the security review.
 
-The questions that expose the real work fall into four groups:
-
-| Group | Questions |
-|---|---|
-| Business | Why now, who owns the outcome, what if nothing is done, which metric matters |
-| Workflow | Show the current process, the hand-offs and the usual exceptions |
-| Technical | Which systems hold the data, which actions are needed, what the access limits are |
-| Delivery | Who approves, which deadline is real, what can stay manual, what can be piloted |
-
-*Table 2: Four groups of questions that expose the real work.*
+If a line of the brief cannot be filled in, discovery is not finished. Go back to [the discovery conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation) for the questions that expose the real work.
 
 > **Pitfall:** The hardest integration scheduled for the final week is a date that will slip. It is one of eight drift signs: nobody can state the outcome, stakeholders disagree on the MVP, the estimate lists no assumptions, the hardest integration comes last, nobody owns admin or support, the AI demo has no test set, scope arrives through chat without changing the plan, and the team celebrates deployment without knowing whether users succeeded.
 
@@ -107,7 +98,7 @@ One engineer owns booking end to end. Another owns payment through reconciliatio
 
 - **Four documents suit a small team.** Regulated or multi-team work may need more formal change control.
 - **The critical path moves.** Re-draw it after each milestone, because a spike result can change which work blocks.
-- **Fictional data.** Pellar Logistics and its figures are illustrative.
+- **Composite engagement.** Pellar Logistics and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

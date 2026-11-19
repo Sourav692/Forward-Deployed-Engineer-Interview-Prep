@@ -10,6 +10,8 @@ export const RENAMED_T6: Record<string, string | null> = {
   'customer-discovery/fde-problem-decomposition-question-bank': 'customer-discovery/the-discovery-conversation',
   // T20.1 practice: parts 1 and 2 merged into one page (19 Nov 2026); part 1 keeps its slug.
   'customer-discovery/practise-discovery-questions-2': 'customer-discovery/practise-discovery-questions-1',
+  // T20.2: Estimating AI Work merged into Sizing the Work a Demo Hides (19 Nov 2026), which keeps the screens slug.
+  'scoping-an-fde-project/estimating-ai-work-as-a-product': 'scoping-an-fde-project/the-system-behind-the-screens',
   // T6.2 consolidated into seven lessons; Module 5 of the guide moved to T6.5.
   'scoping-an-fde-project/scoping-an-fde-project-complete-guide':
     'scoping-an-fde-project/problem-goal-and-definition-of-done',

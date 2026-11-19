@@ -5,19 +5,19 @@ track: Discovery, Scoping and Delivery
 module_group: Discovery and scoping
 module_code: T20.2
 module_name: Scoping an FDE project
-lesson: 6
-lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "The system behind the screens", "Estimating AI work as a product", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
+lesson: 5
+lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "Sizing the work a demo hides", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
 level: intermediate
 reading_time: "10 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [scoping, MVP, prioritisation, first release, riskiest assumption]
 ---
 
 ## Start with the release that had everything
 
-Northgate Engineering, a fictional engineering firm, gave its FDE team six weeks to build a document assistant. The request listed chat, Slack, email, permissions, analytics, many languages, document editing and automatic actions. The lead accepted all of it, and every stakeholder left the kick-off happy.
+Northgate Engineering, an engineering firm, gave its FDE team six weeks to build a document assistant. The request listed chat, Slack, email, permissions, analytics, many languages, document editing and automatic actions. The FDE leading it accepted all of it, and every stakeholder left the kick-off happy.
 
 At week six, each feature was half built. Chat worked in English but leaked a restricted document in testing, because permissions had slipped behind the Slack integration. Nothing could go to users. Nobody had learned whether staff wanted the assistant at all. Call this **the whole-list release**: a first release sized by what people asked for instead of by what the outcome needs.
 
@@ -27,7 +27,7 @@ At week six, each feature was half built. Chat worked in English but leaked a re
 > - Sort every request into must-have, should-have and later.
 > - Choose the first release around the assumption most likely to kill the project.
 
-A large number attached to a large wish list is not a plan. The lead's job is to find the narrowest release that delivers the core outcome safely, using the sizes from [Estimating AI Work as a Product](03_Estimating_AI_Work_as_a_Product.md) to show what each cut saves.
+A large number attached to a large wish list is not a plan. The lead's job is to find the narrowest release that delivers the core outcome safely, using the sizes from [Sizing the Work a Demo Hides](02_Sizing_the_Work_a_Demo_Hides.md) to show what each cut saves.
 
 ## Make the MVP narrow, not sloppy
 
@@ -101,7 +101,7 @@ The six-week MVP is permission-aware chat over the documents, with enough analyt
 
 - **One sort is not the only sort.** Another customer's risk profile may move Slack into must-have, for example if staff cannot reach a browser.
 - **Manual steps have a ceiling.** They hold while volume is small. Watch their load and plan the switch.
-- **Fictional data.** Northgate Engineering and its figures are illustrative.
+- **Composite engagement.** Northgate Engineering and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

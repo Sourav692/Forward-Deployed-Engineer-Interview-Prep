@@ -5,21 +5,21 @@ track: Discovery, Scoping and Delivery
 module_group: Discovery and scoping
 module_code: T20.2
 module_name: Scoping an FDE project
-lesson: 7
-lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "The system behind the screens", "Estimating AI work as a product", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
+lesson: 6
+lessons: ["Problem, goal and definition of done", "Baselines, value and ROI", "Build, buy, configure or no AI", "Sizing the work a demo hides", "Shrinking to a first release", "Estimates people can trust", "From estimate to build plan", "Scoping in practice", "Practise scoping and value questions"]
 level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "19 November 2026"
 tags: [scoping, estimation, uncertainty, ranges, spikes, communication]
 ---
 
 ## Start with the twenty-one days
 
-Tempo Studios, the fictional studio chain from [The System Behind the Screens](02_The_System_Behind_the_Screens.md), asked how long its booking MVP would take. The lead answered "21 working days". The sponsor booked a launch event for day 25.
+Tempo Studios, the studio chain from [Sizing the Work a Demo Hides](02_Sizing_the_Work_a_Demo_Hides.md), asked its FDE how long the booking MVP would take. The FDE answered "21 working days". The sponsor booked a launch event for day 25.
 
-On day 12 the team learned that the payment provider did not support Tempo's refund rules. Nobody had written that assumption down, so nobody had tested it. The work grew by two weeks, and the lead spent a week defending a number whose basis had gone. Call this **the bare number**: an estimate stripped of the assumptions and risks that would let anyone check it.
+On day 12 the team learned that the payment provider did not support Tempo's refund rules. Nobody had written that assumption down, so nobody had tested it. The work grew by two weeks, and the FDE spent a week defending a number whose basis had gone. Call this **the bare number**: an estimate stripped of the assumptions and risks that would let anyone check it.
 
 > **What you'll learn**
 >
@@ -107,7 +107,7 @@ Avoid both "it depends" and fake certainty. Give the current range, the assumpti
 
 ## Worked example: estimating the class-booking MVP
 
-A stakeholder asks how long the class-booking MVP will take. Break it down. Login and checkout are hosted, so they are known. The booking workflow with waitlists is known but has many states. The refund rules are a known unknown: the payment provider may not support them. Door access is a known unknown too.
+A stakeholder asks how long the class-booking MVP will take. Break it down. Login and checkout are hosted and therefore known. The booking workflow with waitlists is known but has many states. The refund rules are a known unknown: the payment provider may not support them. Door access is a known unknown too.
 
 The answer is three to five weeks for one experienced engineer, assuming hosted login, hosted checkout and an existing design system. A spike on refunds comes first, and the range is reissued after it.
 
@@ -124,13 +124,13 @@ The answer is three to five weeks for one experienced engineer, assuming hosted 
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The booking case study in [Scoping in Practice](07_Scoping_in_Practice.md) sizes a single-location booking MVP at six to ten weeks. That version adds memberships, an admin portal and operations work, so the two figures rest on different scope. The gap is itself the lesson: a number means little without its assumptions.
+The booking case study in [Scoping in Practice](07_Scoping_in_Practice.md) sizes a single-location booking MVP at six to ten weeks. That version adds memberships, an admin portal and operations work. The two figures rest on different scope. The gap is itself the lesson: a number means little without its assumptions.
 
 ## Limits of this lesson
 
 - **Ranges are not a licence to pad.** A range that never narrows tells the customer nothing. Name what will narrow it.
 - **Buffers cover unknown unknowns only.** A known risk belongs in a spike, not a buffer.
-- **Fictional data.** Tempo Studios and its figures are illustrative.
+- **Composite engagement.** Tempo Studios and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

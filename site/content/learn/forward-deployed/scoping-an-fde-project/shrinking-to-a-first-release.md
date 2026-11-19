@@ -3,7 +3,7 @@
 
 ## Start with the release that had everything
 
-Northgate Engineering, a fictional engineering firm, gave its FDE team six weeks to build a document assistant. The request listed chat, Slack, email, permissions, analytics, many languages, document editing and automatic actions. The lead accepted all of it, and every stakeholder left the kick-off happy.
+Northgate Engineering, an engineering firm, gave its FDE team six weeks to build a document assistant. The request listed chat, Slack, email, permissions, analytics, many languages, document editing and automatic actions. The FDE leading it accepted all of it, and every stakeholder left the kick-off happy.
 
 At week six, each feature was half built. Chat worked in English but leaked a restricted document in testing, because permissions had slipped behind the Slack integration. Nothing could go to users. Nobody had learned whether staff wanted the assistant at all. Call this **the whole-list release**: a first release sized by what people asked for instead of by what the outcome needs.
 
@@ -13,7 +13,7 @@ At week six, each feature was half built. Chat worked in English but leaked a re
 > - Sort every request into must-have, should-have and later.
 > - Choose the first release around the assumption most likely to kill the project.
 
-A large number attached to a large wish list is not a plan. The lead's job is to find the narrowest release that delivers the core outcome safely, using the sizes from [Estimating AI Work as a Product](/learn/forward-deployed/scoping-an-fde-project/estimating-ai-work-as-a-product) to show what each cut saves.
+A large number attached to a large wish list is not a plan. The lead's job is to find the narrowest release that delivers the core outcome safely, using the sizes from [Sizing the Work a Demo Hides](/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens) to show what each cut saves.
 
 ## Make the MVP narrow, not sloppy
 
@@ -87,7 +87,7 @@ The six-week MVP is permission-aware chat over the documents, with enough analyt
 
 - **One sort is not the only sort.** Another customer's risk profile may move Slack into must-have, for example if staff cannot reach a browser.
 - **Manual steps have a ceiling.** They hold while volume is small. Watch their load and plan the switch.
-- **Fictional data.** Northgate Engineering and its figures are illustrative.
+- **Composite engagement.** Northgate Engineering and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

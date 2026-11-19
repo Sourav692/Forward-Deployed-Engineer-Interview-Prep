@@ -3,9 +3,9 @@
 
 ## Start with the twenty-one days
 
-Tempo Studios, the fictional studio chain from [The System Behind the Screens](/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens), asked how long its booking MVP would take. The lead answered "21 working days". The sponsor booked a launch event for day 25.
+Tempo Studios, the studio chain from [Sizing the Work a Demo Hides](/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens), asked its FDE how long the booking MVP would take. The FDE answered "21 working days". The sponsor booked a launch event for day 25.
 
-On day 12 the team learned that the payment provider did not support Tempo's refund rules. Nobody had written that assumption down, so nobody had tested it. The work grew by two weeks, and the lead spent a week defending a number whose basis had gone. Call this **the bare number**: an estimate stripped of the assumptions and risks that would let anyone check it.
+On day 12 the team learned that the payment provider did not support Tempo's refund rules. Nobody had written that assumption down, so nobody had tested it. The work grew by two weeks, and the FDE spent a week defending a number whose basis had gone. Call this **the bare number**: an estimate stripped of the assumptions and risks that would let anyone check it.
 
 > **What you'll learn**
 >
@@ -93,7 +93,7 @@ Avoid both "it depends" and fake certainty. Give the current range, the assumpti
 
 ## Worked example: estimating the class-booking MVP
 
-A stakeholder asks how long the class-booking MVP will take. Break it down. Login and checkout are hosted, so they are known. The booking workflow with waitlists is known but has many states. The refund rules are a known unknown: the payment provider may not support them. Door access is a known unknown too.
+A stakeholder asks how long the class-booking MVP will take. Break it down. Login and checkout are hosted and therefore known. The booking workflow with waitlists is known but has many states. The refund rules are a known unknown: the payment provider may not support them. Door access is a known unknown too.
 
 The answer is three to five weeks for one experienced engineer, assuming hosted login, hosted checkout and an existing design system. A spike on refunds comes first, and the range is reissued after it.
 
@@ -110,13 +110,13 @@ The answer is three to five weeks for one experienced engineer, assuming hosted 
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The booking case study in [Scoping in Practice](/learn/forward-deployed/scoping-an-fde-project/scoping-in-practice) sizes a single-location booking MVP at six to ten weeks. That version adds memberships, an admin portal and operations work, so the two figures rest on different scope. The gap is itself the lesson: a number means little without its assumptions.
+The booking case study in [Scoping in Practice](/learn/forward-deployed/scoping-an-fde-project/scoping-in-practice) sizes a single-location booking MVP at six to ten weeks. That version adds memberships, an admin portal and operations work. The two figures rest on different scope. The gap is itself the lesson: a number means little without its assumptions.
 
 ## Limits of this lesson
 
 - **Ranges are not a licence to pad.** A range that never narrows tells the customer nothing. Name what will narrow it.
 - **Buffers cover unknown unknowns only.** A known risk belongs in a spike, not a buffer.
-- **Fictional data.** Tempo Studios and its figures are illustrative.
+- **Composite engagement.** Tempo Studios and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
