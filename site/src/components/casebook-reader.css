@@ -350,6 +350,8 @@ th { font-weight: 600; }
 .rail-sticky { top: calc(3.75rem + var(--section-nav-height) + var(--space-lg)); }
 /* An anchor jump must clear the site header and the sticky section tabs. html already pads 5.5rem (globals.css), so subtract it. */
 .reading-section, .deep-topic { scroll-margin-top: calc(3.75rem + var(--section-nav-height) + var(--space-lg) - 5.5rem); }
+/* Light papers match the editorial page (landing/tokens.css), as the dark ones below do; the prototype's cool white drew a box whose edges the rails run into. */
+:scope { --color-paper: oklch(97% 0.007 86); --color-paper-2: oklch(94% 0.010 86); --color-paper-3: oklch(91% 0.012 84); --color-surface: oklch(94% 0.010 86); }
 }
 .dark .casebook-reader {
   color-scheme: dark;
