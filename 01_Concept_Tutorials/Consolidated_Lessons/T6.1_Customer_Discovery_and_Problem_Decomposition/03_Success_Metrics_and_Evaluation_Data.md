@@ -57,6 +57,8 @@ A useful success metric is one the customer already cares about. For a sales acc
 
 A good practice drill asks for three measurable metrics per case. A balanced three covers quality, adoption and outcome. Brief accuracy, seller adoption and preparation time saved is one such set.
 
+Pair any speed or cost target with a guardrail metric: one that must not get worse while the main one improves. "Handling time down 20%" is only a win if the resolution rate holds. Name the guardrail and its threshold up front, so a faster but worse system cannot count as success.
+
 ## Build the evaluation set before the pilot
 
 A customer that "has no reliable way to measure quality" needs an evaluation strategy before it needs a model. The full list falls into four groups:

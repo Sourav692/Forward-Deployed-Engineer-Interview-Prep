@@ -109,6 +109,39 @@ Take the support prompt from the opening story. The switcher compares the two wa
 
 In a real engagement the framed questions are only the start. The next lesson, [observing the work](/learn/forward-deployed/customer-discovery/observing-the-work), covers what no meeting shows you.
 
+## Tell the decomposition round from the design round
+
+Many FDE loops also include an AI system design round, and the two overlap. Decomposition asks what to solve and how to break it down. System design asks how to build and run the solution once the problem is fixed. Company names for the rounds vary, so read Table 2 as a preparation guide, not a rubric.
+
+| | Decomposition round | AI system design round |
+|---|---|---|
+| Main question | What should we solve, and how do we break it down? | How should we build and operate it? |
+| Typical starting point | A vague customer problem | A defined product or capability, often with a scale |
+| Main focus | Users, workflows, outcome, available data, constraints, scope | Architecture, data flow, models, retrieval, tools, storage, serving |
+| Decisions you explain | Which problem matters, whether AI helps at all, what the MVP holds | Retrieval or fine-tuning, fixed workflow or agent, how to meet quality, latency and cost targets |
+| Expected output | A scoped first version, workstreams, an initial technical approach, success criteria | An end-to-end design, component contracts, trade-offs, failure handling, evaluation and rollout |
+| Common weak answer | "Let's build a RAG chatbot" before the user is known | Boxes on a whiteboard with no behaviour, bottleneck or failure explained |
+
+*Table 2: The two rounds compared. A design round still opens with requirements, and a decomposition round still needs technical depth.*
+
+The customer-support prompt shows the difference. As a decomposition prompt it reads "Our support team is overwhelmed. How could AI help?" The framed opening above finds the user and outcome. A good close then names the first version and its parts: "I'd start with policy lookup and reply drafting for delivery tickets, as a copilot that agents approve. It breaks into ticket classification, permission-aware retrieval, draft generation and agent review. Success is lower handling time with no drop in resolution rate."
+
+As a design prompt the same case reads "Design that support copilot for 5,000 agents." The problem is now given, and the time goes on how the parts behave together:
+
+- how policy documents are ingested, versioned, indexed and filtered by permission;
+- how one request retrieves policies and fetches the current order;
+- how the model is chosen and its context is built;
+- what happens on low retrieval confidence, conflicting policies or an order API timeout;
+- how concurrency, latency, token use and cost stay within budget;
+- how answer quality is evaluated, failures are traced and changes are released.
+
+Practise both openings until each is automatic.
+
+- **Decomposition:** "Before choosing a solution, I want to understand whose workflow is failing, what outcome matters and what data we can reach."
+- **System design:** "I'll confirm the requirements and scale, draw the end-to-end architecture, then work through the highest-risk quality and operational trade-offs."
+
+Decomposition still includes technical reasoning. Once the first version is named, an interviewer may push into the data model, an API contract or the retrieval method. Be ready to go one level down on any workstream you named. The design round's method is in [the twelve-part design framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework).
+
 ## Limits of this lesson
 
 - **Interviews are not engagements.** A real discovery runs over days with many people. The round compresses it into minutes, so you state assumptions where a customer would give answers.
@@ -155,6 +188,15 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 </details>
 
+<details>
+<summary>Interview question 5. How does a decomposition round differ from an AI system design round on the same problem?</summary>
+
+- **Answer:** Decomposition starts from a vague problem and ends with a scoped first version: the user, the outcome, the workstreams and the success measure. System design starts from that defined product, often with a scale such as 5,000 agents, and ends with an end-to-end architecture: data flow, retrieval, model and context, failure handling, cost and latency, evaluation and release. Open each differently: decomposition with whose workflow is failing, design with requirements and scale.
+- **Trade-off:** Treating a design round as decomposition spends the time on questions the prompt already answered. Treating decomposition as design builds a system for a problem nobody confirmed.
+- **Follow-up to expect:** "In decomposition, how would the retrieval work?" Go one level down: the sources, the permission filter and how you would test retrieval on its own.
+
+</details>
+
 ## References
 
 1. *FDE Problem Decomposition Question Bank* (the author's own question bank): "How the Round Typically Feels", "What the Interviewer Is Evaluating", "Reusable Answer Template" and "Biggest Mistakes to Avoid".
@@ -168,6 +210,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 - Ask business, constraint, evaluation, architecture and rollout questions, and only the ones whose answers change the design.
 - Most interviewer signals are about judgement and communication, not architecture.
 - The common mistakes each skip a framing, risk or rollout step.
+- Decomposition fixes the problem and a buildable first version. System design shows how that version behaves at scale and when it fails.
 
 ## Check yourself
 

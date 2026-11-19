@@ -43,6 +43,8 @@ Second, who are the users? Consumers, internal staff and partners have very diff
 
 Third, what business problem does it solve: revenue, retention, cost or compliance? That answer later justifies eventual consistency, or rules it out. Fourth, what is out of scope? Park payments, fraud and admin tooling explicitly. "I'll assume payments are handled by an existing service" is a senior move, not a dodge.
 
+If the prompt names no product at all, only a business pain such as "our support team is overwhelmed", you are closer to a decomposition round. Find the user and the outcome first, as in [the discovery conversation](../T6.1_Customer_Discovery_and_Problem_Decomposition/01_The_Discovery_Conversation.md), which compares the two rounds on one example.
+
 ## Keep Functional Requirements Short and Ranked
 
 Functional requirements are capabilities a user would recognise. Keep the list short, order it by importance and confirm it. For each one, know why it matters to the architecture, because that is what turns a feature list into design input.
