@@ -348,6 +348,8 @@ th { font-weight: 600; }
 :scope { --font-body: var(--font-inter), sans-serif; --font-ui: var(--font-inter), sans-serif; --font-display: var(--font-bricolage), sans-serif; }
 .section-nav { top: 3.75rem; z-index: 20; }
 .rail-sticky { top: calc(3.75rem + var(--section-nav-height) + var(--space-lg)); }
+/* An anchor jump must clear the site header and the sticky section tabs. html already pads 5.5rem (globals.css), so subtract it. */
+.reading-section, .deep-topic { scroll-margin-top: calc(3.75rem + var(--section-nav-height) + var(--space-lg) - 5.5rem); }
 }
 .dark .casebook-reader {
   color-scheme: dark;
