@@ -9,7 +9,7 @@ These questions test whether you can apply the module in a live answer, not reci
 2. Answer aloud, as you would to an interviewer.
 3. Open the outline and compare. Note what you missed, not only what you got right.
 
-Every customer and figure below is fictional. The questions on breaking down an unfamiliar problem have their own practice lesson, [practise breaking down the unknown](/learn/fde-in-the-field/fde-role-and-boundaries/practise-fde-role-and-boundaries-decomposition).
+Every customer below is a composite and every figure illustrative, not a real customer. The questions on breaking down an unfamiliar problem have their own practice lesson, [practise breaking down the unknown](/learn/fde-in-the-field/fde-role-and-boundaries/practise-fde-role-and-boundaries-decomposition).
 
 > **What you'll practise**
 >

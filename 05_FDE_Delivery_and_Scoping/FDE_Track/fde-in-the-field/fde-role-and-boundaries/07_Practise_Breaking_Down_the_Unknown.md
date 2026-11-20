@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [practice, decomposition, interview, unfamiliar problems]
 ---
 
@@ -23,7 +23,7 @@ Decomposition rounds give you a vague problem and watch how you break it down. I
 2. Spend six minutes talking through the breakdown aloud.
 3. Spend two minutes comparing with the outline.
 
-The moves come from [judgement under uncertainty](04_Judgement_Under_Uncertainty.md). Every customer below is fictional.
+The moves come from [judgement under uncertainty](04_Judgement_Under_Uncertainty.md). For full decomposition cases scored on six outputs, use [practise decomposition interview cases](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/05_Practise_Decomposition_Interview_Cases.md). Every customer below is a composite, not a real customer.
 
 > **What you'll practise**
 >
@@ -86,7 +86,7 @@ flowchart LR
 ## Limits of this practice
 
 - **Outlines are not scripts.** Your answer should use your own examples and words.
-- **Fictional customers.** Every organisation and figure is illustrative.
+- **Composite customers.** Every organisation and figure is illustrative, not a real customer.
 
 ## References
 

@@ -23,7 +23,7 @@ Decomposition skill comes from repetition on varied cases, not from one rehearse
 2. Open the outline and compare. Note which output you missed.
 3. Say the follow-up answer too, because interviewers usually push once.
 
-Each section names the lesson that teaches its ideas. Cases 7 to 10 are discovery-first cases with fictional customers.
+Each section names the lesson that teaches its ideas. Cases 7 to 10 are discovery-first cases with fictional customers. For ten-minute drills where the industry itself is unfamiliar, use [practise breaking down the unknown](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/07_Practise_Breaking_Down_the_Unknown.md).
 
 > **What you'll practise**
 >

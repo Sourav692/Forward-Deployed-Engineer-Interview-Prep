@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [escalation, risk, dependencies, stopping an engagement]
 ---
 
 ## Start with the status report that stayed green
 
-Fenwick Energy, a fictional utility, hired an FDE team to build a meter-fault predictor. It depended on Fenwick's data platform team delivering a feed of hourly meter readings by week four.
-
-In week four the feed was not ready. The FDE lead marked the project amber in her notes and green in the steering report, because the platform team promised it "next week". The same promise came in weeks five, six and seven. In week nine the sponsor learned that the predictor would miss the winter peak it was bought for. She asked why nobody had told her in week four, when she could still have moved the platform team's priorities.
-
-Call this **the watermelon report**: green on the outside, red inside. Each week's optimism was small. Together they removed the sponsor's chance to act.
+Ines, a forward deployed engineer, leads a team building a meter-fault predictor for Fenwick Energy, a utility. It depends on Fenwick's data platform team delivering a feed of hourly meter readings by week four. In week four the feed is not ready. Ines marks the project amber in her notes but green in the steering report, because the platform team promises it "next week", and the same promise comes in weeks five, six and seven. In week nine the sponsor learns the predictor will miss the winter peak it was bought for, and asks why she was not told in week four, when she could still have moved the platform team's priorities. Call this **the watermelon report**: green on the outside, red inside. Each week's optimism was small. Together they removed the sponsor's chance to act.
 
 > **What you'll learn**
 >
@@ -108,7 +104,7 @@ Bring the same four parts as an escalation, plus what has been learned and what 
 
 - **Culture varies.** Some customers punish bad news. Escalating early still protects the outcome, but agree with your manager how to do it in that culture.
 - **Not every slip is an escalation.** One small delay your team can absorb is a status line, not a decision request.
-- **Fictional data.** Fenwick Energy and its dates are illustrative.
+- **Composite engagement.** Fenwick Energy, Ines and the dates are illustrative, not a real customer.
 
 ## Interview angle
 
