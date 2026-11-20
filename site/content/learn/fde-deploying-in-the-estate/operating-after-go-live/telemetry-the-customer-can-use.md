@@ -3,13 +3,7 @@
 
 ## Start with the green dashboard over an empty warehouse
 
-Pennick Logistics, a fictional fulfilment company, takes about 2,500 orders an hour during the day. An order API accepts each order and puts it on a queue. An allocation worker picks a warehouse and sends a pick list through an adapter to the warehouse system.
-
-At 10:40 one Tuesday, the adapter's credential for the warehouse system expired. The allocation worker caught the error, wrote it to a debug log nobody read, marked the message as done and moved on. The API kept returning 200. Queues stayed empty because the worker kept consuming. All six workers were running, and CPU sat at 35%.
-
-The operations dashboard said "updated 1 minute ago" and showed a normal count of dispatched orders. That panel read a reporting table whose load job had stopped at 09:00. The page refreshed every minute. The data under it did not.
-
-At 12:00 a warehouse supervisor phoned to ask why the pick lists had stopped. About 3,300 orders had been accepted and none had reached a warehouse. Call this **the green dashboard over an empty warehouse**: every part reports healthy while the outcome the customer pays for has stopped.
+Pennick Logistics, a fulfilment company, takes about 2,500 orders an hour during the day. An order API puts each order on a queue, and an allocation worker sends a pick list through an adapter to the warehouse system. At 10:40 one Tuesday the adapter's credential expired. The worker caught the error, wrote it to a debug log nobody read and marked each message done, so the API kept returning 200, the queues stayed empty and CPU sat at 35%. The operations dashboard said "updated 1 minute ago" over a reporting table whose load had stopped at 09:00. At 12:00 a warehouse supervisor phoned Gwen, the forward deployed engineer, to ask why the pick lists had stopped: about 3,300 orders had been accepted and none had reached a warehouse. Call this **the green dashboard over an empty warehouse**: every part reports healthy while the outcome the customer pays for has stopped.
 
 > **What you'll learn**
 >
@@ -103,15 +97,15 @@ Stop it at the source:
 - **Log an allow-list of fields.** Write the order ID, status and timing, not the whole request body. A field added to a request later then stays out of the logs by default.
 - **Redact at the logger.** Mask values shaped like card numbers, tokens or email addresses before the line leaves the process.
 - **Use references, not content.** Log a customer ID, not a name and address. Log a document ID, not the document text or the model prompt that contains it.
-- **Set retention and access.** Keep detailed logs for a short period, with access limited to the people who debug.
+- **Set retention and access.** Keep detailed logs for a short period, with access limited to the people who debug. Logs are copies too: a deletion request must reach them, as [residency, retention and deletion](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/residency-retention-and-deletion) explains.
 
-When sensitive data is found in logs anyway, contain it in order. Stop the source first with a configuration change or a release that removes the field. Restrict access to the affected indexes. Find every copy, including forwarders, archives and exports. Purge what the platform allows, and record what remains until retention removes it. Tell the customer's security team early, because personal data may carry notification duties. If the data is a credential, revoke it first, as the site's [secrets and leaks](/learn/fde-deploying-in-the-estate/networks-and-identity/secrets-and-leaks) lesson explains.
+When sensitive data is found in logs anyway, contain it in order. Stop the source first with a configuration change or a release that removes the field. Restrict access to the affected indexes. Find every copy, including forwarders, archives and exports. Purge what the platform allows, and record what remains until retention removes it. Tell the customer's security team early, because personal data may carry [notification duties](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment#the-cache-that-crosses-tenants). If the data is a credential, revoke it first, as the site's [secrets and leaks](/learn/fde-deploying-in-the-estate/networks-and-identity/secrets-and-leaks) lesson explains.
 
 ## Limits of this lesson
 
 - **Tools differ.** Log platforms, tracing back ends and queue products each handle context and deletion differently. Learn the customer's before go-live.
-- **AI-specific telemetry.** Model prompts, token counts and evaluation scores are covered in the production AI track, not here.
-- **Fictional data.** Pennick Logistics, its systems and figures are illustrative.
+- **AI-specific telemetry.** Model prompts, token counts and evaluation scores belong to [the run trace](/learn/production-ai/observability-and-diagnosis/the-run-trace), not here.
+- **Composite engagement.** Pennick Logistics, Gwen, its systems and figures are illustrative, not a real customer.
 
 ## Interview angle
 

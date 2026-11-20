@@ -12,8 +12,9 @@ Every customer and figure below is fictional.
 > - Repairing broken traces and containing sensitive data in logs.
 > - Spotting dashboards that look current over stale data.
 > - Designing telemetry and dashboards for a workflow with many hops.
+> - Turning a customer journey into an SLO, an error budget and a page.
 > - Rehearsing incidents, updating customers and writing postmortems.
-- Treating a restart as a way to buy time, not as the fix.
+> - Treating a restart as a way to buy time, not as the fix.
 > - Monitoring a customer's data feed for freshness and schema drift.
 
 ## Telemetry in the field
@@ -65,12 +66,26 @@ Taught in [telemetry the customer can use](/learn/fde-deploying-in-the-estate/op
 
 </details>
 
+## SLOs and paging
+
+Taught in [SLOs and alerts that match impact](/learn/fde-deploying-in-the-estate/operating-after-go-live/slos-and-alerts-that-match-impact).
+
+<details>
+<summary>Practice question 6. Caister Water's meter-reading service ingests about 2 million readings a day, evenly through the day. Its operations lead wants 99.9% of readings stored within 15 minutes, over 30 days. Work out the error budget, decide what pages, and say what happens to the CPU alert the team uses today.</summary>
+
+- **Answer:** The SLI is readings stored within 15 minutes of arrival over readings received, measured at the store, with malformed readings excluded by a written rule. Budget: 0.1% of 60 million readings in 30 days = 60,000 late readings. Page on burn rate over two windows: 2% of the budget in one hour is a burn rate of 14.4, an error rate of 1.44%, and 5% in six hours is a burn rate of 6, an error rate of 0.6%. Use a short window to confirm the burn is still happening. Raise a ticket when three days spend 10%. CPU leaves the pager: it goes to the dashboard the on-call engineer opens after a page, and to the monthly capacity review.
+- **Trade-off:** A tighter target, such as 99.99%, leaves 6,000 late readings a month, and an ordinary deploy could spend it. Agree the figure with the operations lead from what a late reading costs them.
+- **Follow-up to expect:** "One site's gateway goes offline and its readings arrive two hours late in a batch." Add a per-site freshness check. The overall ratio can stay inside budget while one site is dark.
+
+
+</details>
+
 ## Incidents and communication
 
 Taught in [incidents with a customer watching](/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching).
 
 <details>
-<summary>Practice question 6. Plan a tabletop exercise with Ravensworth before go-live.</summary>
+<summary>Practice question 7. Plan a tabletop exercise with Ravensworth before go-live.</summary>
 
 - **Answer:** One hour, with Ravensworth's claims operations lead, IT on-call, your engineer and a facilitator. Scenario: the model vendor starts timing out at 09:00 on a Monday. Add a new fact every ten minutes: the backlog reaches 500, the vendor says it is not them, a broker phones the claims director. Ask at each point who leads, what you do and what you send. Test real contact numbers and the manual triage fallback. End with actions, owners and dates.
 - **Trade-off:** A realistic scenario finds real gaps. Too many twists turn it into a quiz and people stop engaging.
@@ -79,7 +94,7 @@ Taught in [incidents with a customer watching](/learn/fde-deploying-in-the-estat
 </details>
 
 <details>
-<summary>Practice question 7. During Pennick's label-service outage, write the 01:25 update to its operations lead, and say when the next one goes.</summary>
+<summary>Practice question 8. During Pennick's label-service outage, write the 01:25 update to its operations lead, and say when the next one goes.</summary>
 
 - **Answer:** "Impact: since 01:10, no orders can be dispatched because the carrier's label service rejects every request. About 75 orders are waiting, and about 300 more arrive each hour. Workaround: none yet. We are asking the carrier about manual labels. Known: no change was released by us, and the carrier's service returns errors to our requests. Not known yet: when the carrier will recover. Doing: priority ticket with the carrier, testing their backup endpoint. Next update: 01:55." Then every 30 minutes until resolved.
 - **Trade-off:** Sending at night wakes the customer. Agree in advance which severity justifies it.
@@ -88,7 +103,7 @@ Taught in [incidents with a customer watching](/learn/fde-deploying-in-the-estat
 </details>
 
 <details>
-<summary>Practice question 8. Outline the postmortem for Pennick's green dashboard incident, where 3,300 orders were accepted and none reached a warehouse.</summary>
+<summary>Practice question 9. Outline the postmortem for Pennick's green dashboard incident, where 3,300 orders were accepted and none reached a warehouse.</summary>
 
 - **Answer:** Summary: impact in Pennick's terms, 80 minutes, about 3,300 orders delayed. Timeline: credential expiry at 10:40, errors swallowed, dashboard stale since 09:00, warehouse phone call at 12:00, recovery and re-drive. Contributing causes: no credential expiry alert, errors logged at debug and messages marked done, no business alert, dashboard showing page refresh not data age. What went well: idempotent re-drive. Actions with owners and dates: expiry alerts, fail-closed worker, business SLO alert, "data as of" panels. Blameless throughout.
 - **Trade-off:** A full write-up takes days. A short summary to the customer within 48 hours, then the full one, keeps trust.
@@ -97,7 +112,7 @@ Taught in [incidents with a customer watching](/learn/fde-deploying-in-the-estat
 </details>
 
 <details>
-<summary>Practice question 9. Caister Water's meter-reading service hangs every four or five days. Each time, on-call restarts it, readings flow again and the ticket is closed. Caister's operations lead asks whether the problem is fixed. What do you tell her, and what do you do?</summary>
+<summary>Practice question 10. Caister Water's meter-reading service hangs every four or five days. Each time, on-call restarts it, readings flow again and the ticket is closed. Caister's operations lead asks whether the problem is fixed. What do you tell her, and what do you do?</summary>
 
 - **Answer:** Tell her no. The restart restores service, but the cause is still there, which is why it keeps coming back. Next time, capture evidence before restarting: thread dumps, memory and connection-pool figures, recent logs and the time of the last good reading. Restart within an agreed limit if readings are backing up. Then track down the cause, perhaps a leaked connection or a stuck lock, fix it and confirm the hangs stop. Give her the plan, and keep one ticket open until the fix is proven.
 - **Trade-off:** Capturing evidence delays service by a few minutes. Agree a time limit, so on-call never holds an outage open to gather data.
@@ -110,7 +125,7 @@ Taught in [incidents with a customer watching](/learn/fde-deploying-in-the-estat
 Taught in [maintenance and drift](/learn/fde-deploying-in-the-estate/operating-after-go-live/maintenance-and-drift).
 
 <details>
-<summary>Practice question 10. Ravensworth sends a nightly policy feed that the triage system uses to check cover. Design its freshness and schema-drift monitoring.</summary>
+<summary>Practice question 11. Ravensworth sends a nightly policy feed that the triage system uses to check cover. Design its freshness and schema-drift monitoring.</summary>
 
 - **Answer:** Freshness: alert if the newest policy record is older than 26 hours, allowing for a late feed. Completeness: compare the feed's row count with the source system's count and with the last seven nights, and alert on a gap above 2%. Reconcile policy IDs weekly. Schema: check required fields, types and allowed values, such as cover codes, on every load. Ignore added fields. Quarantine rows that fail a required field, alert the feed's owner, and show triage users the feed's age.
 - **Trade-off:** Strict checks block a load for one bad row. Quarantining rows keeps the rest flowing.
@@ -123,6 +138,7 @@ Taught in [maintenance and drift](/learn/fde-deploying-in-the-estate/operating-a
 - Carry trace context in every message, and test the chain with one tagged item.
 - On sensitive data in logs, revoke credentials first, restrict access, then remove every copy.
 - Show the age of the data, not the page, and alert on it.
+- Page on error-budget burn over two windows; send CPU and other causes to dashboards and tickets.
 - Rehearse incidents with the customer, send updates on the clock and close every postmortem action.
 - A restart buys time. Capture evidence first, then find and fix the cause.
 - Monitor each source for freshness, completeness and schema, and quarantine what fails.
@@ -137,7 +153,14 @@ A batch consumer handles many messages in one span. A span can have only one par
 </details>
 
 <details>
-<summary>2. In practice question 10, why compare the row count with the last seven nights as well as the source?</summary>
+<summary>2. In practice question 6, why does the one-hour page fire at a 1.44% error rate rather than at the 0.1% the SLO allows?</summary>
+
+At 0.1% the budget lasts exactly 30 days. Paging only when the last hour burns 14.4 times faster than that means a page fires when the month's budget would be gone in about two days, which needs a person now.
+
+</details>
+
+<details>
+<summary>3. In practice question 11, why compare the row count with the last seven nights as well as the source?</summary>
 
 The source count may be unavailable or wrong on the same night. The recent pattern catches a sudden drop even when no source figure exists.
 

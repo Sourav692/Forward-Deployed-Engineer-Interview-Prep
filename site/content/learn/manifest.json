@@ -8551,7 +8551,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/01_Telemetry_the_Customer_Can_Use.md",
       "estMinutes": 14,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/telemetry-the-customer-can-use",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "slos-and-alerts-that-match-impact",
@@ -8563,7 +8563,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/02_SLOs_and_Alerts_That_Match_Impact.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/slos-and-alerts-that-match-impact",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "incidents-with-a-customer-watching",
@@ -8575,7 +8575,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/03_Incidents_With_a_Customer_Watching.md",
       "estMinutes": 14,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "maintenance-and-drift",
@@ -8587,7 +8587,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/04_Maintenance_and_Drift.md",
       "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/maintenance-and-drift",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-operating-after-go-live",
@@ -8597,9 +8597,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/05_Practise_Operating_After_Go_Live.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/practise-operating-after-go-live",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "recovering-half-finished-work",
