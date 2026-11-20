@@ -2,7 +2,7 @@
   "version": 2,
   "catalog_url": "https://forwarddeployedprep.com/design",
   "catalog_captured_at": "2026-11-15T15:11:53.730571+00:00",
-  "updated_at": "2026-11-20T02:39:55+00:00",
+  "updated_at": "2026-11-20T03:35:02+00:00",
   "cases": [
     {
       "slug": "enterprise-knowledge-assistant",
@@ -52,14 +52,14 @@
         "native_validation": ".website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/live-check.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November complete maintained-casebook review and targeted repairs; all baseline teaching units mapped, protected assets and identities retained. Offline and native browser gates pass, with visual limits recorded. Full batch release remains pending.",
-      "next_action": "Wait for all 33 case reviews to pass, then merge/deploy through required reviews and verify this production route.",
+      "note": "User authorised this three-case production release. The remaining 30 casebooks still require editorial completion.",
+      "next_action": "No remaining work for this three-case release. Continue the separate review of the remaining 30 casebooks.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "20 November complete maintained-baseline review, mappings and added-objective audit: .website_spec/casebook-review-2026-11-20/enterprise-knowledge-assistant/audit.json. Offline content/browser/alias checks pass. Native Next.js 16.4.6 route checks pass: .website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/live-check.json. Fresh native desktop/phone views and original light diagrams inspected; limitations recorded in 02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/visual-review.json. This is local verification, not production verification.",
+        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
+        "checked_at": "2026-11-20T03:35:02+00:00",
+        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/live-check.json"
       }
     },
@@ -111,14 +111,14 @@
         "native_validation": ".website_spec/casebook-review-2026-11-20/integration/nl-over-governed-data/live-check.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November complete maintained-casebook review and targeted repairs; all baseline teaching units mapped, protected assets and identities retained. Offline and native browser gates pass, with visual limits recorded. Full batch release remains pending.",
-      "next_action": "Wait for all 33 case reviews to pass, then merge/deploy through required reviews and verify this production route.",
+      "note": "User authorised this three-case production release. The remaining 30 casebooks still require editorial completion.",
+      "next_action": "No remaining work for this three-case release. Continue the separate review of the remaining 30 casebooks.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/nl-over-governed-data",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "20 November complete maintained-baseline review, mappings and added-objective audit: .website_spec/casebook-review-2026-11-20/nl-over-governed-data/audit.json. Offline content/browser/alias checks pass. Native Next.js 16.4.6 route checks pass: .website_spec/casebook-review-2026-11-20/integration/nl-over-governed-data/live-check.json. Fresh native desktop/phone views and original light diagrams inspected; limitations recorded in 02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/visual-review.json. This is local verification, not production verification.",
+        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
+        "checked_at": "2026-11-20T03:35:02+00:00",
+        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/live-check.json"
       }
     },
@@ -170,14 +170,14 @@
         "native_validation": ".website_spec/casebook-review-2026-11-20/integration/document-review-copilot/live-check.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November complete maintained-casebook review and targeted repairs; all baseline teaching units mapped, protected assets and identities retained. Offline and native browser gates pass, with visual limits recorded. Full batch release remains pending.",
-      "next_action": "Wait for all 33 case reviews to pass, then merge/deploy through required reviews and verify this production route.",
+      "note": "User authorised this three-case production release. The remaining 30 casebooks still require editorial completion.",
+      "next_action": "No remaining work for this three-case release. Continue the separate review of the remaining 30 casebooks.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/document-review-copilot",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "20 November complete maintained-baseline review, mappings and added-objective audit: .website_spec/casebook-review-2026-11-20/document-review-copilot/audit.json. Offline content/browser/alias checks pass. Native Next.js 16.4.6 route checks pass: .website_spec/casebook-review-2026-11-20/integration/document-review-copilot/live-check.json. Fresh native desktop/phone views and original light diagrams inspected; limitations recorded in 02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/visual-review.json. This is local verification, not production verification.",
+        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
+        "checked_at": "2026-11-20T03:35:02+00:00",
+        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/live-check.json"
       }
     },
@@ -4043,6 +4043,21 @@
       "at": "2026-11-20T02:39:55+00:00",
       "slug": "document-review-copilot",
       "change": "Set Complete. 20 November complete maintained-casebook review and targeted repairs; all baseline teaching units mapped, protected assets and identities retained. Offline and native browser gates pass, with visual limits recorded. Full batch release remains pending."
+    },
+    {
+      "at": "2026-11-20T03:35:02+00:00",
+      "slug": "enterprise-knowledge-assistant",
+      "change": "Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion."
+    },
+    {
+      "at": "2026-11-20T03:35:02+00:00",
+      "slug": "nl-over-governed-data",
+      "change": "Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion."
+    },
+    {
+      "at": "2026-11-20T03:35:02+00:00",
+      "slug": "document-review-copilot",
+      "change": "Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion."
     }
   ]
 }
