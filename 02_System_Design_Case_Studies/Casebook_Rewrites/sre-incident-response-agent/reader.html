@@ -33,7 +33,7 @@
 <li><strong>Hypothesise.</strong> A strong model ranks likely causes from that evidence pack. Each cause carries citations to the signals behind it and a note of which sources could not be reached.</li>
 <li><strong>Propose.</strong> The agent drafts a rollback command with its blast radius, the runbook it follows and a dry-run result. It does not run it.</li>
 <li><strong>Approve.</strong> The service owner and incident commander review the proposal and click yes.</li>
-<li><strong>Execute once.</strong> One tool gateway runs the approved command exactly once, checks its effect and writes it to the incident timeline.</li>
+<li><strong>Execute and reconcile.</strong> One tool gateway submits the approved command with a stable operation key, checks its effect and writes the confirmed outcome to the incident timeline. A lost response leaves an uncertain outcome; reconcile deployment state before retrying. One effect depends on downstream idempotency or reliable reconciliation, as the deep dive explains.</li>
 </ol>
 <p>The flow is dedupe → read → hypothesise → propose → human → maybe write. Automatic restarts of production come later, if ever, and only after evidence that they are safe. The agent itself runs outside the failure it is investigating, so the checkout outage cannot take the investigator down with it.</p>
 </section><section class="reading-section" id="brief-task"><h3>What you need to design</h3>
@@ -592,7 +592,7 @@
 <ol>
 <li><strong>Authorise.</strong> Check that the caller may use this tool at all. This comes first so a denied caller never learns the tool's schema from a validation error.</li>
 <li><strong>Validate</strong> the arguments against the schema.</li>
-<li><strong>Execute</strong> with a timeout and an idempotency key. The source's example key is a hash of run ID, tool name and canonical arguments, so a retry after a timeout runs the rollback once rather than twice.</li>
+<li><strong>Execute</strong> with a timeout and an idempotency key. The source's example key is a hash of run ID, tool name and canonical arguments. Reuse that key for a retry of the same operation, but do not assume the key alone prevents a second rollback. The downstream tool must honour it, or the gateway must reconcile the deployment's state after a lost response before retrying.</li>
 <li><strong>Classify</strong> the result into the five states.</li>
 <li><strong>Trim</strong> it to the declared fields before it returns.</li>
 <li><strong>Log</strong> all of it.</li>

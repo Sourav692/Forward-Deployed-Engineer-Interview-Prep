@@ -25,7 +25,7 @@ The source traces one running example, and the rest of this casebook keeps retur
 5. **Hypothesise.** A strong model ranks likely causes from that evidence pack. Each cause carries citations to the signals behind it and a note of which sources could not be reached.
 6. **Propose.** The agent drafts a rollback command with its blast radius, the runbook it follows and a dry-run result. It does not run it.
 7. **Approve.** The service owner and incident commander review the proposal and click yes.
-8. **Execute once.** One tool gateway runs the approved command exactly once, checks its effect and writes it to the incident timeline.
+8. **Execute and reconcile.** One tool gateway submits the approved command with a stable operation key, checks its effect and writes the confirmed outcome to the incident timeline. A lost response leaves an uncertain outcome; reconcile deployment state before retrying. One effect depends on downstream idempotency or reliable reconciliation, as the deep dive explains.
 
 The flow is dedupe → read → hypothesise → propose → human → maybe write. Automatic restarts of production come later, if ever, and only after evidence that they are safe. The agent itself runs outside the failure it is investigating, so the checkout outage cannot take the investigator down with it.
 
@@ -557,7 +557,7 @@ Every approved write walks through one gateway in one order:
 
 1. **Authorise.** Check that the caller may use this tool at all. This comes first so a denied caller never learns the tool's schema from a validation error.
 2. **Validate** the arguments against the schema.
-3. **Execute** with a timeout and an idempotency key. The source's example key is a hash of run ID, tool name and canonical arguments, so a retry after a timeout runs the rollback once rather than twice.
+3. **Execute** with a timeout and an idempotency key. The source's example key is a hash of run ID, tool name and canonical arguments. Reuse that key for a retry of the same operation, but do not assume the key alone prevents a second rollback. The downstream tool must honour it, or the gateway must reconcile the deployment's state after a lost response before retrying.
 4. **Classify** the result into the five states.
 5. **Trim** it to the declared fields before it returns.
 6. **Log** all of it.
