@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "6f543241c5119f310a0e1af427416154120d38cebcf65930f411096f7353baa7",
-  "html_sha256": "42c5c679952fe4e83a633120e43e538f79dc8f000dacdd479302d04d7a391282",
-  "config_sha256": "eb0b8c17662b854e012588c0432865f636424ec614aa7e67c203d138a5fa506f",
+  "markdown_sha256": "5ffa6850a64a01fab0cc0897e28e6c90720c3c3b0b7c5591f0bec1458447ecdb",
+  "html_sha256": "14ba89ecba2be6d7601d6a1c7f7aaf36a585ce452bd14cf685e5ac70cfc7a5e7",
+  "config_sha256": "2a1d78f0160a0eb865440e9b5960c6782dcb70197369a7d9be57da1403e50640",
   "source_url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
   "validation": {
     "passed": true,
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "Read all 43 captured sections against the draft. The source repeated the same design four times (interview guide, deep dive, cheat sheet, full design); the walkthrough follows the full design's order (questions, requirements, sizing, architecture, ingestion, gate, residency, reliability, audit, evaluation, trade-offs) and folds the interview-guide and deep-dive versions into the matching step or into a deep dive only where they add mechanism (three timestamps, idempotency key per resolution version, model inputs as regional data, operating metrics). All 16 SVGs are placed as eight light/dark pairs beside the prose that reads them. Added teaching material is labelled illustrative: the $320 Frankfurt parcel, the 0.99-confidence customs trace through both gate orderings, the 3,000-row batch diff and the S:resolution-v1/v2 key trace. The brief opens on the stalled shipment and defines exception, webhook, batch drop, EDI, idempotency key and circuit breaker before use; no approval role was invented beyond the source's ops agents. All 11 Check Yourself questions, 10 follow-ups, the architecture prompt, the two-minute answer and the cost pivot are worked-answer reveals. Source section numbers in moved tables were rewritten to step names. Open items kept explicit: the confidence threshold and shadow agreement target are unspecified in the source."
+      "evidence": "Read all 43 captured sections against the draft. The source repeated the same design four times (interview guide, deep dive, cheat sheet, full design); the walkthrough follows the full design's order (questions, requirements, sizing, architecture, ingestion, gate, residency, reliability, audit, evaluation, trade-offs) and folds the interview-guide and deep-dive versions into the matching step or into a deep dive only where they add mechanism (three timestamps, idempotency key per resolution version, model inputs as regional data, operating metrics). All 16 SVGs are placed as eight light/dark pairs beside the prose that reads them. Added teaching material is labelled illustrative: the $320 Frankfurt parcel, the 0.99-confidence customs trace through both gate orderings, the 3,000-row batch diff and the S:resolution-v1/v2 key trace. The brief opens on the stalled shipment and defines exception, webhook, batch drop, EDI, idempotency key and circuit breaker before use; no approval role was invented beyond the source's ops agents. All 11 Check Yourself questions, 10 follow-ups, the architecture prompt, the two-minute answer and the cost pivot are worked-answer reveals. Source section numbers in moved tables were rewritten to step names. Open items kept explicit: the confidence threshold and shadow agreement target are unspecified in the source. November 20 complete maintained-baseline review: Complete maintained casebook: eleven walkthrough steps, eight protected figures, both feed paths, all gate rules, Frankfurt example, regional topology, execution trace, SAP/weather/manager variant, evaluation and all practice answers. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
     }
   }
 }

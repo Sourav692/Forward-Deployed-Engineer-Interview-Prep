@@ -2,7 +2,7 @@
 
 Tracks the complete teaching rewrite of the 33 casebooks in the approved five-section format and the course-content explanation style.
 
-**Rewrites complete: 3 / 33.** Not started: 0; In progress: 30; Review draft: 0; Complete: 3; Blocked: 0.
+**Rewrites complete: 3 / 33.** Not started: 0; In progress: 20; Review draft: 10; Complete: 3; Blocked: 0.
 
 A completed format migration does not count as a completed prose rewrite. Live checking is tracked separately: pending, deployed, passed or failed. A live pass requires a completed rewrite, deployment reference, published URL and a matching successful check report.
 
@@ -34,26 +34,26 @@ Use `--check name=state --evidence 'actual comparison or report path'` for revie
 | 1 | [Enterprise Knowledge Assistant](https://forwarddeployedprep.com/design/enterprise-knowledge-assistant) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/enterprise-knowledge-assistant) | 2026-11-20 | User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. [html](enterprise-knowledge-assistant/reader.html) [markdown](enterprise-knowledge-assistant/casebook.md) [coverage](enterprise-knowledge-assistant/case.json) [validation](enterprise-knowledge-assistant/snapshot.json) [live_check](enterprise-knowledge-assistant/live-check.json) [review](../../.website_spec/casebook-review-2026-11-20/enterprise-knowledge-assistant/audit.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/enterprise-knowledge-assistant/inventory.json) [native_validation](../../.website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/live-check.json) |
 | 2 | [Natural Language over Governed Data](https://forwarddeployedprep.com/design/nl-over-governed-data) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/nl-over-governed-data) | 2026-11-20 | User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. [markdown](nl-over-governed-data/casebook.md) [html](nl-over-governed-data/reader.html) [coverage](nl-over-governed-data/case.json) [validation](nl-over-governed-data/snapshot.json) [live_check](nl-over-governed-data/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/nl-over-governed-data/inventory.json) [review](../../.website_spec/casebook-review-2026-11-20/nl-over-governed-data/audit.json) [native_validation](../../.website_spec/casebook-review-2026-11-20/integration/nl-over-governed-data/live-check.json) |
 | 3 | [Document Review Copilot](https://forwarddeployedprep.com/design/document-review-copilot) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/document-review-copilot) | 2026-11-20 | User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. [markdown](document-review-copilot/casebook.md) [html](document-review-copilot/reader.html) [coverage](document-review-copilot/case.json) [validation](document-review-copilot/snapshot.json) [live_check](document-review-copilot/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/document-review-copilot/inventory.json) [review](../../.website_spec/casebook-review-2026-11-20/document-review-copilot/audit.json) [native_validation](../../.website_spec/casebook-review-2026-11-20/integration/document-review-copilot/live-check.json) |
-| 4 | [Deep Research Agent](https://forwarddeployedprep.com/design/deep-research-agent) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/deep-research-agent) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](deep-research-agent/casebook.md) [html](deep-research-agent/reader.html) [coverage](deep-research-agent/case.json) [validation](deep-research-agent/snapshot.json) [live_check](deep-research-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/deep-research-agent/inventory.json) |
+| 4 | [Deep Research Agent](https://forwarddeployedprep.com/design/deep-research-agent) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/deep-research-agent) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](deep-research-agent/casebook.md) [html](deep-research-agent/reader.html) [coverage](deep-research-agent/case.json) [validation](deep-research-agent/snapshot.json) [live_check](deep-research-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/deep-research-agent/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json) |
 
 ### Agents and Copilots in Real Workflows
 
 | # | Case | Stage | Sections | Source coverage | Editorial | UI checks | Live check | Updated | Notes and artifacts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 5 | [Customer Support Automation](https://forwarddeployedprep.com/design/customer-support-automation) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/customer-support-automation) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](customer-support-automation/casebook.md) [coverage](customer-support-automation/case.json) [html](customer-support-automation/reader.html) [validation](customer-support-automation/snapshot.json) [live_check](customer-support-automation/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/customer-support-automation/inventory.json) |
-| 6 | [Tool-Using Agent with Safety Controls](https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](tool-using-agent-with-safety-controls/casebook.md) [html](tool-using-agent-with-safety-controls/reader.html) [coverage](tool-using-agent-with-safety-controls/case.json) [validation](tool-using-agent-with-safety-controls/snapshot.json) [live_check](tool-using-agent-with-safety-controls/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/tool-using-agent-with-safety-controls/inventory.json) |
-| 7 | [SRE Incident Response Agent](https://forwarddeployedprep.com/design/sre-incident-response-agent) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/sre-incident-response-agent) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](sre-incident-response-agent/casebook.md) [html](sre-incident-response-agent/reader.html) [coverage](sre-incident-response-agent/case.json) [validation](sre-incident-response-agent/snapshot.json) [live_check](sre-incident-response-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/sre-incident-response-agent/inventory.json) |
-| 8 | [Sales Copilot](https://forwarddeployedprep.com/design/sales-copilot) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/sales-copilot) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](sales-copilot/casebook.md) [html](sales-copilot/reader.html) [coverage](sales-copilot/case.json) [validation](sales-copilot/snapshot.json) [live_check](sales-copilot/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/sales-copilot/inventory.json) |
-| 9 | [Enterprise Coding Assistant](https://forwarddeployedprep.com/design/enterprise-coding-assistant) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/enterprise-coding-assistant) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](enterprise-coding-assistant/casebook.md) [html](enterprise-coding-assistant/reader.html) [coverage](enterprise-coding-assistant/case.json) [validation](enterprise-coding-assistant/snapshot.json) [live_check](enterprise-coding-assistant/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/enterprise-coding-assistant/inventory.json) |
-| 10 | [Real-Time Call Assistant](https://forwarddeployedprep.com/design/real-time-call-assistant) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/real-time-call-assistant) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](real-time-call-assistant/casebook.md) [html](real-time-call-assistant/reader.html) [coverage](real-time-call-assistant/case.json) [validation](real-time-call-assistant/snapshot.json) [live_check](real-time-call-assistant/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/real-time-call-assistant/inventory.json) |
-| 11 | [Logistics Exception Handling](https://forwarddeployedprep.com/design/logistics-exception-handling) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/logistics-exception-handling) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](logistics-exception-handling/casebook.md) [html](logistics-exception-handling/reader.html) [coverage](logistics-exception-handling/case.json) [validation](logistics-exception-handling/snapshot.json) [live_check](logistics-exception-handling/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/logistics-exception-handling/inventory.json) |
+| 5 | [Customer Support Automation](https://forwarddeployedprep.com/design/customer-support-automation) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/customer-support-automation) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](customer-support-automation/casebook.md) [coverage](customer-support-automation/case.json) [html](customer-support-automation/reader.html) [validation](customer-support-automation/snapshot.json) [live_check](customer-support-automation/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/customer-support-automation/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json) |
+| 6 | [Tool-Using Agent with Safety Controls](https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](tool-using-agent-with-safety-controls/casebook.md) [html](tool-using-agent-with-safety-controls/reader.html) [coverage](tool-using-agent-with-safety-controls/case.json) [validation](tool-using-agent-with-safety-controls/snapshot.json) [live_check](tool-using-agent-with-safety-controls/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/tool-using-agent-with-safety-controls/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json) |
+| 7 | [SRE Incident Response Agent](https://forwarddeployedprep.com/design/sre-incident-response-agent) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/sre-incident-response-agent) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](sre-incident-response-agent/casebook.md) [html](sre-incident-response-agent/reader.html) [coverage](sre-incident-response-agent/case.json) [validation](sre-incident-response-agent/snapshot.json) [live_check](sre-incident-response-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/sre-incident-response-agent/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json) |
+| 8 | [Sales Copilot](https://forwarddeployedprep.com/design/sales-copilot) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/sales-copilot) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](sales-copilot/casebook.md) [html](sales-copilot/reader.html) [coverage](sales-copilot/case.json) [validation](sales-copilot/snapshot.json) [live_check](sales-copilot/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/sales-copilot/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json) |
+| 9 | [Enterprise Coding Assistant](https://forwarddeployedprep.com/design/enterprise-coding-assistant) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/enterprise-coding-assistant) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](enterprise-coding-assistant/casebook.md) [html](enterprise-coding-assistant/reader.html) [coverage](enterprise-coding-assistant/case.json) [validation](enterprise-coding-assistant/snapshot.json) [live_check](enterprise-coding-assistant/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/enterprise-coding-assistant/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json) |
+| 10 | [Real-Time Call Assistant](https://forwarddeployedprep.com/design/real-time-call-assistant) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/real-time-call-assistant) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](real-time-call-assistant/casebook.md) [html](real-time-call-assistant/reader.html) [coverage](real-time-call-assistant/case.json) [validation](real-time-call-assistant/snapshot.json) [live_check](real-time-call-assistant/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/real-time-call-assistant/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json) |
+| 11 | [Logistics Exception Handling](https://forwarddeployedprep.com/design/logistics-exception-handling) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/logistics-exception-handling) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](logistics-exception-handling/casebook.md) [html](logistics-exception-handling/reader.html) [coverage](logistics-exception-handling/case.json) [validation](logistics-exception-handling/snapshot.json) [live_check](logistics-exception-handling/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/logistics-exception-handling/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json) |
 
 ### AI Platforms and Scale
 
 | # | Case | Stage | Sections | Source coverage | Editorial | UI checks | Live check | Updated | Notes and artifacts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 12 | [Secure Multi-Tenant AI Platform](https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](secure-multi-tenant-ai-platform/casebook.md) [html](secure-multi-tenant-ai-platform/reader.html) [coverage](secure-multi-tenant-ai-platform/case.json) [validation](secure-multi-tenant-ai-platform/snapshot.json) [live_check](secure-multi-tenant-ai-platform/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/secure-multi-tenant-ai-platform/inventory.json) |
-| 13 | [High-Volume Batch Inference Pipeline](https://forwarddeployedprep.com/design/high-volume-batch-pipeline) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/high-volume-batch-pipeline) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](high-volume-batch-pipeline/casebook.md) [html](high-volume-batch-pipeline/reader.html) [coverage](high-volume-batch-pipeline/case.json) [validation](high-volume-batch-pipeline/snapshot.json) [live_check](high-volume-batch-pipeline/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/high-volume-batch-pipeline/inventory.json) |
+| 12 | [Secure Multi-Tenant AI Platform](https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](secure-multi-tenant-ai-platform/casebook.md) [html](secure-multi-tenant-ai-platform/reader.html) [coverage](secure-multi-tenant-ai-platform/case.json) [validation](secure-multi-tenant-ai-platform/snapshot.json) [live_check](secure-multi-tenant-ai-platform/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/secure-multi-tenant-ai-platform/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json) |
+| 13 | [High-Volume Batch Inference Pipeline](https://forwarddeployedprep.com/design/high-volume-batch-pipeline) | Review draft | 5 / 5 | passed | passed | 0 / 3 | [pending](https://forwarddeployedprep.com/design/high-volume-batch-pipeline) | 2026-11-20 | Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. [markdown](high-volume-batch-pipeline/casebook.md) [html](high-volume-batch-pipeline/reader.html) [coverage](high-volume-batch-pipeline/case.json) [validation](high-volume-batch-pipeline/snapshot.json) [live_check](high-volume-batch-pipeline/live-check.json) [review_baseline](../../.website_spec/casebook-review-next-ten-2026-11-20/baseline/high-volume-batch-pipeline/inventory.json) [review](../../.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json) |
 | 14 | [Agent Platform for Non-Technical Users](https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](agent-platform-for-non-technical-users/casebook.md) [html](agent-platform-for-non-technical-users/reader.html) [coverage](agent-platform-for-non-technical-users/case.json) [validation](agent-platform-for-non-technical-users/snapshot.json) [live_check](agent-platform-for-non-technical-users/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/agent-platform-for-non-technical-users/inventory.json) |
 | 15 | [Consumer-Scale Chat Service](https://forwarddeployedprep.com/design/consumer-scale-chat-service) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/consumer-scale-chat-service) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](consumer-scale-chat-service/casebook.md) [html](consumer-scale-chat-service/reader.html) [coverage](consumer-scale-chat-service/case.json) [validation](consumer-scale-chat-service/snapshot.json) [live_check](consumer-scale-chat-service/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/consumer-scale-chat-service/inventory.json) |
 | 16 | [LLM Inference Serving](https://forwarddeployedprep.com/design/llm-inference-serving) | In progress | 0 / 5 | pending | pending | 0 / 3 | [pending](https://forwarddeployedprep.com/design/llm-inference-serving) | 2026-11-20 | 20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit. [markdown](llm-inference-serving/casebook.md) [html](llm-inference-serving/reader.html) [coverage](llm-inference-serving/case.json) [validation](llm-inference-serving/snapshot.json) [live_check](llm-inference-serving/live-check.json) [review_baseline](../../.website_spec/casebook-review-2026-11-20/baseline/llm-inference-serving/inventory.json) |
@@ -165,223 +165,223 @@ Next: No remaining work for this three-case release. Continue the separate revie
 
 ### Deep Research Agent
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Customer Support Automation
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Tool-Using Agent with Safety Controls
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### SRE Incident Response Agent
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Sales Copilot
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Enterprise Coding Assistant
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Real-Time Call Assistant
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Logistics Exception Handling
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Secure Multi-Tenant AI Platform
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### High-Volume Batch Inference Pipeline
 
-Stage: In progress. Content mode: teach. Live check: pending.
+Stage: Review draft. Content mode: teach. Live check: pending.
 
 | Section | Rewrite state |
 | --- | --- |
-| case-brief | pending |
-| walkthrough | pending |
-| deep-dives | pending |
-| practice | pending |
-| quick-review | pending |
+| case-brief | complete |
+| walkthrough | complete |
+| deep-dives | complete |
+| practice | complete |
+| quick-review | complete |
 
 | Check | State | Evidence |
 | --- | --- | --- |
-| source_coverage | pending | Pending. |
-| editorial_review | pending | Pending. |
-| structural_validation | pending | Pending. |
-| browser_validation | pending | Pending. |
-| visual_review | pending | Pending. |
+| source_coverage | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json |
+| editorial_review | passed | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json |
+| structural_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json |
+| browser_validation | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json |
+| visual_review | pending | Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json |
 
-Next: Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.
+Next: Build, inspect diagrams and screenshots, validate native routes, then deploy this ten-case batch.
 
 ### Agent Platform for Non-Technical Users
 
@@ -827,6 +827,20 @@ Next: Read the complete baseline, repair weak explanations and technical claims,
 
 | Time (UTC) | Case | Change |
 | --- | --- | --- |
+| 2026-11-20T07:29:30+00:00 | real-time-call-assistant | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:29:30+00:00 | sales-copilot | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:29:30+00:00 | tool-using-agent-with-safety-controls | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:28:35+00:00 | high-volume-batch-pipeline | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:25:31+00:00 | secure-multi-tenant-ai-platform | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:23:17+00:00 | logistics-exception-handling | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:21:41+00:00 | real-time-call-assistant | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:19:39+00:00 | enterprise-coding-assistant | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:19:22+00:00 | enterprise-coding-assistant | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T07:17:57+00:00 | sales-copilot | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T04:04:23+00:00 | sre-incident-response-agent | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T04:02:24+00:00 | tool-using-agent-with-safety-controls | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T04:01:04+00:00 | customer-support-automation | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
+| 2026-11-20T04:01:04+00:00 | deep-research-agent | Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending. |
 | 2026-11-20T03:35:02+00:00 | document-review-copilot | Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. |
 | 2026-11-20T03:35:02+00:00 | nl-over-governed-data | Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. |
 | 2026-11-20T03:35:02+00:00 | enterprise-knowledge-assistant | Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion. |

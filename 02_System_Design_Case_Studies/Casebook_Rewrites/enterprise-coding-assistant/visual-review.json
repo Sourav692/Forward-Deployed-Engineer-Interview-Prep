@@ -1,1 +1,28 @@
-{"status": "reviewed", "passed": true, "evidence": "Desktop (1440) shows the five-section nav, contents rail with the three brief topics (keystroke, Alex, task) and the progress rail; body text wraps at a readable measure. Phone (390) shows the topic selector, the core-idea figure rendered under the 'tiny permitted context' paragraph with its caption, Alex's six numbered steps and no horizontal overflow. Rendered the light SVGs locally: the compact three-lane figure shows 'Async repository indexing on push', ACL-versioned symbol/vector index and the versions box as captioned; the original source figure shows user preferences and conversation memory feeding the context builder before the semantic cache, matching the step 4 prose; the hot-path lane's hit edge goes directly to 'Stream to editor', which the text now flags. Browser check passed image decoding for all 16 SVG files at six widths. 16 Nov 2026 caption check: re-read the SVG labels after the text fixes; the hot-path caption's added sentence matches the drawn 'Hit: reuse validated completion' to 'Stream to editor' edge, and the vertical-flow caption matches its Hit to Prompt builder edge.", "limits": ["Visual inspection used the two generated screenshots (Case brief only) plus local thumbnails of four light-variant SVGs, cropped to square; walkthrough and practice panels were checked by the automated browser run, not by eye.", "Dark variants were not inspected visually; the page is light-themed.", "No screen-reader testing."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 8 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-10-0",
+    "figure-35-0",
+    "figure-35-1",
+    "figure-35-2",
+    "figure-35-3",
+    "figure-35-4",
+    "figure-36-0"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

@@ -7,7 +7,7 @@
   "level": "Core",
   "author": "By Sourav Banerjee",
   "source_url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
-  "updated": "Teaching rewrite, 16 November 2026",
+  "updated": "Reviewed 20 November 2026",
   "mode": "teach",
   "markdown": "casebook.md",
   "source_inventory": "source.json",
@@ -1146,7 +1146,7 @@
   ],
   "editorial_review": {
     "status": "reviewed",
-    "evidence": "Compared all 58 captured sections against the earlier draft paragraph by paragraph. The draft's coverage was templated: it dropped the five-row stakeholder map, the three answer tiers, the seven-step whiteboard architecture, sync/async boundaries, the injection replay that its own figure depicts, the model-to-tool time ratio, the risk register table, the who-decides integration axis and Salesforce mapping, cost scenarios' later/prevent steps and cache-key rule, the near-miss scorecard and spoken answer, and every memorable interview quote; it also gave three different plane figures one caption and said a 'refund ledger' owned refund history. These are restored in the walkthrough and deep dives; six follow-ups became answer-11 to answer-16. Our own qualifications (combined 43.2 GB/day audit total, model API sized by concurrency not cores, 'no unauthorised money' is not 'no money', kill-switch limits, distinct identities for identical refunds) are marked as ours. The brief now defines bounded action, deterministic service and idempotent gateway before use and maps the related variant cases."
+    "evidence": "Compared all 58 captured sections against the earlier draft paragraph by paragraph. The draft's coverage was templated: it dropped the five-row stakeholder map, the three answer tiers, the seven-step whiteboard architecture, sync/async boundaries, the injection replay that its own figure depicts, the model-to-tool time ratio, the risk register table, the who-decides integration axis and Salesforce mapping, cost scenarios' later/prevent steps and cache-key rule, the near-miss scorecard and spoken answer, and every memorable interview quote; it also gave three different plane figures one caption and said a 'refund ledger' owned refund history. These are restored in the walkthrough and deep dives; six follow-ups became answer-11 to answer-16. Our own qualifications (combined 43.2 GB/day audit total, model API sized by concurrency not cores, 'no unauthorised money' is not 'no money', kill-switch limits, distinct identities for identical refunds) are marked as ours. The brief now defines bounded action, deterministic service and idempotent gateway before use and maps the related variant cases. November 20 complete maintained-baseline review: Complete maintained five-section casebook: eight walkthrough steps, eleven protected figures, action records and receipts, four security controls, all workload arithmetic, 18-call refund near miss, integration protocols, practice answers and source notes. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
   },
   "required_answer_reveals": [
     "answer-1",

@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "121c5a73aecd4d55fc5e9e81548f7b58f30af300ac42b7d341b0310d4a2327fb",
-  "html_sha256": "b6b5d9ba58f0255077cb2663a77371d9bfe772ae83592be610c0c16ac0fe01fb",
-  "config_sha256": "cdadda21ec135a54e61356070d5028a69179499ed723a91a3c2a30b41ff5715b",
+  "markdown_sha256": "cb7e249a62d3c551bcb7303cbc7fb8e8b75f31bee76cf668ec3a89a679a7f144",
+  "html_sha256": "1a02f4be423be5649143e6e27624e01deb12e0a2ad506d18e1c78c756b28472b",
+  "config_sha256": "3d31dfab20db180f70381d895a91129696b93d517e10a37df915b3ce3c6814a8",
   "source_url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
   "validation": {
     "passed": true,
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "16 November 2026: read all 44 captured sections of the real-time call assistant source and authored a teach-mode rewrite from scratch. The overview, main guide, deep dive and cheat sheet repeat the Full Design's mechanisms, so each mechanism is taught once in the place that fits (three-clock split in step 1, budget arithmetic with the explicit 2,000 ms sum in step 4, per-lane figures inside the snapshot, live-lane and post-call dives) and the shorter versions are mapped as consolidated. The brief uses the source's own Sara/Acme trace as the example and defines CRM, ASR, diarization, PII, VAD and p95 before use. Every substantive table (14 of 18; the old navigation table is consolidated, the main NFR table is merged into the fuller constraints table, and the follow-up table became eight reveals) and all 8 diagrams in both variants are kept beside their explanation. Old 'section N' pointers were removed from table cells and replaced with links to the new anchors. Three changed-constraint questions (unknown inbound caller, mid-call redaction outage, auto-applied stage) are labelled as authored additions; the consent-law example in the privacy dive comes from the source's own references. No RAG-case material was imported beyond the voice project's retrieval step the source itself describes."
+      "evidence": "16 November 2026: read all 44 captured sections of the real-time call assistant source and authored a teach-mode rewrite from scratch. The overview, main guide, deep dive and cheat sheet repeat the Full Design's mechanisms, so each mechanism is taught once in the place that fits (three-clock split in step 1, budget arithmetic with the explicit 2,000 ms sum in step 4, per-lane figures inside the snapshot, live-lane and post-call dives) and the shorter versions are mapped as consolidated. The brief uses the source's own Sara/Acme trace as the example and defines CRM, ASR, diarization, PII, VAD and p95 before use. Every substantive table (14 of 18; the old navigation table is consolidated, the main NFR table is merged into the fuller constraints table, and the follow-up table became eight reveals) and all 8 diagrams in both variants are kept beside their explanation. Old 'section N' pointers were removed from table cells and replaced with links to the new anchors. Three changed-constraint questions (unknown inbound caller, mid-call redaction outage, auto-applied stage) are labelled as authored additions; the consent-law example in the privacy dive comes from the source's own references. No RAG-case material was imported beyond the voice project's retrieval step the source itself describes. November 20 complete maintained-baseline review: Complete maintained casebook: eight walkthrough steps, eight protected figures, all three lanes and stage timings, speech/transcript/CRM boundaries, privacy and retention, summary evaluation, all source questions and three changed-constraint drills. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
     }
   }
 }

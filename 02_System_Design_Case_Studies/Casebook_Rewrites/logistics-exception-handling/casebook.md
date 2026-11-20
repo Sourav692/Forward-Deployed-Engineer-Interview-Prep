@@ -29,7 +29,7 @@ The source traces one exception end to end: a missed scan in Frankfurt. The parc
 
 The whole path is feed, detect, policy, draft or narrow auto-action, audit. One tempting design stays out: "just ping the carrier for every blip." That would put a model and a carrier call behind every routine event, which is both expensive and dangerous.
 
-To make the trace concrete, add some illustrative numbers that are not from the source. Suppose the Frankfurt parcel is worth $320, the route is one the carrier has rebooked many times, and the agent proposes "rebook on the next linehaul and tell the customer the new date" with a confidence above the agreed threshold. The gate checks customs first: detection typed this case as a missed scan, so it is not customs. Then it checks value and confidence: $320 is under $500 and confidence meets the threshold. The rebooking runs once with an idempotency key, and the audit log records the verdict, the draft and the result. Change one fact, so that detection types the case as a customs hold, and the same confident draft goes to an ops agent. Nothing the agent says can change that.
+To make the trace concrete, add some illustrative numbers that are not from the source. Suppose the Frankfurt parcel is worth $320, the route is one the carrier has rebooked many times, and the agent proposes "rebook on the next linehaul and tell the customer the new date" with a confidence above the agreed threshold. The gate checks customs first: detection typed this case as a missed scan, so it is provisionally non-customs. Before auto-action, confirm current carrier/customs status from authoritative fields; a detector label alone can be wrong. Unknown, conflicting or stale status goes to a human. Then it checks value and confidence: $320 is under $500 and confidence meets the threshold. The rebooking runs once with an idempotency key, and the audit log records the verdict, the draft and the result. Change one fact, so that detection types the case as a customs hold, and the same confident draft goes to an ops agent. Nothing the agent says can change that.
 
 ### What you need to design {#brief-task}
 
@@ -153,7 +153,7 @@ The customs rule dominates the rest. The gate holds it as an invariant for every
 
 ### 3. Size by event throughput, not by users {#sizing}
 
-Event throughput and correctness constrain this system, not user count. Forty concurrent agents are a single-server load. Two hundred events a second, bursting during a regional storm, is the real sizing problem. Say this aloud in the interview, because it decides where the model sits.
+Event throughput and correctness constrain this system, not user count. Forty concurrent agents suggest modest interface concurrency, but do not establish one server's capacity or availability requirements. Two hundred events a second, bursting during a regional storm, is the real sizing problem. Say this aloud in the interview, because it decides where the model sits.
 
 <p class="figure-caption">The sizing arithmetic and what each figure decides.</p>
 <div class="source-table-wrap">
@@ -162,7 +162,7 @@ Event throughput and correctness constrain this system, not user count. Forty co
 | --- | --- | --- |
 | Real-time events at peak | ~200 events/s | The stream and detection must absorb bursts; a queue sits in front |
 | Upper bound per day at the peak rate | 200 × 86,400 ≈ 17.3M events | Far too many to send to an LLM; detection must be cheap |
-| Human-handled cases per day | 150 agents × 30–50 ≈ 4,500–7,500 | The model drafts thousands of cases a day, not millions |
+| Human-handled cases per day | 150 agents × 30–50 ≈ 4,500–7,500 | Human capacity is thousands of cases/day; total exception and draft volume still needs measurement |
 | Concurrent approvers at peak | ~40, during shift handoff | The approval queue, not the model, is the human bottleneck |
 | Batch drops | every 2–6 hours, a few thousand records each | Batch exceptions surface hours late by design |
 
@@ -242,9 +242,9 @@ So the two paths converge after ingestion instead:
 
 - Webhook ingest validates and deduplicates each event, then pushes it onto the stream immediately. Detection must be low-latency on this path.
 - Batch ingest picks up the carrier's drop on its schedule, every 2–6 hours. It parses the drop and diffs it against the last known state of each shipment, so only changes enter the stream.
-- Both paths write the same normalised event schema. Detection never needs to know which path an event came from.
+- Both paths write the same normalised event schema. Detection uses one schema but still needs provenance, event time, ingest time, carrier sequence/version and feed freshness. Reject duplicate IDs and prevent an older batch row from overwriting a newer webhook state. Resolve conflicting statuses through carrier-specific authority rules rather than arrival order.
 
-Picture a batch file with three thousand rows where 2,950 shipments are unchanged since the last drop (illustrative numbers). Without the diff, detection would see 3,000 events and might re-flag yesterday's exceptions. With it, detection sees 50 changed shipments and treats them exactly like webhook events.
+Picture a batch file with three thousand rows where 2,950 shipments are unchanged since the last drop (illustrative numbers). Without the diff, detection would see 3,000 events and might re-flag yesterday's exceptions. With it, detection sees 50 changed shipments through the shared schema. That diff alone cannot find the other failure: a shipment that remains unchanged past its expected next scan. Persist its expected-scan deadline and schedule a keyed timer or periodic due-state sweep. At the deadline, check late-event allowance and feed health. A stale batch feed means “cannot establish movement”, not proof that the parcel is physically stuck. An unchanged row or no webhook must not remove the deadline check.
 
 A missed scan on a batch carrier is therefore detected late by design. Surface that latency to agents instead of hiding it, because it changes how urgently they should act. Tag every batch-sourced exception with its detection lag, and show it on the draft. The system has two feed clocks, so keep separate time-to-detect p50 and p95 for webhook and batch feeds (p95 is the time within which 95% of exceptions are detected). An average would blend a seconds-scale clock with an hours-scale one and describe neither.
 
@@ -262,7 +262,9 @@ The customs check runs first and short-circuits everything else. A confidence sc
 
 State the ordering out loud. Suppose a candidate checks confidence first and treats customs as one more reason for low confidence. Now trace a customs hold where the model is, for whatever reason, 0.99 confident in a rebooking (an illustrative value). In that system the case passes the confidence check, and only a later rule might catch it. In principle a high-confidence model could auto-resolve a customs hold, the one outcome the customer ruled out. With customs first, the same case never reaches a confidence comparison. This is the same structure as deny-rules-first in the Tool-Using Agent with Safety Controls tool gateway, with the same short-circuit logic.
 
-Three details make the gate trustworthy:
+Three details make the gate trustworthy. Detection is independent of the drafting model, but it is not infallible. Require current carrier/regulatory evidence for a non-customs verdict and test misclassified customs cases, not only correctly labelled cases with forced high confidence. The $500 rule also needs an explicit currency and valuation basis. Treat exactly $500, an unknown currency or a missing approved conversion as human-review cases; a bare numeric comparison cannot authorise a multi-region shipment.
+
+The remaining details preserve the policy boundary:
 
 - **Take the exception type from detection, not from the agent.** An agent that mislabels a customs hold as a weather delay must not be able to talk its way past the gate.
 - **Fail closed on any missing field.** No value, no type or no confidence routes to a human. So does a missing policy version.
@@ -303,7 +305,7 @@ The main guide adds the remaining failure rules. Customs is an invariant, not a 
 
 This customer's compliance posture depends on traceability. Every auto-resolved action and every human decision must be reconstructable after the fact.
 
-Treat the audit log as a first-class store, not a side effect of other components. It records every gate verdict, whether customs to human or value-and-confidence to auto or human. It records every ops agent action: approve, edit or reject. Each entry is immutable and carries the model's confidence and reasoning trace. Because an action that cannot be logged does not run, the log is complete by construction rather than by best effort.
+Treat the audit log as a first-class store, not a side effect of other components. It records every gate verdict, whether customs to human or value-and-confidence to auto or human. It records every ops agent action: approve, edit or reject. Each entry is immutable and carries the model's confidence and reasoning trace. Because dispatch requires durable intent, missing pre-action evidence blocks execution. Completion evidence still needs reconciliation after crashes or lost responses, so monitor unresolved operations as well as missing audit rows.
 
 Hold least-privilege carrier credentials. The execution path holds only the scopes needed to rebook or reschedule, never broad account-level credentials. Enforce regional access control at the application layer, as step 7 describes.
 
@@ -369,7 +371,7 @@ The source sums up the table in one line: the design centres on one non-negotiab
 
 The sizing step established that about 200 webhook events a second at peak does not mean 200 agent decisions a second. This topic follows the numbers through each component.
 
-Start with the stream. A peak sustained for 24 hours would be 200 × 86,400, about 17.3M events. Treat that as an upper bound for capacity planning, not a daily forecast. Now the human side: about 150 agents each handle 30–50 cases a day, which gives 4,500–7,500 cases in the simple sizing estimate. Because cheap detection runs before the model, inference spend tracks disruptions, not events.
+Start with the stream. A peak sustained for 24 hours would be 200 × 86,400, about 17.3M events. Treat that as an upper bound for capacity planning, not a daily forecast. Now the human side: about 150 agents each handle 30–50 cases a day, which gives 4,500–7,500 cases in the simple sizing estimate. Because cheap detection runs before the model, inference spend tracks detected exceptions and calls per exception. Human case capacity is not an upper bound on automated cases, so measure the exception fraction and auto-resolve share before sizing inference.
 
 The 40 concurrent agents at shift handoff size something different. They size the review interface and the queue SLA, not stream ingestion. Mixing the two leads to the classic mistake of scaling the model tier for a load that only the queue and the humans feel.
 
@@ -395,11 +397,11 @@ Execution is where duplicates happen. Each carrier action needs an idempotency k
 2. The carrier books it, but the response is lost and the executor times out.
 3. A timed-out rebook could have succeeded, so a blind retry risks a second booking.
 4. With the key, the retry carries `S:resolution-v1` again. A carrier that honours keys recognises it and returns the first booking.
-5. If an ops agent later edits the resolution, the new version gets a new key, `S:resolution-v2`. The key tracks the decision, not just the shipment, so a deliberate change is not mistaken for a duplicate.
+5. If an ops agent later edits the resolution, first reconcile `S:resolution-v1` and determine whether it already booked. Only a distinct, still-needed and approved operation gets `S:resolution-v2`. An edit is not permission to dispatch a second booking while the first is uncertain. The key tracks the decision, not just the shipment, so a deliberate change is not mistaken for a duplicate.
 
 Carrier APIs without idempotent semantics may stay human-only, because step 4 has no safe equivalent for them. Limit retries and use a circuit breaker to send work to review when a carrier is unhealthy.
 
-Audit automated and human decisions alike: the original draft, the agent's edit or rejection and the action result. If the audit store is down, take no action. That ordering, log first or do nothing, is what makes the audit log complete by construction.
+Audit automated and human decisions alike: the original draft, the agent's edit or rejection and the action result. If the audit store is down, take no action. Persist intent, policy verdict, approved payload hash and operation ID before dispatch. Persist the authoritative receipt after confirmation. A crash between the carrier effect and receipt write leaves an uncertain action that must be reconciled; the pre-action log cannot prove completion by itself. An outbox can couple local state and queued work, but it does not make the carrier call and the local log one atomic transaction.
 
 ### Residency at the storage and application layers {#dive-residency}
 
@@ -409,7 +411,7 @@ EU data never leaves the EU because the customer requires it. GDPR alone would a
 
 Residency needs two enforcement points. Storage isolation keeps EU records in EU stores. Application sessions must enforce region access as well, because isolated storage alone does not block a cross-region query issued by a service that can reach both regions. The release test in step 10 checks this from every region's session.
 
-Cross-region reporting uses approved aggregate metrics, not raw shipment records. A global dashboard can show EU exception counts or median time-to-draft, but not EU shipment rows.
+Cross-region reporting uses approved aggregate metrics, not raw shipment records. Aggregation alone does not remove the residency obligation: small groups, shipment identifiers and low-count slices may still expose shipment data. Review the permitted metric schema and suppress disallowed detail before export. A global dashboard can show EU exception counts or median time-to-draft, but not EU shipment rows.
 
 ### The rerouting variant: SAP, weather and 500 managers {#dive-rerouting}
 
@@ -482,6 +484,8 @@ The source page consolidated several prompts from its group into one read. The a
 </div>
 
 The source reuses the deny-first gate from the Tool-Using Agent with Safety Controls case, the tenancy ladder from the Secure Multi-Tenant AI Platform case and the channel-adapter idea from the Agent Platform for Non-Technical Users case, naming them rather than repeating them. All volumes, shares and staffing figures are the mock session's planning answers, not measurements. The confidence threshold and the shadow agreement target are deliberately left open: they need replayed history and the ops lead's sign-off.
+
+The November review adds absent-event detection, mixed-feed ordering, customs-status verification and safe recovery after edited or uncertain actions. [Apache Flink timers](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/datastream/operators/process_function/) describe keyed processing and event-time timers; event-time timers require watermark progress, so a stopped feed also needs a health/deadline check. [AWS transactional outbox guidance](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html) explains local dual-write recovery, not atomic carrier effects. No carrier or SAP environment was connected.
 
 The source fact-checked its residency claim on 27 September 2026:
 

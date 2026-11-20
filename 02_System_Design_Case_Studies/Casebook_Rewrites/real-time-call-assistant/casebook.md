@@ -3,9 +3,9 @@
 
 A sales or service rep is on a live call. While the customer talks, the rep wants a short hint on screen: the answer to a pricing question, a reply to an objection, the status of an open support case. After the call, the rep wants a summary, a list of action items and the CRM record updated. CRM (customer relationship management) is the sales and customer system of record; Salesforce is the usual example.
 
-Time is the constraint that shapes everything. A useful bullet must appear within about three seconds of the customer finishing a question, so slower work can never sit on that path. Two privacy rules are just as firm. Without recording consent nothing is transcribed, and if redaction fails, nothing is stored and no model is called. The model never writes to the CRM. It proposes changes, and the rep approves them.
+Time is the constraint that shapes everything. A useful bullet must appear within about three seconds of the customer finishing a question, so slower work can never sit on that path. Two privacy rules are just as firm. Without recording consent nothing is transcribed, and if transcript redaction fails, no transcript is persisted or sent to a downstream language model. Speech recognition necessarily processes the audio earlier, under a separately approved audio-processing contract. The model never writes to the CRM. It proposes changes, and the rep approves them.
 
-A few terms carry the rest of the case. ASR (automatic speech recognition) is speech-to-text; in a live call its delay and its errors flow into every later step. Diarization labels who said each part of the transcript, rep or customer. PII (personally identifiable information) is anything that identifies a person, such as a name, phone number, card number or account number. VAD (voice activity detection) works out when someone has started or stopped talking, and its end-of-utterance signal is the moment the three-second clock starts. A p95 target is the time that 95% of requests must beat.
+A few terms carry the rest of the case. ASR (automatic speech recognition) is speech-to-text; in a live call its delay and its errors flow into every later step. Diarization labels who said each part of the transcript, rep or customer. PII (personally identifiable information) is anything that identifies a person, such as a name, phone number, card number or account number. VAD (voice activity detection) works out when someone has started or stopped talking. Measure the three-second user-facing clock from the actual end of speech, including the silence the detector waits through; starting it only at the detector event would hide that delay. A p95 target is the time that 95% of requests must beat.
 
 The design rests on one idea: prepare context before the call, keep the live suggestion tiny, and do the careful work after the call with a human on every write. The source's overview figure shows those three phases and the two checks between them.
 
@@ -334,7 +334,7 @@ Interviewers probe the latency budget more than any other constraint, so say it 
 </tr>
 </tbody></table></div>
 
-Add the stages: 300 + 300 + 100 + 100 + 150 + 400 + 500 + 150 = 2,000 ms. That leaves about one second of headroom under the three-second target. The headroom pays for one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its own timeout.
+Add the stages: 300 + 300 + 100 + 100 + 150 + 400 + 500 + 150 = 2,000 ms. That leaves about one second of headroom under the three-second target. The headroom can pay for one allowlisted live lookup, such as current price. Independent drafting may start in parallel, but a price-dependent claim cannot be completed until the verified price arrives. Join the lookup before rendering that claim, or insert the value through a validated template. If it misses its deadline, omit it and show “check”.
 
 Several caveats travel with these numbers. The 300 ms end-of-utterance threshold is aggressive: OpenAI's server VAD defaults to 500 ms, and a shorter threshold cuts people off mid-sentence. Streaming ASR already holds partial text, so only the final tail is new work. The 400 ms to first token assumes a short prompt and a warm connection. Measure p95 end to end and per stage under real accents, networks and model load, because the stage tails, not the averages, decide whether the budget holds.
 
@@ -643,9 +643,9 @@ The snapshot holds the account summary, open opportunities with stage and next s
 
 - It runs under the rep's identity, so it mirrors the rep's CRM field visibility.
 - It is cached by account plus the rep's permission signature, a value that changes whenever the rep's role, territory or field mask changes.
-- A role or territory change invalidates it.
+- A role or territory change invalidates it. Recheck effective record and field access on every snapshot read, including during a long call. A missed invalidation event must not preserve access after revocation; refuse account-specific suggestions when current authority is uncertain.
 
-The calendar triggers the build for scheduled calls and the dialer triggers it for outbound campaigns. Inbound calls are the hard case, because the account is unknown until the caller's number is matched. Match on caller ID, then build a minimal snapshot in the first seconds of the call while the greeting is still happening. The source assumes the first real question rarely lands in the first ten seconds, and that gap is the window.
+The calendar triggers the build for scheduled calls and the dialer triggers it for outbound campaigns. Inbound calls are the hard case, because the account is unknown until the caller's number is matched. Use caller ID as a candidate account match, not proof of identity or permission. Confirm ambiguous or shared numbers through the approved workflow before loading account-specific facts; meanwhile use generic playbook guidance. Once matched and authorised, build a minimal snapshot during the greeting. The source assumes the first real question rarely lands in the first ten seconds, and that gap is the window.
 
 A snapshot is a copy, and copies go stale. Mark each field with its age. Keep the few facts that must be current, such as price, stock and open-case status, out of the snapshot. Fetch those live from an allowlist, read-only, in parallel with the model call and under a hard timeout. If the lookup misses, omit the fact. Avoid sequential CRM calls in the live lane.
 
@@ -673,15 +673,15 @@ The call assistant keeps the front half of that pipeline: voice activity detecti
 
 A summary that swaps speakers is wrong in a way no rubric forgives. "The customer agreed to renew" and "the rep offered a renewal" are different facts, and a speaker swap changes who made a promise. Diarization is therefore a correctness control, not a cosmetic one, which is why it is on the anchor prompt's component list.
 
-Take per-speaker channels from the telephony platform when it offers them. A dual-channel recording with the rep on one channel and the customer on the other makes diarization trivial. Fall back to model-based diarization only for single-channel audio.
+Take per-speaker channels from the telephony platform when it offers them. A dual-channel recording simplifies speaker separation when the channel-to-participant mapping is reliable. Verify that mapping across transfers, conferences, cross-talk and echo; two tracks do not by themselves establish which person made a commitment. Fall back to model-based diarization only for single-channel audio.
 
-PII redaction runs on the transcript stream, before storage and before either model call. Spoken card numbers, account numbers, dates of birth and addresses are replaced with typed placeholders. A typed placeholder keeps the kind of value without the value, so the summary can still say "customer gave a card number" without holding it.
+PII redaction runs on the transcript stream, before transcript storage and before either downstream language-model call. The recogniser has already received raw audio. If the customer prohibits that audio leaving its environment, recognition must run in the permitted environment too. A healthy redactor can still miss PII, so test false negatives with labelled calls, pause card capture upstream and restrict any separately retained raw audio. Spoken card numbers, account numbers, dates of birth and addresses are replaced with typed placeholders. A typed placeholder keeps the kind of value without the value, so the summary can still say "customer gave a card number" without holding it.
 
 Keep card details out of the audio in the first place. Pause or mask the recording while the card is read out, because PCI DSS bans storing the security code after authorisation, even encrypted. Other raw audio, if retained with consent, goes in a separate short-retention store with tighter access, because redacting audio is harder than redacting text.
 
-Retention is a policy the platform enforces, not a promise. Set a retention period per region and per data type: audio shortest, redacted transcript longer, summary and CRM fields as long as the CRM keeps them. A scheduler deletes on time and writes an audit record. A failed deletion raises an alert; it is not retried silently.
+Retention is a policy the platform enforces, not a promise. Set a retention period per region and per data type: audio shortest, redacted transcript longer, summary and CRM fields as long as the CRM keeps them. A scheduler deletes on time and writes an audit record. A failed deletion raises an alert and enters bounded retry and reconciliation. Include platform recordings, transcript replicas, exports and provider-held copies in the deletion inventory, and retain evidence of completion without copying the deleted content.
 
-Consent is checked before recording starts, per region. US federal law (18 U.S.C. 2511(2)(d)) allows one-party consent to record, while some states, such as California under Penal Code 632, require all parties to consent. With no recorded consent, the assistant does not record, transcribe or suggest, and the call is logged as unassisted.
+Consent is checked before recording starts, per region. The source contrasts the federal party-or-prior-consent exception in 18 U.S.C. 2511(2)(d), which excludes criminal or tortious interception purposes, with California Penal Code 632's all-party rule for confidential communications. These summaries do not decide a cross-border call's recording policy. Use the organisation's approved jurisdiction, consent and withdrawal rules; an unknown policy state stops capture. With no recorded consent, the assistant does not record, transcribe or suggest, and the call is logged as unassisted.
 
 Permissions finish the picture. The snapshot must mirror the rep's CRM field visibility; a useful suggestion containing another territory's deal value is still a leak. The transcript is untrusted content, and the model only proposes; policy and the rep authorise. Log corrections for review without exposing raw PII in telemetry.
 
@@ -699,7 +699,7 @@ The output is a fixed schema, not free text, because a CRM consumes it. It conta
 - objections raised;
 - proposed CRM field changes, such as stage, next step and close date.
 
-Every extracted item cites its span, so the reviewer can check it in one click and the evaluation can score it. Queue the work and retry on failure, with retries that preserve idempotency so a repeated job does not create a second proposal. An independent queue isolates this lane from the live one: a slow summary must never delay the rep's next call, which gets a fresh live lane with its own snapshot.
+Every extracted item cites its span, so the reviewer can check it in one click and the evaluation can score it. Leave an unstated owner or due date unknown rather than inventing one. Test negation and speaker attribution explicitly: “we cannot commit to Friday” must not become a customer promise to deliver Friday. Queue the work and retry on failure, with retries that preserve idempotency so a repeated job does not create a second proposal. An independent queue isolates this lane from the live one: a slow summary must never delay the rep's next call, which gets a fresh live lane with its own snapshot.
 
 ### Proposing CRM updates without writing them silently {#dive-crm-approval}
 
@@ -707,7 +707,7 @@ A CRM record outlives the call. A wrong stage or an invented commitment misleads
 
 Score each proposed field on its evidence. An explicit statement in a customer turn scores high; an inference from tone scores low. High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm, never pre-filled. Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy on that field holds.
 
-Approval routes the write through the tool gateway with an idempotency key. An idempotency key is an identifier for one intended write; the gateway treats a repeat with the same key as the same operation. A double-clicked approval, or a retry after a CRM outage, therefore writes once.
+Approval routes the write through the tool gateway with an idempotency key. An idempotency key is an identifier for one intended write; the gateway treats a repeat with the same key as the same operation. A double-clicked approval or outage retry must refer to the same persisted operation and approved argument hash. Recheck current permissions, the CRM record version and the approved payload before dispatch. If the response is lost, reconcile with the CRM; a client key alone does not make an arbitrary CRM API replay-safe.
 
 Every correction the rep makes is logged against its proposal. That log is the best evaluation data this system will have, and the [evaluation deep dive](#dive-evaluation) depends on it. This approval step is also the real control against prompt injection: OWASP's guidance on excessive agency places human approval before writes, because spoken or written input can still steer a model.
 
@@ -779,6 +779,8 @@ Every strong cost or latency answer uses four verbs in order:
 4. **Cache safely.** Key the snapshot on account and permission signature, and invalidate it on a role change.
 
 ### Sources and where the material comes from {#dive-references}
+
+The November review distinguishes raw-audio recognition from redacted-language-model input, fixes the speech-end clock origin and live-fact dependency, and adds current snapshot authorisation and negated-commitment checks. Recording-law examples are qualified rather than used as automatic legal decisions. [PCI SSC FAQ 1210](https://www.pcisecuritystandards.org/faqs/1210/), [18 U.S.C. 2511](https://uscode.house.gov/us/usc/t18/s2511/) and the [California judicial instructions](https://courts.ca.gov/system/files/2024-08/judicial_council_of_california_civil_jury_instructions_2024.pdf) support the retained payment and consent distinctions. No real call or vendor latency benchmark ran in this review.
 
 This case has one question-bank prompt and one latency drill and no source worked design, so most of the original page was built by the source author from the group's prompts. The table shows what each contributes; its section numbers refer to the chapters of the original page's Full Design, which this rewrite distributes across the walkthrough, deep dives and Practice.
 
@@ -877,7 +879,7 @@ The source also lists five weak answers to repair on the spot: "Use the best mod
 
 These three changed-constraint questions are authored for this rewrite, not taken from the source. Each tests whether you can apply the boundaries above to a case the source does not spell out.
 
-<details class="answer-reveal" id="rtca-added-inbound"><summary>Added: an inbound caller is unknown until the number matches, and the first question comes in eight seconds. What does the live lane do?</summary><div class="detail-body"><p>Match on caller ID and build a minimal snapshot during the greeting. If the snapshot is not ready when the first answerable question arrives, the lane serves labelled generic playbook guidance or stays silent; it does not call the CRM live inside the three seconds. The full snapshot replaces the minimal one once it is built, still as the rep.</p></div></details>
+<details class="answer-reveal" id="rtca-added-inbound"><summary>Added: an inbound caller is unknown until the number matches, and the first question comes in eight seconds. What does the live lane do?</summary><div class="detail-body"><p>Treat caller ID as a candidate, confirm the account and authorised rep context, then build a minimal snapshot during the greeting. If the snapshot is not ready when the first answerable question arrives, the lane serves labelled generic playbook guidance or stays silent; it does not call the CRM live inside the three seconds. The full snapshot replaces the minimal one once it is built, still as the rep.</p></div></details>
 
 <details class="answer-reveal" id="rtca-added-redaction"><summary>Added: the redaction service fails twenty minutes into a consented call. What changes?</summary><div class="detail-body"><p>Redaction fails closed. From that point the system stops storing transcript text and stops sending it to either model, so live suggestions stop. The post-call summary waits for redaction to recover; if the platform's recording exists, it is processed through redaction later. The rep sees that assistance paused rather than a silent gap with no explanation.</p></div></details>
 
@@ -946,8 +948,8 @@ This group's pivot is the sub-3-second sales drill. Its prompt: "sales team want
 <div class="source-table-wrap"><table>
 <thead>
 <tr>
-<th></th>
-<th></th>
+<th>Drill field</th>
+<th>Worked answer</th>
 </tr>
 </thead>
 <tbody><tr>
