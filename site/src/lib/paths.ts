@@ -455,7 +455,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 368,
+    estHours: 369,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -500,7 +500,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 423,
+    estHours: 424,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [

@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [backups, disaster recovery, RTO, RPO, restore drills]
 ---
 
@@ -59,7 +59,7 @@ The switcher compares three designs for Lanark's 800 GB database against the tar
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The figures are illustrative. Measure your own restore throughput, because it decides every RTO calculation and vendors' numbers rarely match a customer's network. Note too that a replica copies mistakes: a bad delete reaches the standby within seconds, so a standby never replaces backups.
+The figures are illustrative. Measure your own restore throughput, because it decides every RTO calculation and vendors' numbers rarely match a customer's network. Note too that a replica copies mistakes: a bad delete reaches the standby within seconds, so a standby never replaces backups. A replica or backup copy in another region is also a copy of the customer's data there, so check the agreed regions first, as [residency, retention and deletion](../security-reviews-and-compliance/03_Residency_Retention_and_Deletion.md) explains.
 
 ## What a restore needs beyond the data
 

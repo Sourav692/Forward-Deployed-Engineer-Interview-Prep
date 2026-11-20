@@ -86,7 +86,7 @@ Esher rotated the password within 30 minutes, found no use from unknown addresse
 ## Limits of this lesson
 
 - **Products differ.** Secret stores, registries and log platforms delete and rotate in different ways. Learn the customer's before you need them.
-- **Legal steps.** A leak of personal or regulated data may require notification. Involve the customer's security team at once.
+- **Legal steps.** A leak of personal or regulated data may require notification. Involve the customer's security team at once. Who notifies whom, and how fast, is in [threat modelling a deployment](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment#the-cache-that-crosses-tenants).
 - **Composite engagement.** Esher Pharma, Lin and the figures are illustrative, not a real customer.
 
 ## Interview angle
