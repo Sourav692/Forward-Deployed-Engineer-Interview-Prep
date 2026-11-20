@@ -17,11 +17,7 @@ tags: [service accounts, least privilege, RBAC, ABAC, provisioning, access]
 
 ## Start with the key that outlived its owner
 
-Cromer Insurance, a fictional insurer, ran a nightly job that sent suspicious claims to its fraud team. Hannah, an analyst, had set it up. The claims system needed an API key, so she created one under her own user, with administrator rights, because that was the quickest way to make it work.
-
-Hannah left in March. IT disabled her single sign-on account the same day. The API key lived in the claims system's own user store, not in the directory, so it kept working. In August a security review found an administrator key belonging to someone who had left five months earlier. The reviewer revoked it at once, and that night the fraud export stopped. Nobody had known it depended on Hannah.
-
-The credential was too powerful, tied to a person and invisible to the leaver process. Call this **the ghost credential**: access that belongs to nobody and so is removed by nobody, until removing it breaks something.
+Cromer Insurance ran a nightly job that sent suspicious claims to its fraud team. Hannah, an analyst, had set it up with an API key created under her own user, with administrator rights, because that was the quickest way to make it work. She left in March, and IT disabled her single sign-on account the same day. The key lived in the claims system's own user store, not in the directory, so it kept working. In August a security review found an administrator key belonging to someone who had left five months earlier and revoked it at once. That night the fraud export stopped, and Kwesi, the forward deployed engineer supporting Cromer's claims assistant, took the call: nobody had known the export depended on Hannah. Call this **the ghost credential**: access that belongs to nobody and so is removed by nobody, until removing it breaks something.
 
 > **What you'll learn**
 >
@@ -44,7 +40,7 @@ Every call your system makes runs as some identity. There are two kinds:
 
 *Table 1: Delegated and service access. Most systems need both, for different calls.*
 
-The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md) lesson covers the agent case in depth, and [agents that touch business systems](../../fde-building-in-the-estate/ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md) applies it to an MCP server.
+The second risk has a name, the **confused deputy**: a powerful service tricked or careless enough to act for a user beyond that user's rights. AI assistants are prone to it, because they take requests in plain language and call tools on the user's behalf. Default to delegated access for anything a user asks for. Keep service access for work no user starts, and give each job its own account, owned by a team. The site's [delegated authority](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/08_Delegated_Authority_and_Zero_Ambient_Authority.md) lesson covers the agent case in depth, and [agents that touch business systems](../../fde-building-in-the-estate/ai-delivery-in-customer-estates/04_Agents_That_Touch_Business_Systems.md) applies it to an MCP server. For a connector to a software-as-a-service system, [authenticating as whom](../../enterprise-integration/connecting-enterprise-systems/02_Authenticating_as_Whom.md) shows both kinds over OAuth.
 
 ## Roles first, then attributes
 
@@ -129,13 +125,13 @@ You will be asked for administrator rights, and you will ask for them. An FDE in
 4. **Time-box anything broader.** Use just-in-time elevation that expires after hours, with approval and a logged reason.
 5. **Let the customer run the privileged step** when they would rather not grant it. Give them a runbook and watch.
 
-Keep a **break-glass** account for emergencies, held by the customer, alerting on every use. That covers the case "admin" was supposed to cover, without anyone holding it day to day.
+Keep a **break-glass** account for emergencies, held by the customer, alerting on every use. That covers the case "admin" was supposed to cover, without anyone holding it day to day. When the system runs in the customer's cloud and your team operates it, [their cloud, our operations](../deployment-models-and-environments/01_SaaS_Customer_Cloud_or_On_Prem.md#their-cloud-our-operations) sets the approval target and break-glass route in the operating agreement.
 
 ## Limits of this lesson
 
 - **Policy tools vary.** How roles and rules are written depends on the customer's IdP and the application. The design questions stay the same.
 - **SCIM support varies.** Some applications support only creation, not deactivation. Test the leaver path before go-live.
-- **Fictional data.** Cromer Insurance, its people, roles and figures are illustrative.
+- **Composite engagement.** Cromer Insurance, Hannah, Kwesi, the roles and figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -3,11 +3,7 @@
 
 ## Start with the session that never asked again
 
-Bexley Council, a fictional local authority, gave its housing officers an assistant that drafts case notes from case files. Officers signed in with their council account through single sign-on (SSO). The council's IT team was pleased: no new passwords, and disabling an account in the directory would end access everywhere.
-
-Femi, a contractor, finished on a Friday. IT disabled his account at 17:00. On Monday morning an audit report showed him opening three case files from his own laptop. The assistant had checked his identity once, at sign-in two weeks earlier, and then issued its own session cookie valid for 30 days. It never asked the identity provider again.
-
-SSO had worked exactly as designed. The application had not. Call this **the session that never asked again**: an application session that outlives the identity it was built on.
+Bexley Council, a local authority, gave its housing officers an assistant that drafts case notes from case files, with sign-in through the council's single sign-on (SSO). Femi, a contractor, finished on a Friday, and IT disabled his account at 17:00. On Monday an audit report showed him opening three case files from his own laptop. Rohan, the forward deployed engineer who had wired up the sign-in, traced it within the hour: the assistant had checked Femi's identity once, at sign-in two weeks earlier, then issued its own session cookie valid for 30 days and never asked the identity provider again. SSO had worked as designed. The application had not. Call this **the session that never asked again**: an application session that outlives the identity it was built on.
 
 > **What you'll learn**
 >
@@ -63,13 +59,13 @@ OIDC returns up to three tokens. Give each one job, and never use one in place o
 
 | Token | Its job | Who reads it | Typical life | Common misuse |
 | --- | --- | --- | --- | --- |
-| ID token | Tells the app who signed in, when and how | The app that asked for sign-in | Minutes | Sent to an API as if it granted access |
+| ID token | Tells the app who signed in, when and how | The app that asked for sign-in | Minutes to an hour | Sent to an API as if it granted access |
 | Access token | Lets the holder call one API with limited scopes | The API named in its audience | 5 to 60 minutes | Accepted by an API it was not issued for |
 | Refresh token | Gets new access tokens without a new sign-in | The IdP only | Hours to weeks | Stored in the browser, or never rotated |
 
 *Table 1: The three OIDC tokens. Lifetimes vary by IdP and customer policy.*
 
-Short access tokens limit the damage of a stolen token and force regular trips back to the IdP. Each refresh is a chance for the IdP to say no: the account is disabled, the password changed or the session revoked. Rotate refresh tokens on each use, so a stolen one stops working once the real client uses it.
+Short access tokens limit the damage of a stolen token and force regular trips back to the IdP. Each refresh is a chance for the IdP to say no: the account is disabled, the password changed or the session revoked. Rotate refresh tokens on each use, so a stolen one stops working once the real client uses it. When several workers share one connection's refresh token, [authenticating as whom](/learn/enterprise-integration/connecting-enterprise-systems/authenticating-as-whom) covers the refresh race between them.
 
 ## A user mapped to the wrong role
 
@@ -105,8 +101,8 @@ Combine the last two. Short tokens give a ceiling on exposure even if an event i
 ## Limits of this lesson
 
 - **IdP behaviour varies.** Whether a refresh fails after a disable, and how events are pushed, depends on the product and its settings. Test it with the customer's IdP.
-- **Not a protocol course.** The flows have more options, such as the device flow and token exchange, than one lesson covers.
-- **Fictional data.** Bexley Council, its people and its timings are illustrative.
+- **Not a protocol course.** The flows have more options, such as the device flow and token exchange, than one lesson covers. [Identity verification with SSO and OIDC](/learn/production-ai/security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc) goes further into token validation.
+- **Composite engagement.** Bexley Council, Rohan, Femi and the timings are illustrative, not a real customer.
 
 ## Interview angle
 

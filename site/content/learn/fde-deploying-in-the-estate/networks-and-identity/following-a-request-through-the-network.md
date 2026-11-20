@@ -3,15 +3,7 @@
 
 ## Start with one error for three faults
 
-Dalby Freight, a fictional logistics firm, asked for a route-planning service inside its own data centre. The service ran in Dalby's container platform. It had to call Dalby's order system at `erp.dalby.internal` and a hosted model API on the internet.
-
-On install day the service logged one line for every call: "connection failed". Tomas, the FDE, tested both calls from his laptop over the VPN, and both worked. Two days later, with Mei from Dalby's network team, he found three separate faults:
-
-- The container platform's DNS did not forward `dalby.internal` names to Dalby's corporate DNS servers.
-- Calls to the model API ignored Dalby's proxy and were dropped silently at the firewall.
-- Once the proxy was set, Dalby's proxy inspected the TLS traffic and presented a certificate signed by Dalby's own authority, which the container did not trust.
-
-Each fault sat in a different layer, and the code reported them all the same way. Call this **the flattened error**: a failure message that hides which layer broke.
+Dalby Freight, a logistics firm, asked for a route-planning service inside its own data centre, calling Dalby's order system at `erp.dalby.internal` and a hosted model API on the internet. On install day every call logged one line: "connection failed". Tomas, the forward deployed engineer, tested both calls from his laptop over the VPN, and both worked. It took him two days, with Mei from Dalby's network team, to find three faults in three layers: the container platform's DNS did not forward `dalby.internal` names, calls to the model API ignored Dalby's proxy and were dropped at the firewall, and once the proxy was set, its TLS inspection presented a certificate the container did not trust. The code reported all three the same way. Call this **the flattened error**: a failure message that hides which layer broke.
 
 > **What you'll learn**
 >
@@ -35,7 +27,7 @@ Every HTTPS call crosses four steps in order. A failure at one layer stops the c
 
 Tell the two TCP failures apart. **Refused** arrives at once: a host answered, but nothing listens on that port. **Timed out** takes seconds: a firewall dropped the packets or no route exists. Refused points at the server. A timeout points at the path.
 
-Run every check from where the code runs. Your laptop on the VPN has a different resolver, routes and trust store.
+Run every check from where the code runs. Your laptop on the VPN has a different resolver, routes and trust store. During a live incident, [isolate the failing boundary](/learn/forward-deployed/debugging-customer-environment/isolate-the-failing-boundary) walks the same path to find which hop broke.
 
 The walkthrough traces one of Tomas's calls, from the container to Dalby's order system.
 
@@ -105,7 +97,7 @@ Every certificate has an expiry date. When one lapses, every client fails at TLS
 
 - **Simplified layers.** Real paths add load balancers, service meshes and network address translation. The same order of checks still applies.
 - **Commands vary.** Tools differ by platform, and locked-down images may lack them. Ask for a debug image the customer approves.
-- **Fictional data.** Dalby Freight, its people and addresses are illustrative.
+- **Composite engagement.** Dalby Freight, Tomas, Mei and the addresses are illustrative, not a real customer.
 
 ## Interview angle
 
