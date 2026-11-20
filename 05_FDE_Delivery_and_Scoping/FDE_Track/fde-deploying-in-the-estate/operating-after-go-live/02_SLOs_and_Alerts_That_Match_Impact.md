@@ -110,7 +110,7 @@ CPU, memory, disk and queue depth still matter. They explain why a symptom happe
 - **Tickets** for slow trends, such as disk filling in four days or memory creeping up after each release.
 - **Capacity reviews**, where sustained high CPU means a sizing change, not a night call.
 
-Keep a short list of cause-based pages only where waiting would cause harm before any symptom shows, such as a certificate expiring within 24 hours or a disk 95% full on the order database. Review every page monthly. A page nobody acted on is a candidate to delete or demote.
+Keep a short list of cause-based pages only where waiting would cause harm before any symptom shows, such as a certificate expiring within 24 hours or a disk 95% full on the order database. Review every page monthly. A page nobody acted on is a candidate to delete or demote. When a dashboard points at a slow query or a full connection pool, [finding the real bottleneck](../reliability-performance-and-cost/03_Finding_the_Real_Bottleneck.md) shows how to choose the fix.
 
 ## Limits of this lesson
 

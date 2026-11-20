@@ -6,22 +6,18 @@ module_group: Release and operate
 module_code: T23.6
 module_name: Reliability, performance and cost in their estate
 lesson: 3
-lessons: ["Recovering half-finished work", "Latency, queues and load tests", "Finding the real bottleneck", "AI cost per successful task", "Practise reliability, performance and cost, part 1", "Practise reliability, performance and cost, part 2"]
+lessons: ["Recovering half-finished work", "Latency, queues and load tests", "Finding the real bottleneck", "AI cost per successful task", "Practise reliability, performance and cost"]
 level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [performance, databases, connection pools, caching, permissions]
 ---
 
 ## Start with the bigger pool that sank the database
 
-Mossgiel Retail's customer service portal shows an order history page for each caller. At the Monday peak, about 60 pages a second, the page took 3 seconds. Logs showed requests waiting for a database connection. The team raised the connection pool on each of the 8 application instances from 20 to 50.
-
-The database allowed 300 connections. The instances now asked for 400. New connections were refused, the admitted ones fought over 8 CPU cores, and the page went from slow to failing.
-
-Call this **the bigger pool that sank the database**: a fix aimed at the symptom you can see, the wait for a connection, that adds load to the resource that was already full.
+Mossgiel Retail's customer service portal shows an order history page for each caller. At the Monday peak, about 60 pages a second, the page took 3 seconds, and logs showed requests waiting for a database connection. Before Ceri, the forward deployed engineer, had read a trace, the team raised the connection pool on each of the 8 application instances from 20 to 50. The database allowed 300 connections, and the instances now asked for 400. New connections were refused, the admitted ones fought over 8 CPU cores, and the page went from slow to failing. Call this **the bigger pool that sank the database**: a fix aimed at the symptom you can see, the wait for a connection, that adds load to the resource that was already full.
 
 > **What you'll learn**
 >
@@ -32,7 +28,7 @@ Call this **the bigger pool that sank the database**: a fix aimed at the symptom
 
 ## Measure where the time goes
 
-Every slow request spends its time somewhere: in your code, waiting for a pool, in the database, or in another service. A trace shows each part. Read it before you change anything.
+Every slow request spends its time somewhere: in your code, waiting for a pool, in the database, or in another service. A trace shows each part. Read it before you change anything. Start from the symptom the customer feels, then open the dashboards and traces that explain it, as [SLOs and alerts that match impact](../operating-after-go-live/02_SLOs_and_Alerts_That_Match_Impact.md#where-causes-belong) describes. [Telemetry the customer can use](../operating-after-go-live/01_Telemetry_the_Customer_Can_Use.md) covers adding the spans a trace needs.
 
 | What the trace shows | Likely fix |
 | --- | --- |
@@ -109,7 +105,7 @@ For caching model answers, see [caching in GenAI systems](../../../../01_Concept
 
 - **Databases differ.** Connection costs, limits and poolers vary by engine and host. Read the customer's database documentation and current settings.
 - **Simplified arithmetic.** Real query time mixes CPU, disk and lock waits. Use the numbers for direction, then measure.
-- **Fictional data.** Mossgiel Retail, its pages and figures are illustrative.
+- **Composite engagement.** Mossgiel Retail, Ceri, its pages and figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -2276,7 +2276,6 @@ export const MODULES: CurriculumModule[] = [
       'finding-the-real-bottleneck',
       'ai-cost-per-successful-task',
       'practise-reliability-performance-and-cost-1',
-      'practise-reliability-performance-and-cost-2',
     ],
     seeAlso: [],
   },
@@ -2868,7 +2867,6 @@ export const INTERVIEW_ROUNDS: InterviewRound[] = [
           'practise-releases-and-cutover',
           'practise-operating-after-go-live',
           'practise-reliability-performance-and-cost-1',
-          'practise-reliability-performance-and-cost-2',
         ],
       },
       {
@@ -7113,16 +7111,8 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'practise-reliability-performance-and-cost-1',
-    title: 'Practise Reliability, Performance and Cost, Part 1',
+    title: 'Practise Reliability, Performance and Cost',
     source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/05_Practise_Reliability_Performance_and_Cost_1.md',
-    home: 'reliability-performance-and-cost',
-    kind: 'sync',
-    publish: 'own',
-  },
-  {
-    slug: 'practise-reliability-performance-and-cost-2',
-    title: 'Practise Reliability, Performance and Cost, Part 2',
-    source: '05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/06_Practise_Reliability_Performance_and_Cost_2.md',
     home: 'reliability-performance-and-cost',
     kind: 'sync',
     publish: 'own',
