@@ -3,13 +3,7 @@
 
 ## Start with the balance that was a day old
 
-Bransdale Water, a fictional regional water company, asked for an assistant that drafts replies to billing questions for its contact-centre agents. The team pulled customer data from the customer relationship management (CRM) system, because it held contacts, accounts and every past conversation in one place.
-
-The CRM also showed each account's balance. Nobody asked where that number came from. It was a copy, loaded from the finance system every night at 01:00.
-
-On a Thursday a customer's direct debit of £186.40 bounced at 10:00. At 15:00 she asked whether she owed anything. The assistant read the CRM, saw a balance of £0.00, and drafted "Your account is fully paid". The agent sent it. Two weeks later the customer received a reminder letter with a late-payment fee, and complained.
-
-The balance belonged to the enterprise resource planning (ERP) system, where finance posts invoices and payments. The CRM held a convenient copy, and the assistant treated it as the truth. Call this **the copy that looked like the source**.
+Bransdale Water, a regional water company, asked for an assistant that drafts replies to billing questions for its contact-centre agents. Ffion, the forward deployed engineer, pulled customer data from the customer relationship management (CRM) system, because it held contacts, accounts and every past conversation in one place, and it also showed each account's balance. Nobody asked where that number came from: it was a copy, loaded from the finance system every night at 01:00. On a Thursday a customer's direct debit of £186.40 bounced at 10:00. At 15:00 she asked whether she owed anything, the assistant read £0.00 and drafted "Your account is fully paid", and the agent sent it. Two weeks later she received a reminder letter with a late-payment fee, and complained. The balance belonged to the enterprise resource planning (ERP) system, where finance posts invoices and payments, and the assistant had treated a convenient copy as the truth. Call this **the copy that looked like the source**.
 
 > **What you'll learn**
 >
@@ -58,7 +52,7 @@ The lesson on [pagination, filtering and versioning](/learn/engineering-foundati
 
 ## A source of truth for each field
 
-Bransdale's mistake was choosing a source of truth per system. The fix is to choose one per field. Figure 1 shows the map the team drew after the complaint.
+Bransdale's mistake was choosing a source of truth per system. The fix is to choose one per field. Figure 1 shows the map Ffion drew with the billing team after the complaint.
 
 ```mermaid
 flowchart LR
@@ -125,7 +119,8 @@ Write the answers next to the field map. They become the connector's design note
 
 - **Product details vary.** Object names, limits and automation differ between vendors and between customers' configurations. Treat Table 1 as a starting point and confirm it on site.
 - **Identity matching is a separate problem.** Linking the CRM contact to the ERP customer number is taught in [duplicates and entity resolution](/learn/fde-building-in-the-estate/customer-data-pipelines/duplicates-and-entity-resolution).
-- **Fictional data.** Bransdale Water and its figures are illustrative.
+- **Framing a whole integration.** This lesson maps fields for one connector. Agreeing the owner of each business fact before drawing any boxes is taught in [owners before boxes](/learn/enterprise-integration/framing-an-integration/owners-before-boxes).
+- **Composite engagement.** Bransdale Water, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

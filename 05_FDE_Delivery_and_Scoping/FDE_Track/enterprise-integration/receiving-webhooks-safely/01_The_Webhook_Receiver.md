@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, webhooks, HMAC, replay protection, idempotency, acknowledgement]
 ---
 
@@ -35,7 +35,7 @@ The receiver said yes only after doing everything, and could not recognise an ev
 
 ## A public endpoint and its threats
 
-A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](../connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md) lists the basic checks. This lesson builds the receiver behind them.
+A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](../connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md) shows how webhook events feed a sync. This lesson builds the receiver in front of it.
 
 | Threat | What the attacker or fault does | Defence |
 |---|---|---|

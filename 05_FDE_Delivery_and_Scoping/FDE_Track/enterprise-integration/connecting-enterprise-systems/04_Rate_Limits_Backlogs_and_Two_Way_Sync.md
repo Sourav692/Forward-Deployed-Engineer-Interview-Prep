@@ -1,6 +1,6 @@
 ---
 title: "Rate limits, backlogs and two-way sync"
-subtitle: "Keep two enterprise systems in step: drain a backlog inside the rate limit, give every field one owner, resolve conflicting updates and receive webhooks safely."
+subtitle: "Keep two enterprise systems in step: drain a backlog inside the rate limit, give every field one owner and resolve conflicting updates."
 track: "Enterprise Integration"
 module_group: Connectors
 module_code: T22.1
@@ -8,24 +8,16 @@ module_name: "Connecting enterprise systems"
 lesson: 4
 lessons: ["CRM, ERP and ticketing systems", "Authenticating as whom", "Legacy feeds: SOAP, SFTP and CSV", "Rate limits, backlogs and two-way sync", "Practise connecting enterprise systems"]
 level: intermediate
-reading_time: "15 min"
+reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
-tags: [integration, rate limits, backlogs, bidirectional sync, conflicts, webhooks]
+last_updated: "20 November 2026"
+tags: [integration, rate limits, backlogs, bidirectional sync, conflicts]
 ---
 
 ## Start with the stale change that won
 
-Hexworth Retail, a fictional appliance retailer, kept customer details in two places: its customer relationship management (CRM) system, which the website updates, and its ticketing system, where agents handle delivery problems. A connector synced contact details both ways.
-
-One morning the connector stopped at 06:00, when its credentials expired. Nobody noticed until 12:00. By then 90,000 changes were queued from both sides.
-
-Two of them belonged to the same customer. At 08:50 she changed her address on the website. At 09:30 she phoned about a delivery and gave the agent a newer address, because she was moving that week. The agent updated the ticket.
-
-When the connector restarted, eight workers pulled from the queue as fast as they could. The CRM allows 10 requests a second. Most calls were rejected and retried at once. Changes were applied in whatever order the workers finished them, and the last write won. The 09:30 change landed first. The 08:50 change landed 20 minutes later and overwrote both systems with the older address. Her replacement fridge went to the flat she had left.
-
-The connector compared nothing. It applied each change as it arrived. Call this **the stale change that won**.
+Hexworth Retail, an appliance retailer, kept customer details in its customer relationship management (CRM) system, which the website updates, and in its ticketing system, where agents handle delivery problems. Leah, the forward deployed engineer, ran the connector that synced contact details both ways. One morning it stopped at 06:00, when its credentials expired, and nobody noticed until 12:00, by which time 90,000 changes were queued from both sides. Two belonged to the same customer: at 08:50 she changed her address on the website, and at 09:30 she phoned about a delivery and gave the agent a newer address, because she was moving that week. When the connector restarted, eight workers pulled from the queue as fast as they could against a CRM that allows 10 requests a second. Most calls were rejected and retried at once, changes landed in whatever order the workers finished, and the last write won. The 09:30 change landed first. The 08:50 change landed 20 minutes later and overwrote both systems with the older address, and her replacement fridge went to the flat she had left. The connector compared nothing. Call this **the stale change that won**.
 
 > **What you'll learn**
 >
@@ -33,7 +25,6 @@ The connector compared nothing. It applied each change as it arrived. Call this 
 > - How to drain a backlog with arithmetic, not hope.
 > - Why every synced field needs one owner, and how to stop echoes.
 > - How to detect and resolve conflicting updates.
-> - What a safe webhook receiver checks before it says "received".
 
 ## Read the limits first
 
@@ -49,7 +40,7 @@ The server side of the same idea is taught in [protect the endpoint from abuse a
 
 ## Drain a backlog with arithmetic
 
-After an outage, the backlog and the live traffic both need the same limited budget. Live changes matter more, because people are waiting for them now. The switcher compares Hexworth's first restart with the one it ran after the incident.
+After an outage, the backlog and the live traffic both need the same limited budget. Live changes matter more, because people are waiting for them now. The switcher compares Hexworth's first restart with the one Leah ran after the incident.
 
 <div class="learning-widget evidence-switcher" id="drain-switcher">
 <p class="widget-intro">12:00. 90,000 queued changes for 30,000 customers. The CRM allows 10 requests a second. Live changes arrive at about 2 a second.</p>
@@ -90,22 +81,16 @@ flowchart TD
 
 At Hexworth, the base for her address was the old flat. The 09:30 ticket change replaced the old flat, which matched the base. It was applied and its address became the new base. The 08:50 website change also said it replaced the old flat, but the base was now the 09:30 address. Both sides had changed. Under Hexworth's rule an address conflict goes to a person. It was held for review with both values and their source times, and the agent confirmed the newer one.
 
-## Receiving webhooks safely
+## Changes that arrive as events
 
-Many systems push changes as **webhooks**: HTTP calls to your endpoint when something happens. A receiver is public. Anyone can call it. Before you trust a webhook, check four things.
-
-1. **Signature.** The sender signs each request with a shared secret, usually as an HMAC (hash-based message authentication code). Compute it over the raw request bytes, exactly as received, before any parsing. Compare in constant time.
-2. **Freshness.** Reject a request whose signed timestamp is more than a few minutes old. That stops an attacker replaying a captured request.
-3. **Duplicates.** Senders retry, so the same event can arrive twice. Record each event ID and skip ones already seen, for longer than the sender's retry period.
-4. **Durable receipt.** Write the event to a durable queue, then return a success status at once. Process it afterwards. A receiver that does slow work first times out and triggers retries.
-
-Events can also arrive out of order. Duplicates and ordering are taught in [recovering half-finished work](../../fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md).
+Many systems push changes as **webhooks**, HTTP calls to your endpoint when something happens, instead of waiting to be polled. The sync logic above does not change: each event still carries the value it replaced and goes through the same comparison with the base. What changes is the front door. A receiver is public, so it must check the signature, the freshness and the event ID, and put the event on a durable queue before it replies. That receiver is taught in [the webhook receiver](../receiving-webhooks-safely/01_The_Webhook_Receiver.md). Events can also arrive out of order, which [recovering half-finished work](../../fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md) covers.
 
 ## Limits of this lesson
 
-- **Providers differ.** Limits, bulk interfaces, retry schedules and signature formats vary. Read each provider's documentation.
+- **Providers differ.** Limits, bulk interfaces and retry schedules vary. Read each provider's documentation.
 - **Some conflicts need a person.** No rule resolves every case. Size the review queue and staff it.
-- **Fictional data.** Hexworth Retail and its figures are illustrative.
+- **Replaying a sync that stopped.** Checkpoints, replay and reconciliation for a one-way sync are taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md).
+- **Composite engagement.** Hexworth Retail, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -142,8 +127,6 @@ Each answer is an outline to say in about two minutes. Open the question and try
 
 1. IETF, [RFC 6585: Additional HTTP Status Codes](https://www.rfc-editor.org/rfc/rfc6585), accessed 17 November 2026. Status 429 and the `Retry-After` header.
 2. Google, [Handling Overload](https://sre.google/sre-book/handling-overload/), Site Reliability Engineering, accessed 17 November 2026. Client-side throttling and retry budgets.
-3. Standard Webhooks, [Standard Webhooks specification](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md), accessed 17 November 2026. Signing the event ID, timestamp and body, and rejecting stale timestamps.
-4. IETF, [RFC 2104: HMAC](https://www.rfc-editor.org/rfc/rfc2104), accessed 17 November 2026. Keyed hashing for message authentication.
 
 ## Key takeaways
 
@@ -151,7 +134,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 - Drain a backlog in its own lane behind live changes, coalesced per field, with a finish time.
 - Give each synced field one owner, and suppress the connector's own echoes.
 - Detect conflicts against a stored base, not by arrival order or clocks.
-- Verify a webhook's signature on the raw bytes, its freshness and its ID, then queue it before replying.
+- Webhook events go through the same base comparison, behind a receiver that verifies and queues before it replies.
 
 ## Check yourself
 
@@ -170,8 +153,8 @@ Two changes to one record may touch different fields. Keeping only the latest re
 </details>
 
 <details>
-<summary>3. Why compute the webhook signature before parsing the body?</summary>
+<summary>3. Why compare a change with the stored base instead of its timestamp?</summary>
 
-Parsing and re-serialising can change the bytes, such as spacing or key order. The signature was made over the bytes as sent.
+The two systems' clocks differ, and a queued change carries the time it was sent, not the time it was made. The base shows which side changed since the last sync.
 
 </details>

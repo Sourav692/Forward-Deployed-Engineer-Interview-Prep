@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, transport, webhooks, polling, REST, WebSockets, asynchronous processing]
 ---
 
@@ -122,7 +122,7 @@ Three rules keep it safe:
 - **Make the worker safe to repeat.** The sender may still deliver twice, and the backstop poll may find the same booking. Key the hold on the booking ID. Go deeper: [idempotent writes and long-running jobs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md).
 - **Give the worker its own failure policy.** When the reservation system is down, the worker retries with backoff and the queue absorbs the wait. Go deeper: [retries, circuit breakers and bulkheads](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md).
 
-The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish. What the receiver checks before it enqueues is in [rate limits, backlogs and two-way sync](../connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md).
+The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish. What the receiver checks before it enqueues is in [the webhook receiver](../receiving-webhooks-safely/01_The_Webhook_Receiver.md).
 
 ## Limits of this lesson
 

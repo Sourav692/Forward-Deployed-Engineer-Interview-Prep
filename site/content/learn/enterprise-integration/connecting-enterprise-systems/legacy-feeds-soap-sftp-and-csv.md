@@ -3,15 +3,7 @@
 
 ## Start with the half file that counted as whole
 
-Morvah Freight, a fictional parcel carrier, built a customer-service assistant that answers "where is my parcel?". Delivery confirmations came from a partner courier as one comma-separated values (CSV) file each night, dropped on Morvah's secure file transfer server.
-
-The loader checked the drop folder every five minutes. It loaded any file it had not seen before and recorded the file name as done.
-
-One night the partner's link was slow. The upload started at 02:12 and finished at 02:31. At 02:15 the loader found the file, read the 3,100 rows that had arrived so far, dropped the last row because it was cut off mid-line, and marked the file name as done. When the upload finished, the loader saw a name it had already processed and skipped it.
-
-In the morning, 5,300 delivered parcels still showed "in transit". The assistant told customers their parcels were on the way. Over the next two days, 600 of them opened missing-parcel claims for parcels sitting on their doorsteps.
-
-Nothing in the folder said the file was finished, and the loader assumed it was. Call this **the half file that counted as whole**.
+Morvah Freight, a parcel carrier, asked for a customer-service assistant that answers "where is my parcel?". Delivery confirmations came from a partner courier as one comma-separated values (CSV) file each night, dropped on Morvah's secure file transfer server, and Hamid, the forward deployed engineer, wrote a loader that checked the drop folder every five minutes, loaded any file it had not seen and recorded the file name as done. One night the partner's link was slow and the upload ran from 02:12 to 02:31. At 02:15 the loader read the 3,100 rows that had arrived, dropped the last one because it was cut off mid-line, and marked the name as done. When the upload finished, it skipped the file it had already processed. In the morning, 5,300 delivered parcels still showed "in transit", and over the next two days 600 customers opened missing-parcel claims for parcels sitting on their doorsteps. Nothing in the folder said the file was finished, and the loader assumed it was. Call this **the half file that counted as whole**.
 
 > **What you'll learn**
 >
@@ -97,7 +89,7 @@ The walkthrough is a scripted illustration. Two habits matter most. The ledger k
 
 - **Server behaviour varies.** Whether a rename is a single step, and when a file first appears in a listing, depend on the SFTP server and its storage. Test with the partner's real setup.
 - **Late and corrected files.** Files that arrive late or replace earlier ones are covered in [schema drift and late data](/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data).
-- **Fictional data.** Morvah Freight and its figures are illustrative.
+- **Composite engagement.** Morvah Freight, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
