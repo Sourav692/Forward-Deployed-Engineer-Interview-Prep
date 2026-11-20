@@ -129,7 +129,7 @@ At Dunholme, product deferred the work by one quarter. Two more deployments logg
 ## Limits of this lesson
 
 - **Estimates are estimates.** The engineer-week figures are planning numbers. Show your assumptions so others can challenge them.
-- **Not every repeated gap belongs in the platform.** Some belong in a template or a partner's product. Deciding which is the subject of the field-to-product module.
+- **Not every repeated gap belongs in the platform.** Some belong in a template or a partner's product. Deciding which is the subject of [configure, template or custom](../field-to-product/02_Configure_Template_or_Custom.md). For one need raised by customers, rather than a workaround rebuilt across deployments, start with [reusable need or one-off](../field-to-product/01_Reusable_Need_or_One_Off.md).
 - **Fictional data.** Dunholme Systems, its customers, the exposure and all figures are illustrative.
 
 ## Interview angle

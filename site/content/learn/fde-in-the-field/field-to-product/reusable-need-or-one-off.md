@@ -3,11 +3,7 @@
 
 ## Start with the same script written twice
 
-Tilford Software, a fictional workflow-automation vendor, sells a platform that routes work orders to field crews. At Wenlow Water, a fictional utility, supervisors moved work orders one at a time whenever a crew was off sick. That was about 300 moves a week at two minutes each, ten hours of supervisor time.
-
-The Tilford FDE at Wenlow wrote a bulk-reassign script in three days and filed a one-line ticket: "Wenlow wants bulk reassign. Urgent." The product team read it as one customer's preference and closed it.
-
-Two months later, another Tilford FDE wrote nearly the same script for Craven Council's highway repair teams. Support had logged 11 tickets from five customers asking to move many tasks at once. Nobody had connected them. Each field team solved the problem privately, so the product team never saw it. Call this **the invisible pattern**.
+Hana is a forward deployed engineer at Tilford Software, whose platform routes work orders to field crews. At Wenlow Water, supervisors moved work orders one at a time whenever a crew was off sick: about 300 moves a week at two minutes each, ten hours of supervisor time. Hana wrote a bulk-reassign script in three days and filed a one-line ticket: "Wenlow wants bulk reassign. Urgent." The product team read it as one customer's preference and closed it. Two months later, another Tilford FDE wrote nearly the same script for Craven Council's highway repair teams. Support had logged 11 tickets from five customers asking to move many tasks at once, and nobody had connected them. Each field team solved the problem privately, so the product team never saw it. Call this **the invisible pattern**.
 
 > **What you'll learn**
 >
@@ -112,13 +108,13 @@ Often the answer is no, or not yet. That is a valid outcome if the custom work i
 - **Name an owner.** Someone at Tilford or the customer maintains it after the FDE moves on.
 - **Tell the customer.** Explain what product decided and what they get meanwhile. Do not promise the feature is coming.
 
-The long-term cost of work built for one customer is covered in the site's [judgement under uncertainty](/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty) lesson. This lesson covers the step before it: deciding whether the work belongs to one customer at all.
+The long-term cost of work built for one customer is covered in the site's [judgement under uncertainty](/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty) lesson. This lesson covers the step before it: deciding whether the work belongs to one customer at all. When the same gap turns up across many deployments and needs costing against a product roadmap, the staff-level version is [platform investment from field evidence](/learn/fde-in-the-field/staff-fde-leadership/platform-investment-from-field-evidence).
 
 ## Limits of this lesson
 
 - **Three tests are a judgement aid.** They do not replace the product team's own prioritisation, which weighs strategy you may not see.
 - **Evidence can be gamed.** Counting tickets rewards customers who file many. Count customers.
-- **Fictional data.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative.
+- **Composite engagement.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

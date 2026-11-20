@@ -3,11 +3,7 @@
 
 ## Start with the fork nobody upgraded
 
-Tilford Software, a fictional workflow-automation vendor, built a connector between its platform and Wenlow Water's asset-management system. Craven Council, a fictional local authority, ran the same asset product, but an older version with 14 extra fields. To meet Craven's date, an FDE copied the connector code into a separate Craven branch and changed the field names in the code.
-
-Five months later, a Tilford platform release changed the interface every connector uses. The main connector was updated and tested against Wenlow. The Craven branch was not in the release pipeline. Nobody tested it. When Craven upgraded, its connector failed without raising an alert. For two days, 640 repair jobs never reached the asset system.
-
-The copy had saved a week. It cost two days of lost data, an apology to Craven's director and a month of rework. Call this **the quiet fork**.
+Tilford Software had built a connector between its platform and Wenlow Water's asset-management system. Craven Council ran the same asset product, but an older version with 14 extra fields. To meet Craven's date, Owen, a Tilford forward deployed engineer, copied the connector code into a separate Craven branch and changed the field names in the code. Five months later, a platform release changed the interface every connector uses. The main connector was updated and tested against Wenlow, but the Craven branch sat outside the release pipeline and nobody tested it. When Craven upgraded, its connector failed without raising an alert, and for two days 640 repair jobs never reached the asset system. The copy had saved a week. It cost two days of lost data, an apology to Craven's director and a month of rework. Call this **the quiet fork**.
 
 > **What you'll learn**
 >
@@ -73,7 +69,7 @@ Answer with what they need, not the branch they asked for:
 3. **Offer control over timing.** A pinned version inside a support window lets them upgrade when ready.
 4. **If a fork is unavoidable**, make it temporary: an owner, a merge-back date, and a place in the release pipeline so it is tested like everything else.
 
-If the customer needs a separate environment for isolation rather than different code, that is a tenancy question. The site's [tenancy and isolation](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation) lesson covers it.
+The [one platform, many customers](/learn/fde-case-drills/end-to-end-engagements/one-platform-many-customers) simulation runs this decision through a whole engagement. If the customer needs a separate environment for isolation rather than different code, that is a tenancy question. The site's [tenancy and isolation](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation) lesson covers it.
 
 ## When a shared upgrade breaks one customer
 
@@ -101,7 +97,7 @@ Tilford releases every quarter. Craven's change board approves upgrades twice a 
 
 - **Extension points cost design time.** A stable interface must be designed and kept stable. Build one when a second customer needs it.
 - **Support windows are commercial terms.** The FDE proposes them, but contracts and product leadership set them.
-- **Fictional data.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative.
+- **Composite engagement.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -9,7 +9,7 @@ These questions are asked the way a behavioural or customer round asks them: "te
 2. Answer aloud from your own experience, in four parts: the situation, what you did, the result, and what you would change.
 3. Open the outline and compare. Each outline is one worked answer in that shape, not the only good one.
 
-Every customer and figure below is fictional. Tilford Software is the FDE's employer, and Wenlow Water and Craven Council are its customers.
+Tilford Software is the FDE's employer, and Wenlow Water and Craven Council are its customers. All three are composites, not real companies, and every figure below is illustrative.
 
 > **What you'll practise**
 >

@@ -6931,7 +6931,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/01_Reusable_Need_or_One_Off.md",
       "estMinutes": 10,
       "href": "/learn/fde-in-the-field/field-to-product/reusable-need-or-one-off",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "configure-template-or-custom",
@@ -6943,7 +6943,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/02_Configure_Template_or_Custom.md",
       "estMinutes": 12,
       "href": "/learn/fde-in-the-field/field-to-product/configure-template-or-custom",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "capacity-and-cross-team-delivery",
@@ -6955,7 +6955,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/03_Capacity_and_Cross_Team_Delivery.md",
       "estMinutes": 12,
       "href": "/learn/fde-in-the-field/field-to-product/capacity-and-cross-team-delivery",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "practise-field-to-product",
@@ -6967,7 +6967,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/04_Practise_From_One_Customer_to_Many.md",
       "estMinutes": 8,
       "href": "/learn/fde-in-the-field/field-to-product/practise-field-to-product",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "beyond-one-engagement",
@@ -7003,7 +7003,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/staff-fde-leadership/03_Platform_Investment_from_Field_Evidence.md",
       "estMinutes": 11,
       "href": "/learn/fde-in-the-field/staff-fde-leadership/platform-investment-from-field-evidence",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "career-growth-from-fde-to-staff",
@@ -7481,9 +7481,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/09_Handover_and_Ownership.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/handover-and-ownership",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "onboarding-a-new-customer-integration",
@@ -8789,9 +8789,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/11_One_Platform_Many_Customers.md",
-      "estMinutes": 14,
+      "estMinutes": 15,
       "href": "/learn/fde-case-drills/end-to-end-engagements/one-platform-many-customers",
-      "updated": "2026-11-20"
+      "updated": "2026-11-21"
     },
     {
       "slug": "the-engagement-that-is-failing",

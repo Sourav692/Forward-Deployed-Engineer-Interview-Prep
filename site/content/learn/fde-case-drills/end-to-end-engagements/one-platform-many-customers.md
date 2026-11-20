@@ -126,7 +126,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 - **Answer:** Keep one code line and move every difference into a place built for it: tenant configuration with a schema, identity adapters that map each provider's groups to one role model, versioned templates pinned per tenant, and extension points with namespaced fields and webhooks. General needs go into core behind a tenant flag. Nothing customer-specific lives in core code.
 - **Trade-off:** Those places cost design time up front. A branch is faster once and slower forever.
 - **Follow-up to expect:** "The customer's need fits none of those." Then it is a core change or a decline.
-- **Go deeper:** [Tenancy and isolation](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation).
+- **Go deeper:** [Tenancy and isolation](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation), and [configure, template or custom](/learn/fde-in-the-field/field-to-product/configure-template-or-custom) for where each customer difference should live.
 
 </details>
 
