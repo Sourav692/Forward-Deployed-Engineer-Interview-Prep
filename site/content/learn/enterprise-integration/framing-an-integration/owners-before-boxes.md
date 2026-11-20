@@ -3,13 +3,7 @@
 
 ## Start with the copy that became the owner
 
-Tiverton Home Care, a fictional care agency, sends carers to about 900 clients a day. Three systems run the work. Coordinators plan visits in a rostering system. Carers check in and out on a phone app. Payroll pays carers for the visits they make. A fourth system came later: a family portal that shows relatives when the next visit is due.
-
-A project team built an integration to feed the portal. They drew four boxes and some arrows. To make the portal fast, the integration copied every scheduled visit into its own database. Within a month payroll was reading that database too, because it was easier than asking the rostering team for an export.
-
-Then came a week of snow. Coordinators cancelled 140 visits in the rostering system. The integration only copied new visits, so its copy never heard about the cancellations. Families saw visits that were not coming. Payroll paid £2,380 for visits that never happened, at £17 each.
-
-When finance asked who should fix it, nobody answered. The rostering team said its system was right. The integration team said it only copied data. The copy had become the place other systems trusted, and nobody owned it. Call this **the copy that became the owner**.
+Bronwen, a forward deployed engineer, was sent to Tiverton Home Care, a care agency whose carers visit about 900 clients a day, after its family portal went wrong. Coordinators plan visits in a rostering system, carers check in on a phone app and payroll pays for the visits made. The project team had drawn four boxes and copied every scheduled visit into the integration's own database to keep the portal fast, and within a month payroll was reading that copy too. In a week of snow, coordinators cancelled 140 visits, but the copy only heard about new ones: families saw visits that were not coming, and payroll paid £2,380 for visits that never happened. When finance asked who should fix it, the rostering team said its system was right and the integration team said it only copied data. The copy had become the place other systems trusted, and nobody owned it. Call this **the copy that became the owner**.
 
 > **What you'll learn**
 >
@@ -113,13 +107,13 @@ Before you draw an architecture, settle five questions with the system owners. T
 
 The walkthrough is a scripted illustration. Step 1 alone would have caught the snow-week failure, because payroll would have been named as a participant.
 
-The fifth question is where retries, timeouts and queues come in. This lesson does not re-teach them. Go deeper: [retries, circuit breakers and bulkheads](/learn/production-ai/scaling-and-reliability/retries-circuit-breakers-and-bulkheads) and [durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency). How the integration hears about the change is the subject of the next lesson, [choosing the transport](/learn/enterprise-integration/framing-an-integration/choosing-the-transport).
+The fifth question is where retries, timeouts and queues come in. This lesson does not re-teach them. Go deeper: [queues, topics and acknowledgements](/learn/engineering-foundations/distributed-systems-essentials/queues-topics-and-acknowledgements) and [retries, circuit breakers and bulkheads](/learn/production-ai/scaling-and-reliability/retries-circuit-breakers-and-bulkheads). How the integration hears about the change is the subject of the next lesson, [choosing the transport](/learn/enterprise-integration/framing-an-integration/choosing-the-transport).
 
 ## Limits of this lesson
 
 - **Ownership is agreed, not discovered.** The table records a decision by the system owners. Get it in writing.
 - **Facts can change owner.** A visit's pay becomes payroll's once approved. Mark those hand-overs in the story.
-- **Fictional data.** Tiverton Home Care and its figures are illustrative.
+- **Composite engagement.** Tiverton Home Care, Bronwen and the figures are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -130,7 +124,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 
 - **Answer:** Do not draw boxes yet. Ask for the business story: which events matter (a booking made, moved, cancelled, completed) and who cares about each result. Name each system by its job. Then run the boundary checklist: participants, the trigger, data in each direction, the owner of each fact, and what happens when a side is slow or down. Only then sketch the flow. Say out loud which facts each system owns.
 - **Trade-off:** Five minutes of questions feel slow, but they stop you designing the wrong flow for forty.
-- **Follow-up to expect:** "Assume what you need." State the assumptions, and mark which ones would change the design if wrong.
+- **Follow-up to expect:** "Assume what you need." State the assumptions, and mark which ones would change the design if wrong. The full forty-minute version of this round is in [the integration design interview](/learn/enterprise-integration/a-worked-partner-integration/the-integration-design-interview).
 
 </details>
 
