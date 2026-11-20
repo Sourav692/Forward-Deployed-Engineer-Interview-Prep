@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [SLOs, alerting, error budgets, on-call, operations]
 ---
 
 ## Start with the busy pager and the silent night
 
-Pennick Logistics, a fictional fulfilment company, handles about 1.5 million orders a month: around 2,500 an hour in the day and 300 an hour at night. After go-live, its on-call engineer was paged whenever any worker's CPU passed 80% for five minutes.
-
-In the first month that alert fired 41 times. Each time, the engineer logged in, saw orders flowing and went back to sleep. No page matched a delayed order.
-
-Then, from 01:10 to 04:10 one night, the carrier's label service rejected every request. No order could be dispatched without a label. The workers failed fast and CPU sat at 12%. Nobody was paged. The day shift lead found 900 stuck orders at 06:00, and the first lorries left half empty.
-
-Call this **the busy pager and the silent night**: alerts tuned to how hard the machines work, not to whether the customer's work gets done.
+Pennick Logistics handles about 1.5 million orders a month: around 2,500 an hour in the day and 300 an hour at night. After go-live its on-call engineer was paged whenever any worker's CPU passed 80% for five minutes, 41 times in the first month, and no page matched a delayed order. Then, from 01:10 to 04:10 one night, the carrier's label service rejected every request, and no order could be dispatched without a label. The workers failed fast, CPU sat at 12% and nobody was paged. At 06:00 the day shift lead rang Gwen, the forward deployed engineer, with 900 stuck orders, and the first lorries left half empty. Call this **the busy pager and the silent night**: alerts tuned to how hard the machines work, not to whether the customer's work gets done.
 
 > **What you'll learn**
 >
@@ -122,7 +116,7 @@ Keep a short list of cause-based pages only where waiting would cause harm befor
 
 - **Targets are local.** 99.5% suits Pennick's dispatch work. The right figure depends on the cost of failure and what the customer's staff can absorb.
 - **Thresholds are a starting point.** The burn-rate values come from the Google workbook's starting numbers. Tune them with the customer's traffic.
-- **Fictional data.** Pennick Logistics, its systems and figures are illustrative.
+- **Composite engagement.** Pennick Logistics, Gwen, its systems and figures are illustrative, not a real customer.
 
 ## Interview angle
 

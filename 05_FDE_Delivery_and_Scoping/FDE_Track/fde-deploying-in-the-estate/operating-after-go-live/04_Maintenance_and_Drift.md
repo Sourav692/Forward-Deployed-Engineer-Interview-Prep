@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [maintenance, model upgrades, data quality, schema drift, runbooks]
 ---
 
 ## Start with the average that hid a format
 
-Ravensworth Insurance, a fictional insurer, triages about 3,000 claims a day with an AI system. A hosted model reads each claim and its attachments and suggests a category. Handlers fix wrong categories by hand.
-
-The model vendor announced that the version Ravensworth used would be retired in 60 days. The team ran its evaluation set against the new version. Correct categories rose from 91% to 93%. They switched over the following week.
-
-Nine days later, Ravensworth's largest broker complained. Its claims arrive as scanned schedules with several columns, about 8% of the daily volume. On those, correct categories had fallen from 90% to 61%. The new model read the columns in a different order. About 630 claims had gone to the wrong team. The other formats had improved from about 91% to 96%, which lifted the average and hid the loss.
-
-Call this **the average that hid a format**: an upgrade judged on one overall number, while one group of users pays for everyone else's gain.
+Ravensworth Insurance triages about 3,000 claims a day with a hosted model that suggests a category for each claim; handlers fix wrong categories by hand. When the vendor announced the retirement of the model version in 60 days, Yusuf, the forward deployed engineer, ran the evaluation set against the new version. Correct categories rose from 91% to 93%, and the team switched the following week. Nine days later the largest broker complained. Its claims arrive as scanned schedules with several columns, about 8% of daily volume, and on those correct categories had fallen from 90% to 61% because the new model read the columns in a different order. About 630 claims had gone to the wrong team. The other formats had improved from about 91% to 96%, which lifted the average and hid the loss. Call this **the average that hid a format**: an upgrade judged on one overall number, while one group of users pays for everyone else's gain.
 
 > **What you'll learn**
 >
@@ -103,7 +97,7 @@ AI systems in the field read the customer's data: policy records, broker lists, 
 - **Completeness.** The count of records against what the source holds or what normal looks like. Reconcile by ID where you can: a daily count of policies in the source system against your copy, with a list of the missing IDs.
 - **Schema.** The fields, types and allowed values you depend on. A renamed column, a date that becomes text or a new claim type nobody mapped are all **schema drift**.
 
-When a check fails, decide what the system does. For freshness and completeness, show the data's age to users and alert the owner. For schema drift, follow Martin Fowler's tolerant reader idea: read only the fields you need and ignore additions. Quarantine records that fail a required field, and alert, instead of guessing at them. Never let a failed check pass silently.
+When a check fails, decide what the system does. For freshness and completeness, show the data's age to users and alert the owner. For schema drift, follow Martin Fowler's tolerant reader idea: read only the fields you need and ignore additions. Quarantine records that fail a required field, and alert, instead of guessing at them. Never let a failed check pass silently. For a pipeline you built yourself, [schema drift and late data](../../fde-building-in-the-estate/customer-data-pipelines/04_Schema_Drift_and_Late_Data.md) covers the contract at the door and records that arrive late.
 
 ## Runbooks someone else can follow
 
@@ -131,8 +125,8 @@ After go-live, the customer's staff become the best source of defects. Make thei
 ## Limits of this lesson
 
 - **Vendor terms differ.** Retirement notice periods and version pinning vary by provider and contract.
-- **Evaluation design.** Building a labelled evaluation set is covered in the production AI track.
-- **Fictional data.** Ravensworth Insurance, its broker and figures are illustrative.
+- **Evaluation design.** Building a labelled evaluation set, and sizing each slice, is covered in [golden sets and sample size](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md).
+- **Composite engagement.** Ravensworth Insurance, Yusuf, its broker and figures are illustrative, not a real customer.
 
 ## Interview angle
 
