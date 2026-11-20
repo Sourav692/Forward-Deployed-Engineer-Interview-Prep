@@ -112,7 +112,7 @@ Keep a one-page note behind it with the tables. If she chooses stop, deliver the
 
 - **Scope.** Escalation, value measurement and baselines are taught in their own lessons, linked below.
 - **Contract terms.** Fixed-price and time-and-materials contracts change who carries the overrun. Agree any change with your commercial lead.
-- **Fictional data.** Pateley Energy and every figure here are illustrative.
+- **Composite engagement.** Pateley Energy and every figure here are illustrative, not a real customer.
 
 ## Interview angle
 

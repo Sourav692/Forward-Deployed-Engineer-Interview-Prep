@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [multi-tenant, single-tenant, isolation, noisy neighbour, dedicated environment]
 ---
 
 ## Start with the shared lane
 
-Yarrow Health, a fictional group of outpatient clinics, used a multi-tenant service to summarise clinic letters. Forty customers shared one deployment: the same web servers, one database with a tenant column, one cache and one job queue.
-
-One Tuesday evening another customer imported two million archived letters. The import put two million summary jobs on the shared queue. Yarrow's clinics, which send about 3,000 letters each evening, found their jobs behind the import. The workers cleared the queue in order, and Yarrow's summaries arrived the next afternoon instead of within the hour. No data leaked. Yarrow's clinicians still started Wednesday's clinics without them.
-
-Yarrow's chief information officer, Imogen, asked for a dedicated environment the next morning. The problem was one shared queue with no per-tenant limit. Call this **the shared lane**.
+Yarrow Health, a fictional group of outpatient clinics, was one of forty customers sharing a letter-summary service: the same web servers, one database with a tenant column, one cache and one job queue. One Tuesday evening another customer imported two million archived letters, and their summary jobs filled the shared queue ahead of the 3,000 letters Yarrow's clinics send each evening. The workers cleared the queue in order, so Yarrow's summaries arrived the next afternoon instead of within the hour, and clinicians started Wednesday's clinics without them. No data leaked. Yarrow's chief information officer, Imogen, asked for a dedicated environment the next morning, and Tariq, the vendor's forward deployed engineer, had to answer her. The cause was one shared queue with no per-tenant limit. Call this **the shared lane**.
 
 > **What you'll learn**
 >
@@ -114,9 +110,9 @@ Teams that offer dedicated environments well automate them heavily: one template
 
 ## Limits of this lesson
 
-- **Security depth lives elsewhere.** Row-level security, per-tenant keys and cross-tenant threat models are taught in the tenancy and security review lessons.
+- **Security depth lives elsewhere.** Row-level security and per-tenant keys are taught in [tenant isolation levels](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md), and cross-tenant threats in [threat modelling a deployment](../security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md).
 - **Prices are illustrative.** Real costs depend on the provider, region and component sizes.
-- **Fictional data.** Yarrow Health, its letters and every figure above are illustrative.
+- **Composite engagement.** Yarrow Health, Imogen, Tariq, the letters and every figure above are illustrative, not a real customer.
 
 ## Interview angle
 

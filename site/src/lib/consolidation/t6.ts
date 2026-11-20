@@ -18,6 +18,9 @@ export const RENAMED_T6: Record<string, string | null> = {
   // T21.5 practice: "AI engineering in the field" parts 1 and 2 merged into one page (20 Nov 2026); part 1 keeps its slug.
   'ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2':
     'ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1',
+  // T23.6 practice: parts 1 and 2 merged into one page (20 Nov 2026); part 1 keeps its slug.
+  'reliability-performance-and-cost/practise-reliability-performance-and-cost-2':
+    'reliability-performance-and-cost/practise-reliability-performance-and-cost-1',
   // T20.6: Realised Versus Estimated Value merged into Proving Business Impact (19 Nov 2026).
   'adoption-and-impact/realised-versus-estimated-value': 'adoption-and-impact/proving-business-impact',
   // T6.2 consolidated into seven lessons; Module 5 of the guide moved to T6.5.

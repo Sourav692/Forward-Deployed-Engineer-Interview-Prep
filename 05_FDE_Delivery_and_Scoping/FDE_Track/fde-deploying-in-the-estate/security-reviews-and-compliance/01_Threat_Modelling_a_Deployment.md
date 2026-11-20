@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [threat modelling, security review, tenant isolation, file uploads, caching]
 ---
 
 ## Start with the questionnaire without a map
 
-Sandling Pay, a fictional payments firm, piloted a shared document service. Its analysts uploaded chargeback evidence, such as receipts and delivery notes, and the service extracted the fields a dispute needs. Fourteen customers shared one deployment.
-
-Sandling's security reviewer sent a 120-row questionnaire. The team answered every row within a week: encryption yes, single sign-on yes, penetration test yes. The reviewer replied with one line: "Please send the data flow diagram and the threat model."
-
-There was no diagram. While drawing one, the team reached the results cache and stopped. Cached results were keyed by document number and page. Document numbers were counters per customer, so Sandling's document 4812 and another customer's document 4812 shared a key. In the pilot logs they found a Sandling analyst who had opened another customer's extracted invoice for a few seconds.
-
-Every questionnaire answer was true, and none of them covered the cache. Call this **the questionnaire without a map**: a list of controls that nobody checked against the path the data takes.
+Sandling Pay, a payments firm, piloted a shared document service that extracted dispute fields from receipts for fourteen customers on one deployment. Its security reviewer sent a 120-row questionnaire, and the team answered every row within a week. The reviewer replied with one line asking for the data flow diagram and the threat model. There was no diagram. While drawing one, Ama, the forward deployed engineer on the pilot, reached the results cache. Results were keyed by document number and page, and document numbers were counters per customer, so Sandling's document 4812 and another customer's document 4812 shared a key. The pilot logs showed a Sandling analyst opening another customer's extracted invoice for a few seconds. Every answer was true, and none covered the cache. Call this **the questionnaire without a map**: a list of controls that nobody checked against the path the data takes.
 
 > **What you'll learn**
 >
@@ -102,6 +96,8 @@ An upload service has its own threats, because the input is a whole file chosen 
 
 *Table 1: Threats along the document service, element by element, with the control for each.*
 
+The support console row is an access design question as much as a threat. Time-limited, approved access is set out in [service accounts and least privilege](../networks-and-identity/03_Service_Accounts_and_Least_Privilege.md#when-someone-asks-for-admin-rights).
+
 Prompt injection through documents is canonical in [threat model each request path](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/07_Threat_Model_Each_Request_Path.md). This lesson takes the deployment's view of it: a boundary on the diagram with a control outside the model.
 
 ## The cache that crosses tenants
@@ -123,7 +119,9 @@ Caches cross tenants more easily than databases, because a cache key is written 
 
 The fix has three parts. Build every key from the authenticated tenant in one shared function. Add a test that writes the same document number for two tenants and asserts each reads its own result. Then flush the cache, because entries written under the old scheme stay valid until they expire.
 
-The incident response follows the same order as any exposure. Contain it by disabling the cache or flushing it. Use logs to find every cross-tenant read during the exposure window. Tell the affected customers what was exposed and when. Fix the key and add the test.
+The incident response follows the same order as any exposure. Contain it by disabling the cache or flushing it. Use logs to find every cross-tenant read during the exposure window. Tell the affected customers what was exposed and when. Fix the key and add the test. Running the incident itself, with a customer watching, is covered in [incidents with a customer watching](../operating-after-go-live/03_Incidents_With_a_Customer_Watching.md).
+
+Telling customers is a legal duty as well as good practice. When the data is personal data, your contract and data protection law usually set who tells whom and how fast. Under the GDPR, for example, a processor must tell the controller (here, each affected customer) without undue delay, and the controller must tell its regulator within 72 hours of becoming aware, unless the breach is unlikely to put people at risk. The customer decides on that notification. Your job is to give its security team the facts early: what was exposed, for which tenants, over which window, and what you have contained. Ransomware that reaches personal data triggers the same duty, and restoring from a clean copy is covered in [backups, RTO, RPO and restore drills](../releases-cutover-and-recovery/05_Backups_RTO_RPO_and_Restore_Drills.md).
 
 ## Turn threats into controls, owners and evidence
 
@@ -142,7 +140,7 @@ Answer the fourth question, "did we do a good enough job", by re-running the mod
 
 - **Method choice.** STRIDE is one prompt list among several. Customers with their own method, such as attack trees or a regulator's template, expect you to use theirs.
 - **Depth.** This lesson covers a deployment-level model. Code review, penetration tests and AI-specific threats need their own work.
-- **Fictional data.** Sandling Pay, its pilot, figures and documents are illustrative.
+- **Composite engagement.** Sandling Pay, Ama, the pilot, its figures and documents are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -173,6 +171,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 2. OWASP, [Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html), accessed 17 November 2026. Data flow diagrams, trust boundaries and STRIDE.
 3. OWASP, [File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html), accessed 17 November 2026. Generated filenames, untrusted content types, signature checks, size limits and decompression attacks.
 4. Microsoft, [Threat Modeling Tool threats](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats), accessed 17 November 2026. The STRIDE categories with examples.
+5. European Union, [Regulation (EU) 2016/679 (GDPR)](https://eur-lex.europa.eu/eli/reg/2016/679/oj), Article 33, accessed 20 November 2026. Breach notification by the controller to the supervisory authority, and by the processor to the controller.
 
 ## Key takeaways
 

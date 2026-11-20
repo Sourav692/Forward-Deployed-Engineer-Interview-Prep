@@ -123,7 +123,7 @@ Then adjust the total for what the worksheet leaves out:
 - **Growth.** Ask for next year's volume, not this month's.
 - **Prompt caching.** Some providers charge less for a repeated prompt prefix, such as fixed instructions. Check whether the discount applies before counting on it.
 
-Adding 10% for retries and evaluation runs takes Large only to about $1,089 a month, still inside Arden's budget. Measure the token counts on real letters with the provider's counting tool. A guess of "about a page" can be wrong by a factor of two.
+Adding 10% for retries and evaluation runs takes Large only to about $1,089 a month, still inside Arden's budget. Measure the token counts on real letters with the provider's counting tool. A guess of "about a page" can be wrong by a factor of two. After launch, judge the bill by what each completed task costs, failures included, as [AI cost per successful task](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/ai-cost-per-successful-task) shows.
 
 ## Limits of this lesson
 

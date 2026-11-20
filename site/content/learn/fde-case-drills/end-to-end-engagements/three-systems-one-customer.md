@@ -101,7 +101,7 @@ The walkthrough is a scripted illustration. The strongest defence is the write l
 
 ## Limits of this lesson
 
-- **Fictional data.** Bewick Telecom, its customers and every figure are illustrative.
+- **Composite engagement.** Bewick Telecom, its customers and every figure are illustrative, not a real customer.
 - **Matching is a field of its own.** This lesson uses two tiers. Large estates may need a master data management product and a data steward team.
 - **Notification duties vary.** Who must be told about a data exposure, and when, depends on law and contract. The customer's privacy owner decides.
 

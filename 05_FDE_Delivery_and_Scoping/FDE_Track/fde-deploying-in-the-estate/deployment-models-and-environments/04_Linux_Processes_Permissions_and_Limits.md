@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [Linux, processes, file permissions, ulimit, open files, OOM killer, diagnosis]
 ---
 
 ## Start with the month-end ceiling
 
-Alston Telecom, a fictional mobile operator, ran a billing-reconciliation service on two of its own Linux servers. The vendor's engineer, Priya, had installed it as a systemd service running under a dedicated user, `recon`. For three weeks it processed the daily call-record files without trouble.
-
-On the last day of the month, the service started the monthly run. It opened 1,600 batch files in parallel, plus its database and network connections. After a few minutes the log filled with "Too many open files", and half the batches failed. Priya logged in, ran `ulimit -n` in her own shell, saw 65,536 and concluded the limit was not the problem.
-
-Her shell and the service were different processes with different limits. The service ran with a limit of 1,024 open files, which the daily run never came near. Call this **the invisible ceiling**.
+Alston Telecom, a fictional mobile operator, ran a billing-reconciliation service on two of its own Linux servers. Priya, the vendor's forward deployed engineer, had installed it as a systemd service under a dedicated user, `recon`, and for three weeks it handled the daily call-record files. On the last day of the month the monthly run opened 1,600 batch files in parallel, plus its database and network connections, and within minutes the log filled with "Too many open files". Priya ran `ulimit -n` in her own shell, saw 65,536 and ruled the limit out. Her shell and the service were different processes: the service ran with a limit of 1,024 open files, which the daily run never came near. Call this **the invisible ceiling**.
 
 > **What you'll learn**
 >
@@ -122,7 +118,7 @@ Requests framed this way also become part of the runbook. The next engineer at A
 
 - **Distributions differ.** Defaults for limits, the location of logs and whether SELinux or AppArmor is active vary between distributions and customer hardening baselines.
 - **Containers add layers.** Inside a container, cgroup limits and user IDs follow the container runtime. The next lesson covers that.
-- **Fictional data.** Alston Telecom, its PIDs and its counts are illustrative.
+- **Composite engagement.** Alston Telecom, Priya, the PIDs and the counts are illustrative, not a real customer.
 
 ## Interview angle
 

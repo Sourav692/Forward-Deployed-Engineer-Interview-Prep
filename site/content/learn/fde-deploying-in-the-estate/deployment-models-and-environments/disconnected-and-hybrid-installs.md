@@ -3,11 +3,7 @@
 
 ## Start with the phone-home install
 
-Zennor Energy, a fictional electricity distributor, wanted a fault-report assistant inside its operations network. That network has no route to the internet, by design. The vendor's engineer, Callum, was given a two-hour access window on a Saturday morning, escorted, on a workstation inside the network.
-
-The installer started by pulling container images from a public registry. It failed. Callum copied the images from a USB drive he had brought, which the security officer had not scanned, so it was taken away. The images he could load started, then the application tried to install Python packages at startup and to check its licence with the vendor's server. Both calls hung until they timed out. At the end of the two hours nothing was running, and the next window was three weeks away.
-
-Every step assumed a network that the customer had said, in writing, did not exist. Call this **the phone-home install**.
+Zennor Energy, a fictional electricity distributor, wanted a fault-report assistant inside its operations network, which has no route to the internet by design. Callum, the vendor's forward deployed engineer, got a two-hour escorted window on a Saturday morning at a workstation inside that network. The installer tried to pull container images from a public registry and failed. Callum's USB drive of images had not been scanned, so the security officer took it away. The images he could load started, then tried to install Python packages and to check the licence with the vendor's server, and both calls hung until they timed out. When the two hours ended nothing was running, and the next window was three weeks away. Every step assumed a network the customer had said, in writing, did not exist. Call this **the phone-home install**.
 
 > **What you'll learn**
 >
@@ -100,8 +96,8 @@ Watch for a direction trap. Cloud services that call back into the data centre n
 ## Limits of this lesson
 
 - **Transfer procedures vary.** Some sites use one-way data diodes, some approved removable media, some only vendor-supplied hardware. Follow the customer's procedure.
-- **Network design lives elsewhere.** DNS, proxies and certificates inside the customer's network are covered in the networks and identity module.
-- **Fictional data.** Zennor Energy, its windows and its figures are illustrative.
+- **Network design lives elsewhere.** DNS, proxies and certificates inside the customer's network are covered in [following a request through the network](/learn/fde-deploying-in-the-estate/networks-and-identity/following-a-request-through-the-network).
+- **Composite engagement.** Zennor Energy, Callum, the windows and the figures are illustrative, not a real customer.
 
 ## Interview angle
 

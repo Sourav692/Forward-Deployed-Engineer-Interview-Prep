@@ -5,7 +5,7 @@
 
 Selsey Water, a fictional water company, receives about 9,000 supplier invoices a month. Most arrive on paper and are scanned in the post room. Clerks type twelve fields from each into a legacy enterprise resource planning (ERP) system that pays suppliers. Selsey asks you to automate the typing.
 
-After six weeks the pilot reports 97% field accuracy on a test set of 500 invoices. The finance director is ready to switch off manual entry. Then a clerk notices that an invoice for £1,284.50 was prepared for payment as £12,845.00. She checks a few more and finds two other wrong amounts in one morning.
+After six weeks the pilot reports 97% field accuracy on a test set of 500 invoices. The finance director is ready to switch off manual entry. Then a clerk notices that an invoice from a Belgian supplier for €1.284,50 was prepared for payment as €128,450.00. She checks a few more and finds two other wrong amounts in one morning.
 
 The 97% was true. It averaged twelve fields, and the errors were not spread evenly. Call this **the average that hid the money**: one accuracy figure across all fields that conceals where the costly errors sit.
 
@@ -108,11 +108,11 @@ The clerks' work changes from typing every field to checking the invoices that f
 
 - **Scope.** Input quality, extraction design and evaluation on the customer's work are taught in their own lessons, linked below.
 - **Model choice.** Whether a self-hosted model is accurate enough depends on the documents. Test before committing.
-- **Fictional data.** Selsey Water and every figure here, including the re-run results, are illustrative.
+- **Composite engagement.** Selsey Water and every figure here, including the re-run results, are illustrative, not a real customer.
 
 ## Interview angle
 
-Each answer is an outline to say in about two minutes. Open each question and try it aloud before reading.
+Each answer is an outline to say in about two minutes. The last question is timed: set a clock and talk it through before opening it.
 
 <details>
 <summary>Interview question 1. A utility wants scanned supplier invoices entered into a legacy ERP with no API, and its network blocks outbound internet. Design it.</summary>
@@ -131,6 +131,15 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 - **Trade-off:** More review lowers the automation rate. A wrong payment costs more than the review time.
 - **Follow-up to expect:** "When can review drop?" When per-field accuracy after checks holds over an agreed period.
 - **Go deeper:** [Evaluating on the customer's work](/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/evaluating-on-the-customers-work).
+
+</details>
+
+<details>
+<summary>Interview question 3. Timed drill (20 minutes): a utility wants scanned invoices entered into an ERP with no API, inside a network with no outbound internet, and the pilot's errors turn out to cluster in payment amounts. Run the engagement.</summary>
+
+- **Answer:** Minutes 0 to 4: discovery on the documents, the ERP's import path, the network rule and which errors cost most. Minutes 4 to 8: the design, with self-hosted extraction, the existing batch file and checks before import. Minutes 8 to 12: the evaluation split by field, with the amount accuracy and its causes. Minutes 12 to 16: checks that do not trust extraction (arithmetic, supplier locale, purchase order tolerance, correction markers, a value limit) and the re-run. Minutes 16 to 20: defend the review rate with per-field accuracy weighted by cost, and say when it can fall.
+- **Trade-off:** Reading every amount error takes time in a short round. Reporting only the average is the mistake the drill tests.
+- **Follow-up to expect:** "What review rate is acceptable?" The one finance signs against the cost of a wrong payment, lowered as per-field accuracy holds.
 
 </details>
 

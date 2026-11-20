@@ -3,13 +3,7 @@
 
 ## Start with the rollback nobody could call
 
-Thornbury Freight, a fictional freight operator, switched from its old booking system to the new one at 22:00 on a Saturday. The migration had reconciled cleanly. By 07:00 on Sunday, two of Thornbury's nine depots could not print collection labels from the new system.
-
-A call began at 07:15 with eleven people. The operations director wanted to roll back. Your team wanted two hours to fix the label template. The IT manager said the change board had approved going forward, not back. Nobody had written down what would trigger a rollback or who could order one. At 10:30 the operations director decided alone.
-
-The rollback restored the old system. It did not bring along the 1,140 bookings customers had made on the new system since 22:00. Staff re-keyed them from exports on Sunday afternoon and missed 63, whose collections did not happen on Monday.
-
-Call this **the rollback nobody could call**: a cutover planned in detail for going forward, with nothing decided about going back.
+Thornbury Freight switched from its old booking system to the new one at 22:00 on a Saturday, after the migration had reconciled cleanly. By 07:00 on Sunday, two of its nine depots could not print collection labels. A call began at 07:15 with eleven people. The operations director wanted to roll back, Bisi, the forward deployed engineer, wanted two hours to fix the label template, and the IT manager said the change board had approved going forward, not back. Nobody had written down what would trigger a rollback or who could order one, and at 10:30 the operations director decided alone. The rollback restored the old system without the 1,140 bookings customers had made on the new one since 22:00. Staff re-keyed them from exports on Sunday afternoon and missed 63, whose collections did not happen on Monday. Call this **the rollback nobody could call**: a cutover planned in detail for going forward, with nothing decided about going back.
 
 > **What you'll learn**
 >
@@ -75,7 +69,7 @@ Every minute the new system runs, it takes real work. Rolling back must carry th
 
 The options, from strongest to weakest:
 
-- **Reverse change capture.** During hypercare, stream changes from the new database back to the old one, mapped into the old format. The old system stays current and rollback is a routing switch plus a final check.
+- **Reverse change capture.** During hypercare, stream changes from the new database back to the old one, mapped into the old format. The old system stays current and rollback is a routing switch plus a final check. It is the forward migration's mechanism from [migrating live data](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data), run in reverse.
 - **Export and replay.** Record each accepted command, such as "create booking" with its inputs, and replay them through the old system's API on rollback.
 - **Manual re-keying.** Export a list and have staff enter it. Only for small volumes, with a count to reconcile against.
 
@@ -94,7 +88,8 @@ Two details make this work. Customers keep the reference the new system gave the
 
 - **Some cutovers cannot go back.** Where the old system is decommissioned or a partner switches at the same time, plan fix-forward and say so plainly.
 - **Contracts and regulators.** Banks and others may need to notify a regulator of a failed change. Check the customer's rules during readiness.
-- **Fictional data.** Thornbury Freight, its people and figures are illustrative.
+- **Composite engagement.** Thornbury Freight, Bisi, the cutover and its figures are illustrative, not a real customer.
+- **After hypercare.** Once rollback closes, a failure is an incident, run as [incidents with a customer watching](/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching) describes.
 
 ## Interview angle
 

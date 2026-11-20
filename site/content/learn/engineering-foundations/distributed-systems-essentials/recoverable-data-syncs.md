@@ -61,7 +61,7 @@ An **incremental read** asks the source for records changed since a saved point.
 
 Lowick's billing system was a vendor's software as a service, with no database access. Lowick added a five-minute incremental read by modified time, using the pair cursor and the overlap. It would have caught the Sunday gap within five minutes of the sender's maintenance ending.
 
-Sizing the overlap, pages that end inside a tied second and the changes a cursor never sees are taught in [incremental loads and watermarks](/learn/fde-building-in-the-estate/customer-data-pipelines/incremental-loads-and-watermarks).
+Sizing the overlap, pages that end inside a tied second and the changes a cursor never sees are taught in [incremental loads and watermarks](/learn/fde-building-in-the-estate/customer-data-pipelines/incremental-loads-and-watermarks). Moving a whole live database to a new system with a bulk copy and change capture is [migrating live data](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data).
 
 ## Checkpoints advance only after commit
 

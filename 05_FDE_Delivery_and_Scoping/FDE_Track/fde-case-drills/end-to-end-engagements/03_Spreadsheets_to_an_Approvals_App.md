@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [simulation, approvals, workflow, rules as data, delegation, legacy integration]
 ---
 
@@ -118,7 +118,7 @@ The walkthrough is a scripted illustration. Expect challenge on the delay. Your 
 
 ## Limits of this lesson
 
-- **Fictional data.** Carrick Council, its rules and every figure are illustrative.
+- **Composite engagement.** Carrick Council, its rules and every figure are illustrative, not a real customer.
 - **Buy before build.** Many councils already own a finance or workflow product with approvals. Check that first, as the lesson on building, buying or configuring explains.
 - **Regulations differ.** Approval limits and delegation rules come from each organisation's own financial regulations.
 

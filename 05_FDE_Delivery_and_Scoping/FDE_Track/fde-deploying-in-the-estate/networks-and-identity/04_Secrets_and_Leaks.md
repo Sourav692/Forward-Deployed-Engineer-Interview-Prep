@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [secrets, rotation, incident response, containers, logging]
 ---
 
 ## Start with the secret with many copies
 
-Esher Pharma, a fictional drug maker, ran a search assistant over its lab reports. The assistant's database password reached the service in two careless ways. The build passed it as a build argument, which wrote it into the container image's metadata. At startup, debug logging printed the full connection string, password included.
-
-The image sat in a registry that a partner's contractors could pull from. The logs went to Esher's central log platform, kept for 90 days and searchable by about 400 staff. A contractor noticed the password and reported it.
-
-Changing the password then took the service down for 40 minutes. There was one database user, and its six replicas each held the old password until they were redeployed one by one. Call this **the secret with many copies**: one value spread to places nobody listed, each of which must be found before the leak is closed.
+Esher Pharma, a drug maker, ran a search assistant over its lab reports. Its database password reached the service in two careless ways. The build passed it as a build argument, which wrote it into the container image's metadata, and debug logging printed the full connection string at startup. The image sat in a registry that a partner's contractors could pull from, and the logs went to Esher's central log platform, kept for 90 days and searchable by about 400 staff. A contractor noticed the password and reported it. When Lin, the forward deployed engineer, changed it, the service went down for 40 minutes: there was one database user, and its six replicas each held the old password until they were redeployed one by one. Call this **the secret with many copies**: one value spread to places nobody listed, each of which must be found before the leak is closed.
 
 > **What you'll learn**
 >
@@ -64,11 +60,11 @@ flowchart LR
 
 *Figure 1: The image carries no secret. The running service proves its identity, fetches the value by reference and holds it in memory.*
 
-Three rules for delivery:
+Read the secret when the service starts, and fail at once if it is missing, as [validate configuration at startup](../deployment-models-and-environments/06_Config_Compute_and_Kubernetes_Choices.md#validate-configuration-at-startup) describes. Three rules for delivery:
 
 - **Never at build time,** unless the build itself needs the secret, such as a private package registry. Then use the build tool's secret mount, which does not persist in the image. Build arguments and environment settings in a build file are stored in the image.
 - **Prefer a mounted file or a direct fetch to an environment variable.** Environment variables are inherited by child processes and often appear in crash reports and debug pages.
-- **Never log configuration as a whole.** Log which settings loaded, not their values, and redact anything shaped like a credential at the logger.
+- **Never log configuration as a whole.** Log which settings loaded, not their values, and redact anything shaped like a credential at the logger. [Telemetry the customer can use](../operating-after-go-live/01_Telemetry_the_Customer_Can_Use.md#keeping-sensitive-data-out-of-logs) covers keeping other sensitive data out of logs.
 
 The site's [package the service and keep secrets out](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/01_Package_the_Service_and_Keep_Secrets_Out.md) lesson covers building the image, and [secrets and per-tenant encryption keys](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md) covers key hierarchies.
 
@@ -104,8 +100,8 @@ Esher rotated the password within 30 minutes, found no use from unknown addresse
 ## Limits of this lesson
 
 - **Products differ.** Secret stores, registries and log platforms delete and rotate in different ways. Learn the customer's before you need them.
-- **Legal steps.** A leak of personal or regulated data may require notification. Involve the customer's security team at once.
-- **Fictional data.** Esher Pharma, its people and figures are illustrative.
+- **Legal steps.** A leak of personal or regulated data may require notification. Involve the customer's security team at once. Who notifies whom, and how fast, is in [threat modelling a deployment](../security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md#the-cache-that-crosses-tenants).
+- **Composite engagement.** Esher Pharma, Lin and the figures are illustrative, not a real customer.
 
 ## Interview angle
 

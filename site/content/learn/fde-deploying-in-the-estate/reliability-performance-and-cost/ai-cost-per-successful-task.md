@@ -3,11 +3,7 @@
 
 ## Start with the cheaper answer that costs more
 
-Hartfell Energy, a fictional utility, gave its field engineers a retrieval-augmented generation (RAG) assistant over equipment manuals and past work orders. It answered about 200,000 questions a month. Finance asked for the model bill to come down.
-
-The team cut the retrieved context from 12 passages to 4. The model bill fell from $6,000 to $3,600 a month. Within two weeks, failed answers rose from 15 to 30 per cent. Engineers phoned the support desk instead, and Hartfell reckons each failed answer costs about $4 in desk time and delay.
-
-Call this **the cheaper answer that costs more**: a saving measured per model call that raised the cost of each job done.
+Hartfell Energy, a utility, gave its field engineers a retrieval-augmented generation (RAG) assistant over equipment manuals and past work orders, answering about 200,000 questions a month. When finance asked for the model bill to come down, the team cut the retrieved context from 12 passages to 4, and the bill fell from $6,000 to $3,600 a month. Within two weeks failed answers rose from 15 to 30 per cent, engineers phoned the support desk instead, and Hartfell reckons each failed answer costs about $4 in desk time and delay. Nkem, the forward deployed engineer, was asked why the cheaper assistant was costing more. Call this **the cheaper answer that costs more**: a saving measured per model call that raised the cost of each job done.
 
 > **What you'll learn**
 >
@@ -21,7 +17,7 @@ Call this **the cheaper answer that costs more**: a saving measured per model ca
 
 **Cost per successful task** divides everything a task costs by the tasks that succeeded. For Hartfell that includes model tokens, reranking and the $4 each failure costs downstream. A cost per call ignores failures, so it rewards changes that make answers cheaper and worse.
 
-Success needs a definition the customer agrees with. Hartfell counts an answer as successful when the engineer did not escalate and a weekly graded sample confirms it was correct and cited the right manual.
+Success needs a definition the customer agrees with. Building the graded set behind it is covered in [evaluating on the customer's work](/learn/fde-building-in-the-estate/ai-delivery-in-customer-estates/evaluating-on-the-customers-work). Hartfell counts an answer as successful when the engineer did not escalate and a weekly graded sample confirms it was correct and cited the right manual.
 
 The switcher compares three context settings on the same questions. Prices are illustrative: $3 per million input tokens and $15 per million output tokens, with 400 output tokens per answer.
 
@@ -55,7 +51,7 @@ More context is not always better either. Models can miss facts placed in the mi
 
 **Routing** sends each request to the cheapest model that handles it well. About 60 per cent of Hartfell's questions are lookups, such as a torque value or a part number. Sending those to a model at a tenth of the price brings model spend to 0.6 × 0.1 + 0.4 = 0.46 of before, if success holds on that share. Measure success per route, because a router that misjudges hard questions as easy saves money and fails tasks.
 
-A **fallback** model takes over when the primary is down or slow. It is often a different model, with different quality. Hartfell's fallback scored 72 per cent on the graded set against 86 for the primary. Decide in advance which tasks may use it. Hartfell lets lookups fall back, but questions about isolation procedures return the manual's section and a notice instead of a weaker answer. Label fallback answers in logs, and alert when the fallback share rises. The T16.10 lesson on [model routing and prompt discipline](/learn/production-ai/cost-and-latency/model-routing-and-prompt-discipline) covers routers and cascades.
+A **fallback** model takes over when the primary is down or slow. It is often a different model, with different quality. Hartfell's fallback scored 72 per cent on the graded set against 86 for the primary. Decide in advance which tasks may use it. Hartfell lets lookups fall back, but questions about isolation procedures return the manual's section and a notice instead of a weaker answer. Label fallback answers in logs, and alert when the fallback share rises. The T16.10 lesson on [model routing and prompt discipline](/learn/production-ai/cost-and-latency/model-routing-and-prompt-discipline) covers routers and cascades. Choosing which models to compare before launch is covered in [picking a model for a customer](/learn/fde-building-in-the-estate/choosing-the-ai-approach/picking-a-model-for-a-customer).
 
 ## Streaming and batch size
 
@@ -105,7 +101,7 @@ The re-embedding line was a surprise. Each night the job re-embedded 800 million
 
 - **Prices change.** Token prices, discounts and limits vary by provider and change often. Use the customer's contract prices.
 - **Failure costs are estimates.** Agree the cost of a failed task with the customer, and say how you derived it.
-- **Fictional data.** Hartfell Energy, its volumes, prices and success rates are illustrative.
+- **Composite engagement.** Hartfell Energy, Nkem, its volumes, prices and success rates are illustrative, not a real customer.
 
 ## Interview angle
 

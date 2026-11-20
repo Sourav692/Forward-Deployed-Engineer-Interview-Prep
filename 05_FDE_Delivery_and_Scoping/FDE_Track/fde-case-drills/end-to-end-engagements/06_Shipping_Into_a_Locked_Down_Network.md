@@ -11,7 +11,7 @@ level: advanced
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [simulation, private network, proxies, TLS inspection, offline install, change windows]
 ---
 
@@ -117,7 +117,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **One proxy, one host.** Many estates have several proxies and many dependencies. The method holds, and the allow list grows.
 - **Fully disconnected sites** have no proxy at all. The [air-gapped AI system](../../../../02_System_Design_Case_Studies/Casebook_Rewrites/air-gapped-ai-system/casebook.md) case covers that design.
-- **Fictional data.** Glamis Utilities, its timings and its people are illustrative.
+- **Composite engagement.** Glamis Utilities, its timings and its people are illustrative, not a real customer.
 
 ## Interview angle
 

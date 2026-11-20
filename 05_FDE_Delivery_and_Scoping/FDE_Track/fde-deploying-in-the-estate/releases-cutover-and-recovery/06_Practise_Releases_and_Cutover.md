@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [practice, interview, releases, migrations, recovery, AI system design]
 ---
 
@@ -135,12 +135,21 @@ Taught in [cutover and rollback decisions](04_Cutover_and_Rollback_Decisions.md)
 
 </details>
 
+<details>
+<summary>Practice question 11. Ninety minutes into Lanark Bank's weekend cutover, one branch's officers cannot open applications submitted since cutover. The trigger is 60 minutes with no workaround, and it is crossed. Your engineers say the fix needs another hour. 300 applications have arrived on the new platform, and the point of no return is Monday at 07:00. What do you do?</summary>
+
+- **Answer:** Brief the decision owner in the agreed shape: which trigger, the impact (one branch, 300 applications on the new platform), the fix and its time, the rollback and its time, and your recommendation. Look for a workaround that keeps critical work running, such as another branch working that branch's queue. With one, allow the fix inside a time box, such as 45 minutes, and decide again when it ends. Without one, recommend rollback while the point of no return is far off. Freeze the new platform, replay the 300 recorded commands into the old service with the new IDs as idempotency keys, reconcile open applications per branch, then reopen on the old service and tell the branch.
+- **Trade-off:** Rolling back costs the weekend and a new cutover date. Fixing past the time box risks reaching Monday with neither system trusted.
+- **Follow-up to expect:** "The fix lands five minutes after the time box ends. Do you still roll back?" The decision owner decides. The time box forces that call; the owner may extend it once, on evidence the fix works.
+
+</details>
+
 ## Recovery
 
 Taught in [backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_Drills.md).
 
 <details>
-<summary>Practice question 11. Thornbury's board wants the booking system back within 1 hour of a regional outage, losing at most 5 minutes of bookings. Design it and plan the drill.</summary>
+<summary>Practice question 12. Thornbury's board wants the booking system back within 1 hour of a regional outage, losing at most 5 minutes of bookings. Design it and plan the drill.</summary>
 
 - **Answer:** A restore from backup takes hours, so a 1-hour RTO needs a warm standby in a second region with replication lag under a minute. Keep backups and archived logs too, because the replica copies mistakes. Replicate the secret store, keep infrastructure as code for both regions and make keys usable from the second region. Drill quarterly: fail over to the standby, time it, have depot staff make and print a booking, and record data lost.
 - **Trade-off:** The standby costs a second database running all the time.
@@ -149,7 +158,7 @@ Taught in [backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_
 </details>
 
 <details>
-<summary>Practice question 12. Ransomware has encrypted Thornbury's booking database and its last three nightly backups. A weekly copy in locked storage is six days old, and archived logs exist for four of those days. Recover.</summary>
+<summary>Practice question 13. Ransomware has encrypted Thornbury's booking database and its last three nightly backups. A weekly copy in locked storage is six days old, and archived logs exist for four of those days. Recover.</summary>
 
 - **Answer:** Isolate first: rebuild in a clean account, with fresh credentials, so the attacker cannot reach the restore. Verify the locked weekly copy, restore it, and replay the four days of archived logs. That leaves about two days lost. Rebuild those from other records: haulier confirmations, customer emails, invoices and depot paper sheets. Give the business owner the exact window and list of rebuilt bookings early. Afterwards, add daily locked copies and nightly test restores.
 - **Trade-off:** Rebuilding from partners' records is slow and accurate. Asking customers to re-book is faster and damages trust.
@@ -167,6 +176,7 @@ Taught in [backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_
 - A canary fails on a worse business outcome even with flat errors.
 - Keep rollback open with expand and contract, and plan fix-forward for when it closes.
 - In parallel runs, one system acts and the other logs intent.
+- When a trigger is crossed, the decision owner decides, and any fix attempt runs inside a time box.
 - Recovery targets are proved by drills, and backups need locked generations.
 
 ## Check yourself
@@ -179,8 +189,15 @@ It would erase every booking and change made since the backup. Re-adding the col
 </details>
 
 <details>
-<summary>2. In practice question 11, why keep backups when a warm standby exists?</summary>
+<summary>2. In practice question 12, why keep backups when a warm standby exists?</summary>
 
 The standby receives every change within seconds, including deletes and corruption. Backups and archived logs let you go back to before the mistake.
+
+</details>
+
+<details>
+<summary>3. In practice question 11, why does the fix attempt get a time box?</summary>
+
+Without one, a fix that is nearly ready keeps running past the point of no return, and the choice to roll back is lost.
 
 </details>

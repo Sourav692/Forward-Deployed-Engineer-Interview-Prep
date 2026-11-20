@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [incident response, communication, vendors, postmortems, on-call]
 ---
 
 ## Start with the incident nobody held
 
-Ravensworth Insurance, a fictional insurer, triages new claims with an AI system your team built. A claims portal receives each claim. A document vendor extracts text from the attachments. A triage service sends the claim to a hosted model, run by a second vendor, which suggests a category and urgency. The claim then lands in a handler's queue.
-
-At 09:20 one Monday, about 40% of model calls started timing out after 30 seconds. Retries piled up and triage slowed to a crawl. Three people noticed: your forward deployed engineer, a Ravensworth IT engineer and a platform engineer at your company. Each restarted something. Each assumed one of the others was telling the business.
-
-Nobody was. At 10:30 the claims director heard from a broker that urgent claims were not being picked up. By then 1,400 claims were waiting. The model vendor's status page was green, and its support desk replied that the fault was not on its side. It confirmed a regional degradation at 13:10.
-
-Call this **the incident nobody held**: capable people working hard, with no one declaring it, owning it or telling the customer.
+Ravensworth Insurance triages new claims with an AI system your team built: a claims portal, a document vendor that extracts text from attachments, and a triage service that asks a hosted model, run by a second vendor, for a category and urgency before the claim reaches a handler's queue. At 09:20 one Monday about 40% of model calls started timing out after 30 seconds, and retries slowed triage to a crawl. Yusuf, the forward deployed engineer, a Ravensworth IT engineer and a platform engineer at your company each restarted something, and each assumed another was telling the business. Nobody was. At 10:30 the claims director heard from a broker that urgent claims were not being picked up, with 1,400 claims waiting. The model vendor's status page was green and its support desk said the fault was not on its side; it confirmed a regional degradation at 13:10. Call this **the incident nobody held**: capable people working hard, with no one declaring it, owning it or telling the customer.
 
 > **What you'll learn**
 >
@@ -53,7 +47,7 @@ Severity is half the answer. The other half is named roles, following the incide
 - **Communications lead.** Writes and sends every customer update on schedule.
 - **Investigators.** Debug and mitigate, and report findings to the lead before acting.
 
-Agree in writing which organisation fills each role for which systems. At Ravensworth, your team leads incidents in the triage service. Ravensworth IT leads incidents in its network and identity systems. Each vendor is an investigator for its own service, reached through its support contract.
+Agree in writing which organisation fills each role for which systems, and when this rota takes over from cutover's hypercare; [cutover and rollback decisions](../releases-cutover-and-recovery/04_Cutover_and_Rollback_Decisions.md) covers the window before it. At Ravensworth, your team leads incidents in the triage service. Ravensworth IT leads incidents in its network and identity systems. Each vendor is an investigator for its own service, reached through its support contract.
 
 ## The first 15 minutes
 
@@ -68,7 +62,7 @@ The first quarter of an hour sets the tone for the rest. The walkthrough replays
 
 Two habits carry the rest. First, the lead approves each change, and the log records it, so three people never restart three things at once. Second, a restart that clears the symptom buys time but is not a fix. It wipes the state that explains the fault, and the fault returns. Capture evidence first, then keep looking for the cause after service recovers.
 
-The site's [diagnosing production incidents](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/05_Diagnosing_Production_Incidents.md) lesson covers the debugging steps in depth.
+The first reply to an upset customer is taught in [stabilise the customer first](../../forward-deployed/debugging-customer-environment/01_Stabilise_the_Customer_First.md). The site's [diagnosing production incidents](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/05_Diagnosing_Production_Incidents.md) lesson covers the debugging steps in depth.
 
 ## Updates before you know the cause
 
@@ -116,7 +110,7 @@ Build the evidence pack in this order:
 3. **A minimal reproduction.** The same call from a clean host outside your service, with your code removed from the path.
 4. **The pattern.** Failure rate by time and region, and the moment it began.
 
-Send it through the support channel in the contract, quoting its severity terms. Ask your account contact to escalate if the response target passes. Meanwhile, mitigate without them: fall back to the manual queue, lower concurrency, or switch region if the contract allows. Settle blame in the postmortem, not during the incident. The site's [failover, graceful degradation and kill switches](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/05_Failover_Graceful_Degradation_and_Kill_Switches.md) lesson covers designing fallbacks in advance.
+[Collect evidence and escalate](../../forward-deployed/debugging-customer-environment/04_Collect_Evidence_and_Escalate.md) shows how to keep the pack free of customer data. Send it through the support channel in the contract, quoting its severity terms. Ask your account contact to escalate if the response target passes. Meanwhile, mitigate without them: fall back to the manual queue, lower concurrency, or switch region if the contract allows. Settle blame in the postmortem, not during the incident. The site's [failover, graceful degradation and kill switches](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/05_Failover_Graceful_Degradation_and_Kill_Switches.md) lesson covers designing fallbacks in advance.
 
 ## Rehearse it, then learn from it
 
@@ -135,8 +129,8 @@ Share it with the customer within an agreed time, such as five working days. Rav
 ## Limits of this lesson
 
 - **Contracts govern vendors.** Support tiers, response times and escalation paths differ by contract. Read them before go-live.
-- **Security incidents follow other rules.** A suspected breach involves the customer's security team and may carry legal duties. See NIST SP 800-61 in the references.
-- **Fictional data.** Ravensworth Insurance, its vendors and figures are illustrative.
+- **Security incidents follow other rules.** A suspected breach involves the customer's security team and may carry legal duties to notify. [Threat modelling a deployment](../security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md#the-cache-that-crosses-tenants) covers who tells whom; see also NIST SP 800-61 in the references.
+- **Composite engagement.** Ravensworth Insurance, Yusuf, its vendors and figures are illustrative, not a real customer.
 
 ## Interview angle
 

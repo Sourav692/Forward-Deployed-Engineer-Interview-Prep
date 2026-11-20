@@ -3,13 +3,7 @@
 
 ## Start with the copies the deletion forgot
 
-Thirlby Legal, a fictional law firm, used a document assistant to search and summarise its matter files. Its contract had two data rules. Matter data stays in the United Kingdom. When Thirlby instructs deletion of a matter, every copy is gone within 30 days.
-
-A client withdrew, and Thirlby instructed deletion of the client's matter. The vendor's team deleted the matter's rows and files from the primary database and object store on day 2 and confirmed by email.
-
-On day 20, Thirlby's information security team checked. The search index still returned snippets from the matter. Nightly backups, kept for 35 days, held full copies, and they were replicated to a region in another country for disaster recovery. Application logs, shipped to a log service hosted abroad, held request bodies with matter text, kept for 90 days. A support engineer's export of the matter sat as an attachment on a closed ticket.
-
-Each copy had a sensible reason to exist. Nobody had listed them. Call this **the copies the deletion forgot**: data removed from where the team looks, and left everywhere it had flowed.
+Thirlby Legal, a law firm, used a document assistant to search and summarise its matter files. Its contract said matter data stays in the United Kingdom, and that every copy of a matter is gone within 30 days of Thirlby instructing deletion. When a client withdrew, Dafydd, the forward deployed engineer, deleted the matter's rows and files from the primary database and object store on day 2 and confirmed by email. On day 20, Thirlby's information security team checked. The search index still returned snippets from the matter. Nightly backups, kept for 35 days, held full copies and were replicated to another country for disaster recovery. Application logs, shipped to a log service hosted abroad, held request bodies with matter text for 90 days. A support engineer's export of the matter sat on a closed ticket. Each copy had a sensible reason to exist, and nobody had listed them. Call this **the copies the deletion forgot**: data removed from where the team looks, and left everywhere it had flowed.
 
 > **What you'll learn**
 >
@@ -74,8 +68,8 @@ Copies fall into three groups:
 
 Residency covers every place data is stored or processed, and Thirlby's counsel also treated access from abroad as a transfer. Take each flow in Figure 1 in turn:
 
-- **Backups.** Replicate to a second region inside the same country, or keep an in-country copy only and accept the recovery limits. Write the choice down.
-- **Logs.** Never log request or response bodies by default. Redact matter text at the logger, and run the log store in the agreed region.
+- **Backups.** Replicate to a second region inside the same country, or keep an in-country copy only and accept the recovery limits. Write the choice down. How each recovery design meets its targets is in [backups, RTO, RPO and restore drills](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/backups-rto-rpo-and-restore-drills).
+- **Logs.** Never log request or response bodies by default. Redact matter text at the logger, and run the log store in the agreed region. The logging habits are in [telemetry the customer can use](/learn/fde-deploying-in-the-estate/operating-after-go-live/telemetry-the-customer-can-use#keeping-sensitive-data-out-of-logs).
 - **Model provider.** Use an endpoint whose processing location is in the region. Confirm whether the provider keeps prompts and for how long, and get it in writing.
 - **Support access.** Route support through the service's console with access by ticket, instead of exports. Staff outside the region may need the customer's approval to access data.
 
@@ -100,7 +94,7 @@ The walkthrough is a scripted illustration. The deletion record keeps the matter
 
 - **Law varies.** What counts as a transfer, which records must be kept and for how long depend on jurisdiction and sector. The customer's counsel decides. You make the system able to follow the decision.
 - **Provider behaviour.** Cloud and model providers keep their own operational copies for set periods. Read their deletion and data processing terms.
-- **Fictional data.** Thirlby Legal, its contract and figures are illustrative.
+- **Composite engagement.** Thirlby Legal, Dafydd, the contract and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

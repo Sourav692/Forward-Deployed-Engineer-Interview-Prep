@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [simulation, RAG, permissions, freshness, effective dates, retrieval evaluation]
 ---
 
@@ -110,7 +110,7 @@ The walkthrough is a scripted illustration. The question you will be pressed on 
 
 ## Limits of this lesson
 
-- **Fictional data.** Denby Insurance, its sources and every figure are illustrative.
+- **Composite engagement.** Denby Insurance, its sources and every figure are illustrative, not a real customer.
 - **Access models vary.** Some sources expose per-document permissions through an API, and some do not. Where they do not, keep restricted content out of the index.
 - **Deep topics live elsewhere.** Retrieval tuning and evaluation methods have their own lessons, linked below.
 

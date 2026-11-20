@@ -99,7 +99,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **A cooperative sponsor.** The vice president accepted a smaller launch. Some sponsors will not, and then the escalation path matters more than the design.
 - **Cost in tokens only.** Ingleby's costs were mostly model calls. Other services spend more on compute, storage or people.
-- **Fictional data.** Ingleby Pharma, its figures and its regulator's timing are illustrative.
+- **Composite engagement.** Ingleby Pharma, its figures and its regulator's timing are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -7733,7 +7733,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live",
       "updated": "2026-11-20"
     },
@@ -8287,7 +8287,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/01_SaaS_Customer_Cloud_or_On_Prem.md",
       "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/saas-customer-cloud-or-on-prem",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "tenancy-and-isolation",
@@ -8299,7 +8299,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/02_Tenancy_and_Isolation.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "disconnected-and-hybrid-installs",
@@ -8311,7 +8311,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/03_Disconnected_and_Hybrid_Installs.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/disconnected-and-hybrid-installs",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "linux-processes-permissions-and-limits",
@@ -8323,7 +8323,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/04_Linux_Processes_Permissions_and_Limits.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/linux-processes-permissions-and-limits",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "containers-and-persistent-data",
@@ -8335,7 +8335,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/05_Containers_and_Persistent_Data.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/containers-and-persistent-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "config-compute-and-kubernetes-choices",
@@ -8347,7 +8347,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/06_Config_Compute_and_Kubernetes_Choices.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/config-compute-and-kubernetes-choices",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-deployment-models",
@@ -8357,9 +8357,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/07_Practise_Deployment_Models.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/practise-deployment-models",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "following-a-request-through-the-network",
@@ -8371,7 +8371,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/01_Following_a_Request_Through_the_Network.md",
       "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/following-a-request-through-the-network",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "sso-oidc-and-tokens",
@@ -8381,9 +8381,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/02_SSO_OIDC_and_Tokens.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/sso-oidc-and-tokens",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "service-accounts-and-least-privilege",
@@ -8407,7 +8407,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/networks-and-identity/04_Secrets_and_Leaks.md",
       "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/networks-and-identity/secrets-and-leaks",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-networks-and-identity",
@@ -8429,9 +8429,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "encryption-keys-and-audit-evidence",
@@ -8443,7 +8443,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/02_Encryption_Keys_and_Audit_Evidence.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/encryption-keys-and-audit-evidence",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "residency-retention-and-deletion",
@@ -8465,9 +8465,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/04_Practise_the_Security_Review.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/practise-the-security-review",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "builds-you-can-reproduce-and-promote",
@@ -8479,7 +8479,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/01_Builds_You_Can_Reproduce_and_Promote.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/builds-you-can-reproduce-and-promote",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "safe-rollouts",
@@ -8489,9 +8489,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/02_Safe_Rollouts.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/safe-rollouts",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "migrating-live-data",
@@ -8503,7 +8503,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/03_Migrating_Live_Data.md",
       "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "cutover-and-rollback-decisions",
@@ -8513,9 +8513,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/04_Cutover_and_Rollback_Decisions.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/cutover-and-rollback-decisions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "backups-rto-rpo-and-restore-drills",
@@ -8527,7 +8527,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/05_Backups_RTO_RPO_and_Restore_Drills.md",
       "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/backups-rto-rpo-and-restore-drills",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-releases-and-cutover",
@@ -8537,9 +8537,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/06_Practise_Releases_and_Cutover.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/practise-releases-and-cutover",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "telemetry-the-customer-can-use",
@@ -8551,7 +8551,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/01_Telemetry_the_Customer_Can_Use.md",
       "estMinutes": 14,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/telemetry-the-customer-can-use",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "slos-and-alerts-that-match-impact",
@@ -8563,7 +8563,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/02_SLOs_and_Alerts_That_Match_Impact.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/slos-and-alerts-that-match-impact",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "incidents-with-a-customer-watching",
@@ -8575,7 +8575,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/03_Incidents_With_a_Customer_Watching.md",
       "estMinutes": 14,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/incidents-with-a-customer-watching",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "maintenance-and-drift",
@@ -8587,7 +8587,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/04_Maintenance_and_Drift.md",
       "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/maintenance-and-drift",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-operating-after-go-live",
@@ -8597,9 +8597,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/operating-after-go-live/05_Practise_Operating_After_Go_Live.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/operating-after-go-live/practise-operating-after-go-live",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "recovering-half-finished-work",
@@ -8609,9 +8609,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "latency-queues-and-load-tests",
@@ -8623,7 +8623,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/02_Latency_Queues_and_Load_Tests.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/latency-queues-and-load-tests",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "finding-the-real-bottleneck",
@@ -8633,9 +8633,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/03_Finding_the_Real_Bottleneck.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/finding-the-real-bottleneck",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "ai-cost-per-successful-task",
@@ -8647,31 +8647,19 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/04_AI_Cost_per_Successful_Task.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/ai-cost-per-successful-task",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-reliability-performance-and-cost-1",
-      "title": "Practise Reliability, Performance and Cost, Part 1",
+      "title": "Practise Reliability, Performance and Cost",
       "track": "fde-deploying-in-the-estate",
       "module": "reliability-performance-and-cost",
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/05_Practise_Reliability_Performance_and_Cost_1.md",
-      "estMinutes": 9,
+      "estMinutes": 19,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/practise-reliability-performance-and-cost-1",
       "updated": "2026-11-20"
-    },
-    {
-      "slug": "practise-reliability-performance-and-cost-2",
-      "title": "Practise Reliability, Performance and Cost, Part 2",
-      "track": "fde-deploying-in-the-estate",
-      "module": "reliability-performance-and-cost",
-      "kind": "sync",
-      "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/06_Practise_Reliability_Performance_and_Cost_2.md",
-      "estMinutes": 9,
-      "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/practise-reliability-performance-and-cost-2",
-      "updated": "2026-11-17"
     },
     {
       "slug": "the-vague-ai-for-operations-request",
@@ -8683,7 +8671,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/01_The_Vague_AI_for_Operations_Request.md",
       "estMinutes": 14,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-vague-ai-for-operations-request",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "three-systems-one-customer",
@@ -8695,7 +8683,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/02_Three_Systems_One_Customer.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "spreadsheets-to-an-approvals-app",
@@ -8707,7 +8695,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/03_Spreadsheets_to_an_Approvals_App.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/spreadsheets-to-an-approvals-app",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "a-permission-aware-knowledge-assistant",
@@ -8719,7 +8707,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/04_A_Permission_Aware_Knowledge_Assistant.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/a-permission-aware-knowledge-assistant",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "an-agent-that-changes-accounts",
@@ -8731,7 +8719,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/05_An_Agent_That_Changes_Accounts.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/an-agent-that-changes-accounts",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "shipping-into-a-locked-down-network",
@@ -8743,7 +8731,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/06_Shipping_Into_a_Locked_Down_Network.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/shipping-into-a-locked-down-network",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-incident-with-two-suspects",
@@ -8755,7 +8743,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/07_The_Incident_With_Two_Suspects.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-incident-with-two-suspects",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "prototype-to-production",
@@ -8767,7 +8755,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/08_Prototype_to_Production.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/prototype-to-production",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-live-migration-cutover",
@@ -8779,7 +8767,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/09_The_Live_Migration_Cutover.md",
       "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-live-migration-cutover",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-deployment-users-avoid",
@@ -8791,7 +8779,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/10_The_Deployment_Users_Avoid.md",
       "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-deployment-users-avoid",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "one-platform-many-customers",
@@ -8803,7 +8791,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/11_One_Platform_Many_Customers.md",
       "estMinutes": 14,
       "href": "/learn/fde-case-drills/end-to-end-engagements/one-platform-many-customers",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-engagement-that-is-failing",
@@ -8815,7 +8803,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/12_The_Engagement_That_Is_Failing.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-engagement-that-is-failing",
-      "updated": "2026-11-19"
+      "updated": "2026-11-20"
     },
     {
       "slug": "a-six-week-support-assistant",
@@ -8825,9 +8813,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/13_A_Six_Week_Support_Assistant.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/a-six-week-support-assistant",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "document-processing-in-a-legacy-estate",
@@ -8837,9 +8825,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/14_Document_Processing_in_a_Legacy_Estate.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/document-processing-in-a-legacy-estate",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "defending-your-engagement-in-the-interview",
@@ -8851,7 +8839,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/15_Defending_Your_Engagement_in_the_Interview.md",
       "estMinutes": 10,
       "href": "/learn/fde-case-drills/end-to-end-engagements/defending-your-engagement-in-the-interview",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-case-drills-1",

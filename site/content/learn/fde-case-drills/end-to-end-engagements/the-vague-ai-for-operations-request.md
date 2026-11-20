@@ -110,7 +110,7 @@ The walkthrough is a scripted illustration. In an interview, the defence stage i
 
 ## Limits of this lesson
 
-- **Fictional data.** Alderley Foods, its plants and every figure are illustrative.
+- **Composite engagement.** Alderley Foods, its plants and every figure are illustrative, not a real customer.
 - **One path.** A different customer could have a scheduling problem with one clear owner, and then scheduling would win.
 - **Regulation varies.** Food safety and recall duties differ by country. Confirm them with the customer's quality and legal owners.
 

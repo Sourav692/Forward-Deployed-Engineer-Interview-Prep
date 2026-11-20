@@ -1880,8 +1880,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "latency-queues-and-load-tests",
       "finding-the-real-bottleneck",
       "ai-cost-per-successful-task",
-      "practise-reliability-performance-and-cost-1",
-      "practise-reliability-performance-and-cost-2"
+      "practise-reliability-performance-and-cost-1"
     ],
     "practiceMinutes": 270
   },
@@ -2776,6 +2775,7 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "scoping-an-fde-project/estimating-ai-work-as-a-product": "scoping-an-fde-project/the-system-behind-the-screens",
   "requirements-and-solution-design/practise-requirements-and-design-2": "requirements-and-solution-design/practise-requirements-and-design-1",
   "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2": "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1",
+  "reliability-performance-and-cost/practise-reliability-performance-and-cost-2": "reliability-performance-and-cost/practise-reliability-performance-and-cost-1",
   "adoption-and-impact/realised-versus-estimated-value": "adoption-and-impact/proving-business-impact",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",
   "delivery-stages-and-gates/readme": "delivery-stages-and-gates/delivery-as-a-repeatable-process",

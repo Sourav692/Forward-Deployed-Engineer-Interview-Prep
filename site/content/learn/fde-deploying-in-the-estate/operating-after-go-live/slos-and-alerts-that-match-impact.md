@@ -3,13 +3,7 @@
 
 ## Start with the busy pager and the silent night
 
-Pennick Logistics, a fictional fulfilment company, handles about 1.5 million orders a month: around 2,500 an hour in the day and 300 an hour at night. After go-live, its on-call engineer was paged whenever any worker's CPU passed 80% for five minutes.
-
-In the first month that alert fired 41 times. Each time, the engineer logged in, saw orders flowing and went back to sleep. No page matched a delayed order.
-
-Then, from 01:10 to 04:10 one night, the carrier's label service rejected every request. No order could be dispatched without a label. The workers failed fast and CPU sat at 12%. Nobody was paged. The day shift lead found 900 stuck orders at 06:00, and the first lorries left half empty.
-
-Call this **the busy pager and the silent night**: alerts tuned to how hard the machines work, not to whether the customer's work gets done.
+Pennick Logistics handles about 1.5 million orders a month: around 2,500 an hour in the day and 300 an hour at night. After go-live its on-call engineer was paged whenever any worker's CPU passed 80% for five minutes, 41 times in the first month, and no page matched a delayed order. Then, from 01:10 to 04:10 one night, the carrier's label service rejected every request, and no order could be dispatched without a label. The workers failed fast, CPU sat at 12% and nobody was paged. At 06:00 the day shift lead rang Gwen, the forward deployed engineer, with 900 stuck orders, and the first lorries left half empty. Call this **the busy pager and the silent night**: alerts tuned to how hard the machines work, not to whether the customer's work gets done.
 
 > **What you'll learn**
 >
@@ -102,13 +96,13 @@ CPU, memory, disk and queue depth still matter. They explain why a symptom happe
 - **Tickets** for slow trends, such as disk filling in four days or memory creeping up after each release.
 - **Capacity reviews**, where sustained high CPU means a sizing change, not a night call.
 
-Keep a short list of cause-based pages only where waiting would cause harm before any symptom shows, such as a certificate expiring within 24 hours or a disk 95% full on the order database. Review every page monthly. A page nobody acted on is a candidate to delete or demote.
+Keep a short list of cause-based pages only where waiting would cause harm before any symptom shows, such as a certificate expiring within 24 hours or a disk 95% full on the order database. Review every page monthly. A page nobody acted on is a candidate to delete or demote. When a dashboard points at a slow query or a full connection pool, [finding the real bottleneck](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/finding-the-real-bottleneck) shows how to choose the fix.
 
 ## Limits of this lesson
 
 - **Targets are local.** 99.5% suits Pennick's dispatch work. The right figure depends on the cost of failure and what the customer's staff can absorb.
 - **Thresholds are a starting point.** The burn-rate values come from the Google workbook's starting numbers. Tune them with the customer's traffic.
-- **Fictional data.** Pennick Logistics, its systems and figures are illustrative.
+- **Composite engagement.** Pennick Logistics, Gwen, its systems and figures are illustrative, not a real customer.
 
 ## Interview angle
 
