@@ -1,6 +1,6 @@
 ---
 title: "Practise partner APIs and bulk transfer"
-subtitle: "Five practice questions: add to a partner API without breaking anyone, retire a version a large partner still uses, survive a partner's silent change, and plan and prove two bulk transfers."
+subtitle: "Six practice questions: add to a partner API without breaking anyone, retire a version a large partner still uses, survive a partner's silent change, and plan, pace and prove bulk transfers."
 track: "Enterprise Integration"
 module_group: "Integration design"
 module_code: T22.3
@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "11 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [practice, interview, integration, partner API, versioning, bulk transfer]
 ---
 
@@ -83,6 +83,15 @@ Taught in [moving large datasets](02_Moving_Large_Datasets.md).
 
 </details>
 
+<details>
+<summary>Practice question 6. Penrose Books must load 1,200,000 catalogue records into a distributor's API. Its bulk upsert takes 200 records per call and is all or nothing. The limit is 60 calls a minute, shared with live order traffic that uses up to 20. A call takes about 4 seconds, and the source API offers only offset paging. Plan the transfer and give a finish time.</summary>
+
+- **Answer:** Budget first: 60 calls a minute, minus 20 for live orders and 10 as headroom, leaves 30 a minute, 0.5 a second. Calls in flight are 0.5 times 4 seconds, so cap the workers at 2 behind a limiter at 30 a minute. 1,200,000 records at 200 a call is 6,000 calls, which at 30 a minute takes 200 minutes, 3 hours 20 minutes. Offset paging over a live catalogue repeats and skips, so filter the source by ID ranges of 10,000 and page within each small range, with the range as the checkpoint unit. Validate the distributor's known rules before sending. When a batch still fails, split it in halves until the bad record is alone, about eight rounds for 200, and put it on the review list. Upsert by ISBN, run a change pass from the start time, and compare counts per ID range before reporting done.
+- **Trade-off:** The 10 calls of headroom add 50 minutes (150 minutes at 40 a minute), against slowing live orders when the distributor is busy.
+- **Follow-up to expect:** "The business wants it in an hour." Ask the distributor for a temporary limit raise or a file-based bulk import. Never take the live orders' share.
+
+</details>
+
 ## References
 
 1. The lessons linked under each heading in this module.
@@ -92,7 +101,7 @@ Taught in [moving large datasets](02_Moving_Large_Datasets.md).
 - Classify every partner API change by what strict and tolerant readers will do with it.
 - Run deprecations per partner when needed, with dates and evidence.
 - On the consumer side, wrap a partner in one adapter and test their sandbox daily.
-- Plan a bulk transfer from the numbers: batch size, concurrency and time per call.
+- Plan a bulk transfer from the numbers: the budget left after live traffic, batch size, concurrency and time per call.
 - Never report a transfer complete without per-range counts and a review list.
 
 ## Check yourself
@@ -108,5 +117,12 @@ Readers that reject unknown values break when it appears. It is additive only fo
 <summary>2. In practice question 4, why download a job's results before marking it done?</summary>
 
 The results show which records failed. Marking the job done first would lose them if the process stopped.
+
+</details>
+
+<details>
+<summary>3. In practice question 6, why is the checkpoint a range of IDs rather than an offset?</summary>
+
+Offsets shift when records are added or removed during the run. An ID range stays fixed, so a resumed run reads the same records.
 
 </details>

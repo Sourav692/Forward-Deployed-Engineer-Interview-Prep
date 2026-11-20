@@ -22,7 +22,7 @@ When you exceed a limit, an HTTP system usually answers with status 429, "Too Ma
 - **Limit yourself first.** Keep a client-side budget, such as a token bucket, set below the published limit. Hitting the limit should be rare, not your steady state.
 - **Use bulk interfaces.** Many systems offer a call that updates many records at once. It costs fewer requests per record.
 
-The server side of the same idea is taught in [protect the endpoint from abuse and cost](/learn/engineering-foundations/apis-and-backend/protect-the-endpoint-from-abuse-and-cost).
+The server side of the same idea is taught in [protect the endpoint from abuse and cost](/learn/engineering-foundations/apis-and-backend/protect-the-endpoint-from-abuse-and-cost). Sizing the workers for a large one-off transfer inside the same budget is taught in [moving large datasets](/learn/enterprise-integration/partner-apis-and-bulk-transfer/moving-large-datasets).
 
 ## Drain a backlog with arithmetic
 

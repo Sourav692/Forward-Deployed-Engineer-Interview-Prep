@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, bulk transfer, pagination, batching, partial failure, rate limits, checkpoints]
 ---
 
 ## Start with the export that never added up
 
-Fowey Foods, a fictional food wholesaler, was moving 2,000,000 customer accounts from its old ordering platform into a partner's new customer relationship management (CRM) system. The old platform stayed live during the move. Customers kept ordering, and their accounts kept changing.
-
-The first script read accounts 1,000 at a time, sorted by last-modified time, using "skip N, take 1,000". It sent each page to the CRM as two batches of 500 and created a record for every account.
-
-Three things went wrong. Accounts changed during the run moved within the sort order. Some pages repeated accounts and others skipped them. One account with a malformed postcode made the CRM reject its whole batch of 500, and the script retried that batch 40 times before giving up. At hour six the script crashed, and the only way to resume was to start again from zero.
-
-When the team compared totals, the CRM held 3,870 accounts twice and was missing 4,120. Nobody could say which. Call this **the export that never added up**.
+Fowey Foods, a food wholesaler, was moving 2,000,000 customer accounts from its old ordering platform into a partner's new customer relationship management (CRM) system while the old platform stayed live and customers kept ordering. Rhys, the forward deployed engineer, wrote the first script: it read accounts 1,000 at a time, sorted by last-modified time, using "skip N, take 1,000", and sent each page to the CRM as two batches of 500 that created a record for every account. Accounts changed during the run moved within the sort order, so some pages repeated accounts and others skipped them. One account with a malformed postcode made the CRM reject its whole batch of 500, and the script retried that batch 40 times before giving up. At hour six the script crashed, and the only way to resume was to start again from zero. When Rhys compared totals, the CRM held 3,870 accounts twice and was missing 4,120, and nobody could say which. Call this **the export that never added up**.
 
 > **What you'll learn**
 >
@@ -38,7 +32,7 @@ When the team compared totals, the CRM held 3,870 accounts twice and was missing
 **Offset paging** ("skip 300,000, take 1,000") counts positions. When rows are added, removed or re-sorted above the read position, every later page shifts. You get repeats and gaps. **Cursor paging** ("the next 1,000 after this key") starts each page after the last key read, so changes elsewhere do not move it. [Pagination, filtering and versioning](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/08_Pagination_Filtering_and_Versioning.md) shows both in detail. For a bulk transfer, two choices follow.
 
 - **Sort by a key that never changes.** For a full copy, page by account ID. Fowey sorted by last-modified time, and every update during the run moved an account to the end of the list. Sorted by ID, an account stays where it is however often it changes.
-- **Catch changes in a second pass.** A full copy by ID reads each account once, at some moment during the run. Accounts that change after their page was read are stale in the target. Record when the transfer started. When it finishes, read every account changed since then, minus a few minutes of overlap, and send those again.
+- **Catch changes in a second pass.** A full copy by ID reads each account once, at some moment during the run. Accounts that change after their page was read are stale in the target. Record when the transfer started. When it finishes, read every account changed since then, minus a few minutes of overlap, and send those again. Why the overlap is needed (ties and late commits at the boundary) is taught in [incremental loads and watermarks](../../fde-building-in-the-estate/customer-data-pipelines/02_Incremental_Loads_and_Watermarks.md).
 
 The full copy sets the baseline and the change pass brings it up to date. The same shape, run against a live pipeline, is taught in [backfills while live](../../fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md).
 
@@ -67,19 +61,18 @@ Every write should be an **upsert keyed on the source ID**: "create account F-10
 
 One worker sending one batch at a time is slow, because each call waits for the partner. Several workers in parallel are faster, until they exceed the partner's rate limit and the calls start failing. Size the number of calls in flight from the limit.
 
-Start with the budget. The partner's limit is shared with everything else you send it. Subtract live traffic and keep headroom. What is left is the transfer's rate.
+Start with the budget. Reading a partner's limits, sharing them with live traffic and backing off on a 429 are taught in [rate limits, backlogs and two-way sync](../connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md). Subtract live traffic and keep headroom. What is left is the transfer's rate.
 
 Then use a simple rule: **calls in flight = rate × time per call**. If the transfer may make 80 calls a minute (1.33 a second) and each call takes 3 seconds, about 4 calls are in flight at once. A cap of 4 workers keeps the transfer at the budget. More workers would only queue at the limiter or collect 429 responses.
 
-Put a limiter in front of the workers as well as the cap. It stops a run of fast calls bursting above the rate. Honour `Retry-After` when the partner pushes back. The endpoint side of rate limits is in [protect the endpoint from abuse and cost](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/04_Protect_the_Endpoint_From_Abuse_and_Cost.md), and fair sharing of a limited system under load is in [handle overload and fair scheduling](../../../../01_Concept_Tutorials/AI_System_Design_Course/05_overload_fairness/02_learn_and_design.md). Go deeper on retries: [retries, circuit breakers and bulkheads](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md).
+Put a limiter in front of the workers as well as the cap. It stops a run of fast calls bursting above the rate. The cap also adapts: if the partner slows down, the same 4 workers send fewer calls a minute. Go deeper on retries: [retries, circuit breakers and bulkheads](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md).
 
 ## Checkpoints you can resume from
 
-A **checkpoint** records how far the transfer has safely got. It turns a crash at hour six into a resume from hour six.
+A **checkpoint** records how far the transfer has safely got. It turns a crash at hour six into a resume from hour six. The core rule, advance it only after the records it covers are committed and store it outside the process, is taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md). Two points are specific to a bulk transfer.
 
-- **Advance it only after commit.** Save the cursor of a page only when every record on it has a recorded result: accepted, queued for retry or on the review list. A checkpoint saved when the page was read loses the page if the process crashes before writing.
+- **A page is committed when every record has a result.** Accepted, queued for retry or on the review list. A page with records still unaccounted for is not done.
 - **With parallel workers, save the low-water mark.** Pages finish out of order. The checkpoint is the last page such that it and every page before it are complete.
-- **Store it outside the process.** A database row or a durable file, written in the same step as the page's results where possible.
 
 On restart, read from the checkpoint. Pages that were in flight are sent again. Because every write is an upsert keyed on the source ID, the repeats are harmless.
 
@@ -112,13 +105,13 @@ The walkthrough re-runs Fowey's transfer with everything above. The partner allo
 
 The walkthrough is a scripted illustration, and the failure rate and call time are assumptions. Measure both in a trial run of a few thousand records first. The trial also shows whether the old platform can serve reads at the pace you need.
 
-The reconciliation in step 5 is what lets you tell the business "complete". Counting per range of IDs shows where a gap is, not only that one exists. The review list is part of the answer: 4,000 accounts that a person must correct at the source, each with the reason the partner gave.
+The reconciliation in step 5 is what lets you tell the business "complete". Counting per range of IDs shows where a gap is, not only that one exists. Hashing buckets and comparing row by row only where they differ is taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md). The review list is part of the answer: 4,000 accounts that a person must correct at the source, each with the reason the partner gave.
 
 ## Limits of this lesson
 
 - **Partners differ.** Batch sizes, per-item reporting and limits vary. Some offer an asynchronous bulk job instead, which you submit, poll and then read results from. The same rules apply.
-- **Deletes need care.** Accounts closed during the run need a tombstone or a full ID comparison to reach the target.
-- **Fictional data.** Fowey Foods and its figures are illustrative.
+- **Deletes need care.** Accounts closed during the run need a tombstone or a full ID comparison to reach the target. The ways a change pass misses deletes are in [incremental loads and watermarks](../../fde-building-in-the-estate/customer-data-pipelines/02_Incremental_Loads_and_Watermarks.md).
+- **Composite engagement.** Fowey Foods, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
