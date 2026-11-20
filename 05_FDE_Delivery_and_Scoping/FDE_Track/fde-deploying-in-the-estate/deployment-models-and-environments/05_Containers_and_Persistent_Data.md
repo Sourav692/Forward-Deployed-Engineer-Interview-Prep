@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [containers, images, non-root, pinned dependencies, memory limits, OOMKilled, volumes, object storage]
 ---
 
 ## Start with the disposable disk
 
-Yarrow Health, a fictional group of outpatient clinics, ran a referral-letter service as a container on a host in its own data centre. Clinic staff uploaded scanned letters, and the service converted them to text for a summary. The service saved each upload to `/app/uploads`, a folder inside the container.
-
-On Thursday the vendor shipped a fix. The operator pulled the new image, stopped the old container and started a new one. The service came up cleanly. On Friday a clinician asked for a letter uploaded on Monday, and the service returned "file not found". So did every one of the 412 letters uploaded since the previous deploy. They had lived in the old container's writable layer, and that layer was deleted with the container.
-
-Nothing had failed. The container did what containers do. Call this **the disposable disk**.
+Yarrow Health, a fictional group of outpatient clinics, ran a referral-letter service as a container on a host in its own data centre, and the service saved each scanned upload to `/app/uploads`, a folder inside the container. On Thursday Sian, the vendor's forward deployed engineer, shipped a fix: the operator pulled the new image, stopped the old container and started a new one, which came up cleanly. On Friday a clinician asked for a letter uploaded on Monday and got "file not found", as did all 412 letters uploaded since the previous deploy. They had lived in the old container's writable layer, which was deleted with the container. Nothing had failed. The container did what containers do. Call this **the disposable disk**.
 
 > **What you'll learn**
 >
@@ -116,9 +112,9 @@ In a disconnected or on-premises estate, object storage means an S3-compatible s
 
 ## Limits of this lesson
 
-- **The build is taught elsewhere.** Multi-stage builds, image size and secrets are in the T1.3 packaging lesson.
+- **The build is taught elsewhere.** Multi-stage builds, image size and secrets are in [package the service and keep secrets out](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/01_Package_the_Service_and_Keep_Secrets_Out.md).
 - **Memory figures depend on the language runtime.** Garbage-collected runtimes may hold memory they no longer need. Measure the real process under load.
-- **Fictional data.** Yarrow Health, its letters and its memory figures are illustrative.
+- **Composite engagement.** Yarrow Health, Sian, the letters and the memory figures are illustrative, not a real customer.
 
 ## Interview angle
 

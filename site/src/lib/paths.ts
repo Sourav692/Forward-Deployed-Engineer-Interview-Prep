@@ -660,7 +660,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 428,
+    estHours: 429,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',

@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [deployment models, SaaS, customer cloud, on-premises, responsibility matrix, managed services]
 ---
 
 ## Start with the disk at two in the morning
 
-Wardle Bank, a fictional retail bank, bought a document-review service from a software vendor. The bank's data could not leave its own cloud account, so the vendor installed the service there. The contract said the vendor would "operate the service". The bank's cloud team owned the account.
-
-Five weeks after go-live, the database disk filled at 02:10. The service stopped accepting documents. The bank's on-call engineer saw the alert, read the runbook and found that the database belonged to the vendor's application. The vendor's on-call engineer was never paged, because alerts went to the bank's monitoring tool. When the vendor heard at 08:30, its engineer had no access to the account until the bank approved a request at 11:00. The service was down for nine hours over a fix that took ten minutes.
-
-Both sides were competent. Neither had written down who watches the disk, who gets paged and who may log in. Call this **the ownerless gap**.
+Wardle Bank, a fictional retail bank, had a vendor's document-review service installed in the bank's own cloud account, because the data could not leave it. The contract said the vendor would "operate the service", and the bank's cloud team owned the account. Five weeks after go-live the database disk filled at 02:10 and the service stopped accepting documents. The alert went to the bank's monitoring tool, and the bank's on-call engineer found that the database belonged to the vendor's application. Nobody paged Elin, the vendor's forward deployed engineer, until 08:30, and she had no access to the account until the bank approved a request at 11:00. A ten-minute fix took nine hours, because nobody had written down who watches the disk, who gets paged and who may log in. Call this **the ownerless gap**.
 
 > **What you'll learn**
 >
@@ -112,13 +108,13 @@ Inside any model you choose, for each component, whether to rent it as a **manag
 
 The choice is per component and per model. In SaaS, managed services are usually the default because you choose the provider. In customer cloud, the customer's approved-services list decides: a bank may allow a managed database but forbid a managed queue its security team has not reviewed. On-premises has no managed option unless the customer runs an internal platform. Every database, queue and object store becomes yours or theirs to operate.
 
-The trap is counting only the price. A self-managed database costs little to start and then needs backups, restore tests, upgrades and someone who understands failover. Write those tasks into the matrix before you choose, and the comparison becomes honest.
+The trap is counting only the price. A self-managed database costs little to start and then needs backups, restore tests, upgrades and someone who understands failover. Write those tasks into the matrix before you choose, and the comparison becomes honest. The model itself is one more component: [hosted or open weight](../../fde-building-in-the-estate/choosing-the-ai-approach/03_Hosted_or_Open_Weight.md) makes the same choice for it.
 
 ## Their cloud, our operations
 
 The bank's arrangement is common in regulated work: the system runs in the customer's account, and the vendor operates it. It works when four things are settled before go-live.
 
-- **Access.** No standing administrator access. The vendor's engineer requests a time-limited role, a named approver grants it, and every session is logged. Agree an approval target, such as 15 minutes, and a break-glass route for a severe incident.
+- **Access.** No standing administrator access. The vendor's engineer requests a time-limited role, a named approver grants it, and every session is logged. [Service accounts and least privilege](../networks-and-identity/03_Service_Accounts_and_Least_Privilege.md) covers time-boxed elevation and break-glass accounts in depth. Agree an approval target, such as 15 minutes, and a break-glass route for a severe incident.
 - **Alerts.** Telemetry stays in the customer's account, but alerts are forwarded to the vendor's paging tool. Test the route by firing a fake alert.
 - **Change.** Upgrades follow the customer's change process and windows. Agree a fast route for security patches.
 - **Evidence.** The customer's auditors need logs of what the vendor did. Keep them in the customer's account, where the vendor cannot alter them.
@@ -145,7 +141,7 @@ The times are illustrative. The point is the structure: recovery time follows wh
 Customers often arrive with the model already chosen by policy. When the choice is open, work through four questions in order:
 
 1. **Where may the data go?** Residency, regulation or contract may rule out SaaS at once.
-2. **Is there internet?** No outbound route rules out SaaS and makes vendor operations hard. The next lessons cover that case.
+2. **Is there internet?** No outbound route rules out SaaS and makes vendor operations hard. [Disconnected and hybrid installs](03_Disconnected_and_Hybrid_Installs.md) covers that case.
 3. **Who will operate it?** If the customer has no team that can run your database at 02:00, on-premises needs a support contract with real response times, or a different model.
 4. **How often must it change?** Weekly releases suit SaaS. A customer with quarterly change windows will run older versions, and you must support them.
 
@@ -153,9 +149,9 @@ Write the answer and the reason into a decision record. Interviewers listen for 
 
 ## Limits of this lesson
 
-- **The matrix is an example.** Real contracts add rows for data deletion, audit support and end of contract. The security review module covers them.
+- **The matrix is an example.** Real contracts add rows for data deletion, audit support and end of contract. [Residency, retention and deletion](../security-reviews-and-compliance/03_Residency_Retention_and_Deletion.md) covers them.
 - **Provider offers change.** Which managed services exist in which region and on which private platforms changes often. Check the customer's approved list.
-- **Fictional data.** Wardle Bank, its outage and every time above are illustrative.
+- **Composite engagement.** Wardle Bank, Elin, the outage and every time above are illustrative, not a real customer.
 
 ## Interview angle
 

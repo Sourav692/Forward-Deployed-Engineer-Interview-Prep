@@ -8287,7 +8287,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/01_SaaS_Customer_Cloud_or_On_Prem.md",
       "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/saas-customer-cloud-or-on-prem",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "tenancy-and-isolation",
@@ -8299,7 +8299,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/02_Tenancy_and_Isolation.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/tenancy-and-isolation",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "disconnected-and-hybrid-installs",
@@ -8311,7 +8311,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/03_Disconnected_and_Hybrid_Installs.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/disconnected-and-hybrid-installs",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "linux-processes-permissions-and-limits",
@@ -8323,7 +8323,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/04_Linux_Processes_Permissions_and_Limits.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/linux-processes-permissions-and-limits",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "containers-and-persistent-data",
@@ -8335,7 +8335,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/05_Containers_and_Persistent_Data.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/containers-and-persistent-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "config-compute-and-kubernetes-choices",
@@ -8347,7 +8347,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/06_Config_Compute_and_Kubernetes_Choices.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/config-compute-and-kubernetes-choices",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-deployment-models",
@@ -8357,9 +8357,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/deployment-models-and-environments/07_Practise_Deployment_Models.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/deployment-models-and-environments/practise-deployment-models",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "following-a-request-through-the-network",
