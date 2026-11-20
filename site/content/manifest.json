@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T23:00:20.803Z",
+  "generatedAt": "2026-11-20T23:10:56.398Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1260,8 +1260,8 @@
                   "label": "Model Answer"
                 }
               ],
-              "minutes": 105,
-              "updated": "2026-11-16"
+              "minutes": 107,
+              "updated": "2026-11-21"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -1309,8 +1309,8 @@
                   "label": "Model Answer"
                 }
               ],
-              "minutes": 108,
-              "updated": "2026-11-16"
+              "minutes": 110,
+              "updated": "2026-11-21"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1350,8 +1350,8 @@
                   "label": "Model Answer"
                 }
               ],
-              "minutes": 91,
-              "updated": "2026-11-16"
+              "minutes": 93,
+              "updated": "2026-11-21"
             },
             {
               "slug": "self-adapting-agent",
@@ -1379,8 +1379,8 @@
                   "label": "Answer Template"
                 }
               ],
-              "minutes": 69,
-              "updated": "2026-11-16"
+              "minutes": 71,
+              "updated": "2026-11-21"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -1404,8 +1404,8 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 54,
-              "updated": "2026-11-16"
+              "minutes": 56,
+              "updated": "2026-11-21"
             },
             {
               "slug": "production-llm-gateway",
@@ -1434,7 +1434,7 @@
                 }
               ],
               "minutes": 39,
-              "updated": "2026-11-16"
+              "updated": "2026-11-21"
             }
           ]
         },
@@ -1465,8 +1465,8 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 63,
-              "updated": "2026-11-16"
+              "minutes": 64,
+              "updated": "2026-11-21"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1490,8 +1490,8 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 54,
-              "updated": "2026-11-16"
+              "minutes": 56,
+              "updated": "2026-11-21"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1515,8 +1515,8 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 50,
-              "updated": "2026-11-16"
+              "minutes": 51,
+              "updated": "2026-11-21"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -1540,8 +1540,8 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 51,
-              "updated": "2026-11-16"
+              "minutes": 52,
+              "updated": "2026-11-21"
             }
           ]
         }

@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "7ea43d2180dfd0ce049a9f4e657bea49c37f49d2a09cbc952452ce93adc2b0da",
-  "html_sha256": "9924402026abca03d85a78139ee65c762744058602d915a6f2831fa82aeb2c4c",
-  "config_sha256": "3e1864c156472f2612ea786b82193aa7a656cf04efb60a7a92c8b1525713f319",
+  "markdown_sha256": "e8ae6440969257a05625de3e90633fdaba0d499c5cc9a8d42f358446c2723369",
+  "html_sha256": "1ab3c0abd1de4fe18b9907a2a72774e793abd2b7bca951304fb48103bceab3a7",
+  "config_sha256": "ee30c2f9aea46f0c7e35708f5fda146a6d4c563229e07fdf4b413b292e205004",
   "source_url": "https://forwarddeployedprep.com/design/production-llm-gateway",
   "validation": {
     "passed": true,
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "Compared all 27 captured sections against rewritten prose, retained component, assumption, arithmetic, latency, residency, rubric, rehearsal, cost-pivot and level tables. All 13 source self-checks have native worked answers. Opening defines both faces and latency ambiguity without importing RAG framing. Old navigation is consolidated into five-section reading/practice guidance. Historical rates are explicitly dated; atomic reservation caveat is marked authored. Visual review found wide source diagrams too small in mobile inline layout; every figure now links directly to its full-size local SVG. Distinct captions identify input, model, output and complete topology. All ten source SVGs inspected independently. Source inconsistencies resolved in text (2026-11-16): 'prepare four failures' with five listed \u2192 five, since all five have distinct observation and recovery rows; simple-turn spend $6.61 \u2192 $6.62 (14,700 \u00d7 $0.00045 = $6.615, recomputed; total $245.265 unchanged). The SemanticCache gotcha and the five-call p95 collision are source teaching points, not inconsistencies, and stay."
+      "evidence": "Compared all 27 captured sections against rewritten prose, retained component, assumption, arithmetic, latency, residency, rubric, rehearsal, cost-pivot and level tables. All 13 source self-checks have native worked answers. Opening defines both faces and latency ambiguity without importing RAG framing. Old navigation is consolidated into five-section reading/practice guidance. Historical rates are explicitly dated; atomic reservation caveat is marked authored. Visual review found wide source diagrams too small in mobile inline layout; every figure now links directly to its full-size local SVG. Distinct captions identify input, model, output and complete topology. All ten source SVGs inspected independently. Source inconsistencies resolved in text (2026-11-16): 'prepare four failures' with five listed \u2192 five, since all five have distinct observation and recovery rows; simple-turn spend $6.61 \u2192 $6.62 (14,700 \u00d7 $0.00045 = $6.615, recomputed; total $245.265 unchanged). The SemanticCache gotcha and the five-call p95 collision are source teaching points, not inconsistencies, and stay. November 21 complete maintained-baseline review: Complete casebook: brief, five walkthrough steps with cost and requirement tables, all eight figure variants, every deep dive (guards, cache, metering, recovery, latency, tracing, residency, failure review, references), all practice reveals, rubric, rehearsal, cost pivot and Quick review. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
     }
   }
 }

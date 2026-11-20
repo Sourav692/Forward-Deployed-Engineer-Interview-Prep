@@ -1,10 +1,25 @@
 {
- "status": "reviewed",
- "passed": true,
- "evidence": "Desktop (1440) shows the five-section tabs, the new brief heading 'A pilot that worked for a hundred volunteers' and the progress rail; phone (390) shows the brief, the terms paragraph, the tenfold figure, the source-contribution table in a horizontal scroll wrapper and the topic selector, with no page overflow. Read all four light SVGs in the contact sheets: cd00da58 shows 100 -> 1,000 identity breaks -> 10,000 capacity breaks -> 100,000 fairness and ownership break, matching the new caption (the old caption described cohorts and gates, which the SVG does not show); 24677b0b is the vertical answer path from SSE client through gateway, orchestrator, retrieval/tools/cache, router, primary vs warm fallback and labelled degraded answer, output checks and stream; 235c22bf is the async queue/workers/batch API column beside sources/parse/chunk and embed/index with ACL metadata; 8bc2c6a2 is the four-plane view (control plane, gateway, answer path, async lane) with pass/block/hit/miss labels. Each caption and alt text now names those labels and each figure sits in step 6 or the brief beside its explanation.",
- "limits": [
-  "The four-plane SVG (2628 px wide) renders small at column width; its labels are legible only via the 'Open for full size' link.",
-  "Dark variants are preserved and hashed but the reader is light-themed, so they were not inspected in a dark render.",
-  "No screen-reader test was run."
- ]
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 4 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The tenfold breakpoints, answer path, async and ingestion lanes and the four-plane system each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "fig-tenfold",
+    "fig-answer-path",
+    "fig-async-ingestion",
+    "fig-planes"
+  ],
+  "limits": [
+    "Some protected source labels break mid-word inside narrow boxes ('Permission-filtere d retrieval').",
+    "The four-plane figure is wide with small labels at reading width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 1 fail, 4 warns. The en dash is numeric range punctuation ('5–20 sub-requests'); the 99.9% figures are the provider uptime ceiling the case analyses; the repeated $122,000/$400 figures are cost anchors restated where used; the straight-quote warning covers retained source quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

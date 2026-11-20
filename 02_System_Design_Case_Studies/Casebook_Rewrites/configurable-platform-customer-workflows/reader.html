@@ -200,6 +200,7 @@
 <ul>
 <li>Spread evenly over 24 hours, 1,000 versions is about <strong>42 versions per hour</strong>.</li>
 <li>If half the day's changes, 500 versions, arrive inside a 2-hour business window, the peak is about <strong>250 versions per hour</strong>, roughly six times the average. Retries, failed validations and resubmissions come on top of that.</li>
+<li>At the 10-second upper validation cost, 250 versions an hour need 250 × 10 = 2,500 worker-seconds an hour, under one busy worker. Raw throughput is not the baseline problem; one slow tenant blocking the queue is. At 10,000 versions a day with a 5x peak (about 417 an hour average, 2,083 at peak) the same cost needs about 20,833 worker-seconds an hour, or six workers. At 100,000 a day it is about 58, which is where per-tenant quotas and sharding start to matter.</li>
 </ul>
 <p>Size well above the average, often by several times, with a growth factor and a headroom target. Then a release-day spike does not turn configuration into an outage.</p>
 <h4 id="walk-envelope">Work through a four-step capacity envelope</h4>
@@ -317,7 +318,7 @@
 <td>Schema and rule validator</td>
 <td>Verifies syntax, semantic rules, permissions and compatibility</td>
 <td>Only its check results</td>
-<td>Control plane; blocks on save/publish</td>
+<td>Control plane; cheap schema checks inline on save, full checks queued, and publish blocks until they pass</td>
 </tr>
 <tr>
 <td>UI renderer</td>
@@ -372,12 +373,12 @@
 </ol>
 <figure class="source-diagram" id="figure-happy-path"><a aria-label="Open full size: Seven-step release path: author against versioned schema, validate, run tenant contract tests, publish immutable version, roll out behind tenant flag, observe, then an acceptance gate that either promotes the version or moves the flag back to the prior immutable version." href="/casebook-assets/configurable-platform-customer-workflows/0d91ecd4aec14991.svg" rel="noopener" target="_blank"><img alt="Seven-step release path: author against versioned schema, validate, run tenant contract tests, publish immutable version, roll out behind tenant flag, observe, then an acceptance gate that either promotes the version or moves the flag back to the prior immutable version." class="diagram-light" src="/casebook-assets/configurable-platform-customer-workflows/0d91ecd4aec14991.svg"/></a><a aria-label="Open full size: Dark source variant: the author-to-promotion sequence with promote and rollback branches." class="diagram-dark-link" href="/casebook-assets/configurable-platform-customer-workflows/c030f239f930f685.svg" rel="noopener" target="_blank"><img alt="Dark source variant: the author-to-promotion sequence with promote and rollback branches." class="diagram-dark" src="/casebook-assets/configurable-platform-customer-workflows/c030f239f930f685.svg"/></a><figcaption>Author to promotion: the acceptance gate decides between promotion and a flag rollback. Source figure. Open for full size.</figcaption></figure>
 <p>Publishing a version and switching it on everywhere are separate steps. Keeping them apart is what stops one bad configuration from causing a wide outage.</p>
-<p>Some steps should block and some should not. Validation and contract tests are synchronous gates, because they must hold back promotion. Bulk replay, migration and some integration recovery suit asynchronous work, so the user's request does not stay open. The runtime usually does both: quick step decisions inline, and external side effects pushed to asynchronous work when a dependency is slow or flaky.</p>
+<p>Some steps should block and some should not. Validation and contract tests are blocking gates, because they must hold back promotion. They can still run on a queue: what blocks is promotion, which waits for their result, not the author's save request. Bulk replay, migration and some integration recovery suit asynchronous work, so the user's request does not stay open. The runtime usually does both: quick step decisions inline, and external side effects pushed to asynchronous work when a dependency is slow or flaky.</p>
 <h4 id="walk-state-placement">Place systems of record, caches, queues and backpressure</h4>
 <p>Each kind of state has one home:</p>
 <ul>
 <li><strong>System of record:</strong> published versions belong to the configuration registry; execution history normally belongs to the workflow audit store.</li>
-<li><strong>Caches:</strong> recent flag decisions, adapter metadata, rendered form layouts and compiled schema descriptors.</li>
+<li><strong>Caches:</strong> recent flag decisions, adapter metadata, rendered form layouts and compiled schema descriptors. If the flag service is unreachable, the runtime keeps serving each tenant's last cached decision, the version it last ran. It must not fall back to a default that exposes an unreviewed version or switches a tenant off.</li>
 <li><strong>Queues:</strong> test harness batches, migration tasks, event delivery, retries and adapter jobs.</li>
 <li><strong>Backpressure and flow control:</strong> as adapter queues grow, the runtime drops or defers non-critical work instead of letting retries stampede external systems.</li>
 </ul>
@@ -461,7 +462,7 @@
 <li><strong>Detection.</strong> At publish time, static analysis finds the cycle where it can. For a loop that only appears at runtime, the engine notices the same state transitions repeating and trips a max-hop or max-revisit guard, a counter that stops an instance after too many steps or too many returns to one state.</li>
 <li><strong>Containment.</strong> Freeze that workflow version. Stop only the execution group it affects, and block any new run from starting on that revision.</li>
 <li><strong>Recovery.</strong> Fall back to the last known-good version. If the workflow has already caused side effects, queue the affected requests for an operator to review rather than replaying them automatically.</li>
-<li><strong>Prevention.</strong> Tighten graph validation and add test cases for cyclic approvals. Adopt a publish-time policy that refuses any configuration whose approval graph has no <strong>topological order</strong>, an ordering in which every step comes after the steps that feed it. Only a graph without cycles has one.</li>
+<li><strong>Prevention.</strong> Tighten graph validation and add test cases for cyclic approvals. Adopt a publish-time policy that refuses any configuration whose approval graph has no <strong>topological order</strong>, an ordering in which every step comes after the steps that feed it. Only a graph without cycles has one. Real approval flows do have one legitimate loop, sending a request back to the requester for changes. Model that as a declared rework edge with a revisit cap (for example, at most three returns), leave it out of the ordering check, and enforce the cap in the runtime guard. Every other cycle is still refused.</li>
 </ol>
 <figure class="source-diagram" id="figure-loop-drill"><a aria-label="Open full size: Loop drill: detection by static cycle check or runtime max-hop guard, containment by freezing the version and halting affected executions, recovery to the last known-good version or operator review, prevention through stronger graph validation and rejecting non-topologically-orderable graphs; the version fails closed if the loop reaches runtime undetected." href="/casebook-assets/configurable-platform-customer-workflows/65ba2deb998ebfc6.svg" rel="noopener" target="_blank"><img alt="Loop drill: detection by static cycle check or runtime max-hop guard, containment by freezing the version and halting affected executions, recovery to the last known-good version or operator review, prevention through stronger graph validation and rejecting non-topologically-orderable graphs; the version fails closed if the loop reaches runtime undetected." class="diagram-light" src="/casebook-assets/configurable-platform-customer-workflows/65ba2deb998ebfc6.svg"/></a><a aria-label="Open full size: Dark source variant: the four stages of the infinite approval loop drill." class="diagram-dark-link" href="/casebook-assets/configurable-platform-customer-workflows/a23f5d315256843f.svg" rel="noopener" target="_blank"><img alt="Dark source variant: the four stages of the infinite approval loop drill." class="diagram-dark" src="/casebook-assets/configurable-platform-customer-workflows/a23f5d315256843f.svg"/></a><figcaption>The loop drill: detection, containment, recovery and prevention, failing closed for the affected version. Source figure. Open for full size.</figcaption></figure>
 <p>Keep the evidence: the exact configuration revision, the trace of transitions and the history of operator actions. A forensic review needs this record; an error message alone is not enough.</p>
@@ -651,7 +652,7 @@
 <p><code>AdapterDefinition(name, contract_version, permissions)</code> is the contract for talking to one downstream system, such as CRM, ticketing, storage or messaging. <code>name</code> plus <code>contract_version</code> form the key. <code>permissions</code> lists the scopes and capabilities the adapter needs, so the platform can reject a configuration that requests an adapter it has no safe way to call.</p>
 <p>The platform or integrations team runs it. Contracts ship as versions and retire only when no active tenant configuration still relies on them. Retired definitions stay available for past deployments and debugging, flagged inactive so a new configuration cannot select them.</p>
 <h4 id="dive-ledger">ConfigDeployment: the deployment ledger</h4>
-<p><code>ConfigDeployment(tenant_id, version, state)</code> is the deployment ledger. It alone decides which of <code>draft</code>, <code>validated</code>, <code>deployed</code>, <code>rolled_back</code> or <code>failed</code> applies, and ops and support read it to see which version is live at this moment.</p>
+<p><code>ConfigDeployment(tenant_id, version, state)</code> is the deployment ledger. It alone decides which of <code>draft</code>, <code>validated</code>, <code>deployed</code>, <code>rolled_back</code> or <code>failed</code> applies, and ops and support read it to see which version is live at this moment. The feature flag service also holds state about what is live, so the two must not drift apart. Either derive flag state from ledger events, or write the ledger event first and have the flag change replay from it until it succeeds; otherwise a rollback can be recorded while the old flag still serves the bad version.</p>
 <p>Each state change is appended; nothing is rewritten in place. A rollback adds a fresh deployment event that points at an earlier good version. The whole history is retained for the full support and audit window, because incident reviews, customer support and change tracking all depend on it.</p>
 <p class="figure-caption">The four records, their owners and their lifecycles.</p>
 <div class="source-table-wrap">
@@ -769,7 +770,7 @@
 <h4 id="dive-idempotency">Walk through an idempotent deployment</h4>
 <p>Follow one deployment through a timeout. An ops client calls <code>POST /v1/tenants/acme/deployments</code> with the body <code>{configVersion: 17, templateId: "tpl-9"}</code> and the key <code>deploy-2024-11-18-001</code>.</p>
 <ol>
-<li>The server creates deployment <code>dep-555</code> and replies 201 Created with <code>deployment_id=dep-555</code> and <code>state=deployed</code>. The write log stores the idempotency key alongside the result.</li>
+<li>The server creates deployment <code>dep-555</code> and replies 201 Created with <code>deployment_id=dep-555</code> and <code>state=deployed</code>. The write log stores the idempotency key alongside the result and a fingerprint of the request body, scoped to the tenant and caller so one tenant's key can never replay another tenant's deployment. Keys are kept for a published retention window, after which the same key starts a new request.</li>
 <li>The client times out before reading the reply and retries with the same key and body. No <code>dep-556</code> may appear. The reply is identical and still refers to <code>dep-555</code>.</li>
 <li>The client then retries with the same key but sends <code>configVersion: 18</code>. The payload no longer matches what the key was first used for, so the server answers 422 Unprocessable Content.</li>
 </ol>
@@ -831,7 +832,7 @@ function validateWorkflowConfig(input: unknown): WorkflowConfig {
 function validatePolicy(config: WorkflowConfig): void {
   const seenRoles = new Set&lt;string&gt;();
   for (const approval of config.approvals) {
-    if (!approval.role || approval.slaHours &lt;= 0) {
+    if (!approval.role || typeof approval.slaHours !== "number" || !(approval.slaHours &gt; 0)) {
       throw new ConfigValidationError([
         { path: "approvals", code: "invalid_approval", message: "Each approval must have a role and positive SLA" },
       ]);
@@ -898,7 +899,7 @@ function publish(configId: string, raw: unknown, allowedAdapters: Set&lt;string&
 <li><code>JsonValue</code> and <code>JsonLogic</code> express approval conditions as data, leaving no route for arbitrary code.</li>
 <li><code>ValidationError</code> gives the API a fixed vocabulary of error codes.</li>
 <li><code>validateWorkflowConfig</code> validates types at the boundary, so malformed payloads stop before any business logic runs.</li>
-<li><code>validatePolicy</code> keeps authorisation and workflow rules apart from structural checks; here it rejects an approval without a role or a positive SLA, and a duplicate approval role.</li>
+<li><code>validatePolicy</code> keeps authorisation and workflow rules apart from structural checks; here it rejects an approval without a role or a positive numeric SLA, and a duplicate approval role. The SLA test is written as <code>!(slaHours &gt; 0)</code> with a type check because <code>undefined &lt;= 0</code> is false in JavaScript, so a missing SLA would otherwise pass.</li>
 <li><code>validateAdapterMappings</code> compares the integration surface with an allowlist instead of trusting whoever wrote the configuration, and rejects empty mapping keys.</li>
 <li><code>Registry.putImmutable</code> appends each write as a new version and never edits or replaces an earlier one; <code>Registry.versions</code> reads them back without exposing the store for writing.</li>
 <li><code>publish</code> runs the checks in the one order that holds up: parse → validate → authorise-by-policy → persist. Any expected failure returns structured errors; anything unexpected returns a generic <code>internal_error</code> rather than a partial write.</li>
@@ -1481,7 +1482,7 @@ describe("publish", () =&gt; {
 <li>Configuration truth lives in the control plane, and workflows execute in the data plane. That separation stops the product splitting into ten forks.</li>
 <li>For every tenant, the workflow runtime handles instances, step transitions, timers and retries the same way.</li>
 <li>Published configuration versions are immutable. The configuration registry stores them with their release metadata and acts as the system of record.</li>
-<li>On every save and publish, the schema and rule validator runs synchronously, checking syntax, semantic constraints, permissions and compatibility.</li>
+<li>The schema and rule validator checks syntax, semantic constraints, permissions and compatibility. Cheap schema checks run inline on save; the full checks run on a queue, and publish waits for them to pass.</li>
 <li>The UI renderer builds each tenant's forms, labels and layouts from the approved configuration and stores nothing apart from a cache.</li>
 <li>CRM, ERP, ticketing and webhook connectors sit behind one standard interface, the integration adapter SDK. Each tenant's credentials are held by reference.</li>
 <li>Rollout runs through a feature flag service, by tenant, cohort or percentage. The few extensions we approve run in a sandbox with strict limits.</li>
@@ -1741,7 +1742,7 @@ describe("publish", () =&gt; {
 </ul>
 <p>The source's interview section adds no new equation and keeps its numbers in prose; the capacity arithmetic lives in <a href="#walk-sizing">step 3</a>, so the rehearsal stays on trade-offs.</p>
 </section><details class="answer-reveal reading-section" data-worked-answer="true" id="answer-cycle-validator"><summary>Sketch the cycle-rejecting validator from the implementation exercise. (authored for this page)</summary><div class="detail-body">
-<p>The source sets this exercise without a worked answer; this outline is authored from its loop drill and publish-path rules. Treat the approval graph as a directed graph: one node per approval step, one edge per routing rule. Run a topological sort such as Kahn's algorithm: repeatedly remove steps that no remaining step routes into. If steps remain when no such step exists, they form a cycle, so publication fails closed with a structured error naming them, for example <code>approval_cycle</code> with the path <code>manager → compliance → manager</code>.</p>
+<p>The source sets this exercise without a worked answer; this outline is authored from its loop drill and publish-path rules. Treat the approval graph as a directed graph: one node per approval step, one edge per routing rule. Run a topological sort such as Kahn's algorithm: repeatedly remove steps that no remaining step routes into. If steps remain when no such step exists, they contain at least one cycle (plus any steps reachable only through it), so publication fails closed. A depth-first search over the remaining steps finds the actual loop to report as a structured error, for example <code>approval_cycle</code> with the path <code>manager → compliance → manager</code>.</p>
 <p>Place the check in the validate stage of parse → validate → authorise-by-policy → persist, after structural parsing and before any write. Bound it with the expressive-power caps (at most 10 approvals in the source's sketch) so the check itself cannot become a denial-of-service risk. Static analysis cannot see every runtime loop, because a conditional edge may only fire under hidden state, so keep the runtime max-hop or max-revisit guard as the second layer. Test it with the cyclic manager-compliance case, an acyclic chain that must pass, and a self-loop.</p>
 </div></details>
 <section class="reading-section" id="practice-followups"><h3>Answer the expected follow-ups</h3>

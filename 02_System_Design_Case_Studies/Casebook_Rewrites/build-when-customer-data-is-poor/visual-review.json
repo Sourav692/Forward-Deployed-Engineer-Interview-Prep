@@ -1,10 +1,23 @@
 {
   "status": "reviewed",
   "passed": true,
-  "evidence": "Desktop 1280 screenshot: five-section shell, new subtitle about poor warranty data and the repair pipeline, Case brief opening on the verbatim prompt with the three brief groups in the contents rail. Phone 390 screenshot: the brief reads in order, from the prompt and the bolded 'data can only prove what it contains' through the illustrative claim trace and task; the progress rail sits below. I screenshotted each figure in the built page. figure-1-0 (97d955) shows Customer data, Measure eight failure types, One-week readiness score, then Build or narrow to gates, decision layer and review queue (with an arrow back to the gates) and Not yet to Fix the data at its source. The first draft's alt text wrongly put 'fix at source' on the build branch; I corrected the alt, caption and reading paragraph. figure-14-0 (b93385) is the claim path from ERP-A/ERP-B/scans to the label store and three outputs, beside the step-7 trace. figure-14-1 (b667b0) shows the three inputs, quality gates diamond, fails/passes-or-flagged, yes/no confidence branch and gold set growth feeding the evaluation gate; I changed its alt and caption to match that edge. 2026-11-16 source-fix pass: the step 7 lead sentence beside figure-14-0 and figure-14-1 now says the flowcharts run top to bottom with repair stages first; both SVGs are tall (viewBox 552x1164 and 552x1625) and draw ingest and validation above extraction, normalisation and the decision, so the sentence matches the figures.",
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 3 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The readiness core idea and both pipeline figures (stage flow and component flow from ERP-A, ERP-B and scans to the adjudicated label store) each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-14-0",
+    "figure-14-1"
+  ],
   "limits": [
-    "The wide core-idea flowchart is small at 390 px; its labels need the 'open for full size' link on a phone.",
-    "Dark-variant SVGs were hash-checked but not inspected visually; there was no dark-mode or screen-reader test.",
-    "In the figure screenshots the sticky section bar covers part of the tall flowcharts. That is an artefact of the screenshot method, not of reading the page."
-  ]
+    "The component-flow figure (figure-14-1) uses small labels at reading width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 0 fails, 2 warns. The '94% accuracy' metric is a retained source example (offline score against a prompted baseline); the straight-quote warning covers the verbatim source prompt and other retained quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

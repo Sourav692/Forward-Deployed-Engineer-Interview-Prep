@@ -1,1 +1,37 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1280) and phone (390) screenshots show the title, five-section nav, progress rail and the never-charge-twice brief with its definitions list, o-123 trace and the core-idea figure at phone width. All 14 placed source figures were screenshotted in the built page with disclosures open and read: core loop, stress-point decision, control/data-plane topology, happy-path sequence with retry and compensate alt blocks, crash-after-payment overlay, five drills (payment crash, email/CRM, seven-day approval, definition version, API timeout with circuit breaker), four-phase rollout with owners, saga flowchart with pay:/crm:/mail:/refund: keys, model-answer architecture and 50-minute timeline. Each sits directly after the prose it illustrates, and node and branch labels match the prose; the payment-crash caption was rewritten to match that figure's transient/terminal branches.","limits":["The wide topology, happy-path sequence (2536 px source) and interview timeline are small at column width; each links to the full-size local SVG for reading labels.","Dark SVG variants are bundled but the reader is light-themed; dark mode was not tested.","Element screenshots include the sticky section bar overlapping figure tops; that is a capture artifact, not page layout.","Machine checks verify structure and state behaviour; the source-to-output explanation review is recorded in case.json."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 14 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The core loop, stress-point decision, control/data-plane topology, happy-path sequence, crash overlay, five failure drills (payment crash, email/CRM split, approval wait, definition change, API timeout), rollout phases, saga flow, answer architecture and 50-minute plan each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core",
+    "figure-stress-point",
+    "figure-topology",
+    "figure-happy-path",
+    "figure-crash-overlay",
+    "figure-drill-payment-crash",
+    "figure-drill-email-crm",
+    "figure-drill-approval-wait",
+    "figure-drill-definition-change",
+    "figure-drill-api-timeout",
+    "figure-rollout-phases",
+    "figure-saga-flow",
+    "figure-answer-architecture",
+    "figure-interview-plan"
+  ],
+  "limits": [
+    "Protected source diagrams colour terminal or failure nodes dark red with purple, green or dark text, so those labels read at low contrast; the source images cannot be changed.",
+    "Some protected source labels break mid-word inside narrow boxes ('Approval/Docume nt', 'Forward-compati ble', 'update_crm(order ,').",
+    "The saga-flow source label reads 'Validate order.amount_cents 0': the comparison operator is missing from the protected source SVG itself.",
+    "Sequence-diagram message labels are small at reading width and are easier to read from the full-size figure.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 1 fail, 1 warn. The 'elevated' buzzword flag is the technical phrase 'elevated and audited permission' for an operator, not marketing copy; the straight-quote warning covers retained source quotations and code. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

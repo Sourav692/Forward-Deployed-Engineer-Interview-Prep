@@ -139,7 +139,7 @@ Say the arithmetic aloud, because it shows why the design needs an index and a p
 <tr><td>Turns per user per day</td><td>30</td><td>30M turns a day</td></tr>
 <tr><td>Average turn rate</td><td>30M ÷ 86,400 s</td><td>≈ 350 turns/s</td></tr>
 <tr><td>Peak</td><td>3× average</td><td>≈ 1,050 turns/s</td></tr>
-<tr><td>Memory reads per turn</td><td>1 semantic fetch + 1 episodic search</td><td>≈ 2,100 reads/s at peak</td></tr>
+<tr><td>Memory reads per turn</td><td>1 semantic fetch + 1 episodic search</td><td>≈ 2,100 long-term reads/s at peak</td></tr>
 <tr><td>Completed tasks per user per day</td><td>5</td><td>5M episode writes a day</td></tr>
 <tr><td>Episodes kept per user</td><td>100 <em>(source cap)</em></td><td>≤ 100M live episodes</td></tr>
 <tr><td>Stable facts per user</td><td>50</td><td>≈ 50M semantic rows</td></tr>
@@ -147,7 +147,7 @@ Say the arithmetic aloud, because it shows why the design needs an index and a p
 <tr><td>Summary calls</td><td>One per ~15 turns <em>(source threshold)</em></td><td>2 per user a day, ≈ 2M extra model calls, about 7% on top of 30M</td></tr>
 </tbody></table></div>
 
-Follow the chain. One million users at 30 turns each is 30M turns a day; divided by 86,400 seconds that is about 350 turns a second, and a 3× peak gives about 1,050. Each turn does one semantic fetch and one episodic search, so peak memory reads are about 2,100 a second. Five completed tasks per user is 5M episode writes a day. With the cap at 100 episodes per user, at most 100M episodes are live, and at 1,024 dimensions × 4 bytes each vector is about 4 KB, so the capped vectors take about 400 GB. That figure is raw vectors only; index structures, metadata and replicas add to it. Summarising every ~15 turns means two folds per user per day at 30 turns, which is 2M extra model calls, about 7% on top of the 30M turns.
+Follow the chain. One million users at 30 turns each is 30M turns a day; divided by 86,400 seconds that is about 350 turns a second, and a 3× peak gives about 1,050. Each turn does one semantic fetch and one episodic search, so peak long-term memory reads are about 2,100 a second. The request path also loads the thread checkpoint, session state and digest, so the full fan-out is five store reads a turn, about 5,250 a second at peak (1,050 × 5), which is still modest throughput. Five completed tasks per user is 5M episode writes a day. With the cap at 100 episodes per user, at most 100M episodes are live, and at five tasks a day a user reaches the cap in about 20 days (100 ÷ 5), so anything older than about three weeks is recalled only through the digest, and at 1,024 dimensions × 4 bytes each vector is about 4 KB, so the capped vectors take about 400 GB. That figure is raw vectors only; index structures, metadata and replicas add to it. Summarising every ~15 turns means two folds per user per day at 30 turns, which is 2M extra model calls, about 7% on top of the 30M turns.
 
 Three conclusions follow:
 
@@ -244,7 +244,7 @@ Volunteer the failure mode before the interviewer does: the summariser can drop 
 
 Two gotchas separate a practitioner from a reader. First, trimming the prompt does not trim the stored checkpoint; only an explicit removal or a retention policy shrinks storage. Second, a running-summary field with no merge rule can be reset by a stray input on the next call, so the summary appears never to accumulate. Pass only the fields meant to overwrite, and give the summary an explicit merge.
 
-The context builder assembles in a fixed order: system prompt, semantic facts, episode digest, top-k episodes, running summary, recent turns, then the new message. Stable parts go first, so a provider's prefix cache can reuse them across turns. A prefix cache is the provider's reuse of an identical prompt opening, which cuts input cost and time to first token. Any cache you add yourself must include the user's scope in its key.
+The context builder assembles in a fixed order: system prompt, semantic facts, episode digest, top-k episodes, running summary, recent turns, then the new message. Stable parts go first, so a provider's prefix cache can reuse them across turns. A prefix cache is the provider's reuse of an identical prompt opening, which cuts input cost and time to first token. Reuse stops at the first token that differs. The system prompt, the user's facts and the digest can be reused while the same user keeps talking inside the cache lifetime, five minutes by default on Anthropic's API and refreshed on each hit. Everything from the top-k episodes onward changes with the question and is billed at the full input price every turn. Providers also skip caching below a minimum prefix length, 1,024 tokens on Claude Sonnet 5 and 4,096 on Claude Haiku 4.5, so a short system prompt may not cache at all. Any cache you add yourself must include the user's scope in its key.
 
 ### 7. Write facts in place and events by appending {#writes}
 
@@ -310,7 +310,7 @@ Use each search shape for what it does best.
 <tr><td>Did they ever mention a peanut allergy?</td><td>Keyword or field lookup, because exact recall matters more than similarity</td></tr>
 </tbody></table></div>
 
-Semantic facts for one user are few, about 50 in the sizing, so fetch them all by key; the index on that namespace matters only if facts grow well past that. Search is for episodes, and the search must carry the <code>user_id</code> filter so it never ranks another user's records. An allergy question uses exact lookup because a similar-sounding but wrong result is dangerous. Graph memory earns its extraction cost only when answers chain facts never stated together, such as the manager of a trip's organiser, so mention it and do not build it by default.
+Semantic facts for one user are few, about 50 in the sizing, so fetch them all by key; the index on that namespace matters only if facts grow well past that. Search is for episodes, and the search must carry the <code>user_id</code> filter so it never ranks another user's records. How the filter runs matters. A global approximate nearest-neighbour index that ranks all 100M episode vectors and filters to one user's 100 afterwards can return fewer than k results, or none, because that user's records rarely reach the global top candidates. Partition the index by user, or use an engine that applies the filter during the search. At 100 episodes per user, an exact comparison against that user's vectors is about 100 × 1,024 multiply-adds and needs no approximate index; the index earns its place across the whole store rather than inside one user's capped slice. An allergy question uses exact lookup because a similar-sounding but wrong result is dangerous. Graph memory earns its extraction cost only when answers chain facts never stated together, such as the manager of a trip's organiser, so mention it and do not build it by default.
 
 ### Spend the 300 ms budget deliberately {#latency}
 
@@ -351,13 +351,13 @@ Governance follows from the same design.
 <thead><tr><th>Governance ask</th><th>Design answer</th></tr></thead>
 <tbody>
 <tr><td>What does the assistant know about me?</td><td>Query the namespaces directly and show the rows, not the model's summary of itself</td></tr>
-<tr><td>Forget that I said X</td><td>Delete the semantic key and its prior version; scrub matching episodes and the digest</td></tr>
+<tr><td>Forget that I said X</td><td>Delete the semantic key and its prior version; scrub matching episodes, their vectors and the digest; redact the fact from retained thread checkpoints and running summaries, or an old conversation repeats it</td></tr>
 <tr><td>Delete my account</td><td>The deletion job clears checkpoints, session state, facts, episodes, digest, vectors and caches, then confirms</td></tr>
 <tr><td>How long is each thing kept?</td><td>Named per scope: thread retention, session TTL, facts until changed, newest 100 episodes</td></tr>
 <tr><td>EU data stays in the EU</td><td>The residency map pins the user's stores to a region; the index is sharded by user, so it follows</td></tr>
 </tbody></table></div>
 
-Two answers are worth explaining. "What does the assistant know about me?" queries the stores, because a model's summary of its own memory can omit or invent entries. Residency works because the index is sharded by user: pinning a user's stores to a region moves their vectors with them.
+Two answers are worth explaining. "What does the assistant know about me?" queries the stores, because a model's summary of its own memory can omit or invent entries. Residency works because the index is sharded by user: pinning a user's stores to a region moves their vectors with them. Sharding is only the precondition. The shard map must place each user's shard in the pinned region, and replicas and backups must stay there too.
 
 This casebook adds one safeguard the source does not state. Deletion must also stop a write that was already queued from recreating a forgotten fact. Record a deletion marker per key or per user that writers check before committing, and make sure no cache serves data outside the user's pinned region.
 
@@ -490,7 +490,7 @@ These are the source's follow-ups, including its "skeptical staff engineer" prom
 
 <details class="answer-reveal" id="answer-21"><summary>Pivot: memory made the bill go up. What do you cut?</summary><div class="detail-body"><p>Start from the card: the main driver is input tokens, memory, summary and history re-sent on every turn, then the extra model calls for summarising and extracting.</p><p>Measure input tokens per turn by section, extraction and summary calls per 1,000 turns and cost per active user per day. Then send top-k episodes rather than all, fetch facts by key, fold history past ~15 turns, keep the stable prefix first so it caches, and run extraction on a small model in batches off the reply path. Do not stuff every memory into every prompt or extract every turn with the premium model. Close with recall on the harness to show the cut did not cost memory.</p></div></details>
 
-<details class="answer-reveal" id="answer-22"><summary>Added drill: a user says "call me Sam" in thread A, opens thread B the next day, then says "forget my name" while an extraction job for an older turn is still queued. Trace every store and check.</summary><div class="detail-body"><p><em>Authored for this casebook, not from the source.</em></p><p>Thread A: the turn is checkpointed by <code>thread_id</code>; after the reply the memory writer extracts the candidate, the policy filter allows a name, and it upserts <code>preferred_name</code> under <code>(semantic, user_id)</code> with a timestamp and source turn. Thread B: the identity service resolves the same <code>user_id</code>, the semantic read returns the name, and the empty thread checkpoint does not matter. Forget: the deletion job removes the key and its prior version and scrubs matching episodes and the digest. Because an older job is still queued, the writer must check a deletion marker before committing so it cannot recreate the name. Tests: cross-thread recall, rows per key equal to one, and a forget-then-drain check that the name stays gone.</p></div></details>
+<details class="answer-reveal" id="answer-22"><summary>Added drill: a user says "call me Sam" in thread A, opens thread B the next day, then says "forget my name" while an extraction job for an older turn is still queued. Trace every store and check.</summary><div class="detail-body"><p><em>Authored for this casebook, not from the source.</em></p><p>Thread A: the turn is checkpointed by <code>thread_id</code>; after the reply the memory writer extracts the candidate, the policy filter allows a name, and it upserts <code>preferred_name</code> under <code>(semantic, user_id)</code> with a timestamp and source turn. Thread B: the identity service resolves the same <code>user_id</code>, the semantic read returns the name, and the empty thread checkpoint does not matter. Forget: the deletion job removes the key and its prior version and scrubs matching episodes and the digest. Because an older job is still queued, the writer must check a deletion marker before committing so it cannot recreate the name. Thread A's checkpoint and running summary still hold "call me Sam", so redact them as well, or reopening thread A brings the name back without touching the semantic store. Tests: cross-thread recall, rows per key equal to one, and a forget-then-drain check that the name stays gone.</p></div></details>
 
 ### Score yourself and rehearse the answer {#interview}
 
@@ -569,7 +569,7 @@ Procedural memory needs human approval outside the model's reach; enterprise kno
 
 - Clarify the four promises, and settle that the 300 ms p95 budget is for reads.
 - Requirements are testable: recall 20 turns later and across conversations, zero cross-user reads, flat prompt size, deletion everywhere.
-- Sizing (assumptions): 1M users × 30 turns, about 1,050 turns/s and 2,100 reads/s at peak, 5M episode writes a day, ≤100M episodes and about 400 GB of vectors at the cap, summary folds adding about 7% more model calls.
+- Sizing (assumptions): 1M users × 30 turns, about 1,050 turns/s, 2,100 long-term reads/s and about 5,250 store reads/s across the five-way fan-out at peak, about 20 days of raw episodes per user at five tasks a day, 5M episode writes a day, ≤100M episodes and about 400 GB of vectors at the cap, summary folds adding about 7% more model calls.
 - Context: store every turn, send a running summary past ~15 turns plus recent turns in a fixed order with the stable prefix first; trimming the prompt does not trim storage.
 - Writes: key facts by what they are, append events, keep one prior version, persist transient details only as episodes, extract with a model behind a policy filter on the queue.
 - Reads: about 115 ms on the critical path (5 + 40 + 60 + 10), timeouts on every read, answer without episodes when search times out.

@@ -23,7 +23,7 @@ This trace is illustrative. It uses the case's own components and the "Ask Finan
 1. The employee is signed in through SSO. The gateway checks the session token on this request and attaches a verified principal, the platform's record of who is asking and which groups they belong to.
 2. The conversation service checks that this principal may still use this conversation now. Sharing and revocation can change between turns, so a check made when the session opened does not count.
 3. The input scanner classifies the question "Q3 margin by business unit?". If it were restricted data, the turn could be blocked or rerouted to an approved backend before anything left the company.
-4. The quota service admits the turn against the employee's token budget before any money is spent.
+4. The quota service checks the employee's remaining token budget and open streams before any money is spent. The final admission, on the real input size, follows assembly.
 5. The context assembler builds the prompt. Retrieval runs with the Marketing employee's permissions, intersected with the assistant's finance-drive scope. The intersection is empty, so no finance chunk, title or citation enters the context.
 6. The router chooses a model by data classification first and price second. Tokens stream back while the output scanner reads overlapping windows of the stream.
 7. The employee sees "nothing found that you have access to", with an empty citation list that explains why.
@@ -348,8 +348,8 @@ Follow one turn through the architecture:
 1. Authenticate through SSO; the gateway adds a verified principal.
 2. Authorise this conversation now, not from a cache filled at session start.
 3. Scan the input. A restricted classification can block the turn or reroute it.
-4. Admit against quota before spending anything.
-5. Assemble: pin the head, compact history, filter retrieval by permission and put the cacheable prefix first.
+4. Pre-check quota before spending anything: remaining budget and open streams.
+5. Assemble: pin the head, compact history, filter retrieval by permission and put the cacheable prefix first. Then admit on the assembled input size, because retrieval-heavy turns cost the most.
 6. Route to a model and deployment by class, cost and health.
 7. Dispatch and stream. Tokens flow while the output scanner reads a sliding buffer.
 8. Finalise: save the turn with citations, tokens and route; update usage; emit audit.
@@ -615,7 +615,7 @@ Three techniques control this, and they combine:
 
 - **Sliding window with a pinned head.** The system prompt and assistant definition always stay. The last k turns stay word for word. Older turns drop out.
 - **Rolling summarisation.** Older turns are compacted into a summary, so history costs about the same at every turn.
-- **Prompt caching.** Put retrieved documents, assistant instructions and the system prompt into a stable prefix the provider can cache. Providers such as Anthropic document caching that works on a stable prompt prefix, so the order of context determines whether the cache can hit.
+- **Prompt caching.** Put what is identical across turns first: tool definitions, the system prompt and assistant instructions, then conversation history, which only grows at the end. Retrieved chunks change on every turn, so they go after the history, next to the new message. Anthropic caches the prefix in the order tools, system, messages, and a change at one level invalidates that level and everything after it, so a chunk placed early would make every later token a cache miss. The default cache lifetime is five minutes, refreshed on each use. Compaction and a sliding window both rewrite the history prefix, so each compaction costs one cache miss; compact in steps rather than on every turn.
 
 Context order is a day-one cost decision. It is almost free to design in and expensive to fix later. The "pinned head" also protects governance: if the assembler trims from the front of a long conversation, the system prompt is the first thing lost, and the governed assistant silently becomes a bare model. Trim from the middle instead.
 
@@ -661,13 +661,13 @@ The message `status` field needs four values. A stream that dies at 80% is not `
 
 #### The streaming endpoint's contract
 
-**Idempotency is mandatory.** Key it on `(conversation_id, client_message_id)`. If the client sends the same turn twice, it gets back the turn already stored, partial or not, and is not charged twice.
+**Idempotency is mandatory.** Key it on `(conversation_id, client_message_id)`. If the client sends the same turn twice, it gets back the turn already stored, partial or not, and is not charged twice. The replay returns the stored text and citations, not only a status. Two retries can pass the lookup at the same moment, so `begin_turn` needs a unique constraint on the key; the loser of that insert, like any retry that arrives while the first turn is still streaming, gets 409.
 
 **Every event has a type:** `token`, `citation`, `route_change`, `blocked`, `done` or `error`. Plain untyped text is ruled out because the client must tell a fallback notice apart from answer content.
 
 **Errors have distinct codes:** 403 when the caller lacks authorisation; 409 when a request with the same key is still running; 422 when that key arrives with a different body; 413 for an oversized attachment; 429 for quota; a policy block that carries a reason code; and 503 when every provider is down. The 409 and 422 meanings follow the IETF Idempotency-Key header draft.
 
-**HTTP status is not success.** A stream that opens with 200 and stops at token 300 has failed. The service level indicator (SLI) for turn completion counts `done` events and ignores HTTP status codes.
+**HTTP status is not success.** A stream that opens with 200 and stops at token 300 has failed. The service level indicator (SLI) for turn completion counts `done` events whose status is `complete` and ignores HTTP status codes. The handler sends `done` on blocked and failed paths too, so counting every `done` would score failures as successes.
 
 #### Idempotency, versioning and concurrency in three places
 
@@ -679,7 +679,7 @@ Each control appears where its failure would hurt:
 
 ### The turn handler, line by line {#dive-turn-handler}
 
-The turn handler is the riskiest component. One skipped check here exposes a colleague's conversation, sends a document or secret to a vendor, or puts a card number on screen. It runs in eight steps: authorise, scan input, admit, assemble, route, stream with output scan, finalise idempotently, audit.
+The turn handler is the riskiest component. One skipped check here exposes a colleague's conversation, sends a document or secret to a vendor, or puts a card number on screen. It runs in eight steps: authorise, scan input, assemble, admit on the assembled size, route, stream with output scan, finalise idempotently, audit.
 
 <figure class="source-diagram" id="figure-turn-handler" style="max-width:30rem;margin-inline:auto"><a href="source-assets/03e26470821f90c5.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/03e26470821f90c5.svg" alt="Diagram: 1. authorize principal and conversation per turn, not per session; 2. idempotency check on conversation_id and client_message_id, replay existing result; 3. policy.scan_input, audit turn.blocked and return; 4. assembler.build with permissions from the asking human; 5. quota.admit on input tokens; 6. router.choose, classification outranks cost; 7. stream with sliding-window output scan, overlap 64, ending blocked, failed or complete; 8. finally: finalize_turn, quota.record, audit.emit on every path"></a><img class="diagram-dark" src="source-assets/fc62be02b215cf3b.svg" alt="Dark variant: Diagram: 1. authorize principal and conversation per turn, not per session; 2. idempotency check on conversation_id and client_message_id, replay existing result; 3. policy.scan_input, audit turn.blocked and return; 4. assembler.build with permissions from the asking human; 5. quota.admit on input tokens; 6. router.choose, classification outranks cost; 7. stream with sliding-window output scan, overlap 64, ending blocked, failed or complete; 8. finally: finalize_turn, quota.record, audit.emit on every path"><figcaption>The turn handler's eight steps and its three exit paths, source figure 8. Open for full size.</figcaption></figure>
 
@@ -728,7 +728,7 @@ async def handle_turn(principal, req, conversations, policy, quota,
 
     # 7. Stream with a sliding scan. One token cannot be judged; buffering the
     #    whole answer would destroy the TTFT the product lives on.
-    emitted, window, status = [], "", "complete"
+    emitted, window, status = [], "", "partial"   # until the stream ends cleanly
     try:
         async for chunk in router.stream(route, ctx):
             window += chunk
@@ -740,6 +740,7 @@ async def handle_turn(principal, req, conversations, policy, quota,
             yield {"type": "token", "text": chunk}
         if not policy.scan_output_window(window).allowed:
             raise TurnBlocked("output_policy")
+        status = "complete"
 
     except TurnBlocked as blocked:
         status = "blocked"
@@ -751,7 +752,7 @@ async def handle_turn(principal, req, conversations, policy, quota,
     finally:
         # 8. Finalize on EVERY path — complete, blocked or failed. A turn that
         #    vanishes without a record is both a billing hole and an audit hole.
-        usage = {"input": ctx.input_tokens, "output": len(emitted)}
+        usage = {"input": ctx.input_tokens, "output": len(emitted)}  # chunks; bill on the provider's usage figures
         await conversations.finalize_turn(turn_id, status=status, text="".join(emitted),
                                           citations=ctx.citations, usage=usage, route=route)
         await quota.record(principal, usage)
@@ -766,7 +767,7 @@ async def handle_turn(principal, req, conversations, policy, quota,
 - **`assembler.build(principal, …)`** is the line to remember if you remember one. What the turn may see is derived from the person asking.
 - **`quota.admit(…, ctx.input_tokens)` comes after assembly**, because the turns that pull in the most retrieved text are the expensive ones. Admitting on the raw message would under-count them.
 - **`router.choose(classification=…)`** puts data classification ahead of price when choosing a model.
-- **`SCAN_OVERLAP`** keeps the last 64 characters of each 256-character window for the next scan. Without it, a secret split across two windows gets through, a bug teams ship often. The overlap has to be at least as long as the longest pattern the scanner looks for. Scanning token by token is useless because one token cannot be judged, and buffering the whole answer would destroy TTFT.
+- **`SCAN_OVERLAP`** keeps the last 64 characters of each 256-character window for the next scan. The sketch shows each chunk before its window is scanned, so a secret can reach the screen for up to one window before the block replaces it. Where nothing restricted may appear even briefly, hold back the unscanned tail and release text only once a scan has covered it; the cost is a delay of up to one window. Without it, a secret split across two windows gets through, a bug teams ship often. The overlap has to be at least as long as the longest pattern the scanner looks for. Scanning token by token is useless because one token cannot be judged, and buffering the whole answer would destroy TTFT.
 - **`finally`** finalises the turn, records usage and writes audit on every path. Code without this block would not survive in production.
 
 #### Failures the whiteboard sketch omits
@@ -774,7 +775,7 @@ async def handle_turn(principal, req, conversations, policy, quota,
 - **The client drops off mid-stream.** Cancel the provider's stream too, or you pay for tokens nobody reads. This happens often and wastes real money. Some providers do not honour cancellation, so the saving is not guaranteed everywhere.
 - **An attachment is still being scanned.** Wait, or go ahead and say so. If the turn continues silently, users assume the model ignored their file.
 - **Assembled context exceeds the budget.** Trim history, but never the head. Cutting from the front drops the system prompt in long conversations.
-- **The audit write fails.** The turn fails too. This platform exists to be defensible, so swallowing the error is wrong. It costs some availability; say so aloud.
+- **The audit write fails.** The turn fails too. This platform exists to be defensible, so swallowing the error is wrong. It costs some availability; say so aloud. Write an opening audit record before dispatch, so a failed write stops the turn before anything leaves. The closing record is written after the user has read the answer, so its failure can only mark the turn failed, alert and retry the write.
 
 #### Two tests with disproportionate weight
 
@@ -796,7 +797,7 @@ Rewording the system prompt does not solve it. The attack succeeds less often, b
 
 - **Untrusted content carries no authority.** Retrieved or uploaded text sits in a delimited region of the prompt. The orchestration layer decides whether a tool runs; the model does not.
 - **The MVP ships no write tools.** Injection is one reason the MVP scope kept them out.
-- **Permission filtering is the safety net.** A flawless injection still reaches only documents the user could open anyway, so the attacker gains nothing.
+- **Permission filtering is the safety net.** A flawless injection still reaches only documents the user could open anyway. That caps what it can read, not where the text goes. An injected instruction can ask the model to place the user's data in an image or link URL, and a client that loads it sends the data to the attacker. Render images and links from model output only for allow-listed domains.
 - **Detection:** put injection canaries, planted test documents carrying known injection text, in the evaluation set, and alert when tool-call patterns look unusual.
 
 The spoken version: "I expect injection to work some of the time. My design makes a successful one worthless."
@@ -820,7 +821,7 @@ The cause is subtle. Caching group membership for 15 minutes was sensible. The t
 
 The bad path: spinners give way to error pages, people press retry, and load piles up just when capacity is scarce. Ten minutes in, staff are discussing the outage in the consumer tool this platform was meant to replace.
 
-The designed path: a circuit breaker trips when the adapter's error rate climbs, which stops sending traffic to the failing provider. The router moves to a secondary or smaller model, and users see a short labelled banner instead of an error. Background jobs are shed. Retries are capped and spread with random jitter so we do not make the provider's outage worse. Every route change writes an audit event with its reason. The failover path is proven on a game day before it is needed.
+The designed path: a circuit breaker trips when the adapter's error rate climbs, which stops sending traffic to the failing provider. The router moves to a secondary or smaller model, and users see a short labelled banner instead of an error. The fallback must be approved for the turn's data class: a restricted turn with no approved backend left fails with its message kept rather than failing over to an unapproved provider. Background jobs are shed. Retries are capped and spread with random jitter so we do not make the provider's outage worse. Every route change writes an audit event with its reason. The failover path is proven on a game day before it is needed.
 
 The judgement call is to show a weaker, labelled answer rather than an error page. Error pages push people back to the very consumer tool the budget was meant to replace.
 
@@ -901,7 +902,7 @@ Extend what exists. The evaluation set that carries injection canaries can also 
 
 Language is a real gap. Permission-filtered retrieval and output scanning were designed for English, and the boundary tests prove them only on English. A global rollout must re-run those contract tests on content in other languages, because DLP and classification scanners trained on English text may over-block or miss things elsewhere.
 
-Accessibility is in better shape. The streaming relay already sends typed events (`token`, `citation`, `route_change`, `blocked`, `done`), so assistive technology has a clean signal to announce each change of state, including while a response streams. The gap is testing and quality assurance, not architecture.
+Accessibility is in better shape. The streaming relay already sends typed events (`token`, `citation`, `route_change`, `blocked`, `done`), so assistive technology has a clean signal to announce each change of state. Announce `blocked`, `route_change` and `done`, and the answer in sentence-sized pieces; a live region updated on every `token` event floods a screen reader. The gap is testing and quality assurance, not architecture.
 
 Tie both back to adoption. If the governed tool serves staff who work in other languages, or who rely on assistive technology, less well than everyone else, those people drift back to unapproved tools. That recreates the shadow-AI risk the project was funded to remove, for a smaller group.
 
@@ -1298,7 +1299,7 @@ For an internal "own ChatGPT" serving 40,000 employees, the levels separate on w
 
 **The coherence rule.** Identity at the session, re-checked every turn. Nothing enters the context window until it has passed policy and landed in audit. One path into the prompt.
 
-**The turn.** Authorise, idempotency check, scan input, admit, assemble with the asker's permissions, route by classification before cost, stream with an overlapping output scan (256-character windows, 64 overlap), then finalise, record usage and audit on every path. If the audit write fails, the turn fails.
+**The turn.** Authorise, idempotency check, scan input, assemble with the asker's permissions, admit on the assembled size, route by classification before cost, stream with an overlapping output scan (256-character windows, 64 overlap), then finalise, record usage and audit on every path. If the audit write fails, the turn fails.
 
 <p class="figure-caption">Numbers to recall, all source planning assumptions.</p>
 <div class="source-table-wrap"><table>
