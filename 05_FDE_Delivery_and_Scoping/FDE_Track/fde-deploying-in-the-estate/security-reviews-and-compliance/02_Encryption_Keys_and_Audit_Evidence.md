@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [encryption, key management, audit logging, security review, evidence]
 ---
 
 ## Start with the yes that proves nothing
 
-Sandling Pay, a fictional payments firm, was reviewing a document service before sending it chargeback evidence. One questionnaire row asked whether data was encrypted at rest. The team wrote "Yes, AES-256."
-
-The reviewer asked three follow-up questions. Whose key is it? Who can use it to decrypt our documents? Show me the record of the last time one of your engineers read one of our documents.
-
-The answers were awkward. The storage used the cloud provider's default key, which Sandling could not see or revoke. Any engineer with read access to the bucket could read every file, because the storage decrypted on read. The support console logged sign-ins but not which documents an engineer opened, and those logs were kept for 14 days in an account where the same engineers could delete them. The review paused for three weeks.
-
-The first answer was true and answered nothing the reviewer cared about. Call this **the yes that proves nothing**: a control stated as a fact, with no account of what it stops or how anyone could check it.
+Sandling Pay, a payments firm, was reviewing a document service before sending it chargeback evidence. One questionnaire row asked whether data was encrypted at rest, and Ama, the forward deployed engineer, wrote "Yes, AES-256." The reviewer asked whose key it was, who could use it to decrypt Sandling's documents, and for the record of the last time a vendor engineer read one. The storage used the cloud provider's default key, which Sandling could not see or revoke. Any engineer with read access to the bucket could read every file, because the storage decrypted on read. The support console logged sign-ins but not which documents an engineer opened, and kept those logs for 14 days where the same engineers could delete them. The review paused for three weeks. Call this **the yes that proves nothing**: a control stated as a fact, with no account of what it stops or how anyone could check it.
 
 > **What you'll learn**
 >
@@ -62,7 +56,7 @@ flowchart LR
 
 *Figure 1: Envelope encryption. Each document has its own data key. Only the key service can unwrap it, and it logs every request.*
 
-Two properties make this the default. Reading any document needs a call to the KMS, which is logged and can be refused. And rotating the KEK means re-wrapping small DEKs, not re-encrypting every file. With a separate KEK per tenant, one customer's data can be made unreadable without touching another's. The key hierarchy itself is covered in [secrets and per-tenant encryption keys](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md).
+Two properties make this the default. Reading any document needs a call to the KMS, which is logged and can be refused. And rotating the KEK never means re-encrypting every file: old key versions still unwrap existing DEKs, and re-wrapping, where a policy asks for it, touches only the small DEKs. With a separate KEK per tenant, one customer's data can be made unreadable without touching another's. The key hierarchy itself is covered in [secrets and per-tenant encryption keys](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md).
 
 The question a customer cares about is who holds the KEK.
 
@@ -125,7 +119,7 @@ Sandling's review resumed with nine artefacts in place of the one-line answer. I
 
 - **Cryptography choices.** Algorithms, modes and key lengths belong to your platform's standards and the customer's policy. Use the provider's defaults unless a standard requires otherwise.
 - **Certifications.** Audits against formal standards bring their own evidence formats. This lesson covers the engineering evidence underneath them.
-- **Fictional data.** Sandling Pay, its review, figures and ticket numbers are illustrative.
+- **Composite engagement.** Sandling Pay, Ama, the review, its figures and ticket numbers are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -168,7 +162,7 @@ The storage service decrypts for anyone it allows to read. An engineer with buck
 <details>
 <summary>2. Why does rotating a key encryption key not require re-encrypting every document?</summary>
 
-Documents are encrypted with their own data keys. Rotation re-wraps those small data keys with the new key version, and old versions stay available to unwrap existing ones.
+Documents are encrypted with their own data keys, and only those small keys are wrapped by the key encryption key. The key service keeps old versions to unwrap existing data keys, and new writes use the new version. Re-wrapping old data keys, if required, touches only the small keys.
 
 </details>
 

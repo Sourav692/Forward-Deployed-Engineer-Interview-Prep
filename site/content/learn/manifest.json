@@ -8429,9 +8429,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "encryption-keys-and-audit-evidence",
@@ -8443,7 +8443,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/02_Encryption_Keys_and_Audit_Evidence.md",
       "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/encryption-keys-and-audit-evidence",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "residency-retention-and-deletion",
@@ -8465,9 +8465,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/security-reviews-and-compliance/04_Practise_the_Security_Review.md",
-      "estMinutes": 5,
+      "estMinutes": 8,
       "href": "/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/practise-the-security-review",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "builds-you-can-reproduce-and-promote",
@@ -8527,7 +8527,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/05_Backups_RTO_RPO_and_Restore_Drills.md",
       "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/backups-rto-rpo-and-restore-drills",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-releases-and-cutover",
