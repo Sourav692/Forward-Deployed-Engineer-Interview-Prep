@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/self-adapting-agent",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:54:29.135Z",
+  "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+  "checked_at": "2026-11-20T23:30:59.234Z",
   "checks": {
     "responsive": {
       "widths": [

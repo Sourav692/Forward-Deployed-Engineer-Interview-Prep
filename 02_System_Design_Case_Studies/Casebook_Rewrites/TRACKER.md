@@ -2,7 +2,7 @@
 
 Tracks the complete teaching rewrite of the 33 casebooks in the approved five-section format and the course-content explanation style.
 
-**Rewrites complete: 23 / 33.** Not started: 0; In progress: 0; Review draft: 10; Complete: 23; Blocked: 0.
+**Rewrites complete: 33 / 33.** Not started: 0; In progress: 0; Review draft: 0; Complete: 33; Blocked: 0.
 
 A completed format migration does not count as a completed prose rewrite. Live checking is tracked separately: pending, deployed, passed or failed. A live pass requires a completed rewrite, deployment reference, published URL and a matching successful check report.
 
@@ -79,21 +79,21 @@ Use `--check name=state --evidence 'actual comparison or report path'` for revie
 | 21 | [AI-Powered Recruiting Platform](https://forwarddeployedprep.com/design/recruiting-platform) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/recruiting-platform) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](recruiting-platform/casebook.md) [html](recruiting-platform/reader.html) [coverage](recruiting-platform/case.json) [validation](recruiting-platform/snapshot.json) [live_check](recruiting-platform/live-check.json) [review_baseline](../../.website_spec/casebook-review-14-23-2026-11-20/baseline/recruiting-platform/inventory.json) [review](../../.website_spec/casebook-review-14-23-2026-11-20/recruiting-platform/audit.json) |
 | 22 | [Travel Agent: the 12-Part Framework Worked Through](https://forwarddeployedprep.com/design/travel-agent-worked-example) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/travel-agent-worked-example) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](travel-agent-worked-example/casebook.md) [html](travel-agent-worked-example/reader.html) [coverage](travel-agent-worked-example/case.json) [validation](travel-agent-worked-example/snapshot.json) [live_check](travel-agent-worked-example/live-check.json) [review_baseline](../../.website_spec/casebook-review-14-23-2026-11-20/baseline/travel-agent-worked-example/inventory.json) [review](../../.website_spec/casebook-review-14-23-2026-11-20/travel-agent-worked-example/audit.json) |
 | 23 | [AI System for an Air-Gapped Environment](https://forwarddeployedprep.com/design/air-gapped-ai-system) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/air-gapped-ai-system) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](air-gapped-ai-system/casebook.md) [html](air-gapped-ai-system/reader.html) [coverage](air-gapped-ai-system/case.json) [validation](air-gapped-ai-system/snapshot.json) [live_check](air-gapped-ai-system/live-check.json) [review_baseline](../../.website_spec/casebook-review-14-23-2026-11-20/baseline/air-gapped-ai-system/inventory.json) [review](../../.website_spec/casebook-review-14-23-2026-11-20/air-gapped-ai-system/audit.json) |
-| 24 | [Reliable Workflow Orchestration System](https://forwarddeployedprep.com/design/reliable-workflow-orchestration) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/reliable-workflow-orchestration) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](reliable-workflow-orchestration/casebook.md) [html](reliable-workflow-orchestration/reader.html) [coverage](reliable-workflow-orchestration/case.json) [validation](reliable-workflow-orchestration/snapshot.json) [live_check](reliable-workflow-orchestration/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/reliable-workflow-orchestration/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json) |
-| 25 | [Configurable Platform for Customer-Specific Workflows](https://forwarddeployedprep.com/design/configurable-platform-customer-workflows) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/configurable-platform-customer-workflows) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](configurable-platform-customer-workflows/casebook.md) [html](configurable-platform-customer-workflows/reader.html) [coverage](configurable-platform-customer-workflows/case.json) [validation](configurable-platform-customer-workflows/snapshot.json) [live_check](configurable-platform-customer-workflows/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/configurable-platform-customer-workflows/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json) |
-| 26 | [Enterprise Chatbot Platform](https://forwarddeployedprep.com/design/enterprise-chatbot-platform) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/enterprise-chatbot-platform) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](enterprise-chatbot-platform/casebook.md) [html](enterprise-chatbot-platform/reader.html) [coverage](enterprise-chatbot-platform/case.json) [validation](enterprise-chatbot-platform/snapshot.json) [live_check](enterprise-chatbot-platform/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/enterprise-chatbot-platform/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json) |
-| 27 | [Agent That Adapts to New Tasks](https://forwarddeployedprep.com/design/self-adapting-agent) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/self-adapting-agent) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](self-adapting-agent/casebook.md) [html](self-adapting-agent/reader.html) [coverage](self-adapting-agent/case.json) [validation](self-adapting-agent/snapshot.json) [live_check](self-adapting-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/self-adapting-agent/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json) |
-| 28 | [Personal Assistant That Remembers You](https://forwarddeployedprep.com/design/personal-assistant-with-memory) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/personal-assistant-with-memory) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](personal-assistant-with-memory/casebook.md) [html](personal-assistant-with-memory/reader.html) [coverage](personal-assistant-with-memory/case.json) [validation](personal-assistant-with-memory/snapshot.json) [live_check](personal-assistant-with-memory/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/personal-assistant-with-memory/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json) |
-| 29 | [Production LLM Gateway](https://forwarddeployedprep.com/design/production-llm-gateway) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/production-llm-gateway) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](production-llm-gateway/casebook.md) [html](production-llm-gateway/reader.html) [coverage](production-llm-gateway/case.json) [validation](production-llm-gateway/snapshot.json) [live_check](production-llm-gateway/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/production-llm-gateway/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json) |
+| 24 | [Reliable Workflow Orchestration System](https://forwarddeployedprep.com/design/reliable-workflow-orchestration) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/reliable-workflow-orchestration) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](reliable-workflow-orchestration/casebook.md) [html](reliable-workflow-orchestration/reader.html) [coverage](reliable-workflow-orchestration/case.json) [validation](reliable-workflow-orchestration/snapshot.json) [live_check](reliable-workflow-orchestration/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/reliable-workflow-orchestration/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json) |
+| 25 | [Configurable Platform for Customer-Specific Workflows](https://forwarddeployedprep.com/design/configurable-platform-customer-workflows) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/configurable-platform-customer-workflows) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](configurable-platform-customer-workflows/casebook.md) [html](configurable-platform-customer-workflows/reader.html) [coverage](configurable-platform-customer-workflows/case.json) [validation](configurable-platform-customer-workflows/snapshot.json) [live_check](configurable-platform-customer-workflows/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/configurable-platform-customer-workflows/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json) |
+| 26 | [Enterprise Chatbot Platform](https://forwarddeployedprep.com/design/enterprise-chatbot-platform) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/enterprise-chatbot-platform) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](enterprise-chatbot-platform/casebook.md) [html](enterprise-chatbot-platform/reader.html) [coverage](enterprise-chatbot-platform/case.json) [validation](enterprise-chatbot-platform/snapshot.json) [live_check](enterprise-chatbot-platform/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/enterprise-chatbot-platform/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json) |
+| 27 | [Agent That Adapts to New Tasks](https://forwarddeployedprep.com/design/self-adapting-agent) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/self-adapting-agent) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](self-adapting-agent/casebook.md) [html](self-adapting-agent/reader.html) [coverage](self-adapting-agent/case.json) [validation](self-adapting-agent/snapshot.json) [live_check](self-adapting-agent/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/self-adapting-agent/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json) |
+| 28 | [Personal Assistant That Remembers You](https://forwarddeployedprep.com/design/personal-assistant-with-memory) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/personal-assistant-with-memory) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](personal-assistant-with-memory/casebook.md) [html](personal-assistant-with-memory/reader.html) [coverage](personal-assistant-with-memory/case.json) [validation](personal-assistant-with-memory/snapshot.json) [live_check](personal-assistant-with-memory/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/personal-assistant-with-memory/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json) |
+| 29 | [Production LLM Gateway](https://forwarddeployedprep.com/design/production-llm-gateway) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/production-llm-gateway) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](production-llm-gateway/casebook.md) [html](production-llm-gateway/reader.html) [coverage](production-llm-gateway/case.json) [validation](production-llm-gateway/snapshot.json) [live_check](production-llm-gateway/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/production-llm-gateway/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json) |
 
 ### Product Judgement and Problem Decomposition
 
 | # | Case | Stage | Sections | Source coverage | Editorial | UI checks | Live check | Updated | Notes and artifacts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 30 | [Prioritise AI Use Cases for a Large Enterprise](https://forwarddeployedprep.com/design/prioritize-ai-use-cases) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/prioritize-ai-use-cases) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [sample](../../.claude/skills/casebook-content/references/teaching-example.md) [coverage](prioritize-ai-use-cases/case.json) [validation](prioritize-ai-use-cases/snapshot.json) [markdown](prioritize-ai-use-cases/casebook.md) [html](prioritize-ai-use-cases/reader.html) [live_check](prioritize-ai-use-cases/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/prioritize-ai-use-cases/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json) |
-| 31 | [Scale a Prototype from 100 to 100,000 Users](https://forwarddeployedprep.com/design/scale-prototype-to-production) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/scale-prototype-to-production) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](scale-prototype-to-production/casebook.md) [html](scale-prototype-to-production/reader.html) [coverage](scale-prototype-to-production/case.json) [validation](scale-prototype-to-production/snapshot.json) [live_check](scale-prototype-to-production/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/scale-prototype-to-production/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json) |
-| 32 | [Build When the Customer’s Data Is Poor](https://forwarddeployedprep.com/design/build-when-customer-data-is-poor) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/build-when-customer-data-is-poor) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](build-when-customer-data-is-poor/casebook.md) [html](build-when-customer-data-is-poor/reader.html) [coverage](build-when-customer-data-is-poor/case.json) [validation](build-when-customer-data-is-poor/snapshot.json) [live_check](build-when-customer-data-is-poor/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/build-when-customer-data-is-poor/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json) |
-| 33 | [Decomposition Classics: 911, Bank Fraud, Medication Errors](https://forwarddeployedprep.com/design/decomposition-classics-67-68-69) | Review draft | 5 / 5 | passed | passed | 3 / 3 | [pending](https://forwarddeployedprep.com/design/decomposition-classics-67-68-69) | 2026-11-20 | Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. [markdown](decomposition-classics-67-68-69/casebook.md) [html](decomposition-classics-67-68-69/reader.html) [coverage](decomposition-classics-67-68-69/case.json) [validation](decomposition-classics-67-68-69/snapshot.json) [live_check](decomposition-classics-67-68-69/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/decomposition-classics-67-68-69/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json) |
+| 30 | [Prioritise AI Use Cases for a Large Enterprise](https://forwarddeployedprep.com/design/prioritize-ai-use-cases) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/prioritize-ai-use-cases) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [sample](../../.claude/skills/casebook-content/references/teaching-example.md) [coverage](prioritize-ai-use-cases/case.json) [validation](prioritize-ai-use-cases/snapshot.json) [markdown](prioritize-ai-use-cases/casebook.md) [html](prioritize-ai-use-cases/reader.html) [live_check](prioritize-ai-use-cases/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/prioritize-ai-use-cases/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json) |
+| 31 | [Scale a Prototype from 100 to 100,000 Users](https://forwarddeployedprep.com/design/scale-prototype-to-production) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/scale-prototype-to-production) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](scale-prototype-to-production/casebook.md) [html](scale-prototype-to-production/reader.html) [coverage](scale-prototype-to-production/case.json) [validation](scale-prototype-to-production/snapshot.json) [live_check](scale-prototype-to-production/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/scale-prototype-to-production/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json) |
+| 32 | [Build When the Customer’s Data Is Poor](https://forwarddeployedprep.com/design/build-when-customer-data-is-poor) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/build-when-customer-data-is-poor) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](build-when-customer-data-is-poor/casebook.md) [html](build-when-customer-data-is-poor/reader.html) [coverage](build-when-customer-data-is-poor/case.json) [validation](build-when-customer-data-is-poor/snapshot.json) [live_check](build-when-customer-data-is-poor/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/build-when-customer-data-is-poor/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json) |
+| 33 | [Decomposition Classics: 911, Bank Fraud, Medication Errors](https://forwarddeployedprep.com/design/decomposition-classics-67-68-69) | Complete | 5 / 5 | passed | passed | 3 / 3 | [passed](https://forwarddeployedprep.com/design/decomposition-classics-67-68-69) | 2026-11-20 | Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. [markdown](decomposition-classics-67-68-69/casebook.md) [html](decomposition-classics-67-68-69/reader.html) [coverage](decomposition-classics-67-68-69/case.json) [validation](decomposition-classics-67-68-69/snapshot.json) [live_check](decomposition-classics-67-68-69/live-check.json) [review_baseline](../../.website_spec/casebook-review-24-33-2026-11-21/baseline/decomposition-classics-67-68-69/inventory.json) [review](../../.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json) |
 
 ## Current work
 
@@ -605,7 +605,7 @@ Next: Maintain through the existing source and publishing pipeline.
 
 ### Reliable Workflow Orchestration System
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -623,11 +623,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/reliable-workflow-orchestration/); figures and 1440/390 screenshots inspected (reliable-workflow-orchestration/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/reliable-workflow-orchestration/); figures and 1440/390 screenshots inspected (reliable-workflow-orchestration/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Configurable Platform for Customer-Specific Workflows
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -645,11 +645,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/configurable-platform-customer-workflows/); figures and 1440/390 screenshots inspected (configurable-platform-customer-workflows/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/configurable-platform-customer-workflows/); figures and 1440/390 screenshots inspected (configurable-platform-customer-workflows/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Enterprise Chatbot Platform
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -667,11 +667,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/enterprise-chatbot-platform/); figures and 1440/390 screenshots inspected (enterprise-chatbot-platform/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/enterprise-chatbot-platform/); figures and 1440/390 screenshots inspected (enterprise-chatbot-platform/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Agent That Adapts to New Tasks
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -689,11 +689,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/self-adapting-agent/); figures and 1440/390 screenshots inspected (self-adapting-agent/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/self-adapting-agent/); figures and 1440/390 screenshots inspected (self-adapting-agent/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Personal Assistant That Remembers You
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -711,11 +711,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/personal-assistant-with-memory/); figures and 1440/390 screenshots inspected (personal-assistant-with-memory/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/personal-assistant-with-memory/); figures and 1440/390 screenshots inspected (personal-assistant-with-memory/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Production LLM Gateway
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -733,11 +733,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/production-llm-gateway/); figures and 1440/390 screenshots inspected (production-llm-gateway/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/production-llm-gateway/); figures and 1440/390 screenshots inspected (production-llm-gateway/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Prioritise AI Use Cases for a Large Enterprise
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -755,11 +755,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/prioritize-ai-use-cases/); figures and 1440/390 screenshots inspected (prioritize-ai-use-cases/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/prioritize-ai-use-cases/); figures and 1440/390 screenshots inspected (prioritize-ai-use-cases/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Scale a Prototype from 100 to 100,000 Users
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -777,11 +777,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/scale-prototype-to-production/); figures and 1440/390 screenshots inspected (scale-prototype-to-production/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/scale-prototype-to-production/); figures and 1440/390 screenshots inspected (scale-prototype-to-production/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Build When the Customer’s Data Is Poor
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -799,11 +799,11 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/build-when-customer-data-is-poor/); figures and 1440/390 screenshots inspected (build-when-customer-data-is-poor/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/build-when-customer-data-is-poor/); figures and 1440/390 screenshots inspected (build-when-customer-data-is-poor/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ### Decomposition Classics: 911, Bank Fraud, Medication Errors
 
-Stage: Review draft. Content mode: teach. Live check: pending.
+Stage: Complete. Content mode: teach. Live check: passed.
 
 | Section | Rewrite state |
 | --- | --- |
@@ -821,12 +821,45 @@ Stage: Review draft. Content mode: teach. Live check: pending.
 | browser_validation | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/decomposition-classics-67-68-69/); figures and 1440/390 screenshots inspected (decomposition-classics-67-68-69/visual-review.json). |
 | visual_review | passed | Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/decomposition-classics-67-68-69/); figures and 1440/390 screenshots inspected (decomposition-classics-67-68-69/visual-review.json). |
 
-Next: Deploy this ten-case batch and verify production pages.
+Next: Maintain through the existing source and publishing pipeline.
 
 ## Change log
 
 | Time (UTC) | Case | Change |
 | --- | --- | --- |
+| 2026-11-20T23:33:15+00:00 | travel-agent-worked-example | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | tool-using-agent-with-safety-controls | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | sre-incident-response-agent | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | secure-multi-tenant-ai-platform | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | scoping-to-deployed-agent | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | sales-copilot | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | recruiting-platform | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:15+00:00 | real-time-call-assistant | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | observability-and-production-diagnosis | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | nl-over-governed-data | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | model-development-and-post-training | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | logistics-exception-handling | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | llm-inference-serving | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | high-volume-batch-pipeline | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | evaluation-and-release-gating | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | enterprise-knowledge-assistant | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | enterprise-coding-assistant | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:14+00:00 | document-review-copilot | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | deep-research-agent | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | customer-support-automation | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | consumer-scale-chat-service | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | air-gapped-ai-system | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | agent-platform-for-non-technical-users | Set Complete. Updated section/check states or artifacts. |
+| 2026-11-20T23:33:13+00:00 | decomposition-classics-67-68-69 | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:13+00:00 | build-when-customer-data-is-poor | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:13+00:00 | scale-prototype-to-production | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:13+00:00 | prioritize-ai-use-cases | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:13+00:00 | production-llm-gateway | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:13+00:00 | personal-assistant-with-memory | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:12+00:00 | self-adapting-agent | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:12+00:00 | enterprise-chatbot-platform | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:12+00:00 | configurable-platform-customer-workflows | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
+| 2026-11-20T23:33:12+00:00 | reliable-workflow-orchestration | Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit. |
 | 2026-11-20T23:07:53+00:00 | decomposition-classics-67-68-69 | Set Review draft. Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. |
 | 2026-11-20T23:07:53+00:00 | build-when-customer-data-is-poor | Set Review draft. Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. |
 | 2026-11-20T23:07:53+00:00 | scale-prototype-to-production | Set Review draft. Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment. |
