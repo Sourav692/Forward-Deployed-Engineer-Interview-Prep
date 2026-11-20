@@ -4,13 +4,13 @@ These files are the source of the module `take-home-assignments` (T25.1) in the 
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
-| 1 | [How take-homes are scored](01_How_Take_Homes_Are_Scored.md) | `how-take-homes-are-scored` | Drafted |
-| 2 | [Scoping the brief](02_Scoping_the_Brief.md) | `scoping-the-brief` | Drafted |
-| 3 | [Building under the clock](03_Building_Under_the_Clock.md) | `building-under-the-clock` | Drafted |
-| 4 | [Delivering the submission](04_Delivering_the_Submission.md) | `delivering-the-submission` | Drafted |
-| 5 | [Defending your take-home](05_Defending_Your_Take_Home.md) | `defending-your-take-home` | Drafted |
-| 6 | [Practise take-home brief 1](06_Practise_Take_Home_Brief_1.md) | `practise-take-home-brief-1` | Drafted |
-| 7 | [Practise take-home brief 2](07_Practise_Take_Home_Brief_2.md) | `practise-take-home-brief-2` | Drafted |
+| 1 | [How take-homes are scored](01_How_Take_Homes_Are_Scored.md) | `how-take-homes-are-scored` | Published |
+| 2 | [Scoping the brief](02_Scoping_the_Brief.md) | `scoping-the-brief` | Published |
+| 3 | [Building under the clock](03_Building_Under_the_Clock.md) | `building-under-the-clock` | Published |
+| 4 | [Delivering the submission](04_Delivering_the_Submission.md) | `delivering-the-submission` | Published |
+| 5 | [Defending your take-home](05_Defending_Your_Take_Home.md) | `defending-your-take-home` | Published |
+| 6 | [Practise take-home brief 1](06_Practise_Take_Home_Brief_1.md) | `practise-take-home-brief-1` | Published |
+| 7 | [Practise take-home brief 2](07_Practise_Take_Home_Brief_2.md) | `practise-take-home-brief-2` | Published |
 
 ## Sources
 

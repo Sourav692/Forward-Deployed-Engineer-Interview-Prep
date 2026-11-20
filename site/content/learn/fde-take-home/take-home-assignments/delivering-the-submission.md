@@ -124,7 +124,7 @@ Do these in the last 15 minutes, in this order.
 
 - **Format rules.** When the brief sets a format, a page limit or a delivery method, follow it over this lesson.
 - **Design-only take-homes.** A written design has no run step, but needs the same decisions, limits and next steps. The [contract review take-home brief](/interview/mock-interviews/contract-review-take-home-brief) shows that format.
-- **Fictional data.** Whitby Outdoor and its results are illustrative.
+- **Composite example.** Whitby Outdoor and its results are illustrative, not a real customer.
 
 ## Interview angle
 

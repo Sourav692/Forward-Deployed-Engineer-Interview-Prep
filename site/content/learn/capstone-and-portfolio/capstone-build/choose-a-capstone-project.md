@@ -38,7 +38,7 @@ Choose by the expected round, not by size. One finished project with evidence be
 
 The common mistake in this module is a demo without evaluation. A demo shows the system working once. An evaluation shows how often it works and how it fails.
 
-The material's own standard applies here. For each claim the capstone makes, mark whether it is demonstrated in code or only asserted. That coverage-map habit is what makes the project defensible in a deep dive.
+The material's own standard applies here. For each claim the capstone makes, mark whether it is demonstrated in code or only asserted. That coverage-map habit is what makes the project defensible in a deep dive. The [take-home assignments](/learn/fde-take-home/take-home-assignments/how-take-homes-are-scored) module applies the same signals to a four-hour build.
 
 > **Warning: a capstone without an evaluation is a demo.** Interviewers probing a project deep dive ask how you know it works. Plan the evaluation before the features.
 

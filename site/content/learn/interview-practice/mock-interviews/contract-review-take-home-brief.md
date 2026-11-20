@@ -123,3 +123,5 @@ The follow-up usually runs 45 to 60 minutes and follows a familiar shape.
 The panel is checking three things. Does your spoken answer match what you wrote? Do you update when given a new fact, rather than defending the original plan? And do you know your own placeholders: which numbers you need from the customer, and how each one would change the design?
 
 Before the call, reread your submission, prepare a one-line answer for each risk, and bring your open questions. The follow-up is often the right moment to ask them.
+
+For a coded take-home, the [take-home assignments](/learn/fde-take-home/take-home-assignments/how-take-homes-are-scored) module covers scoping, building and delivering it, and [defending your take-home](/learn/fde-take-home/take-home-assignments/defending-your-take-home) covers its follow-up session.

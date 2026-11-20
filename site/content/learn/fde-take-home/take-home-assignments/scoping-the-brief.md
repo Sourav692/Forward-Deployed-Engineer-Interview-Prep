@@ -102,7 +102,7 @@ The walkthrough is a scripted illustration of one sound scoping pass, not the on
 
 - **Scoping on an engagement.** Scoping a real customer project with stakeholders, baselines and estimates is taught in [shrinking to a first release](/learn/forward-deployed/scoping-an-fde-project/shrinking-to-a-first-release). A take-home compresses it into twenty minutes.
 - **Very open briefs.** "Build something useful with this data" has no stated ask. Choose a user and a need, state them first, then apply the same tests.
-- **Fictional data.** Whitby Outdoor and its brief are illustrative.
+- **Composite example.** Whitby Outdoor and its brief are illustrative, not a real customer.
 
 ## Interview angle
 

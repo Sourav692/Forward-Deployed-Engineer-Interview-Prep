@@ -8,7 +8,7 @@ This is a full take-home brief of the kind an FDE team might send. Use it in one
 1. **Full run.** Set a four-hour timer and build it, using the [scoping](/learn/fde-take-home/take-home-assignments/scoping-the-brief), [building](/learn/fde-take-home/take-home-assignments/building-under-the-clock) and [delivery](/learn/fde-take-home/take-home-assignments/delivering-the-submission) lessons. Then answer the defence questions aloud, as in the Demo or Take-Home round.
 2. **Paper run.** Spend 30 minutes writing your scope, build plan and README outline without code, then compare them with the outlines below.
 
-Open each outline only after you have written your own. They are one sound answer, not the only one. Lynmouth Housing, its data and every figure below are fictional.
+Open each outline only after you have written your own. They are one sound answer, not the only one. Lynmouth Housing is a composite: it, its data and every figure below are illustrative, not a real customer.
 
 > **What you'll practise**
 >

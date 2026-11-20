@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [take-home, interview, scoring, scope, evaluation]
 ---
 
@@ -118,7 +118,7 @@ When assistants are allowed, say in the README what you used them for, for examp
 
 - **No single rubric.** Teams weight the signals differently. Some score code quality heavily, others the write-up. Read the brief for hints about which matters most.
 - **Design-only take-homes.** Some take-homes ask for a written design with no code, such as the [contract review take-home brief](../../../../01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/06_Contract_Review_Take_Home_Brief.md). The same signals apply, without the first run.
-- **Fictional data.** Whitby Outdoor, the candidates and the scores are illustrative.
+- **Composite example.** Whitby Outdoor, its brief, the candidates and the scores are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [practice, take-home, classification, evaluation, interview]
 ---
 
@@ -22,7 +22,7 @@ This is a full take-home brief of the kind an FDE team might send. Use it in one
 1. **Full run.** Set a four-hour timer and build it, using the [scoping](02_Scoping_the_Brief.md), [building](03_Building_Under_the_Clock.md) and [delivery](04_Delivering_the_Submission.md) lessons. Then answer the defence questions aloud, as in the Demo or Take-Home round.
 2. **Paper run.** Spend 30 minutes writing your scope, build plan and README outline without code, then compare them with the outlines below.
 
-Open each outline only after you have written your own. They are one sound answer, not the only one. Lynmouth Housing, its data and every figure below are fictional.
+Open each outline only after you have written your own. They are one sound answer, not the only one. Lynmouth Housing is a composite: it, its data and every figure below are illustrative, not a real customer.
 
 > **What you'll practise**
 >

@@ -8,7 +8,7 @@ This brief is longer than [brief 1](/learn/fde-take-home/take-home-assignments/p
 1. **Full run.** Set a five-hour timer and build it. Then answer the defence questions aloud, as in the Demo or Take-Home round.
 2. **Paper run.** Spend 30 minutes writing your scope, build plan and README outline without code, then compare them with the outlines below.
 
-Open each outline only after you have written your own. They are one sound answer, not the only one. Brora Mutual, its documents and every figure below are fictional.
+Open each outline only after you have written your own. They are one sound answer, not the only one. Brora Mutual is a composite: it, its documents and every figure below are illustrative, not a real customer.
 
 > **What you'll practise**
 >

@@ -92,7 +92,7 @@ The walkthrough is a scripted illustration. The lines are examples, not a script
 
 - **Telling the story of a larger build.** Presenting a longer project, such as a capstone, is taught in [the timed deep dive](/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive).
 - **Session formats vary.** Some teams skip the live change, others make it the main event. Ask the recruiter what to expect.
-- **Fictional data.** Whitby Outdoor and the session are illustrative.
+- **Composite example.** Whitby Outdoor and the session are illustrative, not a real customer.
 
 ## Interview angle
 
