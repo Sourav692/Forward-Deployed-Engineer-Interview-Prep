@@ -11,20 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [prioritisation, cost of delay, coordination, support boundaries, stakeholders]
 ---
 
 ## Start with four yeses on a Monday
 
-A Tilford Software FDE covered two fictional customers: Wenlow Water and Craven Council. On one Monday, four requests arrived:
-
-- **An incident.** Since 07:00, Wenlow's work orders had stopped reaching its field crews.
-- **A pilot milestone.** Craven's steering group expected a working pilot demonstration on Thursday, a date in the contract.
-- **A platform fix.** Tilford's platform team asked for help reproducing a connector bug that affected four customers, all of whom had a workaround.
-- **A sales request.** Sales wanted a tailored demonstration for a prospect on Wednesday.
-
-The FDE said yes to all four and worked on whichever request was loudest that hour. Nobody heard about the trade-offs. The incident ran into Tuesday, the sales demonstration was rushed, and the Craven pilot was not ready. Craven's sponsor learned this at 08:30 on Thursday. Every requester had assumed their work was in progress. Call this **the silent queue**.
+Hana, a Tilford Software forward deployed engineer, covered two customers, Wenlow Water and Craven Council. On one Monday, four requests arrived: Wenlow's work orders had stopped reaching its field crews at 07:00; Craven's steering group expected a working pilot demonstration on Thursday, a date in the contract; Tilford's platform team wanted help reproducing a connector bug that affected four customers, all with a workaround; and sales wanted a tailored demonstration for a prospect on Wednesday. Hana said yes to all four and worked on whichever was loudest that hour, and nobody heard about the trade-offs. The incident ran into Tuesday, the sales demonstration was rushed, and Craven's sponsor learned at 08:30 on Thursday that the pilot was not ready. Every requester had assumed their work was in progress. Call this **the silent queue**.
 
 > **What you'll learn**
 >
@@ -49,7 +42,7 @@ When demands collide, the order they arrived in tells you nothing. Ask what each
 The switcher compares the Monday as it happened with the same Monday ranked.
 
 <div class="learning-widget evidence-switcher" id="monday-switcher">
-<p class="widget-intro">The same four requests, handled two ways. The FDE has about 30 working hours from Monday to Wednesday.</p>
+<p class="widget-intro">The same four requests, handled two ways. Hana has about 30 working hours from Monday to Wednesday.</p>
 <div class="mode-controls" hidden role="group" aria-label="How the week was run">
 <button type="button" data-mode="loudest" aria-pressed="false" aria-controls="loudest-result">Loudest first</button>
 <button type="button" data-mode="ranked" aria-pressed="false" aria-controls="ranked-result">Ranked and announced</button>
@@ -59,7 +52,7 @@ The switcher compares the Monday as it happened with the same Monday ranked.
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-Ranking is your call within one engagement. When two customers compete for the same hours, it belongs to your manager. Bring the table and a recommendation, and let them decide.
+Ranking is your call within one engagement. When two customers compete for the same hours, it belongs to your manager. Bring the table and a recommendation, and let them decide. Inside one engagement, more requests than the team can build is a scope negotiation, taught in [negotiating scope and deadlines](../stakeholder-communication/05_Negotiating_Scope_and_Deadlines.md).
 
 ## Make the queue visible
 
@@ -110,26 +103,26 @@ During an engagement the FDE often fixes everything, which teaches the customer 
 
 *Table 2: An illustrative support boundary for Craven. Each row has one first call.*
 
-When a request crosses the line, help the person reach the right team, and say why. The site's [where the role ends](../fde-role-and-boundaries/03_Where_the_Role_Ends.md) lesson covers the drift into help-desk work in depth.
+The full support split and the handover checklist are taught in [handover and ownership](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/09_Handover_and_Ownership.md). When a request crosses the line, help the person reach the right team, and say why. The site's [where the role ends](../fde-role-and-boundaries/03_Where_the_Role_Ends.md) lesson covers the drift into help-desk work in depth.
 
 ## When a security delay is blamed on engineering
 
 Three weeks before Craven's go-live, Craven's director told the steering group that Tilford's engineering was late. The connector had been ready for two weeks. It was waiting on Craven's own security review, submitted five weeks earlier and not yet scheduled.
 
-Arguing in the meeting would have made it a contest. The FDE did four things instead:
+Arguing in the meeting would have made it a contest. Hana did four things instead:
 
 1. **Wrote a dated timeline**: when the review was requested, what was sent, and what is still waiting and on whom.
 2. **Met the security team** to ask what it needed and what was blocking it. It was short of staff that month.
 3. **Offered help**: a completed evidence pack and a walkthrough session to shorten the review.
 4. **Gave the sponsor options**: ask the security team to prioritise, accept a later date, or start the pilot with test data while the review finishes.
 
-State facts without blame. The security team is doing its job and will review every later release. Keep it on your side. The site's [escalate, pause or stop](../fde-role-and-boundaries/05_Escalate_Pause_or_Stop.md) lesson covers raising a blocked dependency.
+State facts without blame. The security team is doing its job and will review every later release. Keep it on your side. The site's [escalate, pause or stop](../fde-role-and-boundaries/05_Escalate_Pause_or_Stop.md) lesson covers raising a blocked dependency. What a security review needs from you is taught in [threat modelling a deployment](../../fde-deploying-in-the-estate/security-reviews-and-compliance/01_Threat_Modelling_a_Deployment.md).
 
 ## Limits of this lesson
 
 - **Cost of delay is an estimate.** Rough numbers are enough to rank. Do not spend a day computing them.
 - **Capacity splits vary.** The 50, 30 and 20 split is one example, not a rule.
-- **Fictional data.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative.
+- **Composite engagement.** Tilford Software, Wenlow Water, Craven Council and their figures are illustrative, not a real customer.
 
 ## Interview angle
 

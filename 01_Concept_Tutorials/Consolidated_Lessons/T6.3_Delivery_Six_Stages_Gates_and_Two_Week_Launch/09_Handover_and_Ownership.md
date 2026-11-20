@@ -65,7 +65,7 @@ flowchart LR
 
 *Figure 1: The support route agreed at Dunmore after the incident. Each box is a named person or desk with a response time.*
 
-The site's [where the role ends](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/03_Where_the_Role_Ends.md) lesson explains why the FDE must not remain the hidden support desk. This lesson covers how to make the alternative real.
+The site's [where the role ends](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/03_Where_the_Role_Ends.md) lesson explains why the FDE must not remain the hidden support desk. This lesson covers how to make the alternative real. Keeping that boundary while you cover several customers at once is part of [capacity and cross-team delivery](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/field-to-product/03_Capacity_and_Cross_Team_Delivery.md).
 
 ## The handover checklist
 
