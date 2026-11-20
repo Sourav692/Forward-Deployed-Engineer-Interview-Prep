@@ -108,7 +108,7 @@ Three rules keep it safe:
 - **Make the worker safe to repeat.** The sender may still deliver twice, and the backstop poll may find the same booking. Key the hold on the booking ID. Go deeper: [idempotent writes and long-running jobs](/learn/engineering-foundations/apis-and-backend/idempotent-writes-and-long-running-jobs).
 - **Give the worker its own failure policy.** When the reservation system is down, the worker retries with backoff and the queue absorbs the wait. Go deeper: [retries, circuit breakers and bulkheads](/learn/production-ai/scaling-and-reliability/retries-circuit-breakers-and-bulkheads).
 
-The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish. What the receiver checks before it enqueues is in [rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync).
+The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish. What the receiver checks before it enqueues is in [the webhook receiver](/learn/enterprise-integration/receiving-webhooks-safely/the-webhook-receiver).
 
 ## Limits of this lesson
 

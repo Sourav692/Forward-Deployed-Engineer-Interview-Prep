@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, OAuth, service accounts, scopes, tokens, refresh]
 ---
 
 ## Start with the assistant that saw everything
 
-Coverack Insurance, a fictional commercial insurer, built an assistant for its broker-support staff. It answered questions about policies and renewals by reading the customer relationship management (CRM) system.
-
-To get going quickly, the team connected the assistant with one integration account. The CRM administrator gave it a role that could read every account, "so it never hits a permission error".
-
-Coverack's 40 largest clients were restricted in the CRM to the key-accounts team. In week three, a support assistant in her first month asked about one of them by name. The assistant returned the renewal premium, the claims history and a note about a pricing dispute. In the CRM's own screens she could not have opened that account.
-
-The CRM checked permissions on every call. It checked them for the integration account, which could see everything. Call this **the assistant that saw everything**.
+Coverack Insurance, a commercial insurer, wanted an assistant for its broker-support staff that answered questions about policies and renewals from the customer relationship management (CRM) system. To get going quickly, Omar, the forward deployed engineer, connected it with one integration account, and the CRM administrator gave that account a role that could read every account, "so it never hits a permission error". Coverack's 40 largest clients were restricted in the CRM to the key-accounts team. In week three, a support assistant in her first month asked about one of them by name, and the assistant returned the renewal premium, the claims history and a note about a pricing dispute: an account she could not have opened in the CRM's own screens. The CRM checked permissions on every call, but it checked them for the integration account, which could see everything. Call this **the assistant that saw everything**.
 
 > **What you'll learn**
 >
@@ -103,7 +97,7 @@ sequenceDiagram
 
 *Figure 1: Two workers refresh the same connection at once. With rotation, the second refresh looks like a stolen token.*
 
-At Coverack, after the fix to delegated access, eight workers shared each user's connection. Every hour, a few users were logged out of the assistant with no explanation. The cause was two workers seeing the same expired token within milliseconds of each other.
+At Coverack, after Omar moved user questions to delegated access, eight workers shared each user's connection. Every hour, a few users were logged out of the assistant with no explanation. The cause was two workers seeing the same expired token within milliseconds of each other.
 
 ## Refresh safely
 
@@ -123,7 +117,8 @@ Tokens are secrets. Store them encrypted, keep them out of logs, and delete a us
 
 - **Providers differ.** Token lifetimes, rotation, grace periods for a reused refresh token and consent rules vary. Read the provider's documentation before relying on any of them.
 - **Sign-in is taught elsewhere.** How users sign in with the customer's identity provider is in the [single sign-on and tokens](../../fde-deploying-in-the-estate/networks-and-identity/02_SSO_OIDC_and_Tokens.md) lesson.
-- **Fictional data.** Coverack Insurance, Penhallow Marine and the figures are illustrative.
+- **The platform side of a connected account.** Storing, revoking and cleaning up a customer's OAuth connection on your own platform is taught in [connecting a customer's account with OAuth](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/11_Connecting_a_Customers_Account_with_OAuth.md).
+- **Composite engagement.** Coverack Insurance, Penhallow Marine, their staff and the figures are illustrative, not a real customer.
 
 ## Interview angle
 

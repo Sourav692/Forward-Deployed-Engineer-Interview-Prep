@@ -21,7 +21,7 @@ The receiver said yes only after doing everything, and could not recognise an ev
 
 ## A public endpoint and its threats
 
-A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync) lists the basic checks. This lesson builds the receiver behind them.
+A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync) shows how webhook events feed a sync. This lesson builds the receiver in front of it.
 
 | Threat | What the attacker or fault does | Defence |
 |---|---|---|

@@ -13,7 +13,8 @@ Every customer and figure below is fictional.
 >
 > - Designing a connector between a customer relationship management (CRM) system and a ticketing system.
 > - Ingesting from a SOAP (originally Simple Object Access Protocol) service and an SFTP (SSH File Transfer Protocol) file drop together.
-> - Designing a two-way sync and a signed webhook receiver.
+> - Choosing the identity for each call and keeping shared tokens working.
+> - Designing a two-way sync.
 > - Recovering a stopped sync and proving the data is complete.
 
 ## Designing a connector
@@ -29,12 +30,25 @@ Taught in [CRM, ERP and ticketing systems](/learn/enterprise-integration/connect
 
 </details>
 
+## Identity and tokens
+
+Taught in [authenticating as whom](/learn/enterprise-integration/connecting-enterprise-systems/authenticating-as-whom).
+
+<details>
+<summary>Practice question 2. Trelleck Housing wants its housing officers to ask an assistant about tenants' repair cases in the ticketing system and, once an officer approves, add a note to the case. A nightly job also builds a search index of all open cases. Thirty workers share the connections. Choose the identity for each kind of call and keep the tokens working.</summary>
+
+- **Answer:** An officer's question runs on behalf of that officer, through the authorisation code flow, so the ticketing system applies her permissions and logs her name. An approved note also uses the approving officer's delegated token, so the change traces to a person. The nightly index runs as a service account with a read-only role on cases. Store each case's permissions with it in the index, refresh them on every sync, and filter every answer for the officer asking. Split readers and writers into separate clients with the smallest scopes. For tokens: one refresher per connection behind a lock with a lease, re-read the store after taking the lock, save the new access and refresh tokens together before use, refresh a few minutes early, and treat "invalid grant" as final: ask the officer to reconnect. Keep tokens encrypted and out of logs.
+- **Trade-off:** Delegated access needs every officer's consent, and the assistant must explain permission refusals. A single service account is simpler, but your code must reproduce every permission rule the ticketing system already enforces.
+- **Follow-up to expect:** "The administrator needs three weeks to approve the write scope." Ship questions on the read scope first and add notes when consent lands.
+
+</details>
+
 ## Legacy ingestion
 
 Taught in [legacy feeds: SOAP, SFTP and CSV](/learn/enterprise-integration/connecting-enterprise-systems/legacy-feeds-soap-sftp-and-csv).
 
 <details>
-<summary>Practice question 2. Ambleside Pharmacy Supply wants an assistant that answers questions about orders and stock. Orders come from the finance system's SOAP service. Stock comes as a comma-separated values (CSV) file a wholesaler drops on an SFTP server at about 03:00 each night. Design the ingestion.</summary>
+<summary>Practice question 3. Ambleside Pharmacy Supply wants an assistant that answers questions about orders and stock. Orders come from the finance system's SOAP service. Stock comes as a comma-separated values (CSV) file a wholesaler drops on an SFTP server at about 03:00 each night. Design the ingestion.</summary>
 
 - **Answer:** For orders, generate the client from the saved WSDL (Web Services Description Language) document. Poll for orders changed since a stored checkpoint, page through results, and save the checkpoint only after each page commits. Set timeouts and log faults in full. For stock, agree a marker file with row count and checksum. Claim each file by checksum, check the header and encoding, compare the count, and replace that night's stock through staging in one step. Label answers with their freshness: orders "as of a minute ago", stock "as of the 03:00 file". Alert if no file has arrived by 05:00 or faults rise.
 - **Trade-off:** Strict validation means some nights the stock is a day old. Loose loading means it can be silently wrong.
@@ -42,25 +56,16 @@ Taught in [legacy feeds: SOAP, SFTP and CSV](/learn/enterprise-integration/conne
 
 </details>
 
-## Two-way sync and events
+## Two-way sync
 
 Taught in [rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync).
 
 <details>
-<summary>Practice question 3. Bransdale Water wants contact details kept in step between its CRM and its field-service ticketing system, where engineers update phone numbers on site. Design the two-way sync.</summary>
+<summary>Practice question 4. Bransdale Water wants contact details kept in step between its CRM and its field-service ticketing system, where engineers update phone numbers on site. Design the two-way sync.</summary>
 
 - **Answer:** Write a field ownership table. Name and email belong to the CRM. Access notes belong to field service. Phone number is shared, with a written conflict rule. Store a base value per synced field. A change whose replaced value matches the base is applied. One that does not is a conflict for its field's rule or a review queue. Suppress echoes by tagging the connector's writes and skipping writes equal to the base. Make writes idempotent by record and field, honour both systems' limits, and sample records nightly to measure drift.
 - **Trade-off:** Strict ownership is easy to run but annoys staff who cannot edit some fields. More shared fields mean more conflicts to staff.
 - **Follow-up to expect:** "The systems already disagree on 12,000 records." Settle them before switching on. Apply owner rules to most, send the rest to review, then set the base.
-
-</details>
-
-<details>
-<summary>Practice question 4. Morvah Freight receives parcel-status webhooks from a courier, signed with an HMAC (hash-based message authentication code) of the timestamp and body using a shared secret. The courier retries for up to three days. Design the receiver.</summary>
-
-- **Answer:** Read the raw request bytes before parsing. Recompute the HMAC over the timestamp and those bytes as the courier documents, and compare in constant time. Reject requests older than five minutes. Insert the event ID into a table with a unique constraint and keep IDs for seven days, longer than the three-day retry period. A duplicate gets a success reply and nothing else. Write the event to a durable queue, then reply at once. Workers process it later and use the parcel's version to ignore older events. Accept two secrets during rotation.
-- **Trade-off:** The ID table grows with traffic. A shorter retention risks processing a late retry twice.
-- **Follow-up to expect:** "Why not process first, then reply?" Slow processing times out, the courier retries, and you get the duplicates you were avoiding.
 
 </details>
 
@@ -83,7 +88,7 @@ Taught in [backfills while live](/learn/fde-building-in-the-estate/customer-data
 - Make creates idempotent with an external key, and reconcile counts each night.
 - Label freshness when answers combine live calls and nightly files.
 - In two-way sync, compare with a stored base, and settle existing disagreements before switching on.
-- A webhook receiver verifies, deduplicates and queues before it replies.
+- Choose the identity per call, and let one worker refresh a connection's token at a time.
 
 ## Check yourself
 
