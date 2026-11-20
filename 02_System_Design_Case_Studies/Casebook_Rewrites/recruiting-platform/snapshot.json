@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "0d4655b652bb3bb3762221137eeb0d71a9f7615de19a2b45aefe1ffa14043648",
-  "html_sha256": "858b2d1c2aea9a3d1bd99ed8aa9d94ea470de2dc049bb3a597fb76493be25436",
-  "config_sha256": "da8ce5da89d1f4add1db58c60343098c3a89e1898d8a0d8c5c6eb40daab6cda4",
+  "markdown_sha256": "2be003882e6cb37d453ecc44fdbf5f17754565ec477b385a61bcd8f38a2a6127",
+  "html_sha256": "b3677ac6d7dc77035cada9f05c13b70d465ea4c3b385101065667c56d6df8cf3",
+  "config_sha256": "57e0e09bbb07dd5b8faa5212a8ade6045add776f2c0535acd6130a2ea3635ba5",
   "source_url": "https://forwarddeployedprep.com/design/recruiting-platform",
   "validation": {
     "passed": true,

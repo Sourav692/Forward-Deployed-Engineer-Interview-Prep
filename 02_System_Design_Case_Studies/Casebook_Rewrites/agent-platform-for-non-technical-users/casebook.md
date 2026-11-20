@@ -464,9 +464,9 @@ Routing asks two independent questions, so it runs two independent checks. Prior
 
 Routing runs in three steps:
 
-1. **Match.** Return every workflow whose tenant, status and trigger fit the event, where a Trigger is `(channel, event_type, priority)`. A `DRAFT` workflow never matches a real event, and that one rule makes authoring safe.
+1. **Match.** Return every workflow whose tenant, status and trigger fit the event, where a Trigger is `(channel, event_type, priority)`. A `DRAFT` workflow never matches a real event, and that one rule makes authoring safe. A `SHADOW` workflow needs live traffic but must not compete for it: if exclusive selection included it, a higher-priority shadow workflow would take the event from the live one and nothing real would happen. Give shadow workflows a mirrored copy of the event outside priority selection and the entity lock.
 2. **Prioritise.** The highest priority wins.
-3. **Lock.** `acquire_lock(target_entity_id, run_id)` refuses if another run is already active on the same entity.
+3. **Lock.** `acquire_lock(target_entity_id, run_id)` refuses if another run is already active on the same entity. In the demo the refused event ends there. In production, record it and replay it after the lock is released, or a customer's follow-up on an in-flight ticket is silently skipped.
 
 `route()` returns the selected workflow or a named reason, `no_trigger_match` or `entity_locked`. It never returns a silent no-op.
 
@@ -553,7 +553,7 @@ The non-technical half of the problem has five constraints, and the source says 
 <tr>
 <td>A test mode where nothing happens</td>
 <td>Shadow mode fakes every write</td>
-<td>Built: <code>SHADOW</code> blocks every destructive step unconditionally, even for an admin</td>
+<td>Built: <code>SHADOW</code> blocks every destructive step unconditionally, even for an admin. A non-destructive write such as <code>tag_ticket</code> still changes Zendesk unless its adapter is also mocked in shadow, so mock every write there, not only the destructive ones</td>
 </tr>
 <tr>
 <td>Run history in human words</td>
@@ -592,7 +592,7 @@ Every step of every run goes through one decision. `authorize_step()` returns `D
 <tr>
 <td>2</td>
 <td><code>spend_cap_exceeded</code></td>
-<td>This step's real cost, the actual refund amount for a financial tool, would exceed the cap, again the tighter of workflow and tenant</td>
+<td>The run's spend so far plus this step's real cost, the actual refund amount for a financial tool, would exceed the cap, again the tighter of workflow and tenant</td>
 </tr>
 <tr>
 <td>3</td>
@@ -618,7 +618,7 @@ Every step of every run goes through one decision. `authorize_step()` returns `D
 
 Non-destructive steps pass after the two budget checks. Destructive steps must clear all five rules and then match one of the two allows, so the full set is seven rules: five deny, two allow. The whiteboard script draws the same logic as a seven-line ladder with "non-destructive? just run it" as its third rung. The five-rule table is the cleaner version to draw.
 
-The step budget and the spend cap count different things; they are not two severities of one check. The step budget counts how many steps a run has taken, so it catches a loop however cheap each step is. A 30-step chain of cheap steps trips a 5-step cap. The spend cap counts the dollars one step is about to spend, so it catches one expensive action on step one. A single $500 refund trips a $50 cap. Both halt and escalate. Neither retries, and neither clamps the amount down to fit.
+The step budget and the spend cap count different things; they are not two severities of one check. The step budget counts how many steps a run has taken, so it catches a loop however cheap each step is. A 30-step chain of cheap steps trips a 5-step cap. The spend cap counts dollars, the run's total including the step about to execute, so it catches one expensive action on step one. Bug 2 below only makes sense because the check adds each step to a running total. A single $500 refund trips a $50 cap. Both halt and escalate. Neither retries, and neither clamps the amount down to fit.
 
 The spend cap must read the right number. The source found a bug where a $500 refund passed a $5 cap because the cost function charged a nominal per-call fee; the fix reads `amount_usd` from the validated financial arguments. The [idempotency deep dive](#idempotency) tells that story with the second bug, which this ordering also depends on.
 
@@ -710,7 +710,7 @@ The verified happy path, from `scripts/run_workflow_demo.py`, is `run_001` on `w
 
 > "There's no separate crash-recovery code path. resume() and a fresh run call the exact same loop — it always starts at next_step_index, whether that's 0 or the middle of a long-running workflow. One loop, one set of bugs to find, not two."
 
-In the demo, an approval that never arrives leaves the run in `PAUSED_FOR_APPROVAL` indefinitely; it does not silently expire into either action. An expiry or escalation policy would be a production addition, not existing behaviour.
+In the demo, an approval that never arrives leaves the run in `PAUSED_FOR_APPROVAL` indefinitely; it does not silently expire into either action. An expiry or escalation policy would be a production addition, not existing behaviour. Decide also whether a paused run keeps its entity lock. If it does, every later event on that ticket is refused for as long as the approval waits, so a production lease needs an expiry tied to the approval timeout, and a resumed run must check that it still holds the lock.
 
 **Beyond the source.** A checkpoint saved after a step cannot by itself cover the moment between an external effect landing and the checkpoint being written. That gap is why the next deep dive's action-level key exists, and why a production deployment still needs downstream idempotency or reconciliation. Do not claim exactly-once external transactions from the demonstrated crash point alone.
 
@@ -722,9 +722,9 @@ A run legitimately retries after a transient failure, so a run-level "already st
 idempotency_key = f"{tenant_id}:{run_id}:{step_name}:{args_hash}"
 ```
 
-The reference build keyed on `{run_id}:{step_name}` alone. Adding the tenant and an arguments hash stops a retry with different arguments, or another tenant's run, from matching. `_apply_side_effect()` returns True only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not. The verified result: before retry, 1 apply; after retry, still 1 apply.
+The reference build keyed on `{run_id}:{step_name}` alone. Adding the tenant and an arguments hash stops a retry with different arguments, or another tenant's run, from matching. The hash only works if a retry hashes the same bytes. Resolve and canonicalise the arguments once, persist them with the checkpoint, and hash the stored copy; re-resolving `50` as `50.0` on a retry would produce a new key and a second refund. `_apply_side_effect()` returns True only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not. The verified result: before retry, 1 apply; after retry, still 1 apply.
 
-The key needs a durable store shared across workers, and the same key should be passed to a provider when the provider supports it. Stripe, for example, accepts an idempotency key on a request so a retried call returns the original result ([Stripe API reference: idempotent requests](https://docs.stripe.com/api/idempotent_requests)). Channel redelivery is normal, not exceptional: Slack's Events API retries failed deliveries ([Slack docs: Events API](https://docs.slack.dev/apis/events-api/)).
+The key needs a durable store shared across workers, and the same key should be passed to a provider when the provider supports it. Stripe, for example, accepts an idempotency key on a request so a retried call returns the original result. Two limits matter here. Stripe rejects a reused key whose parameters differ, and its v1 API may prune keys after 24 hours, so a run resumed a day later cannot rely on the provider key alone and must check the platform's own record or reconcile with the provider first ([Stripe API reference: idempotent requests](https://docs.stripe.com/api/idempotent_requests)). Channel redelivery is normal, not exceptional: Slack's Events API treats a delivery as failed when no 2xx response arrives within three seconds and retries up to three times, marking each retry with an `x-slack-retry-num` header. The adapter should acknowledge fast, process asynchronously, and deduplicate on Slack's `event_id` ([Slack docs: Events API](https://docs.slack.dev/apis/events-api/)).
 
 Two real bugs from building the project are the strongest material in the round. Tell them as stories.
 
@@ -738,7 +738,7 @@ Cost accounting is a side effect too, and so are audit semantics: the visible AP
 
 When quoting, note that the bug story uses a $5 cap, while the Cascade Robotics tenant policy uses $50. Both figures are the source's; they are different scenarios.
 
-**Beyond the source.** Two consequences follow from the key design that the source does not spell out. A retry with different arguments has a different `args_hash`, so it is a new action that needs fresh validation and authority rather than inheriting an old approval. And a redelivered channel event must map back to the same logical run; if every delivery created a fresh `run_id`, the key would never match. Durable event-to-run deduplication is the production piece that makes the source's "redelivery is a no-op" row hold across workers.
+**Beyond the source.** Two consequences follow from the key design that the source does not spell out. A retry with different arguments has a different `args_hash`, so it is a new action that needs fresh validation and authority rather than inheriting an old approval. And a redelivered channel event must map back to the same logical run; if every delivery created a fresh `run_id`, the key would never match. Durable event-to-run deduplication is the production piece that makes the source's "redelivery is a no-op" row hold across workers. It needs a stable delivery identifier, such as Slack's `event_id` or an email Message-ID, which the six-field canonical event does not carry; add one, or derive it from `raw_ref`.
 
 ### Multi-worker safety and honest gaps {#gaps}
 
@@ -746,7 +746,7 @@ The scale answer is one sentence of mechanism and one of storage. The source's v
 
 > "Every lock and idempotency key in this demo lives in an in-process dict - correct in shape, wrong in storage. At real volume that becomes a distributed lock (a unique-constraint row in a database, or a Redis lease checked with a fencing token) and a durable idempotency store shared across workers. The mechanism doesn't change - acquire_lock/release_lock stay the same two functions - only where they're backed changes."
 
-A fencing token matters because a lease can expire while its holder is paused. The protected resource checks a monotonically increasing token, so a worker holding a stale lease cannot keep writing after another worker has taken ownership ([Kleppmann: how to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html); [Redis docs: distributed locks](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)). A database unique-constraint row is the simpler alternative when one store already owns the entity.
+A fencing token matters because a lease can expire while its holder is paused. The protected resource checks a monotonically increasing token, so a worker holding a stale lease cannot keep writing after another worker has taken ownership ([Kleppmann: how to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html); [Redis docs: distributed locks](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)). A database unique-constraint row is the simpler alternative when one store already owns the entity. Two limits apply. The token must come from something that increases on every grant, such as a database sequence; Kleppmann notes that the Redlock algorithm does not produce one. And only a resource that checks the token is protected. A payment provider will not check it, so for an external refund the provider idempotency key and reconciliation remain the safeguard.
 
 The gap table gives each missing piece a status and the line to say about it.
 
@@ -886,13 +886,13 @@ The interviewer's cost pivot is "users built automations and the bill exploded."
 
 Most of the levers are already in the design, so say that aloud. The step budget is the per-run cap, and `max_steps` is the tighter of workflow and tenant. The spend cap already meters real dollars before the action, not after. The idempotency key already stops a redelivered event paying twice for the same work.
 
-The per-tenant breaker and token metering are the additions. Meter model tokens per run into `total_cost_usd` alongside tool cost, and trip the tenant's breaker when the day's spend crosses its budget. Bug 2 belongs in this answer too: cost accounting is a side effect, so a replayed step must not be billed twice.
+The per-tenant breaker and token metering are the additions. The breaker must meter money moved as well as tokens. Step and spend caps bound one run, so a workflow that refunds $49 to each of a thousand customers passes every per-run check; only a tenant-level spend budget answers the discovery question "can it refund every customer tonight?" Meter model tokens per run into `total_cost_usd` alongside tool cost, and trip the tenant's breaker when the day's spend crosses its budget. Bug 2 belongs in this answer too: cost accounting is a side effect, so a replayed step must not be billed twice.
 
 Every strong cost answer follows four verbs in order. **Measure** cost per run and per tenant first. **Route** deterministic events to deterministic handling, and use a model only where judgement adds value. **Bound** runs with step caps, spend caps and the breaker. **Cache** safely, and never across tenants.
 
 ### References {#references}
 
-The source lists these fact-check sources, checked on 27 September 2026. Each supports a specific claim above: lock limits and fencing in the gaps deep dive, channel redelivery and provider idempotency keys in the idempotency deep dive, and the date function calling became a standard API feature in the framing step.
+The November review clarifies how shadow workflows receive events and which writes shadow mocks, makes the spend cap a per-run total consistent with bug 2, adds lock handling for refused events and paused runs, the stable-argument rule for `args_hash`, delivery identifiers for deduplication, Stripe and Slack retry limits, fencing-token sources and a tenant-level money budget. Primary references: [Stripe idempotent requests](https://docs.stripe.com/api/idempotent_requests) (parameter mismatch errors; v1 keys prunable after 24 hours), [Slack Events API](https://docs.slack.dev/apis/events-api/) (three-second acknowledgement, three retries, `event_id`), and [Kleppmann on distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html) (fencing tokens and Redlock). The source lists these fact-check sources, checked on 27 September 2026. Each supports a specific claim above: lock limits and fencing in the gaps deep dive, channel redelivery and provider idempotency keys in the idempotency deep dive, and the date function calling became a standard API feature in the framing step.
 
 - [Redis docs: Distributed locks with Redis](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/): Redis lock patterns and their limits.
 - [Kleppmann: How to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html): a lease lock needs a fencing token to be safe.

@@ -7,7 +7,7 @@
   "level": "Core",
   "author": "By Sourav Banerjee",
   "source_url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
-  "updated": "Teaching rewrite, 16 November 2026",
+  "updated": "Reviewed 20 November 2026",
   "mode": "teach",
   "markdown": "casebook.md",
   "source_inventory": "source.json",
@@ -857,7 +857,7 @@
   ],
   "editorial_review": {
     "status": "reviewed",
-    "evidence": "Compared all 49 captured sections (dumped from source.json HTML with tables) against the rewrite item by item. The four overlapping tracks were folded into one path: the main guide's compact requirement and failure paragraphs were merged with the fuller Full Design tables in steps 3 and 6, the deep-dive incident bullets merged into the complete latency and cost spike dives, and the cheat-sheet kept as Quick review. Expansions are definitions the source assumed (span, trace, correlation ID, tenant, cardinality, exemplar, break-glass, cross-encoder, KV cache, prefill/decode), derived arithmetic that reproduces source figures (110-155 GB storage, 4x/9x queueing, 3.8 days of budget, ~20.2 s stage sum with a percentile caveat), and read-the-table paragraphs for both incident telemetry tables. Two additions are labelled as not from the source: the 0.95^3 sampling illustration and the 100%/90-day changed-constraint question. The Acme German refund trace became the brief's worked example; the external worksheet is disclosed as not imported. All seven figures in both variants are placed beside the text that walks them."
+    "evidence": "Compared all 49 captured sections (dumped from source.json HTML with tables) against the rewrite item by item. The four overlapping tracks were folded into one path: the main guide's compact requirement and failure paragraphs were merged with the fuller Full Design tables in steps 3 and 6, the deep-dive incident bullets merged into the complete latency and cost spike dives, and the cheat-sheet kept as Quick review. Expansions are definitions the source assumed (span, trace, correlation ID, tenant, cardinality, exemplar, break-glass, cross-encoder, KV cache, prefill/decode), derived arithmetic that reproduces source figures (110-155 GB storage, 4x/9x queueing, 3.8 days of budget, ~20.2 s stage sum with a percentile caveat), and read-the-table paragraphs for both incident telemetry tables. Two additions are labelled as not from the source: the 0.95^3 sampling illustration and the 100%/90-day changed-constraint question. The Acme German refund trace became the brief's worked example; the external worksheet is disclosed as not imported. All seven figures in both variants are placed beside the text that walks them. November 20 complete maintained-baseline review: Complete maintained casebook: brief, eight walkthrough steps with all tables and figures, redaction, sampling, failure-drill, latency and cost incident, neighbouring-prompt and pivot deep dives, references, all practice answers and pivot cards, and Quick review. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
   },
   "required_answer_reveals": [
     "answer-check-three-problems",

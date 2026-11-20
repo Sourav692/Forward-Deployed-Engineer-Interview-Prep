@@ -326,7 +326,7 @@ The non-functional requirements set the bars both systems must clear.
 </tr>
 </tbody></table></div>
 
-The data-access row matters more than it looks. Zendesk API tokens are all-or-nothing and are being retired, so read-only access needs OAuth with the read scope. Confluence supports scoped tokens. Every credential is scoped to the engagement and revoked at handover, because the delivery process itself holds live customer credentials.
+The data-access row matters more than it looks. Zendesk API tokens are all-or-nothing and are being retired, so read-only access needs OAuth with the read scope. Confluence supports scoped tokens. Every credential the delivery team holds is scoped to the engagement and revoked at handover, because the delivery process itself holds live customer credentials. The running agent still needs access after day 14, so its credentials move to a customer-owned service identity at handover rather than being revoked.
 
 **Constraints.** Two calendar weeks, a customer SME who has other work, and a security review before any connection is made. Three of the six gates need a customer signature (two from the SME, one from the sponsor), so customer-side delay is the default risk.
 
@@ -686,7 +686,7 @@ Three ordered deny rules decide every sign-off. Every attempt is logged, whether
 </tr>
 </tbody></table></div>
 
-"Deny overrides" means a denial wins over any earlier optimistic state: if a later check fails, the gate does not stay passed because someone once marked it green. Seniority is not an override either. The reason is the same one that stops an LLM from enforcing its own access control: the person closest to the work is not automatically the person authorised to certify that it is safe.
+"Deny overrides" is a policy-combining rule: the three checks are evaluated together, and if any one denies, the attempt is denied even when the others would permit it. A denied attempt changes nothing, so it neither passes the gate nor revokes one that already passed; reopening a passed gate would need its own recorded event. Seniority is not an override either. The reason is the same one that stops an LLM from enforcing its own access control: the person closest to the work is not automatically the person authorised to certify that it is safe.
 
 Two pairs of gates sound alike but check different things, and interviewers like to ask about them.
 
@@ -725,7 +725,7 @@ Evaluation starts from the golden set. Golden tickets must cover the top categor
 
 Measure response time, zero-edit sends, groundedness, escalation correctness, human overrides, rollback time, cost per resolved ticket, and week-four retention once it exists. Each measure answers a different question: response time is the customer's metric, zero-edit sends and overrides show trust, groundedness and escalation correctness show safety, and rollback time shows containment.
 
-Run shadow mode before limited production. Shadow mode collects evidence without broad sending. Limited production runs under a defined approval policy and a rollback trigger, and the team proves rollback before it begins; the Northwind demo's target is to kill sending within two minutes. Refuse broad rollout until the sponsor-approved metrics and the rollback evidence hold.
+Run shadow mode before limited production. Shadow mode collects evidence without broad sending. Limited production runs under a defined approval policy and a rollback trigger, and the team proves rollback before it begins; the Northwind demo's target is to kill sending within two minutes. Sending is a write, and a read-scoped Zendesk token cannot post a reply. Either the approving human posts the draft from their own Zendesk session, or the rollback gate approves a separate, narrowly scoped write grant for the send path. That write grant is what the kill switch disables. Refuse broad rollout until the sponsor-approved metrics and the rollback evidence hold.
 
 The sponsor's day-14 go/no-go cites measured metrics against the limited-release acceptance rule, not only a checkbox. Handover then delivers a runbook, dashboards, a named owner and a credentials plan. The runbook names the ongoing owner, how to inspect the dashboards, how to stop sends, and which version to roll back to. Credentials scoped during the engagement are transferred or revoked at handover. Without that bundle, day 15 has nobody to call.
 
@@ -762,7 +762,7 @@ Intake is also where you ask the questions that change staffing, access and the 
 
 The seven-stage sequence is security review, data access, configuration with the golden set, baseline evaluation, shadow with rollback, limited production against the limited-release acceptance rule, and go/no-go. The day ranges are 1–2, 3–4, 5–7, 8–9, 10–11, 12–13 and day 14. If data access is still pending on day 3, the system escalates automatically.
 
-Each gate records the signer's role and the evidence. The engagement moves to the next stage only when the previous gate is complete, and a deny overrides an earlier optimistic state. Audit every attempt, including rejected sign-offs, in a replayable event log. Replayable means you can rebuild the engagement's state from the log alone, so "why did it stall at day 3?" has one answer.
+Each gate records the signer's role and the evidence. The engagement moves to the next stage only when the previous gate is complete, and if any deny rule fires, the attempt is denied whatever the other checks say. Audit every attempt, including rejected sign-offs, in a replayable event log. Replayable means you can rebuild the engagement's state from the log alone, so "why did it stall at day 3?" has one answer.
 
 Two further controls keep the gates honest. Free-text evidence can rubber-stamp a gate, so the production form should require structured security controls, dataset lineage, a signed golden set, a baseline report and rollback evidence. And separate the people who build from the people who approve risk; the FDA who built the agent does not sign the security gate. Sponsor approval should cite measured metrics, not only a ticked box.
 
@@ -780,7 +780,7 @@ Two further controls keep the gates honest. Free-text evidence can rubber-stamp 
 
 The `pull_or_build` call records that choice for each component, so teams can see where bespoke work accumulates. The library holds connectors, prompt templates, an evaluation harness, guardrail policies and dashboard templates. By name: `zendesk_connector`, `confluence_connector`, `salesforce_connector`, `support_triage_prompt`, `groundedness_prompt`, `golden_set_harness` (a "recall@k / MRR / groundedness / leak-rate harness", where MRR is mean reciprocal rank), `pii_redaction_policy`, `destructive_action_gate`, `eval_baseline_dashboard` and `cost_attribution_dashboard`.
 
-In the Northwind demo run the rate is 83%: 5 of 6 assets came straight from the library, and one custom escalation (guardrail) policy was built. Work it through: 5 reused pulls divided by 6 total pulls is 0.833. A rising custom-build count is the early signal that two weeks is about to slip. Tracked across engagements, the ratio says whether the framework works or is quietly turning bespoke again.
+In the Northwind demo run the rate is 83%: 5 of 6 assets came straight from the library, and one custom escalation (guardrail) policy was built. Work it through: 5 reused pulls divided by 6 total pulls is 0.833. The demo log records Zendesk and Confluence connector pulls but no `salesforce_connector` pull, although Salesforce is one of the three sources. Had that connector been pulled as well, the rate would be 6 of 7, about 86%; treat 83% as the demo's own count. A rising custom-build count is the early signal that two weeks is about to slip. Tracked across engagements, the ratio says whether the framework works or is quietly turning bespoke again.
 
 Reuse still has to be adapted. A pulled connector must respect the tenant's identity model, and a pulled guardrail must reflect the customer's own policy. Pulling an asset saves writing it, not configuring it.
 
@@ -792,7 +792,7 @@ The proposed runtime path is: Zendesk ticket, PII redaction, classification into
 
 <figure class="source-diagram" id="figure-agent-rollout"><a href="source-assets/db7d39432e6d4652.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/db7d39432e6d4652.svg" alt="Diagram: Northwind Zendesk ticket; Webhook; PII redaction; Top 3 supported categories?; No: human queue; Yes: read-only Confluence and Salesforce retrieval; Draft support reply; Groundedness check; Escalation policy; Scoped rollout; Shadow days 10–11: store draft, compare human reply; Limited production days 12–13: human approves or edits, then send; Telemetry: first response, zero-edit sends, overrides, cost"></a><img class="diagram-dark" src="source-assets/8ee1205af96fc8e4.svg" alt="Dark variant: Diagram: Northwind Zendesk ticket; Webhook; PII redaction; Top 3 supported categories?; No: human queue; Yes: read-only Confluence and Salesforce retrieval; Draft support reply; Groundedness check; Escalation policy; Scoped rollout; Shadow days 10–11: store draft, compare human reply; Limited production days 12–13: human approves or edits, then send; Telemetry: first response, zero-edit sends, overrides, cost"><figcaption>A Northwind ticket from webhook to telemetry, with shadow and limited-production handling of the draft, source figure 6. Open for full size.</figcaption></figure>
 
-Trace one ticket. Zendesk calls a webhook. PII redaction strips personal data before any model sees the text. The classifier asks whether the ticket is in one of the top three supported categories; if not, the ticket goes to the human queue, because the agent was never evaluated on anything else. A supported ticket triggers read-only retrieval from Confluence and Salesforce, and the agent drafts a reply. The groundedness check and the escalation policy then judge the draft before any human sees it. What happens next depends on the rollout stage. On days 10–11 (shadow), the draft is stored and compared with the reply a human actually sent. On days 12–13 (limited production), a human approves or edits the draft, then it is sent. Telemetry records first response, zero-edit sends, overrides and cost.
+Trace one ticket. Zendesk calls a webhook. PII redaction strips personal data before any model sees the text. Redaction applies to the free text sent to the model, so the Salesforce lookup uses the ticket's structured requester or organisation ID rather than a name parsed from the message. Retrieval returns only the fields the reply needs, such as plan and entitlement, and any personal detail the reply must contain is filled in from those records after drafting. The classifier asks whether the ticket is in one of the top three supported categories; if not, the ticket goes to the human queue, because the agent was never evaluated on anything else. A supported ticket triggers read-only retrieval from Confluence and Salesforce, and the agent drafts a reply. The groundedness check and the escalation policy then judge the draft before any human sees it. What happens next depends on the rollout stage. On days 10–11 (shadow), the draft is stored and compared with the reply a human actually sent. On days 12–13 (limited production), a human approves or edits the draft, then it is sent. Telemetry records first response, zero-edit sends, overrides and cost.
 
 The second diagram draws the same agent with the library asset names attached, so you can see which components were pulled and which was built.
 
@@ -860,7 +860,7 @@ A gate can be structurally real and still be a rubber stamp. Requiring the right
 </thead>
 <tbody><tr>
 <td>Basic output validation</td>
-<td>No, a quality check, not a security check</td>
+<td>No; it is a runtime control, for quality and for security, not proof that a review happened</td>
 </tr>
 <tr>
 <td>Retrieval and tool-selection accuracy</td>
@@ -880,7 +880,7 @@ A gate can be structurally real and still be a rubber stamp. Requiring the right
 </tr>
 </tbody></table></div>
 
-Only adversarial testing (prompt injection and permission-boundary probes) is what a security review should mean, and free-text evidence cannot prove it happened. The other rows belong to other places: output validation is a quality check, task success is the evaluation gate, and production monitoring is continuous rather than a gate.
+Adversarial testing (prompt injection and permission-boundary probes) is the part of the review most specific to an LLM agent, and free-text evidence cannot prove it happened. A security review also covers credential scope, PII flows and the data agreements, which is why the checklist below names them. The other rows belong to other places: output validation is a runtime control with a security role as well as a quality one, task success is the evaluation gate, and production monitoring is continuous rather than a gate.
 
 The fix is a checklist, not a sentence. Adversarial testing done, permission boundaries tested and data agreements signed must all be present before the gate passes. That is intake's discipline applied to what a signature attests to.
 
@@ -966,11 +966,11 @@ Five metrics are computed on demand from the engagement's own history, never tra
 </tr>
 </tbody></table></div>
 
-The override rate is the one to explain. A falling rate means the agent is earning trust; a flat one means it is not ready for less supervision. A high rate is also diagnostic: measure the override reasons, because they can reveal weak retrieval, an overly conservative policy or poor classification.
+The override rate is the one to explain. A falling rate means the agent is earning trust; a flat one means it is not ready for less supervision. A high rate is also diagnostic: measure the override reasons, because they can reveal weak retrieval, an overly conservative policy or poor classification. Sample size limits what the rate can show. Three overrides in 11 approvals gives a 95% Wilson interval of roughly 10% to 57%, so a trend needs many more approvals before "falling" means anything.
 
 The run also shows 6 of 6 gates passed, deployed `True` on day 14, and one escalation, auto-raised on day 3 and resolved when the gate passed. The complete demo output is: 4m12s first response, 63% zero-edit sends, 0.83 evaluation score against a 0.75 baseline, a rollback note saying under two minutes (never timed), 0.27 override rate, first value in one day, and deployed `True` at day 14.
 
-Read these as one engagement, run once. The evaluation score and time-to-value are demo-scripted, not measured on a real delivery. The week-four retention field has no value, so it cannot support a retention claim; a fake 0.0 would be worse than `None`. The 17 tests demonstrate gate enforcement, not agent quality in live production. The run proves only that the pipeline enforces its own gates. Say so before the interviewer asks; that is the signal.
+Read these as one engagement, run once. The evaluation score and time-to-value are demo-scripted, not measured on a real delivery. Even a measured score would need care: if 0.83 were a pass rate on the 40-case golden set (about 33 of 40), its 95% interval would run from roughly 0.68 to 0.91 and overlap the 0.75 bar. A small golden set can certify coverage of the categories, but not a narrow margin over the baseline. The week-four retention field has no value, so it cannot support a retention claim; a fake 0.0 would be worse than `None`. The 17 tests demonstrate gate enforcement, not agent quality in live production. The run proves only that the pipeline enforces its own gates. Say so before the interviewer asks; that is the signal.
 
 The source also lists what is missing before you could promise the same calendar broadly: scope-change sponsor approval, real provisioning, evaluation-harness integration, versioned rollback and concurrent-engagement scaling. A production plan should add these first.
 
@@ -986,12 +986,14 @@ Operations continue after handover. Credentials are scoped during the engagement
 
 ### References and source boundaries {#dive-references}
 
+The November review corrects the meaning of deny overrides, adds the write path that limited-production sending needs, separates delivery-team credentials from the running agent's at handover, widens the security review beyond adversarial testing, explains redaction before the Salesforce lookup, and adds sample-size limits to the override rate and the 40-case score. It also discloses the missing Salesforce connector pull in the reuse count. Primary references: the [XACML 3.0 core specification](https://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html) (deny-overrides combining algorithm), [OWASP LLM05:2025 Improper Output Handling](https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/), Zendesk's [announcement of more granular OAuth scopes](https://support.zendesk.com/hc/en-us/articles/11093380955674-Announcing-more-granular-OAuth-client-scopes) and its [API token removal notice](https://support.zendesk.com/hc/en-us/articles/10851263566234-Announcing-the-removal-of-API-tokens-as-an-authentication-method-for-API-requests), rechecked in November 2026.
+
 The source fact-checked its claims on 27 September 2026 against these references:
 
 - [Demo script `run_engagement_demo.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/scripts/run_engagement_demo.py) (reference implementation): the 0.83 evaluation score, "verified <2min" rollback and week-2 metrics are hard-coded evidence strings, not measurements.
 - [Gate definitions `gates.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/src/delivery_framework/gates.py) (reference implementation): the customer SME signs two gates; the FDA signs the evaluation and rollback gates.
 - [Zendesk: Announcing the removal of API tokens](https://support.zendesk.com/hc/en-us/articles/10851263566234-Announcing-the-removal-of-API-tokens-as-an-authentication-method-for-API-requests): API tokens are all-or-nothing; no new tokens from 27 October 2026, all switched off on 30 April 2027.
-- [Zendesk: Creating and using OAuth tokens with the API](https://developer.zendesk.com/documentation/authentication/creating-and-using-oauth-tokens-with-the-api/): read-only access needs the OAuth read scope.
+- [Zendesk: Creating and using OAuth tokens with the API](https://developer.zendesk.com/documentation/authentication/creating-and-using-oauth-tokens-with-the-api/): read-only access uses the OAuth `read` scope, or a narrower resource scope such as `tickets:read`.
 - [Atlassian: Scoped API tokens in Confluence Cloud](https://support.atlassian.com/confluence/kb/scoped-api-tokens-in-confluence-cloud/): Confluence supports scoped tokens.
 
 The original page drew this case together from several related sources, each contributing a different part. The tables keep those provenance notes.
@@ -1063,7 +1065,7 @@ Without looking back, design the delivery process for a new customer who wants a
 
 <details class="answer-reveal" id="answer-seven-stages"><summary>Name the seven stages, their days, and what blocks each.</summary><div class="detail-body"><p>Scoping 1–2, data readiness 3–4, configure 5–7, evaluate 8–9, shadow 10–11, limited production 12–13, go/no-go 14. They are blocked in turn by the security review, data access, golden set, evaluation baseline, rollback tested and success metrics gates.</p></div></details>
 
-<details class="answer-reveal" id="answer-deny-rules"><summary>State the three deny rules.</summary><div class="detail-body"><p><code>wrong_role</code>, <code>no_evidence</code> and <code>prior_gate_incomplete</code>. A deny overrides any earlier optimistic state, and every attempt is logged, allowed or denied.</p></div></details>
+<details class="answer-reveal" id="answer-deny-rules"><summary>State the three deny rules.</summary><div class="detail-body"><p><code>wrong_role</code>, <code>no_evidence</code> and <code>prior_gate_incomplete</code>. If any of the three denies, the attempt is denied and state is unchanged, and every attempt is logged, allowed or denied.</p></div></details>
 
 <details class="answer-reveal" id="answer-gate-pair"><summary>What separates golden_set_signed_off from eval_baseline_met?</summary><div class="detail-body"><p>The first certifies that the test is representative and is signed by the SME. The second certifies that the agent passed it and is signed by the FDA.</p></div></details>
 

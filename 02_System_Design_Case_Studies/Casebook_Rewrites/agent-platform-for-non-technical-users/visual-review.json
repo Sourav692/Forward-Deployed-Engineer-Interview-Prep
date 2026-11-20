@@ -1,1 +1,29 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1440) shows the five-section nav, Case brief heading 'Let a support lead switch on actions they can trust' and the progress rail; phone (390) shows the full brief in one column: tenant/canonical event/spec/guardrail/idempotency definitions, the core-path figure inline below its lead paragraph, the Cascade $500 example, human-responsibility paragraph, brief-task and the collapsed anchor/Cascade disclosure, no horizontal overflow. figures-0/3/6 sheets show all eight original SVGs decoding: core path (5 nodes, Yes/No exits), combined path (7f12, with no match, held/entity_locked, invalid, already applied, more steps edges), anchor board ending in Completed/Paused for approval/Halted, authoring plane (builder gap to live selection), runtime plane (idempotency check splitting Replay: no-op from New step authorised against tenant policy and role-checked approver, stores after Checkpoint), detailed exits figure, run_001 resume figure (next_step_index = 1, repeated step 1 no-op) and the three-layer map. Each caption's node names were compared with the rendered labels; the runtime-plane lead was corrected after inspection because the stores sit after Checkpoint, not beside the flow.","limits":["The detailed-exits figure (68a8) and the combined path (7f12) are tall and render small inline at phone width; their labels are legible only via the full-size link.","Dark-mode variants are published but were not visually inspected; no screen-reader test was run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 8 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the guardrail decision, the vertical request path ending in completed, paused or halted, the WorkflowSpec promotion chain, the replay versus new-step guardrail flow, the run-and-resume sequence and the three-layer stack each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/agent-platform-for-non-technical-users/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/agent-platform-for-non-technical-users/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/agent-platform-for-non-technical-users/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-31-0",
+    "figure-31-1",
+    "figure-31-2",
+    "figure-31-3",
+    "figure-11-0",
+    "figure-35-0",
+    "figure-40-0"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-31-3 (five channels through routing, entity lock, validate, idempotency and authorise decisions) uses small node and edge labels; it is legible at full size but needs the full-size link at phone width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/agent-platform-for-non-technical-users/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

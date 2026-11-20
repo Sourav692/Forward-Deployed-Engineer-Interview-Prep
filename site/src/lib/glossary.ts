@@ -200,6 +200,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'A signature that proves a message came from who it says and was not changed on the way.' },
   { term: 'GDPR', expansion: 'General Data Protection Regulation', group: 'Security and compliance',
     plain: "The EU's data-privacy law: consent, the right to be forgotten, where data may live." },
+  { term: 'CFR', expansion: 'Code of Federal Regulations', group: 'Security and compliance',
+    plain: 'The official compilation of US federal agency rules, cited by title and part, such as 29 CFR 1607.' },
   { term: 'HIPAA', expansion: 'Health Insurance Portability and Accountability Act', group: 'Security and compliance',
     plain: 'The US law on protecting health data.' },
   { term: 'SOC 2', group: 'Security and compliance',

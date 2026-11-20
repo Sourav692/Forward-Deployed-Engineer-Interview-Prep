@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T11:08:13.051Z",
+  "generatedAt": "2026-11-20T11:34:09.824Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -849,8 +849,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 59,
-              "updated": "2026-11-16"
+              "minutes": 62,
+              "updated": "2026-11-20"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -886,8 +886,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 49,
-              "updated": "2026-11-16"
+              "minutes": 51,
+              "updated": "2026-11-20"
             },
             {
               "slug": "llm-inference-serving",
@@ -923,8 +923,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 51,
-              "updated": "2026-11-16"
+              "minutes": 53,
+              "updated": "2026-11-20"
             }
           ]
         },
@@ -967,8 +967,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 62,
-              "updated": "2026-11-16"
+              "minutes": 65,
+              "updated": "2026-11-20"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -1012,8 +1012,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 71,
-              "updated": "2026-11-16"
+              "minutes": 73,
+              "updated": "2026-11-20"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -1057,8 +1057,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 74,
-              "updated": "2026-11-16"
+              "minutes": 77,
+              "updated": "2026-11-20"
             }
           ]
         },
@@ -1101,8 +1101,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 56,
-              "updated": "2026-11-16"
+              "minutes": 58,
+              "updated": "2026-11-20"
             }
           ]
         },
@@ -1129,8 +1129,8 @@
                   "label": "Reference Design"
                 }
               ],
-              "minutes": 35,
-              "updated": "2026-11-16"
+              "minutes": 38,
+              "updated": "2026-11-20"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1150,8 +1150,8 @@
                   "label": "12-Part Framework"
                 }
               ],
-              "minutes": 40,
-              "updated": "2026-11-16"
+              "minutes": 43,
+              "updated": "2026-11-20"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1203,8 +1203,8 @@
                   "label": "Model Answer"
                 }
               ],
-              "minutes": 96,
-              "updated": "2026-11-16"
+              "minutes": 99,
+              "updated": "2026-11-20"
             },
             {
               "slug": "reliable-workflow-orchestration",

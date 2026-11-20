@@ -454,7 +454,7 @@ Read the diagram as six steps:
 5. The policy engine computes candidate-minus-baseline deltas for quality, safety, p95 latency and cost, checks each critical slice independently, and issues pass, block or hold.
 6. Humans review disputed or statistically thin cases and record overrides with reasons. Production signals are redacted and labelled before they join future suites.
 
-The full design organises the same components with one rule: the **control plane** decides what to evaluate, and the **data plane** executes it. Because selection, enforcement and escalation live in the control plane, a slow or failing runner cannot make policy nondeterministic. The decision stays the same however noisy execution becomes.
+The full design organises the same components with one rule: the **control plane** decides what to evaluate, and the **data plane** executes it. Because selection, enforcement and escalation live in the control plane, a slow or failing runner cannot make policy nondeterministic. The policy function returns the same decision for the same validated evidence. Noisy execution can still change the evidence itself, which is why the gate judges bounds, repeated trials and minimum slice sizes rather than single scores.
 
 <figure class="source-diagram" id="figure-planes-lanes"><a href="source-assets/27e17a5b5a917e11.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/27e17a5b5a917e11.svg" alt="Release request with candidate and baseline enters the immutable artifact registry and dataset store with suites, labels, rubrics and sensitivity; the evaluation scheduler applies tenant quotas, admission and backpressure; the sandboxed runner makes application, model, retrieval and tool calls; the grader scores task success, safety, latency and cost; results reach the validated warehouse and the fail-closed release policy returns pass, block or hold, with human review and adjudication."></a><img class="diagram-dark" src="source-assets/7e32f88fe8f19c29.svg" alt="Dark variant: registry, dataset store, scheduler, sandboxed runner, grader, validated warehouse, fail-closed release policy and human review."><figcaption>The planes and lanes as one picture: inputs are pinned and versioned, execution is sandboxed, and the fail-closed policy reads the validated warehouse. Open for full size.</figcaption></figure>
 
@@ -564,7 +564,7 @@ A score means nothing without the thing it is compared against. The platform doe
 
 **Δ = Metric<sub>candidate</sub> − Metric<sub>baseline</sub>**
 
-The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate. A delta is useful only when the baseline is fixed, versioned and comparable. A two-tenths-of-a-point gain on a noisy rubric may not justify a release, so the gate weighs variance, confidence bands and operational risk as well as the sign of the delta.
+The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate. The sign that counts as a regression depends on the metric: a negative Δ hurts quality or task success, while a positive Δ hurts a violation rate, latency or cost. Each threshold states its direction. A delta is useful only when the baseline is fixed, versioned and comparable. A two-tenths-of-a-point gain on a noisy rubric may not justify a release, so the gate weighs variance, confidence bands and operational risk as well as the sign of the delta.
 
 Say the derivation on the whiteboard in one breath:
 
@@ -573,7 +573,7 @@ Say the derivation on the whiteboard in one breath:
 3. Aggregate by application, by release and across the fleet.
 4. If the distribution of Δ crosses the allowed regression threshold, the gate fails or routes to human review.
 
-For the refund bot, suppose groundedness was 0.91 on the baseline and 0.89 on the candidate (illustrative values). The delta is −0.02. Whether that blocks depends on the threshold the owners set in advance and on how certain the measurement is, which is why the next step judges quality on a lower bound rather than on −0.02 alone.
+For the refund bot, suppose groundedness was 0.91 on the baseline and 0.89 on the candidate (illustrative values). The delta is −0.02: two percentage points, or about a 2.2% relative drop. The brief's "drops by 2%" means the absolute figure here, and every threshold must say which of the two it uses. Whether that blocks depends on the threshold the owners set in advance and on how certain the measurement is, which is why the next step judges quality on a lower bound rather than on −0.02 alone.
 
 Pinning makes the comparison reproducible: the same dataset, prompt version, model version, tool configuration and grader version recreate the same evaluation context. Four immutable records carry that guarantee, and their write rules are what let you reconstruct a decision a year later. The [records deep dive](#dive-records) covers their fields, lifecycles, ownership and the API that writes them.
 
@@ -652,7 +652,7 @@ The named failure is a grader that rewards verbosity over correctness. Long, con
 </tr>
 </tbody></table></div>
 
-Validate a grader against human judgements on a representative sample, not on the easy cases. Measure agreement on the cases that drive release decisions, then read the disagreements. Some reveal gaps in the rubric; others expose genuine ambiguity in the task. Re-score a held-out set with humans periodically, because a grader drifts after rubric changes or model upgrades even when the platform itself is stable.
+Validate a grader against human judgements on a representative sample, not on the easy cases. Raw match rate flatters a grader when most cases pass, because agreeing by chance is easy; report a chance-corrected statistic such as Cohen's kappa beside it, and read agreement separately on the failing cases. Measure agreement on the cases that drive release decisions, then read the disagreements. Some reveal gaps in the rubric; others expose genuine ambiguity in the task. Re-score a held-out set with humans periodically, because a grader drifts after rubric changes or model upgrades even when the platform itself is stable.
 
 Trust is earned in levels. At first the grader is advisory: it can block only low-risk deploys, or it requires human approval on uncertain cases. As agreement stabilises, high-confidence checks move to automatic gating. The design assumes the grader is imperfect and builds a path to trust instead of assuming trust on day one.
 
@@ -847,7 +847,7 @@ QA here means quality assurance, the team or infrastructure that checks behaviou
 
 A concrete launch review reads like this. Coverage is 97%. One severe regression escaped in the last 20 releases. Human-grader agreement is 89%, acceptable only if the disagreement set is explainable. The p95 run time is 14 minutes against the 20-minute window. Cost is $18 per release evaluation. The flaky rate is 1.5%, concentrated in one ambiguous rubric dimension. Four of five known regression classes were caught before release and one by the canary (a small first slice of production traffic), with a postmortem required on the missed class.
 
-Read against the metric table, every number clears its alert threshold, but two need explanation before launch: the 89% agreement and the class the canary caught.
+Read against the metric table, most numbers clear their alert thresholds, and two need explanation before launch: the 89% agreement and the class the canary caught. Two more need checking. The escape-rate row alerts on any severe escape in a critical app, so the one severe escape trips that alert unless it happened outside a critical app. A 1.5% overall flaky rate concentrated in one dimension can also exceed the 5% per-dimension threshold, so check that dimension on its own.
 
 Rollback triggers are as explicit as go/no-go gates: a bad canary signal, a spike in flaky cases, a post-release incident in an unchecked failure class, and a failed dependency that prevents trustworthy scoring. A severe escape also becomes a new incident case in the suite.
 
@@ -889,7 +889,7 @@ Eight lines carry the round. Each compresses a step above:
 
 - "A dashboard reports scores. A gate makes a decision, with an owner, a threshold and a record."
 - "Thirty apps, twenty releases, five thousand cases: three million executions a day."
-- "Δ against a pinned baseline, never an absolute score."
+- "Δ against a pinned baseline for quality, and absolute floors where a regression is never acceptable."
 - "Missing evidence blocks. Thin evidence holds. Nothing passes by default."
 - "Quality cannot buy its way past the safety floor."
 - "The grader is part of the release logic, so it is versioned and calibrated like code."
@@ -925,7 +925,7 @@ Four immutable records carry the whole design. Their lifecycles are what let an 
 <tr>
 <td><code>EvalRun(id, candidate, baseline, status)</code></td>
 <td>One comparison of a candidate against a baseline under a policy snapshot</td>
-<td>Status moves monotonically through submitted, queued, running, completed, failed, blocked</td>
+<td>Status only moves forward: submitted, queued, running, then one terminal state (completed, failed or blocked)</td>
 </tr>
 <tr>
 <td><code>EvalResult(run_id, case_id, scores, trace_ref)</code></td>
@@ -972,7 +972,7 @@ def release_decision(candidate: Mapping[str, Any], baseline: Mapping[str, Any], 
     return Decision(allow=all(checks.values()), checks=checks, delta=delta)
 ```
 
-Read it line by line. Both candidate and baseline pass through the parser, so a malformed metric such as `"safety_rate": "high"` raises `ValidationError` before any policy logic runs. The baseline's parsed value is discarded (`_`), because only its validity matters here; the comparator reads both raw inputs. Quality is the only relative check: it compares the lower bound of the delta against the allowed drop. Safety, latency and cost are absolute envelopes on the candidate. `allow` is true only when all four checks pass, and the returned `checks` map tells a reviewer which one failed.
+Read it line by line. The test below is an excerpt: it omits the `comparator` argument the signature requires, so a runnable version passes a stub comparator. Both candidate and baseline pass through the parser, so a malformed metric such as `"safety_rate": "high"` raises `ValidationError` before any policy logic runs. The baseline's parsed value is discarded (`_`), because only its validity matters here; the comparator reads both raw inputs. Quality is the only relative check: it compares the lower bound of the delta against the allowed drop. Safety, latency and cost are absolute envelopes on the candidate. `allow` is true only when all four checks pass, and the returned `checks` map tells a reviewer which one failed.
 
 The tutorial's test policy, `policy-7`, uses `max_quality_drop` 0.01, `min_safety_rate` 0.95, `max_p95_ms` 250 and `max_cost` 0.20. One invariant gets its own test:
 
@@ -992,11 +992,11 @@ This function covers the four dimensions. A production gate adds the evidence an
 
 The source asks for "a bootstrapped lower confidence bound for the delta" without spelling out the procedure. This section explains the standard technique; the numbers in it are illustrative.
 
-A rubric score on 5,000 cases has noise: rerun the suite or draw slightly different cases and the mean moves. The bootstrap estimates that noise from the data itself. Take the per-case deltas, then 2,000 times (the `bootstrap_samples=2000` in the code) draw a new sample of the same size with replacement and compute its mean delta. The spread of those 2,000 means shows how far the true delta could plausibly sit from the observed one. A low percentile of that spread, for example the 5th, is the lower bound.
+A rubric score on 5,000 cases has noise: rerun the suite or draw slightly different cases and the mean moves. The bootstrap estimates that noise from the data itself. Take the per-case deltas, which requires the candidate and baseline to be scored on the same cases so each pair cancels case difficulty, then 2,000 times (the `bootstrap_samples=2000` in the code) draw a new sample of the same size with replacement and compute its mean delta. The spread of those 2,000 means shows how far the true delta could plausibly sit from the observed one. A low percentile of that spread, for example the 5th, is the lower bound. When a case runs several repeated trials, resample whole cases with all their trials together. Trials of one case are correlated, and resampling them separately makes the bound look narrower than it is.
 
 Suppose the observed quality delta is +0.004, a small gain. If the 5th percentile of the bootstrap means is −0.015, the gain is indistinguishable from noise, and with `max_quality_drop` 0.01 the lower bound of −0.015 fails the quality check. The same +0.004 measured on a stable rubric might have a lower bound of −0.002, which passes. The point estimate is identical; the decision differs because the certainty differs. That is what "no overstating tiny differences" in the requirements means in practice.
 
-Small slices make the bound wide. Six regulated-claim cases cannot produce a tight bound on anything, which is one reason the gate needs a minimum slice size and holds when a critical slice is too small to decide.
+Small slices make the bound wide. Six regulated-claim cases cannot produce a tight bound on anything, and a percentile bootstrap on six cases is itself unreliable, which is one reason the gate needs a minimum slice size and holds when a critical slice is too small to decide.
 
 ### Incident: aggregate success, slice failure {#dive-incident}
 
@@ -1050,7 +1050,7 @@ Six signals tell the story:
 </tr>
 </tbody></table></div>
 
-The arithmetic shows how small the warning was. 96.7% of 120 is 116 passing cases. 83.3% of 6 is five passing cases: a single failure in the slice that mattered. Averaged over 120, that one failure barely moved the aggregate.
+The arithmetic shows how small the warning was. One source figure does not reconcile: 37 failures over 430 drafts is about 8.6%, not 8.7%. The two rows may count different things (unsupported-claim drafts versus policy failures) or use different windows, so quote them as reported and confirm the denominator before using either as an alert threshold. The diagnosis does not depend on the difference. 96.7% of 120 is 116 passing cases. 83.3% of 6 is five passing cases: a single failure in the slice that mattered. Averaged over 120, that one failure barely moved the aggregate.
 
 Two changes landed together on 2026-07-08 at 09:00. The router moved drafting from `llm_standard_v2` to `llm_premium_v3` after an offline eval showed better fluency. The policy evaluator also moved from block mode to warn-only during the experiment, to reduce false positives.
 
@@ -1107,7 +1107,7 @@ A customer says quality declined after switching to a newer model. Treat it as t
 8. Roll back or pin the model version.
 9. A/B test future upgrades.
 
-Each step maps onto the anchor. Pinning the version is the artifact registry. Replaying a fixed set against the old model is Δ against a pinned baseline. Segmenting is slice-based gating. Calibrating the judge is [grader calibration](#grader). A/B testing future upgrades is the online sampling pipeline. The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
+Each step maps onto the anchor. Pinning the version is the artifact registry. Replaying a fixed set against the old model is Δ against a pinned baseline. Segmenting is slice-based gating. Calibrating the judge is [grader calibration](#grader). A/B testing future upgrades extends the online sampling pipeline with a randomised traffic split, so the two versions see comparable users. The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
 
 The follow-up is "the offline benchmark improved, but the customer still says quality declined." The source gives seven explanations, and each points at a gate weakness:
 
@@ -1234,7 +1234,7 @@ The self-drill card turns the same idea into a complete answer shape.
 
 The source names the risk alongside the fix: weak evaluation coverage misses quality regressions, as the sales-copilot incident shows. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest.
 
-Two levers connect the cost answer back to the design. First, the tutorial's gap note calls human review almost certainly the most expensive unit cost, and human review load often dominates marginal cost. Better grader agreement shrinks the human-review tail, so calibration can lower spend without weakening the gate. Second, the judge cache is safe only on unchanged pairs. It is keyed on prompt version, model version and case, and it never replaces a judgement the gate is meant to re-measure.
+Two levers connect the cost answer back to the design. First, the tutorial's gap note calls human review almost certainly the most expensive unit cost, and human review load often dominates marginal cost. Better grader agreement shrinks the human-review tail, so calibration can lower spend without weakening the gate. Second, the judge cache is safe only on unchanged pairs. It is keyed on every input that could change the verdict: the case, the hash of the exact output being judged, the grader model and its version, and the rubric hash. Reusing a verdict is a decision to stop re-measuring that pair, so repeated trials and calibration runs never read from the cache. That is the stochastic-judgement caveat from the sizing step, and it never replaces a judgement the gate is meant to re-measure.
 
 To prove the savings, measure cost per release, decision time, grader agreement, escape rate, flaky-case rate and override rate. A cheaper gate that lets more regressions escape is not cheaper.
 
@@ -1247,7 +1247,7 @@ Every strong cost answer runs through four verbs in order:
 
 ### References {#references}
 
-The source's fact-check sources were checked on 27 September 2026. They support specific claims above: the 412 status for a failed conditional write, verbosity bias in LLM judges, the compliance and deletion notes, and the human-review cost note.
+The November review clarifies the deterministic-policy claim, the delta sign and percentage-point conventions, paired and clustered bootstrapping, chance-corrected grader agreement, the launch-review thresholds, the judge-cache key and the incident rate discrepancy. Supporting references: [Miller 2024, Adding Error Bars to Evals](https://arxiv.org/abs/2411.00640) on paired comparisons and clustered errors, [SciPy bootstrap documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html) on percentile intervals and paired resampling, and [scikit-learn Cohen's kappa](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html) on chance-corrected agreement. The source's fact-check sources were checked on 27 September 2026. They support specific claims above: the 412 status for a failed conditional write, verbosity bias in LLM judges, the compliance and deletion notes, and the human-review cost note.
 
 - [RFC 9110 HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match): sections 13.1.1 (If-Match) and 15.5.13 (412). A failed If-Match returns 412 Precondition Failed, not 409.
 - [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685): LLM judges show verbosity bias.

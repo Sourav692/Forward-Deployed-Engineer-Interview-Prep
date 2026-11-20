@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "8bd02ff30e26497e4068b152e2b169fbb8dd31ed88b81774b85110a93411cbe6",
-  "html_sha256": "7392ab35a2463c996bad21d221451f6a688d4da7be5b172e0202331142d0e0ce",
-  "config_sha256": "280ba1c7af88cdfdd193577c308c4114723f646c358016fabaa8e1550bcac70e",
+  "markdown_sha256": "226384214606270e72c35411383a4ecfedd9e36e0236304e68dae19a3cd747e4",
+  "html_sha256": "0c00f28966bf749e5fe14b260d34bf3efb319b97dfdb8911a1b0dcba3ecce71a",
+  "config_sha256": "15227dfca5fc75a6931c11be4c9b0229d9a9455c7c66e3ac99f3eb7245fbd1b6",
   "source_url": "https://forwarddeployedprep.com/design/llm-inference-serving",
   "validation": {
     "passed": true,

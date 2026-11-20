@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "0e94ab745f0bd8e247b757df3a2fc880879620847efef669e04066cc547e7076",
-  "html_sha256": "b76e5610ef40ce679b6628de778f98c875e0cdd400299397a7d9ad08faa5212f",
-  "config_sha256": "925a8efb0927a7aa014f243a979f464075055c9a318426635ce326e90ca82f67",
+  "markdown_sha256": "6520e7f7d3266829c74ae66500c939e25d11c0aba1099facbc88c1ed69d451a4",
+  "html_sha256": "aafde7cfe35bc737d4589b554ad6aeb1e23e34139b3b354c1845181abfc5d156",
+  "config_sha256": "6a1012e47f64bd8a2af37d5595213335242c5e618ac9373960a587a6f142386f",
   "source_url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
   "validation": {
     "passed": true,
