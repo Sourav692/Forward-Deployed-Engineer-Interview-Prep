@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/llm-inference-serving",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:50:57.451Z",
+  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
+  "checked_at": "2026-11-20T12:00:01.242Z",
   "checks": {
     "responsive": {
       "widths": [
