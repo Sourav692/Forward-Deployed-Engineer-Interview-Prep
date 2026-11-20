@@ -3,11 +3,9 @@
 
 ## Start with the diagram with no owner
 
-The prompt was one line: "A retailer wants its stock levels on an online marketplace. Design it." Within three minutes the candidate had drawn a message queue, a stream processor, a cache and a sync service, with arrows in both directions. Then the interviewer asked which system owned the number being sent. The candidate did not know. The design had no answer to the only question that decides whether the marketplace oversells.
+Aled, a candidate for a forward deployed role, was given a one-line prompt: "A retailer wants its stock levels on an online marketplace. Design it." Within three minutes he had drawn a message queue, a stream processor, a cache and a sync service, with arrows in both directions. Then the interviewer asked which system owned the number being sent, and Aled did not know. Everything he drew was reasonable, and none of it could be judged without an owner, the only question that decides whether the marketplace oversells. Call this **the diagram with no owner**.
 
-Everything drawn was reasonable, and none of it could be judged without an owner. Call this **the diagram with no owner**.
-
-This lesson replays the round properly, using Stanway Outdoor from [designing a retailer marketplace integration](/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration). The order of the answer matters as much as its content.
+This lesson replays the round properly, using Stanway Outdoor from [designing a retailer marketplace integration](/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration). The order of the answer matters as much as its content. The general shape of a design round is in [the twelve-part design framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework); an integration round compresses it around ownership and one flow.
 
 > **What you'll learn**
 >
@@ -48,7 +46,7 @@ sequenceDiagram
 
 *Figure 1: The core inventory flow. The checkpoint moves only after the marketplace confirms.*
 
-Two choices carry the design. First, send **absolute values**, "available is 5", never "subtract 1". A repeated absolute value is harmless. A repeated delta corrupts stock. Second, **coalesce per SKU**. If a tent changes eight times in five seconds, only the last value matters.
+Two choices carry the design. First, send **absolute values**, "available is 5", never "subtract 1". A repeated absolute value is harmless. A repeated delta corrupts stock. Second, **coalesce per SKU**. If a tent changes eight times in five seconds, only the last value matters. Coalescing and lanes against a rate limit are taught in [rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync).
 
 The numbers work. At the 40-a-second peak, Stanway sees about 150 distinct SKUs change in a five-second window. That is one bulk call every five seconds, well under one call a second, far inside the 14 a second the live outbound lane is given.
 
@@ -96,9 +94,9 @@ The walkthrough replays the round as five stages.
 
 ## Limits of this lesson
 
-- **One flow.** A full round may ask for orders or fulfilment as well. Use the same five stages for each, briefly, after the first.
+- **One flow.** A full round may ask for orders or fulfilment as well. Use the same five stages for each, briefly, after the first. The other three flows are worked in [designing a retailer marketplace integration](/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration).
 - **Time boxes are a guide.** Follow the interviewer when they steer, then return to the stage you left.
-- **Fictional data.** Stanway Outdoor and its figures are illustrative.
+- **Composite engagement.** The round, Aled, Stanway Outdoor and its figures are illustrative, not a real interview or customer.
 
 ## Interview angle
 

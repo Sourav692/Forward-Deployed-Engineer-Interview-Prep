@@ -11,19 +11,13 @@ level: advanced
 reading_time: "17 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, worked case, ownership, consistency, reconciliation, architecture]
 ---
 
 ## Start with the borrowed number
 
-Stanway Outdoor, a fictional retailer of tents, boots and camping kit, has 22 shops, its own website and, since the spring, listings on an online marketplace. Its first marketplace connector pushed stock levels every 30 minutes. The team took the figure from the ERP (enterprise resource planning) system, because the ERP had a tidy API and the warehouse system did not.
-
-The ERP's stock figure is a finance copy. The warehouse posts movements to it once a night.
-
-On a Saturday in May the marketplace featured Stanway's two-person tent in a promotion. The website and shops sold the last units by 11:00. The ERP still showed 39 until that night's posting. By 18:00 the marketplace had sold 37 tents that did not exist. Stanway cancelled 37 orders, refunded 37 buyers, and the marketplace suspended the listing for a week over the cancellation rate.
-
-Nothing failed. Every call succeeded. The connector read a copy and treated it as the owner. Call this **the borrowed number**.
+Nia, a forward deployed engineer, joined Stanway Outdoor, a retailer of tents, boots and camping kit with 22 shops and its own website, after its first marketplace connector oversold. The connector pushed stock every 30 minutes from the ERP (enterprise resource planning) system, because the ERP had a tidy API and the warehouse system did not, but the ERP's stock figure is a finance copy that the warehouse posts to once a night. On a Saturday in May the marketplace featured Stanway's two-person tent: the website and shops sold the last units by 11:00, the ERP still showed 39, and by 18:00 the marketplace had sold 37 tents that did not exist. Stanway cancelled and refunded 37 orders, and the marketplace suspended the listing for a week over the cancellation rate. Every call had succeeded. The connector read a copy and treated it as the owner. Call this **the borrowed number**.
 
 > **What you'll learn**
 >
@@ -56,7 +50,7 @@ The ownership map gives each field one owner and one direction:
 - **Order status, shipment and tracking:** WMS to OMS to marketplace.
 - **Invoice:** OMS to ERP.
 
-The integration owns none of these. It owns only its **control state**: ID mappings (SKU to listing ID, marketplace order ID to OMS order ID), event-ID records, checkpoints, the last version sent per item, delivery status and an audit trail.
+The integration owns none of these. It owns only its **control state**: ID mappings (SKU to listing ID, marketplace order ID to OMS order ID), event-ID records, checkpoints, the last version sent per item, delivery status and an audit trail. How to model that state so a restart resumes cleanly is in [modelling the integration's own state](../../../../01_Concept_Tutorials/Consolidated_Lessons/SQL_and_Data_Modelling/06_Modelling_the_Integrations_Own_State.md).
 
 ## Four flows, one direction each
 
@@ -153,7 +147,7 @@ The marketplace allows 20 calls a second. The sender gives the outbound path 14,
 
 - **One marketplace.** A second one adds a mapping set and a flow per direction. The control state and repair loop stay shared.
 - **No returns or payouts.** Both are further flows with the same shape.
-- **Fictional data.** Stanway Outdoor, its systems and figures are illustrative.
+- **Composite engagement.** Stanway Outdoor, Nia, its systems and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

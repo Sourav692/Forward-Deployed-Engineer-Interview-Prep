@@ -8167,7 +8167,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/a-worked-partner-integration/01_Designing_a_Retailer_Marketplace_Integration.md",
       "estMinutes": 11,
       "href": "/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-integration-design-interview",
@@ -8177,9 +8177,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/a-worked-partner-integration/02_The_Integration_Design_Interview.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/enterprise-integration/a-worked-partner-integration/the-integration-design-interview",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-webhook-receiver",
