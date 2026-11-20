@@ -74,7 +74,7 @@ Taught in [choosing the transport](/learn/enterprise-integration/framing-an-inte
 
 - **Answer:** Story: "A customer orders on the marketplace, Penrose ships it from its warehouse, and the customer sees tracking." Owners: the marketplace owns the order and cancellations. The ERP owns stock and shipments. Inbound orders: marketplace webhooks as signals, a REST fetch of the full order, and a backstop poll every 10 minutes. Acknowledge after a durable enqueue, then create the sales order in the ERP keyed on the marketplace order ID. Outbound shipments: a REST call to the marketplace when the ERP marks a parcel shipped, retried from a queue. The integration owns ID mappings, delivery state, checkpoints and audit.
 - **Trade-off:** Two transports and a poll are more to run than one, but each covers a failure the others miss.
-- **Follow-up to expect:** "A cancellation arrives after shipping." The ERP owns shipment, so the cancellation becomes a return, not a deletion.
+- **Follow-up to expect:** "A cancellation arrives after shipping." The ERP owns shipment, so the cancellation becomes a return, not a deletion. The full worked design of a marketplace integration, with stock, price and repair flows, is [designing a retailer marketplace integration](/learn/enterprise-integration/a-worked-partner-integration/designing-a-retailer-marketplace-integration).
 
 </details>
 

@@ -45,7 +45,7 @@ flowchart LR
 
 *Figure 1: A recoverable sync. Four paths feed one processor, and reconciliation checks the result against the source.*
 
-Running a backfill alongside the live load needs a clear boundary so the two never write the same records. That is taught in [backfills while live](/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live). Connector choices for each enterprise system, including file feeds and rate limits, are in [connecting enterprise systems](/learn/enterprise-integration/connecting-enterprise-systems/crm-erp-and-ticketing-systems).
+Running a backfill alongside the live load needs a clear boundary so the two never write the same records. That is taught in [backfills while live](/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live). Connector choices for each enterprise system, including file feeds and rate limits, are in [connecting enterprise systems](/learn/enterprise-integration/connecting-enterprise-systems/crm-erp-and-ticketing-systems). Choosing between webhooks, polling and REST at a partner's boundary is in [choosing the transport](/learn/enterprise-integration/framing-an-integration/choosing-the-transport).
 
 ## Incremental reads and change data capture
 

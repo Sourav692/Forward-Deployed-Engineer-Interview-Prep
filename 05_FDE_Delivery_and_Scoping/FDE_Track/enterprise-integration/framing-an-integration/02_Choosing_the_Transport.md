@@ -17,13 +17,7 @@ tags: [integration, transport, webhooks, polling, REST, WebSockets, asynchronous
 
 ## Start with the webhook that never came
 
-Lamorna Holidays, a fictional tour operator, sells packages that include rooms at partner hotels. When a hotel confirms a room, its booking system sends Lamorna a webhook: an HTTP call to Lamorna's endpoint saying "booking confirmed". Lamorna then emails the customer.
-
-One Friday a deployment failed and Lamorna's receiver was down for 40 minutes. The hotel group's system retried each webhook three times over 15 minutes, then gave up, as its documentation said it would. 212 confirmations were never delivered.
-
-Nothing alerted. The receiver had no record of events it never received. Customers waited for emails that did not come, and 31 of them booked elsewhere over the weekend. On Monday a hotel asked why Lamorna had not collected payment for rooms it was holding.
-
-The design trusted one push channel to deliver every event. Call this **the webhook that never came**.
+Kwame, a forward deployed engineer, built the booking feed for Lamorna Holidays, a tour operator that sells packages with rooms at partner hotels. When a hotel confirms a room, its booking system sends Lamorna a webhook, an HTTP call saying "booking confirmed", and Lamorna emails the customer. One Friday a failed deployment took the receiver down for 40 minutes. The hotel group retried each webhook three times over 15 minutes and then gave up, as its documentation said it would, so 212 confirmations were never delivered. Nothing alerted, because the receiver had no record of events it never received. Over the weekend 31 customers booked elsewhere, and on Monday a hotel asked why Lamorna had not collected payment for rooms it was holding. The design trusted one push channel to deliver every event. Call this **the webhook that never came**.
 
 > **What you'll learn**
 >
@@ -31,7 +25,7 @@ The design trusted one push channel to deliver every event. Call this **the webh
 > - Where REST, webhooks, polling and WebSockets each fit.
 > - Why polling is the backstop for missed webhooks.
 > - The usual combination: a webhook for speed, polling for misses, REST for full state.
-> - How to acknowledge fast and call a slow system later.
+> - Why the edge answers fast and slow work waits behind a queue.
 
 ## Pull or push
 
@@ -78,7 +72,7 @@ A **backstop poll** catches these. On a schedule, ask the partner for everything
 
 The alert in the third design matters. If the backstop poll keeps finding events the webhooks missed, the push channel is broken, and someone should know before customers do.
 
-Set the poll interval from how late a missed event may be, not from how fresh normal events must be. The webhook handles freshness. The poll handles completeness. Overlap each poll with the previous window by a minute or two, because the partner's "changed since" timestamps can lag. Duplicates from the overlap are harmless when processing skips what it has seen. Go deeper: [durability and idempotency](../../../../01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md).
+Set the poll interval from how late a missed event may be, not from how fresh normal events must be. The webhook handles freshness. The poll handles completeness. Overlap each poll with the previous window by a minute or two, because the partner's "changed since" timestamps can lag. Duplicates from the overlap are harmless when processing skips what it has seen. Go deeper: [duplicates in both directions](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/02_Duplicates_in_Both_Directions.md).
 
 ## The usual combination
 
@@ -88,47 +82,21 @@ Put the three together and each does one job:
 2. **A REST call fetches the current state.** Read the booking from the partner's API. Now you have its latest version, even if webhooks arrived out of order or an older one is delayed in a retry.
 3. **The poll catches what the webhook missed.** It feeds the same processor as the webhooks, so a missed event and a pushed one are handled identically.
 
-Fetching after the signal costs one call per event. It removes two hard problems: ordering, because you always read the latest state, and trust in the payload, because the data comes from an authenticated call you made. Where the partner's rate limit cannot take the extra calls, use the webhook payload and compare its version with the one you hold.
+Fetching after the signal costs one call per event. It removes two hard problems: ordering, because you always read the latest state, and trust in the payload, because the data comes from an authenticated call you made. Where the partner's rate limit cannot take the extra calls, use the webhook payload and compare its version with the one you hold. Add a first full load and a scheduled comparison against the source, and this combination becomes a recoverable sync, taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md).
 
 ## Acknowledge fast, work later
 
-A webhook sender waits for your response, often for 10 seconds or less. Lamorna's own reservation system took 20 to 40 seconds to place a hold on a room. In the first version, the receiver called it before replying. The hotel's system timed out, assumed failure and sent the webhook again. Lamorna placed the hold twice.
+A webhook sender waits for your response, often for 10 seconds or less. Lamorna's reservation system took 20 to 40 seconds to place a hold on a room, and the first receiver called it before replying. The hotel's system timed out, assumed failure and sent the webhook again, so Lamorna placed the hold twice.
 
-The fix is a **hybrid**: synchronous at the edge, asynchronous behind it. The receiver checks the request, writes it to a durable queue, and replies straight away. A worker takes it from the queue and calls the slow system at its own pace.
+The transport choice is a **hybrid**: synchronous at the edge, asynchronous behind it. The receiver checks the request, stores it in a durable queue and replies straight away. A worker takes it from the queue, fetches the current booking and calls the slow system at its own pace. The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish.
 
-```mermaid
-sequenceDiagram
-  participant H as Hotel booking system
-  participant R as Lamorna receiver
-  participant Q as Durable queue
-  participant W as Worker
-  participant S as Reservation system
-  H->>R: webhook: booking 7741 changed
-  R->>R: verify signature, check event ID
-  R->>Q: enqueue event 7741
-  Q-->>R: stored
-  R-->>H: 200 OK, under 1 second
-  W->>Q: take next event
-  W->>H: GET booking 7741, current state
-  W->>S: place hold, 20 to 40 seconds
-  W->>Q: mark done
-```
-
-*Figure 1: Acknowledge after the durable enqueue, then work. The hotel sees a fast success. The slow call happens in the worker, which fetches the current booking first.*
-
-Three rules keep it safe:
-
-- **Acknowledge only after the write is durable.** Reply before the queue confirms, and a crash loses the event after the sender stopped retrying.
-- **Make the worker safe to repeat.** The sender may still deliver twice, and the backstop poll may find the same booking. Key the hold on the booking ID. Go deeper: [idempotent writes and long-running jobs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md).
-- **Give the worker its own failure policy.** When the reservation system is down, the worker retries with backoff and the queue absorbs the wait. Go deeper: [retries, circuit breakers and bulkheads](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/04_Retries_Circuit_Breakers_and_Bulkheads.md).
-
-The same shape works for an inbound REST call that starts slow work: return `202 Accepted` with a status link, and let a worker finish. What the receiver checks before it enqueues is in [the webhook receiver](../receiving-webhooks-safely/01_The_Webhook_Receiver.md).
+What the receiver checks, why it replies only after the queue confirms the write, and how the worker stays safe to repeat are taught in [the webhook receiver](../receiving-webhooks-safely/01_The_Webhook_Receiver.md). Idempotent workers and status links for long jobs are in [idempotent writes and long-running jobs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/10_Idempotent_Writes_and_Long_Running_Jobs.md).
 
 ## Limits of this lesson
 
-- **Partners decide what exists.** Many offer only polling. Some send webhooks without a "changed since" query, which leaves reconciliation as the only backstop.
+- **Partners decide what exists.** Many offer only polling. Some send webhooks without a "changed since" query, which leaves reconciliation as the only backstop, taught in [recoverable data syncs](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/04_Recoverable_Data_Syncs.md).
 - **Retry windows vary.** Read each partner's documented schedule before you size your outage tolerance.
-- **Fictional data.** Lamorna Holidays and its figures are illustrative.
+- **Composite engagement.** Lamorna Holidays, Kwame and the figures are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -183,7 +151,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 - REST answers now, webhooks signal events, polling fills gaps, WebSockets serve live interactive clients.
 - Back every webhook feed with a scheduled poll, and alert when the poll finds misses.
 - Treat the webhook as a signal and fetch the current state.
-- Acknowledge after a durable enqueue, then do slow work in an idempotent worker.
+- Answer at the edge, then do slow work in a worker behind a durable queue.
 
 ## Check yourself
 
@@ -202,8 +170,8 @@ How late a missed event may arrive, checked against the rate limit. The webhook 
 </details>
 
 <details>
-<summary>3. Why must the receiver wait for the queue to confirm the write before replying?</summary>
+<summary>3. Why does the worker fetch the booking from the partner's API instead of using the webhook's payload?</summary>
 
-After a success reply the sender stops retrying. If the event was not yet stored, a crash would lose it for good.
+The fetch returns the latest version, so events that arrive out of order or late from a retry cannot overwrite newer data, and the data comes from a call Lamorna made and authenticated.
 
 </details>

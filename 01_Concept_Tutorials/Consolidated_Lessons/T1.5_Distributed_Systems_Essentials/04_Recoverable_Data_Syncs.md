@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [data sync, change data capture, checkpoints, reconciliation, replay, backfill]
 ---
 
@@ -59,7 +59,7 @@ flowchart LR
 
 *Figure 1: A recoverable sync. Four paths feed one processor, and reconciliation checks the result against the source.*
 
-Running a backfill alongside the live load needs a clear boundary so the two never write the same records. That is taught in [backfills while live](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md). Connector choices for each enterprise system, including file feeds and rate limits, are in [connecting enterprise systems](../../../05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/01_CRM_ERP_and_Ticketing_Systems.md).
+Running a backfill alongside the live load needs a clear boundary so the two never write the same records. That is taught in [backfills while live](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md). Connector choices for each enterprise system, including file feeds and rate limits, are in [connecting enterprise systems](../../../05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/01_CRM_ERP_and_Ticketing_Systems.md). Choosing between webhooks, polling and REST at a partner's boundary is in [choosing the transport](../../../05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/framing-an-integration/02_Choosing_the_Transport.md).
 
 ## Incremental reads and change data capture
 
