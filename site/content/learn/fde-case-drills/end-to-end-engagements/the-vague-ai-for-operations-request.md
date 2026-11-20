@@ -113,6 +113,7 @@ The walkthrough is a scripted illustration. In an interview, the defence stage i
 - **Composite engagement.** Alderley Foods, its plants and every figure are illustrative, not a real customer.
 - **One path.** A different customer could have a scheduling problem with one clear owner, and then scheduling would win.
 - **Regulation varies.** Food safety and recall duties differ by country. Confirm them with the customer's quality and legal owners.
+- **Shorter drill.** For a 20-minute version on a different customer, run [drill 6, thirty AI ideas and one first build](/learn/fde-case-drills/case-drills/practise-case-drills-1#drill-6-thirty-ai-ideas-one-first-build).
 
 ## Interview angle
 

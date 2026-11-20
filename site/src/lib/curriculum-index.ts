@@ -1914,9 +1914,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "title": "Short case drills",
     "track": "fde-case-drills",
     "lessons": [
-      "practise-case-drills-1",
-      "practise-case-drills-2",
-      "practise-case-drills-3"
+      "practise-case-drills-1"
     ],
     "practiceMinutes": 180
   },
@@ -2775,6 +2773,8 @@ export const INDEX_RENAMED: Record<string, string | null> = {
   "scoping-an-fde-project/estimating-ai-work-as-a-product": "scoping-an-fde-project/the-system-behind-the-screens",
   "requirements-and-solution-design/practise-requirements-and-design-2": "requirements-and-solution-design/practise-requirements-and-design-1",
   "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2": "ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1",
+  "case-drills/practise-case-drills-2": "case-drills/practise-case-drills-1",
+  "case-drills/practise-case-drills-3": "case-drills/practise-case-drills-1",
   "reliability-performance-and-cost/practise-reliability-performance-and-cost-2": "reliability-performance-and-cost/practise-reliability-performance-and-cost-1",
   "adoption-and-impact/realised-versus-estimated-value": "adoption-and-impact/proving-business-impact",
   "scoping-an-fde-project/scoping-an-fde-project-complete-guide": "scoping-an-fde-project/problem-goal-and-definition-of-done",

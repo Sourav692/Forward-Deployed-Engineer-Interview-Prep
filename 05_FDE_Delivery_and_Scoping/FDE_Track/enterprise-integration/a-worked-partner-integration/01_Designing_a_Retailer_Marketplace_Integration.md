@@ -148,6 +148,7 @@ The marketplace allows 20 calls a second. The sender gives the outbound path 14,
 - **One marketplace.** A second one adds a mapping set and a flow per direction. The control state and repair loop stay shared.
 - **No returns or payouts.** Both are further flows with the same shape.
 - **Composite engagement.** Stanway Outdoor, Nia, its systems and its figures are illustrative, not a real customer.
+- **Shorter drill.** For a 20-minute version of the same sync problem, run [drill 3, an order-to-cash sync with the ERP](../../fde-case-drills/case-drills/01_Practise_Case_Drills_1.md#drill-3-an-order-to-cash-sync-with-the-erp).
 
 ## Interview angle
 

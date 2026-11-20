@@ -8681,7 +8681,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/02_Three_Systems_One_Customer.md",
-      "estMinutes": 13,
+      "estMinutes": 14,
       "href": "/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer",
       "updated": "2026-11-20"
     },
@@ -8843,39 +8843,15 @@
     },
     {
       "slug": "practise-case-drills-1",
-      "title": "Practise Case Drills 1",
+      "title": "Practise Case Drills",
       "track": "fde-case-drills",
       "module": "case-drills",
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/01_Practise_Case_Drills_1.md",
-      "estMinutes": 13,
+      "estMinutes": 34,
       "href": "/learn/fde-case-drills/case-drills/practise-case-drills-1",
-      "updated": "2026-11-18"
-    },
-    {
-      "slug": "practise-case-drills-2",
-      "title": "Practise Case Drills 2",
-      "track": "fde-case-drills",
-      "module": "case-drills",
-      "kind": "sync",
-      "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/02_Practise_Case_Drills_2.md",
-      "estMinutes": 12,
-      "href": "/learn/fde-case-drills/case-drills/practise-case-drills-2",
-      "updated": "2026-11-18"
-    },
-    {
-      "slug": "practise-case-drills-3",
-      "title": "Practise Case Drills 3",
-      "track": "fde-case-drills",
-      "module": "case-drills",
-      "kind": "sync",
-      "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/case-drills/03_Practise_Case_Drills_3.md",
-      "estMinutes": 12,
-      "href": "/learn/fde-case-drills/case-drills/practise-case-drills-3",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "how-take-homes-are-scored",
