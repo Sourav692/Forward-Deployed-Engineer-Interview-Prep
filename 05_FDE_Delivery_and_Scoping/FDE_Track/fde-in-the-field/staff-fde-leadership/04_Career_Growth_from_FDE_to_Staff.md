@@ -11,17 +11,13 @@ level: advanced
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [career, promotion, staff engineer, sponsorship, impact]
 ---
 
 ## Start with the promotion case that described four good projects
 
-Tom was a senior FDE at Dunholme Systems, a fictional AI platform company. In two years he led four engagements, including Sedbergh Health and Wigton Ports, both fictional. Every sponsor renewed. Two asked for him again by name. His manager put him forward for staff.
-
-The committee turned the case down. The feedback was short: "Strong delivery. All the impact we can find sits inside engagements Tom led. We could not find evidence of scope beyond them."
-
-Tom had done more than that. He had written the release rollback checklist other teams copied, and he had spent a month helping a struggling team at a third customer. None of it was in the case, because none of it was written down, and nobody on the committee had seen it.
+Tom was a senior FDE at Dunholme Systems, an AI platform company. In two years he led four engagements, including Sedbergh Health and Wigton Ports. Every sponsor renewed, and two asked for him again by name. His manager put him forward for staff, and the committee turned the case down: "Strong delivery. All the impact we can find sits inside engagements Tom led. We could not find evidence of scope beyond them." Tom had done more than that. He had written the release rollback checklist other teams copied, and he had spent a month helping a struggling team at a third customer. None of it was in the case, because none of it was written down, and nobody on the committee had seen it.
 
 Call this **the excellent-delivery plateau**: a record of strong engagements that proves you are a very good senior FDE, and nothing more.
 
@@ -112,7 +108,7 @@ Staff FDE is one path, not the only one. Some senior FDEs move into product engi
 
 - **Ladders differ.** Some companies have no staff FDE level, or define it differently. Read your company's ladder and ask your manager how it is applied.
 - **Evidence is necessary, not sufficient.** Budget and team needs affect promotions. A strong case can still wait a cycle.
-- **Fictional data.** Dunholme Systems, Tom, the customers and the figures are illustrative.
+- **Composite engagement.** Dunholme Systems, Tom, the customers and the figures are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -3,11 +3,7 @@
 
 ## Start with the seventh rebuild
 
-Dunholme Systems, a fictional AI platform company, sells an assistant that answers staff questions from a customer's own documents. The assistant must show each user only the documents they may open in the source system. The platform did not do this. Each FDE team built its own job to copy permissions from the customer's document store.
-
-By spring, six deployments had built that job, each slightly differently. Ravenglass Insurance, a fictional insurer, was the seventh. Its FDE team copied the job from an earlier deployment under deadline pressure. The copy did not handle groups nested inside other groups. For three days, claims handlers could see notes from a restricted fraud investigation.
-
-Every FDE lead had raised the gap in their retrospective. The product team had heard about it many times, as seven separate complaints. Its roadmap that year was new connectors and a voice interface, both tied to sales commitments.
+Dunholme Systems, an AI platform company, sells an assistant that answers staff questions from a customer's own documents. The assistant must show each user only the documents they may open in the source system, and the platform did not do this, so each FDE team built its own job to copy permissions from the customer's document store. By spring, six deployments had built that job, each slightly differently. Carys, the FDE lead at Ravenglass Insurance, the seventh deployment, copied the job from an earlier deployment under deadline pressure. The copy did not handle groups nested inside other groups, and for three days claims handlers could see notes from a restricted fraud investigation. Every FDE lead had raised the gap in their retrospective, so the product team had heard about it many times, as seven separate complaints. Its roadmap that year was new connectors and a voice interface, both tied to sales commitments.
 
 Call this **the seventh rebuild**: a gap the field patches again and again, because each patch is cheaper than the argument for fixing it once.
 
@@ -55,7 +51,7 @@ Total: about 58 engineer-weeks of FDE time next year, plus the risk. That is mor
 
 Product teams are not wrong to chase features. New capabilities win deals, and sales commitments carry dates. Field complaints arrive one at a time, from different people, with different wording. They look like noise.
 
-Treat the product manager as a customer and run discovery on them. Ask what goes into their planning, which measures they report and when the next planning cycle closes. Then present the gap in their terms:
+Treat the product manager as a customer and run discovery on them, as in [the discovery conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation). Ask what goes into their planning, which measures they report and when the next planning cycle closes. Then present the gap in their terms:
 
 - **Revenue:** do slow deployments delay contracts or renewals?
 - **Time to value:** how many weeks earlier would customers see results?
@@ -79,7 +75,7 @@ The proposal fits on one page: the problem in one sentence, the evidence from th
 </div>
 <section id="nothing-result" class="mode-panel" data-announcement="Do nothing selected. About 58 engineer-weeks of FDE time."><h4>Do nothing</h4><ul><li>FDE time: 32 engineer-weeks to build eight new copies, plus about 26 to maintain them. About 58 in total.</li><li>Product time: none.</li><li>Risk: fifteen copies of access-control logic by year end.</li></ul><p>No roadmap change. The cost is real but spread across many teams, which is why it stays hidden.</p></section>
 <section id="library-result" class="mode-panel" data-announcement="Shared field library selected. About 31 engineer-weeks of FDE time."><h4>Shared field library</h4><ul><li>FDE time: 6 engineer-weeks to extract and harden the best copy, 1 week per new deployment (8) and per migrated copy (7), plus about 10 to maintain it. About 31 in total.</li><li>Product time: none, but product upgrades can break it without warning.</li><li>Risk: one copy to test, owned by the FDE practice.</li></ul><p>Fast to start. It still lives outside the product, so every upgrade needs an FDE check.</p></section>
-<section id="platform-result" class="mode-panel" data-announcement="Platform capability selected. About 22 engineer-weeks across both teams."><h4>Platform capability</h4><ul><li>Product time: 12 engineer-weeks to build and own it, which moves one planned feature back by about six weeks.</li><li>FDE time: about 10 engineer-weeks to migrate the seven copies and set up eight new deployments, at two days each.</li><li>Risk: one tested implementation, maintained with the product.</li></ul><p>Lowest total cost and risk. It needs product to accept a later date on one feature.</p></section>
+<section id="platform-result" class="mode-panel" data-announcement="Platform capability selected. About 22 engineer-weeks across both teams."><h4>Platform capability</h4><ul><li>Product time: 12 engineer-weeks to build and own it, which moves one planned feature back by about six weeks.</li><li>FDE time: about 10 engineer-weeks: about a week to migrate each of the seven copies, and two days to set up each of the eight new deployments.</li><li>Risk: one tested implementation, maintained with the product.</li></ul><p>Lowest total cost and risk. It needs product to accept a later date on one feature.</p></section>
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
@@ -116,7 +112,7 @@ At Dunholme, product deferred the work by one quarter. Two more deployments logg
 
 - **Estimates are estimates.** The engineer-week figures are planning numbers. Show your assumptions so others can challenge them.
 - **Not every repeated gap belongs in the platform.** Some belong in a template or a partner's product. Deciding which is the subject of [configure, template or custom](/learn/fde-in-the-field/field-to-product/configure-template-or-custom). For one need raised by customers, rather than a workaround rebuilt across deployments, start with [reusable need or one-off](/learn/fde-in-the-field/field-to-product/reusable-need-or-one-off).
-- **Fictional data.** Dunholme Systems, its customers, the exposure and all figures are illustrative.
+- **Composite engagement.** Dunholme Systems, its customers, the exposure and all figures are illustrative, not a real customer.
 
 ## Interview angle
 

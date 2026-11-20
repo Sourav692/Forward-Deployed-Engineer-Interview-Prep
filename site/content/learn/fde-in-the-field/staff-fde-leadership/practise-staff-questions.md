@@ -3,7 +3,7 @@
 
 ## How to use this practice
 
-These are the questions a senior or staff FDE loop asks about your own work. Each outline shows the structure of a strong spoken answer, then a worked example from a fictional staff FDE at Dunholme Systems. The example shows the shape. Your answer must use your own story.
+These are the questions a senior or staff FDE loop asks about your own work. Each outline shows the structure of a strong spoken answer, then a worked example from a composite staff FDE at Dunholme Systems. The example shows the shape. Your answer must use your own story.
 
 Work through them in order:
 
@@ -11,14 +11,14 @@ Work through them in order:
 2. Answer aloud with a real story of your own.
 3. Open the outline. Check your answer against the structure, not the example.
 
-The full method for the project deep dive and for building your stories stays in the Career track: [telling the build story](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) for presenting a project, and the [story bank](/practice/story-bank) for building a set of stories that covers these questions. Dunholme Systems, Sedbergh Health, Wigton Ports, Brough Insurance and every figure below are fictional.
+The full method for the project deep dive and for building your stories stays in the Career track: [telling the build story](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) for presenting a project, and the [story bank](/practice/story-bank) for building a set of stories that covers these questions. Dunholme Systems, Sedbergh Health, Wigton Ports, Brough Insurance and every figure below are composites, not real customers.
 
 > **What you'll practise**
 >
 > - Defending a team metric: how it was measured and what your part was.
 > - Telling an owned project and a failure with the parts interviewers look for.
 > - Explaining a trade-off made under pressure, and influence without authority.
-- Walking an interviewer through an engagement you led, at a steady pace.
+> - Walking an interviewer through an engagement you led, at a steady pace.
 
 ## A metric under challenge
 
