@@ -2,7 +2,7 @@
   "version": 2,
   "catalog_url": "https://forwarddeployedprep.com/design",
   "catalog_captured_at": "2026-11-15T15:11:53.730571+00:00",
-  "updated_at": "2026-11-20T07:39:59+00:00",
+  "updated_at": "2026-11-20T08:13:08+00:00",
   "cases": [
     {
       "slug": "enterprise-knowledge-assistant",
@@ -230,14 +230,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/deep-research-agent",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/deep-research-agent/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/live-check.json"
       }
     },
@@ -290,14 +290,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/customer-support-automation",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/customer-support-automation/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/live-check.json"
       }
     },
@@ -350,14 +350,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/tool-using-agent-with-safety-controls/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/live-check.json"
       }
     },
@@ -410,14 +410,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/sre-incident-response-agent/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/live-check.json"
       }
     },
@@ -470,14 +470,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/sales-copilot",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/sales-copilot/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/live-check.json"
       }
     },
@@ -530,14 +530,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/enterprise-coding-assistant/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/live-check.json"
       }
     },
@@ -590,14 +590,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/real-time-call-assistant/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/live-check.json"
       }
     },
@@ -650,14 +650,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/logistics-exception-handling/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/live-check.json"
       }
     },
@@ -710,14 +710,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/secure-multi-tenant-ai-platform/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/live-check.json"
       }
     },
@@ -770,14 +770,14 @@
         "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
-      "next_action": "Merge after required checks; deploy and verify this case on production.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json",
+        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+        "checked_at": "2026-11-20T08:13:08+00:00",
+        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/high-volume-batch-pipeline/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/live-check.json"
       }
     },
@@ -4208,6 +4208,56 @@
       "at": "2026-11-20T07:39:59+00:00",
       "slug": "high-volume-batch-pipeline",
       "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "deep-research-agent",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "customer-support-automation",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "tool-using-agent-with-safety-controls",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "sre-incident-response-agent",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "sales-copilot",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "enterprise-coding-assistant",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "real-time-call-assistant",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "logistics-exception-handling",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "secure-multi-tenant-ai-platform",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T08:13:08+00:00",
+      "slug": "high-volume-batch-pipeline",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
     }
   ]
 }
