@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T01:55:16.416Z",
+  "generatedAt": "2026-11-20T02:43:37.527Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -290,8 +290,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 43,
-              "updated": "2026-11-16"
+              "minutes": 44,
+              "updated": "2026-11-20"
             },
             {
               "slug": "nl-over-governed-data",
@@ -335,8 +335,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 86,
-              "updated": "2026-11-16"
+              "minutes": 87,
+              "updated": "2026-11-20"
             },
             {
               "slug": "document-review-copilot",
@@ -376,8 +376,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 43,
-              "updated": "2026-11-16"
+              "minutes": 44,
+              "updated": "2026-11-20"
             },
             {
               "slug": "deep-research-agent",

@@ -1,34 +1,25 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "4dbc9d0400759eac6875591d2594f75d096c89e9bdf661ec1c942a9e6f3a2af9",
-  "html_sha256": "6ca4e210a5f27cf6eb8298a5457d542455864b8dd6944d0c0d1310f52099f4ce",
-  "config_sha256": "b91b3b7aff6a7b7d7717b8ef13f99b59804ec71060b985dba5daf6f786c327c4",
+  "markdown_sha256": "dccd3307c14da875901da6325f18638f6f9c96c1879a2b7dc7705be93a4d7c9b",
+  "html_sha256": "b5e7a89bc71b8b837cfa5e6c8cc87ef39eba6ee49f34c4b32ad69969de16fe7d",
+  "config_sha256": "2ab51e9ab76f9564630861998504748bd21def0c3c90a08d5305a26133d6d0f0",
   "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
   "validation": {
-    "date": "2026-11-16",
     "passed": true,
     "mode": "teach",
     "source_sections": 91,
     "coverage_rows": 96,
-    "source_figures": 10,
     "worked_answers": 11,
     "reports": {
       "structure": "content-check.json",
       "browser": "browser-check.json",
       "aliases": "alias-check.json",
-      "visual": "visual-review.json",
-      "source_refresh": "source-refresh.json"
+      "visual": "visual-review.json"
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure. Per-item coverage preserves the source mechanisms, numbers and qualifications."
-    },
-    "hallmark": {
-      "floor_failures": 0,
-      "reflex_findings": 0,
-      "finish_warning": "Retained source table/code terminology uses straight quotes; reviewed and retained."
-    },
-    "opening_decision": "Two brief topics use Priya\u2019s question as the running example; related variants remain in a native optional disclosure. No redundant example, glossary or learning-goal subsection added."
+      "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure. Per-item coverage preserves the source mechanisms, numbers and qualifications. 20 November 2026: complete maintained-baseline review and targeted repairs; see .website_spec/casebook-review-2026-11-20/enterprise-knowledge-assistant/audit.json. Browser and visual evidence is recorded separately."
+    }
   }
 }

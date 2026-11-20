@@ -7,7 +7,7 @@
   "level": "Core",
   "author": "By Sourav Banerjee",
   "source_url": "https://forwarddeployedprep.com/design/document-review-copilot",
-  "updated": "Teaching rewrite, 16 November 2026",
+  "updated": "Technical review, 20 November 2026",
   "mode": "teach",
   "markdown": "casebook.md",
   "source_inventory": "source.json",
@@ -783,7 +783,7 @@
   ],
   "editorial_review": {
     "status": "reviewed",
-    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced. Per-item coverage preserves the source mechanisms, numbers and qualifications. Source inconsistencies resolved in text (2026-11-16): component table let the case be served when audit storage is down, while the requirements demand an immutable audit for final decisions \u2192 preparation may continue audit-pending, but final approval or external transition waits for a durable audit record, because the requirements, the approval workflow's fail-closed posture and the stakeholder table all require the audit for decisions; the table's audit-row cell is the one retained-table edit, and the 'source tension / design clarification' paragraph now states the rule plainly."
+    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. Three brief topics explain the domain and concrete request before the task. Prior authorisation, payer and packet are defined inline. The example retains the missing-therapy gap, cited draft and clinician decision; the page-7 parser failure follows context. Learning guidance is merged into the task; no separate glossary, approval or learning subsection is forced. Per-item coverage preserves the source mechanisms, numbers and qualifications. Source inconsistencies resolved in text (2026-11-16): component table let the case be served when audit storage is down, while the requirements demand an immutable audit for final decisions \u2192 preparation may continue audit-pending, but final approval or external transition waits for a durable audit record, because the requirements, the approval workflow's fail-closed posture and the stakeholder table all require the audit for decisions; the table's audit-row cell is the one retained-table edit, and the 'source tension / design clarification' paragraph now states the rule plainly. 20 November 2026: complete baseline review and targeted repairs with source mapping in .website_spec/casebook-review-2026-11-20/document-review-copilot/audit.json. Runtime and visual checks recorded separately."
   },
   "required_answer_reveals": [
     "document-answer-1",
@@ -800,13 +800,13 @@
   ],
   "visual_review": {
     "status": "reviewed",
-    "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 5 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
-    "opening_decision": "Three brief topics explain unfamiliar healthcare terms and the missing-therapy example, followed by the task. Learning guidance is merged into the task; the old brief-reading fragment aliases to brief-task."
+    "evidence": "20 November 2026: inspected regenerated desktop and 390px phone openings and all 5 light source figures at enlarged scale. Five-section reader, topic navigation, body measure, figures and full-size links retained. Browser-check.json separately verifies expanded sections at six widths, notes/export, progress, answer reveals, no-script, print and denied storage. Hallmark rendered sweep: zero FAIL and zero Reflex findings; straight-quote Finish warning retained for source prose, code and exact prompts."
   },
   "source_refresh_review": {
     "date": "2026-11-16",
     "status": "unchanged",
     "sections": 50,
     "evidence": "See source-refresh.json: fresh live capture compared by source-section text_sha256 and image sha256, with no content or diagram changes."
-  }
+  },
+  "updated_at": "2026-11-20"
 }

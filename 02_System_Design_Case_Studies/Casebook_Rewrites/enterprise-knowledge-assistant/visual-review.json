@@ -1,11 +1,24 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-20",
   "status": "reviewed",
   "passed": true,
-  "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 10 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
-  "opening_decision": "Two brief topics use Priya\u2019s question as the running example; related variants remain in a native optional disclosure. No redundant example, glossary or learning-goal subsection added.",
+  "evidence": "20 November 2026: inspected regenerated desktop and 390px phone openings and all 10 light source figures at enlarged scale. Five-section reader, topic navigation, body measure, figures and full-size links retained. Browser-check.json separately verifies expanded sections at six widths, notes/export, progress, answer reveals, no-script, print and denied storage. Hallmark rendered sweep: zero FAIL and zero Reflex findings; straight-quote Finish warning retained for source prose, code and exact prompts.",
+  "figures_inspected": 10,
+  "capture_index": ".website_spec/casebook-review-2026-11-20/enterprise-knowledge-assistant/figures/index.json",
+  "screenshots": ".casebook-build/enterprise-knowledge-assistant/browser-screens",
   "limits": [
-    "Original wide source diagrams shrink in the reading column; each has a local full-size SVG link.",
-    "Hallmark straight-quote Finish warnings in retained source tables remain; current sweep has zero failures and zero Reflex findings."
-  ]
+    "Protected wide diagrams use the existing full-size links on phones.",
+    "All light figure variants inspected; dark variants decoded by browser checks but not individually visually inspected.",
+    "No screen-reader or comprehensive WCAG contrast audit performed."
+  ],
+  "native_inspection": {
+    "status": "reviewed",
+    "report": ".website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/live-check.json",
+    "screenshots": [
+      ".website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/fresh-desktop.png",
+      ".website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/fresh-brief.png",
+      ".website_spec/casebook-review-2026-11-20/integration/enterprise-knowledge-assistant/fresh-phone-brief.png"
+    ],
+    "evidence": "Inspected fresh native-route views and the reading column at desktop and 390px dark phone widths. Fresh captures show the complete brief; the earlier large blank captured after sequential fragment jumps was not reproduced in a fresh context."
+  }
 }
