@@ -12,7 +12,7 @@ Every customer and figure below is fictional.
 > - Comparing deployment models and writing a responsibility matrix.
 > - Isolating tenants component by component.
 > - Planning an install and upgrade with no internet.
-> - Diagnosing permission and open-file failures, and defining a safe image.
+> - Diagnosing permission, open-file and memory-limit failures, and defining a safe image.
 > - Validating configuration, sizing a deployment and choosing Kubernetes objects.
 
 ## Deployment choices
@@ -86,12 +86,21 @@ Taught in [Linux processes, permissions and limits](/learn/fde-deploying-in-the-
 
 </details>
 
+<details>
+<summary>Practice question 7. Yarrow's letter service, now two containers behind a load balancer, restarts under load with exit code 137 and no application error. Uploads are still written to `/app/uploads`. Diagnose the restarts and say where the uploads should live.</summary>
+
+- **Answer:** Exit code 137 with an "OOMKilled" last state means the kernel killed the process at its memory limit, so the application had no chance to log. Compare the limit with the measured peak per container under realistic load, find what drives the peak, such as several large scans converted at once, and bound it, then set the limit at the measured peak plus headroom. The uploads cannot stay in `/app/uploads`: each container has its own writable layer, so one container cannot see the other's files, and a restart or deploy deletes them. Store each upload in object storage, keep its key and status in the database, and test by replacing a container and scaling to two.
+- **Trade-off:** Raising the limit is quick and costs memory on every copy. Bounding the work needs a code change and keeps the cost flat.
+- **Follow-up to expect:** "Mount a volume instead." A volume lives on one host, so it does not serve two containers on different hosts.
+
+</details>
+
 ## Config, compute and Kubernetes
 
 Taught in [config, compute and Kubernetes choices](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/config-compute-and-kubernetes-choices).
 
 <details>
-<summary>Practice question 7. Design the startup configuration check for a service deployed to test, staging and production.</summary>
+<summary>Practice question 8. Design the startup configuration check for a service deployed to test, staging and production.</summary>
 
 - **Answer:** Before accepting traffic: confirm every required setting is present, with no defaults for addresses, buckets or keys. Check shapes: URLs parse, numbers in range, enums valid. Check the environment: production values must not match a deny-list of sandbox and test hosts. Check dependencies: database connects, upstream API answers a cheap call. On any failure, log all problems without secret values and exit non-zero. The readiness probe passes only after this, so the platform keeps the old version serving.
 - **Trade-off:** Dependency checks slow startup by seconds. Without them a broken deploy takes traffic.
@@ -100,7 +109,7 @@ Taught in [config, compute and Kubernetes choices](/learn/fde-deploying-in-the-e
 </details>
 
 <details>
-<summary>Practice question 8. Alston's call-summary service peaks at 18 requests a second, each using 250 ms of CPU. Instances peak at 900 MiB. It stores 200,000 transcripts a day at 30 KB each for a year. Each instance holds a pool of 15 database connections, and the database allows 150. Size it.</summary>
+<summary>Practice question 9. Alston's call-summary service peaks at 18 requests a second, each using 250 ms of CPU. Instances peak at 900 MiB. It stores 200,000 transcripts a day at 30 KB each for a year. Each instance holds a pool of 15 database connections, and the database allows 150. Size it.</summary>
 
 - **Answer:** CPU: 18 × 0.25 = 4.5 cores busy. At 60% target, 4.5 ÷ 0.6 = 7.5, so 8 cores, four instances of 2 vCPUs. Memory: limit about 1.2 GiB per instance, a third above 900 MiB. Storage: 200,000 × 30 KB = 6 GB a day, about 2.2 TB a year. Connections: 4 × 15 = 60, up to 120 during a rolling deploy, under 150. At 8 instances a deploy would need 240, so add a pooler first.
 - **Trade-off:** 60% target leaves idle capacity. Running hotter fails on bursts.
@@ -110,7 +119,7 @@ Taught in [config, compute and Kubernetes choices](/learn/fde-deploying-in-the-e
 </details>
 
 <details>
-<summary>Practice question 9. List the minimal Kubernetes manifests for a stateless web service with one secret and a public endpoint, and the key fields in each.</summary>
+<summary>Practice question 10. List the minimal Kubernetes manifests for a stateless web service with one secret and a public endpoint, and the key fields in each.</summary>
 
 - **Answer:** Deployment: replicas, the image by digest, container port, resource requests and limits from measurements, readiness and liveness probes, settings from a ConfigMap and the secret as environment or file, a non-root security context. Service: selector matching the Deployment's labels, port mapping. Ingress: host, path, the Service as backend, a TLS certificate. ConfigMap: plain settings. Secret: the one credential, ideally synced from the customer's secret store. No PersistentVolumeClaim, because the service keeps no files.
 - **Trade-off:** Five objects to maintain. Each one replaces work you would otherwise script by hand.
@@ -130,12 +139,13 @@ Taught in [config, compute and Kubernetes choices](/learn/fde-deploying-in-the-e
 - A responsibility matrix names one owner per task and is tested with a real fault.
 - Isolation is set per component, and the weakest one sets the level.
 - Diagnose from the failing process and its path, then request a precise change.
+- Exit code 137 points at the memory limit, and anything that must outlive a container lives outside it.
 - Size from measurements, and check connections during a rolling deploy.
 
 ## Check yourself
 
 <details>
-<summary>1. In practice question 8, why add a connection pooler before scaling to eight instances?</summary>
+<summary>1. In practice question 9, why add a connection pooler before scaling to eight instances?</summary>
 
 Eight instances with 15 connections each hold 120. During a rolling deploy old and new run together, up to 240, above the database's 150.
 
@@ -145,5 +155,12 @@ Eight instances with 15 connections each hold 120. During a rolling deploy old a
 <summary>2. In practice question 3, why take the tenant from the verified token?</summary>
 
 A tenant field in the request can be changed by the caller. The token is issued and signed by the identity provider, so it cannot be altered without detection.
+
+</details>
+
+<details>
+<summary>3. In practice question 7, why is a volume not enough for the uploads?</summary>
+
+A volume belongs to one host. With two containers on different hosts, each sees only its own volume, so an upload saved on one host is missing whenever a request reaches the other.
 
 </details>

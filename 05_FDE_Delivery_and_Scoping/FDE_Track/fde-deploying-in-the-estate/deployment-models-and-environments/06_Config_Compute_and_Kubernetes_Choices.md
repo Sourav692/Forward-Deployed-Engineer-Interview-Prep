@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [configuration, secrets, startup validation, capacity sizing, Kubernetes, environments]
 ---
 
 ## Start with the quiet default
 
-Wardle Bank, a fictional retail bank, ran a payments-status service built by a vendor. The service read its settings from environment variables. One of them, the address of the bank's payments API, had a default in the code: the vendor's sandbox address. Developers could then run the service without setting anything.
-
-The production deploy on a Monday evening used a new deployment template. The template missed that one variable. The service started, passed its health check and began answering. For three hours it reported payment statuses from the sandbox, which answers "settled" to everything. Branch staff told 140 customers their payments had cleared. Eleven had not.
-
-The service did exactly what its configuration said. A missing value had been allowed to look like a valid one. Call this **the quiet default**.
+Wardle Bank, a fictional retail bank, ran a vendor's payments-status service that read its settings from environment variables. One of them, the address of the bank's payments API, defaulted in the code to the vendor's sandbox, so developers could run the service without setting anything. Monday evening's production deploy used a new template that missed that one variable. The service started, passed its health check and for three hours reported statuses from the sandbox, which answers "settled" to everything. Branch staff told 140 customers their payments had cleared, and eleven had not. Marek, the vendor's forward deployed engineer, traced it to one missing value that had been allowed to look like a valid one. Call this **the quiet default**.
 
 > **What you'll learn**
 >
@@ -70,11 +66,11 @@ The readiness check, which tells the platform the instance may receive traffic, 
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The figures are illustrative. A rolling deploy with readiness checks only protects you if the checks test something real.
+The figures are illustrative. A rolling deploy with readiness checks only protects you if the checks test something real. [Safe rollouts](../releases-cutover-and-recovery/02_Safe_Rollouts.md) covers the rollout itself.
 
 ## Sizing compute, storage and databases from measurements
 
-Size from three numbers per workload: the peak arrival rate, the resources one unit of work uses, and how long data is kept. Measure the second number with a load test of the real service, not a guess. A worked example for Wardle's document service:
+Size from three numbers per workload: the peak arrival rate, the resources one unit of work uses, and how long data is kept. Measure the second number with a [load test](../reliability-performance-and-cost/02_Latency_Queues_and_Load_Tests.md) of the real service, not a guess. A worked example for Wardle's document service:
 
 - **Compute.** Peak 40 requests a second, each using 120 ms of CPU. That is 4.8 CPU-seconds every second: 4.8 cores busy. Run CPUs at about 60% at peak to absorb bursts: 4.8 ÷ 0.6 = 8 cores, as four instances of 2 vCPUs.
 - **Memory.** Each instance peaked at 1.2 GiB in the load test. Set the limit at 1.6 GiB, about a third above the measured peak.
@@ -128,8 +124,8 @@ It is rarely worth it for one small service at a customer with no cluster. A clu
 ## Limits of this lesson
 
 - **Load tests set the numbers.** The CPU and memory per request above are illustrative. Measure your own service at its real peak.
-- **Kubernetes depth lives elsewhere.** Autoscaling, network policies and operators are out of scope here.
-- **Fictional data.** Wardle Bank, its deploy and every figure above are illustrative.
+- **Kubernetes depth lives elsewhere.** Autoscaling is in [choose a runtime and scale it](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/02_Choose_a_Runtime_and_Scale_It.md). Network policies and operators belong to the customer's platform team and are out of scope here.
+- **Composite engagement.** Wardle Bank, Marek, the deploy and every figure above are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -140,7 +136,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 
 - **Answer:** Build one image and promote it unchanged. Supply plain settings from the deploy, per environment, and inject secrets at start from a secret store, never from the image or repository. Give environment-specific values no defaults, validate every setting at startup, and fail before serving traffic. In a customer's estate, list each setting with its owner and keep production values in their store.
 - **Trade-off:** Required settings make local runs fussier. Defaults make a bad deploy look healthy.
-- **Follow-up to expect:** "How do you rotate a secret?" Covered with secrets in the networks and identity module. Read it at start and support two valid values during a swap.
+- **Follow-up to expect:** "How do you rotate a secret?" Read it at start and support two valid values during a swap. [Secrets and leaks](../networks-and-identity/04_Secrets_and_Leaks.md) covers rotation.
 
 </details>
 
