@@ -256,7 +256,7 @@ Separate first-release requirements from later improvements. Hybrid retrieval co
 
 Use four explicit interview assumptions: 100,000 employees, 50 million chunks, 20 average queries per second (QPS) and 100 peak QPS. Each sizes a different part of the design. Employees determine the number of identities and permission combinations. Chunks determine index storage and refresh work. Peak QPS determines how much simultaneous serving work the system must sustain. None of these figures is a measured result from this prototype.
 
-At 100 QPS, a three-second generation stage holds roughly 300 requests in flight. This follows from arrival rate multiplied by time in the stage. Budget identity lookup, permission filtering, retrieval, reranking, generation and citation verification separately. The 95th-percentile latency, or p95, should stay within the agreed target: under three seconds for a chat-like experience, or under eight seconds for the source’s relaxed variant. Work that cannot meet the interactive budget needs an explicit asynchronous path and queue limit.
+At a sustained 100 QPS and a mean generation duration of three seconds, the generation stage has roughly 300 requests in flight on average: 100 × 3 = 300. This is a steady-state estimate, not a capacity guarantee. A p95 duration of three seconds cannot replace the mean in this calculation. Bursts, retries and queueing require headroom and a load test. Budget identity lookup, permission filtering, retrieval, reranking, generation and citation verification separately. The 95th-percentile latency, or p95, should stay within the agreed target: under three seconds for a chat-like experience, or under eight seconds for the source’s relaxed variant. Work that cannot meet the interactive budget needs an explicit asynchronous path and queue limit.
 
 <p class="figure-caption">Sizing assumptions and their consequences.</p>
 <div class="source-table-wrap"><table>
@@ -519,9 +519,9 @@ Start with one low-risk corpus and three personas. In week 0-1, identify the wor
 <td>latency or cost at scale, then a cross-encoder behind the same interface</td>
 </tr>
 <tr>
-<td>Hybrid + multi-query as default</td>
-<td>yes</td>
-<td>measurement showing the extra latency does not pay for itself on this corpus</td>
+<td>Hybrid retrieval; evaluate multi-query separately</td>
+<td>Start with dense and lexical retrieval. Add multi-query only if evaluation shows a useful gain.</td>
+<td>Extra retrieval and query-generation latency or cost outweigh the quality gain on this corpus</td>
 </tr>
 <tr>
 <td>Real-time sync vs scheduled indexing</td>
@@ -627,7 +627,7 @@ Consider three ways to keep search results within the user’s access. Post-filt
 <tr>
 <td>Pre-filter</td>
 <td>Search within tenant, clearance, region, and group-overlap limits</td>
-<td>Unauthorised chunks are never scored, ranked, or returned.</td>
+<td>Only records matching the indexed permission predicate are eligible for returned candidates. The search engine may still traverse or score excluded graph nodes internally; an authoritative post-check handles stale or incomplete permissions.</td>
 </tr>
 </tbody></table></div>
 <figure class="source-diagram" id="figure-78-0"><a href="source-assets/7d61705a24ddf82d.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/7d61705a24ddf82d.svg" alt="Permission normalisation, attribute decisions, two-layer enforcement and the unsafe prompt-only alternative, source figure 1."></a><img class="diagram-dark" src="source-assets/78cf1996b7fd60f4.svg" alt="Dark source variant: Permission normalisation, attribute decisions, two-layer enforcement and the unsafe prompt-only alternative, source figure 1."><figcaption>Permission normalisation, attribute decisions, two-layer enforcement and the unsafe prompt-only alternative, source figure 1. Open the figure for full size.</figcaption></figure>
@@ -686,7 +686,7 @@ Role-based access control (RBAC) associates a role with permissions. Attribute-b
 </tr>
 </tbody></table></div>
 
-An indexed filter can represent stable groups and coarse attributes. The policy layer handles time-sensitive or richer obligations, including redaction. Bind identity to the verified session, not a tenant field supplied by the browser. Key permission caches by identity/policy versions, shorten their lifetime, invalidate on change events, and measure the remaining propagation window. A provisioning delay upstream remains a real limit.
+An indexed filter can represent stable groups and coarse attributes. The policy layer handles time-sensitive or richer obligations, including redaction. Bind identity to the verified session, not a tenant field supplied by the browser. Key permission caches by identity/policy versions, shorten their lifetime, invalidate on change events, and measure the remaining propagation window. A provisioning delay upstream remains a real limit. In this example, the region predicate restricts which principals may read a document. That access rule does not by itself enforce where document copies, embeddings, model processing, backups or traces reside; deployment and data-flow controls must enforce those residency requirements separately.
 
 The source discusses a historical Chroma metadata workaround using Boolean group fields such as `grp__engineering` with an `$or` predicate, and contrasts later array filtering. Treat that as a version-specific implementation example. Confirm supported operators against the installed database before encoding a connector contract. The design requirement is an executable, tested permission predicate; syntax does not establish its correctness.
 
@@ -829,7 +829,7 @@ python scripts/demo_access_control.py --matrix
 python scripts/evaluate.py --kinds security
 ```
 
-The first source example prints the visibility matrix without model cost in roughly two seconds. The second runs the security gate. Reproduce those behaviours in the real implementation with explicit expected permissions.
+The source reports that its visibility-matrix command ran without model cost in roughly two seconds. That is a historical observation about the reference project, not a runtime measured in this reader. The second runs the security gate. Reproduce those behaviours in the real implementation with explicit expected permissions.
 
 Trace request and tenant IDs, privacy-preserving identity references, source event/content versions, ACL/index/policy versions, candidates, selected evidence, citations, model/prompt versions, tool calls, stage latency, tokens, cost and final outcome. Govern access to traces and retain only the content needed for diagnosis. A raw prompt dump is not a privacy policy. Operators should be able to distinguish retrieval failure, policy rejection, absent source data, generation error and citation mismatch.
 
@@ -842,6 +842,8 @@ For the legal-documents pivot, first identify lawyers, sales, procurement or exe
 A 100 ms complete-answer requirement changes the architecture. The source contrasts ordinary RAG around 1.5 seconds with cached embeddings, fast authorised retrieval, verified answer caches or precomputed head questions. Keep ordinary live generation off that hot path unless measurements demonstrate the budget. Time to first token is not time to a complete verified answer. The source’s roughly 0.4-second provider example is a historical comparison, not a current service guarantee. A verified semantic cache still needs permission and source-version validity checks.
 
 ### References and source context {#dive-references}
+
+For the concurrency estimate, use mean arrival rate and mean duration, as in [AWS’s concurrency calculation](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html). For filtered approximate search, [Elastic’s filtered kNN documentation](https://www.elastic.co/docs/solutions/search/vector/knn/filtered-knn-search) distinguishes result eligibility from graph exploration. These references qualify the sizing and filtering mechanisms; they do not certify this case’s illustrative targets.
 
 The tables and diagrams retain source case data. Numerical targets are illustrative unless explicitly identified otherwise. This teaching adaptation consolidates repeated explanations from the source’s interview, deep-dive, cheat-sheet and full-pack versions. The source reports a 27 September 2026 fact-check and a 4 November 2026 update. Its dated implementation examples and illustrative thresholds retain that context. Consult current product documentation before selecting APIs or promising a performance target.
 
@@ -876,7 +878,7 @@ Write your attempt before opening the worked answers. The notes and rubric below
 
 <details class="answer-reveal" id="enterprise-answer-5"><summary>What is the release gate for leakage?</summary><div class="detail-body"><p>The source design requires zero leaks on the defined adversarial suite. Any detected leak blocks release or triggers rollback review with Security. A passing finite suite is evidence about tested cases, not proof of universal safety.</p></div></details>
 
-<details class="answer-reveal" id="enterprise-answer-6"><summary>What do the four scale numbers tell you?</summary><div class="detail-body"><p>100,000 employees sizes identity/ACL cardinality; 50 million chunks sizes indexing and refresh; 20 average QPS describes normal load; 100 peak QPS drives capacity. Three seconds per generation implies roughly 300 concurrent generations at peak.</p></div></details>
+<details class="answer-reveal" id="enterprise-answer-6"><summary>What do the four scale numbers tell you?</summary><div class="detail-body"><p>100,000 employees sizes identity/ACL cardinality; 50 million chunks sizes indexing and refresh; 20 average QPS describes normal load; 100 peak QPS drives capacity. With sustained peak arrivals at 100 QPS and a mean of three seconds per generation, average occupancy is roughly 300 generations. Allow extra capacity for bursts, retries and queueing; a p95 target alone does not establish the mean.</p></div></details>
 
 <details class="answer-reveal" id="enterprise-answer-7"><summary>What changes at ten times traffic if BM25 is slow?</summary><div class="detail-body"><p>Profile the lexical stage and replace a costly per-request implementation with a scalable permission-aware search service or suitable partitions. Keep tenant isolation, indexed permission predicates and authoritative checks while changing the serving engine.</p></div></details>
 
@@ -998,7 +1000,7 @@ Five rules carry the design: missing permissions exclude a document; authorisati
 
 ### Recall the tests and numbers {#review-tests}
 
-The example scale is 100,000 employees, 50 million chunks, 20 average QPS and 100 peak QPS. At three seconds of generation, peak traffic implies about 300 in-flight generations. Set per-stage p95 and per-workflow cost budgets. A 100 ms full-answer target generally needs precomputation or a verified cache, with current permissions checked.
+The example scale is 100,000 employees, 50 million chunks, 20 average QPS and 100 peak QPS. At a sustained 100 QPS and a mean three-second generation duration, average occupancy is about 300 in-flight generations, before burst and retry headroom. Set per-stage p95 and per-workflow cost budgets. A 100 ms full-answer target generally needs precomputation or a verified cache, with current permissions checked.
 
 Release gates separate zero permission leaks, grounded claims, correct citations, freshness, retrieval recall, high-risk escalation and task completion. Start with one corpus and three personas. A failed provider can trigger a tested fallback; a failed policy decision must stop disclosure. Cache keys and invalidation must carry permission and version context.
 

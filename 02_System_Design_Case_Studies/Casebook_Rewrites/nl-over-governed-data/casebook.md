@@ -53,9 +53,9 @@ Read the Design walkthrough first; it is the spoken answer and stands on its own
 
 ### 1. Name the wrong-answer risk before drawing anything {#walk-risk}
 
-Open with the failure, not the pipeline. The naive pitch, "let an LLM write the SQL", loses the interview immediately, because generation is the easy part. The system must never produce valid SQL that confidently answers the wrong business question. A failed query tells the executive something went wrong; a wrong-definition answer does not, so they act on it.
+Begin with the business-definition risk. A model can generate valid SQL for booked revenue when Finance expects recognised revenue. The query succeeds, but the executive receives the wrong number without an error to warn them. The design therefore needs a governed definition and a check that the proposed query implements it, as well as SQL generation.
 
-So we reframe the ask. We are not building a text-to-SQL model; we are building a governed decision-support system that only speaks in terms the business has already agreed to. That framing implies three things from day one:
+Treat the assistant as governed decision support. It translates questions into business definitions that named owners have approved. That requires three controls from the first release:
 
 - a semantic layer of governed metric definitions;
 - a safety boundary around the warehouse that is read-only and cost-bounded;
@@ -145,12 +145,12 @@ The interview guide states the non-functional side as targets.
 <tr><td>Correctness</td><td>Outranks speed; valid SQL for the wrong metric still fails.</td></tr>
 <tr><td>Security</td><td>Warehouse-native row/column policies and entitlements on every execution.</td></tr>
 <tr><td>Fail-closed</td><td>A policy failure or a suspicious scan does not run.</td></tr>
-<tr><td>Latency</td><td>Interactive 3–8 s; longer work async and visible.</td></tr>
+<tr><td>Latency</td><td>Interactive 3 to 8 s; longer work async and visible.</td></tr>
 <tr><td>Cost guards</td><td>Row limits, timeouts, date windows, scan budgets.</td></tr>
 <tr><td>Operability</td><td>Versioned metric/schema cache with <abbr title="time to live: How long a cached or stored item stays valid before it expires.">TTLs</abbr> (time to live); narrow credentials; redacted logs.</td></tr>
 </tbody></table></div>
 
-The full design words the same constraints so a test can fail them, and adds compliance and reliability rows. The 3–8 second figure comes from the copilot personas, so treat it as an example to confirm with the customer.
+The full design words the same constraints so a test can fail them, and adds compliance and reliability rows. The 3 to 8 second figure comes from the copilot personas, so treat it as an example to confirm with the customer.
 
 <p class="figure-caption">Constraints stated so they can be tested.</p>
 <div class="source-table-wrap"><table>
@@ -182,7 +182,7 @@ Every must-have then needs an owner in the architecture. If a requirement has no
 
 The first release is deliberately small: ten owner-approved metrics, golden question/SQL/result cases, and analyst shadow review before a small executive audience. Out of scope: a general interface to every warehouse table, a write-query tool, or a machine that defines business metrics.
 
-If the interviewer asks "What are the requirements?", the source's short answer is: "Functionally, pin the metric, generate checked read-only SQL, and explain from the result. Non-functionally, warehouse ACLs, scan budgets, 3–8 second interactive asks, and a replayable query-run record."
+If the interviewer asks "What are the requirements?", the source's short answer is: "Functionally, pin the metric, generate checked read-only SQL, and explain from the result. Non-functionally, warehouse ACLs, scan budgets, 3 to 8 second interactive asks, and a replayable query-run record."
 
 ### 4. Give every kind of state one owner {#walk-authority}
 
@@ -208,7 +208,7 @@ Three core records hold the design together. `Metric(id, name, definition, dimen
 
 State the versioning rules aloud, because they are what make "why did this number change?" answerable:
 
-- Retain metric versions long enough to reconstruct why last quarter's dashboard produced a different number from today's.
+- Retain metric versions long enough to reconstruct why last quarter's dashboard produced a different number from today's. Also record the source-data snapshot or as-of time and retain the result or an approved reproducible reference. A metric version and SQL hash explain the requested computation, but cannot reproduce its old value after the underlying rows change.
 - Make QueryRun write-once and append-only, because incident review and adoption analysis both start from query history.
 - Version every artefact that influences behaviour (metric definitions, schema snapshots, policy bundles, generated plans). Without that, the system works in the happy path and fails at rollout.
 - Put idempotency keys on question submission and feedback, so a retried submit does not create a duplicate, and optimistic concurrency on metric edits, so one team cannot silently overwrite another team's definition.
@@ -327,7 +327,7 @@ Two rehearsed answers live in this step. When asked how to handle "revenue" with
 
 If a question could map to several governed metrics or grain levels, the system stops and asks. A valid query that answers the wrong business question is still a failure, and the costs are lopsided: a clarifying question costs one round trip, while a guess costs an executive decision. The gate has three modes, agreed with the customer in discovery: ask a clarifying question, refuse, or escalate to an analyst. A default is allowed only when a context-specific canonical definition has been approved.
 
-Give the gate a number. The insurer supervisor classifies each question into `simple_kpi`, `deep_analysis`, `document_lookup`, `visualization` or `conversational` with a confidence score, and its clarify node fires only below 60%. "Show me the numbers" therefore gets a clarifying question, not a guess. A threshold makes the behaviour testable and tunable, while "the model will ask when unsure" does not. The 60% is an example from that engagement, not a universal value; agree yours with the customer.
+Give the gate a number. The insurer supervisor classifies each question into `simple_kpi`, `deep_analysis`, `document_lookup`, `visualization` or `conversational` with a confidence score, and its clarify node fires only below 60%. "Show me the numbers" therefore gets a clarifying question, not a guess. A threshold makes the behaviour testable and tunable, while "the model will ask when unsure" does not. The 60% is an example from that engagement, not a universal value. A model-reported score of 0.60 is not automatically a calibrated 60% probability of correctness. Compare scores with reviewed intent labels and measure wrong-route and unnecessary-clarification rates before choosing the threshold with the customer. Even a high score must not override two conflicting approved metric definitions.
 
 Ambiguity is also a freshness signal. When the catalog is stale beyond a threshold, the retriever refreshes through the async queue before allowing generation, falls back to a narrower supported question set, or asks. It never silently generates against an unknown schema. A stale schema and an ambiguous definition are different reasons to stop, and both mean the system should not pretend precision. For a business-definition conflict the failure policy is human intervention, because a wrong answer is worse than a slower one.
 
@@ -438,12 +438,12 @@ The week-by-week plan below gives each stage its gate.
 <div class="source-table-wrap"><table>
 <thead><tr><th>Week</th><th>Gate</th></tr></thead>
 <tbody>
-<tr><td>0–1</td><td>Ten governed metrics with stable definitions, known owners and visible impact (revenue, active customers, pipeline, churn, support backlog); non-goals documented</td></tr>
-<tr><td>1–2</td><td>Metric definitions documented, query templates reviewed; the assistant can explain which metric it used and why</td></tr>
-<tr><td>2–3</td><td>Golden cases built, including ambiguous paraphrases and known traps</td></tr>
-<tr><td>3–4</td><td>Golden set replayed on every change; execution accuracy and semantic correctness compared; every failure explained</td></tr>
+<tr><td>0 to 1</td><td>Ten governed metrics with stable definitions, known owners and visible impact (revenue, active customers, pipeline, churn, support backlog); non-goals documented</td></tr>
+<tr><td>1 to 2</td><td>Metric definitions documented, query templates reviewed; the assistant can explain which metric it used and why</td></tr>
+<tr><td>2 to 3</td><td>Golden cases built, including ambiguous paraphrases and known traps</td></tr>
+<tr><td>3 to 4</td><td>Golden set replayed on every change; execution accuracy and semantic correctness compared; every failure explained</td></tr>
 <tr><td>5</td><td>Shadow analysts on real questions; users still see the analyst's answer as truth; analysts mark correct, merely plausible, or wrong for subtle reasons (wrong grain, wrong definition, wrong segment filter)</td></tr>
-<tr><td>6–8</td><td>Executive release once the assistant consistently matches analyst-reviewed answers and escalation works</td></tr>
+<tr><td>6 to 8</td><td>Executive release once the assistant consistently matches analyst-reviewed answers and escalation works</td></tr>
 <tr><td>After</td><td>Expand domain by domain, each with a named metric owner who approves definitions, reviews golden cases and owns semantic-layer changes</td></tr>
 </tbody></table></div>
 
@@ -487,7 +487,7 @@ Four controls make up the execution boundary. Each stops a different abuse, so t
 <tr><td>Result hygiene</td><td>Mask sensitive fields on the response path; log hashes or redacted fingerprints instead of raw data</td><td>A second leakage channel through logs; a replayable copy of sensitive output</td></tr>
 </tbody></table></div>
 
-Row policies only protect the right person if the query runs as that person. Snowflake's row access policies, for example, evaluate the role running the query ([Snowflake docs](https://docs.snowflake.com/en/user-guide/security-row-intro)). If a shared service account runs everything, the warehouse applies the service account's rights, not the executive's. That is why the gateway runs the query on behalf of the user, resolves entitlements per request, re-checks them at execution, and filters the schema metadata the model sees to what the user may see.
+The warehouse must receive the intended caller context. In Snowflake, a row access policy executes with the policy owner's privileges so it can consult protected mapping tables. Its expression can use session context, such as `CURRENT_ROLE()` or `CURRENT_USER()`, to decide which rows the querying user may see ([Snowflake row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro)). Policy-owner privileges and caller identity serve different purposes. A shared service account does not automatically carry the executive's identity. Use a supported on-behalf-of flow or another explicitly validated identity mapping, recheck entitlements at execution, and test the policy with two users whose permitted rows differ. Filter schema metadata to the caller's access too.
 
 The source proves the hidden-column invariant with a small test sketch. A marketing actor may read `customer_id`, `country` and `plan`. The query `SELECT email FROM customers` is perfectly valid SQL, and the test asserts it is rejected because `email` is outside the actor's permitted columns.
 
@@ -530,7 +530,7 @@ def test_rejects_hidden_column_exfiltration():
 
 Read it for the invariant, not the parser. `parse_selected_columns` splits strings, which is the very approach the rest of this section rejects; it refuses anything beyond a simple `SELECT ... FROM` and wildcards so the sketch stays honest about its limits. The code also omits its imports (`dataclass`, `pytest`). The source says what changes in production: a dialect-aware parser, a policy source from the warehouse or a central registry, and a logged decision with redacted evidence. The test itself is the part worth keeping, run against the real parser and policy path.
 
-After policy, estimate cost. Approved queries get a cost estimate, a timeout and a row limit, then run through the read-only gateway. Prefer bounded date windows and pre-aggregations. When a request would scan beyond the configured threshold, ask the user to narrow it, propose a cheaper rewrite, or require approval from a more privileged role. Never let the model "just try it". Cost control protects shared concurrency as well as the bill: a permitted query can still slow other tenants by consuming the warehouse.
+After policy, estimate cost. Approved queries get a cost estimate, a timeout and a row limit, then run through the read-only gateway. A row limit bounds returned results, but it need not bound the work needed to produce them. For example, BigQuery warns that `LIMIT` does not reduce scan cost for non-clustered tables. Use dry-run estimates and an engine-enforced budget such as maximum bytes billed where supported, together with bounded date windows and pre-aggregations ([BigQuery cost controls](https://docs.cloud.google.com/bigquery/docs/best-practices-costs)). Cancellation after work begins cannot recover cost already incurred. When a request would scan beyond the configured threshold, ask the user to narrow it, propose a cheaper rewrite, or require approval from a more privileged role. Never let the model "just try it". Cost control protects shared concurrency as well as the bill: a permitted query can still slow other tenants by consuming the warehouse.
 
 ### Five failure drills and the safeguards around them {#dive-failures}
 
@@ -651,7 +651,7 @@ Intent is classified with a confidence score, and clarification fires only below
 <div class="source-table-wrap"><table>
 <thead><tr><th>Agent</th><th>Role</th><th>Tools</th><th>The trade-off it embodies</th></tr></thead>
 <tbody>
-<tr><td><strong>Text-to-SQL</strong></td><td>BI specialist</td><td>Managed text-to-SQL conversation API</td><td>A managed service over a hand-rolled text-to-SQL chain: less flexible, but its SQL is always read-only and runs under each user's catalog permissions, and analysts curate the space's tables, instructions and example SQL without code</td></tr>
+<tr><td><strong>Text-to-SQL</strong></td><td>BI specialist</td><td>Managed text-to-SQL conversation API</td><td>A managed service over a hand-rolled text-to-SQL chain: less flexible, with read-only execution as a required deployment contract. Verify which principal the integration uses: a managed API does not automatically impersonate the end user. Analysts curate the space's tables, instructions and example SQL without code</td></tr>
 <tr><td><strong>Multi-Tool</strong></td><td>Generalist</td><td>LLM-generated SQL + vector search <abbr title="retrieval-augmented generation: Fetch the relevant documents first, then have the model answer only from them.">RAG</abbr> over policy docs</td><td>The <em>one</em> place hand-generated SQL was allowed, for ad-hoc questions outside the text-to-SQL service's curated scope, under deliberately narrower governance</td></tr>
 <tr><td><strong>Data Analysis</strong></td><td>Statistical</td><td>Z-score anomaly detection, trend statistics</td><td>Kept <strong>deterministic</strong>: thresholds are computed, not "reasoned about", so the model cannot invent a plausible but wrong number</td></tr>
 <tr><td><strong>Visualisation</strong></td><td>Dashboard creator</td><td>Dashboard REST API</td><td>Publishes real, clickable dashboards rather than a static chart image, closing the loop on the weeks-long dashboard pain</td></tr>
@@ -680,7 +680,7 @@ A managed multi-agent feature was not an option for this customer at the time, s
 
 #### Second pivot: the deep agent
 
-As domains grew, the supervisor's own tool list re-approached the original bloat. So the same fix was applied one level up, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, and claims. Each has its own prompt, small toolset, context window and curated text-to-SQL space. A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback entries. The cost was more infrastructure surface. The gain was a ceiling on tool-selection degradation that does not reappear as the system grows.
+As domains grew, the supervisor's own tool list re-approached the original bloat. So the same fix was applied one level up, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, and claims. Each has its own prompt, small toolset, context window and curated text-to-SQL space. A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback entries. The cost was more infrastructure surface. The design reduced the tools and history visible to each specialist. That can reduce the original selection problem, but domain routing can still fail and a specialist can accumulate too many tools. Evaluate both routing and within-domain tool selection as domains grow.
 
 #### Results, stated honestly
 
@@ -705,15 +705,17 @@ Applied here, that means shrinking context to metric definitions and a few permi
 
 ### Sources and provenance {#dive-sources}
 
-The source checked these references on 27 September 2026. Each supports a specific claim above: Snowflake for row policies evaluating the role that runs the query ([SQL policy](#dive-sql)); OpenAI and RAG-MCP for keeping tool counts small ([insurer engagement](#dive-engagement)); CrewAI for deterministic branching in Flows; BigQuery for on-demand queries billing by bytes processed ([cost](#dive-cost)).
+The November review corrects the Snowflake policy description and separates result limits from scan budgets using the linked Snowflake and BigQuery documentation. The engagement's architecture, timings and reported outcomes remain attributed source material. They are not measurements reproduced by this reader.
 
-- [Snowflake docs: Understanding row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro): row policies evaluate the role running the query.
+The source checked these references on 27 September 2026. Each supports a specific claim above: Snowflake for the distinction between policy-owner privileges and querying-session context ([SQL policy](#dive-sql)); OpenAI and RAG-MCP for keeping tool counts small ([insurer engagement](#dive-engagement)); CrewAI for deterministic branching in Flows; BigQuery for on-demand queries billing by bytes processed ([cost](#dive-cost)).
+
+- [Snowflake docs: Understanding row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro): policy expressions execute with owner privileges and can inspect querying-session context to determine visible rows.
 - [OpenAI API docs: Function calling](https://developers.openai.com/api/docs/guides/function-calling): guidance to keep the tool count per turn small.
 - [Gan and Sun 2025, RAG-MCP: Mitigating Prompt Bloat in LLM Tool Selection](https://arxiv.org/abs/2505.03275): tool-selection accuracy falls as the tool pool grows.
 - [CrewAI docs: Flows](https://docs.crewai.com/en/concepts/flows): `@router` gives CrewAI deterministic branching.
 - [BigQuery pricing](https://cloud.google.com/bigquery/pricing): on-demand queries bill by bytes processed.
 
-The numbers in this case are source examples, not defaults: the 3–8 s interactive target, the 60% clarification threshold, the 16-asset index, the 20% cost drift, the 4.2/5 trust target and the copilot percentages. Confirm each with the customer, and check current warehouse documentation for execution identity, policy coverage and cost estimation before implementing.
+The numbers in this case are source examples, not defaults: the 3 to 8 s interactive target, the 60% clarification threshold, the 16-asset index, the 20% cost drift, the 4.2/5 trust target and the copilot percentages. Confirm each with the customer, and check current warehouse documentation for execution identity, policy coverage and cost estimation before implementing.
 
 ## Practice
 
@@ -757,7 +759,7 @@ The self-checks, follow-ups and drills below come from the source. Try each answ
 
 <details class="answer-reveal" id="probe-service-account"><summary>How do you keep a service account from reading unrestricted data on a user's behalf?</summary><div class="detail-body"><p>Run the query as the user (on-behalf-of login) so warehouse-native RLS/CLS applies to them, not to the service account. Resolve entitlements per request and re-check them at execution, and filter schema metadata to what the user may see.</p></div></details>
 
-<details class="answer-reveal" id="probe-same-number"><summary>Two queries look different but should return the same number. How do you know?</summary><div class="detail-body"><p>Golden cases pair question, approved SQL and expected result shape. Semantic correctness is judged against the governed definition, not by comparing SQL text.</p></div></details>
+<details class="answer-reveal" id="probe-same-number"><summary>Two queries look different but should return the same number. How do you know?</summary><div class="detail-body"><p>Golden cases pair the question, approved SQL, expected result shape and expected values on a fixed test dataset. Compare both queries on that fixture, including nulls, duplicate join keys, date boundaries and grain. Matching SQL text is unnecessary, but matching shapes alone cannot establish the same number. Analyst review still checks that both computations implement the governed definition.</p></div></details>
 
 <details class="answer-reveal" id="probe-number-changed"><summary>The executive says the number changed since last quarter. Why?</summary><div class="detail-body"><p>Metric versions are retained, and the query run records the metric and schema versions used, so the two runs are diffed by definition, not by guesswork.</p></div></details>
 
@@ -797,12 +799,12 @@ Begin with the customer's pain, not a diagram: executives want governed natural-
 <div class="source-table-wrap"><table>
 <thead><tr><th>Minutes</th><th>Phase</th></tr></thead>
 <tbody>
-<tr><td>0–5</td><td>Discovery: the questions in <a href="#walk-discovery">step 2</a>, the ten metrics, the meaning of revenue</td></tr>
-<tr><td>5–10</td><td>Success and failure in business language: correct interpretation, acceptable latency, low unsafe-query rate, adoption; and the failure modes: wrong business question, RLS leakage, harmless-looking expensive scans</td></tr>
-<tr><td>10–18</td><td>Sketch the architecture with the semantic layer in the centre; raw schema access as an escape hatch</td></tr>
-<tr><td>18–28</td><td>Trade-offs, each tied back to the customer outcome</td></tr>
-<tr><td>28–35</td><td>Security and correctness end to end; the service account cannot query unrestricted data on behalf of users</td></tr>
-<tr><td>35–50</td><td>One implementation slice (validation and approval for one metric), rollout gates, questions</td></tr>
+<tr><td>0 to 5</td><td>Discovery: the questions in <a href="#walk-discovery">step 2</a>, the ten metrics, the meaning of revenue</td></tr>
+<tr><td>5 to 10</td><td>Success and failure in business language: correct interpretation, acceptable latency, low unsafe-query rate, adoption; and the failure modes: wrong business question, RLS leakage, harmless-looking expensive scans</td></tr>
+<tr><td>10 to 18</td><td>Sketch the architecture with the semantic layer in the centre; raw schema access as an escape hatch</td></tr>
+<tr><td>18 to 28</td><td>Trade-offs, each tied back to the customer outcome</td></tr>
+<tr><td>28 to 35</td><td>Security and correctness end to end; the service account cannot query unrestricted data on behalf of users</td></tr>
+<tr><td>35 to 50</td><td>One implementation slice (validation and approval for one metric), rollout gates, questions</td></tr>
 </tbody></table></div>
 
 <details class="answer-reveal" id="deliver-ninety-seconds"><summary>Give the 90-second architecture summary.</summary><div class="detail-body"><p>The source's spoken version, in the first person as an interview answer:</p><ul><li>We're building a governed natural-language-to-SQL assistant for executives and analysts who need fast answers but cannot afford incorrect metrics or unsafe queries.</li><li>I'd put a semantic layer between the model and the warehouse so the assistant generates SQL from approved business definitions rather than raw table names.</li><li>The service would accept a user question, classify intent and risk, resolve the relevant metric definitions, generate a constrained draft query, validate it for policy and cost, and then either execute automatically or route for approval depending on sensitivity and confidence.</li><li>Row-level security must be enforced in the warehouse, not in the prompt.</li><li>I'd log the question, the generated SQL, the metric mapping, the cost estimate, the execution result and the user identity for audit and debugging.</li><li>The biggest trade-off is flexibility versus correctness: I'd optimise for governed answers first, then add templates and fallback pathways for the long tail.</li><li>My first rollout gate would be a small set of executive metrics with a golden test corpus and a hard stop on ambiguous or expensive queries.</li></ul></div></details>
@@ -874,7 +876,7 @@ Five rules:
 - Read-only credentials, an execution-time entitlement check, warehouse-native row and column security, and a scan budget.
 - Reject a summary that contradicts the table; return the table alone.
 
-Case numbers, with context. MVP: ten governed metrics, golden question/SQL/result cases, analyst shadowing. Copilot example: 3–8 s interactive. Asian life insurer example: clarify intent below 60%; a handful of governed metric views; eight-node supervisor; 16-asset index. Cost signal: warehouse compute per answer (bytes scanned or credit time) more than 20% above the seven-day baseline. Trust example: 4.2/5 or 80% positive. Copilot evaluation examples: at least 90% supported claims, 95% correct citations and 95% correct high-risk escalation. These are source examples to confirm with the customer.
+Case numbers, with context. MVP: ten governed metrics, golden question/SQL/result cases, analyst shadowing. Copilot example: 3 to 8 s interactive. Asian life insurer example: clarify intent below 60%; a handful of governed metric views; eight-node supervisor; 16-asset index. Cost signal: warehouse compute per answer (bytes scanned or credit time) more than 20% above the seven-day baseline. Trust example: 4.2/5 or 80% positive. Copilot evaluation examples: at least 90% supported claims, 95% correct citations and 95% correct high-risk escalation. These are source examples to confirm with the customer.
 
 ### Failures, cost and the closing answer {#review-closing}
 

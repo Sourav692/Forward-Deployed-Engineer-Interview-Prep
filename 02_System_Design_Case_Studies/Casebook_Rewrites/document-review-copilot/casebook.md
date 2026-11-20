@@ -302,7 +302,7 @@ A field must explain both its value and where that value came from. Store the so
 
 For prior authorisation, preserve payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs and imaging. A low-confidence diagnosis remains uncertain. For compliance, carry document type, jurisdiction, product, business unit, obligation and evidence span. For a contract, carry clause type, normalised text, counterparty, jurisdiction and confidentiality, then compare to the approved playbook.
 
-A typed representation gives deterministic code something concrete to validate. A model returning a long summary of the file does not prove that the required field was found or that the source supports it.
+A typed representation gives deterministic code something concrete to validate. Give each field separate states for present, absent from the supplied records, not extracted and conflicting. If OCR cannot read the therapy table, the system has not established that therapy is undocumented. It has an extraction failure. Preserve the page reference and block the affected conclusion until reprocessing or review resolves it. A model returning a long summary of the file does not prove that the required field was found or that the source supports it.
 
 ### 5. Keep sensitive data inside its scope {#walk-security}
 
@@ -576,7 +576,7 @@ Contract review starts with uploaded contracts and extracted clauses, not clinic
 </tr>
 </tbody></table></div>
 
-An electronic health record (EHR) integration may use FHIR, the health-data exchange standard. Minute-level updates depend on actual subscription support; otherwise polling governs lag. Payer PDFs and portals can change over days or weeks while carrying future effective dates. Regulatory libraries and internal policies need jurisdiction and version tracking. Adviser communications may arrive continuously and require retention controls. Contract lifecycle management (CLM), document management (DMS), governance/risk/compliance (GRC), claims and e-sign systems each retain their own ownership and permission contracts.
+An electronic health record (EHR) integration may use FHIR, the health-data exchange standard. Minute-level updates depend on actual subscription support; otherwise polling governs lag. Subscription support alone does not establish an update-latency guarantee. In FHIR R5, event numbering and heartbeats help a client detect missed notifications, while delivery behaviour depends on the channel and server ([FHIR R5 subscriptions](https://hl7.org/fhir/R5/subscriptions.html)). Persist the last processed event, reconcile gaps against the source, and make repeated notifications idempotent before publishing a new evidence version. Payer PDFs and portals can change over days or weeks while carrying future effective dates. Regulatory libraries and internal policies need jurisdiction and version tracking. Adviser communications may arrive continuously and require retention controls. Contract lifecycle management (CLM), document management (DMS), governance/risk/compliance (GRC), claims and e-sign systems each retain their own ownership and permission contracts.
 
 Claims processing can reuse classification, optical character recognition (OCR), extraction, summarisation and missing-information triage. Fraud or anomaly signals need explainability, thresholds, human decision evaluation and rollout by claim type. Treat autonomous adjudication as a separate scope with additional approval and evidence requirements. An example from one workflow does not validate the others.
 
@@ -596,7 +596,7 @@ Use the extraction schema to limit what later stages may assume. A smaller model
 
 A citation builder must attach the exact supporting span, page or clause to each material claim. The verifier checks semantic support, source version and whether the reviewer may open the evidence. It must not attach the nearest chunk or shortest plausible clause merely because the answer sounds right. A contract fallback from an approved playbook still needs counsel where the approval policy requires it.
 
-Move a case through explicit states: ingested, extraction validated, gaps/risk assessed, draft verified, pending review, approved/edited/rejected. Only the permitted human transition authorises the material action. A request saying “just submit” does not skip it. If approval workflow or required citation verification is unavailable, keep the case pending.
+Move a case through explicit states: ingested, extraction validated, gaps/risk assessed, draft verified, pending review, approved or rejected. An edit creates a new draft version and returns it to verification and review. Bind approval to the exact draft, case identity, evidence set and governing-rule version that the reviewer inspected. If any of those changes materially, require a fresh approval. A request saying “just submit” does not skip the permitted human transition. If approval workflow or required citation verification is unavailable, keep the case pending.
 
 Final decisions require an immutable audit. When audit storage is unavailable, internal preparation may continue with a visible audit-pending state, but final approval or any external transition waits until its audit record is durable.
 
@@ -666,7 +666,7 @@ Contain by rolling back to `cite_v4` and routing low-citation-confidence drafts 
 
 ### Incident: the policy table never reached the index {#dive-incident-parser}
 
-In the source’s second 8 July 2026 incident, a compliance answer missed the requirement for Head of Compliance plus Legal approval on a trade exception above €5 million. The PDF had 48 pages and 17 detected tables. Extraction recovered only nine tables, or 52.9%. Layout confidence was 0.61 and `ocr_fallback=false`, yet ingestion reported success. The defect had already entered the index before the user asked the question.
+In the source’s second 8 July 2026 incident, a compliance answer missed the requirement for Head of Compliance plus Legal approval on a trade exception above €5 million. The PDF had 48 pages and 17 detected tables. Extraction recovered only nine tables, or 52.9% (9 ÷ 17 × 100, rounded to one decimal place). The count exposes a loss, but even 17 recovered tables would not prove that the €5 million threshold, currency and joint-approval cells were extracted correctly. Check those critical cells against the original page as well. Layout confidence was 0.61 and `ocr_fallback=false`, yet ingestion reported success. The defect had already entered the index before the user asked the question.
 
 Trace `trc_parse_8827` and request `req_fin_55019` showed missing text on pages 31, 32 and 33. The missing `restricted_list_threshold_matrix` was expected on page 32. Retrieval returned pages 12, 13, 14 and 21. Its context had `table_required=true`, `chunk_has_table=false`, and completeness 0.46. The 184-chunk index used `heading_aware_v2` and `text_embed_v5`.
 
@@ -709,6 +709,8 @@ If a drill-down takes eighteen seconds against a below-ten-second target, profil
 Measure cost per document and cost per true issue found, along with tokens, extraction accuracy, escalation and reviewer effort. A global switch to a cheaper model can reduce the bill while increasing missed high-risk findings. Business value, failure cost and return-on-investment assumptions need observed workflow data before expansion.
 
 ### References and source context {#dive-references}
+
+The November review adds the FHIR R5 notification-delivery qualification linked above, distinguishes unread fields from absent evidence, and binds approval to a verified draft version. The incident counts and scores remain source-reported examples. Table counts and confidence scores are diagnostic signals, not clinical validation results.
 
 The tables and diagrams retain source case data. Numerical targets are illustrative unless explicitly identified otherwise. This adaptation reorganises the source’s repeated interview, deep-dive, cheat-sheet and full-pack explanations. The incident numbers above are source-reported examples, not incidents observed in this prototype. The source lists a 27 September 2026 reference check. Its retention, supervision and vendor examples need current workflow-specific review before a production claim.
 
@@ -772,7 +774,7 @@ Spend 0-8 minutes clarifying workflow and decision ownership, 8-15 on the shared
 </tr>
 <tr>
 <td>18 seconds per answer</td>
-<td>Set the budget: batch overnight for bulk, p95 under 10 s for drill-down; decompose by stage; parallelise, cache embeddings, cut top-k before rerank, stream, small model for low risk. Do not remove citation verification; make it asynchronous for low-risk explanatory answers only</td>
+<td>Set the budget: batch overnight for bulk, p95 under 10 s for drill-down; decompose by stage; parallelise, cache embeddings, cut top-k before rerank, stream, small model for low risk. Keep material citation verification before the draft is actionable. Only non-material explanatory work may be asynchronous under the agreed risk policy</td>
 </tr>
 <tr>
 <td>Too expensive at scale</td>
@@ -789,7 +791,7 @@ Spend 0-8 minutes clarifying workflow and decision ownership, 8-15 on the shared
 </thead>
 <tbody><tr>
 <td>How would you prove the system is safe enough for production? (OpenAI-style claims practice prompt)</td>
-<td>Evaluation against human decisions on historical cases; the four-dimension gate in section 10 with a red-team suite that blocks on any violation; shadow mode before any user sees a draft; rollout by claim type starting with extraction and triage</td>
+<td>Evaluation against human decisions on historical cases; the <a href="#walk-evaluation">separate extraction, support, citation and escalation gates</a> with a red-team suite that blocks on any violation; shadow mode before any user sees a draft; rollout by claim type starting with extraction and triage</td>
 </tr>
 <tr>
 <td>The business wants to skip the governance review for the <abbr title="minimum viable product: The smallest version that proves the idea works for real users. Not a demo, something people actually use.">MVP</abbr>. What do you do? (OpenAI-style regulated-industry practice prompt)</td>
@@ -801,7 +803,7 @@ Spend 0-8 minutes clarifying workflow and decision ownership, 8-15 on the shared
 </tr>
 <tr>
 <td>What if the answer is correct but cites the wrong source?</td>
-<td>Section 14: span-level verification fails closed, citation accuracy is its own eval, the citation is the span used</td>
+<td><a href="#dive-incident-citation">The wrong-clause incident</a>: span-level verification fails closed, citation accuracy is its own evaluation, and the cited span must support the claim</td>
 </tr>
 <tr>
 <td>What if one customer sees another customer’s data?</td>

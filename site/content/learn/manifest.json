@@ -5622,7 +5622,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/",
-      "estMinutes": 43,
+      "estMinutes": 44,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -5677,7 +5677,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/",
-      "estMinutes": 86,
+      "estMinutes": 87,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -5688,7 +5688,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/",
-      "estMinutes": 43,
+      "estMinutes": 44,
       "href": "/design/document-review-copilot"
     },
     {

@@ -7,7 +7,7 @@
   "level": "Foundation",
   "author": "By Sourav Banerjee",
   "source_url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
-  "updated": "Teaching rewrite, 16 November 2026",
+  "updated": "Technical review, 20 November 2026",
   "mode": "teach",
   "markdown": "casebook.md",
   "source_inventory": "source.json",
@@ -1299,7 +1299,7 @@
   ],
   "editorial_review": {
     "status": "reviewed",
-    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure. Per-item coverage preserves the source mechanisms, numbers and qualifications."
+    "evidence": "16 November 2026: compared a fresh live capture with the saved source; section text and all original image hashes match. Reviewed all authored prose against the existing source mapping. Rewrote the brief and explanatory leads across walkthrough, deep dives, Practice and Quick review for definitions, reasoning and stage outputs. Retained substantive source tables, figures and all worked answers byte-for-byte. A concise two-topic brief defines the employee assistant and RAG, then uses Priya\u2019s SLA question as the example rather than adding a redundant example subsection. Access changes, supported/uncertain answers, read-only scope, action approval, operator/Security ownership and source variants remain. Related cases move into an optional disclosure. Per-item coverage preserves the source mechanisms, numbers and qualifications. 20 November 2026: complete maintained-baseline review and targeted repairs; see .website_spec/casebook-review-2026-11-20/enterprise-knowledge-assistant/audit.json. Browser and visual evidence is recorded separately."
   },
   "required_answer_reveals": [
     "enterprise-answer-1",
@@ -1316,13 +1316,13 @@
   ],
   "visual_review": {
     "status": "reviewed",
-    "evidence": "Inspected the rebuilt desktop opening and 375px full-page rendering. Case-specific brief hierarchy, body measure, local source diagram, five-section navigation and mobile topic selector remain readable. The 10 source figures retain exactly the previously inspected SVG bytes; asset hashes and decoding are rechecked in content-check.json and browser-check.json. Source alias navigation, disclosures, notes/export, all 11 keyboard-operated worked answers and print/no-script/storage-failure behaviour pass current browser reports.",
-    "opening_decision": "Two brief topics use Priya\u2019s question as the running example; related variants remain in a native optional disclosure. No redundant example, glossary or learning-goal subsection added."
+    "evidence": "20 November 2026: inspected regenerated desktop and 390px phone openings and all 10 light source figures at enlarged scale. Five-section reader, topic navigation, body measure, figures and full-size links retained. Browser-check.json separately verifies expanded sections at six widths, notes/export, progress, answer reveals, no-script, print and denied storage. Hallmark rendered sweep: zero FAIL and zero Reflex findings; straight-quote Finish warning retained for source prose, code and exact prompts."
   },
   "source_refresh_review": {
     "date": "2026-11-16",
     "status": "unchanged",
     "sections": 91,
     "evidence": "See source-refresh.json: fresh live capture compared by source-section text_sha256 and image sha256, with no content or diagram changes."
-  }
+  },
+  "updated_at": "2026-11-20"
 }
