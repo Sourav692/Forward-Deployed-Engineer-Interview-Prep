@@ -11,15 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [status updates, decision notes, bad news, delays, estimates]
 ---
 
 ## Start with three weeks of "exploring improvements"
 
-At Saltcote Housing, the fictional housing association building a repairs triage assistant, the FDE lead recommended training a small model on 20,000 past repair jobs to suggest the trade for each new report. The sponsor agreed in week 2. The target was 85 correct trades in 100.
-
-In week 5 the first test on 600 labelled reports scored 71 in 100. The weekly updates for weeks 5, 6 and 7 said "Model training in progress. Exploring improvements." Each was true. In week 8 a repairs planner mentioned to the sponsor that the assistant "still gets nearly a third of jobs wrong". The sponsor asked why she was hearing it from a planner.
+At Saltcote Housing, Ruth, the FDE lead on the repairs triage assistant, recommended training a small model on 20,000 past repair jobs to suggest the trade for each new report. The sponsor agreed in week 2, with a target of 85 correct trades in 100. In week 5 the first test on 600 labelled reports scored 71 in 100. The weekly updates for weeks 5, 6 and 7 each said "Model training in progress. Exploring improvements." Each was true. In week 8 a repairs planner mentioned to the sponsor that the assistant "still gets nearly a third of jobs wrong", and the sponsor asked why she was hearing it from a planner.
 
 Call this **the activity update**: a report of what the team did, which hides what it found.
 
@@ -110,13 +108,13 @@ Do not give a guarantee you cannot keep, and do not refuse to give a date. Separ
 - **Give a range for the rest, with what moves it.** "Phone and email reports follow between mid-March and mid-April, depending on the change board."
 - **Say when the range will narrow.** "We will know after the integration test on 20 January, and I will update you that week."
 
-Basecamp's Shape Up describes work as a hill: uphill while the team is still working out the approach and its unknowns, downhill once the remaining work is known. A date for uphill work is a guess. A date for downhill work is an estimate. Tell the sponsor which parts are which, and move them across as the unknowns resolve.
+Basecamp's Shape Up describes work as a hill: uphill while the team is still working out the approach and its unknowns, downhill once the remaining work is known. A date for uphill work is a guess. A date for downhill work is an estimate. Tell the sponsor which parts are which, and move them across as the unknowns resolve. How to build the range and say what moves it is taught in [estimates people can trust](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/05_Estimates_People_Can_Trust.md).
 
 ## Limits of this lesson
 
 - **Colours vary.** Some customers use their own status scheme. Use theirs, and keep a sentence of reason beside it.
 - **Not every miss needs a meeting.** A small miss your team can absorb is a line in the update, not a call to the sponsor.
-- **Fictional data.** Saltcote Housing, its tests and costs are illustrative.
+- **Composite engagement.** Saltcote Housing, its tests and costs are illustrative, not a real customer.
 
 ## Interview angle
 

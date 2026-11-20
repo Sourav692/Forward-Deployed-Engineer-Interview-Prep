@@ -73,7 +73,7 @@ The same decision means different things to different readers. Explaining it the
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The ADR holds all three views in one record. In meetings, lead with the view the audience needs and keep the rest for questions.
+The ADR holds all three views in one record. In meetings, lead with the view the audience needs and keep the rest for questions. Briefing a whole steering group from one fact sheet, and choosing the order of the briefings, is taught in [one design, three audiences](/learn/fde-in-the-field/stakeholder-communication/one-design-three-audiences).
 
 ## Running a design review
 
@@ -84,6 +84,8 @@ A **design review** is a meeting where the people who will build, secure and run
 3. **Walk one request through.** Including a failure, so reviewers see the behaviour, not a box diagram.
 4. **Collect objections as questions.** For each: is it a standard, a constraint, a preference or a missing fact?
 5. **Record the outcome in the ADR.** Accepted, or the changes needed and who owns them.
+
+When a review drifts into one engineer's implementation preferences, [workshops and reviews that decide](/learn/fde-in-the-field/stakeholder-communication/workshops-and-reviews-that-decide) shows how to sort a standard from a preference and keep the review on its decision.
 
 ## When the engineers reject what the sponsor approved
 

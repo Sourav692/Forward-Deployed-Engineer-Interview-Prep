@@ -11,19 +11,19 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [practice, interview, behavioural, stakeholders, communication]
 ---
 
 ## How to use this practice
 
-These questions come up in behavioural and customer rounds. The interviewer wants a real situation, what you did, the result and what you would change. Each model answer below uses a fictional engagement to show that shape. Replace it with your own story when you practise.
+These questions come up in behavioural and customer rounds. The interviewer wants a real situation, what you did, the result and what you would change. Each model answer below uses a composite engagement to show that shape. Replace it with your own story when you practise.
 
 1. Read the question and set a two-minute timer.
 2. Answer aloud, as you would to an interviewer, from one of your own engagements.
 3. Open the outline and compare. Check that you named what you did yourself, gave a result with a number or a decision, and said what you would change.
 
-How to build and rehearse the stories themselves is taught in the Career lesson [three formats for one project](../../../../01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md). Saltcote Housing and Brackley Media, and every figure below, are fictional.
+How to build and rehearse the stories themselves is taught in the Career lesson [three formats for one project](../../../../01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md). Saltcote Housing and Brackley Media are composites, not real customers, and every figure below is illustrative.
 
 > **What you'll practise**
 >

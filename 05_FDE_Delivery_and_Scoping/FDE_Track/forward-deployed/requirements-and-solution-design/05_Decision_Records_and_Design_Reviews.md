@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "19 November 2026"
+last_updated: "21 November 2026"
 tags: [architecture decision records, design review, trade-offs, stakeholders]
 ---
 
@@ -87,7 +87,7 @@ The same decision means different things to different readers. Explaining it the
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The ADR holds all three views in one record. In meetings, lead with the view the audience needs and keep the rest for questions.
+The ADR holds all three views in one record. In meetings, lead with the view the audience needs and keep the rest for questions. Briefing a whole steering group from one fact sheet, and choosing the order of the briefings, is taught in [one design, three audiences](../../fde-in-the-field/stakeholder-communication/01_One_Design_Three_Audiences.md).
 
 ## Running a design review
 
@@ -98,6 +98,8 @@ A **design review** is a meeting where the people who will build, secure and run
 3. **Walk one request through.** Including a failure, so reviewers see the behaviour, not a box diagram.
 4. **Collect objections as questions.** For each: is it a standard, a constraint, a preference or a missing fact?
 5. **Record the outcome in the ADR.** Accepted, or the changes needed and who owns them.
+
+When a review drifts into one engineer's implementation preferences, [workshops and reviews that decide](../../fde-in-the-field/stakeholder-communication/02_Workshops_and_Reviews_That_Decide.md) shows how to sort a standard from a preference and keep the review on its decision.
 
 ## When the engineers reject what the sponsor approved
 

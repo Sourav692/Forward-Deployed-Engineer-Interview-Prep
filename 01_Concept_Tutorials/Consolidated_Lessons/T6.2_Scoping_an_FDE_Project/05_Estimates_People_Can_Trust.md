@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "19 November 2026"
+last_updated: "21 November 2026"
 tags: [scoping, estimation, uncertainty, ranges, spikes, communication]
 ---
 
@@ -104,6 +104,8 @@ Avoid both "it depends" and fake certainty. Give the current range, the assumpti
 | Estimate change | An assumption changed. Here is the new work and the trade-off. |
 
 *Table 2: Plain wording under uncertainty. Each line gives a range or a cause, never a shrug.*
+
+When a sponsor asks you to guarantee a date for their board, [updates, decision notes and bad news](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/04_Updates_Decision_Notes_and_Bad_News.md) shows how to commit to what you control and give a range for the rest.
 
 ## Worked example: estimating the class-booking MVP
 
