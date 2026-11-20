@@ -103,7 +103,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **One proxy, one host.** Many estates have several proxies and many dependencies. The method holds, and the allow list grows.
 - **Fully disconnected sites** have no proxy at all. The air-gapped AI system case covers that design.
-- **Fictional data.** Glamis Utilities, its timings and its people are illustrative.
+- **Composite engagement.** Glamis Utilities, its timings and its people are illustrative, not a real customer.
 
 ## Interview angle
 

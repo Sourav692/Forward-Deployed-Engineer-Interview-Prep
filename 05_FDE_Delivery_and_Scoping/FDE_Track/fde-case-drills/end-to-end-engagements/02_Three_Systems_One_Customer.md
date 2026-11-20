@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [simulation, integration, data ownership, identifier mapping, rate limits, entity resolution]
 ---
 
@@ -115,7 +115,7 @@ The walkthrough is a scripted illustration. The strongest defence is the write l
 
 ## Limits of this lesson
 
-- **Fictional data.** Bewick Telecom, its customers and every figure are illustrative.
+- **Composite engagement.** Bewick Telecom, its customers and every figure are illustrative, not a real customer.
 - **Matching is a field of its own.** This lesson uses two tiers. Large estates may need a master data management product and a data steward team.
 - **Notification duties vary.** Who must be told about a data exposure, and when, depends on law and contract. The customer's privacy owner decides.
 

@@ -95,7 +95,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **Clean traces.** Hesketh had per-hop traces with request IDs. Without them the diagnosis takes far longer, and adding them is the first action.
 - **A clean rollback.** Version 2.8 changed no data. A release that migrates data may not roll back this easily.
-- **Fictional data.** Hesketh Retail, its numbers and its timeline are illustrative.
+- **Composite engagement.** Hesketh Retail, its numbers and its timeline are illustrative, not a real customer.
 
 ## Interview angle
 

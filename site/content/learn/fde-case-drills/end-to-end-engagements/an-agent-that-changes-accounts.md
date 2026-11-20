@@ -100,7 +100,7 @@ The walkthrough is a scripted illustration. A risk team trusts an agent by its l
 
 ## Limits of this lesson
 
-- **Fictional data.** Elstow Bank, its cases and every figure are illustrative.
+- **Composite engagement.** Elstow Bank, its cases and every figure are illustrative, not a real customer.
 - **Core systems differ.** Not every core banking system accepts idempotency keys. Without them, look up by a client reference before any retry, or keep the step manual.
 - **Regulation applies.** Customer redress, complaint handling and record keeping follow the bank's own regulatory duties.
 

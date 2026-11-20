@@ -8671,7 +8671,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/01_The_Vague_AI_for_Operations_Request.md",
       "estMinutes": 14,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-vague-ai-for-operations-request",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "three-systems-one-customer",
@@ -8683,7 +8683,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/02_Three_Systems_One_Customer.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/three-systems-one-customer",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "spreadsheets-to-an-approvals-app",
@@ -8695,7 +8695,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/03_Spreadsheets_to_an_Approvals_App.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/spreadsheets-to-an-approvals-app",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "a-permission-aware-knowledge-assistant",
@@ -8707,7 +8707,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/04_A_Permission_Aware_Knowledge_Assistant.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/a-permission-aware-knowledge-assistant",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "an-agent-that-changes-accounts",
@@ -8719,7 +8719,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/05_An_Agent_That_Changes_Accounts.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/an-agent-that-changes-accounts",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "shipping-into-a-locked-down-network",
@@ -8731,7 +8731,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/06_Shipping_Into_a_Locked_Down_Network.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/shipping-into-a-locked-down-network",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-incident-with-two-suspects",
@@ -8743,7 +8743,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/07_The_Incident_With_Two_Suspects.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-incident-with-two-suspects",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "prototype-to-production",
@@ -8755,7 +8755,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/08_Prototype_to_Production.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/prototype-to-production",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-live-migration-cutover",
@@ -8767,7 +8767,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/09_The_Live_Migration_Cutover.md",
       "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-live-migration-cutover",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-deployment-users-avoid",
@@ -8779,7 +8779,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/10_The_Deployment_Users_Avoid.md",
       "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-deployment-users-avoid",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "one-platform-many-customers",
@@ -8791,7 +8791,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/11_One_Platform_Many_Customers.md",
       "estMinutes": 14,
       "href": "/learn/fde-case-drills/end-to-end-engagements/one-platform-many-customers",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "the-engagement-that-is-failing",
@@ -8803,7 +8803,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/12_The_Engagement_That_Is_Failing.md",
       "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/the-engagement-that-is-failing",
-      "updated": "2026-11-19"
+      "updated": "2026-11-20"
     },
     {
       "slug": "a-six-week-support-assistant",
@@ -8813,9 +8813,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/13_A_Six_Week_Support_Assistant.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/fde-case-drills/end-to-end-engagements/a-six-week-support-assistant",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "document-processing-in-a-legacy-estate",
@@ -8825,9 +8825,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/14_Document_Processing_in_a_Legacy_Estate.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-case-drills/end-to-end-engagements/document-processing-in-a-legacy-estate",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "defending-your-engagement-in-the-interview",
@@ -8839,7 +8839,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-case-drills/end-to-end-engagements/15_Defending_Your_Engagement_in_the_Interview.md",
       "estMinutes": 10,
       "href": "/learn/fde-case-drills/end-to-end-engagements/defending-your-engagement-in-the-interview",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-case-drills-1",
