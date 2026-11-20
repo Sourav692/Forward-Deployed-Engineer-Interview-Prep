@@ -2,7 +2,7 @@
   "version": 2,
   "catalog_url": "https://forwarddeployedprep.com/design",
   "catalog_captured_at": "2026-11-15T15:11:53.730571+00:00",
-  "updated_at": "2026-11-20T23:07:53+00:00",
+  "updated_at": "2026-11-20T23:33:15+00:00",
   "cases": [
     {
       "slug": "enterprise-knowledge-assistant",
@@ -57,9 +57,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/enterprise-knowledge-assistant",
-        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
-        "checked_at": "2026-11-20T03:35:02+00:00",
-        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/enterprise-knowledge-assistant/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-knowledge-assistant/live-check.json"
       }
     },
@@ -116,9 +116,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/nl-over-governed-data",
-        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
-        "checked_at": "2026-11-20T03:35:02+00:00",
-        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/nl-over-governed-data/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/nl-over-governed-data/live-check.json"
       }
     },
@@ -175,9 +175,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/document-review-copilot",
-        "deployment": "dpl_H3ufeytNQzBYAN7GXYBLzHva5but",
-        "checked_at": "2026-11-20T03:35:02+00:00",
-        "evidence": "Production verification passed on release merge f1ae93342deab0416964c0e032aaeeb5e236b549: revised content, all five panels at six widths, fragment aliases, image loading, notes/export, progress, keyboard answers, themes, print, denied storage and no-script checks. Protected production assets match baseline hashes. Desktop and phone screenshots visually reviewed.",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/document-review-copilot/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/document-review-copilot/live-check.json"
       }
     },
@@ -235,9 +235,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/deep-research-agent",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/deep-research-agent/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/deep-research-agent/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/live-check.json"
       }
     },
@@ -295,9 +295,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/customer-support-automation",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/customer-support-automation/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/customer-support-automation/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/live-check.json"
       }
     },
@@ -355,9 +355,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/tool-using-agent-with-safety-controls/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/tool-using-agent-with-safety-controls/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/live-check.json"
       }
     },
@@ -415,9 +415,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/sre-incident-response-agent/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/sre-incident-response-agent/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/live-check.json"
       }
     },
@@ -475,9 +475,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/sales-copilot",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/sales-copilot/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/sales-copilot/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/live-check.json"
       }
     },
@@ -535,9 +535,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/enterprise-coding-assistant/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/enterprise-coding-assistant/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/live-check.json"
       }
     },
@@ -595,9 +595,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/real-time-call-assistant/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/real-time-call-assistant/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/live-check.json"
       }
     },
@@ -655,9 +655,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/logistics-exception-handling/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/logistics-exception-handling/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/live-check.json"
       }
     },
@@ -715,9 +715,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/secure-multi-tenant-ai-platform/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/secure-multi-tenant-ai-platform/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/live-check.json"
       }
     },
@@ -775,9 +775,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
-        "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
-        "checked_at": "2026-11-20T08:13:08+00:00",
-        "evidence": "Production dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/release/browser/high-volume-batch-pipeline/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/high-volume-batch-pipeline/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/live-check.json"
       }
     },
@@ -833,9 +833,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/agent-platform-for-non-technical-users/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/agent-platform-for-non-technical-users/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/agent-platform-for-non-technical-users/live-check.json"
       }
     },
@@ -891,9 +891,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/consumer-scale-chat-service",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/consumer-scale-chat-service/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/consumer-scale-chat-service/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/consumer-scale-chat-service/live-check.json"
       }
     },
@@ -949,9 +949,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/llm-inference-serving",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/llm-inference-serving/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/llm-inference-serving/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/llm-inference-serving/live-check.json"
       }
     },
@@ -1007,9 +1007,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/scoping-to-deployed-agent",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/scoping-to-deployed-agent/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/scoping-to-deployed-agent/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/scoping-to-deployed-agent/live-check.json"
       }
     },
@@ -1065,9 +1065,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/evaluation-and-release-gating/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/evaluation-and-release-gating/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/evaluation-and-release-gating/live-check.json"
       }
     },
@@ -1123,9 +1123,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/observability-and-production-diagnosis/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/observability-and-production-diagnosis/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/live-check.json"
       }
     },
@@ -1181,9 +1181,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/model-development-and-post-training",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:36+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/model-development-and-post-training/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:14+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/model-development-and-post-training/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/model-development-and-post-training/live-check.json"
       }
     },
@@ -1239,9 +1239,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/recruiting-platform",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:37+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/recruiting-platform/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/recruiting-platform/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/recruiting-platform/live-check.json"
       }
     },
@@ -1297,9 +1297,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/travel-agent-worked-example",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:37+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/travel-agent-worked-example/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:15+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/travel-agent-worked-example/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/travel-agent-worked-example/live-check.json"
       }
     },
@@ -1355,9 +1355,9 @@
       "live": {
         "status": "passed",
         "url": "https://forwarddeployedprep.com/design/air-gapped-ai-system",
-        "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-        "checked_at": "2026-11-20T12:02:37+00:00",
-        "evidence": "Production dpl_6kF833JANMBRkRdDnoubjgoh3Zp5: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/release/browser/air-gapped-ai-system/live-check.json",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3 re-verified on 21 November 2026 after the catalog-wide release: revised reader hash, five panels, legacy aliases, source images, practice features, progress, themes, print and denied storage (browser check .website_spec/casebook-review-24-33-2026-11-21/release/browser-all/air-gapped-ai-system/live-check.json).",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/air-gapped-ai-system/live-check.json"
       }
     },
@@ -1367,7 +1367,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/reliable-workflow-orchestration",
       "worksheet_url": "https://forwarddeployedprep.com/practice/reliable-workflow-orchestration-system",
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1408,14 +1408,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/reliable-workflow-orchestration",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/reliable-workflow-orchestration/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/reliable-workflow-orchestration/); figures and 1440/390 screenshots inspected (reliable-workflow-orchestration/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:12+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/reliable-workflow-orchestration/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/reliable-workflow-orchestration/live-check.json"
       }
     },
@@ -1425,7 +1425,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/configurable-platform-customer-workflows",
       "worksheet_url": "https://forwarddeployedprep.com/practice/configurable-platform-customer-specific-workflows",
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1466,14 +1466,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/configurable-platform-customer-workflows",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/configurable-platform-customer-workflows/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/configurable-platform-customer-workflows/); figures and 1440/390 screenshots inspected (configurable-platform-customer-workflows/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:12+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/configurable-platform-customer-workflows/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/configurable-platform-customer-workflows/live-check.json"
       }
     },
@@ -1483,7 +1483,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/enterprise-chatbot-platform",
       "worksheet_url": "https://forwarddeployedprep.com/practice/enterprise-chatbot-platform",
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1524,14 +1524,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/enterprise-chatbot-platform",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/enterprise-chatbot-platform/); figures and 1440/390 screenshots inspected (enterprise-chatbot-platform/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:12+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/enterprise-chatbot-platform/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-chatbot-platform/live-check.json"
       }
     },
@@ -1541,7 +1541,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/self-adapting-agent",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1582,14 +1582,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/self-adapting-agent",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/self-adapting-agent/); figures and 1440/390 screenshots inspected (self-adapting-agent/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:12+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/self-adapting-agent/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/self-adapting-agent/live-check.json"
       }
     },
@@ -1599,7 +1599,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/personal-assistant-with-memory",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1640,14 +1640,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/personal-assistant-with-memory",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/personal-assistant-with-memory/); figures and 1440/390 screenshots inspected (personal-assistant-with-memory/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/personal-assistant-with-memory/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/personal-assistant-with-memory/live-check.json"
       }
     },
@@ -1657,7 +1657,7 @@
       "theme": "Additional System Designs",
       "source_url": "https://forwarddeployedprep.com/design/production-llm-gateway",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1698,14 +1698,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/production-llm-gateway",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/production-llm-gateway/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/production-llm-gateway/); figures and 1440/390 screenshots inspected (production-llm-gateway/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/production-llm-gateway/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/production-llm-gateway/live-check.json"
       }
     },
@@ -1715,7 +1715,7 @@
       "theme": "Product Judgement and Problem Decomposition",
       "source_url": "https://forwarddeployedprep.com/design/prioritize-ai-use-cases",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1757,14 +1757,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/prioritize-ai-use-cases",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/prioritize-ai-use-cases/); figures and 1440/390 screenshots inspected (prioritize-ai-use-cases/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/prioritize-ai-use-cases/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/prioritize-ai-use-cases/live-check.json"
       }
     },
@@ -1774,7 +1774,7 @@
       "theme": "Product Judgement and Problem Decomposition",
       "source_url": "https://forwarddeployedprep.com/design/scale-prototype-to-production",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1815,14 +1815,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/scale-prototype-to-production",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/scale-prototype-to-production/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/scale-prototype-to-production/); figures and 1440/390 screenshots inspected (scale-prototype-to-production/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/scale-prototype-to-production/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/scale-prototype-to-production/live-check.json"
       }
     },
@@ -1832,7 +1832,7 @@
       "theme": "Product Judgement and Problem Decomposition",
       "source_url": "https://forwarddeployedprep.com/design/build-when-customer-data-is-poor",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1873,14 +1873,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/build-when-customer-data-is-poor",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/build-when-customer-data-is-poor/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/build-when-customer-data-is-poor/); figures and 1440/390 screenshots inspected (build-when-customer-data-is-poor/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/build-when-customer-data-is-poor/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/build-when-customer-data-is-poor/live-check.json"
       }
     },
@@ -1890,7 +1890,7 @@
       "theme": "Product Judgement and Problem Decomposition",
       "source_url": "https://forwarddeployedprep.com/design/decomposition-classics-67-68-69",
       "worksheet_url": null,
-      "stage": "Review draft",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
         "case-brief": "complete",
@@ -1931,14 +1931,14 @@
         "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json"
       },
       "updated": "2026-11-20",
-      "note": "Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment.",
-      "next_action": "Deploy this ten-case batch and verify production pages.",
+      "note": "Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit.",
+      "next_action": "Maintain through the existing source and publishing pipeline.",
       "live": {
-        "status": "pending",
+        "status": "passed",
         "url": "https://forwarddeployedprep.com/design/decomposition-classics-67-68-69",
-        "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-        "checked_at": null,
-        "evidence": "Complete maintained-baseline review and repairs (.website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/audit.json); finish_case offline build, validation and browser check passed (.casebook-build/decomposition-classics-67-68-69/); figures and 1440/390 screenshots inspected (decomposition-classics-67-68-69/visual-review.json).",
+        "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+        "checked_at": "2026-11-20T23:33:13+00:00",
+        "evidence": "Production dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3: revised reader hash, six widths, five panels, legacy aliases, all source images, practice notes/export, reversible progress, keyboard answers, themes, print, denied storage and no-script passed. Public protected asset hashes match the immutable baseline. /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-24-33-2026-11-21/release/browser/decomposition-classics-67-68-69/live-check.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/decomposition-classics-67-68-69/live-check.json"
       }
     }
@@ -4528,6 +4528,171 @@
       "at": "2026-11-20T23:07:53+00:00",
       "slug": "decomposition-classics-67-68-69",
       "change": "Set Review draft. Complete editorial review, repairs, offline build, browser and visual checks passed. Awaiting deployment."
+    },
+    {
+      "at": "2026-11-20T23:33:12+00:00",
+      "slug": "reliable-workflow-orchestration",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:12+00:00",
+      "slug": "configurable-platform-customer-workflows",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:12+00:00",
+      "slug": "enterprise-chatbot-platform",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:12+00:00",
+      "slug": "self-adapting-agent",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "personal-assistant-with-memory",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "production-llm-gateway",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "prioritize-ai-use-cases",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "scale-prototype-to-production",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "build-when-customer-data-is-poor",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "decomposition-classics-67-68-69",
+      "change": "Set Complete. Editorial review and production verification complete for this batch. Limitations and technical evidence remain in the per-case audit."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "agent-platform-for-non-technical-users",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "air-gapped-ai-system",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "consumer-scale-chat-service",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "customer-support-automation",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:13+00:00",
+      "slug": "deep-research-agent",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "document-review-copilot",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "enterprise-coding-assistant",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "enterprise-knowledge-assistant",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "evaluation-and-release-gating",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "high-volume-batch-pipeline",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "llm-inference-serving",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "logistics-exception-handling",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "model-development-and-post-training",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "nl-over-governed-data",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:14+00:00",
+      "slug": "observability-and-production-diagnosis",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "real-time-call-assistant",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "recruiting-platform",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "sales-copilot",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "scoping-to-deployed-agent",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "secure-multi-tenant-ai-platform",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "sre-incident-response-agent",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "tool-using-agent-with-safety-controls",
+      "change": "Set Complete. Updated section/check states or artifacts."
+    },
+    {
+      "at": "2026-11-20T23:33:15+00:00",
+      "slug": "travel-agent-worked-example",
+      "change": "Set Complete. Updated section/check states or artifacts."
     }
   ]
 }

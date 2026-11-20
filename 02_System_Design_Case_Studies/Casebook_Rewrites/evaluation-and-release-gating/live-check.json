@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
-  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
-  "checked_at": "2026-11-20T12:00:22.821Z",
+  "deployment": "dpl_9GAx2o9omid7Ut34o8gEH5DeRTS3",
+  "checked_at": "2026-11-20T23:32:34.209Z",
   "checks": {
     "responsive": {
       "widths": [
