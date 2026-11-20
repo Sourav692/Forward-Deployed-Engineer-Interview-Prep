@@ -118,6 +118,7 @@ The walkthrough is a scripted illustration. The strongest defence is the write l
 - **Composite engagement.** Bewick Telecom, its customers and every figure are illustrative, not a real customer.
 - **Matching is a field of its own.** This lesson uses two tiers. Large estates may need a master data management product and a data steward team.
 - **Notification duties vary.** Who must be told about a data exposure, and when, depends on law and contract. The customer's privacy owner decides.
+- **Shorter drills.** For 20-minute versions on different customers, run [drill 2, a health-data hub](../case-drills/01_Practise_Case_Drills_1.md#drill-2-a-health-data-hub-across-clinical-systems) and [drill 3, an order-to-cash sync](../case-drills/01_Practise_Case_Drills_1.md#drill-3-an-order-to-cash-sync-with-the-erp).
 
 ## Interview angle
 

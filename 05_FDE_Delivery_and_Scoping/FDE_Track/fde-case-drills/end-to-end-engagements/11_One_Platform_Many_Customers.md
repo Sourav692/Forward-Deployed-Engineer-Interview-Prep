@@ -128,6 +128,7 @@ Concede that the platform approach costs design time up front. Offer a fast path
 - **Scope.** Tenant isolation and single sign-on are taught in their own lessons, linked below.
 - **Product politics.** Moving a request into core needs the product owner's agreement.
 - **Composite engagement.** Ludlow Software, Morpeth Health, Nairn Council, Otley Bank and every figure here are illustrative, not real customers.
+- **Shorter drill.** For a 20-minute version on a different customer, run [drill 5, an assistant on a platform with many customers](../case-drills/01_Practise_Case_Drills_1.md#drill-5-an-assistant-on-a-platform-with-many-customers).
 
 ## Interview angle
 
