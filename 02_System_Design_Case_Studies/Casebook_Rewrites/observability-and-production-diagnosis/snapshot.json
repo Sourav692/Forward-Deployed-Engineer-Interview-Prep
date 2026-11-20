@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "78662548dba10ae9da90384af23be44b7b1114d56fb444e11f57dbabface71f4",
-  "html_sha256": "9178fddec3c791ab5f2afafb3cc26f4e275e439d049741c8471e58083ba72216",
-  "config_sha256": "67149fdc06d37834235c864513666900cf2276de9f954a7d8bb4fcce81cec824",
+  "markdown_sha256": "3416e94dcf7475fb6274dfbbf52d9d295aa8a346d6d4b16cc3218d77e059adf1",
+  "html_sha256": "66bf5543ea4a6c75b8b5a6e0a36f928f2df7281823f5971b1a056c484f56bb03",
+  "config_sha256": "3f8d2daadf70c2aa7f18a067eebb9190d66408ececcd437b718da1b90e16842a",
   "source_url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
   "validation": {
     "passed": true,
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "Compared all 49 captured sections (dumped from source.json HTML with tables) against the rewrite item by item. The four overlapping tracks were folded into one path: the main guide's compact requirement and failure paragraphs were merged with the fuller Full Design tables in steps 3 and 6, the deep-dive incident bullets merged into the complete latency and cost spike dives, and the cheat-sheet kept as Quick review. Expansions are definitions the source assumed (span, trace, correlation ID, tenant, cardinality, exemplar, break-glass, cross-encoder, KV cache, prefill/decode), derived arithmetic that reproduces source figures (110-155 GB storage, 4x/9x queueing, 3.8 days of budget, ~20.2 s stage sum with a percentile caveat), and read-the-table paragraphs for both incident telemetry tables. Two additions are labelled as not from the source: the 0.95^3 sampling illustration and the 100%/90-day changed-constraint question. The Acme German refund trace became the brief's worked example; the external worksheet is disclosed as not imported. All seven figures in both variants are placed beside the text that walks them."
+      "evidence": "Compared all 49 captured sections (dumped from source.json HTML with tables) against the rewrite item by item. The four overlapping tracks were folded into one path: the main guide's compact requirement and failure paragraphs were merged with the fuller Full Design tables in steps 3 and 6, the deep-dive incident bullets merged into the complete latency and cost spike dives, and the cheat-sheet kept as Quick review. Expansions are definitions the source assumed (span, trace, correlation ID, tenant, cardinality, exemplar, break-glass, cross-encoder, KV cache, prefill/decode), derived arithmetic that reproduces source figures (110-155 GB storage, 4x/9x queueing, 3.8 days of budget, ~20.2 s stage sum with a percentile caveat), and read-the-table paragraphs for both incident telemetry tables. Two additions are labelled as not from the source: the 0.95^3 sampling illustration and the 100%/90-day changed-constraint question. The Acme German refund trace became the brief's worked example; the external worksheet is disclosed as not imported. All seven figures in both variants are placed beside the text that walks them. November 20 complete maintained-baseline review: Complete maintained casebook: brief, eight walkthrough steps with all tables and figures, redaction, sampling, failure-drill, latency and cost incident, neighbouring-prompt and pivot deep dives, references, all practice answers and pivot cards, and Quick review. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline. Source inconsistencies settled in text (2026-11-21): cost incident priced the GPT-4-class request at $2.74 (about 9\u00d7 $0.31) while the 32K list prices give $1.44 for 21,384 in and 1,288 out \u2192 $1.44 and about 4.6\u00d7 (also more consistent with a 3.8\u00d7 bill on 7% more requests and contexts mostly over the 12,000-token routing threshold); a 12-second hard timeout beside a 22.18 s p95 \u2192 taught as limits at different boundaries (gateway timeout versus console measurement)."
     }
   }
 }

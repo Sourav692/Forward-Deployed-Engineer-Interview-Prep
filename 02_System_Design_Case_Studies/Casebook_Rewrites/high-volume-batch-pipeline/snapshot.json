@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "f658720a529030b21beccf66bed71cc4ed86489e17a0996a54f13332e0eb43fd",
-  "html_sha256": "90602c24e44b1caaa01fd6aed5b536eec7cd4d0faed5da684dfbf4ae933ebc8d",
+  "markdown_sha256": "887fe5985111b117c2890c11c9f6414b50980310517e04736b0b1ca1c5c42f81",
+  "html_sha256": "d9a58acc839b47629e33337bce913f71edb431aad503b2b84c9f0ba287f3124a",
   "config_sha256": "41b4180c9ec16bbe7b7409d81eff6be74075349379f41e3db5b3d119ea8f6195",
   "source_url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
   "validation": {

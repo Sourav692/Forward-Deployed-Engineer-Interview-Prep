@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "16373d77d9c186681cb7198cffbe1a49907d3c46be98f36bbff2b4bde59ff5f4",
-  "html_sha256": "bbff9275e265777c71dc2efccd30ae5da91d6ee03697a08ffab650547fb89aa7",
+  "markdown_sha256": "a0f8bd3014d1f3cfde80c73b265c64fc59e6680b6f9ba8d07726e73dc07b3a03",
+  "html_sha256": "2ec95304786b0021915740bfac1181c2082a988e1869bcd34e2184f4474b62d7",
   "config_sha256": "67bffbfe6038ec1eaa8f6cf26b16d2817913ddd22b06239e4ab5294ac751e1c5",
   "source_url": "https://forwarddeployedprep.com/design/customer-support-automation",
   "validation": {

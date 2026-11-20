@@ -541,7 +541,7 @@ Six study-guide tutorials end with a mock design of this same system in a framew
 
 ### References and source boundaries {#references}
 
-The November review adds approval-version binding, distinguishes offline replay from live shadow mode, and makes the incorrect-resolution denominator explicit. It also corrects the framework example: graph recovery does not undo remote side effects, and a resumed interrupted node can run again. See the [LangGraph interrupt rules](https://docs.langchain.com/oss/python/langgraph/interrupts) and [Stripe idempotent-request contract](https://docs.stripe.com/api/idempotent_requests) for the recovery mechanisms. Backend key scope and retention must be checked for the payment provider actually used.
+Graph recovery does not undo remote side effects, and a resumed interrupted node can run again. See the [LangGraph interrupt rules](https://docs.langchain.com/oss/python/langgraph/interrupts) and [Stripe idempotent-request contract](https://docs.stripe.com/api/idempotent_requests) for the recovery mechanisms. Backend key scope and retention must be checked for the payment provider actually used.
 
 The source checked these references on 27 September 2026. Each is listed with the claim it supports. The captured source attributes a vendor-reported 76% Fin resolution rate and a deflection range to Intercom; that is contextual vendor evidence, not a promised result or launch gate for this case. The framework paths and chunk-size examples are historical implementation references; this rewrite does not assert present provider or library guarantees.
 

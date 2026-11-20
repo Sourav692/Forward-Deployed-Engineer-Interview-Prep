@@ -699,7 +699,7 @@ The test deliberately omits authentication middleware, request signing, database
 
 ### References {#references}
 
-The November review corrects PostgreSQL FORCE/BYPASSRLS behaviour, pooled-session and schema enforcement, and envelope-key erasure claims. It adds concurrent spend reservation and states the fair-queue example's equal-work assumption. [PostgreSQL RLS](https://www.postgresql.org/docs/18/ddl-rowsecurity.html), [transaction-local settings](https://www.postgresql.org/docs/18/sql-set.html), [AWS data keys](https://docs.aws.amazon.com/kms/latest/developerguide/data-keys.html) and [KMS deletion](https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html) support these corrections. The source's earlier fact-check was dated 27 September 2026. They support the specific claims beside them; this rewrite does not assert anything newer about the products named.
+[PostgreSQL RLS](https://www.postgresql.org/docs/18/ddl-rowsecurity.html), [transaction-local settings](https://www.postgresql.org/docs/18/sql-set.html), [AWS data keys](https://docs.aws.amazon.com/kms/latest/developerguide/data-keys.html) and [KMS deletion](https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html) support the specific claims beside them; this casebook does not assert anything newer about the products named.
 
 - [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html): trust only verified tokens, claims or sessions, never client-set fields.
 - [New name for Azure Active Directory (Microsoft Learn)](https://learn.microsoft.com/en-us/entra/fundamentals/new-name): Azure AD is now Microsoft Entra ID.

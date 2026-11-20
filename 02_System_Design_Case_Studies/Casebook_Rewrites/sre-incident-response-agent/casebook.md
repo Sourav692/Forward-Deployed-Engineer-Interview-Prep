@@ -991,7 +991,7 @@ Deliver it in six moves: frame the impact, decompose the path, name the largest 
 
 ### References {#references}
 
-The source fact-checked these references on 27 September 2026. Each line says what the source uses it to support. The November review rechecks the cited Prometheus security model, Resilience4j breaker mechanism and permission-check guidance. It also qualifies the small-model boundary, injection handling, recovery example and 10× scaling assumption, and adds time-correct historical replay. Other historical vendor references remain source context. No live observability backend or production rollback was exercised.
+The source fact-checked these references on 27 September 2026. Each line says what the source uses it to support. Other historical vendor references remain source context. No live observability backend or production rollback was exercised.
 
 - [Grafana roles and permissions](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/): Grafana enforces org, team and folder permissions (the telemetry map's permission column).
 - [Prometheus security model](https://prometheus.io/docs/operating/security/): Prometheus has no fine-grained authorisation, so access is controlled in front of it.

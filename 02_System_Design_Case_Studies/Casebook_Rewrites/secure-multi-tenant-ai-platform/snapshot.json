@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "77f196ef7bd29860f0a64d96ccfb5ad56b1daacdfb98e2cf74c259896f58f253",
-  "html_sha256": "be8600d74e48e232153979a6513c2711c2b67902a6cd7fa5e7d98356e0df15b2",
+  "markdown_sha256": "d74bb06eefc61e546156f894449f9d2df2a4ff6ee7348f597565d5c28369f95f",
+  "html_sha256": "1fe5f926affa86e09436c22995effccdb287510d294f94c579bda033b39a7db8",
   "config_sha256": "86709565e97b92c9d2034770f5960504cbdc36fa6c191c07164dd964d27809d5",
   "source_url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
   "validation": {

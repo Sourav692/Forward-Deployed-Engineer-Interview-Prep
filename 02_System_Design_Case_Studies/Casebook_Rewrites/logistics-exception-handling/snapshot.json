@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "5ffa6850a64a01fab0cc0897e28e6c90720c3c3b0b7c5591f0bec1458447ecdb",
-  "html_sha256": "14ba89ecba2be6d7601d6a1c7f7aaf36a585ce452bd14cf685e5ac70cfc7a5e7",
+  "markdown_sha256": "1b40735a8f318a5a1ae3e2f1d21cfb7f8011b7e6136dd297fecfad625cedc858",
+  "html_sha256": "9677cfa748bbcc19c55cd4e917f9e9b6d9117e7a0931ac8ae3da19cf7910a97b",
   "config_sha256": "2a1d78f0160a0eb865440e9b5960c6782dcb70197369a7d9be57da1403e50640",
   "source_url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
   "validation": {

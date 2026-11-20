@@ -34,7 +34,7 @@ The page assumes you have met fine-tuning, optimiser state and held-out evaluati
 
 ### Follow one problem through the loop {#brief-example}
 
-This trace is illustrative; the problem and its numbers are invented for the walkthrough, not taken from the source.
+This trace is illustrative; the problem and its numbers are invented for the walkthrough.
 
 A word problem arrives from a licensed problem set: "Pencils cost $1.20 for three. How much do ten pencils cost?" Its reference answer is $4.00, and a program can check any candidate answer against it. Before training, deduplication finds that the same problem appears with "pens" instead of "pencils" in a public benchmark the team will evaluate on, so decontamination removes the training copy. A different, clean problem continues.
 
@@ -470,7 +470,7 @@ A tuned model also freezes its task definition, which is the cost the book asks 
 
 ### References {#references}
 
-The November review scoped the post-training and pass@1 definitions, corrected the KV-cache definition, added reference-model and value-model compute, anchored the 3e14 FLOP/s assumption to hardware peaks, corrected the smaller-budget scaling advice, qualified the drift-penalty rule with the DAPO exception and added 4-bit block-scale overhead. Primary references: [Hoffmann et al. 2022](https://arxiv.org/abs/2203.15556), [Yu et al. 2025, DAPO](https://arxiv.org/abs/2503.14476), [Shao et al. 2024, DeepSeekMath (GRPO)](https://arxiv.org/abs/2402.03300), [Dettmers et al. 2023, QLoRA](https://arxiv.org/abs/2305.14314), [Chen et al. 2021, pass@k estimation](https://arxiv.org/abs/2107.03374), the [NVIDIA H100](https://www.nvidia.com/en-us/data-center/h100/) and [A100](https://www.nvidia.com/en-us/data-center/a100/) specifications. The source's fact-check sources, checked 27 September 2026. Each line states the claim it supports in this case.
+Primary references: [Hoffmann et al. 2022](https://arxiv.org/abs/2203.15556), [Yu et al. 2025, DAPO](https://arxiv.org/abs/2503.14476), [Shao et al. 2024, DeepSeekMath (GRPO)](https://arxiv.org/abs/2402.03300), [Dettmers et al. 2023, QLoRA](https://arxiv.org/abs/2305.14314), [Chen et al. 2021, pass@k estimation](https://arxiv.org/abs/2107.03374), the [NVIDIA H100](https://www.nvidia.com/en-us/data-center/h100/) and [A100](https://www.nvidia.com/en-us/data-center/a100/) specifications. The source's fact-check sources, checked 27 September 2026. Each line states the claim it supports in this case.
 
 - [Kaplan et al. 2020, Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361): training ≈ 6 × parameters × tokens FLOPs; generation ≈ 2 × parameters per token.
 - [Rajbhandari et al. 2019, ZeRO](https://arxiv.org/abs/1910.02054): about 16 bytes per parameter for mixed-precision Adam (≈112 GB for 7B).

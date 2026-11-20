@@ -780,7 +780,7 @@ Every strong cost or latency answer uses four verbs in order:
 
 ### Sources and where the material comes from {#dive-references}
 
-The November review distinguishes raw-audio recognition from redacted-language-model input, fixes the speech-end clock origin and live-fact dependency, and adds current snapshot authorisation and negated-commitment checks. Recording-law examples are qualified rather than used as automatic legal decisions. [PCI SSC FAQ 1210](https://www.pcisecuritystandards.org/faqs/1210/), [18 U.S.C. 2511](https://uscode.house.gov/us/usc/t18/s2511/) and the [California judicial instructions](https://courts.ca.gov/system/files/2024-08/judicial_council_of_california_civil_jury_instructions_2024.pdf) support the retained payment and consent distinctions. No real call or vendor latency benchmark ran in this review.
+Recording-law examples are qualified rather than used as automatic legal decisions. [PCI SSC FAQ 1210](https://www.pcisecuritystandards.org/faqs/1210/), [18 U.S.C. 2511](https://uscode.house.gov/us/usc/t18/s2511/) and the [California judicial instructions](https://courts.ca.gov/system/files/2024-08/judicial_council_of_california_civil_jury_instructions_2024.pdf) support the retained payment and consent distinctions. The latency figures are not from a real call or a vendor benchmark.
 
 This case has one question-bank prompt and one latency drill and no source worked design, so most of the original page was built by the source author from the group's prompts. The table shows what each contributes; its section numbers refer to the chapters of the original page's Full Design, which this rewrite distributes across the walkthrough, deep dives and Practice.
 

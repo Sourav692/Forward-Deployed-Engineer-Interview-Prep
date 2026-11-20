@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "0b37a6ac911f0d55cac31e5f5c5bf89bf107d45887f2c104b4b6038209f8e08c",
-  "html_sha256": "4b949a2d80844ee6fea44e8c38e7ce3c82b1bedd873eb6ed2d9d9b079d6dcb31",
+  "markdown_sha256": "1b973efe1aba8798a974ae5a96277ae204c3593a91d687f63a3f0782fda99fc2",
+  "html_sha256": "77876fdcbf366fcd0f7467a80df601598bf9d9730e8eb899de2e5dab48295fd7",
   "config_sha256": "b6fe73b6326437f9558b2aad9e08299b259aee3a8f0b47b8bf601b2987f84685",
   "source_url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
   "validation": {

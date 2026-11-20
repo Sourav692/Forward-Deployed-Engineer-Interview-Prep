@@ -15,7 +15,7 @@ A few terms carry the rest of the page:
 - An **LLM grader** (also called LLM-as-judge) is a large language model, the kind of model that reads and writes text, used to score outputs against a rubric. It is powerful and fallible: it can confidently reward the wrong answer.
 - A **slice** is a subset of cases that share a property, such as every case about regulated claims. A **critical slice** is one whose failure the business cannot accept, however good the average looks.
 
-The hard part is trusting the decision. In the source's incident, a sales copilot passed 96.7% of 120 release cases, which looked healthy. Only six of those cases tested regulated claims, and that slice passed at 83.3%. In production the share of drafts with unsupported claims rose from 1.2% to 8.7%. The aggregate score hid the failure the business feared most. We return to that incident in full in the [incident deep dive](#dive-incident).
+The hard part is trusting the decision. In the source's incident, a sales copilot passed 96.7% of 120 release cases, which looked healthy. Only six of those cases tested regulated claims, and that slice passed at 83.3%. In production the share of drafts with unsupported claims rose from 1.2% to 8.6%. The aggregate score hid the failure the business feared most. We return to that incident in full in the [incident deep dive](#dive-incident).
 
 ### Follow one change through the gate {#brief-example}
 
@@ -1020,7 +1020,7 @@ Six signals tell the story:
 </thead>
 <tbody><tr>
 <td>Online unsupported-claim rate</td>
-<td>8.7% against a 1.2% baseline, sample size 430</td>
+<td>8.6% against a 1.2% baseline, sample size 430</td>
 <td>Production regressed badly</td>
 </tr>
 <tr>
@@ -1050,7 +1050,7 @@ Six signals tell the story:
 </tr>
 </tbody></table></div>
 
-The arithmetic shows how small the warning was. One source figure does not reconcile: 37 failures over 430 drafts is about 8.6%, not 8.7%. The two rows may count different things (unsupported-claim drafts versus policy failures) or use different windows, so quote them as reported and confirm the denominator before using either as an alert threshold. The diagnosis does not depend on the difference. 96.7% of 120 is 116 passing cases. 83.3% of 6 is five passing cases: a single failure in the slice that mattered. Averaged over 120, that one failure barely moved the aggregate.
+The arithmetic shows how small the warning was. 37 failures over 430 drafts is about 8.6%. 96.7% of 120 is 116 passing cases. 83.3% of 6 is five passing cases: a single failure in the slice that mattered. Averaged over 120, that one failure barely moved the aggregate.
 
 Two changes landed together on 2026-07-08 at 09:00. The router moved drafting from `llm_standard_v2` to `llm_premium_v3` after an offline eval showed better fluency. The policy evaluator also moved from block mode to warn-only during the experiment, to reduce false positives.
 
@@ -1087,7 +1087,7 @@ Map the incident back onto the anchor design. Its gate would have caught this in
 
 The interview answer turns on that diagnosis. A weak answer: "The model is too creative. I would make the prompt stricter and ask sales reps to review the output." A strong answer, spoken in the first person:
 
-> "The failure is an eval and launch-gate problem. The suite passed at 96.7%, but it had only six regulated-claim cases and the online unsupported-claim rate jumped to 8.7%. I would roll back the model route, restore blocking for external claims, add claim-level evals for security, ROI, and customer-logo claims, and require critical slices to pass independently before release."
+> "The failure is an eval and launch-gate problem. The suite passed at 96.7%, but it had only six regulated-claim cases and the online unsupported-claim rate jumped to 8.6%. I would roll back the model route, restore blocking for external claims, add claim-level evals for security, ROI, and customer-logo claims, and require critical slices to pass independently before release."
 
 ### Two neighbouring prompts, one gate {#dive-neighbours}
 
@@ -1247,7 +1247,7 @@ Every strong cost answer runs through four verbs in order:
 
 ### References {#references}
 
-The November review clarifies the deterministic-policy claim, the delta sign and percentage-point conventions, paired and clustered bootstrapping, chance-corrected grader agreement, the launch-review thresholds, the judge-cache key and the incident rate discrepancy. Supporting references: [Miller 2024, Adding Error Bars to Evals](https://arxiv.org/abs/2411.00640) on paired comparisons and clustered errors, [SciPy bootstrap documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html) on percentile intervals and paired resampling, and [scikit-learn Cohen's kappa](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html) on chance-corrected agreement. The source's fact-check sources were checked on 27 September 2026. They support specific claims above: the 412 status for a failed conditional write, verbosity bias in LLM judges, the compliance and deletion notes, and the human-review cost note.
+Supporting references: [Miller 2024, Adding Error Bars to Evals](https://arxiv.org/abs/2411.00640) on paired comparisons and clustered errors, [SciPy bootstrap documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html) on percentile intervals and paired resampling, and [scikit-learn Cohen's kappa](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html) on chance-corrected agreement. The source's fact-check sources were checked on 27 September 2026. They support specific claims above: the 412 status for a failed conditional write, verbosity bias in LLM judges, the compliance and deletion notes, and the human-review cost note.
 
 - [RFC 9110 HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match): sections 13.1.1 (If-Match) and 15.5.13 (412). A failed If-Match returns 412 Precondition Failed, not 409.
 - [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685): LLM judges show verbosity bias.
@@ -1275,7 +1275,7 @@ The ten questions below are the source's Check Yourself drills. Answer each alou
 
 <details class="answer-reveal" id="check-verbosity"><summary>6. How is the verbosity-rewarding grader detected and prevented?</summary><div class="detail-body"><p>Detect a score shift toward long, low-alignment answers against a baseline grader. Prevent it by versioning the grader, storing rubric hashes and calibrating on concise-correct and verbose-wrong cases.</p></div></details>
 
-<details class="answer-reveal" id="check-incident"><summary>7. In the sales-copilot incident, what three facts show the gate failed rather than the model?</summary><div class="detail-body"><p>A 96.7% pass on 120 cases with only 6 regulated-claim cases, an 83.3% pass on that slice, and warn-only policy mode. Production ran 8.7% unsupported claims against a 1.2% baseline.</p></div></details>
+<details class="answer-reveal" id="check-incident"><summary>7. In the sales-copilot incident, what three facts show the gate failed rather than the model?</summary><div class="detail-body"><p>A 96.7% pass on 120 cases with only 6 regulated-claim cases, an 83.3% pass on that slice, and warn-only policy mode. Production ran 8.6% unsupported claims against a 1.2% baseline.</p></div></details>
 
 <details class="answer-reveal" id="check-benchmark"><summary>8. The offline benchmark improved but the customer says quality fell. Name three explanations.</summary><div class="detail-body"><p>An unrepresentative benchmark, a regressed customer segment, and worse edge cases hidden by a better average. Also possible: retrieval changed, the user experience slowed, or structured output got less reliable.</p></div></details>
 
@@ -1370,7 +1370,7 @@ Every level can draw the pass, block or hold gate. The level shows in who trusts
 
 **Failure policy.** Grader timeout or evidence-store outage blocks. A delayed dashboard degrades if the decision record is durable. Retry idempotent writes; dead-letter persistent failures to human review. Roll back on a bad canary, an unchecked severe incident or untrustworthy scoring.
 
-**Incident to cite.** Sales copilot: 96.7% pass on 120 cases; only six regulated-claim cases, passing at 83.3%; unsupported claims 8.7% online versus 1.2% baseline; claim policy switched to warn-only. Roll back the route, restore blocking, add claim-level critical-slice coverage, and version the policy mode.
+**Incident to cite.** Sales copilot: 96.7% pass on 120 cases; only six regulated-claim cases, passing at 83.3%; unsupported claims 8.6% online versus 1.2% baseline; claim policy switched to warn-only. Roll back the route, restore blocking, add claim-level critical-slice coverage, and version the policy mode.
 
 **Cost close.** Sample easy cases for smoke, use a cheap judge then strong-judge or human escalation, run full critical suites at release, and cache only unchanged pairs. Do not thin the highest-risk slice.
 
@@ -1386,7 +1386,7 @@ Every level can draw the pass, block or hold gate. The level shows in who trusts
 - The decision checks quality, safety, latency and cost separately, judges quality on a lower bound, and never lets quality hide a safety drop.
 - A grader is release logic: versioned, calibrated against humans, advisory until agreement holds.
 - Critical slices pass on their own, because an aggregate pass rate can hide the failure the business fears.
-- The sales-copilot incident passed at 96.7% with six regulated-claim cases while production ran 8.7% unsupported claims.
+- The sales-copilot incident passed at 96.7% with six regulated-claim cases while production ran 8.6% unsupported claims.
 - A post-upgrade regression is the gate run retroactively, and an evaluation strategy is the gate built from nothing.
 - Missing evidence blocks, thin evidence holds, and dashboards degrade while the gate keeps its record.
 - Trust is earned on one application first, then graders, then latency and cost gates, then a shared schema.

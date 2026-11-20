@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "cb7e249a62d3c551bcb7303cbc7fb8e8b75f31bee76cf668ec3a89a679a7f144",
-  "html_sha256": "1a02f4be423be5649143e6e27624e01deb12e0a2ad506d18e1c78c756b28472b",
+  "markdown_sha256": "ae3d54997d525cc88f1962fa03326edc3e61e5a96660cbe6a0379877176c81b1",
+  "html_sha256": "7fcca08adf06b98691f0f37c5a866b389f43fdfaf47c6ab2d29898b4bc581e31",
   "config_sha256": "3d31dfab20db180f70381d895a91129696b93d517e10a37df915b3ce3c6814a8",
   "source_url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
   "validation": {

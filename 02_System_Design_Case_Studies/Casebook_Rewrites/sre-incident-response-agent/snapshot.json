@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "ab74bb82f62541b774b864214cfa2e694661653c0b663cad843308e324543581",
-  "html_sha256": "371da3caf85773cad223b6618935344c98073dfc974c68be9c005dbd357b005b",
+  "markdown_sha256": "9877d557a97c6be3b76a9ece2d717ea80b8cb351c592dd2e019acea7fcd87326",
+  "html_sha256": "cc5f05ff35bff9356bc11efd99dffd4a21324a176a2a7eb2ff62f33f76c44101",
   "config_sha256": "d67dd455af91f1ca1efaf81118e88e753822a99121a9d3f19d8eedee93827c7e",
   "source_url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
   "validation": {

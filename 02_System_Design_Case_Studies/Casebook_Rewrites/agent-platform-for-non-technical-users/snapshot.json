@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "2dbf7893f5a8c920b6f9a55460cd37767b0f879b57ba0c07a1cea549f1d167b1",
-  "html_sha256": "9a99d6e6122d956f1f636e0fa246cad1fd5267534c29e15d0342d3c103e504f7",
+  "markdown_sha256": "6a6e77f37083cca8a095a56abe572af1a2f29cebc63a16fa50080974c824d4c7",
+  "html_sha256": "a7768f77153c1118ee0a628223a0249963644173dac4d3a8353f32736f7adddf",
   "config_sha256": "1b6e0dc3f1a0427800601226b4d7ba7b36e2e669d3014ae18686cef6cfc9214b",
   "source_url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
   "validation": {
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "16 November 2026: re-read all 47 captured sections against the earlier draft section by section. The draft covered the guardrail and gap tables but had dropped or paraphrased away the main questions table's concrete restatements, the non-functional table, the interview shortcut, the nine nouns, u_author_wrong_hat, the 1-apply/1-apply result, the RAG false-alarm link, the $5-vs-$50 note, the three-layer weak/strong argument, the bridge to other cases, the sixty-minute timing table, the six carrying lines and the source two-minute answer (replaced by an authored one); all are restored. The $500 anchor is now its own walkthrough step, the brief defines tenant, canonical event, declarative spec, guardrail and idempotency before use, and each of the eight source figures has a caption and lead naming its actual nodes instead of 'source figure N'. Added reasoning not in the source (effect-before-checkpoint window, args_hash implying fresh authority, event-to-run dedup) is labelled 'Beyond the source'. Broken ', ' allow-row cell fixed; old section-number references rewritten as links. Three source follow-ups (shadow trial, mid-flight stop, cost pivot) added as worked answers 12-14. No RAG specifics transplanted."
+      "evidence": "16 November 2026: re-read all 47 captured sections against the earlier draft section by section. The draft covered the guardrail and gap tables but had dropped or paraphrased away the main questions table's concrete restatements, the non-functional table, the interview shortcut, the nine nouns, u_author_wrong_hat, the 1-apply/1-apply result, the RAG false-alarm link, the $5-vs-$50 note, the three-layer weak/strong argument, the bridge to other cases, the sixty-minute timing table, the six carrying lines and the source two-minute answer (replaced by an authored one); all are restored. The $500 anchor is now its own walkthrough step, the brief defines tenant, canonical event, declarative spec, guardrail and idempotency before use, and each of the eight source figures has a caption and lead naming its actual nodes instead of 'source figure N'. Added reasoning not in the source (effect-before-checkpoint window, args_hash implying fresh authority, event-to-run dedup) is labelled 'Beyond the source'. Broken ', ' allow-row cell fixed; old section-number references rewritten as links. Three source follow-ups (shadow trial, mid-flight stop, cost pivot) added as worked answers 12-14. No RAG specifics transplanted. November 20 complete maintained-baseline review: Complete maintained casebook: brief and case map, ten walkthrough steps, seven diagrams, guardrail and promotion tables, durability, idempotency, gaps, Cascade build and cost deep dives, all practice reveals, the sixty-minute plan and Quick review. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/agent-platform-for-non-technical-users/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline."
     }
   }
 }

@@ -875,7 +875,7 @@ A global model downgrade, or one large model for every path, is the wrong respon
 
 ### References and where the case comes from {#references}
 
-The November review qualifies symbol and public-code checks, corrects prefix-cache and network-transfer claims, and adds commit-aware indexing and document-version cancellation. [GitHub code referencing](https://docs.github.com/en/enterprise-cloud%40latest/copilot/concepts/completions/code-referencing) describes matching against public-code indexes rather than blanket licence clearance. [Claude prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) documents prefix reuse and provider-specific cache behaviour. The latency allocations remain illustrative, not benchmarks run in this review.
+[GitHub code referencing](https://docs.github.com/en/enterprise-cloud%40latest/copilot/concepts/completions/code-referencing) describes matching against public-code indexes rather than blanket licence clearance. [Claude prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) documents prefix reuse and provider-specific cache behaviour. The latency allocations are illustrative, not benchmarks.
 
 The source page folds one worked design and one practice prompt into a single read. The table records which input contributed which part, using the source's own section numbers.
 

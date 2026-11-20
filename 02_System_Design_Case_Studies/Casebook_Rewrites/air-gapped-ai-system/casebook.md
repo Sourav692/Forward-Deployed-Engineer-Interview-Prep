@@ -1047,13 +1047,13 @@ These are discussion maps, not compliance claims. The customer's compliance auth
 
 ### Source references {#references}
 
-The November review corrected the KV-cache definition, explained the prefill and decode split behind the sizing caveat, added offline time and revocation handling, completed the idempotency-key contract, named verify-before-parse, duplicate-key, hex-case and rollback-replay gaps in the two verifier sketches, and updated the AU-2 title. Primary references: [NIST SP 800-53 Rev 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final), [RFC 8785 JSON canonicalisation](https://www.rfc-editor.org/rfc/rfc8785), [RFC 8259 on duplicate object names](https://www.rfc-editor.org/rfc/rfc8259#section-4), [The Update Framework specification](https://theupdateframework.github.io/specification/latest/), [DistServe on prefill and decode](https://arxiv.org/abs/2401.09670) and the [SLSA specification](https://slsa.dev/spec/). The source author checked these references on 27 September 2026. They support the standards and supply-chain claims above; verify current requirements with the customer's authorised reviewers.
+Primary references: [NIST SP 800-53 Rev 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final), [RFC 8785 JSON canonicalisation](https://www.rfc-editor.org/rfc/rfc8785), [RFC 8259 on duplicate object names](https://www.rfc-editor.org/rfc/rfc8259#section-4), [The Update Framework specification](https://theupdateframework.github.io/specification/latest/), [DistServe on prefill and decode](https://arxiv.org/abs/2401.09670) and the [SLSA specification](https://slsa.dev/spec/). The source author checked these references on 27 September 2026. They support the standards and supply-chain claims above; verify current requirements with the customer's authorised reviewers.
 
 - [NIST SP 800-53 Rev 5 control catalog (OSCAL JSON, usnistgov/oscal-content)](https://github.com/usnistgov/oscal-content/tree/main/nist.gov/SP800-53/rev5): control titles for CM-3, CM-14, AU-2, AU-12 and SC-7.
 - [FedRAMP](https://www.fedramp.gov/): authorises cloud services, not on-premises products.
 - [NIAP Product Compliant List](https://www.niap-ccevs.org/product/pcl): Common Criteria listing for commercial IT products used in national security systems.
 - [DISA Security Technical Implementation Guides](https://www.cyber.mil/stigs/): DoD configuration guides for operating systems and other products.
-- [SLSA provenance specification v1.0](https://slsa.dev/spec/v1.0/provenance): build provenance attestations. The SLSA site now marks later versions current (v1.2 at the November review), so check the version the customer's policy names.
+- [SLSA provenance specification v1.0](https://slsa.dev/spec/v1.0/provenance): build provenance attestations. The SLSA site now marks later versions current (v1.2 in November 2026), so check the version the customer's policy names.
 - [Python hmac.compare_digest](https://docs.python.org/3/library/hmac.html#hmac.compare_digest): constant-time comparison to reduce timing attacks.
 
 ## Practice

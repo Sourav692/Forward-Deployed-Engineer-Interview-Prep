@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "2b5dd3ac9fa9a0bfa6ddc70358deff636aaa6b8860d867dbe4198a893bb08837",
-  "html_sha256": "b42e754d572ff93b19ad7d9d9d727e19c50eda723a13da5dd4c104485ed998b6",
+  "markdown_sha256": "acea42c470e3e5f49f327488ce11bca0062ef1357b738c3d6a9d796cd524f3a7",
+  "html_sha256": "236efd522bcdcfb76747b32e12c18f39222c9bddf2158424e2ab290e45458c6d",
   "config_sha256": "04221d04f5f796bfb19d4091dbcca3e19b8fd9fb6d42db5a957d9d99615959cf",
   "source_url": "https://forwarddeployedprep.com/design/deep-research-agent",
   "validation": {

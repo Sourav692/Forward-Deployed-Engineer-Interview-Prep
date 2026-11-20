@@ -866,7 +866,7 @@ The source compares three ways to build the same product. Each is a real option 
 
 ### References and source notes {#dive-sources}
 
-The November review qualifies the original privacy, cost and grade-distribution claims. Typed findings do not make injected content trustworthy, and whole-run cost savings need measurement. The routing code remains an illustrative sketch, with its signature limitations explained above. Historical deployment details are source-reported, not a deployment reproduced for this review. [OWASP LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) supports layered controls. [Python typing](https://docs.python.org/3/library/typing.html) distinguishes annotations from runtime enforcement.
+Typed findings do not make injected content trustworthy, and whole-run cost savings need measurement. The routing code is an illustrative sketch, with its signature limitations explained above. Historical deployment details are reported by the original team, not reproduced here. [OWASP LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) supports layered controls. [Python typing](https://docs.python.org/3/library/typing.html) distinguishes annotations from runtime enforcement.
 
 The source was fact-checked on 27 September 2026. Each reference is listed with the claim it supports in this case.
 

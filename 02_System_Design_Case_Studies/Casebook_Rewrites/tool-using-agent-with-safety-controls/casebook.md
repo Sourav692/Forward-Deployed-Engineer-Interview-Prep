@@ -852,7 +852,7 @@ Interviewers probe exactly four pairs, and each has a resolved shape: give a lit
 
 ### Source references {#references}
 
-The November review adds the missing remote-success/local-receipt crash window, qualifies token revocation and catalog-size assumptions, and distinguishes formally permitted actions from user-authorised intent. [MCP 2025-11-25 authorisation](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) requires resource-bound token handling. [RFC 7009](https://www.rfc-editor.org/rfc/rfc7009.html) describes revocation and propagation limits. The incident logs below remain source-reported teaching evidence, not observed transactions in this review.
+[MCP 2025-11-25 authorisation](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) requires resource-bound token handling. [RFC 7009](https://www.rfc-editor.org/rfc/rfc7009.html) describes revocation and propagation limits. The incident logs below remain source-reported teaching evidence, not observed transactions in this review.
 
 The captured case's reference check was dated 27 September 2026. The protocol and tool-selection material is retained as source context rather than a claim about every current provider or implementation.
 
