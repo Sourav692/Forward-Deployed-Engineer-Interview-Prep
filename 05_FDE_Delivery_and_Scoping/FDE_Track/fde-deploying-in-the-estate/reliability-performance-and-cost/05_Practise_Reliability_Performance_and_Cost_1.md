@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [practice, interview, reliability, retries, idempotency, AI system design]
 ---
 
@@ -60,6 +60,7 @@ Taught in [recovering half-finished work](01_Recovering_Half_Finished_Work.md).
 - **Answer:** Verify the signature, store the raw event, and reply 200 quickly, then process from a queue. Skip any event ID you have already processed. For ordering, compare the event's timestamp or sequence with the payment's stored state, and never let "succeeded" overwrite "refunded". When in doubt, fetch the payment's current state from the provider's API and apply that. Alert on events that refer to unknown payments.
 - **Trade-off:** Fetching current state costs an API call per event. Trusting event order risks reopening a refunded payment.
 - **Follow-up to expect:** "How long do you keep event IDs?" Longer than the provider's retry window, often a few days.
+- **Go deeper:** [The webhook receiver](../../enterprise-integration/receiving-webhooks-safely/01_The_Webhook_Receiver.md).
 
 </details>
 

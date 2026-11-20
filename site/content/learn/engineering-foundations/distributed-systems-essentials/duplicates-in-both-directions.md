@@ -113,7 +113,7 @@ The two directions need two stores:
 
 *Table 2: The inbound and outbound records. The first stops you applying a repeat. The second stops you causing one.*
 
-Ordering is a separate problem. A repeated event and an out-of-order event need different fixes. [Recovering half-finished work](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work) covers version checks, and the next lesson covers ordering per entity. Webhook signatures and freshness checks are in [rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync).
+Ordering is a separate problem. A repeated event and an out-of-order event need different fixes. [Recovering half-finished work](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work) covers version checks, and the next lesson covers ordering per entity. Webhook signatures and freshness checks are in [the webhook receiver](/learn/enterprise-integration/receiving-webhooks-safely/the-webhook-receiver).
 
 Go deeper on idempotency keys inside one workflow in [durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency), and on a scoped key for an API's own clients in [build the MVP: learn and design](/learn/staff-ai-system-design/mvp/mvp-learn-and-design). When to retry at all is in [retries and fallbacks](/learn/production-ai/robust-agents/retries-and-fallbacks).
 

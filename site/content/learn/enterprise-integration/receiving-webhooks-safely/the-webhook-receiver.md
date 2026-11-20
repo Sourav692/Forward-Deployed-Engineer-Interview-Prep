@@ -3,13 +3,7 @@
 
 ## Start with the slow yes
 
-Felbrigg Lettings, a fictional letting agency, collects rent through a payments provider. When a tenant pays, the provider sends a `payment.succeeded` webhook to Felbrigg's receiver. The receiver checked the signature, then did all the work before it replied: it wrote the payment to the rent ledger, cleared any arrears flag, rendered a PDF receipt and emailed it. Then it returned 200.
-
-On the first of the month, 6,200 tenants paid between 07:00 and 09:00. The ledger database slowed and each request took about 14 seconds. The provider waits 10 seconds for a reply. After that it treats the delivery as failed and retries.
-
-Felbrigg's receiver kept no record of handled events. Every slow delivery finished its work after the provider had given up, and then the retry did the same work again. By 09:30 the ledger showed 1,870 tenants as having paid twice, and some three times. Finance caught it the next morning, an hour before the landlord payout run would have paid out on credits that did not exist.
-
-The receiver said yes only after doing everything, and could not recognise an event it had already handled. Call this **the slow yes**.
+Zara, a forward deployed engineer, is called in by Felbrigg Lettings, a letting agency that collects rent through a payments provider. Its receiver checked each `payment.succeeded` webhook's signature, then wrote the payment to the rent ledger, cleared any arrears flag, rendered a PDF receipt and emailed it, and only then returned 200. On the first of the month, 6,200 tenants paid between 07:00 and 09:00, the ledger slowed to about 14 seconds a request, and the provider, which waits 10 seconds, retried every delivery that ran past that. The receiver kept no record of handled events, so each retry did the work again: by 09:30 the ledger showed 1,870 tenants as having paid twice, and some three times. Finance caught it an hour before the landlord payout run would have paid out on credits that did not exist. The receiver said yes only after doing everything, and could not recognise an event it had already handled. Call this **the slow yes**.
 
 > **What you'll learn**
 >
@@ -21,7 +15,7 @@ The receiver said yes only after doing everything, and could not recognise an ev
 
 ## A public endpoint and its threats
 
-A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync) shows how webhook events feed a sync. This lesson builds the receiver in front of it.
+A webhook receiver is an HTTPS endpoint on the internet. Assume anyone can find it and send it anything. [Rate limits, backlogs and two-way sync](/learn/enterprise-integration/connecting-enterprise-systems/rate-limits-backlogs-and-two-way-sync) shows how webhook events feed a sync, and [recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs) shows why events alone are not enough. This lesson builds the receiver in front of them.
 
 | Threat | What the attacker or fault does | Defence |
 |---|---|---|
@@ -62,7 +56,7 @@ A signature proves the provider made the request, not that it made it recently o
 
 Retries pass the timestamp check, because each attempt is signed with its own time, but they keep the same event ID. So the event-ID record must outlive the provider's whole retry schedule. If the provider retries for three days, keep records for at least three days. A record kept for an hour turns the fourth retry into a fresh event.
 
-**Claiming** the event ID means inserting it into a table with a unique constraint. The insert either succeeds, so this delivery is new, or fails on the constraint, so it was seen before. Do the claim and the enqueue in one transaction. A common form is an **inbox table**: one row per event, keyed by event ID, holding the raw body and a status. One insert claims the ID and stores the work. If they were separate, a crash between them would leave the ID claimed with nothing queued, and every retry would be discarded as a duplicate. The general mechanics of idempotent processing are in [durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency).
+**Claiming** the event ID means inserting it into a table with a unique constraint. The insert either succeeds, so this delivery is new, or fails on the constraint, so it was seen before. Do the claim and the enqueue in one transaction. A common form is an **inbox table**: one row per event, keyed by event ID, holding the raw body and a status. One insert claims the ID and stores the work. If they were separate, a crash between them would leave the ID claimed with nothing queued, and every retry would be discarded as a duplicate. Why a unique constraint beats a lookup, and how outbound calls get the same protection, is taught in [duplicates in both directions](/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions).
 
 ## Acknowledge after the durable enqueue
 
@@ -125,16 +119,16 @@ flowchart LR
 
 Three details complete it:
 
-- **Out-of-order events.** Retries mean a `payment.refunded` can arrive before the `payment.succeeded` it refers to. The worker compares a version or sequence in the event with the stored one and holds or skips stale updates. Or treat the event as a signal and fetch current state from the API. How events are shaped and routed internally is in [canonical events and routing](/learn/production-ai/agentic-workflow-platforms/canonical-events-and-routing).
-- **Missed events.** A provider gives up eventually. Pair the receiver with a scheduled poll of "changed since" from the provider's API, as taught in [choosing the transport](/learn/enterprise-integration/framing-an-integration/choosing-the-transport).
+- **Out-of-order events.** Retries mean a `payment.refunded` can arrive before the `payment.succeeded` it refers to. The worker compares a version or sequence in the event with the stored one and holds or skips stale updates. Or treat the event as a signal and fetch current state from the API. Version checks are taught in [recovering half-finished work](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work).
+- **Missed events.** A provider gives up eventually. Pair the receiver with a scheduled poll of "changed since" from the provider's API, as taught in [choosing the transport](/learn/enterprise-integration/framing-an-integration/choosing-the-transport), and a reconciliation, as in [recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs).
 - **Measures.** Track verification failures, duplicates, inbox depth and the age of the oldest unprocessed row. Age shows how late payments are. Depth does not.
 
-Felbrigg rebuilt its receiver this way. On the next first of the month, every reply took under 50 milliseconds, and 31 retries after a network fault were all claimed as duplicates.
+Zara rebuilt Felbrigg's receiver this way. On the next first of the month, every reply took under 50 milliseconds, and 31 retries after a network fault were all claimed as duplicates.
 
 ## Limits of this lesson
 
 - **A generic scheme.** Real providers name headers differently, and some sign only the body or use asymmetric keys. The order of checks stays the same.
-- **Fictional data.** Felbrigg Lettings, its volumes and its timings are illustrative.
+- **Composite engagement.** Felbrigg Lettings, its volumes and its timings are illustrative, not a real customer.
 
 ## Interview angle
 
@@ -146,7 +140,7 @@ Each answer is an outline to say in about two minutes. Open the question and try
 - **Answer:** Cap the body size. Find the tenant from the endpoint and load its secret. Recompute the HMAC over event ID, timestamp and raw bytes, and compare in constant time against each signature in the header. Reject a timestamp outside about five minutes. Then insert the event into an inbox table keyed by event ID, in one transaction. A new row gets 200. A duplicate gets 200 with no new work. A database failure gets 503. Workers process the inbox afterwards.
 - **Trade-off:** The inbox adds a table and workers to run. Inline work ties reply time to the slowest system.
 - **Follow-up to expect:** "What if the worker fails for good?" Dead-letter the row, alert, and replay it after the fix.
-- **Go deeper:** [Durability and idempotency](/learn/production-ai/agentic-workflow-platforms/durability-and-idempotency).
+- **Go deeper:** [Duplicates in both directions](/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions).
 
 </details>
 

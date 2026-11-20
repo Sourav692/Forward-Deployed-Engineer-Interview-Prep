@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [idempotency, deduplication, event IDs, idempotency keys, webhooks, partner APIs]
 ---
 
@@ -127,7 +127,7 @@ The two directions need two stores:
 
 *Table 2: The inbound and outbound records. The first stops you applying a repeat. The second stops you causing one.*
 
-Ordering is a separate problem. A repeated event and an out-of-order event need different fixes. [Recovering half-finished work](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md) covers version checks, and the next lesson covers ordering per entity. Webhook signatures and freshness checks are in [rate limits, backlogs and two-way sync](../../../05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/connecting-enterprise-systems/04_Rate_Limits_Backlogs_and_Two_Way_Sync.md).
+Ordering is a separate problem. A repeated event and an out-of-order event need different fixes. [Recovering half-finished work](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md) covers version checks, and the next lesson covers ordering per entity. Webhook signatures and freshness checks are in [the webhook receiver](../../../05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/receiving-webhooks-safely/01_The_Webhook_Receiver.md).
 
 Go deeper on idempotency keys inside one workflow in [durability and idempotency](../T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md), and on a scoped key for an API's own clients in [build the MVP: learn and design](../../AI_System_Design_Course/01_mvp/02_learn_and_design.md). When to retry at all is in [retries and fallbacks](../T3.5_Robust_Agents/02_Retries_and_Fallbacks.md).
 
