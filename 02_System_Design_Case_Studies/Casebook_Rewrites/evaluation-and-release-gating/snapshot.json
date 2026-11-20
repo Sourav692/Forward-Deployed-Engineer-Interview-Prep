@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "6520e7f7d3266829c74ae66500c939e25d11c0aba1099facbc88c1ed69d451a4",
-  "html_sha256": "aafde7cfe35bc737d4589b554ad6aeb1e23e34139b3b354c1845181abfc5d156",
-  "config_sha256": "6a1012e47f64bd8a2af37d5595213335242c5e618ac9373960a587a6f142386f",
+  "markdown_sha256": "4c499d561f2729e9aeb92bc0521542130872c8eeb51fddd76115ed5a896de5ed",
+  "html_sha256": "a07fd3e45b85306384ac7607a4f9d282ce18ddb0a0ea58a8e23341aadf2df1e6",
+  "config_sha256": "c55149c6ff65ad2cb0a31addb0c06a67e0811b2d2d79a35f88c0efb1896e1a5f",
   "source_url": "https://forwarddeployedprep.com/design/evaluation-and-release-gating",
   "validation": {
     "passed": true,
@@ -19,7 +19,7 @@
     },
     "editorial": {
       "status": "reviewed",
-      "evidence": "Built the inventory from all 49 captured sections, splitting the dense Full Design parts (sections 1-14) into 86 teaching items. Interview Guide, Deep Dive, Cheat Sheet and Full Design repeat the gate four times; I consolidated them so each mechanism is taught once in walkthrough steps 1-12 or a deep dive, then recalled in Quick review, and checked each repeat for a distinct number or caveat before merging (e.g. the deep-dive 'pre-headroom' qualifier and the 'severe escape becomes incident case' rule only appear once in the source and were kept). Added plain definitions (candidate, baseline, slice, p95, MoSCoW, fail closed, ETag, circuit breaker, weak supervision), a refund-bot trace and an illustrative bootstrap lower-bound explanation, labelled as such; the old minute plan's section numbers were rewritten as links. The upgrade plan is taught as nine steps. The source worksheet page was not captured and is linked rather than imported. Source inconsistencies resolved in text (2026-11-16): the upgrade-regression plan was labelled 'eleven steps' but lists nine actions \u2192 the casebook says 'nine steps' and lists the nine, because no other source section supplies two more steps."
+      "evidence": "Built the inventory from all 49 captured sections, splitting the dense Full Design parts (sections 1-14) into 86 teaching items. Interview Guide, Deep Dive, Cheat Sheet and Full Design repeat the gate four times; I consolidated them so each mechanism is taught once in walkthrough steps 1-12 or a deep dive, then recalled in Quick review, and checked each repeat for a distinct number or caveat before merging (e.g. the deep-dive 'pre-headroom' qualifier and the 'severe escape becomes incident case' rule only appear once in the source and were kept). Added plain definitions (candidate, baseline, slice, p95, MoSCoW, fail closed, ETag, circuit breaker, weak supervision), a refund-bot trace and an illustrative bootstrap lower-bound explanation, labelled as such; the old minute plan's section numbers were rewritten as links. The upgrade plan is taught as nine steps. The source worksheet page was not captured and is linked rather than imported. Source inconsistencies resolved in text (2026-11-16): the upgrade-regression plan was labelled 'eleven steps' but lists nine actions \u2192 the casebook says 'nine steps' and lists the nine, because no other source section supplies two more steps. November 20 complete maintained-baseline review: Complete maintained casebook: brief, twelve walkthrough steps, five diagrams, records and API, decision code and test, lower-bound statistics, sales-copilot incident, neighbouring prompts, threat model, cost pivot, all practice reveals and Quick review. Targeted corrections and source-to-output mappings: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-14-23-2026-11-20/evaluation-and-release-gating/audit.json. Historical captured-source mappings remain preserved; this pass audits the maintained baseline. Source inconsistencies settled in text (2026-11-21): sales-copilot incident rate 8.7% versus 37 failures over 430 drafts \u2192 8.6% throughout, matching the counts (37 \u00f7 430 = 8.60%)."
     }
   }
 }

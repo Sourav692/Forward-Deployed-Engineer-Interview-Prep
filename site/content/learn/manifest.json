@@ -5285,7 +5285,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/",
-      "estMinutes": 91,
+      "estMinutes": 90,
       "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
@@ -5296,7 +5296,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/",
-      "estMinutes": 77,
+      "estMinutes": 76,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -5633,7 +5633,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/",
-      "estMinutes": 78,
+      "estMinutes": 77,
       "href": "/design/customer-support-automation"
     },
     {
@@ -5666,7 +5666,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/",
-      "estMinutes": 70,
+      "estMinutes": 69,
       "href": "/design/sales-copilot"
     },
     {
@@ -5699,7 +5699,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/",
-      "estMinutes": 59,
+      "estMinutes": 58,
       "href": "/design/enterprise-coding-assistant"
     },
     {
@@ -5732,7 +5732,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/agent-platform-for-non-technical-users/",
-      "estMinutes": 62,
+      "estMinutes": 61,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -5743,7 +5743,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/",
-      "estMinutes": 61,
+      "estMinutes": 60,
       "href": "/design/real-time-call-assistant"
     },
     {

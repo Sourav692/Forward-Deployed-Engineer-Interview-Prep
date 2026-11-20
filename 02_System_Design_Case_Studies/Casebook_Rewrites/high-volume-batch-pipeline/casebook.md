@@ -455,7 +455,7 @@ Every strong cost answer follows four verbs in order. **Measure**, by comparing 
 
 ### References {#references}
 
-The November review adds stale-worker fencing, immutable result commits, contiguous checkpoints and ID-set publication reconciliation. It corrects replay-cost units and separates provider billing from sink idempotency. [SQS visibility timeouts](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html) do not guarantee single delivery. [OpenAI Batch](https://developers.openai.com/api/docs/guides/batch) documents a 24-hour window; [Claude limits](https://platform.claude.com/docs/en/api/rate-limits) distinguish requests, input and output quotas. The worker tests below are proposed tests, not executed code in this casebook.
+[SQS visibility timeouts](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html) do not guarantee single delivery. [OpenAI Batch](https://developers.openai.com/api/docs/guides/batch) documents a 24-hour window; [Claude limits](https://platform.claude.com/docs/en/api/rate-limits) distinguish requests, input and output quotas. The worker tests below are proposed tests, not executed code in this casebook.
 
 The source fact-checked these references on 27 September 2026. Each line says what it supports in this case.
 

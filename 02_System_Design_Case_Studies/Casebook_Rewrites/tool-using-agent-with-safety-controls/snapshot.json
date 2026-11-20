@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "724397465877c37ea89ff974d167ebac1aff72dc4c239ab16d6b5787cfb51010",
-  "html_sha256": "9d6c7d357056b9860f6ede16cfd6500f955e213f2156bc8b131ebc19fe0ffcfb",
+  "markdown_sha256": "47753dd65fa7f734a0b9b8bfc7cb80b07243f88983e84940d3f91fb7f68d390b",
+  "html_sha256": "f222380e03750f04a6cbb392f7303fc54654793990463b4ae5bb7d422b9ce8cc",
   "config_sha256": "2de3bc9d60f411b2cfb702bbc429a39dff352e739ad2cd993ef6e75e5e384c36",
   "source_url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
   "validation": {

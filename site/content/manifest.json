@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T22:20:50.336Z",
+  "generatedAt": "2026-11-20T23:00:20.803Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -469,7 +469,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 78,
+              "minutes": 77,
               "updated": "2026-11-20"
             },
             {
@@ -592,7 +592,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 70,
+              "minutes": 69,
               "updated": "2026-11-20"
             },
             {
@@ -633,7 +633,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 59,
+              "minutes": 58,
               "updated": "2026-11-20"
             },
             {
@@ -674,7 +674,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 61,
+              "minutes": 60,
               "updated": "2026-11-20"
             },
             {
@@ -763,7 +763,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 91,
+              "minutes": 90,
               "updated": "2026-11-20"
             },
             {
@@ -849,7 +849,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 62,
+              "minutes": 61,
               "updated": "2026-11-20"
             },
             {
@@ -1057,7 +1057,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 77,
+              "minutes": 76,
               "updated": "2026-11-20"
             }
           ]

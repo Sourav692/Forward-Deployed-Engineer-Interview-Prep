@@ -991,7 +991,7 @@ On 2026-07-08, during peak European hours, agents saw the spinner for 18 to 35 s
 </tbody>
 </table></div>
 
-Read the table from the top. The p50 of 5.3 s is close to normal, while p95 and p99 are far above it: the tail broke, not the median, which already hints at queueing. Adding the listed stage figures (4,200 + 3,100 + 2,800 + 9,360 + 740 ms) gives about 20.2 s before query rewrite, evaluation and streaming. Stage percentiles do not add exactly, so treat that as a budget check, but it shows the 22.18 s p95 is several moderate delays stacked rather than one broken service. The first token at 14.1 s is already past the 12 s budget, which settles one tempting fix in advance. One source inconsistency remains: a 12-second hard timeout cannot coexist with a 22.18 s p95 if it bounds the measured request. The timeout evidently fired at another boundary, such as the gateway, while the console kept waiting, so confirm where each timeout is enforced and measured before using either number in an alert.
+Read the table from the top. The p50 of 5.3 s is close to normal, while p95 and p99 are far above it: the tail broke, not the median, which already hints at queueing. Adding the listed stage figures (4,200 + 3,100 + 2,800 + 9,360 + 740 ms) gives about 20.2 s before query rewrite, evaluation and streaming. Stage percentiles do not add exactly, so treat that as a budget check, but it shows the 22.18 s p95 is several moderate delays stacked rather than one broken service. The first token at 14.1 s is already past the 12 s budget, which settles one tempting fix in advance. A 12-second hard timeout and a 22.18 s p95 hold together only because they sit at different boundaries, with the timeout firing at the gateway while the console keeps waiting and measuring. Confirm where each timeout is enforced and measured before using either number in an alert.
 
 #### What changed and why {#latency-what-changed-and-why}
 
@@ -1064,7 +1064,7 @@ On 2026-07-08 the daily budget alert fired at 14:20. The CFO (chief financial of
 </tr>
 <tr>
 <td>Routing</td>
-<td>GPT-4-class because <code>context_tokens&gt;12000</code>; 21384 tokens in, 1288 out; about 9× the per-request cost of before (the case's illustrative $2.74 against $0.31, not list prices)</td>
+<td>GPT-4-class because <code>context_tokens&gt;12000</code>; 21384 tokens in, 1288 out; about 4.6× the per-request cost of before ($1.44 against $0.31)</td>
 </tr>
 </tbody>
 </table></div>
@@ -1204,13 +1204,13 @@ Each pivot gets a card: the dominant driver, the cheapest lever, the metric that
 
 ### References {#references}
 
-The November review corrects the head-versus-tail sampling description, the exemplar definition, the RFC 2104 key claim, the first-token attribution in the latency incident and the cache-key mechanism in the cost incident, and discloses the timeout inconsistency in the latency logs. Primary references: [OpenTelemetry sampling concepts](https://opentelemetry.io/docs/concepts/sampling/), the [tail sampling processor README](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md), the [OpenTelemetry metrics data model on exemplars](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#exemplars) and [W3C Trace Context](https://www.w3.org/TR/trace-context/).
+Primary references: [OpenTelemetry sampling concepts](https://opentelemetry.io/docs/concepts/sampling/), the [tail sampling processor README](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md), the [OpenTelemetry metrics data model on exemplars](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#exemplars) and [W3C Trace Context](https://www.w3.org/TR/trace-context/).
 
 Fact-check sources from the original case, checked 27 September 2026. Each supports the claim noted beside it.
 
 - [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/): typical span size (~500 bytes) behind the storage sizing.
 - [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104): HMAC keys must be random and periodically refreshed.
-- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices. A 21,384-token prompt exceeds the 8K GPT-4 context, so the 32K model's list prices of $60 per million input and $120 per million output tokens apply: 21,384 in and 1,288 out cost about $1.44. The $2.74 figure is illustrative rather than a list price.
+- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices. A 21,384-token prompt exceeds the 8K GPT-4 context, so the 32K model's list prices of $60 per million input and $120 per million output tokens apply: 21,384 in and 1,288 out cost about $1.44.
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval? (arXiv 2312.05934)](https://arxiv.org/abs/2312.05934): fine-tuning is a weak way to add knowledge compared with retrieval.
 - [Kwon et al. 2023, Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180): continuous batching and KV-cache limits.
 - [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): batch size, preemption and chunked prefill trade-offs.

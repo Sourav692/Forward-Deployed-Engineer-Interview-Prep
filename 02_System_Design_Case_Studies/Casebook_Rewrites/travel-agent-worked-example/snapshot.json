@@ -1,8 +1,8 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "7be69f9deb14e84714f10abd690f2a352a67638596e7c8992234c05b625a9caf",
-  "html_sha256": "637d49793afc3083bb2e8fc53a1d914357dc31bf9716cc8b0efd03bca325ceba",
+  "markdown_sha256": "838d420d8b7acc789c326b54e089a200af4fdcbfc1b7cebc39c5a13e04e449a1",
+  "html_sha256": "108bb932cb80a481c40921d09a804fdb898d9c53e094cfd2bb8a4e832c5a5825",
   "config_sha256": "437793102ca48428d28532ad656257ebd773cd7c572a8456e1ec44f1cf01900c",
   "source_url": "https://forwarddeployedprep.com/design/travel-agent-worked-example",
   "validation": {

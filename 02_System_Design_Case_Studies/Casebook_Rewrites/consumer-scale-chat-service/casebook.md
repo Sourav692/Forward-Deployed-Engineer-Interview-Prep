@@ -542,7 +542,7 @@ The source fact-checked its serving, cancellation, pricing, cache and moderation
 - [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching): exact-prefix matching and per-model caches at a second vendor.
 - [OpenAI API docs: Moderation](https://developers.openai.com/api/docs/guides/moderation): moderation returns category scores; thresholds and policy remain the application's job.
 
-The November review adds prefill-compute and first-token checks to the replica estimate, quantifies full-history cost, qualifies session affinity and first-token claims, adds cache lifetimes, removes an unsupported moderation cost ratio and updates the small-model price. Supporting references: [Claude prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) for the five-minute and one-hour lifetimes, [Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing) for current model prices, [OpenAI prompt caching](https://platform.openai.com/docs/guides/prompt-caching) for cache retention, and [vLLM automatic prefix caching](https://docs.vllm.ai/en/latest/design/prefix_caching.html) for least-recently-used eviction of cached blocks.
+Supporting references: [Claude prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) for the five-minute and one-hour lifetimes, [Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing) for current model prices, [OpenAI prompt caching](https://platform.openai.com/docs/guides/prompt-caching) for cache retention, and [vLLM automatic prefix caching](https://docs.vllm.ai/en/latest/design/prefix_caching.html) for least-recently-used eviction of cached blocks.
 
 ## Practice
 
