@@ -89,6 +89,7 @@ With that in place, the billing assistant could say "readings for 4 January were
 
 - **Partitions by event date assume late data is handled.** If readings for a day keep arriving, combine this with the open-period rules in [schema drift and late data](/learn/fde-building-in-the-estate/customer-data-pipelines/schema-drift-and-late-data).
 - **Some sources cannot be re-read.** If the history exists only in a system that limits extracts, the backfill may take weeks. Measure the rate before promising a date.
+- **Not a system move.** Moving a whole live database to a new system is [migrating live data](/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data).
 - **Composite engagement.** Kilbride Energy, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle

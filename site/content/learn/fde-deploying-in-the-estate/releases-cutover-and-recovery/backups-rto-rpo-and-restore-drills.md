@@ -3,13 +3,7 @@
 
 ## Start with the backup that was not a restore
 
-Lanark Bank, a fictional bank, runs your document service for its loan officers. The bank's recovery policy gives the service a four-hour recovery target. Its database backups had reported success every night for 14 months.
-
-The bank's first restore drill for the service started at 09:00 in a clean recovery account. The database came back by 10:00. Then the problems queued up. The database was encrypted with a key held in the production account's key management service, and the recovery account had no permission to use it. Uploaded documents lived in object storage that no backup covered. The service's configuration and secret references existed only in the production deploy settings. The search index had no rebuild procedure. The service answered its first request at 04:00 the next morning, 19 hours after the start.
-
-Every backup had worked. The restore did not.
-
-Call this **the backup that was not a restore**: copies of the data with nothing else a recovery needs, never tested end to end.
+Lanark Bank's recovery policy gives its loan document service a four-hour recovery target, and the service's database backups had reported success every night for 14 months. The first restore drill, run by Owain, the forward deployed engineer, started at 09:00 in a clean recovery account, and the database came back by 10:00. Then the problems queued up. The database was encrypted with a key held in the production account's key management service, and the recovery account had no permission to use it. Uploaded documents lived in object storage that no backup covered, the configuration and secret references existed only in the production deploy settings, and the search index had no rebuild procedure. The service answered its first request at 04:00 the next morning, 19 hours after the start. Every backup had worked, and the restore had not. Call this **the backup that was not a restore**: copies of the data with nothing else a recovery needs, never tested end to end.
 
 > **What you'll learn**
 >
@@ -105,13 +99,13 @@ Sometimes the newest backups are the problem: corrupted, encrypted by ransomware
 - **Test-restore automatically,** for example every night into a scratch environment, with a check that the data is current.
 - **Alert on anomalies,** such as a backup much smaller or quicker than usual.
 
-When it happens anyway, find the newest copy that verifies, restore it, replay archived logs past it if they are intact, and rebuild the rest from source systems, partner records and staff knowledge. Write down exactly what was lost, and give the business owner that list early.
+When it happens anyway, find the newest copy that verifies, restore it, replay archived logs past it if they are intact, and rebuild the rest from source systems, partner records and staff knowledge. Write down exactly what was lost, and give the business owner that list early. Ransomware that reached personal data is also a breach, and [the cache that crosses tenants](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment#the-cache-that-crosses-tenants) sets out who must tell whom.
 
 ## Limits of this lesson
 
 - **Products differ.** Snapshot, log archiving and replication features vary by database and provider. Check the customer's.
 - **Regulation.** Banks may have regulator-set recovery targets and drill reporting duties.
-- **Fictional data.** Lanark Bank, its people and figures are illustrative.
+- **Composite engagement.** Lanark Bank, Owain, the drill and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
