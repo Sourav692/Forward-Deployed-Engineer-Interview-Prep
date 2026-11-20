@@ -24,9 +24,10 @@ Taught in [the webhook receiver](/learn/enterprise-integration/receiving-webhook
 <details>
 <summary>Practice question 1. Morvah Freight receives parcel-status webhooks from a courier, signed with an HMAC (hash-based message authentication code) of the timestamp and body using a shared secret. The courier retries for up to three days. Design the receiver.</summary>
 
-- **Answer:** Read the raw request bytes before parsing. Recompute the HMAC over the timestamp and those bytes as the courier documents, and compare in constant time. Reject requests older than five minutes. Insert the event ID into a table with a unique constraint and keep IDs for seven days, longer than the three-day retry period. A duplicate gets a success reply and nothing else. Write the event to a durable queue, then reply at once. Workers process it later and use the parcel's version to ignore older events. Accept two secrets during rotation.
+- **Answer:** Read the raw request bytes before parsing. Recompute the HMAC over the timestamp and those bytes as the courier documents, and compare in constant time. Reject requests older than five minutes. In one transaction, insert the event ID and raw body into an inbox table with a unique constraint on the ID, and keep IDs for seven days, longer than the three-day retry period. A duplicate gets a success reply and nothing else. A new event gets its reply as soon as the insert commits. Workers process it later and use the parcel's version to ignore older events. Accept two secrets during rotation.
 - **Trade-off:** The ID table grows with traffic. A shorter retention risks processing a late retry twice.
 - **Follow-up to expect:** "Why not process first, then reply?" Slow processing times out, the courier retries, and you get the duplicates you were avoiding.
+- **Go deeper:** [Duplicates in both directions](/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions).
 
 </details>
 
@@ -44,11 +45,12 @@ Taught in [the webhook receiver](/learn/enterprise-integration/receiving-webhook
 Taught in [the webhook receiver](/learn/enterprise-integration/receiving-webhooks-safely/the-webhook-receiver).
 
 <details>
-<summary>Practice question 3. Tolland Freight receives parcel status events from a carrier. Its tracking page sometimes shows "Out for delivery" for parcels already marked "Delivered". The logs show `delivered` arriving before `out_for_delivery` for the same parcel. Fix it.</summary>
+<summary>Practice question 3. Hatherleigh Parcels receives parcel status events from a carrier. Its tracking page sometimes shows "Out for delivery" for parcels already marked "Delivered". The logs show `delivered` arriving before `out_for_delivery` for the same parcel. Fix it.</summary>
 
 - **Answer:** The carrier retries failed deliveries, so events overtake each other. Define the valid transitions for a parcel: collected, in transit, out for delivery, delivered, with exceptions such as returned. In the worker, apply an event only if it moves the parcel forward. If the event carries a sequence number or an event time, store the latest applied and skip older ones. Record skipped events for audit rather than dropping them silently. If the carrier offers a status lookup, fetch current state on any doubt.
 - **Trade-off:** Strict forward-only rules can block a genuine correction, such as a parcel taken back to the depot. Model those as explicit transitions.
 - **Follow-up to expect:** "Events have no sequence number." Use the transition rules alone, and fetch current state when an event conflicts with them.
+- **Go deeper:** [Recovering half-finished work](/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work).
 
 </details>
 

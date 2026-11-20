@@ -46,6 +46,7 @@ Taught in [recovering half-finished work](/learn/fde-deploying-in-the-estate/rel
 - **Answer:** Verify the signature, store the raw event, and reply 200 quickly, then process from a queue. Skip any event ID you have already processed. For ordering, compare the event's timestamp or sequence with the payment's stored state, and never let "succeeded" overwrite "refunded". When in doubt, fetch the payment's current state from the provider's API and apply that. Alert on events that refer to unknown payments.
 - **Trade-off:** Fetching current state costs an API call per event. Trusting event order risks reopening a refunded payment.
 - **Follow-up to expect:** "How long do you keep event IDs?" Longer than the provider's retry window, often a few days.
+- **Go deeper:** [The webhook receiver](/learn/enterprise-integration/receiving-webhooks-safely/the-webhook-receiver).
 
 </details>
 

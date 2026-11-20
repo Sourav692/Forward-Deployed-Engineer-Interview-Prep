@@ -274,7 +274,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.5_Distributed_Systems_Essentials/02_Duplicates_in_Both_Directions.md",
       "estMinutes": 11,
       "href": "/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "keeping-a-message-pipeline-healthy",
@@ -8659,7 +8659,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/05_Practise_Reliability_Performance_and_Cost_1.md",
       "estMinutes": 9,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/practise-reliability-performance-and-cost-1",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-reliability-performance-and-cost-2",
