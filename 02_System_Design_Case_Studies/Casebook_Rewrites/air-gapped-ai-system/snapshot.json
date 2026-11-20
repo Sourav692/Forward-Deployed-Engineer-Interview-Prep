@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "871fd79a3ada1e80a3465d7fde6b0ceae96b8c2d5174598532ee608b087b7494",
-  "html_sha256": "7fa9b553e56d60a0344e2209476e94dde25ae54003df11c5d21ee7aa30e095d2",
-  "config_sha256": "0da1fd07d69eddcb55cea6d0ffdac1f67e5adcf53473409c9fd07d79f7c50f2f",
+  "markdown_sha256": "f708cb2c93f730c8d66c5c361c77321f64d11a8baa6587a53c10acd881c637a5",
+  "html_sha256": "80995a819519a76c25bf29789e8a8a7022b81f8b79f57d6a9f47304e6a9177da",
+  "config_sha256": "1ddd9f799848d450890b5ddb92e9552f25f4882dcc2d1f1048099954e97ff0cc",
   "source_url": "https://forwarddeployedprep.com/design/air-gapped-ai-system",
   "validation": {
     "passed": true,

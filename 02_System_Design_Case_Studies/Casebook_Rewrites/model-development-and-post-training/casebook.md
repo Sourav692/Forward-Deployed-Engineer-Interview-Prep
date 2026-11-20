@@ -19,16 +19,16 @@ The case uses training vocabulary from its first paragraph. These definitions ar
 - **LLM (large language model).** A model that reads and writes text, such as GPT, Claude or Llama. Capable, and willing to state wrong things confidently.
 - **Base model.** A model trained only to continue text. Asked a question, it tends to keep writing rather than answer.
 - **SFT (supervised fine-tuning).** Further training on example inputs paired with the exact outputs wanted, so the model copies that behaviour. Here the outputs are worked solutions ending in a marked final answer.
-- **Post-training.** Training on the model's own attempts. The model samples answers (each sample is a *rollout*), a scorer grades them, and an update pushes the model toward higher-scoring answers.
+- **Post-training.** In this case, training on the model's own attempts (the wider term also covers SFT and preference tuning done after pretraining). The model samples answers (each sample is a *rollout*), a scorer grades them, and an update pushes the model toward higher-scoring answers.
 - **Verifier.** A program that checks an answer, for example by comparing a final number with the reference or by running a symbolic check.
 - **Reward hacking.** The model learning the scorer's blind spots instead of the task, such as matching the reference's format with a wrong number.
 - **Drift penalty.** A term that penalises the updated model for moving too far from a reference model (often written as a KL penalty, after the Kullback-Leibler divergence that measures that distance).
 - **DPO (direct preference optimisation).** Training directly on pairs of "this answer is better than that one", without a separate reward model.
-- **Pass@1.** The fraction of problems solved with one sampled answer per problem. Its value depends on sampling settings such as temperature.
+- **Pass@1.** The fraction of problems solved with one sampled answer per problem. Its value depends on sampling settings such as temperature. When sampling is random, estimate it by drawing several answers per problem and averaging the share that are correct, because one draw per problem is a noisy estimate.
 - **Decontamination.** Removing any evaluation problem, or a near-copy of one, from the training data.
 - **FLOPs (floating-point operations).** A unit of compute, used to size how much GPU work a run needs.
 - **LoRA and QLoRA.** Adapter methods: train a small set of added weights while the base model stays frozen. QLoRA does the same with the base model loaded at 4-bit precision.
-- **KV (key-value) cache.** The model's stored memory of the prompt so far, reused so it does not recompute it for every new token. It grows with context length.
+- **KV (key-value) cache.** The attention keys and values stored for every token already processed, prompt and generated output alike, so the model does not recompute them for each new token. It grows with context length and with the number of sequences decoded at once.
 
 The page assumes you have met fine-tuning, optimiser state and held-out evaluation before. Each mechanism is still explained where it first matters.
 
@@ -158,7 +158,7 @@ The table runs those rules on the maths model. Every workload is an assumption; 
 
 </div>
 
-Read the last column top to bottom. SFT is cheap. Post-training with sampled rollouts costs roughly ten times more under these assumptions, and generation runs well below peak throughput because it is memory-bound: the GPU spends much of its time moving weights and cache rather than multiplying. The compute budget therefore belongs to post-training and to evaluation, not to the supervised stage. The "about 2 GPU-hours" for SFT is an assumed-throughput sketch, not a guarantee.
+Read the last column top to bottom. SFT is cheap. Post-training with sampled rollouts costs roughly ten times more under these assumptions, and generation runs well below peak throughput because it is memory-bound: the GPU spends much of its time moving weights and cache rather than multiplying, especially at the small per-step batches long rollouts often run at. The table also leaves out work the update method adds. A drift penalty needs a forward pass of the frozen reference model over every rollout token (another 2 × 7e9 × 4e8 = 5.6e18 FLOPs), and PPO trains a separate value model as well. GRPO-style methods drop the value model by scoring each sample against the others drawn for the same problem, which is one reason they suit verifiable maths rewards. The compute budget therefore belongs to post-training and to evaluation, not to the supervised stage. The "about 2 GPU-hours" for SFT is an assumed-throughput sketch, not a guarantee.
 
 Memory decides the hardware shape. A full fine-tune with the Adam optimiser in mixed precision needs roughly 16 bytes per parameter for weights, gradients and optimiser state. For 7B parameters that is about 112 GB before activations, which does not fit on one 80 GB card. There are two ways out: shard the optimiser state across GPUs, or train a small adapter instead of the full weights. The [compute deep dive](#dive-compute) returns to both.
 
@@ -223,7 +223,7 @@ The source's Foundations labs show the mechanical half of this stage. They contr
 
 **Deduplicate first.** In the source book's worked example, 140,000 traces turned out to be only about 9,000 distinct requests after deduplication. Training on the raw count would have weighted a few popular requests heavily and, worse, placed their twins in the test set. Deduplicate near-duplicates before splitting, not after.
 
-**Split by time and by source, never at random.** A random split puts near-twins on both sides of the wall. This is exactly how the 94% offline score in the [case brief](#brief-scenario) happened, and why the honest number after the fix was about 83%.
+**Split by time and by source, never row by row at random.** A random split puts near-twins on both sides of the wall. Where a time split is impossible, assign whole duplicate clusters to one side. This is exactly how the 94% offline score in the [case brief](#brief-scenario) happened, and why the honest number after the fix was about 83%.
 
 **Route hard labels to people.** Send low-agreement, high-impact or simply hard examples to human adjudication, because an automatic label is not the same as a correct one.
 
@@ -262,7 +262,7 @@ Take them one at a time. A **final-answer verifier** is efficient and hard to fo
 
 Two update methods sit on top of the scorer. **RLHF** (reinforcement learning from human feedback) trains a separate reward model from human comparisons, then optimises the policy against it with a penalty for drifting from the starting model. **DPO** skips the separate reward model: it trains directly on preferred-versus-rejected pairs and gets the same drift control implicitly. DPO is simpler to run and usually more stable, though a well-tuned PPO (the policy-gradient method commonly used in RLHF) can still beat it. Where a program can check correctness, as it can in maths, **RL with a verifier** is the stronger option.
 
-The drift penalty is not optional. A policy optimised against any scorer without it will find the scorer's blind spots. A lenient answer-matcher gets answers formatted like the reference but wrong. A length-biased reward model gets padding. Keep the penalty, and audit high-reward samples by hand every round, because a sudden jump in reward is as likely to be a new exploit as a new skill.
+Keep the drift penalty by default. A policy optimised against a learned or lenient scorer without it will find the scorer's blind spots. Some verifiable-reward recipes for long reasoning, such as DAPO, drop the penalty because the reasoning style is meant to move far from the starting model; they depend on a strict rule-based verifier and other controls instead. Remove it only with that kind of verifier and held-out monitoring in place. A lenient answer-matcher gets answers formatted like the reference but wrong. A length-biased reward model gets padding. Keep the penalty, and audit high-reward samples by hand every round, because a sudden jump in reward is as likely to be a new exploit as a new skill.
 
 The source's spoken version: "For math I would lead with reinforcement learning against a program that checks the final answer, because correctness is verifiable. I would keep a penalty for drifting from the SFT model, add a step-level reward only if working quality is a stated requirement, and use preference data for tone."
 
@@ -337,7 +337,7 @@ Training FLOPs ≈ 6 × parameters × tokens; generation FLOPs ≈ 2 × paramete
 
 #### Sizing a pretraining run from the budget
 
-A widely used rule of thumb from compute-optimal scaling work is about 20 training tokens per parameter. For a 7B model that is 140B tokens. The compute is then 6 × 7e9 × 1.4e11 = 5.88e21 FLOPs. At an assumed 3e14 effective FLOP/s per GPU, that is about 5,444 GPU-hours, or about 21 hours on 256 GPUs. The throughput and token ratio are assumptions; the arithmetic is exact. If the budget is smaller, shrink the model before shrinking the data, because a model starved of tokens wastes the compute it does get.
+A widely used rule of thumb from compute-optimal scaling work is about 20 training tokens per parameter. For a 7B model that is 140B tokens. The compute is then 6 × 7e9 × 1.4e11 = 5.88e21 FLOPs. At an assumed 3e14 effective FLOP/s per GPU, that is about 5,444 GPU-hours, or about 21 hours on 256 GPUs. For scale, 3e14 is roughly 30% of an H100's dense BF16 peak of about 9.9e14, a plausible utilisation, but it is close to the whole 3.1e14 peak of an A100, which no real run sustains. Restate the throughput for the hardware you actually have; the 21-hour figure also assumes perfect scaling across 256 GPUs. The throughput and token ratio are assumptions; the arithmetic is exact. If the budget is smaller, shrink the model and the token count together. Chinchilla found compute-optimal parameters and tokens both grow roughly with the square root of compute, so keeping the model size and cutting tokens leaves an under-trained model. Teams that care about serving cost often go further and train a smaller model on more tokens than compute-optimal, paying extra training compute for cheaper inference.
 
 #### Choose parallelism in the order memory forces it
 
@@ -382,7 +382,7 @@ Sample multiple candidate answers per problem; too few samples give no learning 
 
 #### Choosing the update
 
-RL with a verifier works better with a reference-model drift penalty. Tulu 3 (Lambert et al. 2024) calls this RL with verifiable rewards and reports it working well where correctness is checkable, and DeepSeek-R1 used rule-based rewards for maths and code. DPO (Rafailov et al. 2023) gives a simpler preference-pair path with no separate reward model. Xu et al. 2024 found that a well-tuned PPO can match or beat DPO, which is why "DPO is simpler" is a reason, not a verdict.
+RL with a verifier usually keeps a reference-model drift penalty, though DAPO (Yu et al. 2025) removes it for long chain-of-thought training with a strict rule-based reward. Tulu 3 (Lambert et al. 2024) calls this RL with verifiable rewards and reports it working well where correctness is checkable, and DeepSeek-R1 used rule-based rewards for maths and code. DPO (Rafailov et al. 2023) gives a simpler preference-pair path with no separate reward model. Xu et al. 2024 found that a well-tuned PPO can match or beat DPO, which is why "DPO is simpler" is a reason, not a verdict.
 
 #### Catching reward hacking
 
@@ -438,11 +438,11 @@ Memory for weights is parameters × bytes per parameter. The table applies that 
 
 </div>
 
-A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model (an assumption). That points to about a 1B model at 4-bit. A 3B model needs about 1.5 GB for weights alone, so it fits only at the top of that budget. The source's air-gapped chapter adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
+A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model (an assumption). That points to about a 1B model at 4-bit. A 3B model needs about 1.5 GB for weights alone, so it fits only at the top of that budget. Real 4-bit formats also store a scale for each small block of weights, which adds a fraction of a bit per parameter (QLoRA's block size of 64 costs 0.5 bits per parameter before its double quantisation), so plan on somewhat more than 1.5 GB. The source's air-gapped chapter adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
 
 #### Distil, then quantise
 
-Distillation trains a small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. A hard cost or latency ceiling is one of the three situations where parameter updates earn their cost (see [the next deep dive](#dive-weights)), and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
+Distillation trains a small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. A hard cost or latency ceiling is one of the three situations where parameter updates earn their cost (see [the next deep dive](#dive-weights)), and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, usually loses less quality than quantising after the fact, at the cost of a training run.
 
 #### Politeness is a preference target
 
@@ -470,7 +470,7 @@ A tuned model also freezes its task definition, which is the cost the book asks 
 
 ### References {#references}
 
-The source's fact-check sources, checked 27 September 2026. Each line states the claim it supports in this case.
+The November review scoped the post-training and pass@1 definitions, corrected the KV-cache definition, added reference-model and value-model compute, anchored the 3e14 FLOP/s assumption to hardware peaks, corrected the smaller-budget scaling advice, qualified the drift-penalty rule with the DAPO exception and added 4-bit block-scale overhead. Primary references: [Hoffmann et al. 2022](https://arxiv.org/abs/2203.15556), [Yu et al. 2025, DAPO](https://arxiv.org/abs/2503.14476), [Shao et al. 2024, DeepSeekMath (GRPO)](https://arxiv.org/abs/2402.03300), [Dettmers et al. 2023, QLoRA](https://arxiv.org/abs/2305.14314), [Chen et al. 2021, pass@k estimation](https://arxiv.org/abs/2107.03374), the [NVIDIA H100](https://www.nvidia.com/en-us/data-center/h100/) and [A100](https://www.nvidia.com/en-us/data-center/a100/) specifications. The source's fact-check sources, checked 27 September 2026. Each line states the claim it supports in this case.
 
 - [Kaplan et al. 2020, Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361): training ≈ 6 × parameters × tokens FLOPs; generation ≈ 2 × parameters per token.
 - [Rajbhandari et al. 2019, ZeRO](https://arxiv.org/abs/1910.02054): about 16 bytes per parameter for mixed-precision Adam (≈112 GB for 7B).

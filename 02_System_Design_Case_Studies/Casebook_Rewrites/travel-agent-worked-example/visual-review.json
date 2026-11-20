@@ -1,10 +1,23 @@
 {
   "status": "reviewed",
   "passed": true,
-  "evidence": "Desktop (1280) shows the five-section nav, the new subtitle, brief headings in the contents rail and the progress rail; phone (390) shows the topic selector, the brief reading top to bottom with the core-idea figure under the 'check the cache first' sentence and the Frankfurt trace after it. Screenshotted each built figure with disclosures open: the core-idea SVG shows Request, Gateway with rate limiting, Semantic cache diamond, Hit to Reply, Miss to Supervisor and Synthesiser, matching its caption; the corrected-architecture SVG shows gateway, cache with hit and write-back lines, supervisor, the five agents (Pricing, Policy, Booking, Search, Recommend.), the shared backend (Foundation LLM, MCP Tool Registry, External APIs, Vector DBs AMER/EMEA/APJ), the Synthesiser box (Policy overrides Booking), Response to user and Monitoring with cache hit rate, so the caption was extended to name the last three; the redrawn draft illustration shows load balancer, gateway, fan-out, a dashed dead-end Rate limiter and the four shared stages with markers 1-5 matching walkthrough steps 2-6, after moving its 'no line leaves it' label off a connector.",
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 2 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the cache-first request flow and the corrected architecture with supervisor, five specialised agents, shared backend, synthesiser and monitoring each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/travel-agent-worked-example/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/travel-agent-worked-example/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/travel-agent-worked-example/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-corrected"
+  ],
   "limits": [
-    "The wide core-idea figure (1218x183) renders small at 390 px; its labels need the 'Open for full size' link on phones.",
-    "The corrected architecture is a tall 1270x1975 SVG; dense backend connectors are legible at desktop width and via full-size link, not inline on a phone.",
-    "Dark-variant SVGs are preserved but the reader is light-themed; dark rendering and screen readers were not tested."
-  ]
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-corrected has many crossing agent-to-backend edges and small labels; it is legible at full size but the routing is hard to follow at phone width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/travel-agent-worked-example/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

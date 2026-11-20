@@ -1,3 +1,29 @@
-{"status":"reviewed","passed":true,
-"evidence":"Desktop (1440) shows the title, five-tab nav, contents rail and progress rail with the 'Find the hop' brief; phone (390) shows the three brief sections (complaint with term list, Acme German refund six-step trace, task) as separate headings, the core-idea flowchart under its explanation and the related-case table scrolling horizontally. Rendered each light SVG on its own: core idea (complaint -> correlated trace -> evidence good? -> answer matches? branches), architecture (seven request hops with dotted structured-span edges into bounded collector, HMAC classifier, biased sampling, store, global dashboard, tenant gateway, separate audit log), head-vs-tail sampling (uniform/random rule vs anomaly/error signal, 'Only Bad Trace Lost'), request path (seven boxes), observability path (buffer, collector, classify/HMAC, tail sampling, store, gateway, fail-closed audit), source two-path diagram and bad-answer triage (empty/stale/off-topic, contradict? yes/no-one-tenant). Labels match the walkthrough prose and alt text in steps 4, 5 and 7.",
-"limits":["The wide core-idea flowchart is small at 390 px; readers use its 'Open for full size' link.","Source sampling SVG's 'Only Bad Trace Lost' box has dark text on dark red, an original-asset contrast issue left unchanged because asset bytes are hash-checked.","Dark-mode variants were placed but not visually inspected; no screen-reader test run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 7 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the complaint-to-trace triage, the head versus tail sampling decision, the architecture with structured spans, the request path, the observability path, the source architecture and the bad-answer triage each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-sampling-decision",
+    "figure-architecture",
+    "figure-request-path",
+    "figure-observability-path",
+    "figure-source-architecture",
+    "figure-bad-answer-triage"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-sampling-decision: the 'Only Bad Trace Lost' node uses dark green text on a dark red fill, which has weak contrast.",
+    "Some labels break mid-word (expensive-to-repr oduce, Retention-bounde d trace store), and in figure-bad-answer-triage edge lines pass through the branch labels; text stays readable.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/observability-and-production-diagnosis/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

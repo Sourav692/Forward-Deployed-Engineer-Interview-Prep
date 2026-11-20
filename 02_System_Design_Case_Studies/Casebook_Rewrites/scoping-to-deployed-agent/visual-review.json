@@ -1,10 +1,29 @@
 {
- "status": "reviewed",
- "passed": true,
- "evidence": "Desktop (1280) and phone (390) screenshots show the five-section shell, the brief's term list (SME, Sponsor, FDA as Forward Deployed Architect, golden set, shadow mode, accelerator library) and the core-idea figure rendering at phone width. Each of the seven original light SVGs was screenshotted in place in the built page and read: core idea (No -> do not start the clock; sponsor Yes/No branches) under the clock paragraph; two-planes figure with control plane and runtime linked by evaluates/shadows/controls rollout, beside the seven-step list; signer pipeline (security reviewer, SME x2, FDA x2, sponsor, day-3 auto-escalate branch) matching the prose sequence; delivery framework with the refusal branch and separate Engagement state feeding library, day-3 check, event log and metrics; compressed strip; agent rollout figure with webhook, top-3 decision, shadow vs limited-production branches and telemetry, matching the ticket trace; agent assets figure with support_triage_prompt, Grounded? and Custom escalation policy labels as described.",
- "limits": [
-  "The compressed pipeline strip (3581px wide) and agent-assets figure (2658px wide) are legible only through the full-size link at column width; the source drew them that way.",
-  "Dark diagram variants were hash-checked by the validator but not visually inspected; the prototype is light-themed.",
-  "No screen-reader test was run."
- ]
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 7 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the intake and sponsor decisions, the two-planes control and runtime figure, the signer pipeline, the delivery framework, the pipeline strip, the Northwind rollout and the agent assets flow each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/scoping-to-deployed-agent/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/scoping-to-deployed-agent/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/scoping-to-deployed-agent/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-two-planes",
+    "figure-pipeline-signers",
+    "figure-delivery-framework",
+    "figure-pipeline-strip",
+    "figure-agent-rollout",
+    "figure-agent-assets"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-pipeline-strip is a 2,400×297 horizontal strip; opened at full size and legible, but its labels are tiny in the reader column and need the full-size link at phone width.",
+    "Some signer labels break mid-identifier (for example data_access_gra nted, golden_set_signe d_off) because long snake_case names wrap inside fixed-width nodes; text stays readable.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/scoping-to-deployed-agent/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

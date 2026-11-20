@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "c0e2f45087c2ae65119647e884e048a8f96e9a51b212b97c277fe31eeeb32fd3",
-  "html_sha256": "fe28a6d201dd9978d36fb8a50df9afc7e1f23c214ef2be06af2c89ca623e218a",
-  "config_sha256": "db6aa9f6d624141843cf4946ec01d6549adca1ea75af751613871fb41238eaab",
+  "markdown_sha256": "2dbf7893f5a8c920b6f9a55460cd37767b0f879b57ba0c07a1cea549f1d167b1",
+  "html_sha256": "9a99d6e6122d956f1f636e0fa246cad1fd5267534c29e15d0342d3c103e504f7",
+  "config_sha256": "1b6e0dc3f1a0427800601226b4d7ba7b36e2e669d3014ae18686cef6cfc9214b",
   "source_url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
   "validation": {
     "passed": true,

@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "e80b2adccd36a099021315951fcd01180f0c4b8c76f77fa5cb2da4a680f23c42",
-  "html_sha256": "abea7b0dd33439f2fdc92dd9531090b642a641595891e90e9505765709be3578",
-  "config_sha256": "96c50c76d4ceedd8634c21bf5742aed2f3dbb7c0b5c7fe77a4af652171518344",
+  "markdown_sha256": "0f77fcea19d40f5f90d6b7119d811d18432cd890a3288c2720b6e646d6ec4a7d",
+  "html_sha256": "6291cee8c61754f4c0a68754c6102318a9c333489f3d8c7249a59fae61bb6bb8",
+  "config_sha256": "5f3314b80918bfc3e64d532ec635bc4b2b3e7614a256c6476be8589aafd9c738",
   "source_url": "https://forwarddeployedprep.com/design/consumer-scale-chat-service",
   "validation": {
     "passed": true,

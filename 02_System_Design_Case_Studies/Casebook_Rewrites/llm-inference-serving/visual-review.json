@@ -1,1 +1,26 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1440) shows the five-section nav, contents rail and progress rail with the 'Batch language-model requests on stateful GPUs' brief; phone (390) shows the topic selector, Figure 1 inline beside its explanation and the four-column related-prompts table scrolling inside its wrapper. figures-0/3 sheets: all five source SVGs decode. Figure 1 labels (Tokenise and assign ID, Queue has room?, Refuse early, Route by free KV, Continuous batch, Stream by request ID) match the brief; Figure 2 (gateway, admission diamond with over-limit 429 branch, router, capacity registry + health probes, scheduler, LLM GPU, demux, cancel) matches the eight-step trace; Figure 3 shows the overload and Client-disconnects/Cancel branches named in its caption; Figure 4 shows heartbeat -> registry -> router and health checker -> evict/drain; Figure 5 is a 3260px-wide diagram with the control plane at lower left, not above as the draft caption claimed, so its caption and prose were corrected and the page rebuilt.","limits":["Figure 5 text is small at column width; readers must use the open-full-size link.","Dark mode and screen readers were not tested.","Light diagram variants inspected; dark variants only confirmed to decode by the browser check."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 5 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the admission flow, the gateway-to-token-stream architecture with heartbeat and disconnect edges, the vertical request path, the heartbeat and health-checker figure and the full control-plane diagram each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/llm-inference-serving/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/llm-inference-serving/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/llm-inference-serving/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-11-0",
+    "figure-31-0",
+    "figure-31-1",
+    "figure-31-2"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-31-2 (control plane, replica, router and admission) is about 2,400px wide with small labels; opened at full size and legible, but needs the full-size link at phone width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/llm-inference-serving/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

@@ -5274,7 +5274,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/evaluation-and-release-gating/",
-      "estMinutes": 71,
+      "estMinutes": 73,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -5296,7 +5296,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/observability-and-production-diagnosis/",
-      "estMinutes": 74,
+      "estMinutes": 77,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -5318,7 +5318,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/consumer-scale-chat-service/",
-      "estMinutes": 49,
+      "estMinutes": 51,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -5340,7 +5340,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/model-development-and-post-training/",
-      "estMinutes": 56,
+      "estMinutes": 58,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -5351,7 +5351,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/llm-inference-serving/",
-      "estMinutes": 51,
+      "estMinutes": 53,
       "href": "/design/llm-inference-serving"
     },
     {
@@ -5721,7 +5721,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/scoping-to-deployed-agent/",
-      "estMinutes": 62,
+      "estMinutes": 65,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -5732,7 +5732,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/agent-platform-for-non-technical-users/",
-      "estMinutes": 59,
+      "estMinutes": 62,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -5765,7 +5765,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/recruiting-platform/",
-      "estMinutes": 35,
+      "estMinutes": 38,
       "href": "/design/recruiting-platform"
     },
     {
@@ -5787,7 +5787,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/travel-agent-worked-example/",
-      "estMinutes": 40,
+      "estMinutes": 43,
       "href": "/design/travel-agent-worked-example"
     },
     {
@@ -5798,7 +5798,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/air-gapped-ai-system/",
-      "estMinutes": 96,
+      "estMinutes": 99,
       "href": "/design/air-gapped-ai-system"
     },
     {

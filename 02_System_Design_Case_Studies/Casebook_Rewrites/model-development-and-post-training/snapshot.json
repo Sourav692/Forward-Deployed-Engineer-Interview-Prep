@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "a3575fac813425e31d48897fd56d512175df9bb229db8ef38bccebc4ed2b21b2",
-  "html_sha256": "20cff01885d011c9f38e003896a00478b9837f63d19ef539d4bab54debb88247",
-  "config_sha256": "ee672fa968ff1cc8c7e1c905de79e7e0ef3e61a486254d50d3efa984a6d24baa",
+  "markdown_sha256": "b912641af707b9e71ed8834104149b9f41e7c9bb30fa1e74c69a806d8e64b523",
+  "html_sha256": "c8d29caef571845cac7dd73c1fc1b687c00fe65673c17b9580954147620d8034",
+  "config_sha256": "989d22bc7d88aefe91c34ce5963d24475ece268a322d4565141708cbb85cbadf",
   "source_url": "https://forwarddeployedprep.com/design/model-development-and-post-training",
   "validation": {
     "passed": true,

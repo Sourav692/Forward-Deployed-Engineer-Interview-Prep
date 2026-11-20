@@ -1,9 +1,9 @@
 {
   "mode": "teach",
   "validated": true,
-  "markdown_sha256": "2dc3a0405127af18533c24474d1630398747e6d519ace306f74c606b5364af89",
-  "html_sha256": "b298f2c67be4a56e82cc28bceb58523df91b5230379e396bbf897baf06027d9e",
-  "config_sha256": "f5f1de8c6884e8a1955f205c5eb8e03ccc23288a4541c5c4a64fbec95a511c7c",
+  "markdown_sha256": "78662548dba10ae9da90384af23be44b7b1114d56fb444e11f57dbabface71f4",
+  "html_sha256": "9178fddec3c791ab5f2afafb3cc26f4e275e439d049741c8471e58083ba72216",
+  "config_sha256": "67149fdc06d37834235c864513666900cf2276de9f954a7d8bb4fcce81cec824",
   "source_url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
   "validation": {
     "passed": true,

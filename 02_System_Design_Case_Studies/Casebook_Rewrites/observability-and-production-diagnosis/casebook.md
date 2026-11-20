@@ -394,7 +394,7 @@ The source chapter itself gives no numbers. A supplementary "gap note" from the 
 </tr>
 <tr>
 <td>Spans per request</td>
-<td>~6: auth, retrieval, model, tool, post-processing, plus the collector envelope</td>
+<td>~6: auth, retrieval, model, tool, post-processing, plus the root request span</td>
 </tr>
 <tr>
 <td>Raw span rate</td>
@@ -405,7 +405,7 @@ The source chapter itself gives no numbers. A supplementary "gap note" from the 
 <td>100% for error and latency-outlier traces, roughly 2-5% of volume</td>
 </tr>
 <tr>
-<td>Head sampling for the rest</td>
+<td>Probabilistic sampling for the rest, decided in the tail sampler</td>
 <td>5%</td>
 </tr>
 <tr>
@@ -426,9 +426,9 @@ The note's conclusion is that storage is not the constraint at this scale. Class
 Sampling is a deliberate control, and the two basic kinds behave differently.
 
 - **Head sampling** decides at the start of a request whether to keep its trace. It is simple and cheap, but it is blind to how the request ends: a 5% head sample drops 95% of the failures along with 95% of the successes.
-- **Tail sampling** decides after the request completes, so it can keep slow and failed traces. It needs more buffering, more infrastructure and careful policy, because every trace must be held until its outcome is known.
+- **Tail sampling** decides after the request completes, so it can keep slow and failed traces. It needs more buffering, more infrastructure and careful policy, because every trace must be held until its outcome is known. All spans of one trace must also reach the same sampler instance, so a scaled deployment puts a trace-ID-aware load balancer in front of the tail-sampling collectors.
 
-The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first, then head-sample the ordinary remainder.
+The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first, then keep a small random share of the ordinary remainder. Both decisions belong to the tail sampler after the trace completes. A head sampler that dropped a request at the start could not keep it later when it failed.
 
 <figure class="source-diagram" id="figure-sampling-decision"><a href="source-assets/5a13c6541449fb74.svg" target="_blank" rel="noopener"><img class="diagram-light" src="source-assets/5a13c6541449fb74.svg" alt="Flowchart: an incoming request trace reaches a sampling decision; head sampling is cheap and simple but risks dropping a rare, expensive-to-reproduce failure so the only bad trace is lost; tail sampling keeps latency-heavy, error-heavy and suspicious traces through preferential retention of anomalous traces."></a><img class="diagram-dark" src="source-assets/c366796b41c5e996.svg" alt="Dark variant: Flowchart: an incoming request trace reaches a sampling decision; head sampling is cheap and simple but risks dropping a rare, expensive-to-reproduce failure so the only bad trace is lost; tail sampling keeps latency-heavy, error-heavy and suspicious traces through preferential retention of anomalous traces."><figcaption>Head sampling risks losing the only bad trace; tail sampling retains anomalous traces preferentially. Open for full size.</figcaption></figure>
 
@@ -446,7 +446,7 @@ Trace one request through the figure, step by step.
 2. Time retrieval, model, tool and post-processing steps, attaching structured version, error and outcome metadata, while the request continues to the user.
 3. Export spans asynchronously through a bounded buffer. If export fails, serve the user anyway and alert on the diagnostic gap.
 4. Classify and redact sensitive fields before storage. Where correlation is needed, replace the value with an HMAC fingerprint made with a secret key, and cap attribute cardinality. HMAC (hash-based message authentication code) is explained in the [redaction deep dive](#dive-redaction).
-5. Bias retention towards error and slow traces, with exemplars and incident overrides so rare failures stay diagnosable. An exemplar is a trace kept deliberately as a concrete example of a metric, whatever the sampling rate.
+5. Bias retention towards error and slow traces, with exemplars and incident overrides so rare failures stay diagnosable. An exemplar is a metric data point that carries the trace ID of one request it measured, so a latency chart links to a concrete trace. The link is only useful if the sampler also keeps that trace, so exemplar traces are exempt from sampling.
 6. Store only bounded, retention-limited traces. Send platform-wide aggregates to the global dashboard, and enforce tenant and role access for support views.
 7. Write support access events to a separate, durable audit path, so trace sampling cannot erase the record of who viewed evidence.
 
@@ -787,9 +787,9 @@ The data model is small. A `Request` carries tenant ID, prompt and an optional u
 
 #### Why the hash must be keyed
 
-HMAC-SHA256 combines the value with a secret key before hashing. The same prompt with the same key always produces the same fingerprint, so the fingerprint can deduplicate and correlate repeated queries across the store. A plain unkeyed hash would do that too, but anyone could hash a list of common prompts and match the results, which is a dictionary attack. Without the secret key, nobody can brute-force common prompts back out of an HMAC. RFC 2104, section 3, makes the point that HMAC's security rests on the secret key, not on a salt.
+HMAC-SHA256 combines the value with a secret key before hashing. The same prompt with the same key always produces the same fingerprint, so the fingerprint can deduplicate and correlate repeated queries across the store. A plain unkeyed hash would do that too, but anyone could hash a list of common prompts and match the results, which is a dictionary attack. Without the secret key, nobody can brute-force common prompts back out of an HMAC. RFC 2104, section 3, requires HMAC keys to be random, or drawn from a cryptographically strong generator, and periodically refreshed to limit the damage of an exposed key.
 
-If the key leaks, attackers can run that dictionary attack, so the key lives in a vault and is rotated. A missing key raises an error. The code must never fall back silently to a plain unkeyed hash, because that fallback looks like success while removing the protection.
+If the key leaks, attackers can run that dictionary attack, so the key lives in a vault and is rotated. A missing key raises an error. The code must never fall back silently to a plain unkeyed hash, because that fallback looks like success while removing the protection. Rotation has a cost: a fingerprint made under the old key never matches one made under the new key. Store a key version beside each fingerprint, and expect correlation across the rotation boundary to break unless lookups try both keys during an overlap window.
 
 #### Three executable contracts
 
@@ -825,7 +825,7 @@ The last test guards the case's central failure drill: sampling and redaction mu
 
 Telemetry attributes are schema-validated at ingestion. Unknown high-cardinality fields are rejected or collapsed into a bounded "other" bucket. Ingestion is idempotent, so retries do not double-count.
 
-Queue serialisation contracts carry trace context, idempotency key and tenant scope explicitly. HTTP headers carry trace context between services automatically, but a message placed on a queue carries only what its schema includes. If correlation and tenant scope are not serialised into the message, the consumer starts a fresh trace and the spans after the handoff become orphan spans with no parent.
+Queue serialisation contracts carry trace context, idempotency key and tenant scope explicitly. Instrumented HTTP clients and servers carry trace context between services in the W3C `traceparent` header, but a message placed on a queue carries only what its schema includes. If correlation and tenant scope are not serialised into the message, the consumer starts a fresh trace and the spans after the handoff become orphan spans with no parent.
 
 #### Two paths: debug traces and access audit
 
@@ -835,11 +835,11 @@ Debug traces and access audit have separate paths. The trace store is sampled an
 
 The case's signature phrase is "sampling drops the only bad trace." Uniform sampling keeps a fixed fraction of everything. When failures are rare, a fixed fraction of a rare thing is often zero. For example, at a 5% uniform rate a failure that happens three times in an hour has about an 86% chance of leaving no trace at all (0.95 cubed), an illustrative calculation rather than a source figure. Expect the interviewer to inject this mid-round and have the answer ready.
 
-Head sampling is cheap but cannot know a request's final outcome. Tail-biased retention costs more buffering but preserves slow and failed traces. The robust policy combines four mechanisms:
+Head sampling is cheap but cannot know a request's final outcome. Tail-biased retention costs more buffering but preserves slow and failed traces. A policy that survives rare failures combines four mechanisms:
 
 - normal low-rate sampling for ordinary traffic;
 - error-class overrides, so every request with a given error class is kept;
-- always-on exemplars, a low-rate stream of kept traces for each path even when nothing looks wrong;
+- always-on exemplars, whose linked traces are always kept, plus a low-rate stream of kept traces for each path even when nothing looks wrong;
 - temporary tenant or route escalation during an incident, raising fidelity for just the affected slice.
 
 Monitor trace coverage against complaints and request errors. Never read a missing trace as proof of health.
@@ -991,7 +991,7 @@ On 2026-07-08, during peak European hours, agents saw the spinner for 18 to 35 s
 </tbody>
 </table></div>
 
-Read the table from the top. The p50 of 5.3 s is close to normal, while p95 and p99 are far above it: the tail broke, not the median, which already hints at queueing. Adding the listed stage figures (4,200 + 3,100 + 2,800 + 9,360 + 740 ms) gives about 20.2 s before query rewrite, evaluation and streaming. Stage percentiles do not add exactly, so treat that as a budget check, but it shows the 22.18 s p95 is several moderate delays stacked rather than one broken service. The first token at 14.1 s is already past the 12 s budget, which settles one tempting fix in advance.
+Read the table from the top. The p50 of 5.3 s is close to normal, while p95 and p99 are far above it: the tail broke, not the median, which already hints at queueing. Adding the listed stage figures (4,200 + 3,100 + 2,800 + 9,360 + 740 ms) gives about 20.2 s before query rewrite, evaluation and streaming. Stage percentiles do not add exactly, so treat that as a budget check, but it shows the 22.18 s p95 is several moderate delays stacked rather than one broken service. The first token at 14.1 s is already past the 12 s budget, which settles one tempting fix in advance. One source inconsistency remains: a 12-second hard timeout cannot coexist with a 22.18 s p95 if it bounds the measured request. The timeout evidently fired at another boundary, such as the gateway, while the console kept waiting, so confirm where each timeout is enforced and measured before using either number in an alert.
 
 #### What changed and why {#latency-what-changed-and-why}
 
@@ -1075,7 +1075,7 @@ The first two rows rule out the obvious story. Requests grew 7%, so users did no
 
 The `exec_summary_v6` upgrade added "more supporting context" after executives asked for richer explanations. The same release changed cache-key normalisation and dropped the date-range and snapshot fields. It also disabled compression while debugging a formatting issue.
 
-The root cause is three effects multiplying. The template expanded context. The larger context crossed the routing threshold into the expensive model. The cache-key regression collapsed the hit rate, so the system paid full price for every large prompt. Each effect alone would have been a moderate increase; together they compound.
+The root cause is three effects multiplying. The template expanded context. The larger context crossed the routing threshold into the expensive model. The cache-key regression collapsed the hit rate, so the system paid full price for every large prompt. The two key changes pulled in opposite directions. Keying on raw `query_text` instead of a normalised query fragmented the keys, and the new template started from a cold cache, which together explain the fall from 67% to 4%. Dropping date range, snapshot and role scope made each key match more requests, which on its own would raise the hit rate and created the over-sharing risk described below. Each effect alone would have been a moderate increase; together they compound.
 
 #### Debugging path {#cost-debugging-path}
 
@@ -1163,14 +1163,14 @@ The follow-up is "it only happens at peak traffic." Peak-only latency points at 
 
 Separate seven failure classes: retrieval, context assembly, reasoning or synthesis, prompt or instruction, output format, evaluation and user experience. Measure each separately.
 
-- Retrieval: recall@k (how many relevant documents appear in the top k), precision@k (how many of the top k are relevant), and ranking metrics such as MRR (mean reciprocal rank) or nDCG (normalised discounted cumulative gain). MRR averages one divided by the rank of the first relevant result.
+- Retrieval: recall@k (the fraction of all relevant documents that appear in the top k), precision@k (the fraction of the top k that are relevant), and ranking metrics such as MRR (mean reciprocal rank) or nDCG (normalised discounted cumulative gain). MRR averages one divided by the rank of the first relevant result.
 - Context assembly: citation correctness and context sufficiency.
 - Generation: answer faithfulness, answer relevance and abstention quality.
 - The whole application: end-to-end task success.
 
 The [triage flowchart in step 7](#walkthrough-diagnosis) is the first cut; these metrics are the second.
 
-The follow-up is "would you fine-tune the model?" Classify the problem first. A knowledge problem is usually retrieval or data access. A behaviour problem is prompting, fine-tuning or structured output. A freshness problem is indexing and the data pipeline. A permission problem is access-control-aware retrieval. Fine-tuning mainly helps the behaviour problem; it is a poor fix for missing knowledge, stale indexing or unauthorised retrieval. Ovadia et al. (2023) found fine-tuning a weak way to add knowledge compared with retrieval.
+The follow-up is "would you fine-tune the model?" Classify the problem first. A knowledge problem is usually retrieval or data access. A behaviour problem is prompting, fine-tuning or structured output. A freshness problem is indexing and the data pipeline. A permission problem is access-control-aware retrieval. Fine-tuning mainly helps the behaviour problem; it is a poor fix for missing knowledge, stale indexing or unauthorised retrieval. Ovadia et al. (2023) found unsupervised fine-tuning a weaker way to add knowledge than retrieval on their benchmarks.
 
 #### High latency in an LLM inference pipeline
 
@@ -1179,7 +1179,7 @@ This is the layer below the application. Walk the full stack: tokenisation, netw
 - **Prefill** processes the whole prompt in parallel and sets time to first token, so it scales with input tokens.
 - **Decode** generates one token at a time and sets tokens per second, so it scales with output tokens.
 
-A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length. In the latency incident, 18,500 input tokens against 610 output tokens is why the first token, not the tail of the answer, was the problem.
+A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length. In the latency incident, most of the 14.1 s first-token time accrued before the provider started: retrieval, reranking, compression and gateway queueing account for about 10.8 s, and 18,500 input tokens add prefill on top. The 9.7 s from first token to completion for 610 output tokens is slow decode, cross-region round trips and streaming, so both halves need attention.
 
 - Batch size trades throughput for per-request latency. With continuous batching nothing waits for a batch to fill, but each decode step gets slower as more sequences share it.
 - The KV (key–value) cache holds attention state for tokens already processed, so the model does not recompute the prompt for every new token. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Kwon et al. (2023) and the vLLM tuning guide describe these limits.
@@ -1198,17 +1198,19 @@ Ten members of this prompt group are the same system asked a cost or latency que
 
 Three recurring situations show the pattern applied. For peak HTTP 429 (rate-limit) errors, separate the provider's limits from your own gateway's, and shed non-interactive work. For abandoned streams, cancel generation and in-flight tools; this saves spend where the provider stops generating on cancel. Some hosted providers keep billing after a client cancels, while self-hosted engines such as vLLM's OpenAI-compatible server abort generation on disconnect. For a sudden cache miss, inspect normalisation, prompt prefix bytes, TTL (time to live, how long a cached item stays valid) and version before adding capacity.
 
-Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The Claude and OpenAI prompt-caching documentation both describe this exact-prefix behaviour.
+Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The Claude and OpenAI prompt-caching documentation both describe this exact-prefix behaviour. Keep it separate from an application response cache such as the one in the cost incident. A provider prompt cache reuses the processed prefix, so the model still generates and the saving is on input cost and first-token time. A response cache skips the model call, which is why its key must carry tenant, permission scope and data version.
 
 Each pivot gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse and the line to say. Every card shares the playbook's customer-communication sentence: "Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric." The ten cards are in [Practice](#practice-pivots), so you can attempt each before revealing it.
 
 ### References {#references}
 
+The November review corrects the head-versus-tail sampling description, the exemplar definition, the RFC 2104 key claim, the first-token attribution in the latency incident and the cache-key mechanism in the cost incident, and discloses the timeout inconsistency in the latency logs. Primary references: [OpenTelemetry sampling concepts](https://opentelemetry.io/docs/concepts/sampling/), the [tail sampling processor README](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md), the [OpenTelemetry metrics data model on exemplars](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#exemplars) and [W3C Trace Context](https://www.w3.org/TR/trace-context/).
+
 Fact-check sources from the original case, checked 27 September 2026. Each supports the claim noted beside it.
 
 - [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/): typical span size (~500 bytes) behind the storage sizing.
-- [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104): HMAC security rests on a secret key, not a salt.
-- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices used to check the $2.74 figure.
+- [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104): HMAC keys must be random and periodically refreshed.
+- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices. A 21,384-token prompt exceeds the 8K GPT-4 context, so the 32K model's list prices of $60 per million input and $120 per million output tokens apply: 21,384 in and 1,288 out cost about $1.44. The $2.74 figure is illustrative rather than a list price.
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval? (arXiv 2312.05934)](https://arxiv.org/abs/2312.05934): fine-tuning is a weak way to add knowledge compared with retrieval.
 - [Kwon et al. 2023, Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180): continuous batching and KV-cache limits.
 - [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): batch size, preemption and chunked prefill trade-offs.

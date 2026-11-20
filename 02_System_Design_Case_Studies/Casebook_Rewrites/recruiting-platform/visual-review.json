@@ -1,11 +1,23 @@
 {
   "status": "reviewed",
   "passed": true,
-  "evidence": "Fresh desktop.png and phone.png (built 16 Nov 07:18) show the new brief: GDPR/EEOC defined inline, the core-loop figure after the one-sentence core idea, and the phone layout with topic selector and no horizontal overflow. The browser-screens figure sheets were stale (pre-rewrite, five figures), so each of the four built figures was screenshotted in place with puppeteer at 1280px: figure-1-0 shows Resume and job description > Structured profiles > Weighted, explained ranking > Recruiter review diamond with Approve > Book the interview and Override > Change the shortlist, matching its caption; figure-9-0 shows the two upload lanes through OCR/Document Parser and JD Parser converging on Structured Extraction Service, the 'after the interview or assessment' edge before AI Judge Scoring, and Human Recruiter Review before Interview Scheduler, as the step 2 caption states; figure-22-0 is the same topology with shorter labels (Candidate profile, Evaluation, Interview scheduling) beside the 16-component table; figure-13-0 shows AI ranking and scores > Human recruiter review > Approve or override > Final hiring decision with no bypass, as the dive-fairness prose says. The duplicated security figure from the previous build is gone.",
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 4 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: the resume-to-recruiter-review flow, the two vertical reference architectures from recruiter portal to candidate portal and the human review chain each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/recruiting-platform/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/recruiting-platform/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/recruiting-platform/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-9-0",
+    "figure-22-0",
+    "figure-13-0"
+  ],
   "limits": [
-    "figure-13-0 is a narrow 168px-wide SVG that the reader scales to column width, so its boxes render very large on desktop; legible but oversized. Renderer styling, not changed.",
-    "The two tall architecture SVGs (1519 and 1769px high) need scrolling at desktop width; labels stay readable.",
-    "Dark-variant SVGs were hash-checked by the validator but not visually inspected; no dark theme exists in the reader.",
-    "Element screenshots include the sticky section bar overlapping the figure; that is a screenshot artefact of sticky positioning, not a layout defect."
-  ]
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/recruiting-platform/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

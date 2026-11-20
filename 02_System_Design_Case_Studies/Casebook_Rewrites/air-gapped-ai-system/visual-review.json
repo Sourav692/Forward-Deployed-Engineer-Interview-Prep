@@ -1,3 +1,34 @@
-{"status":"reviewed","passed":true,
-"evidence":"Desktop (1440) screenshot shows the five-section tab bar, the 'Run useful AI inside a network with no way out' brief with its contents rail and the separate progress rail; phone (390) screenshot shows the topic selector, the full Case brief (enclave definition, bolded outcome line, core-idea figure, document and release traces, task) and progress rail with no horizontal overflow. Text labels were extracted from all 11 light source SVGs and compared with the new alt text and captions (question tree branches, six workload levers, nine-component top-down split, happy-path lifelines, failure-overlay messages, four-stage drill, four rollout phases, 50-minute blocks). Four SVGs (843b9040, 18a4b5f6, 1fc12c2c, cf0fe73c) were rasterised and viewed: they render, and the build/signing/export/transfer-zone and Detection-to-Containment labels match the adjacent prose. Browser check reported all images decoding offline at six widths and 16 keyboard-accessible answer reveals.",
-"limits":["Rasterised previews were Quick Look square crops, so only part of each wide diagram was viewed as an image; the rest was checked via extracted SVG text.","Source SVG 18a4b5f6 shows literal '<i>' markup inside its box labels; this is in the original captured asset and was kept unchanged.","Wide source diagrams render small at 390 px; readers rely on the 'Open for full size' link.","Dark mode and screen-reader testing were not run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 11 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render: the build-to-enclave flow, six-bucket discovery, the question tree, replica capacity check, top-down architecture, both sequence diagrams, the four-stage drill, the phased rollout, the verify-bundle flow and the 50-minute timeline each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-14-23-2026-11-20/air-gapped-ai-system/ui-1440.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/air-gapped-ai-system/ui-390.png",
+    ".website_spec/casebook-review-14-23-2026-11-20/air-gapped-ai-system/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-9-0",
+    "figure-10-0",
+    "figure-11-0",
+    "figure-12-0",
+    "figure-12-1",
+    "figure-12-2",
+    "figure-14-0",
+    "figure-15-0",
+    "figure-13-0",
+    "figure-16-0"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "figure-12-0 shows literal '<i> ... </i>' markup inside its node labels (for example 'Transfer Staging Zone <i> quarantine + inspect </i>'); the diagram renders and stays readable, but the italic tags print as text. This is in the preserved source figure bytes.",
+    "figure-11-0 (capacity diamond), figure-14-0 (detection node) and figure-13-0 (raise ManifestError, SignatureError, IntegrityError nodes) use dark text on a dark red fill, which has weak contrast.",
+    "figure-10-0 (question tree) and figure-12-2 are wide with small labels; figure-13-0 wraps canonical_json(manifest) and IntegrityError(path) mid-token.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-14-23-2026-11-20/air-gapped-ai-system/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}
