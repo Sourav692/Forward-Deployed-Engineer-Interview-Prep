@@ -11,7 +11,7 @@ level: advanced
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [interview, design defence, trade-offs, challenge, communication]
 ---
 
@@ -118,11 +118,13 @@ Practise with a partner using any lesson in this module.
 4. Close in 30 seconds.
 5. Swap roles and score each other on whether the moves matched the kinds.
 
+The same sorting and moves apply in a take-home follow-up session, where the challenges target choices you made alone. [Defending your take-home](../../fde-take-home/take-home-assignments/05_Defending_Your_Take_Home.md) covers that round.
+
 ## Limits of this lesson
 
 - **Scope.** Telling the build story and running the whiteboard round are taught in their own lessons, linked below.
 - **Interviewers differ.** Some challenge to probe, some to see how you handle disagreement. The sorting step works for both.
-- **Fictional data.** The candidates and the customers named here are illustrative.
+- **Composite examples.** The candidates and the customers named here are illustrative, not real people or customers.
 
 ## Interview angle
 

@@ -11,7 +11,7 @@ level: advanced
 reading_time: "20 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [multi-tenant, configuration, extensions, templates, upgrades, identity]
 ---
 
@@ -127,7 +127,7 @@ Concede that the platform approach costs design time up front. Offer a fast path
 
 - **Scope.** Tenant isolation and single sign-on are taught in their own lessons, linked below.
 - **Product politics.** Moving a request into core needs the product owner's agreement.
-- **Fictional data.** Ludlow Software, Morpeth Health, Nairn Council, Otley Bank and every figure here are illustrative.
+- **Composite engagement.** Ludlow Software, Morpeth Health, Nairn Council, Otley Bank and every figure here are illustrative, not real customers.
 
 ## Interview angle
 

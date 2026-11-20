@@ -111,11 +111,11 @@ If asked why the plan slipped, give the causes and what you changed. The narrowe
 
 - **Scope.** Retrieval quality, permission-aware search and pilot design are taught in their own lessons, linked below.
 - **Short pilots.** Two weeks of data shows direction, not a settled effect.
-- **Fictional data.** Rothbury Telecom and every figure here are illustrative.
+- **Composite engagement.** Rothbury Telecom and every figure here are illustrative, not a real customer.
 
 ## Interview angle
 
-Each answer is an outline to say in about two minutes. Open each question and try it aloud before reading.
+Each answer is an outline to say in about two minutes. The last question is timed: set a clock and talk it through before opening it.
 
 <details>
 <summary>Interview question 1. You have six weeks and one other engineer to build a support assistant over a knowledge base and a ticketing system. Plan it.</summary>
@@ -134,6 +134,15 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 - **Trade-off:** Cutting scope keeps the date but delays part of the value. Holding scope keeps the value but loses trust in the date.
 - **Follow-up to expect:** "Security is being slow on purpose." Assume a reason and ask for it. Here, it was right.
 - **Go deeper:** [Service accounts and least privilege](/learn/fde-deploying-in-the-estate/networks-and-identity/service-accounts-and-least-privilege).
+
+</details>
+
+<details>
+<summary>Interview question 3. Timed drill (20 minutes): a telecom wants a support assistant live in six weeks with two engineers, and in week three the access you planned on has not arrived. Run the engagement.</summary>
+
+- **Answer:** Minutes 0 to 4: discovery on the support measures, the top intents by volume, the knowledge base and which articles customers must never see. Minutes 4 to 7: list every access grant with its owner and lead time, and request each on day one. Minutes 7 to 11: the design, with visibility labels on every article, drafts written as internal notes and an evaluation set from resolved tickets. Minutes 11 to 15: week three, with the causes of each slip, a narrower service account and a label check at indexing. Minutes 15 to 18: options for the sponsor in writing, fewer intents on the date or full scope later. Minutes 18 to 20: what shipped, what is deferred and what the customer owns.
+- **Trade-off:** Time spent on access and labels leaves less for retrieval design. Interviewers mark the plan that survives the slip, not the architecture.
+- **Follow-up to expect:** "Why not wait for access before planning?" The evaluation set and the design need no access, so waiting wastes two weeks.
 
 </details>
 

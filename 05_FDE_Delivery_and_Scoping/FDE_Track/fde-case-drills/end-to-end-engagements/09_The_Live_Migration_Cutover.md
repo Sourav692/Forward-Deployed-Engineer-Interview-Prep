@@ -11,7 +11,7 @@ level: advanced
 reading_time: "16 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [simulation, data migration, cutover, reconciliation, rollback, change data capture]
 ---
 
@@ -112,7 +112,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **One source system.** Migrations that merge several systems add matching and duplicate problems on top of these.
 - **A cooperative legacy system.** Jedburgh's legacy database supported change capture. Some systems allow only nightly extracts, which widens the final delta.
-- **Fictional data.** Jedburgh Building Society, its figures and its weekend are illustrative.
+- **Composite engagement.** Jedburgh Building Society, its figures and its weekend are illustrative, not a real customer.
 
 ## Interview angle
 

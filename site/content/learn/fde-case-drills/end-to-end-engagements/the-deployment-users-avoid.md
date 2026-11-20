@@ -104,7 +104,7 @@ The walkthrough replays the engagement as you would tell it in an interview, one
 
 - **A willing head of operations.** Changing the morning report needed her authority. Without a sponsor for the "asked" branch, product fixes alone rarely move usage.
 - **Short measurement.** Four weeks shows direction, not a lasting habit.
-- **Fictional data.** Kirkby Freight, its controllers and its figures are illustrative. The logistics exception handling case covers the system design.
+- **Composite engagement.** Kirkby Freight, its controllers and its figures are illustrative, not a real customer. The logistics exception handling case covers the system design.
 
 ## Interview angle
 
