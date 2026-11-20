@@ -3,11 +3,7 @@
 
 ## Start with the build nobody tested
 
-Lanark Bank, a fictional bank, runs your document service for its loan officers. The service reads uploaded payslips and bank statements and extracts the figures an officer needs. A release passed every test in staging on a Tuesday. The bank's change board approved it on Wednesday. On Thursday the pipeline deployed it to production, and about one upload in five failed to parse.
-
-Staging and production ran the same commit. They did not run the same build. The pipeline rebuilt the image for each environment, and the dependency file allowed any minor version of the PDF library. Between Tuesday and Thursday a new minor version shipped, and the production build picked it up. The change board had approved one thing and the bank received another.
-
-Call this **the build nobody tested**: an artefact assembled after the tests ran, from inputs nobody pinned, carrying an approval it never earned.
+Lanark Bank runs a document service that reads loan applicants' payslips and bank statements and extracts the figures its loan officers need. Owain, the forward deployed engineer on the account, shipped a release that passed every test in staging on a Tuesday. The bank's change board approved it on Wednesday, and on Thursday the pipeline deployed it to production, where about one upload in five failed to parse. Staging and production ran the same commit. They did not run the same build: the pipeline rebuilt the image for each environment, the dependency file allowed any minor version of the PDF library, and a new minor version shipped between Tuesday and Thursday. The change board had approved one thing and the bank received another. Call this **the build nobody tested**: an artefact assembled after the tests ran, from inputs nobody pinned, carrying an approval it never earned.
 
 > **What you'll learn**
 >
@@ -106,13 +102,13 @@ Promotion removes the build as a cause. When staging and production still disagr
 
 *Table 2: Differences between environments that run the same artefact, checked in order of cost.*
 
-Make the comparison cheap before you need it. Have the service log its digest and a hash of its effective configuration at startup, with secret values excluded. Then the first two rows take a minute.
+Make the comparison cheap before you need it. Have the service log its digest and a hash of its effective configuration at startup, with secret values excluded. Then the first two rows take a minute. [Validate configuration at startup](/learn/fde-deploying-in-the-estate/deployment-models-and-environments/config-compute-and-kubernetes-choices#validate-configuration-at-startup) makes the service refuse to start on a bad setting.
 
 ## Limits of this lesson
 
 - **Tools differ.** Lockfile formats, registries and infrastructure tools vary. The principles hold, and the commands are the customer's.
 - **Bit-for-bit reproducibility is hard.** Timestamps and file ordering break it. Aim for pinned inputs and recorded provenance first.
-- **Fictional data.** Lanark Bank, its people and figures are illustrative.
+- **Composite engagement.** Lanark Bank, Owain, the release and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

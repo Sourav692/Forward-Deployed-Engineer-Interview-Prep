@@ -4,16 +4,16 @@ These files are the source of the module `releases-cutover-and-recovery` in the 
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
-| 1 | [Builds you can reproduce and promote](01_Builds_You_Can_Reproduce_and_Promote.md) | `builds-you-can-reproduce-and-promote` | Drafted |
-| 2 | [Safe rollouts](02_Safe_Rollouts.md) | `safe-rollouts` | Drafted |
-| 3 | [Migrating live data](03_Migrating_Live_Data.md) | `migrating-live-data` | Drafted |
-| 4 | [Cutover and rollback decisions](04_Cutover_and_Rollback_Decisions.md) | `cutover-and-rollback-decisions` | Drafted |
-| 5 | [Backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_Drills.md) | `backups-rto-rpo-and-restore-drills` | Drafted |
-| 6 | [Practise releases and cutover](06_Practise_Releases_and_Cutover.md) | `practise-releases-and-cutover` | Drafted |
+| 1 | [Builds you can reproduce and promote](01_Builds_You_Can_Reproduce_and_Promote.md) | `builds-you-can-reproduce-and-promote` | Published |
+| 2 | [Safe rollouts](02_Safe_Rollouts.md) | `safe-rollouts` | Published |
+| 3 | [Migrating live data](03_Migrating_Live_Data.md) | `migrating-live-data` | Published |
+| 4 | [Cutover and rollback decisions](04_Cutover_and_Rollback_Decisions.md) | `cutover-and-rollback-decisions` | Published |
+| 5 | [Backups, RTO, RPO and restore drills](05_Backups_RTO_RPO_and_Restore_Drills.md) | `backups-rto-rpo-and-restore-drills` | Published |
+| 6 | [Practise releases and cutover](06_Practise_Releases_and_Cutover.md) | `practise-releases-and-cutover` | Published |
 
 ## Sources
 
-Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Customers, names and figures in the lessons are fictional and labelled as illustrations.
+Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Each teaching lesson opens on a composite engagement: the customers, forward deployed engineers, names and figures are illustrative, not real customers. The practice page's customers are fictional.
 
 ## Editing
 

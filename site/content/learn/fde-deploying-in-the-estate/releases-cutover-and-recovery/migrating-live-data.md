@@ -3,13 +3,7 @@
 
 ## Start with the parallel run that did the work twice
 
-Thornbury Freight, a fictional freight operator, is replacing its 15-year-old booking system with a new one your team built. To gain confidence, the plan was a one-week parallel run. Every booking went into both systems, and each night a script compared their records.
-
-Both systems were fully live. Each sent collection requests to Thornbury's subcontracted hauliers and a confirmation email to the customer. By noon on the first day, 340 collections had been requested twice. Two hauliers sent lorries to the same warehouse for the same pallets, and customers received two confirmations with different reference numbers. The run was stopped and the hauliers were paid for the wasted trips.
-
-The data comparison had been designed with care. The side effects had not been designed at all.
-
-Call this **the parallel run that did the work twice**: a test that runs the new system for real, in a world where only one system is allowed to act.
+Thornbury Freight is replacing its 15-year-old booking system with a new one built by Bisi's team; Bisi is the forward deployed engineer. To gain confidence, the plan was a one-week parallel run: every booking went into both systems, and a nightly script compared their records. Both systems were fully live, and each sent collection requests to Thornbury's subcontracted hauliers and a confirmation email to the customer. By noon on the first day, 340 collections had been requested twice. Two hauliers sent lorries to the same warehouse for the same pallets, and customers received two confirmations with different reference numbers. The run was stopped and the hauliers were paid for the wasted trips. The data comparison had been designed with care, and the side effects had not been designed at all. Call this **the parallel run that did the work twice**: a test that runs the new system for real, in a world where only one system is allowed to act.
 
 > **What you'll learn**
 >
@@ -47,6 +41,8 @@ The details that decide whether it works:
 - **Deletes.** CDC emits deletes as their own events. A consumer that only handles inserts and updates leaves deleted bookings alive in the target.
 - **Lag.** Measure the time between a commit on the source and its arrival on the target. At cutover you wait for lag to reach zero. Its size decides the length of the write freeze.
 - **Schema changes.** A column added to the source mid-migration must reach the transform, or the stream fails or drops the field.
+
+Change capture is one of four ways to catch changes in a source. [Recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs) compares them, and its rule that a checkpoint moves only after the target commits applies to the apply step here. Re-running history inside a live pipeline, without moving the system, is [backfills while live](/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live).
 
 ## Reconciliation beyond row counts
 
@@ -92,7 +88,7 @@ A **parallel run** puts both systems through the same real workload over days, o
 
 *Table 1: Who may act during a parallel run. The system under test proves what it would have done, without doing it.*
 
-Compare the intended-actions log with what the old system did each day: same collections, same amounts, same recipients. Also give every action an **idempotency key** derived from the booking, such as the booking ID plus the action type, and have the haulier integration reject a repeat. That second layer turns any slip in the first rule into a rejected duplicate instead of a lorry.
+Compare the intended-actions log with what the old system did each day: same collections, same amounts, same recipients. Also give every action an **idempotency key** derived from the booking, such as the booking ID plus the action type, and have the haulier integration reject a repeat, as [idempotent writes](/learn/engineering-foundations/apis-and-backend/idempotent-writes-and-long-running-jobs) describes. That second layer turns any slip in the first rule into a rejected duplicate instead of a lorry.
 
 Thornbury restarted its parallel run a fortnight later with the new system in compare mode. Over seven days the intended-actions log matched the old system's actions for all but 14 collections, each traced to a known rounding rule.
 
@@ -100,7 +96,7 @@ Thornbury restarted its parallel run a fortnight later with the new system in co
 
 - **Change capture needs access.** Reading the transaction log needs database settings and grants the customer's database team must approve.
 - **Some systems cannot be shadowed.** Mainframe batch jobs and vendor products may offer no way to copy traffic. Parallel runs on batch outputs may be the only option.
-- **Fictional data.** Thornbury Freight, its people and figures are illustrative.
+- **Composite engagement.** Thornbury Freight, Bisi, the parallel run and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

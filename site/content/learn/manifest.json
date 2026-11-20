@@ -7733,7 +7733,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-building-in-the-estate/customer-data-pipelines/05_Backfills_While_Live.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/learn/fde-building-in-the-estate/customer-data-pipelines/backfills-while-live",
       "updated": "2026-11-20"
     },
@@ -8479,7 +8479,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/01_Builds_You_Can_Reproduce_and_Promote.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/builds-you-can-reproduce-and-promote",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "safe-rollouts",
@@ -8489,9 +8489,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/02_Safe_Rollouts.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/safe-rollouts",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "migrating-live-data",
@@ -8503,7 +8503,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/03_Migrating_Live_Data.md",
       "estMinutes": 10,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/migrating-live-data",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "cutover-and-rollback-decisions",
@@ -8513,9 +8513,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/04_Cutover_and_Rollback_Decisions.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/cutover-and-rollback-decisions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "backups-rto-rpo-and-restore-drills",
@@ -8537,9 +8537,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/releases-cutover-and-recovery/06_Practise_Releases_and_Cutover.md",
-      "estMinutes": 11,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/releases-cutover-and-recovery/practise-releases-and-cutover",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "telemetry-the-customer-can-use",

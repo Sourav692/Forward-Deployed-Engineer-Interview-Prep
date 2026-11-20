@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [feature flags, canary releases, rollback, schema migrations, expand and contract]
 ---
 
 ## Start with the one-way release
 
-Thornbury Freight, a fictional freight operator, takes bookings for lorry collections through a system your team extends. A release moved collection slots out of a text column on the bookings table into a new `slots` reference table. The same release copied the data across and dropped the old column.
-
-The release went to a canary: 10% of traffic for two hours. Error rate and latency stayed flat, so it looked healthy. But the new code rejected bookings whose slot text did not match a row in the new table, such as "AM, gate 3". It returned a polite validation message, not an error. Completed bookings in the canary fell from 92 in every 100 attempts to 84.
-
-A dispatcher noticed. The team tried to roll back, and the old code crashed at startup: the column it read no longer existed. The rollback had been removed by the release itself.
-
-Call this **the one-way release**: a change that is judged on the wrong signals and cannot be undone once it starts.
+Thornbury Freight takes bookings for lorry collections through a system extended by a team that Bisi, the forward deployed engineer, leads. A release moved collection slots out of a text column on the bookings table into a new `slots` reference table, copied the data across and dropped the old column. It went to a canary at 10% of traffic for two hours, and error rate and latency stayed flat. The new code rejected bookings whose slot text matched no row in the new table, such as "AM, gate 3", with a polite validation message instead of an error, and completed bookings in the canary fell from 92 in every 100 attempts to 84. A dispatcher noticed. Bisi's team tried to roll back, and the old code crashed at startup because the column it read no longer existed: the release had removed its own rollback. Call this **the one-way release**: a change that is judged on the wrong signals and cannot be undone once it starts.
 
 > **What you'll learn**
 >
@@ -117,11 +111,13 @@ A **rolling deploy** replaces instances a few at a time, so for minutes or hours
 
 *Table 2: Schema and message changes during a rolling deploy.*
 
+Readiness checks decide when each new instance takes traffic during the roll. [Config, compute and Kubernetes choices](../deployment-models-and-environments/06_Config_Compute_and_Kubernetes_Choices.md) covers what they should test.
+
 ## Limits of this lesson
 
 - **Database specifics matter.** Which changes lock a table differs between databases and versions. Check the customer's before you plan.
 - **Flags are not free.** Each one adds a code path to test.
-- **Fictional data.** Thornbury Freight, its people and figures are illustrative.
+- **Composite engagement.** Thornbury Freight, Bisi, the release and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
