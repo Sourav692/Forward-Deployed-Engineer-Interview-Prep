@@ -6,22 +6,18 @@ module_group: Release and operate
 module_code: T23.6
 module_name: Reliability, performance and cost in their estate
 lesson: 2
-lessons: ["Recovering half-finished work", "Latency, queues and load tests", "Finding the real bottleneck", "AI cost per successful task", "Practise reliability, performance and cost, part 1", "Practise reliability, performance and cost, part 2"]
+lessons: ["Recovering half-finished work", "Latency, queues and load tests", "Finding the real bottleneck", "AI cost per successful task", "Practise reliability, performance and cost"]
 level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [latency, percentiles, queues, backpressure, load testing]
 ---
 
 ## Start with the average that hid the queue
 
-Mossgiel Retail, the fictional clothing chain from the previous lesson, opened its winter sale at 09:00. The operations dashboard showed the order API's average response time steady at 120 ms all morning. Yet 1 in 50 customers waited over a second at checkout, and the stock-update queue held 28,500 messages by 09:05. The consumers' CPU sat at 15 per cent, so nobody added capacity.
-
-Shop staff saw items sell out that the website still showed in stock. The dashboard said everything was fine.
-
-Call this **the average that hid the queue**: a mean that stayed flat while the slowest requests and the backlog grew, and a CPU graph that pointed away from the real limit.
+Mossgiel Retail opened its winter sale at 09:00. The operations dashboard showed the order API's average response time steady at 120 ms all morning, yet 1 in 50 customers waited over a second at checkout, and the stock-update queue held 28,500 messages by 09:05. The consumers' CPU sat at 15 per cent, so nobody added capacity, and shop staff saw items sell out that the website still showed in stock. Ceri, the forward deployed engineer, was asked why the dashboard said everything was fine. Call this **the average that hid the queue**: a mean that stayed flat while the slowest requests and the backlog grew, and a CPU graph that pointed away from the real limit.
 
 > **What you'll learn**
 >
@@ -52,7 +48,7 @@ The tail matters more than its share suggests. A page that makes 10 backend call
 - If the payment call slows by 0.5 s, each request takes 0.75 s. Now 300 must be in flight. With 200 workers, it can finish at most 200 ÷ 0.75 ≈ 267 a second, and the rest queue.
 - The stock consumers run 10 at a time, and each waits 0.4 s on the warehouse system. They can finish at most 10 ÷ 0.4 = 25 messages a second. Messages arrive at 30. The queue grows by 5 a second, 18,000 an hour, while the CPU idles.
 
-That last line explains the low CPU. The consumers were waiting, not working. Their limit was concurrency against a slow dependency. During the sale's first five minutes, 120 updates arrived each second against 25 handled, which built the 28,500 backlog: 95 × 300.
+That last line explains the low CPU. The consumers were waiting, not working. Their limit was concurrency against a slow dependency. The T16.11 lesson on [capacity, latency and cost at scale](../../../../01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/03_Capacity_Latency_and_Cost_at_Scale.md) applies the same law to sizing model serving. During the sale's first five minutes, 120 updates arrived each second against 25 handled, which built the 28,500 backlog: 95 × 300.
 
 ## How long the queue takes to drain
 
@@ -95,7 +91,7 @@ The tools are bounds:
 - **Bounded queues and pools.** Set a maximum depth or size. When it is reached, reject or wait, rather than grow without limit.
 - **Reject early with a hint.** Return 429 or 503 with a Retry-After header, so clients back off.
 - **Shed by priority.** Drop or delay low-value work, such as recommendation refreshes, before checkouts.
-- **Limit concurrency per dependency.** Cap calls to a slow system so it does not take every worker. The [handling overload](https://sre.google/sre-book/handling-overload/) chapter of Google's Site Reliability Engineering book covers rejection and per-client limits.
+- **Limit concurrency per dependency.** Cap calls to a slow system so it does not take every worker. [Concurrency without surprises](../../fde-building-in-the-estate/working-in-customer-code/05_Concurrency_Without_Surprises.md) shows the cap in code. The [handling overload](https://sre.google/sre-book/handling-overload/) chapter of Google's Site Reliability Engineering book covers rejection and per-client limits.
 
 ## Load tests with bursts and a slow dependency
 
@@ -111,13 +107,13 @@ A load test at a steady average rate tells you little about a sale morning. Test
 
 *Table 2: A load-test suite. Each test has a pass rule written before it runs.*
 
-Inject the impairment with a fault proxy or a stub of the dependency, not by hoping it happens. Measure percentiles, queue depth, pool waits, error rates and the time to recover after the burst ends. Use production-shaped data, because cache hits and query plans change with it. The T1.4 lesson on [degrading gracefully and load testing](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md) shows a mock model endpoint for AI services.
+Inject the impairment with a fault proxy or a stub of the dependency, not by hoping it happens. Measure percentiles, queue depth, pool waits, error rates and the time to recover after the burst ends. Use production-shaped data, because cache hits and query plans change with it. The T1.3 lesson on [degrading gracefully and load testing](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md) shows a mock model endpoint for AI services. To turn the results into instance and database sizes, see [sizing compute, storage and databases from measurements](../deployment-models-and-environments/06_Config_Compute_and_Kubernetes_Choices.md#sizing-compute-storage-and-databases-from-measurements).
 
 ## Limits of this lesson
 
 - **Little's law needs a stable system.** It holds for long-run averages. During a burst, use the arrival and capacity arithmetic instead.
 - **Real arrivals are uneven.** Queues build before average utilisation reaches 100 per cent. Keep headroom.
-- **Fictional data.** Mossgiel Retail, its rates and figures are illustrative.
+- **Composite engagement.** Mossgiel Retail, Ceri, its rates and figures are illustrative, not a real customer.
 
 ## Interview angle
 

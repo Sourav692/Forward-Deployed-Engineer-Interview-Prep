@@ -3,11 +3,7 @@
 
 ## Start with the paid-but-pending order
 
-Mossgiel Retail, a fictional clothing chain, takes online orders through three services: stock, payments and orders. Checkout reserves stock, charges the card, then marks the order paid. On a busy Saturday the orders database stalled for 40 seconds. The payment provider charged 312 customers, but the step that marks orders paid timed out.
-
-Those orders stayed "pending". Stock stayed reserved. Customers saw a charge and no confirmation, and many pressed "Pay" again. The retry logic in the web app, the API gateway and the order service each tried again, and some customers were charged twice.
-
-Call this **the paid-but-pending order**: work that finished in one system and not the next, with no record of which steps ran.
+Mossgiel Retail, a clothing chain, takes online orders through three services: stock, payments and orders. Checkout reserves stock, charges the card, then marks the order paid. On a busy Saturday the orders database stalled for 40 seconds. The payment provider charged 312 customers, but the step that marks orders paid timed out, so those orders stayed "pending" with their stock still reserved. Customers saw a charge and no confirmation, and many pressed "Pay" again. The web app, the API gateway and the order service each retried, and some customers were charged twice. On Monday Ceri, the forward deployed engineer, got the finance team's list of complaints and had to work out, order by order, how far each checkout had got. Call this **the paid-but-pending order**: work that finished in one system and not the next, with no record of which steps ran.
 
 > **What you'll learn**
 >
@@ -34,7 +30,7 @@ flowchart LR
 
 The hardest case is a **timeout**. A timeout does not mean the call failed. It means you do not know. The payment provider may have charged the card and the reply was lost. Before you retry or undo anything, find out what happened, by asking the other system for the result under a known key.
 
-Record each step's state in the order record (reserved, charged, paid, shipped) with the provider's reference. Then a reconciliation job can find orders stuck between states and finish them.
+Record each step's state in the order record (reserved, charged, paid, shipped) with the provider's reference. Then a reconciliation job can find orders stuck between states and finish them. The T1.5 lesson on [recoverable data syncs](/learn/engineering-foundations/distributed-systems-essentials/recoverable-data-syncs) covers reconciliation in depth.
 
 ## Duplicates and events out of order
 
@@ -45,6 +41,8 @@ Most queues and webhook senders deliver **at least once**. A message can arrive 
 - **Missing context.** If an event refers to a record you have not seen yet, park it briefly and retry, or fetch the current state from the source.
 
 When the event carries a full snapshot of the record, the newest version wins and older ones can be dropped. When events carry changes ("add 5 units"), you cannot drop one. Apply them in sequence and hold any that arrive early.
+
+The T1.5 lesson on [duplicates in both directions](/learn/engineering-foundations/distributed-systems-essentials/duplicates-in-both-directions) covers deduplication stores in depth, and [the webhook receiver](/learn/enterprise-integration/receiving-webhooks-safely/the-webhook-receiver) applies both rules at a partner's front door.
 
 ## Retries that help and retries that hurt
 
@@ -75,6 +73,8 @@ A **dead-letter queue** holds messages that failed after their retries. It stops
 3. Replay through the normal, idempotent consumer at a limited rate.
 4. Count what succeeded and what failed again, and record both.
 
+A replay tool with filters, a rate cap and an audit trail is built in [keeping a message pipeline healthy](/learn/engineering-foundations/distributed-systems-essentials/keeping-a-message-pipeline-healthy).
+
 ## Finishing or undoing the work
 
 When a step cannot complete, earlier steps need a **compensating action**: a new action that undoes the business effect. A refund compensates a charge. Releasing stock compensates a reservation. You cannot delete a charge, and an email already sent stays sent.
@@ -94,7 +94,7 @@ Run every repair through the same idempotent code paths as live traffic. A repai
 
 - **Provider behaviour varies.** Idempotency key lifetimes, webhook retry schedules and ordering promises differ. Read the provider's documentation before relying on them.
 - **Money and regulation.** Refund and notification rules may be set by the customer's finance and legal teams. Agree the rule before running a repair.
-- **Fictional data.** Mossgiel Retail, its orders and figures are illustrative.
+- **Composite engagement.** Mossgiel Retail, Ceri, its orders and figures are illustrative, not a real customer.
 
 ## Interview angle
 

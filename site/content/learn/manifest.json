@@ -8609,9 +8609,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/01_Recovering_Half_Finished_Work.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/recovering-half-finished-work",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "latency-queues-and-load-tests",
@@ -8623,7 +8623,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/02_Latency_Queues_and_Load_Tests.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/latency-queues-and-load-tests",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "finding-the-real-bottleneck",
@@ -8633,9 +8633,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/03_Finding_the_Real_Bottleneck.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/finding-the-real-bottleneck",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "ai-cost-per-successful-task",
@@ -8647,31 +8647,19 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/04_AI_Cost_per_Successful_Task.md",
       "estMinutes": 12,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/ai-cost-per-successful-task",
-      "updated": "2026-11-17"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-reliability-performance-and-cost-1",
-      "title": "Practise Reliability, Performance and Cost, Part 1",
+      "title": "Practise Reliability, Performance and Cost",
       "track": "fde-deploying-in-the-estate",
       "module": "reliability-performance-and-cost",
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/05_Practise_Reliability_Performance_and_Cost_1.md",
-      "estMinutes": 9,
+      "estMinutes": 19,
       "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/practise-reliability-performance-and-cost-1",
       "updated": "2026-11-20"
-    },
-    {
-      "slug": "practise-reliability-performance-and-cost-2",
-      "title": "Practise Reliability, Performance and Cost, Part 2",
-      "track": "fde-deploying-in-the-estate",
-      "module": "reliability-performance-and-cost",
-      "kind": "sync",
-      "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-deploying-in-the-estate/reliability-performance-and-cost/06_Practise_Reliability_Performance_and_Cost_2.md",
-      "estMinutes": 9,
-      "href": "/learn/fde-deploying-in-the-estate/reliability-performance-and-cost/practise-reliability-performance-and-cost-2",
-      "updated": "2026-11-17"
     },
     {
       "slug": "the-vague-ai-for-operations-request",
