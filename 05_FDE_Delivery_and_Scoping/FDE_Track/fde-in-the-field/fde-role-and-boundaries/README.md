@@ -14,7 +14,7 @@ These files are the source of the module `fde-role-and-boundaries` in the `fde-i
 
 ## Sources
 
-Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Customers, names and figures in the lessons are fictional and labelled as illustrations.
+Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Customers, names and figures in the lessons are composites, labelled in each lesson's Limits as illustrative, not real customers.
 
 ## Editing
 

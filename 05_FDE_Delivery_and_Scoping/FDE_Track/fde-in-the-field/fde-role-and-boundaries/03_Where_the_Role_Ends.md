@@ -11,17 +11,13 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [FDE role, boundaries, scope, production changes, handover]
 ---
 
 ## Start with the FDE who became the help desk
 
-Tom, a fictional FDE, is four months into an engagement with Calder Insurance. He fixed a broken report export in week two, as a favour. In week five he reset two passwords because the IT queue was slow. By month four, Calder's staff message him first for printer faults, laptop updates and spreadsheet formulas.
-
-He is busy every day and liked by everyone. The claims-triage system he was hired to deliver is six weeks late.
-
-Call this **help-desk drift**: small favours that each look harmless, until the FDE has become free support and the outcome nobody else owns slips.
+Tom, a forward deployed engineer, is four months into an engagement with Calder Insurance. He fixed a broken report export in week two as a favour, and reset two passwords in week five because the IT queue was slow. By month four, Calder's staff message him first for printer faults, laptop updates and spreadsheet formulas. He is busy every day and liked by everyone, and the claims-triage system he was hired to deliver is six weeks late. Call this **help-desk drift**: small favours that each look harmless, until the FDE has become free support and the outcome nobody else owns slips.
 
 > **What you'll learn**
 >
@@ -84,7 +80,7 @@ The switcher compares how one over-promise plays out under two responses. The fi
 <p class="switch-status" aria-live="polite"></p>
 </div>
 
-The FDE's role is to make the gap visible early and propose the closest real option. Hiding it protects nobody.
+The FDE's role is to make the gap visible early and propose the closest real option. Hiding it protects nobody. When the promise is a date rather than a feature, [negotiating scope and deadlines](../stakeholder-communication/05_Negotiating_Scope_and_Deadlines.md) covers sizing the work and offering options.
 
 ## Who may change production
 
@@ -111,13 +107,13 @@ Plan the exit from the scoping stage onwards:
 - **Hand over gradually.** The owner runs a release and handles an incident while the FDE is still there to help.
 - **Leave the evidence.** Runbook, architecture notes, open issues and the metric dashboard.
 
-A later lesson in the delivery module, on handover and ownership, covers the full handover checklist.
+[Handover and ownership](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/09_Handover_and_Ownership.md), in the delivery module, covers the full handover checklist.
 
 ## Limits of this lesson
 
 - **Boundaries vary by contract.** Some engagements include operational support. Read what was sold before deciding what is out of scope.
 - **Small favours are not banned.** One quick fix that builds trust in week one can be worth it. The problem is a pattern.
-- **Fictional data.** Calder Insurance and the figures in the switcher are illustrative.
+- **Composite engagement.** Calder Insurance, Tom and the figures in the switcher are illustrative, not a real customer.
 
 ## Interview angle
 

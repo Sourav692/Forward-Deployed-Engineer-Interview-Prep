@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [practice, interview, trade-offs, responsibilities, technical debt]
 ---
 
@@ -23,7 +23,7 @@ These questions test whether you can apply the module in a live answer, not reci
 2. Answer aloud, as you would to an interviewer.
 3. Open the outline and compare. Note what you missed, not only what you got right.
 
-Every customer and figure below is fictional. The questions on breaking down an unfamiliar problem have their own practice lesson, [practise breaking down the unknown](07_Practise_Breaking_Down_the_Unknown.md).
+Every customer below is a composite and every figure illustrative, not a real customer. The questions on breaking down an unfamiliar problem have their own practice lesson, [practise breaking down the unknown](07_Practise_Breaking_Down_the_Unknown.md).
 
 > **What you'll practise**
 >

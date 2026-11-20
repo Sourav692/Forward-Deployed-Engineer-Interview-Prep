@@ -3,11 +3,7 @@
 
 ## Start with a project that shipped and changed nothing
 
-Harlow Freight, a fictional customs broker, files about 4,000 import declarations a month. Each one means reading a commercial invoice, picking a tariff code and keying the result into a government portal. A vendor team built an extraction tool in six weeks. It read invoices, filled the fields and passed every acceptance test in the statement of work.
-
-Three months later, the brokers still keyed most declarations by hand. The tool's output landed in a shared folder they never opened, the tariff codes needed a second check anyway, and nobody had asked how the brokers' day ran. The contract was delivered in full. The customer's problem was untouched.
-
-Call this the **delivered-but-unused** failure. Everyone did their job, and nobody owned the result.
+Dana, a forward deployed engineer, joins Harlow Freight, a customs broker that files about 4,000 import declarations a month, each one read from a commercial invoice, given a tariff code and keyed into a government portal. A vendor team has already built an extraction tool in six weeks, and it passed every acceptance test in the statement of work. Three months on, the brokers still key most declarations by hand: the tool's output lands in a shared folder they never open, the tariff codes need a second check anyway, and nobody asked how the brokers' day runs. The contract was delivered in full and the customer's problem is untouched. Call this the **delivered-but-unused** failure: everyone did their job, and nobody owned the result.
 
 > **What you'll learn**
 >
@@ -105,7 +101,7 @@ Each stage has its own exit evidence. The [role-gated stage gates lesson](/learn
 
 - **Titles vary.** Some companies call this role solutions engineering, deployment engineering or applied AI engineering, and some FDE job posts describe pre-sales work. Judge a role by what it is accountable for.
 - **Ownership is not doing everything.** Owning the outcome means making sure each piece has an owner. An FDE who personally fixes the customer's printers has drifted. Lesson 3 of this module, on where the role ends, takes that up.
-- **Fictional data.** Harlow Freight and every figure in the switcher and walkthrough are illustrative.
+- **Composite engagement.** Harlow Freight, Dana and every figure in the switcher and walkthrough are illustrative, not a real customer.
 
 ## Interview angle
 

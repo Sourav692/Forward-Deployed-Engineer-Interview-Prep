@@ -29,7 +29,7 @@ Basecamp's Shape Up calls this **fixed time, variable scope**: set how much time
 
 ## A date someone else promised
 
-Sales teams sometimes commit to dates before the delivery team has seen the work. Do not blame sales in front of the customer. To Brackley, the promise came from your company, so your company owns it. Do not accept it in the first meeting either. Say "Let me size this and come back to you by Thursday with options," and then do so.
+Sales teams sometimes commit to dates before the delivery team has seen the work. Do not blame sales in front of the customer. To Brackley, the promise came from your company, so your company owns it. Do not accept it in the first meeting either. Say "Let me size this and come back to you by Thursday with options," and then do so. When the promise is a feature the product lacks, [where the role ends](/learn/fde-in-the-field/fde-role-and-boundaries/where-the-role-ends) covers the internal re-plan.
 
 The walkthrough shows what Brackley's FDE lead could have done from kickoff.
 

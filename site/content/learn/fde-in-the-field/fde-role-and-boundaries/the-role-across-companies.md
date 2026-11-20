@@ -83,7 +83,7 @@ Five constraints come up in most enterprises:
 - **Change windows.** Releases happen at agreed times with the customer's operations team present, not when your branch is ready.
 - **People's calendars.** The users you need to watch have their own work. A ward nurse can give you an hour on Tuesday, not a week.
 
-Plan the first two weeks around these constraints. Use them to read documents, map the workflow and meet people, so that when data arrives you know what to do with it.
+Plan the first two weeks around these constraints. Use them to read documents, map the workflow and meet people, so that when data arrives you know what to do with it. The deploying track teaches the constraints in depth: [following a request through the network](/learn/fde-deploying-in-the-estate/networks-and-identity/following-a-request-through-the-network) for access, and [threat modelling a deployment](/learn/fde-deploying-in-the-estate/security-reviews-and-compliance/threat-modelling-a-deployment) for the security review.
 
 > **Key distinction:** A slow start caused by access and review is normal. A slow start because nobody asked for access until week two is the FDE's own fault.
 
@@ -100,6 +100,7 @@ Job posts rarely say which pattern they are. Three questions in an interview usu
 - **Patterns overlap.** Many companies combine two patterns, such as a model provider with a long-term deployment team for its largest customers.
 - **Illustrative week.** Table 2 shows one plausible shape. Weeks with an incident or a launch look nothing like it.
 - **No company claims.** This lesson describes patterns, not named employers. Check any company's current role description yourself.
+- **Composite examples.** Priya, her two offers and the hospital week are illustrative, not real companies.
 
 ## Interview angle
 
@@ -133,7 +134,7 @@ These questions are not tied to a specific practice set. Use them to check you c
 
 - Judge an FDE role by what you deploy, how long you stay and how much is selling, not by its title.
 - Platform companies ask for depth with one customer. Model providers ask for breadth across many.
-- About a third of an ordinary field week is code. The rest is observing, getting permission and communicating.
+- In the illustrative week, about a third of the hours are code. The rest is observing, getting permission and communicating.
 - Access, security review, data approvals, change windows and people's calendars set the early pace.
 - Ask before day one for what takes weeks to approve.
 

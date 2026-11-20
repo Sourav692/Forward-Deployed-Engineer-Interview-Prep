@@ -9,7 +9,7 @@ Decomposition rounds give you a vague problem and watch how you break it down. I
 2. Spend six minutes talking through the breakdown aloud.
 3. Spend two minutes comparing with the outline.
 
-The moves come from [judgement under uncertainty](/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty). Every customer below is fictional.
+The moves come from [judgement under uncertainty](/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty). For full decomposition cases scored on six outputs, use [practise decomposition interview cases](/learn/forward-deployed/customer-discovery/practise-decomposition-interview-cases). Every customer below is a composite, not a real customer.
 
 > **What you'll practise**
 >
@@ -72,7 +72,7 @@ flowchart LR
 ## Limits of this practice
 
 - **Outlines are not scripts.** Your answer should use your own examples and words.
-- **Fictional customers.** Every organisation and figure is illustrative.
+- **Composite customers.** Every organisation and figure is illustrative, not a real customer.
 
 ## References
 

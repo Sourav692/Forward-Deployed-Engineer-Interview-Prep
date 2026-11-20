@@ -6847,7 +6847,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/01_What_an_FDE_Owns.md",
       "estMinutes": 13,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/what-an-fde-owns",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "the-role-across-companies",
@@ -6859,7 +6859,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/02_The_Role_Across_Companies.md",
       "estMinutes": 10,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/the-role-across-companies",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "where-the-role-ends",
@@ -6871,7 +6871,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/03_Where_the_Role_Ends.md",
       "estMinutes": 10,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/where-the-role-ends",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "judgement-under-uncertainty",
@@ -6883,7 +6883,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/04_Judgement_Under_Uncertainty.md",
       "estMinutes": 11,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/judgement-under-uncertainty",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "escalate-pause-or-stop",
@@ -6895,7 +6895,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/05_Escalate_Pause_or_Stop.md",
       "estMinutes": 10,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/escalate-pause-or-stop",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "practise-the-role-questions",
@@ -6907,7 +6907,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/06_Practise_the_Role_Questions.md",
       "estMinutes": 7,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/practise-the-role-questions",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "practise-fde-role-and-boundaries-decomposition",
@@ -6917,9 +6917,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/fde-role-and-boundaries/07_Practise_Breaking_Down_the_Unknown.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/fde-in-the-field/fde-role-and-boundaries/practise-fde-role-and-boundaries-decomposition",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "reusable-need-or-one-off",
@@ -7087,7 +7087,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/05_Negotiating_Scope_and_Deadlines.md",
       "estMinutes": 13,
       "href": "/learn/fde-in-the-field/stakeholder-communication/negotiating-scope-and-deadlines",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "practise-stakeholder-communication",
@@ -7159,7 +7159,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/05_Practise_Decomposition_Interview_Cases.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/customer-discovery/practise-decomposition-interview-cases",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "observing-the-work",

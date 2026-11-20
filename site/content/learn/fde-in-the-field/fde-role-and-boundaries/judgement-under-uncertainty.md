@@ -3,11 +3,7 @@
 
 ## Start with a shortcut that outlived its week
 
-Ashby Logistics, a fictional warehouse operator, needed a stock-reconciliation tool live before a quarterly audit. The FDE had nine days. Single sign-on with Ashby's identity provider would take two weeks to approve, so the team created one shared admin account for the tool and gave its password to six supervisors. Everyone agreed it was temporary.
-
-Eight months later the account still existed. Two of the six supervisors had left the company. The audit log showed every change as "admin", and Ashby's auditors could not tell who had adjusted a stock count by 400 units.
-
-The shortcut itself was reasonable for nine days. The failure was treating a decision that is hard to undo as if it were easy to undo, and never writing down when it would be reversed. Call it **the permanent temporary fix**.
+Ana, a forward deployed engineer at Ashby Logistics, a warehouse operator, had nine days to put a stock-reconciliation tool live before a quarterly audit. Single sign-on with Ashby's identity provider would take two weeks to approve, so the team created one shared admin account and gave its password to six supervisors, agreeing it was temporary. Eight months later the account still existed, two of the six supervisors had left, and the audit log showed every change as "admin", so Ashby's auditors could not tell who had adjusted a stock count by 400 units. The shortcut itself was reasonable for nine days. The failure was treating a decision that is hard to undo as if it were easy to undo, and never writing down when it would be reversed. Call it **the permanent temporary fix**.
 
 > **What you'll learn**
 >
@@ -97,13 +93,13 @@ Sometimes the uncertainty is the whole problem: a customer in an industry you ha
 3. **What data and rules exist?** Ask for a sample and the policy documents, not a data model.
 4. **What is the smallest thing that would change their decision?** Build that, and fake the rest.
 
-Spend the first day on questions and the remaining days building. The practice lesson on breaking down the unknown drills this with timed cases.
+Spend the first day on questions and the remaining days building. [Practise breaking down the unknown](/learn/fde-in-the-field/fde-role-and-boundaries/practise-fde-role-and-boundaries-decomposition) drills this with timed cases. The full discovery method lives in the discovery module: [the discovery conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation) and [decomposing a solution into workstreams](/learn/forward-deployed/customer-discovery/decomposing-a-solution-into-workstreams).
 
 ## Limits of this lesson
 
 - **Reversibility is a judgement.** Teams disagree about which doors are one-way. Write the reasoning down so it can be challenged.
 - **Debt is not always bad.** Prudent, deliberate debt that gets repaid can be the right call. The danger is debt that hides or endangers operations.
-- **Fictional data.** Ashby Logistics and its figures are illustrative.
+- **Composite engagement.** Ashby Logistics, Ana and the figures are illustrative, not a real customer.
 
 ## Interview angle
 
