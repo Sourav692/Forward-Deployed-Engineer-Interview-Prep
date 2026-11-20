@@ -18,6 +18,9 @@ export const RENAMED_T6: Record<string, string | null> = {
   // T21.5 practice: "AI engineering in the field" parts 1 and 2 merged into one page (20 Nov 2026); part 1 keeps its slug.
   'ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-2':
     'ai-delivery-in-customer-estates/practise-ai-engineering-in-the-field-1',
+  // T24.2 practice: case drills 1, 2 and 3 merged into one page of six drills (20 Nov 2026); part 1 keeps its slug.
+  'case-drills/practise-case-drills-2': 'case-drills/practise-case-drills-1',
+  'case-drills/practise-case-drills-3': 'case-drills/practise-case-drills-1',
   // T23.6 practice: parts 1 and 2 merged into one page (20 Nov 2026); part 1 keeps its slug.
   'reliability-performance-and-cost/practise-reliability-performance-and-cost-2':
     'reliability-performance-and-cost/practise-reliability-performance-and-cost-1',

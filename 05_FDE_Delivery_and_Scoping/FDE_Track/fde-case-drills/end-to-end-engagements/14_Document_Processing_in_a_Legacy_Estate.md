@@ -123,6 +123,7 @@ The clerks' work changes from typing every field to checking the invoices that f
 - **Scope.** Input quality, extraction design and evaluation on the customer's work are taught in their own lessons, linked below.
 - **Model choice.** Whether a self-hosted model is accurate enough depends on the documents. Test before committing.
 - **Composite engagement.** Selsey Water and every figure here, including the re-run results, are illustrative, not a real customer.
+- **Shorter drill.** For a 20-minute version on a different customer, run [drill 1, billing codes from clinical notes](../case-drills/01_Practise_Case_Drills_1.md#drill-1-billing-codes-from-clinical-notes).
 
 ## Interview angle
 
