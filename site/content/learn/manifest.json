@@ -5307,7 +5307,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/scale-prototype-to-production/",
-      "estMinutes": 54,
+      "estMinutes": 56,
       "href": "/design/scale-prototype-to-production"
     },
     {
@@ -5809,7 +5809,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/reliable-workflow-orchestration/",
-      "estMinutes": 105,
+      "estMinutes": 107,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -5820,7 +5820,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/configurable-platform-customer-workflows/",
-      "estMinutes": 108,
+      "estMinutes": 110,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -5831,7 +5831,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-chatbot-platform/",
-      "estMinutes": 91,
+      "estMinutes": 93,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -5842,7 +5842,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/prioritize-ai-use-cases/",
-      "estMinutes": 63,
+      "estMinutes": 64,
       "href": "/design/prioritize-ai-use-cases"
     },
     {
@@ -5853,7 +5853,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/build-when-customer-data-is-poor/",
-      "estMinutes": 50,
+      "estMinutes": 51,
       "href": "/design/build-when-customer-data-is-poor"
     },
     {
@@ -5864,7 +5864,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/self-adapting-agent/",
-      "estMinutes": 69,
+      "estMinutes": 71,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -5875,7 +5875,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/personal-assistant-with-memory/",
-      "estMinutes": 54,
+      "estMinutes": 56,
       "href": "/design/personal-assistant-with-memory"
     },
     {
@@ -5886,7 +5886,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Casebook_Rewrites/decomposition-classics-67-68-69/",
-      "estMinutes": 51,
+      "estMinutes": 52,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {

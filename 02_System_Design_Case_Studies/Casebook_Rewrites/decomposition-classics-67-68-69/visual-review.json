@@ -1,1 +1,27 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop: three-line title, five-section nav, brief opens on 'Three open prompts with no hidden right answer' with progress rail; no overflow. Phone (390px): prompt table scrolls inside its wrapper (third column off-screen until scrolled), core-idea chain figure renders small but legible via full-size link, assumption callout renders as an ordinary paragraph with bold run-in (no callout styling in this renderer), navigation-note disclosure closed. Figure sheets: fig 1 six-node chain matches the brief's step list; fig 2/3 (911 flow and components) match the prose trace, and I added the tail-metrics-to-optimiser feedback loop seen in fig 3; fig 4/5 (fraud) showed the note summary feeding entity resolution and senior review feeding label reconciliation, so the trace was corrected to match; fig 6/7 (medication) show pharmacist review before the one-ward nurse alert, and fig 7's review-queue-to-outcome-log edge is now mentioned. Each pair sits under its case's 'Draw the architecture' heading directly above the component table.","limits":["Dark variants checked by hash and path only, not visually","No screen-reader test","Mobile view of wide figures relies on the full-size link"]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 7 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The method chain and the flow and component figures for 911 response, bank fraud and medication errors each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-12-0",
+    "figure-12-1",
+    "figure-13-0",
+    "figure-13-1",
+    "figure-14-0",
+    "figure-14-1"
+  ],
+  "limits": [
+    "The component figures (figure-12-1, figure-13-1) are wide strips with small labels at reading width.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/decomposition-classics-67-68-69/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 0 fails, 1 warn. The straight-quote warning covers the verbatim interview prompts and other retained quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

@@ -1,3 +1,58 @@
-{"status":"reviewed","passed":true,
-"evidence":"Desktop (1440) and phone (390) screenshots show the title, five-section nav, progress rail and the Case brief with the core-idea decision figure (881fac) directly after the core-idea sentence; on phone it scales to column width with its caption and full-size link. Rendered element screenshots at 1280 of fig-full-architecture (4dea9a: runtime loop known/novel branches, tool gateway to human approval on irreversible, learning loop to eval gate, discard/shadow/owner review, live monitor to auto-demote, control plane registry and permission policy), fig-learning-loop (649822: four candidate types, held-out paired evaluation by stratum, shadow at least 200 attempts, 4 points below baseline auto-demote) and fig-skill-promotion (90d041: Better Than Baseline? and Healthy? branches to Reject, Owner Review, LIVE) match their captions and the step 5 and step 9 prose. Text labels of all 37 light SVGs were extracted and checked against each caption; the three Orion figures were deliberately re-placed beside the steps their labels show.",
-"limits":["Dark variants were not displayed; the shell is light-themed and they are kept for hash coverage only.","Not every one of the 37 figures was screenshot individually; the rest were checked by extracted SVG labels plus the browser check's image-decode pass.","Screen-reader testing did not run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 37 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The core idea, adaptation ladder and its short form, rung-3 workflow, two loops, runtime and learning loops (short and detailed), full and template architectures, fallback, dynamic examples, reflexion, supersession, repeated restart, skill promotion, bad and good prompt processes, rung decision, CI/CD and agent release paths, unsafe and safe paths, safety boundary, the three Orion steps, post-MVP order, registry states and rollback, shadow, demotion, staged evaluation, trade-off demotion, review pipeline and thirty-second summary each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "fig-core-idea",
+    "fig-ladder",
+    "fig-level3-workflow",
+    "fig-ladder-short",
+    "fig-two-loops",
+    "fig-runtime-short",
+    "fig-learning-short",
+    "fig-runtime-loop",
+    "fig-learning-loop",
+    "fig-full-architecture",
+    "fig-template-architecture",
+    "fig-fallback",
+    "fig-dynamic-examples",
+    "fig-reflexion",
+    "fig-supersede",
+    "fig-repeated-restart",
+    "fig-skill-promotion",
+    "fig-prompt-bad",
+    "fig-prompt-good",
+    "fig-finetune-decision",
+    "fig-cicd",
+    "fig-agent-release",
+    "fig-unsafe-path",
+    "fig-safe-path",
+    "fig-safety-boundary",
+    "fig-orion-route",
+    "fig-orion-explore",
+    "fig-orion-perform",
+    "fig-mvp-then",
+    "fig-registry-states",
+    "fig-registry-rollback",
+    "fig-shadow",
+    "fig-demotion",
+    "fig-staged-eval",
+    "fig-tradeoff-demotion",
+    "fig-review-pipeline",
+    "fig-thirty-second"
+  ],
+  "limits": [
+    "Some protected source labels break mid-word inside narrow boxes ('Instruction-followi ng problem').",
+    "The full and template architecture figures are dense with small labels at reading width; they read clearly from the full-size figure.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/self-adapting-agent/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 1 fail, 1 warn. The en dash is numeric range punctuation ('0–5' minute range); the straight-quote warning covers retained source quotations and illustrative requests such as \"restart service X\". All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

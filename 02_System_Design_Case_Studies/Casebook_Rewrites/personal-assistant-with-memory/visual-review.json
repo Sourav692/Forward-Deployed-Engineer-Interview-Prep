@@ -1,1 +1,24 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop: title, case-specific subtitle (300 ms, users apart, forget on request), five-section nav and the brief opening on p95 and recall render cleanly. Phone (390 px): the brief, four-scope list, illustrative Sam/Lisbon trace, verbatim prompt blockquote and provenance table all render; the table scrolls inside its wrapper. Each placed source SVG was screenshotted in the built page at 1280 px: figure-1-0 shows the six-box turn (user turn, resolve from auth, read four scopes in parallel, assemble bounded prompt, reply, write from queue) and matches its caption; figure-11-0 shows the request path with five parallel reads (thread_id, session_id+TTL, semantic, episode search with user filter, digest) and the checkpoint/enqueue tail described in the caption and step 4 prose; figure-11-1 shows the async writers, the one-prior-version box, the 15-turn summariser, the 100-episode pruner and the delete-everywhere branch as captioned; figure-11-2 shows the three lanes (control plane, request path under 300 ms, async write path) and sits after the control-plane paragraph as in the source.","limits":["figure-11-2 is a very wide source flowchart; inline at the content width its labels are too small to read and the reader must use the Open-full-size link","Dark diagram variants were not visually inspected; the reader is light-themed","No screen-reader test"]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 4 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The one-turn chain, request path with five parallel memory reads, async write and forget paths, and the three-lane control/write/request diagram each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-11-0",
+    "figure-11-1",
+    "figure-11-2"
+  ],
+  "limits": [
+    "The three-lane figure (figure-11-2) is dense with many crossing edges and small labels at reading width; it reads from the full-size figure.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/personal-assistant-with-memory/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 1 fail, 2 warns. The en dash is numeric range punctuation ('1–3 s'); the '7% more' metric is the case's own derived arithmetic (two folds per user per day on 30 turns); the straight-quote warning covers retained source quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

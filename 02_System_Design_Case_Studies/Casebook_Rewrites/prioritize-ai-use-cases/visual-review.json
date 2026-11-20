@@ -1,1 +1,23 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop 1440 screenshot shows the five-section nav, the new 'Thirty ideas and one question' brief heading, contents rail and progress rail with no overlap. Phone 390 screenshot shows the topic selector, the core-idea funnel figure inline after the core-idea sentence with its node-by-node caption, the numbered #7 trace in brief-example and the brief-task reading links, all within the column. figures-0.png renders all three source SVGs: figure 1 (thirty ideas, same card, gates diamond with Fail to Not ready and Pass to score, stress-test, waves) matches its caption; figure 2 shows #7, #1, #6/#13, Later #3/#29, core systems and portfolio office feeding gateway #28, which fans out to #26, #27, eval/release gates and cost/adoption tracing, as the walk-platform prose says; figure 3 shows the use-case and shared-platform layers with #1/#12 to ingestion, #6/#13 to retrieval and eval harness plus observability feeding the portfolio office, matching its alt text. Both platform figures sit in walk-platform directly before the enabler table.","limits":["Dark-variant SVGs were hash-checked by the validator but not viewed rendered","The thirty-row portfolio table was checked by the browser run at six widths, not inspected by eye at phone width","No screen-reader testing"]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 3 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The gated core idea, the platform hub and the use-case/shared-platform layers each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "fig-core-idea",
+    "fig-platform-hub",
+    "fig-platform-layers"
+  ],
+  "limits": [
+    "Some protected source labels break mid-word inside narrow boxes ('Permission-awar e retrieval').",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/prioritize-ai-use-cases/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 2 fails, 2 warns. 'Unlocks' is used literally (each step's evidence unlocks the next step), not as marketing copy; the en dash is numeric range punctuation in the wave schedule ('weeks 1–4'); the repeated $0.75/$1.9 figures are the worked cost anchors restated where used; the straight-quote warning covers retained source quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

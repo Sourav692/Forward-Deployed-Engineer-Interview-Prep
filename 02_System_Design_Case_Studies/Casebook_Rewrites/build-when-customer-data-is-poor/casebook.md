@@ -332,7 +332,7 @@ Poor data rules out some designs and barely affects others. The rule is to pick 
 
 Two rows need more explanation than the table gives.
 
-**Weak supervision** replaces hand-labelling every record with several cheap labelling rules, for example a keyword match, a lookup table and a model's guess. Each rule is unreliable on its own. Their votes are combined, weighted by each rule's estimated accuracy, into a label that is usable at scale. Tools such as Snorkel estimate those weights from where the rules agree and disagree, without needing ground truth; a small trusted sample then checks the result. Deep dive [Grow labels from the review queue](#dive-labels) applies it to the warranty failure codes.
+**Weak supervision** replaces hand-labelling every record with several cheap labelling rules, for example a keyword match, a lookup table and a model's guess. Each rule is unreliable on its own. Their votes are combined, weighted by each rule's estimated accuracy, into a label that is usable at scale. Rules that read the same evidence are correlated and would be counted twice by a simple weighted vote, so the label model has to account for those correlations, as Snorkel's does. Tools such as Snorkel estimate those weights from where the rules agree and disagree, without needing ground truth; a small trusted sample then checks the result. Deep dive [Grow labels from the review queue](#dive-labels) applies it to the warranty failure codes.
 
 **Synthetic data** carries the sharpest caveat. One rule from the source's evaluation material applies directly: "a small, real eval beats a synthetic one for customer-specific evaluation." Synthetic examples can fill gaps in coverage, such as a failure mode that has never occurred. They cannot tell anyone how the system performs on this customer's real records.
 
@@ -376,7 +376,7 @@ The worked example makes the method concrete. The scenario is invented by the so
 </tr>
 </tbody></table></div>
 
-The last row decides the design. Adjusters agree on outcomes (κ = 0.81, green), so the approve or reject outcome is a usable label. They disagree on failure codes (κ = 0.52, red against the 0.60 floor), so historical failure codes are not ground truth. Any design that trains on historical failure codes would learn the disagreement. That one measurement moves failure codes from "training label" to "field the project must repair".
+The last row decides the design. Adjusters agree on outcomes (κ = 0.81, green), so the approve or reject outcome is a usable label. They disagree on failure codes (κ = 0.52, red against the 0.60 floor), so historical failure codes are not ground truth. Any design that trains on historical failure codes would learn the disagreement. That one measurement moves failure codes from "training label" to "field the project must repair". Treat 0.52 as an estimate, not an exact value. On 100 claims, if chance agreement across the code list is about 0.2, observed agreement is about 0.62 and the sampling error is roughly ±0.12, so the true value could sit anywhere from about 0.40 to 0.64. The verdict holds because the design adjudicates failure codes either way, but a result this close to the floor justifies relabelling more claims before quoting it to the customer as settled.
 
 The functional requirements follow from the defects. Each has a test, so "done" is something you can check rather than argue about.
 
@@ -535,7 +535,7 @@ Read the components in dependency order. Each row says what the component does a
 </tr>
 <tr>
 <td>Gold set growth</td>
-<td>Stratified, time-split sample of the label store</td>
+<td>Stratified, time-split sample of the label store, topped up with a random audit sample of auto-accepted fields</td>
 <td>The eval set drifts toward whatever was easy</td>
 </tr>
 <tr>
@@ -570,7 +570,7 @@ The enterprise RAG design's ingestion pipeline (Enterprise Knowledge Assistant) 
 
 That pipeline also records a `last_synced_at` time for each source and every rejected document with its reason, and keeps both queryable after the job exits rather than only printing them to a log. That is the quarantine box in step 7. A log line disappears; a queryable quarantine table becomes evidence.
 
-Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, the hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so the hash saves cost as well as stopping duplicates from looking like new records.
+Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, the hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so the hash saves cost as well as stopping exact re-sends from looking like new records. It catches only byte-identical content. A rescan of the same invoice, or the same claim entered in both ERPs under different claim numbers, hashes differently; those duplicates are the job of cross-ERP matching in normalisation.
 
 Repairing at the pipeline treats the symptom; repairing at source treats the cause. The FDE (Forward Deployed Engineer) cross-team case in the source resolved this conflict with data contracts. Software teams wanted speed, while data and AI teams needed stable, high-quality data, and "Data contracts turned an ownership argument into an interface agreement." In this design, the contract makes serial number required at entry and fixes one failure-code list across both ERPs. The quarantine report becomes the evidence that the contract is needed: it shows the source owner exactly how many records their form produced that the pipeline could not use.
 
@@ -622,7 +622,7 @@ The phases follow the readiness scores, not a generic timeline. Each phase exits
 <td>3 Draft</td>
 <td>10-13</td>
 <td>Recommendation drafts with evidence, in shadow mode</td>
-<td>Adjuster agreement ≥ 85%; minutes per claim measurably down</td>
+<td>Adjuster agreement ≥ 85%, also reported as κ and per outcome; minutes per claim measurably down</td>
 </tr>
 <tr>
 <td>4 Assist</td>
@@ -632,7 +632,7 @@ The phases follow the readiness scores, not a generic timeline. Each phase exits
 </tr>
 </tbody></table></div>
 
-Read the exit conditions as a ladder of trust. Phase 1 must show extraction is precise before anything uses its output. Phase 2 must show the system's codes agree with adjudicated codes at κ ≥ 0.70, where two adjusters reached only 0.52 with each other. Phase 3 must show the drafts agree with adjusters before any adjuster sees one live.
+Read the exit conditions as a ladder of trust. Phase 1 must show extraction is precise before anything uses its output. Phase 2 must show the system's codes agree with adjudicated codes at κ ≥ 0.70, where two adjusters reached only 0.52 with each other. Phase 3 must show the drafts agree with adjusters before any adjuster sees one live. Raw agreement alone is the trap from step 4: if most claims are approved, a draft that always says approve clears 85%. Report κ and the agreement on rejections and requests for more information alongside it.
 
 **Shadow mode** in phase 3 means what it means in the delivery framework: the system runs on real traffic and records what it would recommend, but takes no action, while people compare its output with their own decisions. Its first real action is never also the first time nobody is watching.
 
@@ -647,11 +647,13 @@ Poor labels are a starting condition, not a permanent one. The review queue turn
 2. **Each correction records who made it and when.** Labels from a reviewer with low agreement can then be weighted down.
 3. **Disagreements go to adjudication, not to whoever clicked last.** Adjudication means a designated expert, or a defined process, settles the conflict and records why.
 
+Two biases follow from routing. Only low-confidence fields reach reviewers, so the label store says little about fields the system accepted on its own; send a small random sample of high-confidence fields to review as well, or threshold tuning has no evidence above the threshold. And once drafts go live in phase 4, a reviewer who sees the draft is anchored by it, so keep a slice of claims reviewed blind if those labels will feed evaluation.
+
 General dataset hygiene applies unchanged. Deduplicate first, because, in the source's words, "100,000 raw traces might be a few thousand distinct problems"; ten copies of one easy claim make a dataset look ten times larger and easier than it is. Split held-out cases by time and by user, never at random, so near-identical records cannot sit on both sides of the split. Route low-agreement, high-impact cases to human adjudication.
 
 Watch for the trap in automatic labels. An outcome such as "user didn't complain" is not the same as "correct". For claims, "approved and not disputed" is a weak label, not a gold one: a wrongly approved claim the customer was happy with will never be disputed.
 
-Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote on each claim's code: a keyword map from description to code, the part's historically most common failure, and the extraction model's own guess. Each rule's votes are scored against the adjudicated sample to estimate its accuracy. Where the rules agree with high confidence, the combined label is used for training. Where they disagree, the claim goes to the review queue. The disagreement itself tells the system where people are needed, so expert time goes to the claims that are actually ambiguous.
+Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote on each claim's code: a keyword map from description to code, the part's historically most common failure, and the extraction model's own guess. Each rule's votes are scored against the adjudicated sample to estimate its accuracy. The keyword map and the extraction model both read the same failure description, so when they agree that is weaker evidence than two independent rules agreeing; weight it accordingly. Where the rules agree with high confidence, the combined label is used for training. Where they disagree, the claim goes to the review queue. The disagreement itself tells the system where people are needed, so expert time goes to the claims that are actually ambiguous.
 
 Synthetic claims fill one gap only: rare failure modes the history lacks, such as a new pump model with no claims yet. They are tagged as synthetic in the label store and excluded from any headline metric.
 

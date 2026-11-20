@@ -1,1 +1,34 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1440) and phone (390) openings show the governance/adoption brief, terms paragraph and illustrative Ask Finance turn trace with the five-section nav intact. Rendered each of the 12 light-variant source figures in place at 1280 px: architecture overlay (blocked/explain, ACL fail-closed, labelled smaller model) and the sequence diagram's Failure A/B notes match the overlay bullets and branch narration; question tree branches match the four bullets; rollout-layers figure shows Alpha 150/Beta 2,000/GA 40,000/Assistants gates beside step 7. The four 168-px-wide drill SVGs and the turn-handler flowchart first rendered at full column width (laundromat boxes ~600 px tall); capped them at 14rem/30rem in the Markdown and re-checked: laundromat Detect/Contain text now reads at normal size and matches the prose (scope ∩ LIVE permissions, Marketing gets empty results).","limits":["Wide strip figures (core idea, question tree, 50-minute plan) render small at column width; each links to full size and the 50-minute plan is restated as a table beside it.","Dark-variant images are bundled and hashed but not visually inspected; the reader is light-themed.","No screen-reader testing was run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "21 November 2026: inspected fresh 1440×1000 and 390×1000 offline reader screenshots and all 12 primary figures, including labels, branches and clipping. Five-section navigation (case brief, design walkthrough, technical deep dives, practice, quick review), in-section rail, reading column and progress rail keep the existing layout at 1440px; at 390px the section tabs wrap to two rows, the topic selector replaces the rail and title, summary and body text wrap inside the viewport with no horizontal overflow or cut-off. Figures render cleanly: The per-turn core path, four-question tree, architecture, sequence with both failure overlays, assistant laundromat drill, phase strip, rollout layers, turn handler, injection drill, revocation drill, provider-outage drill and fifty-minute plan each match their alt text. No blank, broken or clipped figure and no new layout regression found.",
+  "artifacts": [
+    ".website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/ui-1440.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/ui-390.png",
+    ".website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-question-tree",
+    "figure-architecture",
+    "figure-sequence",
+    "figure-laundromat",
+    "figure-phases",
+    "figure-rollout-layers",
+    "figure-turn-handler",
+    "figure-injection",
+    "figure-revocation",
+    "figure-provider",
+    "figure-fifty-minute-plan"
+  ],
+  "limits": [
+    "Protected source diagrams colour terminal or failure nodes dark red with purple, green or dark text, so those labels read at low contrast; the source images cannot be changed.",
+    "Some protected source labels break mid-word inside narrow boxes ('permission-filtere d', 'scope-intersectio n', 'authorize(principa l').",
+    "Sequence-diagram message labels are small at reading width and are easier to read from the full-size figure. The phase strip and fifty-minute plan are wide with small text.",
+    "Dark variants were not individually inspected; their source bytes are preserved. A screen reader review was not performed. Only the first screen of each UI capture (1000px tall) was inspected, not every section of the reader."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-24-33-2026-11-21/enterprise-chatbot-platform/hallmark.log",
+    "result": "Rendered sweep completed (render tier ran with puppeteer-core; five fold and full-page screenshots, no render-tier findings). 2 fails, 2 warns. The en dash is numeric range punctuation ('wk 1–6'); the middle-dot flag is the quick-review list of retained mock-interview prompts inside the approved casebook format, not page meta; the repeated $22/$30 figures are the case's cost anchors restated in the sections that use them; the straight-quote warning covers retained source quotations. All flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

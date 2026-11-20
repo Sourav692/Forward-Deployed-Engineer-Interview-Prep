@@ -168,7 +168,7 @@ Safe caching, region routing, real-path red teaming and versioned configuration 
 
 ### 3. Calculate the $500 day {#pricing}
 
-Use 30,000 turns a day: 10,000 users multiplied by three turns. A 30% cache hit rate removes 9,000 generation paths. Of 21,000 misses, 70% are simple one-call turns and 30% are complex five-call turns. Five calls is the low end of the source's 5 to 20 sub-request rule. Each call has 2,000 input and 250 output tokens.
+Use 30,000 turns a day: 10,000 users multiplied by three turns. A 30% cache hit rate removes 9,000 generation paths. Of 21,000 misses, 70% are simple one-call turns and 30% are complex five-call turns. Five calls is the low end of the source's 5 to 20 sub-request rule. Each call has 2,000 input and 250 output tokens. A flat 2,000 per call assumes each agent step sends a bounded context. If every step re-sends the conversation plus earlier tool results, input tokens climb step by step, so measure the per-step growth before trusting the complex-turn price.
 
 At the historical illustrative small-model rates of $0.15 input and $0.60 output per million tokens, one call costs (2,000 × 0.15 + 250 × 0.60) / 1,000,000 = $0.00045. At the large-model rates of $2.50 and $10.00, the call costs $0.0075. Five such calls cost $0.0375.
 
@@ -432,7 +432,7 @@ An exact cache normalises the PII-masked query and hashes it into a lookup key. 
 
 A semantic cache embeds the query into a vector and searches nearby stored vectors. A tuned similarity threshold decides whether a paraphrase can reuse an answer. A loose threshold can return mismatched or stale answers. Start with exact matching and introduce vector lookup only when observed traffic contains enough repeated paraphrases to justify its risk and operating cost.
 
-Include tenant, user permission, document version and prompt version in the response key. Cache reusable FAQ responses, never live account answers. Changing a prompt or knowledge version deliberately invalidates prior entries. Invalidate on document, access-control list (ACL) or metadata changes. Freshness and permission checks still apply to semantic hits.
+Include tenant, user permission, document version and prompt version in the response key. Cache reusable FAQ responses, never live account answers. Masking makes this rule necessary rather than optional: "What is the balance on [ACCOUNT]?" from two customers masks to the same text and the same key, so cacheability must come from the request's data class and intent, decided before lookup, not from the key alone. Changing a prompt or knowledge version deliberately invalidates prior entries. Invalidate on document, access-control list (ACL) or metadata changes. Freshness and permission checks still apply to semantic hits.
 
 A sudden hit-rate drop is a reason to inspect keying, versioning, traffic mix and invalidation before adding capacity. Output validation precedes writes: a blocked answer must never become a future cache hit.
 
@@ -471,7 +471,7 @@ Implementation caveat added for the teaching design: concurrent calls need atomi
 
 ### Retry, breaker, fallback and degradation {#recovery}
 
-A retry handles a transient connection drop or provider rate limit. Exponential backoff with jitter spreads clients across time. Fixed intervals synchronise retries into a thundering herd. The source's general pattern allows three to four attempts, but interactive requests must obey a deadline instead.
+A retry handles a transient connection drop or provider rate limit. Exponential backoff with jitter spreads clients across time. Fixed intervals synchronise retries into a thundering herd. When a provider's 429 carries a Retry-After header, treat that wait as the floor for the next attempt, and fail over at once if it exceeds the request's remaining deadline. The source's general pattern allows three to four attempts, but interactive requests must obey a deadline instead.
 
 The breaker wraps the retried provider call and remembers dependency health. The illustrative settings are failure_threshold=3 and cooldown_seconds=5.0. Closed admits calls. Open rejects immediately. After cooldown, half-open admits a probe. Success permits recovery. Without the probe, the breaker has no path back to healthy. Under flapping load, count failures over a sliding window and require more than one successful probe before closing.
 
@@ -490,7 +490,7 @@ Five sequential model calls at 1 to 2 seconds take 5 to 10 seconds. Because comp
 
 Backoff of 0.3, 0.6 and 1.2 seconds spends 2.1 seconds before attempt four even starts. Attempt timeouts make it worse. Give each interactive request a deadline, permit one retry only when enough time remains, then fail over. Once open, the breaker skips A immediately. The earliest affected callers still pay detection and timeout cost, bounded by the trip policy.
 
-Streaming creates another boundary: a validator cannot retract words already displayed. Run rule checks sentence by sentence before release. Buffer risky replies, including refunds or account data, until the LLM output check finishes. Reconcile that buffering with the first-token target rather than claiming both unconditional streaming and complete pre-display semantic review.
+Streaming creates another boundary: a validator cannot retract words already displayed. The same applies to recovery. If the primary fails after tokens have reached the customer, the fallback cannot silently continue the sentence from a different model. Discard the partial answer with a visible restart notice, or hand off, and record both providers on the trace. Run rule checks sentence by sentence before release. Buffer risky replies, including refunds or account data, until the LLM output check finishes. Reconcile that buffering with the first-token target rather than claiming both unconditional streaming and complete pre-display semantic review.
 
 
 <table>

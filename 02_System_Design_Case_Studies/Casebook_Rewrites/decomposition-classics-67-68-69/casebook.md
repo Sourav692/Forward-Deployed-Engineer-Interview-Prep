@@ -302,7 +302,7 @@ Decompose the interval first, because no one yet knows where the minutes go. Tim
 
 The first slice is a report, not a model. Segment every priority-one call from the last year into answer, triage, dispatch and travel time, and show it by district and hour. Assume the result shows that travel dominates in two outer districts at night. The second slice is then a pre-positioning recommendation: where idle units should wait, by hour, to cover those districts.
 
-The model comes last, and it is mostly not machine learning. Travel-time estimation is a regression over GPS history. Pre-positioning is a coverage optimisation, a classic operations-research problem: choose waiting points so that as many likely call locations as possible are within the target time. A language model has one sensible role, summarising free-text call notes to speed triage, and only if the segment analysis says triage is slow.
+The model comes last, and it is mostly not machine learning. Travel-time estimation is a regression over GPS history. Pre-positioning is a coverage optimisation, a classic operations-research problem: choose waiting points so that as many likely call locations as possible are within the target time. A unit already on a call covers nothing, so the optimiser has to model how often each unit is busy at that hour; a plan that assumes every unit is free overstates coverage exactly at the peaks that matter. A language model has one sensible role, summarising free-text call notes to speed triage, and only if the segment analysis says triage is slow.
 
 #### Draw the architecture {#dive-response-draw-architecture}
 
@@ -357,7 +357,7 @@ The second figure shows the same system as components. Note the loop at the righ
 
 #### Evaluate before anyone asks {#dive-response-evaluate-before-anyone-asks}
 
-Backtest the optimiser on last year's calls first: replay history with the recommended unit positions and estimate time to scene. Then pilot in one district at night, with a matched district as the comparison.
+Backtest the optimiser on last year's calls first: replay history with the recommended unit positions and estimate time to scene. The replay has to re-simulate unit availability call by call, because moving one unit changes which units are free for every later call; recomputing each call's travel time in isolation overstates the gain. Then pilot in one district at night, with a matched district as the comparison.
 
 Two checks gate expansion. The target district's 90th percentile must improve. No other district's 90th percentile may worsen, because moving units toward one area uncovers another. Track the dispatcher override rate too. A high override rate means dispatchers either think the model is wrong or do not trust it, and either one needs an answer before the pilot grows.
 
@@ -398,7 +398,7 @@ Two checks gate expansion. The target district's 90th percentile must improve. N
 
 #### Adapt when the GPS feed disappears {#dive-response-gps}
 
-This is the canonical curveball. Without GPS, actual travel times and live unit availability are gone. Re-derive: fall back to traffic-sensor travel estimates, and take availability from the dispatch log's status codes.
+This is the canonical curveball. Without GPS, live positions, new travel tracks and live unit availability are gone. GPS history already collected still trains the travel-time model, so time-of-day estimates survive; what degrades is knowing where each unit is now, which falls back to its station or last logged location. Re-derive: fall back to traffic-sensor travel estimates, and take availability from the dispatch log's status codes.
 
 Then say what degraded. Outer-district estimates get worse, because sensors are thinnest there. So the equity guardrail needs wider error bars, and the pilot should stay in a sensor-rich district until GPS returns.
 
@@ -558,7 +558,7 @@ Sequence by risk. The riskiest unknown is whether one consistent label can exist
 </tr>
 </tbody></table></div>
 
-The honest 90-day deliverable is the single queue plus a validated shadow model, not a new production model deciding on transactions. Say so early. That is the regulatory realism the round asks for.
+The honest 90-day deliverable is the single queue plus a validated shadow model, not a new production model deciding on transactions. Say so early. That is the regulatory realism the round asks for. Ten days is short for an independent validation that starts cold, so bring model risk in during Discover to agree the label definition, the holdout and the validation criteria; days 81 to 90 then review evidence the validators already expect.
 
 #### Choose the model last {#dive-fraud-choose-the-model-last}
 
@@ -624,7 +624,7 @@ The second figure shows the same components as a system, and the table after it 
 
 #### Evaluate against a label you trust {#dive-fraud-evaluate-against-a-label-you-trust}
 
-Hold out a relabelled sample that no training run ever sees. Compare the shadow model with the legacy rules on that holdout, at a fixed false-positive rate. The claim to prove is a higher catch rate at the same customer friction.
+Hold out a relabelled sample that no training run ever sees. Compare the shadow model with the legacy rules on that holdout, at a fixed false-positive rate. The claim to prove is a higher catch rate at the same customer friction. Two cautions apply. Past cases exist mostly because a legacy rule alerted on them, so a holdout drawn only from them cannot show fraud the rules missed and favours the rules; relabel a random sample of unalerted transactions as well. And because the relabelled set is stratified, reweight it to the real fraud rate before reporting a false-positive rate.
 
 Score chargebacks separately, as a late but independent check. They arrive weeks or months after the transaction, so they validate the model rather than train it. Measure the note summariser against investigator judgement on a sample, and never use it as a label source.
 
@@ -805,7 +805,7 @@ The nurse schedule enters at step two, as context, not as a target. It answers w
 
 The first slice is retrospective. Take three months of post-surgical orders for the target drugs. Reconcile each scheduled dose against dispensing and administration records. Flag doses that were late, missed, or outside the weight-based range. Pharmacists review a sample of flags and mark each true or false. That gives a baseline error rate and a precision figure for the rules at once, without touching a patient.
 
-The model comes last. Rules cover the first version: dose range per kilogram, time windows for time-critical drugs, and duplicate therapy. A learned risk score comes later, ranking which patients need a pharmacist review first. A language model has one narrow role: extracting weight or allergy from free-text notes when the structured field is empty. A human confirms every extraction.
+The model comes last. Rules cover the first version: dose range per kilogram for drugs dosed by weight, maximum single and daily doses for the rest, time windows for time-critical drugs, and duplicate therapy. A learned risk score comes later, ranking which patients need a pharmacist review first. A language model has one narrow role: extracting weight or allergy from free-text notes when the structured field is empty. A human confirms every extraction.
 
 #### Draw the architecture {#dive-medication-draw-architecture}
 
@@ -930,7 +930,7 @@ The method repeats across the cases. What changes every time is the mission's hi
 </tr>
 <tr>
 <td>Riskiest input</td>
-<td>Traffic sensors, thin where equity is judged</td>
+<td>Hand-entered call timestamps, which decide where the minutes go; traffic sensors, thin where equity is judged</td>
 <td>Labels, defined three ways</td>
 <td>Administration records, which may not exist</td>
 </tr>
