@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/consumer-scale-chat-service",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:48:04.106Z",
+  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
+  "checked_at": "2026-11-20T11:59:52.361Z",
   "checks": {
     "responsive": {
       "widths": [

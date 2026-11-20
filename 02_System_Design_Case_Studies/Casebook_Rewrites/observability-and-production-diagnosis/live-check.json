@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/observability-and-production-diagnosis",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:52:05.679Z",
+  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
+  "checked_at": "2026-11-20T12:00:33.266Z",
   "checks": {
     "responsive": {
       "widths": [

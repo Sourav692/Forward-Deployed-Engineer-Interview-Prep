@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/agent-platform-for-non-technical-users",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:46:11.993Z",
+  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
+  "checked_at": "2026-11-20T11:59:39.590Z",
   "checks": {
     "responsive": {
       "widths": [

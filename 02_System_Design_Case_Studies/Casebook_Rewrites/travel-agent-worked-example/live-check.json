@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/travel-agent-worked-example",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:54:58.101Z",
+  "deployment": "dpl_6kF833JANMBRkRdDnoubjgoh3Zp5",
+  "checked_at": "2026-11-20T12:01:00.124Z",
   "checks": {
     "responsive": {
       "widths": [
