@@ -11,17 +11,15 @@ level: advanced
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "21 November 2026"
 tags: [staff engineer, architecture standards, exceptions, architecture review, portfolio]
 ---
 
 ## Start with the fix that stayed at one customer
 
-Dunholme Systems, a fictional AI platform company, had nine customer deployments live, each built by a different FDE team. In March, the team at Sedbergh Health, a fictional hospital group, found a service account key stored in a plain configuration file. They moved it into the hospital's secrets vault, added a rotation job and closed the ticket.
+Dunholme Systems, an AI platform company, had nine customer deployments live, each built by a different FDE team. In March, Imran, the FDE lead at Sedbergh Health, a hospital group, found a service account key stored in a plain configuration file. He moved it into the hospital's secrets vault, added a rotation job and closed the ticket. Nobody asked where the pattern came from: an internal starter repository that five of the other eight deployments had copied. In September, a support engineer at Wigton Ports, a port operator, attached that configuration file to a ticket in a shared tracker. The key was valid and had write access to the port's scheduling data, and the incident took two weeks to close and a letter to the port's board. Every team had done good work inside its own engagement, and the fix stayed at the customer where it was found.
 
-Nobody asked where the pattern came from. It came from an internal starter repository that five of the other eight deployments had copied. In September, a support engineer at Wigton Ports, a fictional port operator, attached that configuration file to a ticket in a shared tracker. The key was valid, and it had write access to the port's scheduling data. The incident took two weeks to close and a letter to the port's board.
-
-Every team had done good work inside its own engagement. The fix existed. It stayed at the customer where it was found. Call this **the fix that stayed home**: a problem solved once and left unsolved everywhere else, because nobody's job covered the gap between deployments.
+Call this **the fix that stayed home**: a problem solved once and left unsolved everywhere else, because nobody's job covered the gap between deployments.
 
 > **What you'll learn**
 >
@@ -125,13 +123,13 @@ Table 2 is part of the matrix from the first review after the incident.
 
 *Table 2: Three of nine rows. Two deployments skip the release evaluation, which points to a shared cause worth one fix, not two separate reminders.*
 
-Michael Nygard's decision records keep the review honest over time. Each changed standard gets a short record of its context, the decision and its consequences, so a new FDE can see why a rule exists before arguing to drop it.
+Michael Nygard's decision records keep the review honest over time. Writing one for a single engagement is taught in [decision records and design reviews](../../forward-deployed/requirements-and-solution-design/05_Decision_Records_and_Design_Reviews.md); here the same format records a change to a standard. Each changed standard gets a short record of its context, the decision and its consequences, so a new FDE can see why a rule exists before arguing to drop it.
 
 ## Limits of this lesson
 
 - **Company shape varies.** Some employers have an architecture group that owns standards. The staff FDE then feeds field evidence into that group rather than running the review alone.
 - **Small teams need less.** With three deployments, a shared checklist and a monthly conversation may do the job of a formal review.
-- **Fictional data.** Dunholme Systems, Sedbergh Health, Wigton Ports, Ravenglass Insurance and the incident are illustrative.
+- **Composite engagement.** Dunholme Systems, Sedbergh Health, Wigton Ports, Ravenglass Insurance and the incident are illustrative, not a real customer.
 
 ## Interview angle
 

@@ -56,7 +56,7 @@ Most of an FDE's week is not coding. Table 2 shows a fictional, ordinary week fo
 
 Roughly a third of the week is code. The rest is learning how the work runs, getting permission to change things, and telling people what changed. That ratio surprises engineers who expect a coding job with travel.
 
-The site's [senior FDE's day](/learn/orientation/the-fde-role/a-senior-fdes-day) lesson covers how a senior FDE orders a single day.
+The site's [senior FDE's day](/learn/orientation/the-fde-role/a-senior-fdes-day) lesson covers how a senior FDE orders a single day. What changes at staff level, where the work spans many deployments, is covered in [beyond one engagement](/learn/fde-in-the-field/staff-fde-leadership/beyond-one-engagement).
 
 ## Enterprise constraints set the pace
 

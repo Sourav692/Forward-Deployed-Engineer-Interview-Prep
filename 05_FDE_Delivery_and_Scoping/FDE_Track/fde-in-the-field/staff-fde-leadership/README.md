@@ -4,11 +4,11 @@ These files are the source of the module `staff-fde-leadership` in the `fde-in-t
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
-| 1 | [Beyond one engagement](01_Beyond_One_Engagement.md) | `beyond-one-engagement` | Drafted |
-| 2 | [Growing other FDEs](02_Growing_Other_FDEs.md) | `growing-other-fdes` | Drafted |
-| 3 | [Platform investment from field evidence](03_Platform_Investment_from_Field_Evidence.md) | `platform-investment-from-field-evidence` | Drafted |
-| 4 | [Career growth from FDE to staff](04_Career_Growth_from_FDE_to_Staff.md) | `career-growth-from-fde-to-staff` | Drafted |
-| 5 | [Practise staff questions](05_Practise_Staff_Questions.md) | `practise-staff-questions` | Drafted |
+| 1 | [Beyond one engagement](01_Beyond_One_Engagement.md) | `beyond-one-engagement` | Published |
+| 2 | [Growing other FDEs](02_Growing_Other_FDEs.md) | `growing-other-fdes` | Published |
+| 3 | [Platform investment from field evidence](03_Platform_Investment_from_Field_Evidence.md) | `platform-investment-from-field-evidence` | Published |
+| 4 | [Career growth from FDE to staff](04_Career_Growth_from_FDE_to_Staff.md) | `career-growth-from-fde-to-staff` | Published |
+| 5 | [Practise staff questions](05_Practise_Staff_Questions.md) | `practise-staff-questions` | Published |
 
 ## Sources
 
