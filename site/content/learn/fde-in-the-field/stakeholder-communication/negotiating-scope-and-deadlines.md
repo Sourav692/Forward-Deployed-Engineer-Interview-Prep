@@ -3,9 +3,7 @@
 
 ## Start with the best-efforts yes
 
-Brackley Media, the fictional media firm from [demos that tell the truth](/learn/fde-in-the-field/stakeholder-communication/demos-that-tell-the-truth), signed for a newsroom-wide release of its archive search assistant. To close the deal, your company's account executive promised Brackley's head of news ten features by 1 September, the start of the autumn schedule. Nobody from the FDE team had sized them.
-
-The FDE lead learned this at kickoff, three weeks of build time before the date. She said "We'll do our best." The team worked two weekends and shipped seven features on 1 September, most of them half-tested. The feature that holds back clips with unknown rights had a fault, and the rights team asked for the release to be pulled. Within a fortnight producers had stopped using it.
+Brackley Media, from [demos that tell the truth](/learn/fde-in-the-field/stakeholder-communication/demos-that-tell-the-truth), signed for a newsroom-wide release of its archive search assistant. To close the deal, your company's account executive had promised Brackley's head of news ten features by 1 September, the start of the autumn schedule, and nobody on the FDE team had sized them. Megan, the FDE lead, learned this at kickoff, three weeks of build time before the date, and said "We'll do our best." The team worked two weekends and shipped seven features on 1 September, most of them half-tested. The feature that holds back clips with unknown rights had a fault, the rights team asked for the release to be pulled, and within a fortnight producers had stopped using it.
 
 Call this **the best-efforts yes**: accepting a date and a scope you have not sized, and paying for it in quality.
 
@@ -100,7 +98,7 @@ Do not choose between two senior stakeholders yourself, and do not try to build 
 
 - **Some dates are contractual.** A date with a penalty clause may need your commercial team in the negotiation, not only the FDE lead.
 - **Estimates carry error.** The table's days are estimates. Re-plan when a fact changes, and tell the customer.
-- **Fictional data.** Brackley Media, its features and its figures are illustrative.
+- **Composite engagement.** Brackley Media, its features and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

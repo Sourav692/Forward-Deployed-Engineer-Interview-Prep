@@ -3,9 +3,7 @@
 
 ## Start with forty sticky notes
 
-Saltcote Housing, the fictional housing association from the [previous lesson](/learn/fde-in-the-field/stakeholder-communication/one-design-three-audiences), needed to agree how planners would work with its new repairs triage assistant. The FDE lead booked a two-hour workshop with twelve people from repairs, tenant services, IT and finance. The invitation said "Workshop: triage workflow. Let's discuss."
-
-Nobody had read anything beforehand, because nothing had been sent. The first hour went on explaining the assistant. The second hour produced forty sticky notes about concerns, ideas and questions. The meeting ended with a request for a follow-up workshop. The follow-up revisited half the same notes. Three weeks after the first invitation, nothing had been decided, and the build team was waiting.
+Saltcote Housing, from the [previous lesson](/learn/fde-in-the-field/stakeholder-communication/one-design-three-audiences), needed to agree how planners would work with its new repairs triage assistant. Ruth, the FDE lead, booked a two-hour workshop with twelve people from repairs, tenant services, IT and finance, and the invitation said only "Workshop: triage workflow. Let's discuss." Nobody had read anything beforehand, because nothing had been sent, so the first hour went on explaining the assistant and the second produced forty sticky notes of concerns, ideas and questions. The meeting ended with a request for a follow-up workshop, which revisited half the same notes. Three weeks after the first invitation nothing had been decided, and the build team was waiting.
 
 Call this **the sticky-note harvest**: a meeting that collects opinions well and decides nothing.
 
@@ -102,7 +100,7 @@ End every decision meeting by reading the decisions back aloud, then send them i
 
 - **Some cultures decide outside meetings.** In some organisations the real decision happens in a one-to-one with the approver beforehand. Find out how your customer decides and work with it.
 - **Workshops also explore.** A discovery workshop that gathers views is legitimate, if everyone knows that is its purpose.
-- **Fictional data.** Saltcote Housing and its meetings are illustrative.
+- **Composite engagement.** Saltcote Housing and its meetings are illustrative, not a real customer.
 
 ## Interview angle
 

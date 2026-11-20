@@ -7039,7 +7039,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/01_One_Design_Three_Audiences.md",
       "estMinutes": 12,
       "href": "/learn/fde-in-the-field/stakeholder-communication/one-design-three-audiences",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "workshops-and-reviews-that-decide",
@@ -7051,7 +7051,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/02_Workshops_and_Reviews_That_Decide.md",
       "estMinutes": 12,
       "href": "/learn/fde-in-the-field/stakeholder-communication/workshops-and-reviews-that-decide",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "demos-that-tell-the-truth",
@@ -7063,7 +7063,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/03_Demos_That_Tell_the_Truth.md",
       "estMinutes": 11,
       "href": "/learn/fde-in-the-field/stakeholder-communication/demos-that-tell-the-truth",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "updates-decision-notes-and-bad-news",
@@ -7073,9 +7073,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/04_Updates_Decision_Notes_and_Bad_News.md",
-      "estMinutes": 12,
+      "estMinutes": 13,
       "href": "/learn/fde-in-the-field/stakeholder-communication/updates-decision-notes-and-bad-news",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "negotiating-scope-and-deadlines",
@@ -7099,7 +7099,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/06_Practise_Stakeholder_Communication.md",
       "estMinutes": 10,
       "href": "/learn/fde-in-the-field/stakeholder-communication/practise-stakeholder-communication",
-      "updated": "2026-11-17"
+      "updated": "2026-11-21"
     },
     {
       "slug": "the-discovery-conversation",
@@ -7251,7 +7251,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/05_Estimates_People_Can_Trust.md",
       "estMinutes": 9,
       "href": "/learn/forward-deployed/scoping-an-fde-project/estimates-people-can-trust",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "from-estimate-to-build-plan",
@@ -7339,7 +7339,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/requirements-and-solution-design/02_Managing_Change_and_Scope_Creep.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/requirements-and-solution-design/managing-change-and-scope-creep",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "technical-readiness-before-you-commit",
@@ -7375,7 +7375,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/forward-deployed/requirements-and-solution-design/05_Decision_Records_and_Design_Reviews.md",
       "estMinutes": 11,
       "href": "/learn/forward-deployed/requirements-and-solution-design/decision-records-and-design-reviews",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "practise-requirements-and-design-1",
@@ -7471,7 +7471,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/08_Pilots_That_Predict_Production.md",
       "estMinutes": 14,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/pilots-that-predict-production",
-      "updated": "2026-11-19"
+      "updated": "2026-11-21"
     },
     {
       "slug": "handover-and-ownership",

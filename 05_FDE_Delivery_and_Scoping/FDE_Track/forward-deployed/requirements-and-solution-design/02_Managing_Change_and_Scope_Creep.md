@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "19 November 2026"
+last_updated: "21 November 2026"
 tags: [scope, change control, assumptions, dependencies, go/no-go]
 ---
 
@@ -105,6 +105,8 @@ flowchart LR
 ```
 
 *Figure 1: Every out-of-scope request gets a note and a decision. Nothing reaches the build without passing the sponsor.*
+
+When the requests arrive all at once, tied to a date someone else promised, [negotiating scope and deadlines](../../fde-in-the-field/stakeholder-communication/05_Negotiating_Scope_and_Deadlines.md) shows how to size them against capacity and agree what ships first.
 
 ## Go and no-go criteria
 

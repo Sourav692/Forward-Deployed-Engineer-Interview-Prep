@@ -4,16 +4,16 @@ These files are the source of the module `stakeholder-communication` in the `fde
 
 | # | Lesson | Site slug | Status |
 |---|---|---|---|
-| 1 | [One design, three audiences](01_One_Design_Three_Audiences.md) | `one-design-three-audiences` | Drafted |
-| 2 | [Workshops and reviews that decide](02_Workshops_and_Reviews_That_Decide.md) | `workshops-and-reviews-that-decide` | Drafted |
-| 3 | [Demos that tell the truth](03_Demos_That_Tell_the_Truth.md) | `demos-that-tell-the-truth` | Drafted |
-| 4 | [Updates, decision notes and bad news](04_Updates_Decision_Notes_and_Bad_News.md) | `updates-decision-notes-and-bad-news` | Drafted |
-| 5 | [Negotiating scope and deadlines](05_Negotiating_Scope_and_Deadlines.md) | `negotiating-scope-and-deadlines` | Drafted |
-| 6 | [Practise stakeholder communication](06_Practise_Stakeholder_Communication.md) | `practise-stakeholder-communication` | Drafted |
+| 1 | [One design, three audiences](01_One_Design_Three_Audiences.md) | `one-design-three-audiences` | Published |
+| 2 | [Workshops and reviews that decide](02_Workshops_and_Reviews_That_Decide.md) | `workshops-and-reviews-that-decide` | Published |
+| 3 | [Demos that tell the truth](03_Demos_That_Tell_the_Truth.md) | `demos-that-tell-the-truth` | Published |
+| 4 | [Updates, decision notes and bad news](04_Updates_Decision_Notes_and_Bad_News.md) | `updates-decision-notes-and-bad-news` | Published |
+| 5 | [Negotiating scope and deadlines](05_Negotiating_Scope_and_Deadlines.md) | `negotiating-scope-and-deadlines` | Published |
+| 6 | [Practise stakeholder communication](06_Practise_Stakeholder_Communication.md) | `practise-stakeholder-communication` | Published |
 
 ## Sources
 
-Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Customers, names and figures in the lessons are fictional and labelled as illustrations.
+Each lesson lists its primary sources (standards, vendor documentation, engineering books and papers) in its own References section. Customers, names and figures in the lessons are composites and labelled as illustrations, not real customers.
 
 ## Editing
 

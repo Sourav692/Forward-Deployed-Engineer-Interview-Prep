@@ -92,6 +92,8 @@ flowchart LR
 
 *Figure 1: Every out-of-scope request gets a note and a decision. Nothing reaches the build without passing the sponsor.*
 
+When the requests arrive all at once, tied to a date someone else promised, [negotiating scope and deadlines](/learn/fde-in-the-field/stakeholder-communication/negotiating-scope-and-deadlines) shows how to size them against capacity and agree what ships first.
+
 ## Go and no-go criteria
 
 A go-live decision made on the day is made under pressure. Agree the criteria at the start, when everyone is calm, and write them as checks someone can pass or fail:

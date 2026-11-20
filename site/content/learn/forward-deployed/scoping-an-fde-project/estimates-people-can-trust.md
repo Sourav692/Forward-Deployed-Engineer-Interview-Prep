@@ -91,6 +91,8 @@ Avoid both "it depends" and fake certainty. Give the current range, the assumpti
 
 *Table 2: Plain wording under uncertainty. Each line gives a range or a cause, never a shrug.*
 
+When a sponsor asks you to guarantee a date for their board, [updates, decision notes and bad news](/learn/fde-in-the-field/stakeholder-communication/updates-decision-notes-and-bad-news) shows how to commit to what you control and give a range for the rest.
+
 ## Worked example: estimating the class-booking MVP
 
 A stakeholder asks how long the class-booking MVP will take. Break it down. Login and checkout are hosted and therefore known. The booking workflow with waitlists is known but has many states. The refund rules are a known unknown: the payment provider may not support them. Door access is a known unknown too.

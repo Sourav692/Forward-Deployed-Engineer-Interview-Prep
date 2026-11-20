@@ -3,9 +3,7 @@
 
 ## Start with the deck everyone sat through
 
-Saltcote Housing, a fictional housing association with 14,000 homes, asked an FDE team for a repairs triage assistant. Tenants report repairs by phone, email and an online portal. The assistant reads each report, suggests the trade, the priority and the contractor, and drafts a job for a repairs planner to approve.
-
-After four weeks the FDE lead presented to the steering group: the director of finance, the head of repairs operations, the IT manager and the head of tenant services. She used one 30-slide deck for all four. The finance director asked what the assistant would cost each year, which no slide said. The head of tenant services asked what happens when the assistant misses an emergency, and the answer was a confidence threshold on slide 27. The IT manager had stopped listening by slide 10, because the first slides described the planners' screens. The group deferred the decision by a month.
+Saltcote Housing, a housing association with 14,000 homes, asked an FDE team for a repairs triage assistant: it reads each repair report, whether it arrives by phone, email or the online portal, suggests the trade, the priority and the contractor, and drafts a job for a repairs planner to approve. After four weeks Ruth, the FDE lead, presented one 30-slide deck to the whole steering group: the director of finance, the head of repairs operations, the IT manager and the head of tenant services. The finance director asked what the assistant would cost each year, which no slide said. The head of tenant services asked what happens when it misses an emergency, and the answer was a confidence threshold on slide 27. The IT manager had stopped listening by slide 10, because the first slides described the planners' screens. The group deferred the decision by a month.
 
 Call this **the everyone deck**: one presentation built for all audiences, which answers nobody's question first.
 
@@ -99,7 +97,7 @@ Do not settle it by telling each group what it wants to hear. Bring both views, 
 
 - **Groups overlap.** A small customer may have one person who is both IT and operations. Brief the decisions, not the job titles.
 - **Separate briefings take time.** Four 30-minute meetings cost more calendar time than one long one. Use them when a group can block the decision.
-- **Fictional data.** Saltcote Housing, its volumes, costs and test results are illustrative.
+- **Composite engagement.** Saltcote Housing, its volumes, costs and test results are illustrative, not a real customer.
 
 ## Interview angle
 

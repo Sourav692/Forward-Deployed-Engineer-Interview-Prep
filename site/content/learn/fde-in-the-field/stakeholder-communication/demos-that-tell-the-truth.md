@@ -3,11 +3,7 @@
 
 ## Start with five perfect searches
 
-Brackley Media, a fictional media firm, holds an archive of about 400,000 video clips. Producers spend hours finding usable footage, and each clip's licence lives in a separate rights database. An FDE team built a prototype assistant: a producer types a plain-language request, and it returns matching clips with their licence status.
-
-The FDE lead demonstrated it to Brackley's chief executive with five rehearsed searches. Every result was a well-labelled clip with a clean licence. The chief executive approved a newsroom pilot that afternoon.
-
-In the first pilot week, about 1 in 4 searches returned at least one clip whose rights record was incomplete. The prototype showed those clips as available, because it treated a missing licence as no restriction. A producer nearly put an unlicensed clip on air. About 3 in 100 clips in the archive had incomplete rights records, and none of them had appeared in the demo.
+Brackley Media holds an archive of about 400,000 video clips, and each clip's licence lives in a separate rights database. Megan, the FDE lead, built a prototype assistant that takes a producer's plain-language request and returns matching clips with their licence status, and she demonstrated it to Brackley's chief executive with five rehearsed searches. Every result was a well-labelled clip with a clean licence, and the chief executive approved a newsroom pilot that afternoon. In the first pilot week, about 1 in 4 searches returned at least one clip whose rights record was incomplete, and the prototype showed those clips as available, because it treated a missing licence as no restriction. A producer nearly put an unlicensed clip on air. About 3 in 100 clips in the archive had incomplete rights records, and none of them had appeared in the demo.
 
 Call this **the showroom demo**: a demo that shows only the cases that work, so the audience believes the product is ready.
 
@@ -94,7 +90,7 @@ The UK Government's service manual gives the same warning to its own teams: do n
 
 - **Some demos are sales demos.** A pre-sales demo of a general product has different aims. This lesson covers demos of work built for a customer.
 - **Real data needs permission.** Using customer records in a demo may need approval. A realistic copy is often the safer choice.
-- **Fictional data.** Brackley Media, its archive and its figures are illustrative.
+- **Composite engagement.** Brackley Media, its archive and its figures are illustrative, not a real customer.
 
 ## Interview angle
 

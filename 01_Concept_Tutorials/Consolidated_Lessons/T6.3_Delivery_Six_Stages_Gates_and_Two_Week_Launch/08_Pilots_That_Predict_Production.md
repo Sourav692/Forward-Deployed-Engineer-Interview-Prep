@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "15 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "19 November 2026"
+last_updated: "21 November 2026"
 tags: [pilot, prototype, proof of concept, scorecard, expansion, rollout]
 ---
 
@@ -176,7 +176,7 @@ Each answer is an outline to say in about two minutes. Open each question and tr
 <details>
 <summary>Interview question 4. The executive committee loved the demo and the chief executive wants it company-wide next month. What do you do?</summary>
 
-- **Answer:** Turn enthusiasm into a plan with dates. Explain that the demo answered "can it work", not "will it work for everyone". Propose a short pilot with representative users and a scorecard, then waves with a checklist between each. Offer a date for the first wave, so the answer is "yes, in this order", not "no".
+- **Answer:** Turn enthusiasm into a plan with dates. Explain that the demo answered "can it work", not "will it work for everyone". Propose a short pilot with representative users and a scorecard, then waves with a checklist between each. Offer a date for the first wave, so the answer is "yes, in this order", not "no". How to correct the announcement itself, privately and the same day, is taught in [demos that tell the truth](../../../05_FDE_Delivery_and_Scoping/FDE_Track/fde-in-the-field/stakeholder-communication/03_Demos_That_Tell_the_Truth.md).
 - **Trade-off:** A staged plan disappoints at first. A rushed company-wide launch that fails costs the programme its credibility.
 - **Follow-up to expect:** "They insist on the date." Agree the date for a defined first wave, and put the risks of going wider in writing.
 
