@@ -1,1 +1,28 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop screenshot shows the Logistics Exception Handling header, five-section nav and the Case brief opening on the stalled-shipment explanation with the progress rail; phone screenshot shows the full brief in one column with the core-idea figure (carrier feeds to gate to run-once-and-audit or ops agent queue) beside its left-to-right reading, the Frankfurt trace list and the task paragraphs, with no horizontal overflow. All eight light SVGs were rendered and inspected at full size before placement (core idea, regional architecture, end-to-end, trust boundaries, control/data planes, Mermaid gate ordering, customs-first gate, regional data). In the built page I screenshotted figure-end-to-end, figure-trust-boundaries, figure-gate-ordering, figure-policy-gate and figure-regional-data at 1280 px: each decodes at the 590 px content width, and the labels match the prose (customs check before 'value < $500 and confidence meets threshold', 'yes or unknown' and 'carrier API open circuit' branches, 'EU data and audit: never leaves EU').","limits":["Dark-mode variants are preserved as files but the light-themed reader was not tested in a dark theme.","The tall Mermaid and regional-flow diagrams render small on a 390 px phone; they rely on the open-for-full-size link, as in the approved reference.","No screen-reader testing was run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 8 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-end-to-end",
+    "figure-trust-boundaries",
+    "figure-planes",
+    "figure-gate-ordering",
+    "figure-regional-flow",
+    "figure-policy-gate",
+    "figure-regional-data"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

@@ -1,1 +1,25 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1440) shows the new subtitle, five-section tabs, contents rail with the three brief groups and progress rail; phone (390) stacks the brief, the topic selector, the core-idea figure and the numbered Acme trace without horizontal scroll. figures-0/3 show all five source diagrams decoding: core loop (plan, search apart, append, Enough coverage? with No back to plan and Yes to cited answer with gaps), main architecture with the 'thin, budget remains' loop to the planner, the vertical linear flow, the branching flow with Valid hit: return and Thin: replan within cap, and the planes/trust-zones figure with control plane, untrusted zone of web sub-agents 1..N, user-scoped zone, schema boundary, trace + cost by branch. Each caption was rewritten to match those labels and sits beside its explanation in step 5 or the brief.","limits":["The planes-and-zones figure is tall and dense; its labels are small inline at phone width and are read via the full-size link.","Dark-mode variants are present in markup but dark mode and screen readers were not tested."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 5 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "fig-core-idea",
+    "fig-main-architecture",
+    "fig-flow-linear",
+    "fig-flow-branches",
+    "fig-planes-zones"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

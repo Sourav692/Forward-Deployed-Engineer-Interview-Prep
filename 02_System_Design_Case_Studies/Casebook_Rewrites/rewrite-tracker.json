@@ -2,7 +2,7 @@
   "version": 2,
   "catalog_url": "https://forwarddeployedprep.com/design",
   "catalog_captured_at": "2026-11-15T15:11:53.730571+00:00",
-  "updated_at": "2026-11-20T03:35:02+00:00",
+  "updated_at": "2026-11-20T07:39:59+00:00",
   "cases": [
     {
       "slug": "enterprise-knowledge-assistant",
@@ -187,35 +187,35 @@
       "theme": "Knowledge and Retrieval",
       "source_url": "https://forwarddeployedprep.com/design/deep-research-agent",
       "worksheet_url": null,
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json"
         }
       },
       "artifacts": {
@@ -224,17 +224,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/deep-research-agent/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/deep-research-agent/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/deep-research-agent/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/deep-research-agent",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/deep-research-agent/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/deep-research-agent/live-check.json"
       }
     },
@@ -244,35 +247,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/customer-support-automation",
       "worksheet_url": "https://forwarddeployedprep.com/practice/ai-customer-support-automation",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json"
         }
       },
       "artifacts": {
@@ -281,17 +284,20 @@
         "html": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/reader.html",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/customer-support-automation/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/customer-support-automation/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/customer-support-automation/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/customer-support-automation",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/customer-support-automation/live-check.json"
       }
     },
@@ -301,35 +307,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
       "worksheet_url": "https://forwarddeployedprep.com/practice/tool-using-ai-agent-with-safety-controls",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json"
         }
       },
       "artifacts": {
@@ -338,17 +344,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/tool-using-agent-with-safety-controls/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/tool-using-agent-with-safety-controls/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/tool-using-agent-with-safety-controls/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/tool-using-agent-with-safety-controls",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/tool-using-agent-with-safety-controls/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/tool-using-agent-with-safety-controls/live-check.json"
       }
     },
@@ -358,35 +367,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
       "worksheet_url": "https://forwarddeployedprep.com/practice/sre-triage-agent",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json"
         }
       },
       "artifacts": {
@@ -395,17 +404,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/sre-incident-response-agent/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/sre-incident-response-agent/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/sre-incident-response-agent/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/sre-incident-response-agent",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sre-incident-response-agent/live-check.json"
       }
     },
@@ -415,35 +427,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/sales-copilot",
       "worksheet_url": "https://forwarddeployedprep.com/practice/sales-copilot",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json"
         }
       },
       "artifacts": {
@@ -452,17 +464,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/sales-copilot/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/sales-copilot/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/sales-copilot/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/sales-copilot",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/sales-copilot/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/sales-copilot/live-check.json"
       }
     },
@@ -472,35 +487,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
       "worksheet_url": null,
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json"
         }
       },
       "artifacts": {
@@ -509,17 +524,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/enterprise-coding-assistant/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/enterprise-coding-assistant/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/enterprise-coding-assistant/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/enterprise-coding-assistant",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/enterprise-coding-assistant/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/enterprise-coding-assistant/live-check.json"
       }
     },
@@ -529,35 +547,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
       "worksheet_url": null,
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json"
         }
       },
       "artifacts": {
@@ -566,17 +584,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/real-time-call-assistant/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/real-time-call-assistant/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/real-time-call-assistant/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/real-time-call-assistant/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/real-time-call-assistant/live-check.json"
       }
     },
@@ -586,35 +607,35 @@
       "theme": "Agents and Copilots in Real Workflows",
       "source_url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
       "worksheet_url": null,
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json"
         }
       },
       "artifacts": {
@@ -623,17 +644,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/logistics-exception-handling/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/logistics-exception-handling/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/logistics-exception-handling/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/logistics-exception-handling",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/logistics-exception-handling/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/logistics-exception-handling/live-check.json"
       }
     },
@@ -643,35 +667,35 @@
       "theme": "AI Platforms and Scale",
       "source_url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
       "worksheet_url": "https://forwarddeployedprep.com/practice/secure-multi-tenant-ai-platform",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json"
         }
       },
       "artifacts": {
@@ -680,17 +704,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/secure-multi-tenant-ai-platform/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/secure-multi-tenant-ai-platform/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/secure-multi-tenant-ai-platform/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/secure-multi-tenant-ai-platform",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/secure-multi-tenant-ai-platform/live-check.json"
       }
     },
@@ -700,35 +727,35 @@
       "theme": "AI Platforms and Scale",
       "source_url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
       "worksheet_url": "https://forwarddeployedprep.com/practice/high-volume-batch-inference-system",
-      "stage": "In progress",
+      "stage": "Complete",
       "mode": "teach",
       "sections": {
-        "case-brief": "pending",
-        "walkthrough": "pending",
-        "deep-dives": "pending",
-        "practice": "pending",
-        "quick-review": "pending"
+        "case-brief": "complete",
+        "walkthrough": "complete",
+        "deep-dives": "complete",
+        "practice": "complete",
+        "quick-review": "complete"
       },
       "checks": {
         "source_coverage": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json"
         },
         "editorial_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline read and semantic comparison, targeted repairs and objective audit: /Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json"
         },
         "structural_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json"
         },
         "browser_validation": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json"
         },
         "visual_review": {
-          "status": "pending",
-          "evidence": ""
+          "status": "passed",
+          "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json"
         }
       },
       "artifacts": {
@@ -737,17 +764,20 @@
         "coverage": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/case.json",
         "validation": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/snapshot.json",
         "live_check": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/live-check.json",
-        "review_baseline": ".website_spec/casebook-review-2026-11-20/baseline/high-volume-batch-pipeline/inventory.json"
+        "review_baseline": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/baseline/high-volume-batch-pipeline/inventory.json",
+        "review": "/Users/sourav/Github_Repos/Forward-Deployed-Engineer-Interview-Prep/.website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json",
+        "browser": ".website_spec/casebook-review-next-ten-2026-11-20/integration/browser/high-volume-batch-pipeline/live-check.json",
+        "visual": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/visual-review.json"
       },
       "updated": "2026-11-20",
-      "note": "20 November: immutable maintained-source baseline and teaching-unit inventory captured. This review pass has not yet read or rewritten this case. Prior completion records are retained in the baseline commit.",
-      "next_action": "Read the complete baseline, repair weak explanations and technical claims, then audit coverage and validate.",
+      "note": "Editorial rewrite and local validation complete. Production deployment and live verification pending.",
+      "next_action": "Merge after required checks; deploy and verify this case on production.",
       "live": {
         "status": "pending",
         "url": "https://forwarddeployedprep.com/design/high-volume-batch-pipeline",
         "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
         "checked_at": null,
-        "evidence": "Production check of PR #287 merge a81866ecd0381bc37722b81f18a2ed569ee07385: five sections, legacy aliases, notes, export, answer reveals, theme and print at 6 widths; see live-check.json.",
+        "evidence": "Complete maintained-baseline review; 100% critical coverage, all added objectives covered, fresh offline and native browser checks passed. Visual evidence records all primary diagrams and compatibility limitations. .website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/audit.json",
         "report": "02_System_Design_Case_Studies/Casebook_Rewrites/high-volume-batch-pipeline/live-check.json"
       }
     },
@@ -4058,6 +4088,126 @@
       "at": "2026-11-20T03:35:02+00:00",
       "slug": "document-review-copilot",
       "change": "Set Complete. User authorised this three-case production release. The remaining 30 casebooks still require editorial completion."
+    },
+    {
+      "at": "2026-11-20T04:01:04+00:00",
+      "slug": "deep-research-agent",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T04:01:04+00:00",
+      "slug": "customer-support-automation",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T04:02:24+00:00",
+      "slug": "tool-using-agent-with-safety-controls",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T04:04:23+00:00",
+      "slug": "sre-incident-response-agent",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:17:57+00:00",
+      "slug": "sales-copilot",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:19:22+00:00",
+      "slug": "enterprise-coding-assistant",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:19:39+00:00",
+      "slug": "enterprise-coding-assistant",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:21:41+00:00",
+      "slug": "real-time-call-assistant",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:23:17+00:00",
+      "slug": "logistics-exception-handling",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:25:31+00:00",
+      "slug": "secure-multi-tenant-ai-platform",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:28:35+00:00",
+      "slug": "high-volume-batch-pipeline",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:29:30+00:00",
+      "slug": "tool-using-agent-with-safety-controls",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:29:30+00:00",
+      "slug": "sales-copilot",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:29:30+00:00",
+      "slug": "real-time-call-assistant",
+      "change": "Set Review draft. Complete editorial review and targeted repairs recorded. Runtime and visual checks pending."
+    },
+    {
+      "at": "2026-11-20T07:39:58+00:00",
+      "slug": "deep-research-agent",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:58+00:00",
+      "slug": "customer-support-automation",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "tool-using-agent-with-safety-controls",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "sre-incident-response-agent",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "sales-copilot",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "enterprise-coding-assistant",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "real-time-call-assistant",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "logistics-exception-handling",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "secure-multi-tenant-ai-platform",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
+    },
+    {
+      "at": "2026-11-20T07:39:59+00:00",
+      "slug": "high-volume-batch-pipeline",
+      "change": "Set Complete. Editorial rewrite and local validation complete. Production deployment and live verification pending."
     }
   ]
 }

@@ -1,3 +1,31 @@
-{"status":"reviewed","passed":true,
-"evidence":"Desktop (1280) and phone (390) screenshots show the five-tab shell, the Acme/Globex opening, the Maya six-step list, the core-idea figure and the variant table scrolling inside its wrapper on phone without page overflow. Rendered all nine light source SVGs at 1600px and checked each against its lead-in: core idea (verify, freeze, quota yes/no), platform (control plane boxes, fail-closed and queue-or-reject branches, chunk-tenant check), control-plane chain, vertical request path with the 404 branch, full flow with seven tenant-scoped stores and per-tenant observability, compressed answer key, sequence diagram with the missing-predicate failure branch, the detect-refuse-contain-recover-prevent drill, and the four rollout phases with gates G1-G3. In the built page, figure-platform and figure-sequence render beside their prose with captions; the authored tier SVG is legible at 1280 and scales down at 390.",
-"limits":["Wide source diagrams (platform, full flow, sequence) are small at phone width; readers rely on the full-size link, as in the source.","Dark source variants were hash-checked and are referenced but not visually inspected; no dark theme is offered.","No screen-reader testing was run."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 10 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-platform",
+    "figure-control-plane",
+    "figure-request-path",
+    "figure-full-flow",
+    "figure-compressed",
+    "figure-sequence",
+    "figure-missing-predicate",
+    "figure-rollout",
+    "figure-tiers"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed.",
+    "Some inherited red nodes have weak text contrast. Protected assets remain unchanged; adjacent explanations and image alternatives carry their meaning."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/secure-multi-tenant-ai-platform/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

@@ -493,7 +493,7 @@ The interactive path cannot fan out to the CRM, the transcript store and the war
 
 The snapshot job runs on a calendar trigger, or on demand with a visible progress state. It builds the account summary, the open opportunities with stage and next step, the last interactions across calls and email, the open support escalations, and the approved claims and objections for the account's segment. It runs as the rep, so the permission check happens at build time, and it is cached under a key of account plus the rep's permission signature. A manager and a rep on the same account get different snapshots, because they may see different fields.
 
-Precomputation is an optimisation, never a permission model. A snapshot is a materialised view: stored output derived from source records at one moment, and it can outlive a permission change. A rep moved off a territory at noon must not read the 9 a.m. snapshot at 2 p.m. So the ask lane rechecks policy on fresh attributes before serving it, and a territory or role change invalidates every snapshot keyed on that rep. This is the same two-layer rule as permission-aware retrieval in general: filter when building, check again when serving. Precompute improves p95 latency, but on its own it cannot honour a revocation.
+Precomputation is an optimisation, never a permission model. A snapshot is a materialised view: stored output derived from source records at one moment, and it can outlive a permission change. If a noon territory change removes the rep's effective access, they must not read the 9 a.m. snapshot at 2 p.m. Evaluate all current grants: ownership, sharing or another permitted relationship may independently retain access. So the ask lane rechecks policy on fresh attributes before serving it, and a territory or role change invalidates every snapshot keyed on that rep. This is the same two-layer rule as permission-aware retrieval in general: filter when building, check again when serving. Precompute improves p95 latency, but on its own it cannot honour a revocation.
 
 Stamp source, index and policy versions. During a CRM outage, serve only a previously authorised snapshot still within approved staleness, after a valid current access decision. If that decision or freshness cannot be established, refuse. Do not turn precomputation into a second independent permission system.
 
@@ -516,8 +516,8 @@ So a router in front of retrieval decides which kind of question it has. A count
 </thead>
 <tbody><tr>
 <td>"Summarise the last three calls with this account"</td>
-<td>Semantic search over transcripts</td>
-<td>It does not: this is the case plain search is built for</td>
+<td>Authorised account lookup, timestamp sort and limit to three, then transcript summarisation</td>
+<td>Similarity alone does not select the three most recent calls</td>
 </tr>
 <tr>
 <td>"How many open opportunities does this account have past their close date?"</td>
@@ -542,13 +542,13 @@ Opportunity risks are then reasoned from evidence the system fetched: stage age,
 
 ### 7. Block unapproved claims and preview exact writes {#claims}
 
-An email draft is the copilot's most visible output, and its most dangerous, because it leaves the building. Every outbound claim must trace to an entry in `Playbook.approved_claims`. Pricing and discount language comes only from the current versioned deal-desk policy, including its regional variants, and the copilot refuses to quote outside it.
+An email draft is the copilot's most visible output, and its most dangerous, because it leaves the building. Every outbound product, certification, pricing or ROI claim must trace to an entry in `Playbook.approved_claims`. Account-specific facts also need current authorised source evidence and an explicit policy permitting their external use; an internal CRM note is not automatically an approved customer-facing statement. Pricing and discount language comes only from the current versioned deal-desk policy, including its regional variants, and the copilot refuses to quote outside it.
 
 Personalisation is drawn from the account's own record and interactions: the rep's last thread, the customer's stated priorities from the transcript, the open escalation. It is never drawn from the model's sense of what a company like this probably cares about. Discovery questions follow the same rule: they come from the playbook's objection list and the gaps in the CRM record.
 
 The claim verifier blocks an external draft when a claim has no approved entry or no correct citation. It does not warn. A warning beside a pending certification, an internal-only ROI figure or an unapproved customer reference is not enough, because the rep under time pressure sends the draft anyway; the [regression incident](#incident) shows exactly that. The verifier checks approval status and citation, not just whether the claim sounds similar to a source. Human review is a second line of control after this gate, not a replacement for it.
 
-CRM update suggestions are proposals, not writes. The copilot proposes a stage change, a next step or a note, and it becomes a `Draft` with an `approval_status`. The path is fixed: exact fields previewed, policy check, human approval, idempotent gateway call, CRM receipt and audit. An idempotency key is a unique ID sent with the write so the CRM can recognise a retry; a retried approval returns the existing result instead of writing twice.
+CRM update suggestions are proposals, not writes. The copilot proposes a stage change, a next step or a note, and it becomes a `Draft` with an `approval_status`. The path is fixed: exact fields previewed, policy check, human approval, idempotent gateway call, CRM receipt and audit. Bind approval to the account, field values, prior record version, actor and policy version; check current access and the record version again at execution. If another seller changed the opportunity, return a conflict for review rather than overwriting the newer state. The gateway persists a logical-operation ID, approved argument hash and expected record version before dispatch. Reuse that operation on retries and check the authoritative CRM result after an uncertain response. A CRM does not acquire Stripe-style idempotency merely because a client adds a header. The adapter must implement the documented contract; a conditional update can reject intervening edits but does not itself make every side effect replay-safe.
 
 Read tools run automatically. Write tools require a policy check, an idempotency key, preview mode and human approval for anything above the risk threshold. Sending mail, closing an opportunity, changing an amount or stage, and emailing externally sit above that threshold on day one.
 
@@ -692,7 +692,7 @@ Authorisation assumes identity is already established, so start in front of it. 
 
 CRM permissions are richer than document ACLs, and the mirror has to carry all of them. Salesforce decides record visibility from org-wide defaults (the baseline access everyone gets), then widens it by record owner, role hierarchy, sharing rules, teams and territories. Field-level security (FLS) separately decides which fields of a visible record show.
 
-The mirror translates each rule into an attribute on the record: `owner_id`, `territory_ids`, `role_visible_from`, and a field mask that hides forecast amount, or any other FLS-restricted field, from roles that cannot see it. The pre-filter compiled into retrieval carries tenant, territory and role. The post-check, after retrieval and before generation or serving a snapshot, re-verifies the field mask and any sharing rule that changed since the index was written.
+The mirror translates each rule into an attribute on the record: `owner_id`, `territory_ids`, `role_visible_from`, and a field mask computed from the current user's effective object and field permissions, including profile and permission-set grants. A sales role or territory alone does not establish field access. The pre-filter compiled into retrieval carries tenant, territory and role. The post-check, after retrieval and before generation or serving a snapshot, re-verifies effective object, record and field access. A generated summary may already blend restricted facts into prose, so masking a source column after generation is insufficient. Invalidate and rebuild it from currently permitted evidence, or omit every affected claim using retained field-level provenance.
 
 A count of open opportunities that includes a peer's territory is as serious a leak as a forbidden document, even if no individual row appears, and it is held to the same zero-violation gate. Transcripts add their own rules: participant and manager access, and regional recording consent. Embeddings and snapshots are derived state and never grant access.
 
@@ -839,7 +839,7 @@ This incident is the failure the claim verifier in [step 7](#claims) exists to p
 ```
 
 
-Read the three lines in order. The online monitor shows the unsupported-claim rate at 8.7% against a 1.2% baseline, over a sample of 430 drafts with 37 external-policy failures. The release gate shows why nobody was stopped: 96.7% of 120 cases passed, but only six cases covered regulated claims, they passed at 83.3% (five of six), and the suite had no cases at all for pending security certifications, internal-only ROI numbers or customer-logo permission. The claim verifier line shows the last guard: it knew the claim was pending approval and internal-only, its policy said block, and it only warned. Detection, then, means comparing online failures with offline slices and with the policy action actually taken.
+Read the three lines in order. The online monitor shows the unsupported-claim rate at 8.7% against a 1.2% baseline, over a sample of 430 drafts with 37 external-policy failures. The release gate shows why nobody was stopped: 96.7% of 120 cases passed, but only six cases covered regulated claims, they passed at 83.3% (five of six), and the suite had no cases at all for pending security certifications, internal-only ROI numbers or customer-logo permission. The claim verifier line shows the last guard: it knew the claim was pending approval and internal-only, its policy said block, and it only warned. Detection, then, means comparing online failures with offline slices and with the policy action actually taken. The source reports 8.7% and 37 failures over 430 drafts, but 37 ÷ 430 is about 8.6%. Preserve those log values as reported, and resolve whether the rate uses another denominator or window before using it for an alert threshold. This discrepancy does not change the documented block-versus-warn failure.
 
 **Contain.** Roll back to `llm_standard_v2`. Restore block mode for external claims. Add review banners to every draft produced during the experiment.
 
@@ -905,8 +905,8 @@ The strong move is to precompute the account snapshot on the calendar trigger, r
 <div class="source-table-wrap"><table>
 <thead>
 <tr>
-<th></th>
-<th></th>
+<th>Drill field</th>
+<th>Worked answer</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -983,7 +983,7 @@ This case is assembled from a group of prompts rather than one bespoke worked de
 </tr>
 </tbody></table></div>
 
-The source checked its references on 27 September 2026. They support the explanation; they do not make this prototype a live integration or state current provider guarantees.
+The November review corrects the last-three-calls route, distinguishes territory and field permissions, adds safe handling for derived snapshots and stale CRM approvals, and discloses the incident rate discrepancy. Salesforce's [sharing and field-security guidance](https://developer.salesforce.com/docs/platform/apex-dev/references/apex-dev/apex-security-sharing-rules.html) and [conditional REST requests](https://developer.salesforce.com/docs/platform/api-rest/guide/intro-rest-conditional-requests.html) support the permission and concurrent-update distinctions. The source checked its earlier references on 27 September 2026. They support the explanation; they do not make this prototype a live integration or state current provider guarantees.
 
 - FDE (Forward Deployed Engineer) problem-decomposition question bank: reusable practice cases for ambiguous enterprise problems (no public link in the source).
 
@@ -1001,7 +1001,7 @@ The source checked its references on 27 September 2026. They support the explana
 
 The source pairs this case with a "Sales Copilot for Account Executives" worksheet that asks for the same design from a blank page. That worksheet was not part of the captured source, so it is not reproduced here; the notes panel prompts below play its role. Close the walkthrough and write your answer before opening any reveal: the five outputs by risk, the three lanes, the two checks around the model, the write gate, and how you would release it.
 
-Then try this exercise, which is authored for this casebook rather than taken from the source. One account, Acme, is visible to two reps: Sara, who owns it, and Dev, who covers a neighbouring territory and can see the account but not its forecast amount. Their manager, Lin, sees everything. At noon Sara is moved off Acme's territory.
+Then try this exercise, which is authored for this casebook rather than taken from the source. One account, Acme, is visible to two reps: Sara, who owns it, and Dev, who covers a neighbouring territory and can see the account but not its forecast amount. Their manager, Lin, sees everything. At noon Sara is moved off Acme's territory, account ownership is reassigned and no other sharing grant retains her access. This final condition is an illustrative assumption for the drill.
 
 <details class="answer-reveal" id="answer-exercise-territory"><summary>Worked answer: how do the three morning snapshots differ, and what happens to Sara's at 2 p.m.?</summary><div class="detail-body"><p>Each snapshot is built as its user and keyed on account plus that user's permission signature, so there are three entries. Lin's includes the forecast amount. Sara's includes it if her role's field-level security allows. Dev's has the amount masked, because the mirror carries the field mask and the snapshot job ran as Dev.</p><p>At noon the territory change invalidates every snapshot keyed on Sara. If anything still served her the 9 a.m. entry, the ask lane's post-check would re-run the policy on her current attributes and refuse, because her signature no longer grants the account. A count of "open Acme opportunities" requested by Sara after noon fails the same check, because an aggregate over rows she cannot see is a leak too.</p><p>If Sara had asked for a follow-up email before noon claiming "SOC 2 certified", the verifier would block it unless <code>Playbook.approved_claims</code> held an approved entry. A proposed stage change would sit as a <code>Draft</code> with <code>approval_status</code> pending until she previewed the exact fields and approved, then go through the gateway once with an idempotency key.</p></div></details>
 

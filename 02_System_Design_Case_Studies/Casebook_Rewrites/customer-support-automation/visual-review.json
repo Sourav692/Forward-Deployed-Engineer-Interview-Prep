@@ -1,1 +1,26 @@
-{"status":"reviewed","passed":true,"evidence":"Desktop (1440) shows the five-section nav, contents rail with the three brief subsections and the progress rail; the brief opens on the double-charge quote. Phone (390) stacks the brief, the core-idea figure sits right after the paragraph that traces it, and the new related-case table scrolls inside its wrapper with no page overflow. All six original SVGs inspected rendered in figures-0/3: core idea (verify, fetch, draft, gateway yes/no), whiteboard architecture (control plane, single-lookup 'no draft or gate' branch, bounded planner, gate exits, 'verification fails' to generic help), ingress-to-decision (failure exit, direct authorised read-only tool, calibrated three-way split to auto-resolve, manager queue, prioritised human queue), execution tail (scoped execution, CRM/billing/orders/tickets, confirm outcome, quality store), the five lanes (control plane; ingress and identity sync; decision sync ordered by risk with 'high confidence, policy pass', 'action needs approval', 'risky, ambiguous, missing facts'; action async; observability with four-layer dashboard) and the refund approval workflow. Each label set matches the paragraph placed before its figure.","limits":["The two wide SVGs (whiteboard architecture and planes lanes) are small at phone width; readers rely on the open-full-size link.","Dark-mode variants were not visually inspected; only their hashes and decoding were checked.","No screen-reader testing."]}
+{
+  "status": "reviewed",
+  "passed": true,
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 6 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-11-0",
+    "figure-48-0",
+    "figure-48-1",
+    "figure-48-2",
+    "figure-50-0"
+  ],
+  "limits": [
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/customer-support-automation/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
+}

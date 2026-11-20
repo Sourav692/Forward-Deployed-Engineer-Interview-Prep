@@ -1,11 +1,29 @@
 {
   "status": "reviewed",
   "passed": true,
-  "evidence": "Desktop (1440) and phone (390) screenshots show the batch-pipeline title, subtitle, five-section nav, the term list and the core-idea flow in the brief; the r-1042 trace table and four-prompt table scroll inside their wrappers on phone without page overflow. Each of the nine original light SVGs was screenshotted in place in the built page (headless Chrome, all disclosures open) and its labels compared with the prose: core idea (On time? to Publish all / Apply agreed policy); main architecture (wide 13-node topology, small at column width but linked full size); control/data planes with enqueue leases, request capacity and grant/delay tokens edges; control-plane detail (opaque lease IDs, visibility timeout, dead letter); data-plane detail (batches of 64, quarantine branch, checkpoint only after sink write, ack or release); happy path, which really does draw '5. Checkpoint result ranges' before the outcome diamond, matching the ordering note added in step 5; worker loop with TransientError/ValidationError/more chunks/all chunks done branches matching the seven-step walk in dive-worker-loop; 4 a.m. flow with 'Yes, transient' and 'No, persistent' branches converging on the idempotent sink; PDF pipeline with the 'unchanged' branch to Reuse last summary. Each sits directly beside the paragraph that explains it. 2026-11-16: the sentence after the happy-path figure now says the figure labels step 5 by its checkpoint alone and the sink write comes first; checked against the figure's text ('5. Checkpoint result ranges') and the data-plane figure (checkpoint after the write), and it matches both.",
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 9 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-core-idea",
+    "figure-architecture",
+    "figure-planes",
+    "figure-control-plane",
+    "figure-data-plane",
+    "figure-happy-path",
+    "figure-4am",
+    "figure-worker-loop",
+    "figure-pdf-pivot"
+  ],
   "limits": [
-    "Dark SVG variants were checked for presence and hash only, not visually.",
-    "The wide main-architecture and PDF figures render small at desktop column width; readers rely on the open-full-size link, as in the approved reference.",
-    "The sticky section nav overlapped tall figures in element screenshots; this is a capture artifact, not a layout fault.",
-    "No screen-reader or Hallmark sweep was run."
-  ]
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/high-volume-batch-pipeline/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }

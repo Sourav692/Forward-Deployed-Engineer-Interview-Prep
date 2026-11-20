@@ -1,10 +1,30 @@
 {
   "status": "reviewed",
   "passed": true,
-  "evidence": "Viewed desktop.png (1440) and phone.png (390): five-section nav, brief opening with SRE definition, the core-idea flow figure beside its paragraph, numbered checkout-5xx trace, and the related-cases table scrolling inside its wrapper on phone. Screenshotted all ten placed light figures in the built page at 1280: labels match the captions (core flow yes/no branch; compact 7-step diagram with read/propose/execute policy box; full control/data-plane Mermaid with 'Timeline entry: declined'; investigation chain ending 'Stream first useful summary in under 30 s'; mitigation chain ending 'Postmortem draft'; four-box whiteboard; five typed states; issue_refund gateway sequence; 45-minute timeline; four recovery moves). The two vertical chains rendered 3,661 px and 2,888 px tall at column width, so an inline max-width was added in the Markdown; they now render about 1,500 and 1,200 px. Rechecked figures-6.png after the 2026-11-16 caption edits: the typed-results caption's \"here's your order\" wording and the gateway caption's generic refund call match the SUCCESS box and the issue_refund(order_123, $50) arrow in the rendered figures.",
+  "evidence": "20 November 2026: inspected fresh 1440\u00d71000 and 390\u00d71000 offline reader screenshots and all 10 primary figures, including labels, branches and clipping. Five-section navigation, topic selector, reading column and progress rail retain the existing layout. No new layout regression found. Corrected mechanisms are explained in adjacent prose; source diagrams remain simplified teaching views.",
+  "artifacts": [
+    ".website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/ui-1440.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/ui-390.png",
+    ".website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/figures/index.json"
+  ],
+  "figures_reviewed": [
+    "figure-1-0",
+    "figure-42-2",
+    "figure-42-0",
+    "figure-42-1",
+    "figure-42-3",
+    "figure-11-0",
+    "figure-44-0",
+    "figure-44-1",
+    "figure-49-0",
+    "figure-49-1"
+  ],
   "limits": [
-    "The full control/data-plane diagram and the compact seven-step diagram are wide and their labels are small at column width; they rely on the Open-for-full-size link.",
-    "Dark variants are present and hash-checked but the light-themed reader was the only theme inspected.",
-    "No screen-reader or physical-device testing."
-  ]
+    "Dense architecture and sequence diagrams require the retained full-size links at phone width.",
+    "This inspection covers all primary light figures and the authored inline comparison. Dark variants decode in browser checks; their source bytes are preserved. A screen reader review was not performed."
+  ],
+  "hallmark": {
+    "raw_report": ".website_spec/casebook-review-next-ten-2026-11-20/sre-incident-response-agent/hallmark.log",
+    "result": "Rendered sweep completed. Content flags reviewed as compatibility exceptions: retained source quotations, illustrative names, technical acronyms, numeric range punctuation and existing diagram labels. Source preservation and the approved casebook format take precedence over page-marketing copy rules. No design change requested."
+  }
 }
