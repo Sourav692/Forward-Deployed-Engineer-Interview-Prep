@@ -8215,7 +8215,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/01_An_API_Partners_Build_Against.md",
       "estMinutes": 13,
       "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/an-api-partners-build-against",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "moving-large-datasets",
@@ -8227,7 +8227,7 @@
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/02_Moving_Large_Datasets.md",
       "estMinutes": 14,
       "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/moving-large-datasets",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "practise-partner-apis-and-bulk-transfer",
@@ -8237,9 +8237,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "05_FDE_Delivery_and_Scoping/FDE_Track/enterprise-integration/partner-apis-and-bulk-transfer/03_Practise_Partner_APIs_and_Bulk_Transfer.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/enterprise-integration/partner-apis-and-bulk-transfer/practise-partner-apis-and-bulk-transfer",
-      "updated": "2026-11-18"
+      "updated": "2026-11-20"
     },
     {
       "slug": "owners-before-boxes",

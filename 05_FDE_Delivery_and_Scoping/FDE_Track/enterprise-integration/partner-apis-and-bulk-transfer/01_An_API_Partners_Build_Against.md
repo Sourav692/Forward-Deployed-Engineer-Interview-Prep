@@ -11,19 +11,13 @@ level: intermediate
 reading_time: "14 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [integration, partner API, API contract, versioning, deprecation, compatibility]
 ---
 
 ## Start with the minor change that moved the money
 
-Glaisdale Payroll, a fictional payroll platform, runs payroll for small employers. About 40 accounting partners build against its API. Each payday they read every payslip and post the wages to their clients' ledgers.
-
-One field, `net_pay`, held each employee's take-home pay in pounds, such as `1842.50`. A Glaisdale engineer changed it to whole pence, `184250`, to avoid rounding errors. The schema still said "number". The release was marked minor, and the changelog had one line about it.
-
-On the next payday, one partner's import read `184250` as pounds. It posted wages a hundred times too large to the ledgers of 60 employers. Their accountants spent two days reversing entries. Glaisdale's support team learned of it from an angry email, not from a test.
-
-Nothing in the shape of the API had changed. Its meaning had. Call this **the minor change that moved the money**.
+Glaisdale Payroll runs payroll for small employers, and about 40 accounting partners build against its API: each payday they read every payslip and post the wages to their clients' ledgers. Ines, the forward deployed engineer embedded in Glaisdale's platform team, changed one field, `net_pay`, from take-home pay in pounds, such as `1842.50`, to whole pence, `184250`, to avoid rounding errors. The schema still said "number", the release was marked minor, and the changelog had one line about it. On the next payday one partner's import read `184250` as pounds and posted wages a hundred times too large to the ledgers of 60 employers, whose accountants spent two days reversing entries. Glaisdale's support team learned of it from an angry email, not from a test. Nothing in the shape of the API had changed; its meaning had. Call this **the minor change that moved the money**.
 
 > **What you'll learn**
 >
@@ -43,7 +37,7 @@ A partner builds against your API once and then depends on it for years. They ca
 
 Typed request and response schemas make the shape of the contract checkable. [Define the API contract with typed schemas](../../../../01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/03_Define_the_API_Contract_With_Typed_Schemas.md) teaches that inside one service. A partner contract adds what a schema cannot express: what a field means, and how long that meaning lasts.
 
-Glaisdale's schema said `net_pay` was a number. Its documentation said "net pay". Neither said "in pounds, to two decimal places", so a change of unit looked safe to the engineer and broke the partner.
+Glaisdale's schema said `net_pay` was a number. Its documentation said "net pay". Neither said "in pounds, to two decimal places", so a change of unit looked safe to Ines and broke the partner.
 
 ## Additive change by default
 
@@ -93,7 +87,7 @@ Removing a version that partners still call is an incident. The deprecation wind
 <div class="step-footer" hidden><button type="button" data-walk="previous">Previous</button><p class="step-status" aria-live="polite"></p><button type="button" data-walk="next">Next step</button></div>
 </div>
 
-The walkthrough is a scripted illustration. The headers are standard: RFC 9745 defines `Deprecation` and RFC 8594 defines `Sunset`. They help partners who log response headers, but they do not replace the email and the phone call. The named contact in step 1 is the part most often missing. Collect a technical contact from every partner when they sign up.
+The walkthrough is a scripted illustration. The headers are standard: RFC 9745 defines `Deprecation` and RFC 8594 defines `Sunset`. They help partners who log response headers, but they do not replace the email and the phone call. The named contact in step 1 is easy to skip and hard to find later. Collect a technical contact from every partner when they sign up.
 
 ## Catch breaks before partners do
 
@@ -109,7 +103,7 @@ As a forward deployed engineer you are often on the other side, building against
 
 - **Partners differ in speed.** A six-month window suits most, but a large partner on a yearly release cycle may need longer. Agree it in the contract.
 - **Some changes cannot wait.** A security fix may need a shorter window. Explain why, and help partners move.
-- **Fictional data.** Glaisdale Payroll and its figures are illustrative.
+- **Composite engagement.** Glaisdale Payroll, its staff and its figures are illustrative, not a real customer.
 
 ## Interview angle
 
