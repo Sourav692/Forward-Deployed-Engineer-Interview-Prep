@@ -1,8 +1,8 @@
 {
   "passed": true,
   "url": "https://forwarddeployedprep.com/design/real-time-call-assistant",
-  "deployment": "a81866ecd0381bc37722b81f18a2ed569ee07385",
-  "checked_at": "2026-11-16T02:53:22.667Z",
+  "deployment": "dpl_9n1y5aeftLVWfALbLtCj2hJAZoNX",
+  "checked_at": "2026-11-20T08:11:35.942Z",
   "checks": {
     "responsive": {
       "widths": [
