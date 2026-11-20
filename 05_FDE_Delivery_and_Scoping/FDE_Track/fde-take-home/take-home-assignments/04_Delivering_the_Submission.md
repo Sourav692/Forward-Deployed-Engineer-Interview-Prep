@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "12 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [take-home, README, testing, evaluation, demo]
 ---
 
@@ -138,7 +138,7 @@ Do these in the last 15 minutes, in this order.
 
 - **Format rules.** When the brief sets a format, a page limit or a delivery method, follow it over this lesson.
 - **Design-only take-homes.** A written design has no run step, but needs the same decisions, limits and next steps. The [contract review take-home brief](../../../../01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/06_Contract_Review_Take_Home_Brief.md) shows that format.
-- **Fictional data.** Whitby Outdoor and its results are illustrative.
+- **Composite example.** Whitby Outdoor and its results are illustrative, not a real customer.
 
 ## Interview angle
 

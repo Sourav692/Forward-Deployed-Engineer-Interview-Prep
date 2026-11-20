@@ -104,7 +104,7 @@ When assistants are allowed, say in the README what you used them for, for examp
 
 - **No single rubric.** Teams weight the signals differently. Some score code quality heavily, others the write-up. Read the brief for hints about which matters most.
 - **Design-only take-homes.** Some take-homes ask for a written design with no code, such as the [contract review take-home brief](/interview/mock-interviews/contract-review-take-home-brief). The same signals apply, without the first run.
-- **Fictional data.** Whitby Outdoor, the candidates and the scores are illustrative.
+- **Composite example.** Whitby Outdoor, its brief, the candidates and the scores are illustrative, not a real customer.
 
 ## Interview angle
 

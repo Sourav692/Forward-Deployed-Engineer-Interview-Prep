@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [take-home, interview, defence, code walkthrough, live change]
 ---
 
@@ -106,7 +106,7 @@ The walkthrough is a scripted illustration. The lines are examples, not a script
 
 - **Telling the story of a larger build.** Presenting a longer project, such as a capstone, is taught in [the timed deep dive](../../../../01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Timed_Deep_Dive.md).
 - **Session formats vary.** Some teams skip the live change, others make it the main event. Ask the recruiter what to expect.
-- **Fictional data.** Whitby Outdoor and the session are illustrative.
+- **Composite example.** Whitby Outdoor and the session are illustrative, not a real customer.
 
 ## Interview angle
 

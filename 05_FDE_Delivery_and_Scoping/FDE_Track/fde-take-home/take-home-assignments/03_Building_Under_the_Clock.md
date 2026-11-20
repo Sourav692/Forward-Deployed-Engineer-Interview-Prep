@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [take-home, walking skeleton, evaluation, testing, time box]
 ---
 
@@ -123,7 +123,7 @@ Keep secrets out from the first commit. Read keys from environment variables, in
 
 - **Language and stack.** The lesson avoids naming tools on purpose. Use the language and libraries you know best, unless the brief names others.
 - **Longer take-homes.** A brief with several days allows more polish, but the order holds: skeleton, evidence, then features.
-- **Fictional data.** Whitby Outdoor, its order formats and the timings are illustrative.
+- **Composite example.** Whitby Outdoor, its order formats and the timings are illustrative, not a real customer.
 
 ## Interview angle
 

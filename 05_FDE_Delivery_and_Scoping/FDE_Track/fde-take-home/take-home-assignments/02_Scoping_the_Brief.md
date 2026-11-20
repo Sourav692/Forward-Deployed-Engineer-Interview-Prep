@@ -11,7 +11,7 @@ level: intermediate
 reading_time: "13 min"
 source: "Forward Deployed Engineering track"
 author: Sourav Banerjee
-last_updated: "17 November 2026"
+last_updated: "20 November 2026"
 tags: [take-home, scoping, assumptions, thin slice, time box]
 ---
 
@@ -116,7 +116,7 @@ The walkthrough is a scripted illustration of one sound scoping pass, not the on
 
 - **Scoping on an engagement.** Scoping a real customer project with stakeholders, baselines and estimates is taught in [shrinking to a first release](../../../../01_Concept_Tutorials/Consolidated_Lessons/T6.2_Scoping_an_FDE_Project/04_Shrinking_to_a_First_Release.md). A take-home compresses it into twenty minutes.
 - **Very open briefs.** "Build something useful with this data" has no stated ask. Choose a user and a need, state them first, then apply the same tests.
-- **Fictional data.** Whitby Outdoor and its brief are illustrative.
+- **Composite example.** Whitby Outdoor and its brief are illustrative, not a real customer.
 
 ## Interview angle
 
