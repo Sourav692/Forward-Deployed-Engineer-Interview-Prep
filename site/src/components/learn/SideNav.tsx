@@ -3,6 +3,7 @@ import type { CurriculumTrack } from '@/lib/curriculum-types'
 import { getModuleBySlug, learnHref, trackLabel } from '@/lib/learn'
 import { cx, focusRing } from '@/components/ui'
 import { LISTED_ELSEWHERE, moduleTag } from '@/lib/curriculum-href'
+import { isFlatTrack } from '@/lib/learn-stages'
 
 /**
  * SideNav tree (FE-03): the track's sections and modules, as nested lists.
@@ -18,6 +19,7 @@ export function SideNav({
   track: CurriculumTrack
   currentModule?: string
 }) {
+  const flat = isFlatTrack(track)
   const tree = (
     <nav aria-label={`${trackLabel(track)}: sections and modules`} className="text-[0.8125rem]">
       <Link
@@ -30,8 +32,9 @@ export function SideNav({
       <ul className="mt-2 space-y-3">
         {track.sections.map((s) => (
           <li key={s.slug}>
-            <span className="block px-2 text-[0.6875rem] font-semibold uppercase tracking-wide text-subtle">{s.title}</span>
-            <ul className="mt-1 space-y-0.5">
+            {/* A flat track's only section repeats the track title above it. */}
+            {!flat && <span className="block px-2 text-[0.6875rem] font-semibold uppercase tracking-wide text-subtle">{s.title}</span>}
+            <ul className={cx('space-y-0.5', !flat && 'mt-1')}>
               {s.modules.map((slug) => {
                 const m = getModuleBySlug(slug)
                 if (!m || LISTED_ELSEWHERE.has(slug)) return null

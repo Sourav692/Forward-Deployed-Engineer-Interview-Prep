@@ -39,6 +39,7 @@ import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { moduleTag } from '@/lib/curriculum-href'
+import { isFlatTrack } from '@/lib/learn-stages'
 import { PageHead } from '@/components/editorial/PageHead'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
@@ -77,6 +78,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
 
   const section = getSection(mod)
   const list = readingList(mod)
+  // In a flat track's module, "Module title: overview" lists as "Overview" (display only).
+  const shortenFor = isFlatTrack(track) ? mod.title : undefined
   const time = moduleTime(mod)
   const input = moduleInput(mod)
   const checkpoint = getCheckpoint(mod.slug)
@@ -201,9 +204,9 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                       </Link>
                     </p>
                   ) : list.main.length && mod.groups ? (
-                    <LessonGroups groups={mod.groups} lessons={list.main} />
+                    <LessonGroups groups={mod.groups} lessons={list.main} shortenFor={shortenFor} />
                   ) : list.main.length ? (
-                    <ReadingList lessons={list.main} />
+                    <ReadingList lessons={list.main} shortenFor={shortenFor} />
                   ) : (
                     <EmptyState title={COPY.emptyReadingList} body={COPY.comingSoonNoRelated} />
                   )}

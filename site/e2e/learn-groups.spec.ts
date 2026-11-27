@@ -68,6 +68,23 @@ test('AI Engineering lists the course tracks in part order', async ({ page }) =>
   ])
 })
 
+test('AI Engineering shows track cards, flat track pages and short lesson titles', async ({ page }) => {
+  await page.goto('/learn/topics/ai-engineering')
+  await expect(page.getByRole('main').locator('article.cb-group-card')).toHaveCount(14)
+  // Other groups keep ruled rows.
+  await page.goto('/learn/topics/start-here')
+  await expect(page.getByRole('main').locator('article.cb-group-card')).toHaveCount(0)
+  // A one-section course track lists its modules with no section heading repeating the track title.
+  await page.goto('/learn/llm-and-retrieval')
+  const main = page.getByRole('main')
+  await expect(main.getByRole('heading', { level: 2, name: 'Modules', exact: true })).toBeVisible()
+  await expect(main.getByRole('button', { name: /RAG Foundations: Ingestion & Indexing/ })).toHaveCount(0)
+  // The module list drops the module-title prefix; the read mark keeps the full title.
+  await page.goto('/learn/llm-and-retrieval/rag-from-first-principles')
+  await expect(main.getByRole('link', { name: 'Overview', exact: true })).toBeVisible()
+  await expect(main.getByRole('link', { name: 'Why RAG & the RAG Lifecycle: overview', exact: true })).toHaveCount(0)
+})
+
 test('Production AI Engineering is its own group with the production-ai track', async ({ page }) => {
   await page.goto('/learn')
   await page.getByRole('list', { name: 'Topic groups' }).getByRole('link', { name: 'Production AI Engineering', exact: true }).click()

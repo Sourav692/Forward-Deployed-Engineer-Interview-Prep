@@ -15,7 +15,8 @@ import {
   trackNotebooks,
   trackParams,
 } from '@/lib/learn'
-import type { CurriculumModule } from '@/lib/curriculum-types'
+import type { CurriculumModule, CurriculumSection } from '@/lib/curriculum-types'
+import { isFlatTrack } from '@/lib/learn-stages'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -133,42 +134,66 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
 
           <StorageNotice />
 
-          <div className="mt-8 space-y-4">
-            {track.sections.map((s) => {
-              const modules = s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
-              const minutes = countedMinutes(modules)
-              return (
-                <SectionAccordion
-                  key={s.slug}
-                  id={s.slug}
-                  title={s.title}
-                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? (SHOW_STUDY_TIME ? `, ${formatMinutes(minutes)}` : '') : ', coming soon'}`}
-                >
-                  {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
-                  <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>
-                    {modules.map((m) => (
-                      <li key={m.slug}>
-                        <ModuleCard module={m} />
-                      </li>
-                    ))}
-                  </ul>
-                  {/* A planned section (scaffold) has no exercise yet. */}
-                  {s.exercise && (
-                    <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
-                      <Fact term="Exercise">
-                        <DiagnosticText text={s.exercise} />
-                      </Fact>
-                      <Fact term="Done when">
-                        <DiagnosticText text={s.doneWhen} />
-                      </Fact>
-                    </dl>
-                  )}
-                </SectionAccordion>
-              )
-            })}
-          </div>
+          {isFlatTrack(track) ? (
+            // A flat track's only section repeats the track title, so its modules list directly.
+            <section aria-labelledby="modules" className="mt-8">
+              <h2 id="modules" className="text-xl font-semibold">
+                Modules
+              </h2>
+              <div className="mt-3">
+                <SectionBody section={track.sections[0]} />
+              </div>
+            </section>
+          ) : (
+            <div className="mt-8 space-y-4">
+              {track.sections.map((s) => {
+                const modules = sectionModules(s)
+                const minutes = countedMinutes(modules)
+                return (
+                  <SectionAccordion
+                    key={s.slug}
+                    id={s.slug}
+                    title={s.title}
+                    meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? (SHOW_STUDY_TIME ? `, ${formatMinutes(minutes)}` : '') : ', coming soon'}`}
+                  >
+                    <SectionBody section={s} />
+                  </SectionAccordion>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
+    </>
+  )
+}
+
+const sectionModules = (s: CurriculumSection) =>
+  s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
+
+/** A section's why-it-matters line, module cards, and exercise facts. */
+function SectionBody({ section: s }: { section: CurriculumSection }) {
+  return (
+    <>
+      {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
+      <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>
+        {sectionModules(s).map((m) => (
+          <li key={m.slug}>
+            <ModuleCard module={m} />
+          </li>
+        ))}
+      </ul>
+      {/* A planned section (scaffold) has no exercise yet. */}
+      {s.exercise && (
+        <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
+          <Fact term="Exercise">
+            <DiagnosticText text={s.exercise} />
+          </Fact>
+          <Fact term="Done when">
+            <DiagnosticText text={s.doneWhen} />
+          </Fact>
+        </dl>
+      )}
     </>
   )
 }

@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-27',
+    title: 'AI Engineering: track cards and flatter track pages',
+    summary:
+      'The AI Engineering group page shows its fourteen tracks as cards in three columns. Each AI Engineering track page lists its modules directly, without a section heading that repeated the track title, and its sidebar drops the same label. In a module\'s lesson list, titles that repeated the module name now read "Overview" or "Interview questions"; the lesson page, search and progress keep the full title. Other groups are unchanged.',
+  },
+  {
     date: '2026-11-18',
     title: 'Audit fixes: one lesson opening, cleaner references and counts',
     summary:

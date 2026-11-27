@@ -8,7 +8,7 @@ import { ReadingList } from './ReadingList'
  * running count would clash with the review numbers the notes use. Each group's id is an
  * anchor the /interview hub links to.
  */
-export function LessonGroups({ groups, lessons }: { groups: LessonGroup[]; lessons: LearnLesson[] }) {
+export function LessonGroups({ groups, lessons, shortenFor }: { groups: LessonGroup[]; lessons: LearnLesson[]; shortenFor?: string }) {
   const bySlug = new Map(lessons.map((l) => [l.slug, l]))
   const lists = groups.map((g) => g.lessons.map((s) => bySlug.get(s)).filter((l): l is LearnLesson => !!l))
   return (
@@ -20,7 +20,7 @@ export function LessonGroups({ groups, lessons }: { groups: LessonGroup[]; lesso
           </h3>
           <p className="mt-0.5 text-sm text-muted">{g.note}</p>
           <div className="mt-3">
-            <ReadingList lessons={lists[i]} numbered={false} />
+            <ReadingList lessons={lists[i]} numbered={false} shortenFor={shortenFor} />
           </div>
         </section>
       ))}

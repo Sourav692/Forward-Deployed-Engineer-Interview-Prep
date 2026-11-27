@@ -11,13 +11,13 @@ import { SHOW_STUDY_TIME } from '@/lib/study-time'
  * TrackCard (FE-06): one track on /learn, a ruled entry in the Editorial theme. The whole
  * entry is one link (the title), stretched over it with a pseudo-element so there is a
  * single tab stop. Module status counts are left to the track page, which labels each
- * module (FV-03).
+ * module (FV-03). `card` draws it as a bordered square like the group cards on /learn.
  */
-export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes: Record<string, number> }) {
+export function TrackCard({ track, minutes, card = false }: { track: CurriculumTrack; minutes: Record<string, number>; card?: boolean }) {
   const modules = trackModules(track)
 
   return (
-    <article className="cb-entry relative flex w-full flex-col">
+    <article className={cx(card ? 'cb-group-card' : 'cb-entry', 'relative flex w-full flex-col')}>
       <div className="flex flex-wrap items-center gap-2">
         {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
         <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>

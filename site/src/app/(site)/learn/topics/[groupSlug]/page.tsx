@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { allMinutes, getTrack, isRequired, learnHref, notebookCount, trackHours } from '@/lib/learn'
-import { groupHref, liveGroups } from '@/lib/learn-stages'
+import { groupHref, isFlatGroup, liveGroups } from '@/lib/learn-stages'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -40,10 +40,11 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
 
   const tracks = group.tracks.flatMap((slug) => getTrack(slug) ?? [])
   const minutes = allMinutes()
+  const cards = isFlatGroup(group.slug)
   const items: TrackItem[] = tracks.map((t) => ({
     slug: t.slug,
     required: isRequired(t),
-    node: <TrackCard track={t} minutes={minutes} />,
+    node: <TrackCard track={t} minutes={minutes} card={cards} />,
   }))
 
   return (
@@ -67,8 +68,8 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
       />
       <StorageNotice />
       {/* useSearchParams in TrackBrowser needs a Suspense boundary on a static page. */}
-      <Suspense fallback={<StaticTrackGrid items={items} />}>
-        <TrackBrowser items={items} minutes={minutes} />
+      <Suspense fallback={<StaticTrackGrid items={items} cards={cards} />}>
+        <TrackBrowser items={items} minutes={minutes} cards={cards} />
       </Suspense>
     </div>
   )
