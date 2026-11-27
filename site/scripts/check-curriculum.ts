@@ -367,14 +367,24 @@ for (const m of MODULES) {
   }
 }
 
-// Module checkpoints (DATA-10): one per published T2–T6 module, 6 to 10 well-formed items.
-// retrieval-quality-engineering holds retrieval-hybrid-rerank, the T2.4 pilot's module, since the AI Engineering integration.
-const CHECKPOINT_TRACKS = ['llm-and-retrieval', 'agentic-systems', 'retrieval-quality-engineering', 'production-ai', 'ai-systems-design', 'forward-deployed']
+// Module checkpoints (DATA-10): one per published module in the listed tracks or the AI Engineering
+// group, 6 to 10 well-formed items. Every ready AI Engineering module has one since 27 November 2026.
+const CHECKPOINT_TRACKS = [
+  ...(LEARN_STAGES.find((g) => g.slug === 'ai-engineering')?.tracks ?? []),
+  'production-ai',
+  'ai-systems-design',
+  'forward-deployed',
+]
 unique('checkpoint module', CHECKPOINTS.map((c) => c.module))
+// Coverage: every ready or partly module in the AI Engineering group has a checkpoint.
+for (const m of MODULES) {
+  if (!LEARN_STAGES.find((g) => g.slug === 'ai-engineering')?.tracks.includes(m.track)) continue
+  if ((m.status === 'ready' || m.status === 'partly') && !CHECKPOINTS.some((c) => c.module === m.slug)) fail(`checkpoint: AI Engineering module ${m.slug} has none`)
+}
 for (const c of CHECKPOINTS) {
   const m = moduleBySlug.get(c.module)
   if (!m) fail(`checkpoint: unknown module "${c.module}"`)
-  else if (!CHECKPOINT_TRACKS.includes(m.track)) fail(`checkpoint ${c.module}: module is in ${m.track}, not a T2–T6 track`)
+  else if (!CHECKPOINT_TRACKS.includes(m.track)) fail(`checkpoint ${c.module}: module is in ${m.track}, which takes no checkpoints`)
   else if (m.status !== 'ready' && m.status !== 'partly') fail(`checkpoint ${c.module}: module is ${m.status}`)
   if (c.items.length < 6 || c.items.length > 10) fail(`checkpoint ${c.module}: has ${c.items.length} items; needs 6 to 10`)
   const ids = new Set<string>()
