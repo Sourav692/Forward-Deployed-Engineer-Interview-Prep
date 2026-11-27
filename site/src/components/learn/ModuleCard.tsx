@@ -8,44 +8,39 @@ import { moduleTag } from '@/lib/curriculum-href'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
- * ModuleCard (FE-06): one module row on a track page, with code, title, status,
- * effort and progress. The title link is stretched over the row (one tab stop).
+ * ModuleCard (FE-06): one module on a track page, a square bordered card like the group
+ * and track cards (`cb-group-card`), with code, title, objective, status and progress.
+ * The title link is stretched over the card (one tab stop). A Coming soon or On hold
+ * module gets the dashed `is-soon` card.
  */
 export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
   const input = moduleInput(mod)
   const gap = mod.status === 'coming-soon' || mod.status === 'on-hold'
+  const facts = [
+    ...(SHOW_STUDY_TIME && moduleTime(mod).total > 0 ? [formatMinutes(moduleTime(mod).total)] : []),
+    // The progress bar shows the lesson count, so the count appears only where the bar does not.
+    ...(gap && input.reading.length > 0 ? [`${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`] : []),
+  ]
   return (
-    <article className="relative flex flex-col gap-2 rounded-md border border-border bg-bg px-3 py-3 transition-colors duration-150 hover:bg-surface-2 sm:flex-row sm:items-center sm:gap-4">
-      <div className="min-w-0 flex-1 sm:min-w-56">
-        <div className="flex items-baseline gap-2">
-          {moduleTag(mod) && <span className="min-w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
-          <h3 className="cb-small-head min-w-0 text-sm font-semibold leading-snug">
-            <Link href={learnHref.module(mod)} className={cx('rounded-sm after:absolute after:inset-0 after:rounded-md hover:text-accent', focusRing)}>
-              {mod.title}
-            </Link>
-          </h3>
-        </div>
-        {/* A scaffold module (Coming soon, no estimate) has no time to show. The lesson count
-            appears here only when the progress bar (which shows it) does not. */}
-        {(SHOW_STUDY_TIME ? moduleTime(mod).total > 0 : gap && input.reading.length > 0) && (
-          <p className="mt-0.5 pl-11 text-xs text-muted">
-            {[
-              ...(SHOW_STUDY_TIME ? [formatMinutes(moduleTime(mod).total)] : []),
-              ...(gap && input.reading.length > 0 ? [`${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`] : []),
-            ].join(', ')}
-          </p>
-        )}
-      </div>
-      <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-2 pl-11 sm:pl-0">
-        <ModulePathFlag moduleSlug={mod.slug} size="xs" />
+    <article className={cx('cb-group-card relative flex w-full flex-col', gap && 'is-soon')}>
+      <div className="relative z-10 flex min-h-6 flex-wrap items-center gap-2">
+        {moduleTag(mod) && <span className="text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
         {mod.status === 'partly' && <Tag>Partly ready</Tag>}
         <ModuleStatusBadge input={input} size="xs" />
-        {!gap && (
-          <div className="w-40">
-            <ModuleProgress input={input} compact />
-          </div>
-        )}
+        <ModulePathFlag moduleSlug={mod.slug} size="xs" />
       </div>
+      <h3 className="cb-small-head mt-3 text-lg font-semibold leading-snug">
+        <Link href={learnHref.module(mod)} className={cx('after:absolute after:inset-0 hover:text-accent', focusRing)}>
+          {mod.title}
+        </Link>
+      </h3>
+      {mod.objective && <p className="mt-2 line-clamp-3 text-sm text-muted">{mod.objective}</p>}
+      {facts.length > 0 && <p className="cb-entry-facts">{facts.map((f) => <span key={f}>{f}</span>)}</p>}
+      {!gap && (
+        <div className="relative z-10 mt-auto pt-4">
+          <ModuleProgress input={input} compact />
+        </div>
+      )}
     </article>
   )
 }

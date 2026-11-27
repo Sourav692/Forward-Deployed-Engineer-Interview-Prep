@@ -26,6 +26,7 @@ import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
 import { TextLink } from '@/components/areas/Area'
 import { PageHead } from '@/components/editorial/PageHead'
+import { cx } from '@/components/ui'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
@@ -176,9 +177,9 @@ function SectionBody({ section: s }: { section: CurriculumSection }) {
   return (
     <>
       {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
-      <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>
+      <ul className={cx('grid gap-4 sm:grid-cols-2 xl:grid-cols-3', s.whyItMatters && 'mt-3')}>
         {sectionModules(s).map((m) => (
-          <li key={m.slug}>
+          <li key={m.slug} className="flex">
             <ModuleCard module={m} />
           </li>
         ))}
