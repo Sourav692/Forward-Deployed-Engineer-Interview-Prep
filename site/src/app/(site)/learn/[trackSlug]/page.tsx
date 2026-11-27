@@ -15,16 +15,17 @@ import {
   trackNotebooks,
   trackParams,
 } from '@/lib/learn'
-import type { CurriculumModule } from '@/lib/curriculum-types'
+import type { CurriculumModule, CurriculumSection } from '@/lib/curriculum-types'
+import { isFlatTrack } from '@/lib/learn-stages'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { SectionAccordion } from '@/components/learn/SectionAccordion'
-import { SideNav } from '@/components/learn/SideNav'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
 import { TextLink } from '@/components/areas/Area'
 import { PageHead } from '@/components/editorial/PageHead'
+import { cx } from '@/components/ui'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
@@ -75,67 +76,77 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
         ]}
       />
       <Breadcrumbs items={[...groupTrail(track), { label: track.title }]} />
-      <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
-        <SideNav track={track} />
-        <div className="min-w-0">
-          <PageHead
-            tag={trackTag(track) ?? undefined}
-            title={track.title}
-            standfirst={`${track.objective}.`}
-            facts={[
-              { term: 'Requirement', value: REQUIREMENT_LABEL[track.required] },
-              { term: 'For whom', value: track.forWhom },
-              ...(trackNotebooks(track) ? [{ term: 'Notebooks', value: String(trackNotebooks(track)) }] : []),
-              ...(SHOW_STUDY_TIME ? [{ term: 'Time', value: formatMinutes(trackMinutes(track)) }] : []),
-              {
-                term: 'Before this track',
-                value: (
-                  <>
-                    {prereqTracks.length === 0 && !track.prerequisiteNote && 'Nothing; start here'}
-                    {prereqTracks.map((t, i) => (
-                      <span key={t.slug}>
-                        {i > 0 && ', '}
-                        <Link href={learnHref.track(t.slug)} className="underline underline-offset-2">
-                          {t.title}
-                        </Link>
-                      </span>
-                    ))}
-                    {track.prerequisiteNote && `${prereqTracks.length ? '; ' : ''}${track.prerequisiteNote}`}
-                  </>
-                ),
-              },
-            ]}
-          />
+      {/* No sidebar: the module cards below are the track's map. Module pages keep theirs. */}
+      <div className="min-w-0">
+        <PageHead
+          tag={trackTag(track) ?? undefined}
+          title={track.title}
+          standfirst={`${track.objective}.`}
+          facts={[
+            { term: 'Requirement', value: REQUIREMENT_LABEL[track.required] },
+            { term: 'For whom', value: track.forWhom },
+            ...(trackNotebooks(track) ? [{ term: 'Notebooks', value: String(trackNotebooks(track)) }] : []),
+            ...(SHOW_STUDY_TIME ? [{ term: 'Time', value: formatMinutes(trackMinutes(track)) }] : []),
+            {
+              term: 'Before this track',
+              value: (
+                <>
+                  {prereqTracks.length === 0 && !track.prerequisiteNote && 'Nothing; start here'}
+                  {prereqTracks.map((t, i) => (
+                    <span key={t.slug}>
+                      {i > 0 && ', '}
+                      <Link href={learnHref.track(t.slug)} className="underline underline-offset-2">
+                        {t.title}
+                      </Link>
+                    </span>
+                  ))}
+                  {track.prerequisiteNote && `${prereqTracks.length ? '; ' : ''}${track.prerequisiteNote}`}
+                </>
+              ),
+            },
+          ]}
+        />
 
-          <section aria-labelledby="exit" className="mt-6">
-            <h2 id="exit" className="text-sm font-semibold">
-              Objectives
+        <section aria-labelledby="exit" className="mt-6">
+          <h2 id="exit" className="text-sm font-semibold">
+            Objectives
+          </h2>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-text marker:text-subtle">
+            {track.exitCompetencies.map((c) => (
+              <li key={c}>{c[0].toUpperCase() + c.slice(1)}</li>
+            ))}
+          </ul>
+        </section>
+
+        {track.slug === 'ai-systems-design' && (
+          <aside aria-label="Worked design cases" className="mt-6 max-w-3xl rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
+            <p className="text-muted">
+              Start here to learn the design framework, whiteboard timing and reusable patterns. The classic design
+              lessons are short walkthroughs for recognising those patterns. For complete architectures, deeper
+              trade-offs and interview follow-ups, open the worked cases in Casebook.
+            </p>
+            <div className="mt-3">
+              <TextLink href="/design">Explore worked design cases</TextLink>
+            </div>
+          </aside>
+        )}
+
+        <StorageNotice />
+
+        {isFlatTrack(track) ? (
+          // A flat track's only section repeats the track title, so its modules list directly.
+          <section aria-labelledby="modules" className="mt-8">
+            <h2 id="modules" className="text-xl font-semibold">
+              Modules
             </h2>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-text marker:text-subtle">
-              {track.exitCompetencies.map((c) => (
-                <li key={c}>{c[0].toUpperCase() + c.slice(1)}</li>
-              ))}
-            </ul>
+            <div className="mt-3">
+              <SectionBody section={track.sections[0]} />
+            </div>
           </section>
-
-          {track.slug === 'ai-systems-design' && (
-            <aside aria-label="Worked design cases" className="mt-6 max-w-3xl rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
-              <p className="text-muted">
-                Start here to learn the design framework, whiteboard timing and reusable patterns. The classic design
-                lessons are short walkthroughs for recognising those patterns. For complete architectures, deeper
-                trade-offs and interview follow-ups, open the worked cases in Casebook.
-              </p>
-              <div className="mt-3">
-                <TextLink href="/design">Explore worked design cases</TextLink>
-              </div>
-            </aside>
-          )}
-
-          <StorageNotice />
-
+        ) : (
           <div className="mt-8 space-y-4">
             {track.sections.map((s) => {
-              const modules = s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
+              const modules = sectionModules(s)
               const minutes = countedMinutes(modules)
               return (
                 <SectionAccordion
@@ -144,31 +155,43 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                   title={s.title}
                   meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? (SHOW_STUDY_TIME ? `, ${formatMinutes(minutes)}` : '') : ', coming soon'}`}
                 >
-                  {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
-                  <ul className={s.whyItMatters ? 'mt-3 space-y-2' : 'space-y-2'}>
-                    {modules.map((m) => (
-                      <li key={m.slug}>
-                        <ModuleCard module={m} />
-                      </li>
-                    ))}
-                  </ul>
-                  {/* A planned section (scaffold) has no exercise yet. */}
-                  {s.exercise && (
-                    <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
-                      <Fact term="Exercise">
-                        <DiagnosticText text={s.exercise} />
-                      </Fact>
-                      <Fact term="Done when">
-                        <DiagnosticText text={s.doneWhen} />
-                      </Fact>
-                    </dl>
-                  )}
+                  <SectionBody section={s} />
                 </SectionAccordion>
               )
             })}
           </div>
-        </div>
+        )}
       </div>
+    </>
+  )
+}
+
+const sectionModules = (s: CurriculumSection) =>
+  s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
+
+/** A section's why-it-matters line, module cards, and exercise facts. */
+function SectionBody({ section: s }: { section: CurriculumSection }) {
+  return (
+    <>
+      {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
+      <ul className={cx('grid gap-4 sm:grid-cols-2 lg:grid-cols-3', s.whyItMatters && 'mt-3')}>
+        {sectionModules(s).map((m) => (
+          <li key={m.slug} className="flex">
+            <ModuleCard module={m} />
+          </li>
+        ))}
+      </ul>
+      {/* A planned section (scaffold) has no exercise yet. */}
+      {s.exercise && (
+        <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
+          <Fact term="Exercise">
+            <DiagnosticText text={s.exercise} />
+          </Fact>
+          <Fact term="Done when">
+            <DiagnosticText text={s.doneWhen} />
+          </Fact>
+        </dl>
+      )}
     </>
   )
 }

@@ -38,7 +38,7 @@ function progressBucket(slug: string, minutes: Record<string, number>): string {
   return f <= 0 ? 'not-started' : f >= 1 ? 'completed' : 'in-progress'
 }
 
-export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: Record<string, number> }) {
+export function TrackBrowser({ items, minutes, cards = false }: { items: TrackItem[]; minutes: Record<string, number>; cards?: boolean }) {
   const params = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -73,7 +73,7 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
         {visible.length} of {items.length} tracks shown
       </p>
       {visible.length ? (
-        <TrackGrid items={visible} />
+        <TrackGrid items={visible} cards={cards} />
       ) : (
         <EmptyState
           title={COPY.filterEmptyTitle}
@@ -91,17 +91,18 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
 
 
 /** The grid shown before the island hydrates (and to crawlers): every track, no filters. */
-export function StaticTrackGrid({ items }: { items: TrackItem[] }) {
+export function StaticTrackGrid({ items, cards = false }: { items: TrackItem[]; cards?: boolean }) {
   return (
     <div className="mt-[3.25rem]">
-      <TrackGrid items={items} />
+      <TrackGrid items={items} cards={cards} />
     </div>
   )
 }
 
-function TrackGrid({ items }: { items: TrackItem[] }) {
+/** Ruled rows in two columns, or bordered cards in three (the /learn group card grid). */
+function TrackGrid({ items, cards }: { items: TrackItem[]; cards: boolean }) {
   return (
-    <ul className="grid gap-x-10 sm:grid-cols-2">
+    <ul className={cards ? 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-x-10 sm:grid-cols-2'}>
       {items.map((item) => <li key={item.slug} className="flex">{item.node}</li>)}
     </ul>
   )

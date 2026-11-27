@@ -34,11 +34,11 @@ import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/l
 import { ReadingList } from '@/components/learn/ReadingList'
 import { LessonGroups } from '@/components/learn/LessonGroups'
 import { NotebookOnlyList } from '@/components/learn/NotebookOnlyList'
-import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { moduleTag } from '@/lib/curriculum-href'
+import { isFlatTrack } from '@/lib/learn-stages'
 import { PageHead } from '@/components/editorial/PageHead'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
@@ -77,6 +77,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
 
   const section = getSection(mod)
   const list = readingList(mod)
+  // In a flat track's module, "Module title: overview" lists as "Overview" (display only).
+  const shortenFor = isFlatTrack(track) ? mod.title : undefined
   const time = moduleTime(mod)
   const input = moduleInput(mod)
   const checkpoint = getCheckpoint(mod.slug)
@@ -110,224 +112,222 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
       <Breadcrumbs
         items={[...trail, ...sectionCrumb, { label: mod.title }]}
       />
-      <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
-        <SideNav track={track} currentModule={mod.slug} />
-        <div className="min-w-0 max-w-3xl">
-          <PageHead
-            tag={moduleTag(mod) ?? undefined}
-            title={mod.title}
-            standfirst={mod.objective ? `${capitalise(mod.objective)}.` : undefined}
-            facts={[
-              // A paused or planned module has nothing to spend time on yet.
-              ...(!SHOW_STUDY_TIME || mod.status === 'on-hold' || mod.status === 'coming-soon'
-                ? []
-                : [{ term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` }]),
-              ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
-            ]}
-          >
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <ModuleStatusBadge input={input} />
-              {mod.status === 'partly' && <Tag>Partly ready</Tag>}
-              <ModulePathFlag moduleSlug={mod.slug} />
-            </div>
-          </PageHead>
-
-          <div className="mt-6">
-            <StorageNotice />
+      {/* No sidebar: Prev and Next and the breadcrumb move between modules. */}
+      <div className="min-w-0 max-w-3xl">
+        <PageHead
+          tag={moduleTag(mod) ?? undefined}
+          title={mod.title}
+          standfirst={mod.objective ? `${capitalise(mod.objective)}.` : undefined}
+          facts={[
+            // A paused or planned module has nothing to spend time on yet.
+            ...(!SHOW_STUDY_TIME || mod.status === 'on-hold' || mod.status === 'coming-soon'
+              ? []
+              : [{ term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` }]),
+            ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
+          ]}
+        >
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <ModuleStatusBadge input={input} />
+            {mod.status === 'partly' && <Tag>Partly ready</Tag>}
+            <ModulePathFlag moduleSlug={mod.slug} />
           </div>
+        </PageHead>
 
-          {gap && (
-            <div className="mt-2">
-              <GapPanel module={mod} />
-            </div>
-          )}
-
-          <dl className="mt-6 grid gap-4 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
-            {/* The course's 46 module scopes are only its notebook-time estimate ("Practice time
-                includes about 3 h of notebook work"), which hides with the rest of the study time. */}
-            {mod.scope && (SHOW_STUDY_TIME || !/^Practice time includes/.test(mod.scope)) && (
-              <Fact term="Scope">{capitalise(mod.scope)}</Fact>
-            )}
-            {!gap && (
-              <Fact term="Prerequisites">
-                {prereqModules.length === 0 ? (
-                  'None'
-                ) : (
-                  <ul className="space-y-1.5">
-                    {prereqModules.map((p) => (
-                      <li key={p.slug} className="flex flex-wrap items-center gap-2">
-                        <Link href={learnHref.module(p)} className="text-accent underline underline-offset-2">
-                          {p.title}
-                        </Link>
-                        <ModuleStatusBadge input={moduleInput(p)} size="xs" />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </Fact>
-            )}
-          </dl>
-
-          {!gap && (
-            <>
-              <div className="mt-6">
-                <PrerequisiteCard
-                  input={input}
-                  meta={prereqModules.map((p) => ({ slug: p.slug, title: p.title, href: learnHref.module(p) }))}
-                />
-              </div>
-
-              <section aria-labelledby="lessons" className="mt-8">
-                <div className="flex flex-wrap items-end justify-between gap-3">
-                  <h2 id="lessons" className="text-xl font-semibold">
-                    {COPY.readingListTitle}
-                  </h2>
-                  {firstLesson && (
-                    <LinkButton href={firstLesson.href} variant="secondary">
-                      Start module
-                    </LinkButton>
-                  )}
-                </div>
-                {list.seeAlsoIsMain && <p className="mt-1 text-sm text-muted">{COPY.seeAlsoAsMainLead}</p>}
-                <div className="mt-3">
-                  <ModuleProgress input={input} />
-                </div>
-                <div className="mt-3">
-                  {mod.listedOn ? (
-                    <p className="text-sm text-muted">
-                      {mod.listedOn.lead}{' '}
-                      <Link href={mod.listedOn.href} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
-                        {mod.listedOn.label}
-                      </Link>
-                    </p>
-                  ) : list.main.length && mod.groups ? (
-                    <LessonGroups groups={mod.groups} lessons={list.main} />
-                  ) : list.main.length ? (
-                    <ReadingList lessons={list.main} />
-                  ) : (
-                    <EmptyState title={COPY.emptyReadingList} body={COPY.comingSoonNoRelated} />
-                  )}
-                </div>
-                {mod.status === 'partly' && (
-                  <div className="mt-4">
-                    <GapPanel module={mod} />
-                  </div>
-                )}
-                {mod.notebookOnly?.length ? (
-                  <div className="mt-6">
-                    <h3 className="text-base font-semibold">{COPY.notebookOnlyTitle}</h3>
-                    <p className="mt-0.5 text-sm text-muted">{COPY.notebookOnlyLead}</p>
-                    <div className="mt-3">
-                      <NotebookOnlyList lessons={mod.notebookOnly} />
-                    </div>
-                  </div>
-                ) : null}
-                {!list.seeAlsoIsMain && list.seeAlso.length > 0 && (
-                  <div className="mt-6">
-                    <h3 className="text-base font-semibold">{COPY.seeAlsoTitle}</h3>
-                    <p className="mt-0.5 text-sm text-muted">{COPY.seeAlsoLead}</p>
-                    <div className="mt-3">
-                      <ReadingList lessons={list.seeAlso} numbered={false} />
-                    </div>
-                  </div>
-                )}
-              </section>
-
-              <section aria-labelledby="practise" className="mt-10">
-                <h2 id="practise" className="text-xl font-semibold">
-                  Practise and Check
-                </h2>
-                <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
-                  {mod.deliverable && (
-                    <Fact term="Deliverable">
-                      <DiagnosticText text={capitalise(mod.deliverable)} />
-                    </Fact>
-                  )}
-                  {mod.assessment && (
-                    <Fact term="Assessment">
-                      <DiagnosticText text={capitalise(mod.assessment)} />
-                    </Fact>
-                  )}
-                  {mod.interviewProbe && <Fact term="Interview probe">{capitalise(mod.interviewProbe)}</Fact>}
-                  {mod.commonMistakes.length > 0 && (
-                    <Fact term="Common mistakes">
-                      <ul className="list-disc space-y-1 pl-5 marker:text-subtle">
-                        {mod.commonMistakes.map((m) => (
-                          <li key={m} className="[&_code]:font-mono [&_code]:text-[0.875em]" dangerouslySetInnerHTML={{ __html: inlineHtml(m) }} />
-                        ))}
-                      </ul>
-                    </Fact>
-                  )}
-                </dl>
-              </section>
-
-              {checkpoint && (
-                <section aria-labelledby="checkpoint" className="mt-10 scroll-mt-20">
-                  <h2 id="checkpoint" className="text-xl font-semibold">
-                    Checkpoint
-                  </h2>
-                  <div className="mt-3">
-                    <CheckpointPanel moduleSlug={mod.slug} title={mod.title} href={learnHref.module(mod)} items={checkpoint.items} />
-                  </div>
-                </section>
-              )}
-
-              <section aria-labelledby="yours" className="mt-10 rounded-lg border border-border bg-surface p-4 sm:p-5">
-                <h2 id="yours" className="text-xl font-semibold">
-                  Your Progress
-                </h2>
-                <div className="mt-4 grid gap-6 md:grid-cols-2">
-                  <ConfidenceControl moduleSlug={mod.slug} />
-                  <ModuleNotes moduleSlug={mod.slug} />
-                </div>
-              </section>
-            </>
-          )}
-
-          {related.length > 0 && (
-            <section aria-labelledby="related" className="mt-10">
-              <h2 id="related" className="text-xl font-semibold">
-                Related Modules
-              </h2>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {related.map((r) => (
-                  <li key={r.slug}>
-                    <Link
-                      href={learnHref.module(r)}
-                      className="block rounded-md border border-border bg-surface px-3 py-2 text-sm transition-colors hover:bg-surface-2"
-                    >
-                      {moduleTag(r) && <span className="mr-2 text-xs font-semibold tabular-nums text-subtle">{moduleTag(r)}</span>}
-                      <span className="font-semibold">{r.title}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-          {gap && coveredBy.length > 0 && (
-            <p className="mt-8 text-sm text-muted">
-              {COPY.comingSoonCoveredBy}{' '}
-              {coveredBy.map((m, i) => (
-                <span key={m.slug}>
-                  {i > 0 && (i === coveredBy.length - 1 ? ' and ' : ', ')}
-                  <Link href={learnHref.module(m)} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
-                    {m.code} {m.title}
-                  </Link>
-                </span>
-              ))}
-              .
-            </p>
-          )}
-          {/* "No other module" is only claimed where the gap note says nothing exists; a planned scaffold says it is planned. */}
-          {gap && related.length === 0 && coveredBy.length === 0 && (
-            <p className="mt-8 text-sm text-muted">{mod.gapNote || mod.status === 'on-hold' ? COPY.comingSoonNoRelated : COPY.comingSoonPlanned}</p>
-          )}
-
-          <PrevNext
-            prev={prevModule && { href: learnHref.module(prevModule), title: prevModule.title }}
-            next={nextModule && { href: learnHref.module(nextModule), title: nextModule.title }}
-          />
+        <div className="mt-6">
+          <StorageNotice />
         </div>
+
+        {gap && (
+          <div className="mt-2">
+            <GapPanel module={mod} />
+          </div>
+        )}
+
+        <dl className="mt-6 grid gap-4 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
+          {/* The course's 46 module scopes are only its notebook-time estimate ("Practice time
+              includes about 3 h of notebook work"), which hides with the rest of the study time. */}
+          {mod.scope && (SHOW_STUDY_TIME || !/^Practice time includes/.test(mod.scope)) && (
+            <Fact term="Scope">{capitalise(mod.scope)}</Fact>
+          )}
+          {!gap && (
+            <Fact term="Prerequisites">
+              {prereqModules.length === 0 ? (
+                'None'
+              ) : (
+                <ul className="space-y-1.5">
+                  {prereqModules.map((p) => (
+                    <li key={p.slug} className="flex flex-wrap items-center gap-2">
+                      <Link href={learnHref.module(p)} className="text-accent underline underline-offset-2">
+                        {p.title}
+                      </Link>
+                      <ModuleStatusBadge input={moduleInput(p)} size="xs" />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Fact>
+          )}
+        </dl>
+
+        {!gap && (
+          <>
+            <div className="mt-6">
+              <PrerequisiteCard
+                input={input}
+                meta={prereqModules.map((p) => ({ slug: p.slug, title: p.title, href: learnHref.module(p) }))}
+              />
+            </div>
+
+            <section aria-labelledby="lessons" className="mt-8">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <h2 id="lessons" className="text-xl font-semibold">
+                  {COPY.readingListTitle}
+                </h2>
+                {firstLesson && (
+                  <LinkButton href={firstLesson.href} variant="secondary">
+                    Start module
+                  </LinkButton>
+                )}
+              </div>
+              {list.seeAlsoIsMain && <p className="mt-1 text-sm text-muted">{COPY.seeAlsoAsMainLead}</p>}
+              <div className="mt-3">
+                <ModuleProgress input={input} />
+              </div>
+              <div className="mt-3">
+                {mod.listedOn ? (
+                  <p className="text-sm text-muted">
+                    {mod.listedOn.lead}{' '}
+                    <Link href={mod.listedOn.href} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+                      {mod.listedOn.label}
+                    </Link>
+                  </p>
+                ) : list.main.length && mod.groups ? (
+                  <LessonGroups groups={mod.groups} lessons={list.main} shortenFor={shortenFor} />
+                ) : list.main.length ? (
+                  <ReadingList lessons={list.main} shortenFor={shortenFor} />
+                ) : (
+                  <EmptyState title={COPY.emptyReadingList} body={COPY.comingSoonNoRelated} />
+                )}
+              </div>
+              {mod.status === 'partly' && (
+                <div className="mt-4">
+                  <GapPanel module={mod} />
+                </div>
+              )}
+              {mod.notebookOnly?.length ? (
+                <div className="mt-6">
+                  <h3 className="text-base font-semibold">{COPY.notebookOnlyTitle}</h3>
+                  <p className="mt-0.5 text-sm text-muted">{COPY.notebookOnlyLead}</p>
+                  <div className="mt-3">
+                    <NotebookOnlyList lessons={mod.notebookOnly} />
+                  </div>
+                </div>
+              ) : null}
+              {!list.seeAlsoIsMain && list.seeAlso.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-base font-semibold">{COPY.seeAlsoTitle}</h3>
+                  <p className="mt-0.5 text-sm text-muted">{COPY.seeAlsoLead}</p>
+                  <div className="mt-3">
+                    <ReadingList lessons={list.seeAlso} numbered={false} />
+                  </div>
+                </div>
+              )}
+            </section>
+
+            <section aria-labelledby="practise" className="mt-10">
+              <h2 id="practise" className="text-xl font-semibold">
+                Practise and Check
+              </h2>
+              <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
+                {mod.deliverable && (
+                  <Fact term="Deliverable">
+                    <DiagnosticText text={capitalise(mod.deliverable)} />
+                  </Fact>
+                )}
+                {mod.assessment && (
+                  <Fact term="Assessment">
+                    <DiagnosticText text={capitalise(mod.assessment)} />
+                  </Fact>
+                )}
+                {mod.interviewProbe && <Fact term="Interview probe">{capitalise(mod.interviewProbe)}</Fact>}
+                {mod.commonMistakes.length > 0 && (
+                  <Fact term="Common mistakes">
+                    <ul className="list-disc space-y-1 pl-5 marker:text-subtle">
+                      {mod.commonMistakes.map((m) => (
+                        <li key={m} className="[&_code]:font-mono [&_code]:text-[0.875em]" dangerouslySetInnerHTML={{ __html: inlineHtml(m) }} />
+                      ))}
+                    </ul>
+                  </Fact>
+                )}
+              </dl>
+            </section>
+
+            {checkpoint && (
+              <section aria-labelledby="checkpoint" className="mt-10 scroll-mt-20">
+                <h2 id="checkpoint" className="text-xl font-semibold">
+                  Checkpoint
+                </h2>
+                <div className="mt-3">
+                  <CheckpointPanel moduleSlug={mod.slug} title={mod.title} href={learnHref.module(mod)} items={checkpoint.items} />
+                </div>
+              </section>
+            )}
+
+            <section aria-labelledby="yours" className="mt-10 rounded-lg border border-border bg-surface p-4 sm:p-5">
+              <h2 id="yours" className="text-xl font-semibold">
+                Your Progress
+              </h2>
+              <div className="mt-4 grid gap-6 md:grid-cols-2">
+                <ConfidenceControl moduleSlug={mod.slug} />
+                <ModuleNotes moduleSlug={mod.slug} />
+              </div>
+            </section>
+          </>
+        )}
+
+        {related.length > 0 && (
+          <section aria-labelledby="related" className="mt-10">
+            <h2 id="related" className="text-xl font-semibold">
+              Related Modules
+            </h2>
+            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <Link
+                    href={learnHref.module(r)}
+                    className="block rounded-md border border-border bg-surface px-3 py-2 text-sm transition-colors hover:bg-surface-2"
+                  >
+                    {moduleTag(r) && <span className="mr-2 text-xs font-semibold tabular-nums text-subtle">{moduleTag(r)}</span>}
+                    <span className="font-semibold">{r.title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {gap && coveredBy.length > 0 && (
+          <p className="mt-8 text-sm text-muted">
+            {COPY.comingSoonCoveredBy}{' '}
+            {coveredBy.map((m, i) => (
+              <span key={m.slug}>
+                {i > 0 && (i === coveredBy.length - 1 ? ' and ' : ', ')}
+                <Link href={learnHref.module(m)} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+                  {m.code} {m.title}
+                </Link>
+              </span>
+            ))}
+            .
+          </p>
+        )}
+        {/* "No other module" is only claimed where the gap note says nothing exists; a planned scaffold says it is planned. */}
+        {gap && related.length === 0 && coveredBy.length === 0 && (
+          <p className="mt-8 text-sm text-muted">{mod.gapNote || mod.status === 'on-hold' ? COPY.comingSoonNoRelated : COPY.comingSoonPlanned}</p>
+        )}
+
+        <PrevNext
+          prev={prevModule && { href: learnHref.module(prevModule), title: prevModule.title }}
+          next={nextModule && { href: learnHref.module(nextModule), title: nextModule.title }}
+        />
       </div>
     </>
   )

@@ -4,13 +4,23 @@ import { cx, focusRing } from '@/components/ui'
 import { COPY } from './copy'
 import { LessonReadMark } from './ProgressIslands'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
+import { shortLessonTitle } from '@/lib/learn-stages'
 
 /**
  * A module's reading list. Synced lessons open their /learn page; live lessons open
  * the existing practice or case-study page and say so, and carry their own Mark read
- * toggle because that page has no Learn actions.
+ * toggle because that page has no Learn actions. With `shortenFor` (the module title), a
+ * title that repeats it shows only its rest; the read mark keeps the full title.
  */
-export function ReadingList({ lessons, numbered = true }: { lessons: LearnLesson[]; numbered?: boolean }) {
+export function ReadingList({
+  lessons,
+  numbered = true,
+  shortenFor,
+}: {
+  lessons: LearnLesson[]
+  numbered?: boolean
+  shortenFor?: string
+}) {
   const List = numbered ? 'ol' : 'ul'
   return (
     <List className="divide-y divide-border rounded-lg border border-border bg-surface">
@@ -22,7 +32,7 @@ export function ReadingList({ lessons, numbered = true }: { lessons: LearnLesson
               {numbered && <span className="w-5 shrink-0 text-right text-xs tabular-nums text-subtle">{i + 1}</span>}
               <div className="min-w-0">
                 <Link href={l.href} className={cx('rounded-sm text-sm font-semibold hover:text-accent hover:underline', focusRing)}>
-                  {l.title}
+                  {shortenFor ? shortLessonTitle(l.title, shortenFor) : l.title}
                 </Link>
                 <p className="mt-0.5 text-xs text-muted">
                   {SHOW_STUDY_TIME && l.estMinutes ? `${formatMinutes(l.estMinutes)}` : null}

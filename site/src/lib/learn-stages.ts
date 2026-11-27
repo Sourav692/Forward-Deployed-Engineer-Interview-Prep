@@ -99,3 +99,23 @@ export const LEARN_STAGES: LearnGroup[] = [
 export const groupHref = (slug: string) => `/learn/topics/${slug}`
 export const liveGroups = () => LEARN_STAGES.filter((group) => group.tracks.length > 0)
 export const groupOfTrack = (trackSlug: string) => LEARN_STAGES.find((group) => group.tracks.includes(trackSlug))
+
+/**
+ * Groups whose one-section tracks render flat: the track page lists its modules with no
+ * section accordion, the group page shows its tracks as cards, and module pages shorten
+ * lesson titles that repeat the module title. Display only; ids and data are unchanged.
+ */
+export const FLAT_TRACK_GROUPS: readonly string[] = ['ai-engineering']
+
+export const isFlatGroup = (groupSlug: string) => FLAT_TRACK_GROUPS.includes(groupSlug)
+
+export const isFlatTrack = (track: { slug: string; sections: readonly unknown[] }) =>
+  track.sections.length === 1 && isFlatGroup(groupOfTrack(track.slug)?.slug ?? '')
+
+/** "Module title: overview" becomes "Overview" in that module's lesson list. */
+export function shortLessonTitle(title: string, moduleTitle: string) {
+  const prefix = `${moduleTitle}: `
+  if (!title.startsWith(prefix) || title.length === prefix.length) return title
+  const rest = title.slice(prefix.length)
+  return rest[0].toUpperCase() + rest.slice(1)
+}
