@@ -3,7 +3,7 @@ import { AnimatedDiagram } from '@/components/learn/AnimatedDiagram'
 import { LabFrame } from '@/components/learn/LabFrame'
 import { WidgetProse } from '@/components/learn/LearningWidgets'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
-import { toPlainText, type ReadingSection } from '@/lib/reading'
+import { toPlainText, type ReadingChunk, type ReadingSection } from '@/lib/reading'
 import { LessonTabs } from '@/components/learn/LessonTabs'
 import type { TwinLink } from '@/lib/twins'
 import type { ExplorerData } from '@/lib/explorers/types'
@@ -84,27 +84,34 @@ export function LessonReader({ page, twins = [], explorer, tag }: { page: Lesson
 }
 
 /** A reading document's sections, as a lesson draws them. The exercise page reuses it. */
+/** A run of reading chunks: prose, diagrams, labs and animated figures. */
+export function Chunks({ chunks }: { chunks: ReadingChunk[] }) {
+  return (
+    <div className="space-y-4">
+      {chunks.map((chunk, i) =>
+        chunk.kind === 'diagram' ? (
+          <Diagram key={i} code={chunk.code} />
+        ) : chunk.kind === 'lab' ? (
+          <LabFrame key={i} src={chunk.src} title={chunk.title} />
+        ) : chunk.kind === 'animated' ? (
+          <AnimatedDiagram key={i} html={chunk.html} />
+        ) : chunk.html.includes('learning-widget') ? (
+          <WidgetProse key={i} className="prose reading" html={chunk.html} />
+        ) : (
+          <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
+        ),
+      )}
+    </div>
+  )
+}
+
 export function Sections({ sections }: { sections: ReadingSection[] }) {
   return (
     <div className="space-y-8">
       {sections.map((section) => (
         <section key={section.id} id={section.id} className="scroll-mt-24" aria-label={section.title ? undefined : 'Introduction'}>
           {section.title && <h2 className="mt-0" dangerouslySetInnerHTML={{ __html: section.title }} />}
-          <div className="space-y-4">
-            {section.chunks.map((chunk, i) =>
-              chunk.kind === 'diagram' ? (
-                <Diagram key={i} code={chunk.code} />
-              ) : chunk.kind === 'lab' ? (
-                <LabFrame key={i} src={chunk.src} title={chunk.title} />
-              ) : chunk.kind === 'animated' ? (
-                <AnimatedDiagram key={i} html={chunk.html} />
-              ) : chunk.html.includes('learning-widget') ? (
-                <WidgetProse key={i} className="prose reading" html={chunk.html} />
-              ) : (
-                <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
-              ),
-            )}
-          </div>
+          <Chunks chunks={section.chunks} />
         </section>
       ))}
     </div>

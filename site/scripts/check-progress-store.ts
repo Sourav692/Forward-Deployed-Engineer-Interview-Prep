@@ -214,5 +214,26 @@ store.markLessonRead('new', 'd', NOW + 1000, 'Lesson D')
 const logged = store.listActivity()[0]
 check('a read mark is logged with the title passed in', [logged.kind, logged.itemId, logged.label], ['lesson-read', 'new/d', 'Lesson D'])
 
+// ── Exercise notes: one key per track, exported and reset with progress ─────
+store.resetProgress()
+check('exercise notes start empty', store.getExerciseNotes('llm-and-retrieval'), { results: {}, decision: '', checks: [] })
+const notes = { results: { '0:1': '0.96' }, decision: 'Keep recursive', checks: [0, 2] }
+check('exercise notes save', store.saveExerciseNotes('llm-and-retrieval', notes), true)
+check('exercise key shape', storage.getItem('fd:v1:exercise:llm-and-retrieval'), JSON.stringify(notes))
+check('exercise notes read back', store.getExerciseNotes('llm-and-retrieval'), notes)
+check('exercise notes are exported', 'fd:v1:exercise:llm-and-retrieval' in store.exportProgress(NOW).data, true)
+storage.setItem('fd:v1:exercise:bad', '{"results":7,"checks":["x",1]}')
+check('damaged exercise notes fall back field by field', store.getExerciseNotes('bad'), { results: {}, decision: '', checks: [1] })
+store.resetProgress()
+check('reset clears exercise notes', storage.getItem('fd:v1:exercise:llm-and-retrieval'), null)
+const realGet = storage.getItem.bind(storage)
+const realSet = storage.setItem.bind(storage)
+storage.getItem = () => { throw new Error('blocked') }
+storage.setItem = () => { throw new Error('blocked') }
+check('blocked storage reads empty notes', store.getExerciseNotes('llm-and-retrieval'), { results: {}, decision: '', checks: [] })
+check('blocked storage refuses the save', store.saveExerciseNotes('llm-and-retrieval', notes), false)
+storage.getItem = realGet
+storage.setItem = realSet
+
 console.log(`${passes} passed, ${failures} failed`)
 if (failures) process.exit(1)
