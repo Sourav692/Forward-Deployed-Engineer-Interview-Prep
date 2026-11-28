@@ -358,6 +358,26 @@ export function coursePage(from, vendored) {
 /** A part exercise page without its "Back to the part" footer: the site's breadcrumbs lead back. */
 export const trimExercisePage = (md) => md.replace(/\n+Back to the part: \[[^\]]*\]\([^)]*\)\s*$/, '\n')
 
+/** The `##` headings of a part exercise, in order: the exercise page renders from them. The course test checks the same list. */
+export const EXERCISE_HEADINGS = ['Problem statement', 'What you will learn', 'Before you start', 'Experiment workflow', 'Implementation tasks', 'Record results', 'Done when', 'Common mistakes', 'Interview angle', 'Worked solution']
+
+/**
+ * A part exercise page as the site serves it: no footer, the ten headings checked, and the
+ * run line's date cut ("Our run, 28 November 2026, x 1.0, offline." becomes "Our run: x 1.0,
+ * offline."). The course README keeps the date, as its lab rules ask.
+ */
+export function siteExercisePage(md, name) {
+  const headings = md.replace(/^```[\s\S]*?^```/gm, '').match(/^## .+$/gm)?.map((h) => h.slice(3)) ?? []
+  const wrong = EXERCISE_HEADINGS.findIndex((h, i) => headings[i] !== h)
+  if (wrong !== -1 || headings.length !== EXERCISE_HEADINGS.length) {
+    const at = wrong === -1 ? EXERCISE_HEADINGS.length : wrong
+    throw new Error(`${name}: heading ${at + 1} is "${headings[at] ?? '(none)'}", wants "${EXERCISE_HEADINGS[at] ?? '(no more headings)'}"`)
+  }
+  const run = /^Our run, \d{1,2} [A-Z][a-z]+ \d{4}, (.+), offline\.$/m
+  if (!run.test(md)) throw new Error(`${name}: Worked solution has no "Our run, <date>, <versions>, offline." line`)
+  return trimExercisePage(md.replace(run, 'Our run: $1, offline.'))
+}
+
 export function importTheory(from) {
   if (!existsSync(join(from, 'THEORY.md'))) throw new Error(`${from} is not a rag-agents-engineering checkout`)
   if (git(from, 'status', '--porcelain', '--', ':(glob)p[0-9][0-9]_*/m[0-9][0-9]_*/*/theory/**', ':(glob)p[0-9][0-9]_*/exercise/**'))
@@ -387,7 +407,7 @@ export function importTheory(from) {
     if (dirname(dirname(out)) !== OUT || basename(out) !== 'exercise.md') throw new Error(`${ex.source}: not a <part>/exercise.md under ${posix(relative(SITE, OUT))}`)
     const src = join(from, basename(dirname(out)), 'exercise', 'README.md')
     if (!existsSync(src)) throw new Error(`${ex.source}: the course has no ${posix(relative(from, src))}`)
-    pages.push({ src, out, md: trimExercisePage(readFileSync(src, 'utf8')), mod: null })
+    pages.push({ src, out, md: siteExercisePage(readFileSync(src, 'utf8'), posix(relative(from, src))), mod: null })
   }
   const moduleOf = new Map([...modules].map(([mod, m]) => [m.readme, mod]))
   // (source file, GitHub anchor) -> (vendored file, site id). A module page's anchors may

@@ -33,6 +33,7 @@ const BUDGETS = [
   { label: 'landing', match: (r) => r === '/', kb: 45 },
   { label: 'lesson', match: (r) => r === '/learn/[trackSlug]/[moduleSlug]/[lessonSlug]', kb: 90 },
   { label: 'module', match: (r) => r === '/learn/[trackSlug]/[moduleSlug]', kb: 90 },
+  { label: 'exercise', match: (r) => r === '/learn/[trackSlug]/exercise', kb: 90 },
   // Client-heavy learner pages (Phase 2 dashboard). None exist in Phase 1.
   { label: 'client-heavy', match: (r) => r === '/progress' || r.startsWith('/progress/') || r === '/settings', kb: 140 },
 ]

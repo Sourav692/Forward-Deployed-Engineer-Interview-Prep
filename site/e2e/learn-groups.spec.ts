@@ -100,6 +100,39 @@ test('A track with an exercise page links to it, and the page reads like a lesso
   expect(res?.status()).toBe(404)
 })
 
+test('The exercise page has the ten-part layout, keeps the learner notes and hides the solution', async ({ page }) => {
+  await page.goto('/learn/llm-and-retrieval/exercise')
+  const article = page.getByRole('main').locator('article')
+  const parts = ['Problem statement', 'What you will learn', 'Before you start', 'Experiment workflow', 'Implementation tasks', 'Record results', 'Done when', 'Common mistakes', 'Interview angle', 'Worked solution']
+  await expect(article.getByRole('heading', { level: 2 })).toHaveText(parts)
+  // The On this page list jumps to a part.
+  await page.getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: '06 Record results' }).click()
+  await expect(page).toHaveURL(/#exercise-results$/)
+  // Results, the decision note and a tick are kept in this browser.
+  const cell = page.getByLabel('Fixed-size 500/50, Hit rate')
+  await cell.fill('0.92')
+  await page.getByLabel('Your decision').fill('Keep recursive')
+  await page.locator('#exercise-done-when').getByRole('checkbox').nth(1).check()
+  await expect(page.locator('#exercise-done-when')).toContainText('1 of 4 done')
+  await page.reload()
+  await expect(cell).toHaveValue('0.92')
+  await expect(page.getByLabel('Your decision')).toHaveValue('Keep recursive')
+  await expect(page.locator('#exercise-done-when').getByRole('checkbox').nth(1)).toBeChecked()
+  // The worked run stays hidden until opened, and the page carries no run date.
+  const run = page.locator('#exercise-solution table')
+  await expect(run).toBeHidden()
+  await page.locator('#exercise-solution summary').click()
+  await expect(run).toBeVisible()
+  await expect(article).toContainText('Our run: scikit-learn')
+  await expect(article).not.toContainText('November 2026')
+})
+
+test('The exercise page fits a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/learn/llm-and-retrieval/exercise')
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
+})
+
 test('Production AI Engineering is its own group with the production-ai track', async ({ page }) => {
   await page.goto('/learn')
   await page.getByRole('list', { name: 'Topic groups' }).getByRole('link', { name: 'Production AI Engineering', exact: true }).click()

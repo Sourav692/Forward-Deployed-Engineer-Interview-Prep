@@ -18,6 +18,7 @@ import type {
   Rights,
 } from './curriculum-types'
 import { parseReading, type ReadingDocument } from './reading'
+import { parseExercise, type Exercise } from './exercise'
 import { studyTime, type StudyTime } from './study-time'
 import type { ModuleInput } from '@/components/learn/progress-model'
 
@@ -230,14 +231,14 @@ export const exerciseParams = () =>
 
 const exerciseFile = (e: LearnExercise) => join(LEARN_DIR, e.track, 'exercise.md')
 
-export type ExercisePage = { exercise: LearnExercise; track: CurriculumTrack; section: CurriculumSection; doc: ReadingDocument }
+export type ExercisePage = { exercise: LearnExercise; track: CurriculumTrack; section: CurriculumSection; body: Exercise }
 
 export const getExercisePage = cache((trackSlug: string): ExercisePage | null => {
   const exercise = getExercises().find((e) => e.track === trackSlug)
   const track = getTrack(trackSlug)
   const section = track?.sections.find((s) => s.exercisePage)
   if (!exercise || !track || !section) return null
-  return { exercise, track, section, doc: parseReading(readFileSync(exerciseFile(exercise), 'utf8'), 'lesson') }
+  return { exercise, track, section, body: parseExercise(readFileSync(exerciseFile(exercise), 'utf8'), exerciseFile(exercise)) }
 })
 
 /**

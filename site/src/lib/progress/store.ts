@@ -47,6 +47,8 @@ export const lessonKey = (moduleSlug: string, lessonSlug: string) =>
   `fd:v1:learn:lesson:${moduleSlug}/${lessonSlug}`
 export const moduleKey = (moduleSlug: string) => `fd:v1:learn:module:${moduleSlug}`
 export const attemptsKey = (assessmentId: string) => `fd:v1:learn:attempts:${assessmentId}`
+/** A track exercise's notes in this browser: results cells, the decision note, Done when ticks. Not progress. */
+export const exerciseKey = (trackSlug: string) => `fd:v1:exercise:${trackSlug}`
 
 // ── Guarded storage access ─────────────────────────────────────────────────
 
@@ -185,6 +187,23 @@ export function migrateRenamedProgress(renamed: Record<string, string | null> = 
 // ── Modules: confidence, notes, open anyway ────────────────────────────────
 
 const emptyModule = (): ModuleRecord => ({ confidence: [], notes: '' })
+
+/** Results cells keyed `<row>:<column>`, the decision note, and the indexes of ticked Done when items. */
+export type ExerciseNotes = { results: Record<string, string>; decision: string; checks: number[] }
+
+export function getExerciseNotes(trackSlug: string): ExerciseNotes {
+  const v = readJson<Partial<ExerciseNotes>>(exerciseKey(trackSlug))
+  return {
+    results: v?.results && typeof v.results === 'object' ? v.results : {},
+    decision: typeof v?.decision === 'string' ? v.decision : '',
+    checks: Array.isArray(v?.checks) ? v.checks.filter((n) => Number.isInteger(n)) : [],
+  }
+}
+
+/** Saves the notes. The progress event only re-renders the exercise page; no dashboard reads this key. */
+export function saveExerciseNotes(trackSlug: string, notes: ExerciseNotes): boolean {
+  return writeJson(exerciseKey(trackSlug), notes)
+}
 
 export function getModuleRecord(moduleSlug: string): ModuleRecord {
   const stored = readJson<Partial<ModuleRecord>>(moduleKey(moduleSlug))

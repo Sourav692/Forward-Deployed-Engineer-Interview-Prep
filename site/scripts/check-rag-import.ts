@@ -7,7 +7,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, coursePage, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimExercisePage, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, coursePage, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, EXERCISE_HEADINGS, siteExercisePage, splitModulePage, transformLine, trimExercisePage, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 import { siteText } from './site-text-edits.mjs'
 
@@ -40,6 +40,17 @@ assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) Â· Lesson 11.2 Â
 assert.equal(fileTitle('01_open_source_llms_with_langchain.ipynb'), 'Open source LLMs with LangChain')
 // A part exercise page loses its footer back to the part README; the site's breadcrumbs lead back.
 assert.equal(trimExercisePage('# E\n\n## Solution\n\nS.\n\nBack to the part: [README.md](../README.md)\n'), '# E\n\n## Solution\n\nS.\n')
+
+// An exercise page keeps its ten headings in order and loses its run date (decision 6, exercise page layout plan).
+{
+  const body = (h: string) => (h === 'Experiment workflow' ? '```mermaid\n## not a heading\n```' : h === 'Worked solution' ? 'Our run, 28 November 2026, scikit-learn 1.9.1, offline.' : 'x')
+  const page = (hs: string[]) => `# E\n\n${hs.map((h) => `## ${h}\n\n${body(h)}\n`).join('\n')}\nBack to the part: [README.md](../README.md)\n`
+  const out = siteExercisePage(page(EXERCISE_HEADINGS), 'e.md')
+  assert.ok(out.includes('Our run: scikit-learn 1.9.1, offline.') && !out.includes('2026') && !out.includes('Back to the part'))
+  assert.throws(() => siteExercisePage(page(EXERCISE_HEADINGS.slice(1)), 'e.md'), /heading 1 is "What you will learn", wants "Problem statement"/)
+  assert.throws(() => siteExercisePage(page([...EXERCISE_HEADINGS, 'Extra']), 'e.md'), /heading 11 is "Extra"/)
+  assert.throws(() => siteExercisePage(page(EXERCISE_HEADINGS).replace(', 28 November 2026', ''), 'e.md'), /no "Our run/)
+}
 
 // The course's numbering becomes the site's (IA-08).
 const renumber = makeRenumber((n: string) => ({ '13': 'T6.2', '11': 'T5.1' })[n] ?? null, (k: number) => (k === 6 ? 'T7' : null))
