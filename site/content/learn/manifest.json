@@ -9771,5 +9771,16 @@
       "href": "/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision",
       "updated": "2026-11-18"
     }
+  ],
+  "exercises": [
+    {
+      "track": "llm-and-retrieval",
+      "slug": "exercise",
+      "title": "Exercise: a measured baseline and two chunkings",
+      "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/exercise.md",
+      "href": "/learn/llm-and-retrieval/exercise",
+      "estMinutes": 5,
+      "updated": "2026-11-28"
+    }
   ]
 }

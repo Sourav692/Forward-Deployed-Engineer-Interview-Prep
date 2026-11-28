@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-28',
+    title: 'Exercise pages for AI Engineering tracks',
+    summary:
+      'A track exercise can now have its own page, linked from the exercise line on the track page. The first is RAG Foundations: Ingestion & Indexing, where you build a TF-IDF baseline over the Larkspur handbook, record recall at k and compare two ways of chunking it, question by question. The page gives the brief, the steps, a table to fill in, what done looks like, common mistakes and a worked solution notebook that runs offline. The other AI Engineering tracks follow.',
+  },
+  {
     date: '2026-11-27',
     title: 'Track and module cards, flatter AI Engineering track pages',
     summary:

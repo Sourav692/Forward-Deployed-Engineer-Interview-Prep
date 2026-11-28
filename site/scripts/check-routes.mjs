@@ -52,6 +52,7 @@ const published = new Set(manifest.lessons.map((l) => l.slug))
 const siteManifest = JSON.parse(readFileSync(new URL('../content/manifest.json', import.meta.url), 'utf8'))
 const bylined = new Set([
   ...manifest.lessons.filter((l) => l.kind === 'sync').map((l) => l.href),
+  ...(manifest.exercises ?? []).map((e) => e.href),
   ...siteManifest.modules.flatMap((m) => m.tracks.flatMap((t) => t.scenarios.map((sc) => scenarioHref({ moduleId: m.id, trackId: t.id, slug: sc.slug })))),
   STORY_BANK.href,
 ])

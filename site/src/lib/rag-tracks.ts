@@ -125,7 +125,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
         "exercise": "Build the baseline pipeline over the Larkspur handbook and record recall at k, then compare two chunking strategies",
         "assessment": "Each module's Interview questions",
         "interviewRelevance": "RAG design, chunking, embedding and vector store questions",
-        "doneWhen": "You can answer every module's Interview questions without notes",
+        "doneWhen": "Your table has recall at k for both chunkings, and you can name the question one of them loses and why",
         "modules": [
           "rag-from-first-principles",
           "document-ingestion-and-metadata-design",
@@ -133,7 +133,12 @@ export const RAG_TRACKS: CurriculumTrack[] = [
           "embeddings-and-model-selection",
           "vector-stores-and-index-operations",
           "advanced-indexing-strategies"
-        ]
+        ],
+        "exercisePage": {
+          "slug": "exercise",
+          "title": "Exercise: a measured baseline and two chunkings",
+          "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/exercise.md"
+        }
       }
     ]
   },

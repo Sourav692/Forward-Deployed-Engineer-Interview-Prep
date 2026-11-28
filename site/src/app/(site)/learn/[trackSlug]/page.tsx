@@ -25,7 +25,7 @@ import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
 import { TextLink } from '@/components/areas/Area'
 import { PageHead } from '@/components/editorial/PageHead'
-import { cx } from '@/components/ui'
+import { cx, focusRing } from '@/components/ui'
 import { SHOW_STUDY_TIME } from '@/lib/study-time'
 
 /**
@@ -140,7 +140,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
               Modules
             </h2>
             <div className="mt-3">
-              <SectionBody section={track.sections[0]} />
+              <SectionBody section={track.sections[0]} trackSlug={track.slug} />
             </div>
           </section>
         ) : (
@@ -155,7 +155,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                   title={s.title}
                   meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}${minutes > 0 ? (SHOW_STUDY_TIME ? `, ${formatMinutes(minutes)}` : '') : ', coming soon'}`}
                 >
-                  <SectionBody section={s} />
+                  <SectionBody section={s} trackSlug={track.slug} />
                 </SectionAccordion>
               )
             })}
@@ -170,7 +170,7 @@ const sectionModules = (s: CurriculumSection) =>
   s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
 
 /** A section's why-it-matters line, module cards, and exercise facts. */
-function SectionBody({ section: s }: { section: CurriculumSection }) {
+function SectionBody({ section: s, trackSlug }: { section: CurriculumSection; trackSlug: string }) {
   return (
     <>
       {s.whyItMatters && <p className="text-sm text-muted">{s.whyItMatters}</p>}
@@ -185,7 +185,14 @@ function SectionBody({ section: s }: { section: CurriculumSection }) {
       {s.exercise && (
         <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
           <Fact term="Exercise">
-            <DiagnosticText text={s.exercise} />
+            {/* An exercise with its own page links to it; the line itself is the link text. */}
+            {s.exercisePage ? (
+              <Link href={learnHref.exercise(trackSlug)} className={cx('rounded-sm font-semibold text-accent underline underline-offset-2 hover:text-accent-hover', focusRing)}>
+                {s.exercise}
+              </Link>
+            ) : (
+              <DiagnosticText text={s.exercise} />
+            )}
           </Fact>
           <Fact term="Done when">
             <DiagnosticText text={s.doneWhen} />

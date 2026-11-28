@@ -3,9 +3,9 @@ import { getAllScenarios, getStoryBank } from '@/lib/content'
 import { CHANGELOG } from '@/lib/changelog'
 import { STORY_BANK } from '@/lib/editorial'
 import type { CurriculumModule } from '@/lib/curriculum-types'
-import { roundHref } from '@/lib/curriculum-href'
+import { isLearnTrack, roundHref } from '@/lib/curriculum-href'
 import { liveRounds } from '@/lib/interview-rounds'
-import { getLearnManifest, getTracks, learnHref, learnTracks, trackModules } from '@/lib/learn'
+import { getExercises, getLearnManifest, getTracks, learnHref, learnTracks, trackModules } from '@/lib/learn'
 import { groupHref, liveGroups } from '@/lib/learn-stages'
 import { PATHS } from '@/lib/paths'
 import { MODULE_AREAS, scenarioHref } from '@/lib/scenario'
@@ -36,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   add(STORY_BANK.href, (await getStoryBank())?.updated)
   const lessons = getLearnManifest()
   for (const lesson of lessons) if (lesson.kind === 'sync') add(lesson.href, lesson.updated)
+  for (const e of getExercises()) if (isLearnTrack(e.track)) add(e.href, e.updated)
   // A `live` lesson is a case or worksheet page; it changes when that page does.
   const lessonDate = new Map(lessons.map((l) => [l.slug, l.updated ?? dated.get(l.href)]))
 

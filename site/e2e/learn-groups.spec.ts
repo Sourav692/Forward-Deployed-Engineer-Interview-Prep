@@ -85,6 +85,21 @@ test('AI Engineering shows track cards, flat track pages and short lesson titles
   await expect(main.getByRole('link', { name: 'Why RAG & the RAG Lifecycle: overview', exact: true })).toHaveCount(0)
 })
 
+test('A track with an exercise page links to it, and the page reads like a lesson', async ({ page }) => {
+  await page.goto('/learn/llm-and-retrieval')
+  const main = page.getByRole('main')
+  await main.getByRole('link', { name: /Build the baseline pipeline over the Larkspur handbook/ }).click()
+  await expect(page).toHaveURL(/\/learn\/llm-and-retrieval\/exercise$/)
+  await expect(main.getByRole('heading', { level: 1, name: 'Exercise: a measured baseline and two chunkings' })).toBeVisible()
+  await expect(main.getByRole('heading', { level: 2, name: 'Done when' })).toBeVisible()
+  await expect(main.getByRole('link', { name: 'open in Colab' })).toHaveAttribute('href', /colab\.research\.google\.com/)
+  // The breadcrumbs lead back to the track.
+  await expect(page.getByRole('navigation', { name: /breadcrumb/i }).getByRole('link', { name: 'RAG Foundations: Ingestion & Indexing' })).toBeVisible()
+  // A track without an exercise page has no exercise route.
+  const res = await page.goto('/learn/orientation/exercise')
+  expect(res?.status()).toBe(404)
+})
+
 test('Production AI Engineering is its own group with the production-ai track', async ({ page }) => {
   await page.goto('/learn')
   await page.getByRole('list', { name: 'Topic groups' }).getByRole('link', { name: 'Production AI Engineering', exact: true }).click()
