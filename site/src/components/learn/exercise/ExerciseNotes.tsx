@@ -39,7 +39,7 @@ export function ResultsTable({ track, record }: { track: string; record: RecordT
     <div className="space-y-4">
       <StorageLine />
       <div className="table-wrap" tabIndex={0} role="region" aria-label="Your results">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[36rem] text-sm">
           <thead>
             <tr>
               <th scope="col" className="py-2 pr-3 text-left">{rowHead}</th>
@@ -59,7 +59,7 @@ export function ResultsTable({ track, record }: { track: string; record: RecordT
                       {fixed ?? (
                         <Input
                           aria-label={`${row.label}, ${cols[c]}`}
-                          className="w-24 min-w-0"
+                          className="w-20"
                           value={notes.results[key] ?? ''}
                           onChange={(e) => update((n) => ({ ...n, results: { ...n.results, [key]: e.target.value } }))}
                         />
