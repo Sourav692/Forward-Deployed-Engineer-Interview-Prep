@@ -355,10 +355,13 @@ export function coursePage(from, vendored) {
   return hits[0]
 }
 
+/** A part exercise page without its "Back to the part" footer: the site's breadcrumbs lead back. */
+export const trimExercisePage = (md) => md.replace(/\n+Back to the part: \[[^\]]*\]\([^)]*\)\s*$/, '\n')
+
 export function importTheory(from) {
   if (!existsSync(join(from, 'THEORY.md'))) throw new Error(`${from} is not a rag-agents-engineering checkout`)
-  if (git(from, 'status', '--porcelain', '--', ':(glob)p[0-9][0-9]_*/m[0-9][0-9]_*/*/theory/**'))
-    throw new Error('the theory pages have uncommitted changes; commit them first')
+  if (git(from, 'status', '--porcelain', '--', ':(glob)p[0-9][0-9]_*/m[0-9][0-9]_*/*/theory/**', ':(glob)p[0-9][0-9]_*/exercise/**'))
+    throw new Error('the theory or exercise pages have uncommitted changes; commit them first')
   const commit = git(from, 'rev-parse', 'HEAD')
 
   // Every page the export names, its vendored path and its anchors.
@@ -377,6 +380,14 @@ export function importTheory(from) {
     } else if (basename(out) !== '99_interview_questions.md') {
       pages.push({ src, out, md: trimLessonPage(readFileSync(src, 'utf8')), mod })
     }
+  }
+  // A part's exercise page, `<part>/exercise/README.md`, vendored as `<part>/exercise.md`.
+  for (const ex of RAG_TRACKS.flatMap((t) => t.sections.map((s) => s.exercisePage).filter(Boolean))) {
+    const out = join(SITE, '..', ex.source)
+    if (dirname(dirname(out)) !== OUT || basename(out) !== 'exercise.md') throw new Error(`${ex.source}: not a <part>/exercise.md under ${posix(relative(SITE, OUT))}`)
+    const src = join(from, basename(dirname(out)), 'exercise', 'README.md')
+    if (!existsSync(src)) throw new Error(`${ex.source}: the course has no ${posix(relative(from, src))}`)
+    pages.push({ src, out, md: trimExercisePage(readFileSync(src, 'utf8')), mod: null })
   }
   const moduleOf = new Map([...modules].map(([mod, m]) => [m.readme, mod]))
   // (source file, GitHub anchor) -> (vendored file, site id). A module page's anchors may

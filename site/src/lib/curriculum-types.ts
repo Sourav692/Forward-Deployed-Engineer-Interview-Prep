@@ -40,6 +40,11 @@ export type CurriculumSection = {
   doneWhen: string
   /** Module slugs, in teaching order. */
   modules: string[]
+  /**
+   * The section's exercise page, served at `/learn/<track>/exercise`. Only AI Engineering
+   * tracks have one (from the course's `<part>/exercise/README.md`); `source` is the vendored copy.
+   */
+  exercisePage?: { slug: string; title: string; source: string }
 }
 
 export type CurriculumTrack = {

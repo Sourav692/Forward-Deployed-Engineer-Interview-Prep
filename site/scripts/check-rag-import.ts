@@ -7,7 +7,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, coursePage, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, coursePage, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimExercisePage, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 import { siteText } from './site-text-edits.mjs'
 
@@ -38,6 +38,8 @@ assert.equal(spotlight, 'Interview Spotlight: 5 Questions')
 assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`02a_creating_an_mcp_server.ipynb`](b) · [All theory pages](c)*\n\n## A\n\n## Key Takeaways\n\nK.\n'),
   '# T\n\n\n## A\n\n' + '## Run the notebooks\n\nThe code for this lesson is in these notebooks. Colab runs one in your browser: install the packages its first cell imports and set the API keys it reads. To run every notebook as written, clone the repository and use its uv environment.\n\n| Notebook | GitHub | Colab |\n|---|---|---|\n| Creating an MCP server | [Open on GitHub](b) | [Open in Colab](colab:b) |\n\n' + '## Key Takeaways\n\nK.\n')
 assert.equal(fileTitle('01_open_source_llms_with_langchain.ipynb'), 'Open source LLMs with LangChain')
+// A part exercise page loses its footer back to the part README; the site's breadcrumbs lead back.
+assert.equal(trimExercisePage('# E\n\n## Solution\n\nS.\n\nBack to the part: [README.md](../README.md)\n'), '# E\n\n## Solution\n\nS.\n')
 
 // The course's numbering becomes the site's (IA-08).
 const renumber = makeRenumber((n: string) => ({ '13': 'T6.2', '11': 'T5.1' })[n] ?? null, (k: number) => (k === 6 ? 'T7' : null))

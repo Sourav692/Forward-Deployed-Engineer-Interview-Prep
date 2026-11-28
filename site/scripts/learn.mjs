@@ -167,6 +167,10 @@ export function lessonDecision(lesson) {
   return 'publish'
 }
 
+/** A track exercise page's slug and URL; no module may use the slug (check:curriculum). */
+export const EXERCISE_SLUG = 'exercise'
+export const exerciseHref = (trackSlug) => `/learn/${trackSlug}/${EXERCISE_SLUG}`
+
 export const lessonHref = (lesson) => {
   const mod = moduleBySlug.get(lesson.home)
   return curriculumHref(mod.track, mod.slug, lesson.slug)
@@ -629,9 +633,24 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
     }
   }
 
+  // Track exercise pages (`exercisePage` on a section), served at /learn/<track>/exercise.
+  // Links to one from a lesson open that page, like a link to a live page.
+  const exercisePlan = []
+  const linkUrls = new Map(liveUrls)
+  for (const track of TRACKS) {
+    for (const ex of track.sections.map((s) => s.exercisePage).filter(Boolean)) {
+      if (!isAllowedSource(ex.source)) throw new Error(`${track.slug}: exercise source ${ex.source} is outside the allow-list`)
+      const md = resolve(repoRoot, ex.source)
+      if (!existsSync(md)) throw new Error(`${track.slug}: exercise source not found at ${ex.source}`)
+      const href = exerciseHref(track.slug)
+      exercisePlan.push({ track, ex, md, href })
+      linkUrls.set(md, href)
+    }
+  }
+
   const stats = { lesson: 0, live: 0, unlinked: 0 }
   const updatedOf = gitDates(repoRoot)
-  const ctx = { repoRoot, lessonsBySource, liveUrls, retired, stats, missing: [] }
+  const ctx = { repoRoot, lessonsBySource, liveUrls: linkUrls, retired, stats, missing: [] }
   const manifest = []
   await rm(learnDir, { recursive: true, force: true })
 
@@ -670,6 +689,18 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
     manifest.push(entry)
   }
 
+  const exercises = []
+  for (const { track, ex, md, href } of exercisePlan) {
+    const title = cleanTitle(ex.title)
+    let body = stripRepoReferences(normaliseHeadings(stripClockLine(stripFrontMatter(await readFile(md, 'utf8'))), title))
+    body = sanitise(unlinkRepoLinks(rewriteLinks(body, md, { ...ctx, self: null })))
+    const out = join(learnDir, track.slug, `${EXERCISE_SLUG}.md`)
+    await mkdir(dirname(out), { recursive: true })
+    await writeFile(out, body.endsWith('\n') ? body : `${body}\n`)
+    const updated = updatedOf(md)
+    exercises.push({ track: track.slug, slug: ex.slug, title, source: ex.source, href, estMinutes: readingMinutes(body), ...(updated && { updated }) })
+  }
+
   const guard = slugGuard(previous, manifest)
   if (guard.length) throw new Error(guard.join('\n'))
 
@@ -677,7 +708,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
   await mkdir(learnDir, { recursive: true })
   await writeFile(
     join(learnDir, 'manifest.json'),
-    `${JSON.stringify({ lessons: manifest.sort((a, b) => (trackOrder.get(a.track) ?? 0) - (trackOrder.get(b.track) ?? 0)) }, null, 2)}\n`,
+    `${JSON.stringify({ lessons: manifest.sort((a, b) => (trackOrder.get(a.track) ?? 0) - (trackOrder.get(b.track) ?? 0)), exercises }, null, 2)}\n`,
   )
 
   for (const note of notes) console.log(`  learn: ${note}`)
@@ -685,7 +716,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
   const synced = manifest.filter((l) => l.kind === 'sync').length
   const live = manifest.length - synced
   console.log(
-    `learn sync: ${synced} lessons synced, ${live} live hrefs resolved; links rewritten: ` +
+    `learn sync: ${synced} lessons synced, ${exercises.length} exercise pages, ${live} live hrefs resolved; links rewritten: ` +
       `${stats.lesson} to lessons, ${stats.live} to live pages, ${stats.unlinked} to plain text` +
       (ctx.missing.length ? ` (${ctx.missing.length} to missing files)` : ''),
   )

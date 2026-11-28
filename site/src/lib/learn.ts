@@ -71,6 +71,8 @@ export const learnHref = {
   index: () => '/learn',
   track: (track: string) => curriculumHref(track),
   module: (m: Pick<CurriculumModule, 'track' | 'slug'>) => curriculumHref(m.track, m.slug),
+  /** A track's exercise page; `scripts/learn.mjs` (`exerciseHref`) writes the same URL. */
+  exercise: (track: string) => `${curriculumHref(track)}/exercise`,
 }
 
 export { INTERVIEW_TRACK }
@@ -201,6 +203,42 @@ export const trackHours = (track: CurriculumTrack): number => Math.round(trackMi
 
 /** A notebook link's identity: `owner/repo/path`, so a GitHub link and its Colab twin count once. */
 const NOTEBOOK = /([\w.-]+\/[\w.-]+)\/blob\/[^/\s]+\/([^)\s"'`#?]+\.ipynb)/g
+
+/** One entry of the manifest's `exercises`: a track's exercise page, as written by `scripts/learn.mjs`. */
+export type LearnExercise = {
+  track: string
+  slug: string
+  title: string
+  source: string
+  href: string
+  estMinutes: number
+  updated?: string
+}
+
+export const getExercises = cache(
+  (): LearnExercise[] => (JSON.parse(readFileSync(join(LEARN_DIR, 'manifest.json'), 'utf8')) as { exercises?: LearnExercise[] }).exercises ?? [],
+)
+
+/** Tracks with a synced exercise page. A manifest entry whose file is missing fails the build. */
+export const exerciseParams = () =>
+  getExercises()
+    .filter((e) => isLearnTrack(e.track))
+    .map((e) => {
+      if (!existsSync(exerciseFile(e))) throw new Error(`Exercise file missing for ${e.href}: ${exerciseFile(e)}. Run \`npm run sync\`.`)
+      return { trackSlug: e.track }
+    })
+
+const exerciseFile = (e: LearnExercise) => join(LEARN_DIR, e.track, 'exercise.md')
+
+export type ExercisePage = { exercise: LearnExercise; track: CurriculumTrack; section: CurriculumSection; doc: ReadingDocument }
+
+export const getExercisePage = cache((trackSlug: string): ExercisePage | null => {
+  const exercise = getExercises().find((e) => e.track === trackSlug)
+  const track = getTrack(trackSlug)
+  const section = track?.sections.find((s) => s.exercisePage)
+  if (!exercise || !track || !section) return null
+  return { exercise, track, section, doc: parseReading(readFileSync(exerciseFile(exercise), 'utf8'), 'lesson') }
+})
 
 /**
  * The notebooks a track points to, each counted once: `.ipynb` links in its synced

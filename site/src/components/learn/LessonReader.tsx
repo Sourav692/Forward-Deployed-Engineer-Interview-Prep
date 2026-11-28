@@ -83,7 +83,8 @@ export function LessonReader({ page, twins = [], explorer, tag }: { page: Lesson
   )
 }
 
-function Sections({ sections }: { sections: ReadingSection[] }) {
+/** A reading document's sections, as a lesson draws them. The exercise page reuses it. */
+export function Sections({ sections }: { sections: ReadingSection[] }) {
   return (
     <div className="space-y-8">
       {sections.map((section) => (

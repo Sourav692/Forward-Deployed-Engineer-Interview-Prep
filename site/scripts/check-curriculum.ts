@@ -99,6 +99,17 @@ stagedTracks.forEach((slug, i) => {
 })
 // Group pages live at /learn/topics/<group>; a track with that slug would be shadowed.
 if (TRACKS.some((t) => t.slug === 'topics')) fail('track slug "topics" collides with the /learn/topics route')
+// A track's exercise page lives at /learn/<track>/exercise; a module with that slug would be shadowed.
+for (const m of MODULES) if (m.slug === 'exercise') fail(`module ${m.track}/${m.slug}: slug "exercise" collides with the track exercise route`)
+// Exercise pages: Learn tracks only, one per track, served from the vendored copy.
+for (const t of TRACKS) {
+  const pages = t.sections.filter((s) => s.exercisePage)
+  if (pages.length > 1) fail(`track ${t.slug}: ${pages.length} sections have an exercise page; a track has at most one`)
+  for (const s of pages) {
+    if (!isLearnTrack(t.slug)) fail(`track ${t.slug}: only Learn tracks have exercise pages`)
+    if (s.exercisePage!.slug !== 'exercise') fail(`track ${t.slug}: exercise page slug ${s.exercisePage!.slug} is not "exercise"`)
+  }
+}
 unique('module', MODULES.map((m) => m.slug))
 unique('lesson', LESSONS.map((l) => l.slug))
 for (const t of TRACKS) unique(`section (${t.slug})`, t.sections.map((s) => s.slug))

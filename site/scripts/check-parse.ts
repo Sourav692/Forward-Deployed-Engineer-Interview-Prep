@@ -39,12 +39,12 @@ import ts from 'typescript'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { americanWords } from '../src/lib/spelling.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
-import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
+import { LESSONS, MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
 import { diagramKey } from '../src/lib/diagram-key.ts'
 import { mermaidFences } from './render-diagrams.mjs'
 import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
-import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
+import { EXERCISE_SLUG, exerciseHref, findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
 import { checkExplorerSnapshots } from './explorers.mjs'
 import { checkCasebookRewrites } from './check-casebook-rewrites.mjs'
 import { CUT } from './site-text-edits.mjs'
@@ -448,6 +448,9 @@ let learnManifest: LearnEntry[] = []
   else learnManifest = JSON.parse(raw).lessons
 }
 for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
+// Track exercise pages (`exercisePage` on a section) are prerendered too.
+const EXERCISE_TRACKS = CURRICULUM_TRACKS.filter((t) => t.sections.some((s) => s.exercisePage))
+for (const t of EXERCISE_TRACKS) routes.add(exerciseHref(t.slug))
 // Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
 for (const m of CURRICULUM_MODULES) {
   routes.add(curriculumHref(m.track))
@@ -579,6 +582,11 @@ for (const lesson of LESSONS) {
   expectedFiles.add(file!)
   if (!learnOnDisk.has(file!)) failures.push(`learn ${key}: missing ${relative(CONTENT, file!)} — run npm run sync`)
 }
+for (const t of EXERCISE_TRACKS) {
+  const file = join(LEARN, t.slug, `${EXERCISE_SLUG}.md`)
+  expectedFiles.add(file)
+  if (!learnOnDisk.has(file)) failures.push(`learn ${t.slug}: exercise page missing ${relative(CONTENT, file)} — run npm run sync`)
+}
 for (const file of learnOnDisk) {
   if (!expectedFiles.has(file)) failures.push(`content/${relative(CONTENT, file)}: no publishable lesson owns this file`)
 }
@@ -628,7 +636,7 @@ for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) 
   // content/learn/<track>/<module>/<lesson>.md → the lesson's URL (/learn/... or an area's).
   const hrefOf = (file: string) => {
     const [track, mod, lesson] = relative(LEARN, file).replace(/\.md$/, '').split(sep)
-    return curriculumHref(track, mod, lesson)
+    return lesson === undefined && mod === EXERCISE_SLUG ? exerciseHref(track) : curriculumHref(track, mod, lesson)
   }
   for (const file of learnFiles) {
     anchorsOf.set(hrefOf(file), headingAnchors(await readFile(file, 'utf8')))
